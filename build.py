@@ -44,8 +44,8 @@ def _classify(md_file: Path) -> Dict[str, Optional[str]]:
     rel_parts = md_file.relative_to(REPO_ROOT).parts
     if rel_parts[0] == "contest" and len(rel_parts) > 1:
         return {"category": "contest", "contest": rel_parts[1], "week": None, "day": None, "folder": rel_parts[1]}
-    if rel_parts[0] == "daily" and len(rel_parts) > 3:
-        return {"category": "daily", "contest": None, "week": rel_parts[1], "day": rel_parts[2], "folder": rel_parts[2]}
+    if rel_parts[0] == "solution" and len(rel_parts) > 1:
+        return {"category": "solution", "contest": None, "week": None, "day": None, "folder": rel_parts[1]}
     return {"category": "other", "contest": None, "week": None, "day": None, "folder": md_file.parent.name}
 
 
@@ -65,8 +65,8 @@ def _compute_slugs(md_files: List[Path]) -> Dict[Path, str]:
             seen_slugs[slug] += 1
             if info["category"] == "contest":
                 slug = f"{info['contest']}-{base_slug}"
-            elif info["category"] == "daily":
-                slug = f"{info['week']}-{info['day']}-{base_slug}"
+            elif info["category"] in ("daily", "solution"):
+                slug = f"{info['folder']}-{base_slug}"
             else:
                 slug = f"{info['folder']}-{base_slug}"
         else:
@@ -128,7 +128,7 @@ def _extract_leetcode_url(markdown_text: str) -> Optional[str]:
 # ---------------------------------------------------------------------------
 
 def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: str) -> str:
-    """Build sidebar navigation as a three-level accordion."""
+    """Build sidebar navigation — contest accordion + solution flat list by difficulty."""
     lines = []
 
     overview_class = "nav-link active" if current_slug is None else "nav-link"
@@ -141,14 +141,16 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
             if p["slug"] == current_slug:
                 if p["category"] == "contest":
                     current_path = ["contest", p["contest"]]
-                elif p["category"] == "daily":
-                    current_path = ["daily", p["week"], p["day"]]
+                elif p["category"] == "solution":
+                    current_path = ["solution", p["folder"]]
                 break
 
     tree: Dict[str, Dict] = {
         "contest": {"title": "周赛", "children": {}, "problems": []},
-        "daily": {"title": "每日一题", "children": {}, "problems": []},
+        "solution": {"title": "每日一题", "children": {}, "problems": []},
     }
+
+    DIFFICULTY_LABELS = {"easy": "简单", "medium": "中等", "hard": "困难"}
 
     for p in problems:
         if p["category"] == "contest":
@@ -158,18 +160,9 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
                     "title": contest, "children": {}, "problems": []
                 }
             tree["contest"]["children"][contest]["problems"].append(p)
-        elif p["category"] == "daily":
-            week = p["week"]
-            day = p["day"]
-            if week not in tree["daily"]["children"]:
-                tree["daily"]["children"][week] = {
-                    "title": week, "children": {}, "problems": []
-                }
-            if day not in tree["daily"]["children"][week]["children"]:
-                tree["daily"]["children"][week]["children"][day] = {
-                    "title": day, "children": {}, "problems": []
-                }
-            tree["daily"]["children"][week]["children"][day]["problems"].append(p)
+        elif p["category"] == "solution":
+            folder = p["folder"]
+            tree["solution"]["problems"].append(p)
 
     def sort_key_numeric(name: str) -> int:
         match = re.search(r'(\d+)$', name)
@@ -179,15 +172,21 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
         result: List[str] = []
         title = node["title"]
 
-        if len(path) == 3 and path[0] == "daily":
+        if path == ["solution"]:
+            problem_groups: Dict[str, list] = {}
             for p in node.get("problems", []):
-                cls = "nav-link active" if current_slug == p["slug"] else "nav-link"
-                result.append(
-                    f'<a class="{cls}" href="{root_prefix}problems/{p["slug"]}.html">'
-                    f'<span class="nav-day-tag">{title}</span>'
-                    f'{p["title"]}'
-                    f'</a>'
-                )
+                folder = p.get("folder", "other")
+                problem_groups.setdefault(folder, []).append(p)
+            for diff in ["easy", "medium", "hard"]:
+                label = DIFFICULTY_LABELS.get(diff, diff)
+                group_problems = problem_groups.get(diff, [])
+                group_problems.sort(key=lambda x: x["slug"])
+                result.append(f'<div class="nav-section">')
+                result.append(f'  <div class="nav-section-title" style="padding-left:8px;margin:6px 0 2px;font-size:0.85rem;">{label}</div>')
+                for p in group_problems:
+                    cls = "nav-link active" if current_slug == p["slug"] else "nav-link"
+                    result.append(f'<a class="{cls}" href="{root_prefix}problems/{p["slug"]}.html">{p["title"]}</a>')
+                result.append(f'</div>')
             return result
 
         is_expanded = bool(current_path and current_path[:len(path)] == path)
@@ -211,13 +210,8 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
             child_items = list(children.items())
             if path == ["contest"]:
                 child_items.sort(key=lambda x: sort_key_numeric(x[0]), reverse=True)
-            elif path == ["daily"]:
-                child_items.sort(key=lambda x: sort_key_numeric(x[0]))
-            elif len(path) == 2 and path[0] == "daily":
-                child_items.sort(key=lambda x: sort_key_numeric(x[0]))
             else:
                 child_items.sort(key=lambda x: x[0])
-
             for key, child in child_items:
                 child_path = path + [key]
                 result.extend(render_accordion(child, child_path, level + 1))
@@ -233,7 +227,7 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
         result.append('</div>')
         return result
 
-    for key in ["contest", "daily"]:
+    for key in ["contest", "solution"]:
         if tree[key]["children"] or tree[key]["problems"]:
             lines.extend(render_accordion(tree[key], [key], 1))
 
@@ -414,30 +408,33 @@ def main() -> None:
         })
 
     contest_groups: Dict[str, List[Dict]] = {}
-    weekly_groups: Dict[str, Dict[str, List[Dict]]] = defaultdict(lambda: defaultdict(list))
+    solution_groups: Dict[str, List[Dict]] = defaultdict(list)
+    DIFFICULTY_LABELS = {"easy": "简单", "medium": "中等", "hard": "困难"}
+    DIFFICULTY_ORDER = {"easy": 0, "medium": 1, "hard": 2}
     for p in problems:
         if p["category"] == "contest":
             contest_groups.setdefault(p["contest"], []).append(p)
-        elif p["category"] == "daily":
-            weekly_groups[p["week"]][p["day"]].append(p)
+        elif p["category"] == "solution":
+            solution_groups[p["folder"]].append(p)
 
     def sort_key_numeric(name: str) -> int:
         match = re.search(r'(\d+)$', name)
         return int(match.group(1)) if match else 0
 
     daily_markdown = ""
-    for week in sorted(weekly_groups.keys(), key=sort_key_numeric, reverse=False):
+    for diff in ["easy", "medium", "hard"]:
+        label = DIFFICULTY_LABELS.get(diff, diff)
+        group_problems = solution_groups.get(diff, [])
+        group_problems.sort(key=lambda x: x["slug"])
         daily_markdown += f'<div class="leetcode-section">\n'
-        daily_markdown += f'  <div class="leetcode-section-title">第 {sort_key_numeric(week)} 周</div>\n'
+        daily_markdown += f'  <div class="leetcode-section-title">{label}</div>\n'
         daily_markdown += f'  <div class="leetcode-problem-list">\n'
-        for day in sorted(weekly_groups[week].keys(), key=sort_key_numeric):
-            for p in weekly_groups[week][day]:
-                daily_markdown += (
-                    f'    <a class="leetcode-problem-link" href="./problems/{p["slug"]}.html">'
-                    f'<span class="leetcode-problem-day">{day}</span>'
-                    f'<span class="leetcode-problem-title">{p["title"]}</span>'
-                    f'</a>\n'
-                )
+        for p in group_problems:
+            daily_markdown += (
+                f'    <a class="leetcode-problem-link" href="./problems/{p["slug"]}.html">'
+                f'<span class="leetcode-problem-title">{p["title"]}</span>'
+                f'</a>\n'
+            )
         daily_markdown += '  </div>\n'
         daily_markdown += '</div>\n\n'
 

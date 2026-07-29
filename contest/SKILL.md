@@ -5,7 +5,7 @@ description: 用于在 leetcode/contest 下编写 LeetCode 周赛题解。规定
 
 # 写 LeetCode 周赛题解 Skill
 
-本工程(`ai-infra-notes`)的 LeetCode 周赛题解遵循一套固定的目录组织、文档结构和插图规范。本 skill 描述如何产出符合仓库惯例的题解。周赛题解与每日题解（`leetcode/daily/SKILL.md`）共享**手绘 SVG 风格**与**网站构建流程**，但在**目录组织、文件命名、文档结构（强调证明）**上有显著区别。
+本工程(`ai-infra-notes`)的 LeetCode 周赛题解遵循一套固定的目录组织、文档结构和插图规范。本 skill 描述如何产出符合仓库惯例的题解。周赛题解与每日题解（`leetcode/solution/SKILL.md`）共享**手绘 SVG 风格**与**网站构建流程**，但在**目录组织、文件命名、文档结构（强调证明）**上有显著区别。
 
 ## 1. 选题与取舍：周赛题的取舍逻辑
 
@@ -19,7 +19,7 @@ description: 用于在 leetcode/contest 下编写 LeetCode 周赛题解。规定
 | **Q2/Q3 重点** | 中等题套路代表性强，常考滑动窗口、DP、贪心、二分，必须写 |
 | **Q4 必写** | 困难题无论比赛是否做出，都要完整复盘思路、证明与优化 |
 | **不会的题必写** | 比赛时没做出来或思路卡壳的题必须补全题解，这是复盘的核心价值 |
-| **题目不重复** | 同一道题在 daily 与 contest 中只出现一次；选题前先查 `leetcode/contest/` 与 `leetcode/daily/` 已有文件 |
+| **题目不重复** | 同一道题在 solution 与 contest 中只出现一次；选题前先查 `leetcode/contest/` 与 `leetcode/solution/` 已有文件 |
 
 > 💡 **一句话总结**：周赛题解的本质是「赛后完整复盘 + 套路沉淀」，四题都要写，每题都要能提炼一个可迁移的模板或观察。
 
@@ -199,7 +199,7 @@ print(d)
 
 ## 5. 图片风格：手绘 sketch 风（Excalidraw-like）
 
-**所有插图统一为手绘 sketch 风**，与 daily 题解完全一致。完整 SVG 实现规范见 `leetcode/daily/SKILL.md` 第 4 节，要点复述如下：
+**所有插图统一为手绘 sketch 风**，与每日题解完全一致。完整 SVG 实现规范见 `leetcode/solution/SKILL.md` 第 4 节，要点复述如下：
 
 - **禁止 ASCII 图片**：所有示意图、流程图、架构图一律用 SVG，不要在 Markdown 中嵌入 ASCII 字符画（如用 `+---+`、`|   |` 拼成的表格或流程图）
 
