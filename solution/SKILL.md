@@ -44,6 +44,7 @@ description: 用于在 leetcode/solution 下编写每日 LeetCode 题解。规�
 | 76 | 最小覆盖子串 | 困难 | 滑动窗口 | ✅ |
 | 45 | 跳跃游戏 II | 中等 | 贪心 | ✅ |
 | 209 | 长度最小的子数组 | 中等 | 滑动窗口（正数单调） | ✅ |
+| 713 | 乘积小于K的子数组 | 中等 | 滑动窗口 + 计数(right−left+1) | ✅ |
 | 435 | 无重叠区间 | 中等 | 贪心区间调度（按右端点） | ✅ |
 
 #### 链表
@@ -83,6 +84,7 @@ description: 用于在 leetcode/solution 下编写每日 LeetCode 题解。规�
 | 70 | 爬楼梯 | 简单 | 一维 DP | ✅ |
 | 72 | 编辑距离 | 中等 | 二维 DP | ✅ |
 | 198 | 打家劫舍 | 中等 | 一维 DP | ✅ |
+| 213 | 打家劫舍 II | 中等 | 拆环为线 + 一维 DP | ✅ |
 | 300 | 最长递增子序列 | 中等 | DP / 二分 | ✅ |
 | 322 | 零钱兑换 | 中等 | 完全背包 DP | ✅ |
 | 416 | 分割等和子集 | 中等 | 0-1 背包 DP | ✅ |
@@ -137,40 +139,45 @@ description: 用于在 leetcode/solution 下编写每日 LeetCode 题解。规�
 
 ## 2. 目录组织
 
-所有每日题解**必须写在** `leetcode/solution/` **下**，按**难度**组织：
+所有每日题解**必须写在** `leetcode/solution/` **下**，按**题号区间**组织（每 100 题一个目录），**不按难度分目录**。题目的「简单/中等/困难」仅作为元信息写在题解头部，不决定目录归属。
 
 ```
 leetcode/solution/
-├── easy/
+├── 0001-0100/                     # 题号 1-100
 │   ├── 1_两数之和.md              # 题解主体（文件名 = 题号_题目中文名）
-│   ├── 70_爬楼梯.md
-│   ├── 206_反转链表.md
-│   ├── images/                    # easy 级别所有 SVG 插图
-│   └── ...
-├── medium/
-│   ├── 3_无重复字符的最长子串.md
-│   ├── 15_三数之和.md
-│   ├── 46_全排列.md
-│   ├── images/                    # medium 级别所有 SVG 插图
-│   └── ...
-├── hard/
 │   ├── 42_接雨水.md
-│   ├── 84_柱状图中最大的矩形.md
-│   ├── images/                    # hard 级别所有 SVG 插图
+│   ├── 70_爬楼梯.md
 │   └── ...
+├── 0101-0200/                     # 题号 101-200
+│   ├── 146_LRU缓存.md
+│   ├── 200_岛屿数量.md
+│   └── ...
+├── 0201-0300/                     # 题号 201-300
+│   ├── 206_反转链表.md
+│   ├── 239_滑动窗口最大值.md
+│   └── ...
+├── ...
+├── 1001-1100/                     # 题号 1001-1100
+│   └── 1011_在D天内送达包裹的能力.md
+├── 1101-1200/                     # 题号 1101-1200
+│   └── 1143_最长公共子序列.md
+├── images/                        # ⭐ 所有题解的 SVG 插图统一存放于此（全库共享）
 └── SKILL.md                       # 本文件
 ```
 
 **规则**：
 
 1. **题解根目录**：`leetcode/solution/`，不要写到 `leetcode/` 根下或其它位置。
-2. **难度目录**：`easy/`、`medium/`、`hard/`，按题目实际难度归类。
+2. **区间目录**：按题号每 100 题一个目录，命名 `<起点>-<终点>`（4 位零填充）。题号 `N` 所属区间为 `((N-1)//100)*100+1` 到 `((N-1)//100)*100+100`。例：`1~100` → `0001-0100`，`101~200` → `0101-0200`，`1001~1100` → `1001-1100`，`1143` → `1101-1200`。区间目录内**只放 `.md` 题解**，不放图片。
 3. **题解文件名**：`<题号>_<题目中文名>.md`（如 `42_接雨水.md`、`53_最大子数组和.md`），与文档一级标题一致。
-4. **图片目录**：每个难度目录下有一个 `images/` 子目录，存放该难度级别所有 SVG 插图。图片文件名建议加题目缩写前缀避免冲突（如 `trap_water_column.svg`）。
+4. **图片目录（统一）**：所有题解的 SVG 插图**统一存放**在 `leetcode/solution/images/`，**不在各区间目录下再建 `images/`**。图片文件名建议加题目缩写前缀避免重名冲突（如 `trap_water_column.svg`、`palindrome_partition_flow.svg`）。题解中引用用相对路径 `../images/<filename>.svg`（从区间目录上一级取）。
+5. **难度不参与归类**：题目难度仅写在题解头部的 `**难度**：简单/中等/困难`，目录一律按题号区间归档，便于按号检索与补全。
+
+> 💡 **选题 vs 归档**：第 1 节强调「按面试高频套路选题，而非按题号顺序刷」——这是**选题策略**；本节「按题号区间归档」是**存储结构**。二者不冲突：选题仍看套路，写完后按题号落入对应区间目录。
 
 ## 3. 题解文档结构
 
-每篇题解 `.md` 遵循固定章节顺序（参考 `hard/42_接雨水.md`、`medium/53_最大子数组和.md`、`medium/3_无重复字符的最长子串.md`）：
+每篇题解 `.md` 遵循固定章节顺序（参考 `0001-0100` 区间下的 `42_接雨水.md`、`53_最大子数组和.md`、`3_无重复字符的最长子串.md`）：
 
 ```markdown
 # <题目中文名>
@@ -209,7 +216,7 @@ leetcode/solution/
 
 - **中文为主**，概念加粗，善用 `> 💡` / `> ⚠️` blockquote。
 - 代码块标注语言：` ```cpp` / ` ```python` / ` ```text`。
-- 图片引用用相对路径：`![<中文alt>](images/<filename>.svg)`（从 `easy/` / `medium/` / `hard/` 出发）。
+- 图片引用用相对路径：`![<中文alt>](../images/<filename>.svg)`（题解在区间目录如 `0001-0100/` 下，图片统一在上一级 `solution/images/`）。
 - 每个 Day 平均引用 **2-4 张 SVG**。
 - alt 文本用中文。
 - **「同类练习题」**列出 3-5 道同套路题目，格式为 `- [题号. 题名](url)：一句话说明关联点`，帮助读者举一反三。
@@ -293,25 +300,25 @@ leetcode/solution/
 
 ## 5. 网站构建集成
 
-题解写完后会被 `build/leetcode.py` 自动读取并生成网页：
+题解写完后会被 `leetcode/build.py` 自动读取并生成网页：
 
-- `build.py` 递归扫描 `leetcode/` 下所有 `.md`（排除 `website/`、`images/`）。
+- `build.py` 递归扫描 `leetcode/` 下所有 `.md`（排除 `public/`、`static/`、`images/`、`build/`、`.git` 等，并跳过 `SKILL.md`）。
 - 解析一级标题 `# <title>` 作为侧边栏与列表页标题。
-- 图片路径 `images/xxx.svg` 在题解页被重写为 `../images/xxx.svg`。
-- **重要**：`build.py` 只扫描 `leetcode/images/` 作为网站图片目录，因此 `easy/images/`、`medium/images/`、`hard/images/` 下的 SVG **必须同步复制一份到** `leetcode/images/`，否则网页图片会裂开。
+- **图片**：题解 SVG 统一存放在 `leetcode/solution/images/`。`build.py` 会把 `leetcode/images/`（顶层，供周赛等共用）与 `leetcode/solution/images/`（题解专用）一并复制到 `public/images/`。题解中引用的 `../images/xxx.svg` 在题解页（平铺于 `public/problems/`）原样保留，解析到 `public/images/xxx.svg`。
+- **分组**：侧边栏「每日一题」与列表页均按**题号区间**分组（标签如 `1-100`、`101-200`…，由区间目录名生成），区间内按文件名（题号）排序。
+- **重要**：新增 SVG 直接放入 `leetcode/solution/images/` 即可，构建会自动收集，无需再额外同步到其它目录。
 
-**验证命令**：
+**验证命令**（在 `leetcode/` 目录下运行）：
 
 ```bash
-python3 build.py                     # 组合构建全站（含 leetcode）
+python3 build.py                     # 构建全站到 public/
 ```
 
 **自检清单**：
 
-- [ ] 题解位于 `leetcode/solution/<easy|medium|hard>/<题号>_<题目名>.md`
+- [ ] 题解位于 `leetcode/solution/<题号区间>/<题号>_<题目名>.md`，区间目录如 `0001-0100`
 - [ ] 一级标题 `# <题目中文名>` 与文件名中题目名一致
-- [ ] 含 2-4 张 SVG 插图，引用格式 `![中文alt](images/xxx.svg)`
+- [ ] 含 2-4 张 SVG 插图，引用格式 `![中文alt](../images/xxx.svg)`，SVG 放在 `leetcode/solution/images/`
 - [ ] SVG 为手绘 sketch 风（含 `feTurbulence` 抖动滤镜 + Comic Sans/Kaiti SC 字体）
-- [ ] SVG 同步复制到 `leetcode/images/`
-- [ ] `python3 build.py` 成功生成对应 `public/leetcode/problems/<题目名>.html`
+- [ ] `python3 build.py` 成功生成对应 `public/problems/<slug>.html`
 - [ ] `git push origin` 推送题解（commit + push 到远程）

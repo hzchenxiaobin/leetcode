@@ -123,6 +123,18 @@ def _extract_leetcode_url(markdown_text: str) -> Optional[str]:
     return None
 
 
+def _range_start(name: str) -> int:
+    """Sort key for a solution range folder like '0001-0100' -> 1."""
+    m = re.match(r'(\d+)', name)
+    return int(m.group(1)) if m else 0
+
+
+def _range_label(name: str) -> str:
+    """Human-friendly label for a range folder: '0001-0100' -> '1-100'."""
+    m = re.match(r'0*(\d+)-0*(\d+)', name)
+    return f"{m.group(1)}-{m.group(2)}" if m else name
+
+
 # ---------------------------------------------------------------------------
 # Sidebar navigation
 # ---------------------------------------------------------------------------
@@ -150,8 +162,6 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
         "solution": {"title": "每日一题", "children": {}, "problems": []},
     }
 
-    DIFFICULTY_LABELS = {"easy": "简单", "medium": "中等", "hard": "困难"}
-
     for p in problems:
         if p["category"] == "contest":
             contest = p["contest"]
@@ -177,9 +187,9 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
             for p in node.get("problems", []):
                 folder = p.get("folder", "other")
                 problem_groups.setdefault(folder, []).append(p)
-            for diff in ["easy", "medium", "hard"]:
-                label = DIFFICULTY_LABELS.get(diff, diff)
-                group_problems = problem_groups.get(diff, [])
+            for folder in sorted(problem_groups.keys(), key=_range_start):
+                label = _range_label(folder)
+                group_problems = problem_groups.get(folder, [])
                 group_problems.sort(key=lambda x: x["slug"])
                 result.append(f'<div class="nav-section">')
                 result.append(f'  <div class="nav-section-title" style="padding-left:8px;margin:6px 0 2px;font-size:0.85rem;">{label}</div>')
@@ -373,6 +383,10 @@ def main() -> None:
     if top_level_images.exists():
         shutil.copytree(top_level_images, images_dir, dirs_exist_ok=True)
 
+    solution_images = REPO_ROOT / "solution" / "images"
+    if solution_images.exists():
+        shutil.copytree(solution_images, images_dir, dirs_exist_ok=True)
+
     md_files = sorted([
         f for f in REPO_ROOT.rglob("*.md")
         if f.is_file()
@@ -409,8 +423,6 @@ def main() -> None:
 
     contest_groups: Dict[str, List[Dict]] = {}
     solution_groups: Dict[str, List[Dict]] = defaultdict(list)
-    DIFFICULTY_LABELS = {"easy": "简单", "medium": "中等", "hard": "困难"}
-    DIFFICULTY_ORDER = {"easy": 0, "medium": 1, "hard": 2}
     for p in problems:
         if p["category"] == "contest":
             contest_groups.setdefault(p["contest"], []).append(p)
@@ -422,9 +434,9 @@ def main() -> None:
         return int(match.group(1)) if match else 0
 
     daily_markdown = ""
-    for diff in ["easy", "medium", "hard"]:
-        label = DIFFICULTY_LABELS.get(diff, diff)
-        group_problems = solution_groups.get(diff, [])
+    for folder in sorted(solution_groups.keys(), key=_range_start):
+        label = _range_label(folder)
+        group_problems = solution_groups.get(folder, [])
         group_problems.sort(key=lambda x: x["slug"])
         daily_markdown += f'<div class="leetcode-section">\n'
         daily_markdown += f'  <div class="leetcode-section-title">{label}</div>\n'
