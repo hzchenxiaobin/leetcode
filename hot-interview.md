@@ -184,6 +184,7 @@
 | [64. 最小路径和](https://leetcode.cn/problems/minimum-path-sum/) | 中等 | [站内题解](solution/0001-0100/64_最小路径和.md) |
 | [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/) | 中等 | [站内题解](solution/0001-0100/5_最长回文子串.md) |
 | [1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/) | 中等 | [站内题解](solution/1101-1200/1143_最长公共子序列.md) |
+| [877. 石子游戏](https://leetcode.cn/problems/stone-game/) | 中等 | [站内题解](solution/0801-0900/877_石子游戏.md) |
 | [72. 编辑距离](https://leetcode.cn/problems/edit-distance/) | 困难 | [站内题解](solution/0001-0100/72_编辑距离.md) |
 
 ### 技巧
@@ -256,6 +257,8 @@
 | [559. N 叉树的最大深度](https://leetcode.cn/problems/maximum-depth-of-n-ary-tree/) | 简单 | [站内题解](solution/0501-0600/559_N叉树的最大深度.md) |  |
 | [889. 根据前序与后序遍历构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-postorder-traversal/) | 中等 | [站内题解](solution/0801-0900/889_根据前序与后序遍历构造二叉树.md) |  |
 | [1008. 前序遍历构造二叉搜索树](https://leetcode.cn/problems/construct-binary-search-tree-from-preorder-traversal/) | 中等 | [站内题解](solution/1001-1100/1008_前序遍历构造二叉搜索树.md) |  |
+| [117. 填充每个节点的下一个右侧节点指针 II](https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/) | 中等 | [站内题解](solution/0101-0200/117_填充每个节点的下一个右侧节点指针 II.md) | 面试经典 150，116 进阶版，O(1) 空间层序 |
+| [450. 删除二叉搜索树中的节点](https://leetcode.cn/problems/delete-node-in-a-bst/) | 中等 | [站内题解](solution/0401-0500/450_删除二叉搜索树中的节点.md) | BST CRUD 必备，三种情况分类处理 |
 
 ### 栈与队列
 
@@ -270,6 +273,7 @@
 | [503. 下一个更大元素 II](https://leetcode.cn/problems/next-greater-element-ii/) | 中等 | [站内题解](solution/0501-0600/503_下一个更大元素 II.md) | 单调栈 + 循环数组 |
 | [901. 股票价格跨度](https://leetcode.cn/problems/online-stock-span/) | 中等 | [站内题解](solution/0901-1000/901_股票价格跨度.md) | 单调栈 |
 | [316. 去除重复字母](https://leetcode.cn/problems/remove-duplicate-letters/) | 中等 | [站内题解](solution/0301-0400/316_去除重复字母.md) | 单调栈 + 贪心 |
+| [735. 行星碰撞](https://leetcode.cn/problems/asteroid-collision/) | 中等 | [站内题解](solution/0701-0800/735_行星碰撞.md) | 面试经典 150，栈模拟碰撞 |
 
 ### 二分查找
 
@@ -297,17 +301,21 @@
 | [338. 比特位计数](https://leetcode.cn/problems/counting-bits/) | 简单 | [站内题解](solution/0301-0400/338_比特位计数.md) |  |
 | [349. 两个数组的交集](https://leetcode.cn/problems/intersection-of-two-arrays/) | 简单 | [站内题解](solution/0301-0400/349_两个数组的交集.md) |  |
 | [581. 最短无序连续子数组](https://leetcode.cn/problems/shortest-unsorted-continuous-subarray/) | 中等 | [站内题解](solution/0501-0600/581_最短无序连续子数组.md) |  |
+| [229. 多数元素 II](https://leetcode.cn/problems/majority-element-ii/) | 中等 | [站内题解](solution/0201-0300/229_多数元素II.md) | 面试经典 150，Boyer-Moore k=3 推广 |
 
 ### 区间、贪心与差分
 
 | 题目 | 难度 | 题解 | 备注 |
 |---|---|---|---|
 | [253. 会议室 II](https://leetcode.cn/problems/meeting-rooms-ii/) | 中等 | [站内题解](solution/0201-0300/253_会议室II.md) | 扫描线 / 堆，外企高频 |
+| [57. 插入区间](https://leetcode.cn/problems/insert-interval/) | 中等 | [站内题解](solution/0001-0100/57_插入区间.md) | 面试经典 150，三阶段线性扫描 |
+| [228. 汇总区间](https://leetcode.cn/problems/summary-ranges/) | 中等 | [站内题解](solution/0201-0300/228_汇总区间.md) | 面试经典 150，连续区间扫描与格式化 |
 | [435. 无重叠区间](https://leetcode.cn/problems/non-overlapping-intervals/) | 中等 | [站内题解](solution/0401-0500/435_无重叠区间.md) | 区间贪心 |
 | [452. 用最少数量的箭引爆气球](https://leetcode.cn/problems/minimum-number-of-arrows-to-burst-balloons/) | 中等 | [站内题解](solution/0401-0500/452_用最少数量的箭引爆气球.md) | 区间贪心 |
 | [621. 任务调度器](https://leetcode.cn/problems/task-scheduler/) | 中等 | [站内题解](solution/0601-0700/621_任务调度器.md) | 字节高频 |
 | [406. 根据身高重建队列](https://leetcode.cn/problems/queue-reconstruction-by-height/) | 中等 | [站内题解](solution/0401-0500/406_根据身高重建队列.md) | 排序 + 插队 |
 | [1109. 航班预订统计](https://leetcode.cn/problems/corporate-flight-bookings/) | 中等 | [站内题解](solution/1101-1200/1109_航班预订统计.md) | 差分数组模板 |
+| [767. 重构字符串](https://leetcode.cn/problems/reorganize-string/) | 中等 | [站内题解](solution/0701-0800/767_重构字符串.md) | 贪心 + 大根堆，面试经典 150 |
 
 ### 滑动窗口与子数组
 
@@ -316,12 +324,15 @@
 | [209. 长度最小的子数组](https://leetcode.cn/problems/minimum-size-subarray-sum/) | 中等 | [站内题解](solution/0201-0300/209_长度最小的子数组.md) | 面试经典 150 |
 | [424. 替换后的最长重复字符](https://leetcode.cn/problems/longest-repeating-character-replacement/) | 中等 | [站内题解](solution/0401-0500/424_替换后的最长重复字符.md) |  |
 | [713. 乘积小于 K 的子数组](https://leetcode.cn/problems/subarray-product-less-than-k/) | 中等 | [站内题解](solution/0701-0800/713_乘积小于K的子数组.md) |  |
+| [974. 和可被 K 整除的子数组](https://leetcode.cn/problems/subarray-sums-divisible-by-k/) | 中等 | [站内题解](solution/0901-1000/974_和可被K整除的子数组.md) | 前缀和 + 同余定理 |
+| [525. 连续数组](https://leetcode.cn/problems/contiguous-array/) | 中等 | [站内题解](solution/0501-0600/525_连续数组.md) | 前缀和 + 哈希，0 当 −1 转换 |
 
 ### 动态规划补充
 
 | 题目 | 难度 | 题解 | 备注 |
 |---|---|---|---|
 | [122. 买卖股票的最佳时机 II](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/) | 中等 | [站内题解](solution/0101-0200/122_买卖股票的最佳时机II.md) | 股票系列 |
+| [123. 买卖股票的最佳时机 III](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iii/) | 困难 | [站内题解](solution/0101-0200/123_买卖股票的最佳时机III.md) | 股票系列，至多 2 笔，四状态机 |
 | [188. 买卖股票的最佳时机 IV](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/) | 困难 | [站内题解](solution/0101-0200/188_买卖股票的最佳时机IV.md) | 股票系列 |
 | [309. 买卖股票的最佳时机含冷冻期](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-cooldown/) | 中等 | [站内题解](solution/0301-0400/309_买卖股票的最佳时机含冷冻期.md) | 股票系列 |
 | [714. 买卖股票的最佳时机含手续费](https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/) | 中等 | [站内题解](solution/0701-0800/714_买卖股票的最佳时机含手续费.md) | 股票系列 |
@@ -335,6 +346,8 @@
 | [516. 最长回文子序列](https://leetcode.cn/problems/longest-palindromic-subsequence/) | 中等 | [站内题解](solution/0501-0600/516_最长回文子序列.md) |  |
 | [647. 回文子串](https://leetcode.cn/problems/palindromic-substrings/) | 中等 | [站内题解](solution/0601-0700/647_回文子串.md) | 中心扩展 |
 | [698. 划分为 K 个相等的子集](https://leetcode.cn/problems/partition-to-k-equal-sum-subsets/) | 中等 | [站内题解](solution/0601-0700/698_划分为K个相等的子集.md) | 回溯 + 剪枝 |
+| [96. 不同的二叉搜索树](https://leetcode.cn/problems/unique-binary-search-trees/) | 中等 | [站内题解](solution/0001-0100/96_不同的二叉搜索树.md) | 卡塔兰数计数 DP |
+| [918. 环形子数组的最大和](https://leetcode.cn/problems/maximum-sum-circular-subarray/) | 中等 | [站内题解](solution/0901-1000/918_最大环形子数组和.md) | 面试经典 150，Kadane 环形变体（total − min_sum） |
 
 ### 图与 BFS
 
@@ -350,12 +363,14 @@
 | [743. 网络延迟时间](https://leetcode.cn/problems/network-delay-time/) | 中等 | [站内题解](solution/0701-0800/743_网络延迟时间.md) | Dijkstra 模板 |
 | [752. 打开转盘锁](https://leetcode.cn/problems/open-the-lock/) | 中等 | [站内题解](solution/0701-0800/752_打开转盘锁.md) | BFS |
 | [329. 矩阵中的最长递增路径](https://leetcode.cn/problems/longest-increasing-path-in-a-matrix/) | 困难 | [站内题解](solution/0301-0400/329_矩阵中的最长递增路径.md) | 记忆化搜索 |
+| [212. 单词搜索 II](https://leetcode.cn/problems/word-search-ii/) | 困难 | [站内题解](solution/0201-0300/212_单词搜索II.md) | Trie + DFS 回溯，字节 / Google 高频 |
 
 ### 设计题
 
 | 题目 | 难度 | 题解 | 备注 |
 |---|---|---|---|
 | [380. O(1) 时间插入、删除和获取随机元素](https://leetcode.cn/problems/insert-delete-getrandom-o1/) | 中等 | [站内题解](solution/0301-0400/380_O1时间插入删除和获取随机元素.md) | 面试经典 150 |
+| [460. LFU 缓存](https://leetcode.cn/problems/lfu-cache/) | 困难 | [站内题解](solution/0401-0500/460_LFU缓存.md) | LRU 姐妹题，频率桶 + 双向链表 |
 | [264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/) | 中等 | [站内题解](solution/0201-0300/264_丑数II.md) | 剑指 Offer 49，多路归并 |
 
 ## 三、剑指 Offer 高频题
@@ -367,9 +382,9 @@
 | 剑指 Offer 03 | 数组中重复的数字 | [287. 寻找重复数](https://leetcode.cn/problems/find-the-duplicate-number/) ｜ [站内题解](solution/0201-0300/287_寻找重复数.md) |
 | 剑指 Offer 04 | 二维数组中的查找 | [240. 搜索二维矩阵 II](https://leetcode.cn/problems/search-a-2d-matrix-ii/) ｜ [站内题解](solution/0201-0300/240_搜索二维矩阵II.md) |
 | 剑指 Offer 07 | 重建二叉树 | [105. 从前序与中序遍历序列构造二叉树](https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) ｜ [站内题解](solution/0101-0200/105_从前序与中序遍历序列构造二叉树.md) |
-| 剑指 Offer 09 | 用两个栈实现队列 | [232. 用栈实现队列](https://leetcode.cn/problems/implement-queue-using-stacks/) |
+| 剑指 Offer 09 | 用两个栈实现队列 | [232. 用栈实现队列](https://leetcode.cn/problems/implement-queue-using-stacks/) ｜ [站内题解](solution/0201-0300/232_用栈实现队列.md) |
 | 剑指 Offer 10 | 斐波那契数列 | [509](https://leetcode.cn/problems/fibonacci-number/) ｜ [站内题解](solution/0501-0600/509_斐波那契数.md) |
-| 剑指 Offer 11 | 旋转数组的最小数字 | [153. 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/) |
+| 剑指 Offer 11 | 旋转数组的最小数字 | [153. 寻找旋转排序数组中的最小值](https://leetcode.cn/problems/find-minimum-in-rotated-sorted-array/) ｜ [站内题解](solution/0101-0200/153_寻找旋转排序数组中的最小值.md) |
 | 剑指 Offer 12 | 矩阵中的路径 | [79. 单词搜索](https://leetcode.cn/problems/word-search/) ｜ [站内题解](solution/0001-0100/79_单词搜索.md) |
 | 剑指 Offer 15 | 二进制中 1 的个数 | [191](https://leetcode.cn/problems/number-of-1-bits/) ｜ [站内题解](solution/0001-0100/191_位1的个数.md) |
 | 剑指 Offer 16 | 数值的整数次方 | [50. Pow(x, n)](https://leetcode.cn/problems/powx-n/) ｜ [站内题解](solution/0001-0100/50_Powx_n.md) |
@@ -390,7 +405,7 @@
 | 剑指 Offer 46 | 把数字翻译成字符串 | [91. 解码方法](https://leetcode.cn/problems/decode-ways/) ｜ [站内题解](solution/0001-0100/91_解码方法.md) |
 | 剑指 Offer 48 | 最长不含重复字符的子字符串 | [3. 无重复字符的最长子串](https://leetcode.cn/problems/longest-substring-without-repeating-characters/) ｜ [站内题解](solution/0001-0100/3_无重复字符的最长子串.md) |
 | 剑指 Offer 49 | 丑数 | [264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/) ｜ [站内题解](solution/0201-0300/264_丑数II.md) |
-| 剑指 Offer 51 | 数组中的逆序对 | [力扣剑指 Offer 题库](https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/) |
+| 剑指 Offer 51 | 数组中的逆序对 | [力扣剑指 Offer 题库](https://leetcode.cn/problems/shu-zu-zhong-de-ni-xu-dui-lcof/) ｜ [站内题解](solution/0101-0200/LCOF51_数组中的逆序对.md) |
 | 剑指 Offer 52 | 两个链表的第一个公共节点 | [160. 相交链表](https://leetcode.cn/problems/intersection-of-two-linked-lists/) ｜ [站内题解](solution/0101-0200/160_相交链表.md) |
 | 剑指 Offer 53 | 在排序数组中查找数字 | [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/) ｜ [站内题解](solution/0001-0100/34_在排序数组中查找元素的第一个和最后一个位置.md) |
 | 剑指 Offer 54 | 二叉搜索树的第 k 大节点 | [230. 二叉搜索树中第 K 小的元素](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/) ｜ [站内题解](solution/0201-0300/230_二叉搜索树中第K小的元素.md) |
@@ -399,7 +414,7 @@
 | 剑指 Offer 57 | 和为 s 的两个数字 | [167. 两数之和 II - 输入有序数组](https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/) ｜ [站内题解](solution/0101-0200/167_两数之和 II - 输入有序数组.md) |
 | 剑指 Offer 58 | 翻转单词顺序 | [151. 反转字符串中的单词](https://leetcode.cn/problems/reverse-words-in-a-string/) ｜ [站内题解](solution/0101-0200/151_反转字符串中的单词.md) |
 | 剑指 Offer 59 | 滑动窗口的最大值 | [239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/) ｜ [站内题解](solution/0201-0300/239_滑动窗口最大值.md) |
-| 剑指 Offer 62 | 圆圈中最后剩下的数字（约瑟夫环） | [力扣剑指 Offer 题库](https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/) |
+| 剑指 Offer 62 | 圆圈中最后剩下的数字（约瑟夫环） | [力扣剑指 Offer 题库](https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/) ｜ [站内题解](solution/0101-0200/LCOF62_圆圈中最后剩下的数字.md) |
 | 剑指 Offer 65 | 不用加减乘除做加法 | [371](https://leetcode.cn/problems/sum-of-two-integers/) ｜ [站内题解](solution/0301-0400/371_两整数之和.md) |
 | 剑指 Offer 66 | 构建乘积数组 | [238. 除自身以外数组的乘积](https://leetcode.cn/problems/product-of-array-except-self/) ｜ [站内题解](solution/0201-0300/238_除自身以外数组的乘积.md) |
 | 剑指 Offer 68 | 树中两个节点的最近公共祖先 | [236. 二叉树的最近公共祖先](https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/) ｜ [站内题解](solution/0201-0300/236_二叉树的最近公共祖先.md) |
@@ -420,4 +435,4 @@
 
 ---
 
-本页共收录 **198** 道高频题（不含剑指 Offer 重复对应），其中 **176** 道已有本站题解，持续补充中。
+本页共收录 **209** 道高频题（不含剑指 Offer 重复对应），其中 **189** 道已有本站题解，持续补充中。
