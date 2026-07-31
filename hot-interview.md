@@ -127,7 +127,7 @@
 
 | 题目 | 难度 | 题解 |
 |---|---|---|
-| [35. 搜索插入位置](https://leetcode.cn/problems/search-insert-position/) | 简单 | — |
+| [35. 搜索插入位置](https://leetcode.cn/problems/search-insert-position/) | 简单 | [站内题解](solution/0001-0100/35_搜索插入位置.md) |
 | [74. 搜索二维矩阵](https://leetcode.cn/problems/search-a-2d-matrix/) | 中等 | [站内题解](solution/0001-0100/74_搜索二维矩阵.md) |
 | [34. 在排序数组中查找元素的第一个和最后一个位置](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/) | 中等 | [站内题解](solution/0001-0100/34_在排序数组中查找元素的第一个和最后一个位置.md) |
 | [33. 搜索旋转排序数组](https://leetcode.cn/problems/search-in-rotated-sorted-array/) | 中等 | [站内题解](solution/0001-0100/33_搜索旋转排序数组.md) |
