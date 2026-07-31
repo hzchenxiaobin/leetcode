@@ -135,6 +135,13 @@ def _range_label(name: str) -> str:
     return f"{m.group(1)}-{m.group(2)}" if m else name
 
 
+def _thousand_range_key(folder: str) -> str:
+    """1000-range key for a 100-range folder: '0001-0100' -> '0001-1000'."""
+    start = _range_start(folder)
+    t_start = ((start - 1) // 1000) * 1000 + 1
+    return f"{t_start:04d}-{t_start + 999:04d}"
+
+
 # ---------------------------------------------------------------------------
 # Sidebar navigation
 # ---------------------------------------------------------------------------
@@ -154,7 +161,7 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
                 if p["category"] == "contest":
                     current_path = ["contest", p["contest"]]
                 elif p["category"] == "solution":
-                    current_path = ["solution", p["folder"]]
+                    current_path = ["solution", _thousand_range_key(p["folder"]), p["folder"]]
                 break
 
     tree: Dict[str, Dict] = {
@@ -172,7 +179,16 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
             tree["contest"]["children"][contest]["problems"].append(p)
         elif p["category"] == "solution":
             folder = p["folder"]
-            tree["solution"]["problems"].append(p)
+            t_key = _thousand_range_key(folder)
+            if t_key not in tree["solution"]["children"]:
+                tree["solution"]["children"][t_key] = {
+                    "title": _range_label(t_key), "children": {}, "problems": []
+                }
+            if folder not in tree["solution"]["children"][t_key]["children"]:
+                tree["solution"]["children"][t_key]["children"][folder] = {
+                    "title": _range_label(folder), "children": {}, "problems": []
+                }
+            tree["solution"]["children"][t_key]["children"][folder]["problems"].append(p)
 
     def sort_key_numeric(name: str) -> int:
         match = re.search(r'(\d+)$', name)
@@ -181,23 +197,6 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
     def render_accordion(node: Dict, path: List[str], level: int) -> List[str]:
         result: List[str] = []
         title = node["title"]
-
-        if path == ["solution"]:
-            problem_groups: Dict[str, list] = {}
-            for p in node.get("problems", []):
-                folder = p.get("folder", "other")
-                problem_groups.setdefault(folder, []).append(p)
-            for folder in sorted(problem_groups.keys(), key=_range_start):
-                label = _range_label(folder)
-                group_problems = problem_groups.get(folder, [])
-                group_problems.sort(key=lambda x: x["slug"])
-                result.append(f'<div class="nav-section">')
-                result.append(f'  <div class="nav-section-title" style="padding-left:8px;margin:6px 0 2px;font-size:0.85rem;">{label}</div>')
-                for p in group_problems:
-                    cls = "nav-link active" if current_slug == p["slug"] else "nav-link"
-                    result.append(f'<a class="{cls}" href="{root_prefix}problems/{p["slug"]}.html">{p["title"]}</a>')
-                result.append(f'</div>')
-            return result
 
         is_expanded = bool(current_path and current_path[:len(path)] == path)
         expanded_cls = " is-expanded" if is_expanded else ""
@@ -271,7 +270,7 @@ def page_template(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=6">
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=7">
     <!-- Marked.js for Markdown rendering -->
     <script src="{root_prefix}js/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -342,7 +341,7 @@ def page_template(
             console.error('Markdown render error:', err);
         }}
     </script>
-    <script src="{root_prefix}js/main.js?v=6"></script>
+    <script src="{root_prefix}js/main.js?v=7"></script>
 </body>
 </html>
 """
