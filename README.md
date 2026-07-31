@@ -7,6 +7,7 @@
 推送 `main` 分支后由 GitHub Actions 自动构建并部署，站点结构：
 
 - 首页：题解列表（每日一题按题号区间分组 + 周赛按场次降序），含「随机选一道题练习」按钮
+- 高频面试题页：`hot-interview.md` 汇总 Hot 100 / CodeTop / 剑指 Offer 高频题，逐题链接站内题解（侧边栏「🔥 高频面试题」入口）
 - 题解页：每篇 Markdown 渲染为独立页面，含侧边栏导航、KaTeX 数学公式、Prism 代码高亮、手绘 SVG 插图
 
 ## 仓库结构
@@ -14,6 +15,8 @@
 ```
 .
 ├── build.py                 # 静态网站生成器（扫描 .md → public/）
+├── hot-interview.md         # 高频算法面试题汇总页（Hot 100 / CodeTop / 剑指 Offer，链接站内题解）
+├── 8-week-plan.md           # 8 周刷题计划（按类别组织 198 道高频题，链接站内题解）
 ├── cannbot_hello.sh         # 调用 cannbot 按 SKILL.md 自动产出题解的脚本
 ├── solution/                # 每日一题 / 面试高频题题解
 │   ├── 0001-0100/           # 按题号每 100 题一个区间目录

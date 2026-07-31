@@ -25,6 +25,15 @@ STATIC_DIR = REPO_ROOT / "static"
 # Directories never scanned for solution markdown
 EXCLUDED_PARTS = {".git", ".arts", ".opencode", "build", "public", "static", "images"}
 
+# Slug of the curated hot-interview page (hot-interview.md at repo root)
+HOT_PAGE_SLUG = "hot-interview"
+
+# Extra top-level pages that get a sidebar entry: (slug, label)
+NAV_EXTRA_PAGES = [
+    (HOT_PAGE_SLUG, "🔥 高频面试题"),
+    ("8-week-plan", "📅 8 周刷题计划"),
+]
+
 
 # ---------------------------------------------------------------------------
 # Markdown helpers
@@ -152,6 +161,13 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
 
     overview_class = "nav-link active" if current_slug is None else "nav-link"
     lines.append(f'<a class="{overview_class}" href="{root_prefix}index.html">📌 题解列表</a>')
+
+    slugs = {p["slug"] for p in problems}
+    for slug, label in NAV_EXTRA_PAGES:
+        if slug in slugs:
+            cls = "nav-link active" if current_slug == slug else "nav-link"
+            lines.append(f'<a class="{cls}" href="{root_prefix}problems/{slug}.html">{label}</a>')
+
     lines.append('<div class="nav-section-title">题目</div>')
 
     current_path: List[str] = []
@@ -501,8 +517,16 @@ def main() -> None:
 
 """
 
+    hot_banner = ""
+    if any(p["slug"] == HOT_PAGE_SLUG for p in problems):
+        hot_banner = (
+            f'\n[🔥 高频算法面试题汇总（Hot 100 / CodeTop / 剑指 Offer，附站内题解链接）]'
+            f'(./problems/{HOT_PAGE_SLUG}.html)\n\n'
+        )
+
     overview_markdown = (
         random_picker_html
+        + hot_banner
         + '<div class="leetcode-overview-row">\n'
         '  <div class="leetcode-col leetcode-col-daily">\n'
         f'{daily_markdown}'
