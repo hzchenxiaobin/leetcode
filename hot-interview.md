@@ -65,6 +65,7 @@
 | [59. 螺旋矩阵 II](https://leetcode.cn/problems/spiral-matrix-ii/) | 中等 | [站内题解](solution/0001-0100/59_螺旋矩阵II.md) |
 | [48. 旋转图像](https://leetcode.cn/problems/rotate-image/) | 中等 | [站内题解](solution/0001-0100/48_旋转图像.md) |
 | [240. 搜索二维矩阵 II](https://leetcode.cn/problems/search-a-2d-matrix-ii/) | 中等 | [站内题解](solution/0201-0300/240_搜索二维矩阵II.md) |
+| [304. 二维区域和检索 - 数组不可变](https://leetcode.cn/problems/range-sum-query-2d-immutable/) | 中等 | [站内题解](solution/0301-0400/304_二维区域和检索 - 数组不可变.md) |
 
 ### 链表
 
@@ -112,6 +113,7 @@
 | [200. 岛屿数量](https://leetcode.cn/problems/number-of-islands/) | 中等 | [站内题解](solution/0101-0200/200_岛屿数量.md) |
 | [994. 腐烂的橘子](https://leetcode.cn/problems/rotting-oranges/) | 中等 | [站内题解](solution/0901-1000/994_腐烂的橘子.md) |
 | [207. 课程表](https://leetcode.cn/problems/course-schedule/) | 中等 | [站内题解](solution/0201-0300/207_课程表.md) |
+| [332. 重新安排行程](https://leetcode.cn/problems/reconstruct-itinerary/) | 困难 | [站内题解](solution/0301-0400/332_重新安排行程.md) |
 | [208. 实现 Trie（前缀树）](https://leetcode.cn/problems/implement-trie-prefix-tree/) | 中等 | [站内题解](solution/0201-0300/208_实现Trie.md) |
 
 ### 回溯
@@ -119,6 +121,7 @@
 | 题目 | 难度 | 题解 |
 |---|---|---|
 | [46. 全排列](https://leetcode.cn/problems/permutations/) | 中等 | [站内题解](solution/0001-0100/46_全排列.md) |
+| [47. 全排列 II](https://leetcode.cn/problems/permutations-ii/) | 中等 | [站内题解](solution/0001-0100/47_全排列II.md) |
 | [77. 组合](https://leetcode.cn/problems/combinations/) | 中等 | [站内题解](solution/0001-0100/77_组合.md) |
 | [78. 子集](https://leetcode.cn/problems/subsets/) | 中等 | [站内题解](solution/0001-0100/78_子集.md) |
 | [17. 电话号码的字母组合](https://leetcode.cn/problems/letter-combinations-of-a-phone-number/) | 中等 | [站内题解](solution/0001-0100/17_电话号码的字母组合.md) |
@@ -156,6 +159,7 @@
 |---|---|---|
 | [215. 数组中的第 K 个最大元素](https://leetcode.cn/problems/kth-largest-element-in-an-array/) | 中等 | [站内题解](solution/0201-0300/215_数组中的第K个最大元素.md) |
 | [347. 前 K 个高频元素](https://leetcode.cn/problems/top-k-frequent-elements/) | 中等 | [站内题解](solution/0301-0400/347_前K个高频元素.md) |
+| [692. 前 K 个高频单词](https://leetcode.cn/problems/top-k-frequent-words/) | 中等 | [站内题解](solution/0601-0700/692_前K个高频单词.md) |
 | [295. 数据流的中位数](https://leetcode.cn/problems/find-median-from-data-stream/) | 困难 | [站内题解](solution/0201-0300/295_数据流的中位数.md) |
 
 ### 贪心算法
@@ -192,6 +196,7 @@
 | [120. 三角形最小路径和](https://leetcode.cn/problems/triangle/) | 中等 | [站内题解](solution/0101-0200/120_三角形最小路径和.md) |
 | [5. 最长回文子串](https://leetcode.cn/problems/longest-palindromic-substring/) | 中等 | [站内题解](solution/0001-0100/5_最长回文子串.md) |
 | [1143. 最长公共子序列](https://leetcode.cn/problems/longest-common-subsequence/) | 中等 | [站内题解](solution/1101-1200/1143_最长公共子序列.md) |
+| [97. 交错字符串](https://leetcode.cn/problems/interleaving-string/) | 中等 | [站内题解](solution/0001-0100/97_交错字符串.md) |
 | [877. 石子游戏](https://leetcode.cn/problems/stone-game/) | 中等 | [站内题解](solution/0801-0900/877_石子游戏.md) |
 | [72. 编辑距离](https://leetcode.cn/problems/edit-distance/) | 困难 | [站内题解](solution/0001-0100/72_编辑距离.md) |
 
@@ -219,6 +224,7 @@
 | [179. 最大数](https://leetcode.cn/problems/largest-number/) | 中等 | [站内题解](solution/0101-0200/179_最大数.md) | 自定义排序，腾讯 / 华为高频 |
 | [274. H 指数](https://leetcode.cn/problems/h-index/) | 中等 | [站内题解](solution/0201-0300/274_H指数.md) | 面试经典 150，计数排序 |
 | [315. 计算右侧小于当前元素的个数](https://leetcode.cn/problems/count-of-smaller-numbers-after-self/) | 困难 | [站内题解](solution/0301-0400/315_计算右侧小于当前元素的个数.md) | 归并排序 + 索引数组，字节 / Google 高频，逆序对进阶 |
+| [611. 有效三角形的个数](https://leetcode.cn/problems/valid-triangle-number/) | 中等 | [站内题解](solution/0601-0700/611_有效三角形的个数.md) | 面试经典 150，排序 + 双指针计数（a+b&gt;c 区间计数，计数型双指针招牌题） |
 
 ### 字符串
 
@@ -235,6 +241,7 @@
 | [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/) | 简单 | [站内题解](solution/0001-0100/28_找出字符串中第一个匹配项的下标.md) | KMP 模板题 |
 | [468. 验证 IP 地址](https://leetcode.cn/problems/validate-ip-address/) | 中等 | [站内题解](solution/0401-0500/468_验证IP地址.md) | 字节高频 |
 | [93. 复原 IP 地址](https://leetcode.cn/problems/restore-ip-addresses/) | 中等 | [站内题解](solution/0001-0100/93_复原IP地址.md) | 回溯 + 剪枝 |
+| [392. 判断子序列](https://leetcode.cn/problems/is-subsequence/) | 简单 | [站内题解](solution/0301-0400/392_判断子序列.md) | 面试经典 150，双指针贪心 + 进阶二分预处理 |
 
 ### 链表
 
@@ -288,6 +295,7 @@
 | [316. 去除重复字母](https://leetcode.cn/problems/remove-duplicate-letters/) | 中等 | [站内题解](solution/0301-0400/316_去除重复字母.md) | 单调栈 + 贪心 |
 | [735. 行星碰撞](https://leetcode.cn/problems/asteroid-collision/) | 中等 | [站内题解](solution/0701-0800/735_行星碰撞.md) | 面试经典 150，栈模拟碰撞 |
 | [946. 验证栈序列](https://leetcode.cn/problems/validate-stack-sequences/) | 中等 | [站内题解](solution/0901-1000/946_验证栈序列.md) | 剑指 Offer 31，栈模拟判定（能弹就弹贪心） |
+| [71. 简化路径](https://leetcode.cn/problems/simplify-path/) | 中等 | [站内题解](solution/0001-0100/71_简化路径.md) | 面试经典 150，栈模拟路径压缩（切分 + 压栈/弹栈） |
 
 ### 二分查找
 
@@ -308,6 +316,7 @@
 | 题目 | 难度 | 题解 | 备注 |
 |---|---|---|---|
 | [50. Pow(x, n)](https://leetcode.cn/problems/powx-n/) | 中等 | [站内题解](solution/0001-0100/50_Powx_n.md) | 剑指 Offer 16，快速幂 |
+| [29. 两数相除](https://leetcode.cn/problems/divide-two-integers/) | 中等 | [站内题解](solution/0001-0100/29_两数相除.md) | 面试经典 150，位运算模拟除法（位移加速，承接 371 加法 / 50 快速幂） |
 | [470. 用 Rand7() 实现 Rand10()](https://leetcode.cn/problems/implement-rand10-using-rand7/) | 中等 | [站内题解](solution/0401-0500/470_用Rand7实现Rand10.md) | CodeTop 超高频 |
 | [398. 随机数索引](https://leetcode.cn/problems/random-pick-index/) | 中等 | [站内题解](solution/0301-0400/398_随机数索引.md) | 面试经典 150，蓄水池抽样招牌题 |
 | [528. 按权重随机选择](https://leetcode.cn/problems/random-pick-with-weight/) | 中等 | [站内题解](solution/0501-0600/528_按权重随机选择.md) | 面试经典 150，前缀和 + 二分加权随机采样 |
@@ -321,6 +330,9 @@
 | [229. 多数元素 II](https://leetcode.cn/problems/majority-element-ii/) | 中等 | [站内题解](solution/0201-0300/229_多数元素II.md) | 面试经典 150，Boyer-Moore k=3 推广 |
 | [168. Excel表列名称](https://leetcode.cn/problems/excel-sheet-column-title/) | 中等 | [站内题解](solution/0001-0100/168_Excel表列名称.md) | 面试经典 150，1-indexed 进制转换母题 |
 | [204. 计数质数](https://leetcode.cn/problems/count-primes/) | 中等 | [站内题解](solution/0201-0300/204_计数质数.md) | 埃氏筛模板，数论筛法基础 |
+| [149. 直线上最多的点数](https://leetcode.cn/problems/max-points-on-a-line/) | 困难 | [站内题解](solution/0101-0200/149_直线上最多的点数.md) | 旧 Hot 100，哈希 + GCD 化简分数表示斜率 |
+| [202. 快乐数](https://leetcode.cn/problems/happy-number/) | 简单 | [站内题解](solution/0201-0300/202_快乐数.md) | 面试经典 150，数位平方和序列 + Floyd 判圈（承接 141/287 判环三件套） |
+| [89. 格雷编码](https://leetcode.cn/problems/gray-code/) | 中等 | [站内题解](solution/0001-0100/89_格雷编码.md) | 旧 Hot 100，镜像反射 + 公式 G(i)=i^(i&gt;&gt;1)（构造而非搜索） |
 
 ### 区间、贪心与差分
 
@@ -338,6 +350,8 @@
 | [767. 重构字符串](https://leetcode.cn/problems/reorganize-string/) | 中等 | [站内题解](solution/0701-0800/767_重构字符串.md) | 贪心 + 大根堆，面试经典 150 |
 | [502. IPO](https://leetcode.cn/problems/ipo/) | 中等 | [站内题解](solution/0501-0600/502_IPO.md) | 面试经典 150，贪心 + 大顶堆（排序解锁 + 每轮取最大利润） |
 | [334. 递增的三元子序列](https://leetcode.cn/problems/increasing-triplet-subsequence/) | 中等 | [站内题解](solution/0301-0400/334_递增的三元子序列.md) | 面试经典 150，贪心双阈值 O(n)/O(1)，LIS k=3 特例 |
+| [870. 优势洗牌](https://leetcode.cn/problems/advantage-shuffle/) | 中等 | [站内题解](solution/0801-0900/870_优势洗牌.md) | 田忌赛马贪心，排序 + 双端双指针，最大化取胜数 |
+| [659. 分割数组为连续子序列](https://leetcode.cn/problems/split-array-into-consecutive-subsequences/) | 中等 | [站内题解](solution/0601-0700/659_分割数组为连续子序列.md) | 字节 / 腾讯高频，贪心 + 哈希计数（freq/tails 双表，续接优先 + 交换论证，最小堆通用版） |
 
 ### 滑动窗口与子数组
 
@@ -362,6 +376,7 @@
 | [213. 打家劫舍 II](https://leetcode.cn/problems/house-robber-ii/) | 中等 | [站内题解](solution/0201-0300/213_打家劫舍II.md) | 环形 DP |
 | [337. 打家劫舍 III](https://leetcode.cn/problems/house-robber-iii/) | 中等 | [站内题解](solution/0301-0400/337_打家劫舍III.md) | 树形 DP |
 | [221. 最大正方形](https://leetcode.cn/problems/maximal-square/) | 中等 | [站内题解](solution/0201-0300/221_最大正方形.md) | 二维 DP |
+| [174. 地下城游戏](https://leetcode.cn/problems/dungeon-game/) | 困难 | [站内题解](solution/0101-0200/174_地下城游戏.md) | 面试经典 150，反向网格 DP（状态定义决定子结构，从终点倒推 + 哨兵） |
 | [518. 零钱兑换 II](https://leetcode.cn/problems/coin-change-ii/) | 中等 | [站内题解](solution/0501-0600/518_零钱兑换II.md) | 完全背包求方案数 |
 | [494. 目标和](https://leetcode.cn/problems/target-sum/) | 中等 | [站内题解](solution/0401-0500/494_目标和.md) | 01 背包转化 |
 | [1049. 最后一块石头的重量 II](https://leetcode.cn/problems/last-stone-weight-ii/) | 中等 | [站内题解](solution/1001-1100/1049_最后一块石头的重量II.md) | 0-1 背包求最值（相撞⇔赋±号，最小化两组差） |
@@ -376,6 +391,12 @@
 | [918. 环形子数组的最大和](https://leetcode.cn/problems/maximum-sum-circular-subarray/) | 中等 | [站内题解](solution/0901-1000/918_最大环形子数组和.md) | 面试经典 150，Kadane 环形变体（total − min_sum） |
 | [343. 整数拆分](https://leetcode.cn/problems/integer-break/) | 中等 | [站内题解](solution/0301-0400/343_整数拆分.md) | 剑指 Offer 14，切分型 DP + 数学贪心（切成 3 最优） |
 | [377. 组合总和 IV](https://leetcode.cn/problems/combination-sum-iv/) | 中等 | [站内题解](solution/0301-0400/377_组合总和IV.md) | 完全背包求排列数，与 518 镜像对比循环顺序 |
+
+### 回溯与枚举
+
+| 题目 | 难度 | 题解 | 备注 |
+|---|---|---|---|
+| [90. 子集 II](https://leetcode.cn/problems/subsets-ii/) | 中等 | [站内题解](solution/0001-0100/90_子集II.md) | 面试经典 150，含重复元素的子集（78 收集框架 + 40 同层剪枝去重，`i > start` 区分同层/纵深） |
 
 ### 图与 BFS
 
@@ -402,6 +423,7 @@
 | 题目 | 难度 | 题解 | 备注 |
 |---|---|---|---|
 | [380. O(1) 时间插入、删除和获取随机元素](https://leetcode.cn/problems/insert-delete-getrandom-o1/) | 中等 | [站内题解](solution/0301-0400/380_O1时间插入删除和获取随机元素.md) | 面试经典 150 |
+| [355. 设计推特](https://leetcode.cn/problems/design-twitter/) | 中等 | [站内题解](solution/0301-0400/355_设计推特.md) | 面试经典 150，最大堆 K 路归并取 Top-10 |
 | [460. LFU 缓存](https://leetcode.cn/problems/lfu-cache/) | 困难 | [站内题解](solution/0401-0500/460_LFU缓存.md) | LRU 姐妹题，频率桶 + 双向链表 |
 | [981. 基于时间的键值存储](https://leetcode.cn/problems/time-based-key-value-store/) | 中等 | [站内题解](solution/0901-1000/981_基于时间的键值存储.md) | 面试经典 150，HashMap + 有序数组二分找右界 |
 | [264. 丑数 II](https://leetcode.cn/problems/ugly-number-ii/) | 中等 | [站内题解](solution/0201-0300/264_丑数II.md) | 剑指 Offer 49，多路归并 |
@@ -469,4 +491,4 @@
 
 ---
 
-本页共收录 **233** 道高频题（不含剑指 Offer 重复对应），其中 **233** 道已有本站题解，持续补充中。
+本页共收录 **241** 道高频题（不含剑指 Offer 重复对应），其中 **241** 道已有本站题解，持续补充中。
