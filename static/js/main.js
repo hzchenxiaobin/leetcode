@@ -53,6 +53,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (button) {
             button.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
         }
+        // Animate max-height with real measurements so long lists are never
+        // clipped by a fixed cap. After the expand transition finishes, the
+        // inline style is cleared and the CSS `max-height: none` rule applies.
+        const content = item.querySelector(':scope > .nav-accordion-content');
+        if (content) {
+            if (isExpanded) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.addEventListener('transitionend', function handler(e) {
+                    if (e.propertyName !== 'max-height') return;
+                    content.removeEventListener('transitionend', handler);
+                    if (item.classList.contains('is-expanded')) {
+                        content.style.maxHeight = '';
+                    }
+                });
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                void content.offsetHeight; // force reflow so the collapse animates
+                content.style.maxHeight = '0px';
+            }
+        }
         // When manually expanding a level, collapse its descendants so that
         // each level requires its own click to expand.
         if (willExpand) {
@@ -61,6 +81,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const childButton = child.querySelector('.nav-accordion-toggle');
                 if (childButton) {
                     childButton.setAttribute('aria-expanded', 'false');
+                }
+                const childContent = child.querySelector(':scope > .nav-accordion-content');
+                if (childContent) {
+                    childContent.style.maxHeight = '';
                 }
             });
         }
