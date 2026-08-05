@@ -205,4 +205,4 @@ class Solution {
 - [372. 超级次方](https://leetcode.cn/problems/super-pow/)：快速幂 + 模运算，指数以数组形式给出，需逐位降幂
 - [1922. 统计好数字的数目](https://leetcode.cn/problems/count-good-numbers/)：快速幂取模，求 $5^n \cdot 4^n \bmod (10^9+7)$
 - [70. 爬楼梯](https://leetcode.cn/problems/climbing-stairs/)（[题解](70_爬楼梯.md)）：可用矩阵快速幂将 $O(n)$ 递推优化到 $O(\log n)$
-- [50. Pow(x, n)](https://leetcode.cn/problems/powx-n/)（[题解](Powx_n.md)）：快速幂浮点版基础模板
+- [50. Pow(x, n)](https://leetcode.cn/problems/powx-n/)（题解）：快速幂浮点版基础模板
