@@ -127,6 +127,12 @@ def _parse_title(markdown_text: str, filename: str = "") -> str:
     return title
 
 
+def _extract_problem_number(markdown_text: str) -> Optional[str]:
+    """Extract the LeetCode problem number from the '**链接**：[123. ...]' line."""
+    match = re.search(r"\*\*链接\*\*[：:]\s*\[(?:LC\s*)?(\d+)\.", markdown_text)
+    return match.group(1) if match else None
+
+
 def _extract_leetcode_url(markdown_text: str) -> Optional[str]:
     match = re.search(r"https://leetcode\.cn/problems/([^/\s)]+)/?", markdown_text)
     if match:
@@ -247,8 +253,11 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
 
         for p in node.get("problems", []):
             cls = "nav-link active" if current_slug == p["slug"] else "nav-link"
+            label = p["title"]
+            if p.get("number"):
+                label = f'{p["number"]}. {label}'
             result.append(
-                f'<a class="{cls}" href="{root_prefix}problems/{p["slug"]}.html">{p["title"]}</a>'
+                f'<a class="{cls}" href="{root_prefix}problems/{p["slug"]}.html">{label}</a>'
             )
 
         result.append('    </div>')
@@ -434,9 +443,13 @@ def main() -> None:
         title = _parse_title(markdown_text, filename=md_file.name)
         info = _classify(md_file)
 
+        num_match = re.match(r"(\d+)_", md_file.stem)
+        number = num_match.group(1) if num_match else _extract_problem_number(markdown_text)
+
         problems.append({
             "slug": slug_by_path[md_file.resolve()],
             "title": title,
+            "number": number,
             "leetcode_url": _extract_leetcode_url(markdown_text),
             "category": info["category"],
             "contest": info["contest"],

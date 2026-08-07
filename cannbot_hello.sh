@@ -6,7 +6,7 @@ set -euo pipefail
 WORKDIR="/mnt/workspace/code/github/infra/leetcode"
 SKILL="$WORKDIR/solution/SKILL.md"
 MESSAGE_PREFIX="使用${SKILL}写一下题号为"
-TIMES=4
+TIMES=20
 
 cd "$WORKDIR"
 echo ">>> 工作目录: $(pwd)"
