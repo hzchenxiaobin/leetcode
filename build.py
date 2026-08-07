@@ -32,7 +32,6 @@ HOT_PAGE_SLUG = "hot-interview"
 NAV_EXTRA_PAGES = [
     (HOT_PAGE_SLUG, "🔥 高频面试题"),
     ("8-week-plan", "📅 8 周刷题计划"),
-    ("backtracking", "🧩 回溯专题"),
 ]
 
 
@@ -56,6 +55,8 @@ def _classify(md_file: Path) -> Dict[str, Optional[str]]:
         return {"category": "contest", "contest": rel_parts[1], "week": None, "day": None, "folder": rel_parts[1]}
     if rel_parts[0] == "solution" and len(rel_parts) > 1:
         return {"category": "solution", "contest": None, "week": None, "day": None, "folder": rel_parts[1]}
+    if rel_parts[0] == "topics" and len(rel_parts) > 1:
+        return {"category": "topics", "contest": None, "week": None, "day": None, "folder": "topics"}
     return {"category": "other", "contest": None, "week": None, "day": None, "folder": md_file.parent.name}
 
 
@@ -168,6 +169,13 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
         if slug in slugs:
             cls = "nav-link active" if current_slug == slug else "nav-link"
             lines.append(f'<a class="{cls}" href="{root_prefix}problems/{slug}.html">{label}</a>')
+
+    topic_problems = [p for p in problems if p["category"] == "topics"]
+    if topic_problems:
+        lines.append('<div class="nav-section-title">📚 专题</div>')
+        for p in topic_problems:
+            cls = "nav-link active" if current_slug == p["slug"] else "nav-link"
+            lines.append(f'<a class="{cls}" href="{root_prefix}problems/{p["slug"]}.html">{p["title"]}</a>')
 
     lines.append('<div class="nav-section-title">题目</div>')
 
