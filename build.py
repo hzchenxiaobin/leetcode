@@ -32,6 +32,7 @@ HOT_PAGE_SLUG = "hot-interview"
 NAV_EXTRA_PAGES = [
     (HOT_PAGE_SLUG, "🔥 高频面试题"),
     ("8-week-plan", "📅 8 周刷题计划"),
+    ("backtracking", "🧩 回溯专题"),
 ]
 
 
