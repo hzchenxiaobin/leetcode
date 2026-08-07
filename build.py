@@ -32,8 +32,6 @@ HOT_PAGE_SLUG = "hot-interview"
 NAV_EXTRA_PAGES = [
     (HOT_PAGE_SLUG, "🔥 高频面试题"),
     ("8-week-plan", "📅 8 周刷题计划"),
-    ("backtracking", "🧩 回溯专题"),
-    ("greedy", "🧩 贪心专题"),
 ]
 
 
@@ -173,13 +171,6 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
             lines.append(f'<a class="{cls}" href="{root_prefix}problems/{slug}.html">{label}</a>')
 
     topic_problems = [p for p in problems if p["category"] == "topics"]
-    if topic_problems:
-        lines.append('<div class="nav-section-title">📚 专题</div>')
-        for p in topic_problems:
-            cls = "nav-link active" if current_slug == p["slug"] else "nav-link"
-            lines.append(f'<a class="{cls}" href="{root_prefix}problems/{p["slug"]}.html">{p["title"]}</a>')
-
-    lines.append('<div class="nav-section-title">题目</div>')
 
     current_path: List[str] = []
     if current_slug is not None:
@@ -189,6 +180,8 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
                     current_path = ["contest", p["contest"]]
                 elif p["category"] == "solution":
                     current_path = ["solution", _thousand_range_key(p["folder"]), p["folder"]]
+                elif p["category"] == "topics":
+                    current_path = ["topics"]
                 break
 
     tree: Dict[str, Dict] = {
@@ -262,6 +255,12 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
         result.append('  </div>')
         result.append('</div>')
         return result
+
+    if topic_problems:
+        topic_node = {"title": "📚 专题", "children": {}, "problems": topic_problems}
+        lines.extend(render_accordion(topic_node, ["topics"], 1))
+
+    lines.append('<div class="nav-section-title">题目</div>')
 
     for key in ["contest", "solution"]:
         if tree[key]["children"] or tree[key]["problems"]:
