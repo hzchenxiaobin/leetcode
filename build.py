@@ -31,7 +31,7 @@ HOT_PAGE_SLUG = "hot-interview"
 # Extra top-level pages that get a sidebar entry: (slug, label)
 NAV_EXTRA_PAGES = [
     (HOT_PAGE_SLUG, "🔥 高频面试题"),
-    ("8-week-plan", "📅 8 周刷题计划"),
+    ("10-week-plan", "📅 10 周刷题计划"),
 ]
 
 

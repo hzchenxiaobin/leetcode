@@ -17,7 +17,7 @@
 .
 ├── build.py                 # 静态网站生成器（扫描 .md → public/）
 ├── hot-interview.md         # 高频算法面试题汇总页（Hot 100 / CodeTop / 剑指 Offer，链接站内题解）
-├── 8-week-plan.md           # 8 周刷题计划（按类别组织 198 道高频题，链接站内题解）
+├── 10-week-plan.md          # 10 周刷题计划（按类别组织 198 道高频题，链接站内题解）
 ├── cannbot_hello.sh         # 调用 cannbot 按 SKILL.md 自动产出题解的脚本
 ├── solution/                # 每日一题 / 面试高频题题解
 │   ├── 0001-0100/           # 按题号每 100 题一个区间目录
