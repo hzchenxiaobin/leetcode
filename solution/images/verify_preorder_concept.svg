@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
   <defs>
     <filter id="rough">
       <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
@@ -8,115 +8,91 @@
       <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
       <feDisplacementMap in="SourceGraphic" scale="1.5"/>
     </filter>
-    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    <marker id="arrD" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto">
+      <path d="M0,0 L4,7 L8,0 Z" fill="#888"/>
     </marker>
-    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
-    </marker>
-    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#888"/>
     </marker>
   </defs>
 
-  <rect width="560" height="380" fill="#fafafa"/>
+  <rect width="560" height="440" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="14" fill="#555" font-weight="bold">核心：槽位计数——把前序遍历看作「往空槽填节点」</text>
 
-  <!-- Title -->
-  <text x="280" y="26" text-anchor="middle" font-size="14" fill="#555" font-weight="bold">BST 前序遍历：左脊递减 + 右拐升下界</text>
+  <!-- Section 1: initial slot -->
+  <text x="40" y="62" font-size="12" fill="#446688" font-weight="bold">① 初始：1 个根槽位</text>
 
-  <!-- ===== Left: BST Tree ===== -->
-  <text x="120" y="52" text-anchor="middle" font-size="12" fill="#444" font-weight="bold">BST 结构</text>
+  <rect x="240" y="76" width="80" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="92" text-anchor="middle" font-size="10" fill="#888">根的位置</text>
+  <text x="280" y="108" text-anchor="middle" font-size="14" fill="#446688" font-weight="bold">slots = 1</text>
 
-  <!-- Node 5 (root) -->
-  <circle cx="120" cy="80" r="16" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
-  <text x="120" y="84" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">5</text>
+  <!-- divider -->
+  <path d="M 40 132 L 520 132" stroke="#ddd" stroke-width="1.5" stroke-dasharray="4,4" fill="none" filter="url(#rough2)"/>
 
-  <!-- Node 2 (left child) -->
-  <circle cx="80" cy="130" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
-  <text x="80" y="134" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">2</text>
-  <line x1="108" y1="92" x2="92" y2="118" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <!-- Section 2: two cases -->
+  <text x="40" y="160" font-size="12" fill="#446688" font-weight="bold">② 每读入一个 token：先消耗 1 槽，再按类型补槽</text>
 
-  <!-- Node 6 (right child) -->
-  <circle cx="170" cy="130" r="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
-  <text x="170" y="134" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">6</text>
-  <line x1="132" y1="92" x2="158" y2="118" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <!-- Case A: non-null node -->
+  <rect x="40" y="178" width="230" height="120" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="155" y="200" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">非空节点（整数）</text>
 
-  <!-- Node 1 (left of 2) -->
-  <circle cx="50" cy="180" r="14" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
-  <text x="50" y="184" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">1</text>
-  <line x1="68" y1="142" x2="58" y2="168" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <!-- consume -->
+  <rect x="56" y="212" width="64" height="30" fill="#fafafa" stroke="#888" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="88" y="232" text-anchor="middle" font-size="10.5" fill="#333">消耗 1</text>
 
-  <!-- Node 3 (right of 2) -->
-  <circle cx="110" cy="180" r="14" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
-  <text x="110" y="184" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">3</text>
-  <line x1="92" y1="142" x2="102" y2="168" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="130" y="232" font-size="14" fill="#888" font-weight="bold">+</text>
 
-  <!-- Left spine annotation -->
-  <text x="20" y="100" font-size="10" fill="#446688" font-weight="bold">左脊</text>
-  <text x="20" y="114" font-size="10" fill="#446688">(递减)</text>
+  <!-- produce -->
+  <rect x="146" y="212" width="64" height="30" fill="#fafafa" stroke="#888" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="178" y="232" text-anchor="middle" font-size="10.5" fill="#333">产生 2</text>
 
-  <!-- Preorder sequence -->
-  <text x="120" y="222" text-anchor="middle" font-size="11" fill="#555" font-weight="bold">前序序列</text>
-  <rect x="30" y="232" width="30" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="45" y="248" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">5</text>
-  <rect x="62" y="232" width="30" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="77" y="248" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">2</text>
-  <rect x="94" y="232" width="30" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="109" y="248" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">1</text>
-  <rect x="126" y="232" width="30" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="141" y="248" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">3</text>
-  <rect x="158" y="232" width="30" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="173" y="248" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">6</text>
+  <text x="220" y="232" font-size="11" fill="#888">=</text>
 
-  <text x="45" y="272" text-anchor="middle" font-size="9" fill="#d6a040">根</text>
-  <text x="77" y="272" text-anchor="middle" font-size="9" fill="#446688">左</text>
-  <text x="109" y="272" text-anchor="middle" font-size="9" fill="#446688">左</text>
-  <text x="141" y="272" text-anchor="middle" font-size="9" fill="#d6a040">右拐↑</text>
-  <text x="173" y="272" text-anchor="middle" font-size="9" fill="#4a7a3a">右拐↑</text>
+  <!-- net -->
+  <rect x="232" y="212" width="32" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="248" y="232" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">+1</text>
 
-  <!-- ===== Right: Stack Evolution ===== -->
-  <text x="390" y="52" text-anchor="middle" font-size="12" fill="#444" font-weight="bold">单调栈演变</text>
+  <text x="155" y="262" text-anchor="middle" font-size="10" fill="#555">把当前槽换成「左、右」两个子槽</text>
+  <text x="155" y="278" text-anchor="middle" font-size="9.5" fill="#888">−1 + 2 = 净增 1 槽</text>
 
-  <!-- Moment 1: stack = [5,2,1] -->
-  <text x="300" y="78" font-size="10" fill="#888" font-weight="bold">① 1 入栈：</text>
-  <rect x="360" y="62" width="36" height="22" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="378" y="77" text-anchor="middle" font-size="10" fill="#333" font-weight="bold">5</text>
-  <rect x="360" y="86" width="36" height="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="378" y="101" text-anchor="middle" font-size="10" fill="#333" font-weight="bold">2</text>
-  <rect x="360" y="110" width="36" height="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="378" y="125" text-anchor="middle" font-size="10" fill="#333" font-weight="bold">1</text>
-  <text x="405" y="100" font-size="9" fill="#446688">← 递减</text>
-  <text x="405" y="113" font-size="9" fill="#888">lower = -∞</text>
+  <!-- Case B: null node -->
+  <rect x="290" y="178" width="230" height="120" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="405" y="200" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">空节点（"#"）</text>
 
-  <!-- Moment 2: 3 arrives, pop 1,2 -->
-  <text x="300" y="156" font-size="10" fill="#888" font-weight="bold">② 3 到来：</text>
-  <text x="360" y="156" font-size="9" fill="#b85450">弹 1 → lower=1</text>
-  <text x="360" y="169" font-size="9" fill="#b85450">弹 2 → lower=2</text>
-  <rect x="430" y="152" width="36" height="22" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="448" y="167" text-anchor="middle" font-size="10" fill="#333" font-weight="bold">5</text>
-  <rect x="430" y="176" width="36" height="22" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="448" y="191" text-anchor="middle" font-size="10" fill="#333" font-weight="bold">3</text>
-  <text x="300" y="191" font-size="9" fill="#d6a040">进入 2 的右子树</text>
-  <text x="300" y="204" font-size="9" fill="#888">lower = 2</text>
+  <!-- consume -->
+  <rect x="306" y="212" width="64" height="30" fill="#fafafa" stroke="#888" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="338" y="232" text-anchor="middle" font-size="10.5" fill="#333">消耗 1</text>
 
-  <!-- Arrow from moment 1 to 2 -->
-  <path d="M 378 138 Q 410 145 440 150" fill="none" stroke="#d6a040" stroke-width="1.2" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="380" y="232" font-size="14" fill="#888" font-weight="bold">+</text>
 
-  <!-- Moment 3: 6 arrives, pop 3,5 -->
-  <text x="300" y="222" font-size="10" fill="#888" font-weight="bold">③ 6 到来：</text>
-  <text x="360" y="222" font-size="9" fill="#b85450">弹 3 → lower=3</text>
-  <text x="360" y="235" font-size="9" fill="#b85450">弹 5 → lower=5</text>
-  <rect x="430" y="230" width="36" height="22" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
-  <text x="448" y="245" text-anchor="middle" font-size="10" fill="#333" font-weight="bold">6</text>
-  <text x="300" y="245" font-size="9" fill="#4a7a3a">进入 5 的右子树</text>
-  <text x="300" y="258" font-size="9" fill="#888">lower = 5</text>
+  <!-- produce -->
+  <rect x="396" y="212" width="64" height="30" fill="#fafafa" stroke="#888" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="428" y="232" text-anchor="middle" font-size="10.5" fill="#333">产生 0</text>
 
-  <!-- Arrow from moment 2 to 3 -->
-  <path d="M 448 202 L 448 225" fill="none" stroke="#4a7a3a" stroke-width="1.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="470" y="232" font-size="11" fill="#888">=</text>
 
-  <!-- ===== Bottom: Key Insight ===== -->
-  <rect x="30" y="290" width="500" height="70" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
-  <text x="280" y="312" text-anchor="middle" font-size="12" fill="#444" font-weight="bold">核心：栈维护左脊（递减），遇更大值弹栈 → 右拐祖先值 = 新下界</text>
-  <text x="280" y="330" text-anchor="middle" font-size="11" fill="#666">下界单调递增：每次右拐都进入更大祖先的右子树，lower 只升不降</text>
-  <text x="280" y="348" text-anchor="middle" font-size="11" fill="#b85450">任何 x &lt; lower → 非法（出现在祖先右子树中却比祖先小）</text>
+  <!-- net -->
+  <rect x="482" y="212" width="32" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="498" y="232" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">−1</text>
+
+  <text x="405" y="262" text-anchor="middle" font-size="10" fill="#555">把当前槽直接抹掉</text>
+  <text x="405" y="278" text-anchor="middle" font-size="9.5" fill="#888">−1 + 0 = 净减 1 槽</text>
+
+  <!-- divider -->
+  <path d="M 40 312 L 520 312" stroke="#ddd" stroke-width="1.5" stroke-dasharray="4,4" fill="none" filter="url(#rough2)"/>
+
+  <!-- Section 3: validity criteria -->
+  <text x="40" y="340" font-size="12" fill="#d6a040" font-weight="bold">③ 合法判据：两条同时满足</text>
+
+  <!-- criteria 1 -->
+  <rect x="40" y="356" width="235" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="60" y="378" font-size="11" fill="#333" font-weight="bold">过程中 slots ≥ 0</text>
+  <text x="60" y="394" font-size="10" fill="#555">一旦 &lt; 0，说明某 token 无槽可放</text>
+  <text x="60" y="408" font-size="10" fill="#888">（如 "9,#,#,1" 末尾的 1）</text>
+
+  <!-- criteria 2 -->
+  <rect x="290" y="356" width="235" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="378" font-size="11" fill="#333" font-weight="bold">结束时 slots = 0</text>
+  <text x="310" y="394" font-size="10" fill="#555">所有槽恰好填满，不多不少</text>
+  <text x="310" y="408" font-size="10" fill="#888">（如 "1,#" 结束时 slots=1，非法）</text>
 </svg>
