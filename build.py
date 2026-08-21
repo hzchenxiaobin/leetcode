@@ -34,6 +34,15 @@ NAV_EXTRA_PAGES = [
     ("10-week-plan", "📅 10 周刷题计划"),
 ]
 
+GITHUB_REPO_URL = "https://github.com/hzchenxiaobin/leetcode"
+
+TOPIC_ICONS = {
+    "backtracking": "🔁",
+    "greedy": "💰",
+    "interval-dp": "📊",
+    "monotonic-stack": "📉",
+}
+
 
 # ---------------------------------------------------------------------------
 # Markdown helpers
@@ -305,7 +314,7 @@ def page_template(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=7">
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=8">
     <!-- Marked.js for Markdown rendering -->
     <script src="{root_prefix}js/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -376,7 +385,113 @@ def page_template(
             console.error('Markdown render error:', err);
         }}
     </script>
-    <script src="{root_prefix}js/main.js?v=7"></script>
+    <script src="{root_prefix}js/main.js?v=8"></script>
+</body>
+</html>
+"""
+
+
+def landing_template(
+    *,
+    stats_html: str,
+    topic_cards_html: str,
+    resource_cards_html: str,
+    problem_list_html: str,
+    random_picker_html: str,
+    hot_href: Optional[str] = None,
+    plan_href: Optional[str] = None,
+    root_prefix: str = "",
+) -> str:
+    """Generate the landing-style index.html (no sidebar, hero + card sections)."""
+
+    hero_actions_parts = []
+    if hot_href:
+        hero_actions_parts.append(
+            f'<a class="btn btn-primary" href="{hot_href}">🔥 高频面试题</a>'
+        )
+    if plan_href:
+        hero_actions_parts.append(
+            f'<a class="btn btn-secondary" href="{plan_href}">📋 10 周刷题计划</a>'
+        )
+    hero_actions = (
+        f'<div class="hero-actions">{"".join(hero_actions_parts)}</div>'
+        if hero_actions_parts
+        else ""
+    )
+
+    nav_links_parts = [
+        f'<a href="#problems">题解列表</a>',
+        f'<a href="#topics">算法专题</a>',
+    ]
+    if hot_href:
+        nav_links_parts.append(f'<a href="{hot_href}">高频面试题</a>')
+    if plan_href:
+        nav_links_parts.append(f'<a href="{plan_href}">10 周计划</a>')
+    nav_links_parts.append(
+        f'<a class="landing-nav-github" href="{GITHUB_REPO_URL}">GitHub ↗</a>'
+    )
+
+    return f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode 题解</title>
+    <meta name="description" content="面试高频题与周赛题的中文题解集合，配套手绘 SVG 图解、复杂度分析与面试 Q&A。">
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=8">
+    <script src="{root_prefix}js/main.js?v=8" defer></script>
+</head>
+<body class="landing">
+    <header class="landing-nav">
+        <a class="landing-nav-brand" href="{root_prefix}index.html">LeetCode <span>题解</span></a>
+        <nav class="landing-nav-links">
+            {"".join(nav_links_parts)}
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-eyebrow">面试高频 · 周赛实战</div>
+            <h1 class="hero-title">LeetCode <span class="hero-title-accent">题解</span></h1>
+            <p class="hero-subtitle">从「暴力递归」进阶到「最优解 + 面试讲清楚」</p>
+            <p class="hero-meta">涵盖 Hot 100 / 面试经典 150 / 剑指 Offer 高频题，配套手绘 SVG 图解、复杂度分析与面试 Q&A</p>
+            {hero_actions}
+        </div>
+    </section>
+
+    <section class="stats-strip">
+        {stats_html}
+    </section>
+
+    <main class="landing-main">
+        <section class="landing-section" id="topics">
+            <h2 class="section-title">算法专题</h2>
+            <p class="section-subtitle">按算法类别沉淀的专题笔记：核心思想 + 模板 + 剪枝/去重技巧 + 例题精讲 + 课后练习。</p>
+            <div class="topic-grid">
+                {topic_cards_html}
+            </div>
+        </section>
+
+        <section class="landing-section">
+            <h2 class="section-title">更多资源</h2>
+            <div class="resource-grid">
+                {resource_cards_html}
+            </div>
+        </section>
+
+        <section class="landing-section" id="problems">
+            <h2 class="section-title">题解列表</h2>
+            <p class="section-subtitle">每日一题按题号区间分组 + 周赛按场次降序，点击题目进入题解。</p>
+            {random_picker_html}
+            {problem_list_html}
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <span>LeetCode 题解 · 由 <a href="{GITHUB_REPO_URL}">GitHub</a> 驱动 · Deployed on GitHub Pages</span>
+    </footer>
+
+    <button class="back-to-top" aria-label="Back to top">↑</button>
 </body>
 </html>
 """
@@ -540,17 +655,59 @@ def main() -> None:
 
 """
 
-    hot_banner = ""
-    if any(p["slug"] == HOT_PAGE_SLUG for p in problems):
-        hot_banner = (
-            f'\n[🔥 高频算法面试题汇总（Hot 100 / CodeTop / 剑指 Offer，附站内题解链接）]'
-            f'(./problems/{HOT_PAGE_SLUG}.html)\n\n'
+    hot_href = f"./problems/{HOT_PAGE_SLUG}.html" if any(p["slug"] == HOT_PAGE_SLUG for p in problems) else None
+    plan_href = "./problems/10-week-plan.html" if any(p["slug"] == "10-week-plan" for p in problems) else None
+
+    topic_problems = [p for p in problems if p["category"] == "topics"]
+    topic_cards_html = ""
+    for p in topic_problems:
+        icon = TOPIC_ICONS.get(p["slug"], "📘")
+        topic_cards_html += (
+            f'<a class="topic-card" href="./problems/{p["slug"]}.html">'
+            f'<span class="topic-card-icon">{icon}</span>'
+            f'<span class="topic-card-name">{p["title"]}</span>'
+            f'<span class="topic-card-arrow">→</span>'
+            f'</a>\n'
         )
 
-    overview_markdown = (
-        random_picker_html
-        + hot_banner
-        + '<div class="leetcode-overview-row">\n'
+    resource_items = []
+    if hot_href:
+        resource_items.append(("🔥", "高频面试题", "Hot 100 / CodeTop / 剑指 Offer 高频题汇总", hot_href))
+    if plan_href:
+        resource_items.append(("📅", "10 周刷题计划", "按类别组织 198 道高频题的递进式路线", plan_href))
+    resource_items.append(("🧠", "AI Infra Notes", "CUDA / 推理系统 / 分布式并行学习笔记", "https://hzchenxiaobin.github.io/ai-infra-notes/"))
+    resource_items.append(("💻", "GitHub 仓库", "本站全部源码与 Markdown 原文", GITHUB_REPO_URL))
+
+    resource_cards_html = ""
+    for icon, name, desc, href in resource_items:
+        resource_cards_html += (
+            f'<a class="resource-card" href="{href}">'
+            f'<span class="resource-card-icon">{icon}</span>'
+            f'<span class="resource-card-body">'
+            f'<span class="resource-card-name">{name}</span>'
+            f'<span class="resource-card-desc">{desc}</span>'
+            f'</span>'
+            f'</a>\n'
+        )
+
+    total_solutions = len([p for p in problems if p["category"] in ("solution", "contest")])
+    stats = [
+        (str(total_solutions), "道题解"),
+        (str(len(contest_groups)), "场周赛"),
+        (str(len(topic_problems)), "算法专题"),
+        ("∞", "持续更新"),
+    ]
+    stats_html = ""
+    for value, label in stats:
+        stats_html += (
+            f'<div class="stat-item">'
+            f'<span class="stat-value">{value}</span>'
+            f'<span class="stat-label">{label}</span>'
+            f'</div>\n'
+        )
+
+    problem_list_html = (
+        '<div class="leetcode-overview-row">\n'
         '  <div class="leetcode-col leetcode-col-daily">\n'
         f'{daily_markdown}'
         '  </div>\n'
@@ -560,15 +717,17 @@ def main() -> None:
         '</div>\n'
     )
 
-    overview_markdown = overview_markdown.replace("](images/", "](./images/")
-
-    overview_html = page_template(
-        title="LeetCode 题解",
-        nav_html=_build_nav(current_slug=None, problems=problems, root_prefix=""),
-        markdown=overview_markdown,
+    landing_html = landing_template(
+        stats_html=stats_html,
+        topic_cards_html=topic_cards_html,
+        resource_cards_html=resource_cards_html,
+        problem_list_html=problem_list_html,
+        random_picker_html=random_picker_html,
+        hot_href=hot_href,
+        plan_href=plan_href,
         root_prefix="",
     )
-    (public_dir / "index.html").write_text(overview_html, encoding="utf-8")
+    (public_dir / "index.html").write_text(landing_html, encoding="utf-8")
     print(f"Generated: {public_dir / 'index.html'}")
 
     for p in problems:

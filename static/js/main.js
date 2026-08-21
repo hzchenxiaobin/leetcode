@@ -189,13 +189,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhance interview Q&A section into styled cards
     enhanceInterviewQA();
 
-    // Open all links in new tab, except sidebar links
+    // Open external links in new tab; on non-landing pages, open all non-sidebar
+    // links in new tab (existing behavior). On the landing page, only external
+    // links get target="_blank" so internal navigation stays in-tab.
     document.querySelectorAll('a').forEach(link => {
         if (link.closest('.sidebar')) {
             return;
         }
-        link.setAttribute('target', '_blank');
-        link.setAttribute('rel', 'noopener noreferrer');
+        if (document.body.classList.contains('landing')) {
+            const href = link.getAttribute('href') || '';
+            if (href.startsWith('http://') || href.startsWith('https://')) {
+                try {
+                    if (new URL(href).origin !== window.location.origin) {
+                        link.setAttribute('target', '_blank');
+                        link.setAttribute('rel', 'noopener noreferrer');
+                    }
+                } catch (e) {}
+            }
+        } else {
+            link.setAttribute('target', '_blank');
+            link.setAttribute('rel', 'noopener noreferrer');
+        }
     });
 });
 
