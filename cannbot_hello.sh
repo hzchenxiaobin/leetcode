@@ -6,10 +6,15 @@ set -euo pipefail
 WORKDIR="/mnt/workspace/code/github/infra/leetcode"
 SKILL="$WORKDIR/solution/SKILL.md"
 MESSAGE_PREFIX="使用${SKILL}写一下题号为"
-TIMES=10
+TIMES=2
+ROUNDS=10
 
 cd "$WORKDIR"
 echo ">>> 工作目录: $(pwd)"
+
+for round in $(seq 1 "$ROUNDS"); do
+echo
+echo "======== 第 $round/$ROUNDS 轮 ========"
 
 # 预计算接下来 TIMES 个缺失题号（按题号升序），保证并发线程各写一题不冲突
 mapfile -t NUMS < <(python3 -c "
@@ -69,4 +74,8 @@ echo "======== 提交并推送 ========"
 echo ">>> 发送: $GIT_MESSAGE"
 cannbot run "$GIT_MESSAGE"
 echo
-echo ">>> 全部完成"
+echo ">>> 第 $round/$ROUNDS 轮完成"
+done
+
+echo
+echo ">>> 全部 $ROUNDS 轮完成"
