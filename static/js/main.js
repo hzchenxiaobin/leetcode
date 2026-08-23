@@ -454,7 +454,7 @@ function initSidebarResizer() {
 
     const MIN_WIDTH = 220;
     const MAX_WIDTH = 520;
-    const DEFAULT_WIDTH = 300;
+    const DEFAULT_WIDTH = 280;
 
     function setSidebarWidth(width) {
         sidebar.style.width = width + 'px';

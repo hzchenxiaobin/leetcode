@@ -30,8 +30,8 @@ HOT_PAGE_SLUG = "hot-interview"
 
 # Extra top-level pages that get a sidebar entry: (slug, label)
 NAV_EXTRA_PAGES = [
-    (HOT_PAGE_SLUG, "🔥 高频面试题"),
-    ("10-week-plan", "📅 10 周刷题计划"),
+    (HOT_PAGE_SLUG, "高频面试题"),
+    ("10-week-plan", "10 周刷题计划"),
 ]
 
 GITHUB_REPO_URL = "https://github.com/hzchenxiaobin/leetcode"
@@ -177,7 +177,7 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
     lines = []
 
     overview_class = "nav-link active" if current_slug is None else "nav-link"
-    lines.append(f'<a class="{overview_class}" href="{root_prefix}index.html">📌 题解列表</a>')
+    lines.append(f'<a class="{overview_class}" href="{root_prefix}index.html">题解列表</a>')
 
     slugs = {p["slug"] for p in problems}
     for slug, label in NAV_EXTRA_PAGES:
@@ -236,7 +236,7 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
         is_expanded = bool(current_path and current_path[:len(path)] == path)
         expanded_cls = " is-expanded" if is_expanded else ""
         aria_expanded = "true" if is_expanded else "false"
-        toggle_icon = "▼" if is_expanded else "▶"
+        toggle_icon = "▸"
         level_cls = f" level-{level}"
 
         result.append(f'<div class="nav-accordion-item{level_cls}{expanded_cls}">')
@@ -275,7 +275,7 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
         return result
 
     if topic_problems:
-        topic_node = {"title": "📚 专题", "children": {}, "problems": topic_problems}
+        topic_node = {"title": "专题", "children": {}, "problems": topic_problems}
         lines.extend(render_accordion(topic_node, ["topics"], 1))
 
     lines.append('<div class="nav-section-title">题目</div>')
@@ -314,7 +314,7 @@ def page_template(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=8">
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=9">
     <!-- Marked.js for Markdown rendering -->
     <script src="{root_prefix}js/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -385,7 +385,7 @@ def page_template(
             console.error('Markdown render error:', err);
         }}
     </script>
-    <script src="{root_prefix}js/main.js?v=8"></script>
+    <script src="{root_prefix}js/main.js?v=9"></script>
 </body>
 </html>
 """
@@ -407,11 +407,11 @@ def landing_template(
     hero_actions_parts = []
     if hot_href:
         hero_actions_parts.append(
-            f'<a class="btn btn-primary" href="{hot_href}">🔥 高频面试题</a>'
+            f'<a class="btn btn-primary" href="{hot_href}">高频面试题</a>'
         )
     if plan_href:
         hero_actions_parts.append(
-            f'<a class="btn btn-secondary" href="{plan_href}">📋 10 周刷题计划</a>'
+            f'<a class="btn btn-secondary" href="{plan_href}">10 周刷题计划</a>'
         )
     hero_actions = (
         f'<div class="hero-actions">{"".join(hero_actions_parts)}</div>'
@@ -438,8 +438,8 @@ def landing_template(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeetCode 题解</title>
     <meta name="description" content="面试高频题与周赛题的中文题解集合，配套手绘 SVG 图解、复杂度分析与面试 Q&A。">
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=8">
-    <script src="{root_prefix}js/main.js?v=8" defer></script>
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=9">
+    <script src="{root_prefix}js/main.js?v=9" defer></script>
 </head>
 <body class="landing">
     <header class="landing-nav">
@@ -626,32 +626,8 @@ def main() -> None:
     problems_json = json.dumps(picker_problems, ensure_ascii=False)
 
     random_picker_html = f"""<div class="random-pick">
-  <button id="random-pick-btn" class="random-btn" data-problems='{problems_json}'>🎲 随机选一道题练习</button>
+  <button id="random-pick-btn" class="random-btn" data-problems='{problems_json}'>随机选一道题练习</button>
 </div>
-<style>
-.random-pick {{
-  margin: 1rem 0 1.5rem;
-  padding: 1rem;
-  background: #1f2937;
-  border: 1px solid #374151;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}}
-.random-btn {{
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}}
-.random-btn:hover {{ background: #1d4ed8; }}
-</style>
 
 """
 
