@@ -5,49 +5,48 @@ document.addEventListener('DOMContentLoaded', function() {
         activePill.scrollIntoView({ inline: 'center', block: 'nearest' });
     }
 
-    // Mobile menu toggle
+    // Navigation drawer (opened from the top-bar menu button)
     const menuToggle = document.querySelector('.menu-toggle');
     const sidebar = document.querySelector('.sidebar');
+    const navOverlay = document.querySelector('.nav-overlay');
+
+    function closeDrawer() {
+        sidebar.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('visible');
+    }
 
     if (menuToggle && sidebar) {
         menuToggle.addEventListener('click', function() {
-            if (window.innerWidth <= 768) {
-                // Mobile: sidebar is an overlay
-                sidebar.classList.toggle('open');
-            } else {
-                // Desktop: collapse/expand sidebar to give content more room
-                const collapsed = document.documentElement.classList.toggle('sidebar-collapsed');
-                try {
-                    localStorage.setItem('sidebar-collapsed', collapsed ? '1' : '0');
-                } catch (e) {}
-            }
-        });
-
-        // Close sidebar when clicking on a link (mobile)
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.remove('open');
+            const willOpen = !sidebar.classList.contains('open');
+            sidebar.classList.toggle('open');
+            if (navOverlay) navOverlay.classList.toggle('visible', willOpen);
+            if (willOpen) {
+                // Bring the active page link into view inside the drawer
+                const active = sidebar.querySelector('.nav-link.active');
+                if (active) {
+                    active.scrollIntoView({ block: 'center' });
                 }
-            });
+            }
+        });
+
+        if (navOverlay) {
+            navOverlay.addEventListener('click', closeDrawer);
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+                closeDrawer();
+            }
+        });
+
+        // Close drawer after navigating
+        sidebar.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeDrawer);
         });
     }
 
-    // Scroll sidebar independently on wheel when it has overflow
-    if (sidebar) {
-        sidebar.addEventListener('wheel', function(e) {
-            if (e.deltaY === 0) return;
-            const canScrollUp = sidebar.scrollTop > 0;
-            const canScrollDown = sidebar.scrollTop + sidebar.clientHeight < sidebar.scrollHeight;
-            if ((e.deltaY < 0 && canScrollUp) || (e.deltaY > 0 && canScrollDown)) {
-                e.preventDefault();
-                sidebar.scrollTop += e.deltaY;
-            }
-        }, { passive: false });
-    }
-
-    // Draggable sidebar width resizer
-    initSidebarResizer();
+    // Right-hand table of contents
+    initToc();
 
     // Accordion navigation in sidebar
     function toggleAccordionItem(item) {
@@ -199,7 +198,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // links in new tab (existing behavior). On the landing page, only external
     // links get target="_blank" so internal navigation stays in-tab.
     document.querySelectorAll('a').forEach(link => {
-        if (link.closest('.sidebar')) {
+        if (link.closest('.sidebar') || link.closest('.top-nav')) {
             return;
         }
         if (document.body.classList.contains('landing')) {
@@ -439,77 +438,46 @@ function initImageLightbox() {
 }
 
 
-function initSidebarResizer() {
-    const sidebar = document.querySelector('.sidebar');
-    const mainContent = document.querySelector('.main-content');
-    if (!sidebar || !mainContent) return;
+function initToc() {
+    const content = document.querySelector('.content');
+    const toc = document.getElementById('toc');
+    if (!content || !toc) return;
 
-    // Don't show resizer on mobile where sidebar is an overlay
-    if (window.innerWidth <= 768) return;
-
-    const resizer = document.createElement('div');
-    resizer.className = 'sidebar-resizer';
-    resizer.setAttribute('aria-label', '调整侧边栏宽度');
-    document.body.appendChild(resizer);
-
-    const MIN_WIDTH = 220;
-    const MAX_WIDTH = 520;
-    const DEFAULT_WIDTH = 280;
-
-    function setSidebarWidth(width) {
-        sidebar.style.width = width + 'px';
-        mainContent.style.marginLeft = width + 'px';
-        resizer.style.left = width + 'px';
+    const headings = Array.from(content.querySelectorAll('h2, h3'));
+    if (headings.length < 2) {
+        const shell = toc.closest('.content-shell');
+        if (shell) shell.classList.add('no-toc');
+        toc.style.display = 'none';
+        return;
     }
 
-    // Restore saved width on load
-    const savedWidth = localStorage.getItem('sidebar-width');
-    if (savedWidth) {
-        const width = parseInt(savedWidth, 10);
-        if (!isNaN(width) && width >= MIN_WIDTH && width <= MAX_WIDTH) {
-            setSidebarWidth(width);
+    const title = document.createElement('div');
+    title.className = 'toc-title';
+    title.textContent = '本页目录';
+    toc.appendChild(title);
+
+    const tocLinks = [];
+    headings.forEach((heading, i) => {
+        if (!heading.id) {
+            heading.id = 'section-' + i;
         }
-    }
-
-    let isResizing = false;
-
-    resizer.addEventListener('mousedown', function(e) {
-        isResizing = true;
-        resizer.classList.add('resizing');
-        document.body.style.userSelect = 'none';
-        document.body.style.cursor = 'col-resize';
-        e.preventDefault();
+        const link = document.createElement('a');
+        link.className = heading.tagName === 'H3' ? 'toc-h3' : 'toc-h2';
+        link.href = '#' + heading.id;
+        link.textContent = heading.textContent;
+        toc.appendChild(link);
+        tocLinks.push(link);
     });
 
-    document.addEventListener('mousemove', function(e) {
-        if (!isResizing) return;
-        const newWidth = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, e.clientX));
-        setSidebarWidth(newWidth);
-    });
+    // Scroll-spy: highlight the section currently in view
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            tocLinks.forEach(link => {
+                link.classList.toggle('toc-active', link.hash === '#' + entry.target.id);
+            });
+        });
+    }, { rootMargin: '-80px 0px -70% 0px' });
 
-    document.addEventListener('mouseup', function() {
-        if (!isResizing) return;
-        isResizing = false;
-        resizer.classList.remove('resizing');
-        document.body.style.userSelect = '';
-        document.body.style.cursor = '';
-        localStorage.setItem('sidebar-width', sidebar.offsetWidth);
-    });
-
-    // Clean up on orientation/resize changes to mobile layout
-    window.addEventListener('resize', function() {
-        if (window.innerWidth <= 768) {
-            resizer.style.display = 'none';
-            sidebar.style.width = '';
-            mainContent.style.marginLeft = '';
-        } else {
-            resizer.style.display = '';
-            const currentWidth = sidebar.offsetWidth;
-            if (currentWidth < MIN_WIDTH || currentWidth > MAX_WIDTH) {
-                setSidebarWidth(DEFAULT_WIDTH);
-            } else {
-                resizer.style.left = currentWidth + 'px';
-            }
-        }
-    });
+    headings.forEach(heading => observer.observe(heading));
 }

@@ -314,7 +314,7 @@ def page_template(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=9">
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=10">
     <!-- Marked.js for Markdown rendering -->
     <script src="{root_prefix}js/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -327,31 +327,40 @@ def page_template(
     <script src="{root_prefix}js/prism-cpp.min.js"></script>
     <script src="{root_prefix}js/prism-bash.min.js"></script>
     <script src="{root_prefix}js/prism-python.min.js"></script>
-    <!-- Restore collapsed sidebar before paint (desktop only) -->
-    <script>(function(){{try{{if(localStorage.getItem('sidebar-collapsed')==='1'&&window.innerWidth>768){{document.documentElement.classList.add('sidebar-collapsed');}}}}catch(e){{}}}})();</script>
 </head>
 <body>
-    <button class="menu-toggle" aria-label="Toggle menu">☰</button>
-
-    <div class="site-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <a href="{root_prefix}index.html" style="text-decoration: none;">
-                    <h1 class="sidebar-title"{title_style_attr}>{sidebar_title}</h1>
-                </a>
-            </div>
-            <nav class="sidebar-nav">
-{nav_html}
+    <header class="top-nav">
+        <div class="top-nav-inner">
+            <button class="menu-toggle" aria-label="打开导航菜单">☰</button>
+            <a class="top-nav-brand" href="{root_prefix}index.html">LeetCode <span>题解</span></a>
+            <nav class="top-nav-links">
+                <a href="{root_prefix}index.html">题解列表</a>
+                <a href="{GITHUB_REPO_URL}">GitHub ↗</a>
             </nav>
-        </aside>
+        </div>
+    </header>
 
-        <main class="main-content">
-            <div class="page-header">
-                <h1 class="page-title">{title}</h1>
-            </div>
+    <div class="nav-overlay"></div>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="{root_prefix}index.html" style="text-decoration: none;">
+                <h1 class="sidebar-title"{title_style_attr}>{sidebar_title}</h1>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+{nav_html}
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1 class="page-title">{title}</h1>
+        </div>
+        <div class="content-shell">
             <article class="content" id="content"></article>
-        </main>
-    </div>
+            <aside class="toc" id="toc" aria-label="本页目录"></aside>
+        </div>
+    </main>
 
     <button class="back-to-top" aria-label="Back to top">↑</button>
 
@@ -385,7 +394,7 @@ def page_template(
             console.error('Markdown render error:', err);
         }}
     </script>
-    <script src="{root_prefix}js/main.js?v=9"></script>
+    <script src="{root_prefix}js/main.js?v=10"></script>
 </body>
 </html>
 """
@@ -438,8 +447,8 @@ def landing_template(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeetCode 题解</title>
     <meta name="description" content="面试高频题与周赛题的中文题解集合，配套手绘 SVG 图解、复杂度分析与面试 Q&A。">
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=9">
-    <script src="{root_prefix}js/main.js?v=9" defer></script>
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=10">
+    <script src="{root_prefix}js/main.js?v=10" defer></script>
 </head>
 <body class="landing">
     <header class="landing-nav">
