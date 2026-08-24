@@ -724,6 +724,7 @@ def main() -> None:
             root_prefix="../",
         )
         slug_html = f"{p['slug']}.html"
+        problems_dir.mkdir(parents=True, exist_ok=True)
         (problems_dir / slug_html).write_text(html, encoding="utf-8")
         print(f"Generated: {problems_dir / slug_html}")
 
