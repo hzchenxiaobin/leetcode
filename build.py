@@ -525,7 +525,12 @@ def copy_static_assets(public_dir: Path) -> None:
 def main() -> None:
     public_dir = REPO_ROOT / "public"
     if public_dir.exists():
-        shutil.rmtree(public_dir)
+        try:
+            shutil.rmtree(public_dir)
+        except OSError:
+            import time
+            backup = REPO_ROOT / f"public.bak.build_{int(time.time())}"
+            public_dir.rename(backup)
     public_dir.mkdir()
 
     print("Copying static assets (css/js)...")
