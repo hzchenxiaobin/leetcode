@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="540" height="400" fill="#fafafa"/>
+
+  <text x="270" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：净位移决定选哪 a 步向终点</text>
+  <text x="270" y="44" text-anchor="middle" font-size="11" fill="#888">每步 ±1，k 步中选 a 步向终点、b 步背离 → C(k, a)</text>
+
+  <!-- ===== number line ===== -->
+  <text x="36" y="86" font-size="10" fill="#888" font-weight="bold">数轴：</text>
+  <line x1="78" y1="86" x2="462" y2="86" stroke="#888" stroke-width="1.2" filter="url(#rough2)"/>
+  <circle cx="150" cy="86" r="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="150" y="74" text-anchor="middle" font-size="10" fill="#446688" font-weight="bold">startPos</text>
+  <circle cx="370" cy="86" r="5" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="370" y="74" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold">endPos</text>
+  <!-- diff brace -->
+  <path d="M 154 96 L 154 108 L 366 108 L 366 96" stroke="#d6a040" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+  <text x="260" y="124" text-anchor="middle" font-size="11" fill="#d6a040" font-weight="bold">diff = |endPos − startPos|</text>
+
+  <!-- ===== k-step decomposition ===== -->
+  <text x="36" y="166" font-size="10" fill="#888" font-weight="bold">k 步分解：</text>
+  <g font-size="11" fill="#333">
+    <rect x="96" y="150" width="150" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+    <text x="171" y="173" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">a 步向终点 →</text>
+
+    <text x="266" y="173" text-anchor="middle" font-size="14" fill="#888" font-weight="bold">+</text>
+
+    <rect x="286" y="150" width="150" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+    <text x="361" y="173" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">← b 步背离</text>
+
+    <text x="466" y="173" text-anchor="middle" font-size="11" fill="#888" font-weight="bold">= k 步</text>
+  </g>
+  <text x="270" y="206" text-anchor="middle" font-size="10" fill="#888">每步位移大小都是 1，净位移只看方向数，与顺序无关</text>
+
+  <!-- ===== equations ===== -->
+  <rect x="60" y="222" width="420" height="62" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="270" y="244" text-anchor="middle" font-size="12" fill="#444" font-weight="bold">a + b = k，  a − b = diff</text>
+  <text x="270" y="266" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">→ a = (k + diff) / 2，  b = (k − diff) / 2</text>
+
+  <!-- ===== answer ===== -->
+  <rect x="60" y="296" width="420" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="270" y="324" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold">ans = C(k, a) = C(k, (k+diff)/2)  mod (10⁹+7)</text>
+
+  <!-- ===== parity note ===== -->
+  <rect x="60" y="352" width="420" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="6" filter="url(#rough2)"/>
+  <text x="270" y="372" text-anchor="middle" font-size="10" fill="#d6a040" font-weight="bold">⚠ (k+diff) 为奇数 或 diff &gt; k → 0 种（不可达）</text>
+</svg>
