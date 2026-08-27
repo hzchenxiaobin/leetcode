@@ -3,11 +3,11 @@
 # 并发前先预分配互不相同的题号，避免多个线程写同一题号的题解
 set -euo pipefail
 
-WORKDIR="/mnt/workspace/code/infra/leetcode"
+WORKDIR="/home/chenb/code/github/leetcode"
 SKILL="$WORKDIR/solution/SKILL.md"
 MESSAGE_PREFIX="使用${SKILL}写一下题号为"
-TIMES=10
-ROUNDS=10
+TIMES=2
+ROUNDS=2
 
 cd "$WORKDIR"
 echo ">>> 工作目录: $(pwd)"
