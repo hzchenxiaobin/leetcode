@@ -3,7 +3,7 @@
 # 并发前先预分配互不相同的题号，避免多个线程写同一题号的题解
 set -euo pipefail
 
-WORKDIR="/home/chenb/code/github/leetcode"
+WORKDIR="$(cd "$(dirname "$0")/.." && pwd)"
 SKILL="$WORKDIR/solution/SKILL.md"
 MESSAGE_PREFIX="使用${SKILL}写一下题号为"
 TIMES=10
