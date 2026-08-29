@@ -6,7 +6,7 @@ set -euo pipefail
 WORKDIR="$(cd "$(dirname "$0")" && pwd)"
 SKILL="$WORKDIR/solution/SKILL.md"
 MESSAGE_PREFIX="使用${SKILL}写一下题号为"
-TIMES=1
+TIMES=2
 ROUNDS=1000
 
 cd "$WORKDIR"
