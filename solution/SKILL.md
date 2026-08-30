@@ -59,7 +59,25 @@ print('\n'.join(str(x) for x in out))
 
 ### 1.4 题目信息获取（实测可用的 recipe）
 
-通过 leetcode.cn 的 GraphQL 获取题面（2026-08 实测可用）。**不要抓 leetcode.com**，会被 Cloudflare 拦截（403）：
+题号 → 题面分两步（2026-08 实测可用）：**题号先换 slug，再用 slug 走 GraphQL 拿题面**。**不要抓 leetcode.com**，会被 Cloudflare 拦截（403）。
+
+**第一步：题号 → slug**。GraphQL 的 question 查询只认 `titleSlug` 不认题号，用全量题表换：
+
+```bash
+curl -s 'https://leetcode.cn/api/problems/all/'
+```
+
+返回 JSON 的 `stat_status_pairs` 每条含 `frontend_question_id`（题号）与 `question__title_slug`。注意两点：
+
+- 题号是**字符串**，表中混有 `LCP 82`、`面试题 01.01` 这类非数字 id，必须按字符串相等匹配，不要 `int()` 转换；
+- 该接口有几 MB，**批量场景缓存一次全表复用**，不要每题都拉。
+
+```python
+slug = next(p['stat']['question__title_slug'] for p in data['stat_status_pairs']
+            if p['stat']['frontend_question_id'] == str(N))
+```
+
+**第二步：slug → 题面**（GraphQL）：
 
 ```bash
 curl -s 'https://leetcode.cn/graphql/' \
@@ -70,9 +88,10 @@ curl -s 'https://leetcode.cn/graphql/' \
 
 要点（均为踩坑记录）：
 
-- **slug 不要凭题号猜**（如把 2633 猜成 `convert-to-date`）。不确定时先搜索 "leetcode <题号>" 确认 slug；猜错的 slug 返回 `question: null`。
+- **slug 不要凭题号猜**（如把 2633 猜成 `convert-to-date`）。优先用第一步的全量题表查；查不到（如表未收录的新题）再搜索 "leetcode <题号>" 确认；猜错的 slug 返回 `question: null`。
 - GraphQL 可用字段以以上 query 为准。`titleCn`、`langCode`、`questionList` 等字段不存在；参数名是 `titleSlug` 而非 `questionId`。
 - 标签字段是 `topicTags { name }`（英文名），没有 `nameTranslated`。
+- `translatedContent` 是 HTML（含 `&nbsp;`/`<code>`/`<sup>` 等），写题解前需去标签转纯文本。
 - 偶发返回阿里系反爬 HTML 页面（不是 JSON，`json.loads` 会报 `JSONDecodeError`），属正常反爬，稍后重试即可；解析前先判断响应是否为合法 JSON。
 
 **付费题处理（`isPaidOnly: true`）**：此时 `translatedContent` 返回 `null`，属预期行为，**不要反复重试抓取题面**。改为：
