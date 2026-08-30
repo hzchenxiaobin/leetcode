@@ -554,7 +554,7 @@ def main() -> None:
         f for f in REPO_ROOT.rglob("*.md")
         if f.is_file()
         and not (set(f.relative_to(REPO_ROOT).parts) & EXCLUDED_PARTS)
-        and f.name != "SKILL.md"
+        and f.name not in {"SKILL.md", "INDEX.md"}
     ])
 
     for md_file in md_files:
