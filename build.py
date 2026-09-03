@@ -582,6 +582,8 @@ def main() -> None:
         markdown_text = _rewrite_md_links_to_html(markdown_text, md_file, slug_by_path)
 
         title = _parse_title(markdown_text, filename=md_file.name)
+        # 去掉正文中的首个 H1——页头已渲染标题，避免重复
+        markdown_text = re.sub(r"^#\s+.*(?:\n|$)", "", markdown_text, count=1, flags=re.MULTILINE)
         info = _classify(md_file)
 
         num_match = re.match(r"(\d+)_", md_file.stem)
