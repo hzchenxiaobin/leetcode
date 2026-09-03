@@ -1,15 +1,15 @@
-# 应该被禁止的 Leetflex 账户
-
-- **题目名称**：应该被禁止的 Leetflex 账户
-- **链接**：[1747. 应该被禁止的 Leetflex 账户](https://leetcode.cn/problems/leetflex-banned-accounts/)
-- **难度**：中等
-- **标签**：数据库、SQL、自连接、区间重叠、`JOIN`、`DISTINCT`、`datetime`
+# LeetCode 应该被禁止的 Leetflex 账户 题解
 
 > ⚠️ **本题是 LeetCode Plus 会员专享题**，官方题面需登录会员查看。下方题面依据平台公开的建表语句与示例数据复原，描述与官方一致。
 
 ## 1. 题目概述
 
-给定 `LogInfo` 表，记录用户登录/登出 Leetflex 账户的会话信息：某 `account_id` 从某 `ip_address` 在 `login` 时刻登录、`logout` 时刻登出。**如果一个账户在同一时刻从两个不同的 IP 地址在线**（即存在两条 `account_id` 相同、`ip_address` 不同、且时间区间 `[login, logout]` 重叠的记录），该账户应被禁止。
+- **标题 / 题号**：应该被禁止的 Leetflex 账户（#1747，medium）
+- **链接**：https://leetcode.cn/problems/leetflex-banned-accounts/
+- **难度**：中等
+- **标签**：数据库、SQL、自连接、区间重叠、`JOIN`、`DISTINCT`、`datetime`
+
+**题意**：给定 `LogInfo` 表，记录用户登录/登出 Leetflex 账户的会话信息：某 `account_id` 从某 `ip_address` 在 `login` 时刻登录、`logout` 时刻登出。**如果一个账户在同一时刻从两个不同的 IP 地址在线**（即存在两条 `account_id` 相同、`ip_address` 不同、且时间区间 `[login, logout]` 重叠的记录），该账户应被禁止。
 
 要求写一个 SQL 查询，返回所有应被禁止账户的 `account_id`，结果按 `account_id` 升序排列。
 
@@ -63,15 +63,13 @@ LogInfo 表：
 账户 4：IP 10 于 17:00:00 登出，IP 11 于 17:00:00 登录，端点相接算同时在线 → 禁止。
 ```
 
-**约束条件**：
+**约束**：
 
 - `account_id`、`ip_address` 为整数；`login`、`logout` 为 `datetime` 类型
 - 区间为**闭区间** $[\text{login}, \text{logout}]$，**端点相接（一端 `logout` = 另一端 `login`）也算重叠**
 - 结果按 `account_id` 升序排列；同一账户多对违规只出现一次
 
 > 💡 本题是 SQL **"自连接 + 区间重叠判定"招牌题**——核心三步：① 自连接把同账户的两条会话配成对；② 用闭区间重叠条件 $a.\text{login} \le b.\text{logout} \land b.\text{login} \le a.\text{logout}$ 筛「同时在线」；③ `DISTINCT` 去重 + `ORDER BY`。难点在端点相接的边界处理：账户 3 用 `16:59:59` 与账户 4 用 `17:00:00` 仅差 1 秒，却决定禁止与否。
-
----
 
 ## 2. 解题思路
 
@@ -150,8 +148,6 @@ $$\text{login}_1 \le \text{logout}_2 \quad \land \quad \text{login}_2 \le \text{
 | 1 |
 | 4 |
 
----
-
 ## 3. 参考代码
 
 ### SQL（解法 A：自连接 + 闭区间重叠，推荐）
@@ -218,8 +214,6 @@ def leetflex_banned_accounts(log_info: pd.DataFrame) -> pd.DataFrame:
 > - `(login_1 <= logout_2) & (login_2 <= logout_1)` 对应闭区间重叠公式。
 > - `.drop_duplicates().sort_values()` 对应 `DISTINCT ... ORDER BY`。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 解法 A（`JOIN` + `<`） | 解法 B（隐式连接 + `<>`） | pandas |
@@ -233,8 +227,6 @@ def leetflex_banned_accounts(log_info: pd.DataFrame) -> pd.DataFrame:
 > - **时间**：自连接最坏产生 $O(n^2)$ 个配对（同账户的所有两两组合），每个配对 $O(1)$ 判定。若同账户会话数有上限 $k$，则配对数为 $O(n \cdot k)$。现代数据库优化器在 `account_id` 有索引时可走嵌套循环或哈希连接，把不同账户的会话分桶，配对只发生在桶内。
 > - **空间**：中间配对结果最多 $O(n^2)$ 行，去重后结果 $O(m)$。
 > - **索引优化**：在 `LogInfo(account_id)` 上建索引，让同账户会话快速聚集；`ip_address`、`login`、`logout` 的联合索引可进一步加速区间扫描。
-
----
 
 ## 5. 扩展：区间重叠的判定模板与变体
 
@@ -254,8 +246,6 @@ def leetflex_banned_accounts(log_info: pd.DataFrame) -> pd.DataFrame:
 3. **若会话数量大、需优化？** 对 `login`/`logout` 建索引并按 `account_id` 分桶；或用窗口函数按 `account_id` 分区、按 `login` 排序后检查相邻会话的最大 `logout` 是否覆盖当前 `login`，可降至 $O(n \log n)$（前提是只需判定「是否存在任一重叠」，而非所有重叠对）。
 
 > ⚠️ **`datetime` 比较的数据库一致性**：MySQL/PostgreSQL/SQL Server 的 `datetime`/`timestamp` 可直接用 `<=` 比较，语义一致。Oracle 的 `DATE` 类型同样支持。本题建表语句在 Oracle 下用 `login date, logout date`（见 `metaData`），比较行为不变。
-
----
 
 ## 6. 面试要点
 
@@ -281,12 +271,12 @@ def leetflex_banned_accounts(log_info: pd.DataFrame) -> pd.DataFrame:
 
 > 💡 **一句话总结**：1747 是 SQL **"自连接 + 区间重叠"招牌题**——核心模板「`FROM LogInfo l1 JOIN LogInfo l2 ON account_id 相同 AND ip 不同 AND login₁ ≤ logout₂ AND login₂ ≤ logout₁` → `SELECT DISTINCT` → `ORDER BY`」。三大要点：① 同表双别名产生会话配对；② 闭区间相交公式用 `<=` 让端点相接算重叠；③ `DISTINCT` 防同一账户多对重复。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [1454. 活跃用户](https://leetcode.cn/problems/active-users/)：自连接 + 登录日期区间判定活跃，对照本题「时间区间比较」的「日期连续」变体
-- [603. 连续空余座位](https://leetcode.cn/problems/consecutive-available-seats/)：自连接 + 相邻 ID 比较，巩固「同表双别名 + JOIN 配对」骨架
-- [1280. 学生们参加各科测试的次数](https://leetcode.cn/problems/students-and-examinations/)：自连接 + 分组计数，对照本题「自连接配对」的「分组聚合」场景
-- [197. 上升的温度](https://leetcode.cn/problems/rising-temperature/)：自连接 + 日期比较（`DATEDIFF`），自连接在时序数据上的应用
-- [175. 组合两个表](https://leetcode.cn/problems/combine-two-tables/)：`JOIN` 基础入门题，对照本题理解「连接条件」的构造
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 1454 | [活跃用户](https://leetcode.cn/problems/active-users/) | 自连接 + 登录日期区间判定活跃，对照本题「时间区间比较」的「日期连续」变体 |
+| 603 | [连续空余座位](https://leetcode.cn/problems/consecutive-available-seats/) | 自连接 + 相邻 ID 比较，巩固「同表双别名 + JOIN 配对」骨架 |
+| 1280 | [学生们参加各科测试的次数](https://leetcode.cn/problems/students-and-examinations/) | 自连接 + 分组计数，对照本题「自连接配对」的「分组聚合」场景 |
+| 197 | [上升的温度](https://leetcode.cn/problems/rising-temperature/) | 自连接 + 日期比较（`DATEDIFF`），自连接在时序数据上的应用 |
+| 175 | [组合两个表](https://leetcode.cn/problems/combine-two-tables/) | `JOIN` 基础入门题，对照本题理解「连接条件」的构造 |

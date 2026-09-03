@@ -1,13 +1,13 @@
-# Leetcodify 好友推荐
-
-- **题目名称**：Leetcodify 好友推荐
-- **链接**：[1917. Leetcodify 好友推荐](https://leetcode.cn/problems/leetcodify-friends-recommendations/)
-- **难度**：困难
-- **标签**：数据库、SQL、自连接（Self-Join）、`NOT EXISTS`、反连接（anti-join）、`UNION`、对称化、`GROUP BY` + `HAVING`、`COUNT(DISTINCT)`、`SELECT DISTINCT`、LeetCode 锁题
+# LeetCode Leetcodify 好友推荐 题解
 
 ## 1. 题目概述
 
-给定 `Listens`（收听记录）与 `Friendship`（好友关系）两张表，编写 SQL 查询，为 Leetcodify 用户推荐好友。将符合下列条件的用户 $x$ 推荐给用户 $y$：
+- **标题 / 题号**：Leetcodify 好友推荐（#1917，hard）
+- **链接**：https://leetcode.cn/problems/leetcodify-friends-recommendations/
+- **难度**：困难
+- **标签**：数据库、SQL、自连接（Self-Join）、`NOT EXISTS`、反连接（anti-join）、`UNION`、对称化、`GROUP BY` + `HAVING`、`COUNT(DISTINCT)`、`SELECT DISTINCT`、LeetCode 锁题
+
+**题意**：给定 `Listens`（收听记录）与 `Friendship`（好友关系）两张表，编写 SQL 查询，为 Leetcodify 用户推荐好友。将符合下列条件的用户 $x$ 推荐给用户 $y$：
 
 - 用户 $x$ 和 $y$ **不是好友**，且
 - 用户 $x$ 和 $y$ 在**同一天**收听了相同的**三首或更多不同歌曲**。
@@ -97,8 +97,6 @@ Friendship 表：
 > 💡 **审题关键**：① 「同一天」——$x$ 和 $y$ 必须在**相同的 `day`** 收听共同歌曲，跨天不算；② 「三首或更多**不同**歌曲」——去重计数，若同一首歌两人各听两遍，仍只算一首；③ 好友关系表只存 `user1_id < user2_id` 的单向行，判定「是否好友」需**双向对称化**；④ 推荐是**单向**的——$(x, y)$ 与 $(y, x)$ 是两条独立结果。
 
 > ⚠️ **Listens 表可能存在重复项**：同一 `(user_id, song_id, day)` 三元组可能出现多行。这直接影响计数方式——必须用 `COUNT(DISTINCT song_id)` 而非 `COUNT(*)`，否则重复行会虚增共同歌曲数（详见 2.2）。
-
----
 
 ## 2. 解题思路
 
@@ -263,8 +261,6 @@ $$\boxed{\text{推荐}(\text{user\_id}, \text{recommended\_id}) \iff \exists\,\t
 
 > 💡 **观察要点**：① 用户 4 虽与 1、2、3 都有共同歌曲，但都只有 2 首（因 4 听了 13 而非 12），全部被 `HAVING` 过滤；② 用户 5 在 03-16 独自听歌，自连接无匹配行（`l1.user_id != l2.user_id` 无法满足），不参与任何用户对；③ $(1,3)$ 与 $(3,1)$ 各占一行——单向推荐的双向性由自连接的双向匹配天然保证。
 
----
-
 ## 3. 参考代码
 
 ### SQL（解法 A：自连接 + `NOT EXISTS` + `GROUP BY`/`HAVING`，推荐）
@@ -411,8 +407,6 @@ def leetcodify_friends_recommendations(
 > - `.groupby(...).nunique()`——对应 `GROUP BY` + `COUNT(DISTINCT song_id)`。`nunique()` 即 `COUNT(DISTINCT)`。
 > - `.drop_duplicates()`——对应 `SELECT DISTINCT`。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 解法 A（`NOT EXISTS`） | 解法 B（`LEFT JOIN`） | 解法 C（CTE 分层） | pandas |
@@ -426,8 +420,6 @@ def leetcodify_friends_recommendations(
 > - **时间**：自连接 `Listens` 按 `(day, song_id)` 等值匹配，若每天每首歌平均 $S$ 个用户收听，则连接产出 $L \cdot S$ 行（每个 `Listens` 行匹配同日同曲的 $S-1$ 个其他用户）。`NOT EXISTS`/`LEFT JOIN` 对每行检查好友表，有索引时 $O(\log F)$。解法 C 先聚合全部用户对（含好友）再过滤，聚合数据量略大。
 > - **空间**：自连接中间表 $O(L \cdot S)$，好友对称表 $O(F)$。
 > - **索引优化**：在 `Listens(day, song_id)` 上建复合索引可加速自连接；在 `Friendship(user1_id, user2_id)` 上建索引可加速 `NOT EXISTS` 的相关子查询。
-
----
 
 ## 5. 扩展：自连接的三种反连接写法与对称化技巧
 
@@ -477,8 +469,6 @@ def leetcodify_friends_recommendations(
 
 > 💡 本题选「不限制大小」更简洁——自连接天然产出 $(x,y)$ 与 $(y,x)$，无需额外 `UNION`。但若题目要求「每对只出现一行（按 `user1 < user2` 排序）」，则应限制 `l1.user_id < l2.user_id` 避免双向重复。
 
----
-
 ## 6. 面试要点
 
 1. **为什么需要对 `Friendship` 表做对称化？**
@@ -503,12 +493,12 @@ def leetcodify_friends_recommendations(
 
 > 💡 **一句话总结**：1917 是 SQL **"自连接 + 反连接 + 分组计数"招牌题**——核心模板「CTE `UNION` 对称化好友表 → `Listens` 自连接 `ON day, song_id, user_id !=` 物化共听对 → `WHERE NOT EXISTS` 排除好友 → `GROUP BY day, user_x, user_y` + `HAVING COUNT(DISTINCT song) >= 3` → `SELECT DISTINCT` 去重」。三大要点：① **`UNION` 对称化好友关系**；② **`COUNT(DISTINCT)` 应对重复行**；③ **`NOT EXISTS` 在 `WHERE` 提前过滤**。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [1581. 进店却未进行过交易的顾客](https://leetcode.cn/problems/customer-who-visited-but-did-not-make-any-transactions/)（[题解](../1501-1600/1581_进店却未进行过交易的顾客.md)）：反连接入门招牌题——`LEFT JOIN ... IS NULL` / `NOT EXISTS` 排除有匹配的行，与本题 `NOT EXISTS` 排除好友同源，但 1581 是单表反连接，1917 是自连接后再反连接
-- [183. 从不订购的客户](https://leetcode.cn/problems/customers-who-never-order/)：反连接最经典母题——`LEFT JOIN ... IS NULL` 找从未订购的客户，巩固反连接三件套（`LEFT JOIN`/`NOT EXISTS`/`NOT IN`）的基础写法
-- [1811. 寻找面试候选人](https://leetcode.cn/problems/find-interview-candidates/)（[题解](../1801-1900/1811_寻找面试候选人.md)）：`UNION ALL` 逆透视 + 自连接三元组判定，与本题自连接 + `UNION` 对称化同为「宽表展开 + 自身关联」家族，但 1811 检测连续性，1911 检测共听数
-- [197. 上升的温度](https://leetcode.cn/problems/rising-temperature/)（[题解](../0101-0200/197_上升的温度.md)）：自连接做跨行比较（找比昨天温度高的日期），体会自连接 `ON` 条件中「不等 + 跨行关联」的写法，与本题 `ON day, song_id, user_id !=` 对照
-- [602. 好友申请 II - 谁有最多的好友](https://leetcode.cn/problems/friend-requests-ii-who-has-the-most-friends/)：`UNION ALL` 合并 `requester_id`/`accepter_id` 两列为一列再 `GROUP BY` 计数，与本题 `UNION` 对称化好友表同类，体会「把宽表两列展开为长表」的逆透视技巧
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 1581 | [进店却未进行过交易的顾客](https://leetcode.cn/problems/customer-who-visited-but-did-not-make-any-transactions/)（[题解](../1501-1600/1581_进店却未进行过交易的顾客.md)） | 反连接入门招牌题——`LEFT JOIN ... IS NULL` / `NOT EXISTS` 排除有匹配的行，与本题 `NOT EXISTS` 排除好友同源，但 1581 是单表反连接，1917 是自连接后再反连接 |
+| 183 | [从不订购的客户](https://leetcode.cn/problems/customers-who-never-order/) | 反连接最经典母题——`LEFT JOIN ... IS NULL` 找从未订购的客户，巩固反连接三件套（`LEFT JOIN`/`NOT EXISTS`/`NOT IN`）的基础写法 |
+| 1811 | [寻找面试候选人](https://leetcode.cn/problems/find-interview-candidates/)（[题解](../1801-1900/1811_寻找面试候选人.md)） | `UNION ALL` 逆透视 + 自连接三元组判定，与本题自连接 + `UNION` 对称化同为「宽表展开 + 自身关联」家族，但 1811 检测连续性，1911 检测共听数 |
+| 197 | [上升的温度](https://leetcode.cn/problems/rising-temperature/)（[题解](../0101-0200/197_上升的温度.md)） | 自连接做跨行比较（找比昨天温度高的日期），体会自连接 `ON` 条件中「不等 + 跨行关联」的写法，与本题 `ON day, song_id, user_id !=` 对照 |
+| 602 | [好友申请 II - 谁有最多的好友](https://leetcode.cn/problems/friend-requests-ii-who-has-the-most-friends/) | `UNION ALL` 合并 `requester_id`/`accepter_id` 两列为一列再 `GROUP BY` 计数，与本题 `UNION` 对称化好友表同类，体会「把宽表两列展开为长表」的逆透视技巧 |

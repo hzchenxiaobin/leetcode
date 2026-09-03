@@ -1,13 +1,13 @@
-# 有时间限制的Promise对象
-
-- **题目名称**：有时间限制的Promise对象
-- **链接**：[2637. 有时间限制的Promise对象](https://leetcode.cn/problems/promise-time-limit/)
-- **难度**：中等
-- **标签**：Promise、async/await、setTimeout、Promise.race
+# LeetCode 有时间限制的Promise对象 题解
 
 ## 1. 题目概述
 
-编写函数 `timeLimit(fn, t)`，接收一个异步函数 `fn` 和以毫秒为单位的时间 `t`，返回一个**限时函数**。该函数接受与 `fn` 相同的参数，遵循：
+- **标题 / 题号**：有时间限制的Promise对象（#2637，medium）
+- **链接**：https://leetcode.cn/problems/promise-time-limit/
+- **难度**：中等
+- **标签**：Promise、async/await、setTimeout、Promise.race
+
+**题意**：编写函数 `timeLimit(fn, t)`，接收一个异步函数 `fn` 和以毫秒为单位的时间 `t`，返回一个**限时函数**。该函数接受与 `fn` 相同的参数，遵循：
 
 - 若 `fn` 在 `t` 毫秒内完成，返回结果；
 - 若 `fn` 执行超过 `t` 毫秒，拒绝并返回字符串 `"Time Limit Exceeded"`。
@@ -56,15 +56,13 @@ t = 1000
 解释：fn 立即抛出 Error，race 立即落定为 rejected。
 ```
 
-**约束条件**：
+**约束**：
 
 - `0 <= inputs.length <= 10`
 - `0 <= t <= 1000`
 - `fn` 返回一个 Promise 对象
 
 > 💡 关键信号：这是一道**语言特性题**，不考算法复杂度，考的是对 **Promise.race 语义**的理解——"谁先敲定谁获胜"，以及 Promise 状态**一次性、不可回退**的特性。核心是「**让真实任务与超时定时器竞速，先到先决**」。
-
----
 
 ## 2. 解题思路
 
@@ -126,8 +124,6 @@ function timeLimit(fn, t) {
 - **示例 1**（fn=100ms，t=50ms）：定时器在 50ms 先触发 `reject("Time Limit Exceeded")`，B 先敲定，race 落定为 rejected。fn 虽仍在运行但已无意义。
 - **示例 2**（fn=100ms，t=150ms）：fn 在 100ms resolve(25)，A 先敲定，race 落定为 fulfilled(25)。150ms 后定时器触发 reject，但 B 的 reject 已是空操作。
 - **示例 4**（fn 立即 throw）：fn 同步返回的 Promise 立即 reject("Error")，A 在 time≈0 就敲定，race 跟随 reject。这印证了 race 的"先到先决"——fn 自身的 reject 也能赢得竞速。
-
----
 
 ## 3. 参考代码
 
@@ -203,8 +199,6 @@ class Solution:
 
 > ⚠️ 注意 `asyncio.wait_for` 超时会**取消**底层协程并抛 `asyncio.TimeoutError`，与 JS 中 fn 继续在后台运行、仅 race 失效不同。本题要求超时返回字符串 `"Time Limit Exceeded"`，故实际需 catch `TimeoutError` 转为该字符串；此处仅展示概念对应。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -213,8 +207,6 @@ class Solution:
 | **空间复杂度** | $O(1)$ | 分配一个超时 Promise 与一个定时器句柄；race 外层 Promise 复用 V8 内部结构 |
 
 > 💡 真实的"时间成本"是 $\min(\text{fn 耗时}, t)$ 毫秒的延迟，但属**调度开销**而非**计算复杂度**。fn 若未完成仍会在后台运行至结束（JS 无法取消已发起的 Promise），但其结果被丢弃——这是 JS 异步模型的固有限制。
-
----
 
 ## 5. 扩展：真正的"取消"与 AbortController
 
@@ -240,8 +232,6 @@ var timeLimit = function (fn, t) {
 
 > 💡 本题的 fn 是黑盒（不知道是否支持 signal），故 `Promise.race` 是唯一通用解法。`AbortController` 适用于 fn 由你控制、且支持 signal 的工程场景。
 
----
-
 ## 6. 面试要点
 
 1. **`Promise.race` 的确切语义是什么？**
@@ -266,11 +256,11 @@ var timeLimit = function (fn, t) {
 
 > 💡 **一句话总结**：2637 = 「`Promise.race([fn(...args), 超时 Promise])`」。让真实任务与 `t` 毫秒超时闸门竞速，先敲定者决定终态——fn 赢则透传结果，超时赢则 reject `"Time Limit Exceeded"`。本质是利用 Promise 状态的一次性实现"先到先决"。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2621. 睡眠函数](https://leetcode.cn/problems/sleep/)：`new Promise(r => setTimeout(r, millis))`，一次性延迟回调；本题把 setTimeout 的 reject 用作超时闸门，承接"定时器驱动状态转移"思想（[题解](../2601-2700/2621_睡眠函数.md)）
-- [2622. 有时间限制的缓存](https://leetcode.cn/problems/cache-with-time-limit/)：`setTimeout` + `clearTimeout` 管键过期，覆盖时必须清旧 timer 防误删；本题用定时器做超时拒绝，思想相通
-- [2636. 串行处理 promise](https://leetcode.cn/problems/promise-pool/)：Promise 的调度与并发控制，承接对 Promise 链与 async/await 时序的理解
-- [2715. 执行可取消的延迟函数](https://leetcode.cn/problems/timeout-cancellation/)：在 2621 基础上加 cancel 取消延迟，与本题超时取消是"延迟 + 撤销"的两种应用
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2621 | [睡眠函数](https://leetcode.cn/problems/sleep/) | `new Promise(r => setTimeout(r, millis))`，一次性延迟回调；本题把 setTimeout 的 reject 用作超时闸门，承接"定时器驱动状态转移"思想（[题解](../2601-2700/2621_睡眠函数.md)） |
+| 2622 | [有时间限制的缓存](https://leetcode.cn/problems/cache-with-time-limit/) | `setTimeout` + `clearTimeout` 管键过期，覆盖时必须清旧 timer 防误删；本题用定时器做超时拒绝，思想相通 |
+| 2636 | [串行处理 promise](https://leetcode.cn/problems/promise-pool/) | Promise 的调度与并发控制，承接对 Promise 链与 async/await 时序的理解 |
+| 2715 | [执行可取消的延迟函数](https://leetcode.cn/problems/timeout-cancellation/) | 在 2621 基础上加 cancel 取消延迟，与本题超时取消是"延迟 + 撤销"的两种应用 |

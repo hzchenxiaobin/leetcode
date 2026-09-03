@@ -1,13 +1,13 @@
-# Alice和Bob玩鲜花游戏
-
-- **题目名称**：Alice和Bob玩鲜花游戏
-- **链接**：[3021. Alice 和 Bob 玩鲜花游戏](https://leetcode.cn/problems/alice-and-bob-playing-flower-game/)
-- **难度**：中等
-- **标签**：数学、博弈、奇偶性
+# LeetCode Alice和Bob玩鲜花游戏 题解
 
 ## 1. 题目概述
 
-Alice 和 Bob 在一片田野上玩一个回合制游戏，两人之间有两排花：**第一排 x 朵，第二排 y 朵**。游戏规则：
+- **标题 / 题号**：Alice和Bob玩鲜花游戏（#3021，medium）
+- **链接**：https://leetcode.cn/problems/alice-and-bob-playing-flower-game/
+- **难度**：中等
+- **标签**：数学、博弈、奇偶性
+
+**题意**：Alice 和 Bob 在一片田野上玩一个回合制游戏，两人之间有两排花：**第一排 x 朵，第二排 y 朵**。游戏规则：
 
 1. Alice 先行动；
 2. 每一次行动中，当前玩家必须**选择其中一排**，从这排摘走**一朵**鲜花；
@@ -34,13 +34,11 @@ Alice 和 Bob 在一片田野上玩一个回合制游戏，两人之间有两排
 解释：没有数对满足题目要求。
 ```
 
-**约束条件**：
+**约束**：
 
 - $1 \le n, m \le 10^5$
 
 > ⚠️ 读题陷阱：本题不是让你模拟对局，而是**计数**——数有多少个初始局面 $(x, y)$ 先手必胜。胜负判定要做成 $O(1)$，计数还要再压成公式，两层都不能暴力。
-
----
 
 ## 2. 解题思路
 
@@ -109,8 +107,6 @@ $$\text{ans} = \left\lfloor \frac{n \cdot m}{2} \right\rfloor$$
 
 ✓ 共 3 对：$(1,2)$、$(2,1)$、$(3,2)$，与示例输出一致，也与公式 $\lfloor 3 \times 2 / 2 \rfloor = 3$ 吻合。
 
----
-
 ## 3. 参考代码
 
 ### C++（O(1) 闭合公式）
@@ -148,8 +144,6 @@ class Solution:
 
 > 💡 面试建议：先讲清「策略无关 → 奇偶判定」的因果链，再给分类计数版（可复现推导过程），最后指出可化简为 $\lfloor nm/2 \rfloor$。直接甩一行公式而不解释为什么策略不影响胜负，等于没做这道题。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -157,8 +151,6 @@ class Solution:
 | 时间复杂度 | $O(1)$ | 一次乘法 + 一次整除（分类计数版也仅 4 次除法 + 2 次乘加） |
 | 空间复杂度 | $O(1)$ | 常数个变量 |
 | 暴力对照 | $O(nm)$ | $n, m \le 10^5$ 时达 $10^{10}$，必然超时——判定再快也救不了枚举层 |
-
----
 
 ## 5. 扩展：规则一变形，何时变成「真博弈」？
 
@@ -169,8 +161,6 @@ class Solution:
 - **步长固定但终局条件复杂**（如「谁先面对某排为 0 谁输」）：奇偶分析仍可能奏效，但要重新核对终局判定，如 [2029. 石子游戏 IX](https://leetcode.cn/problems/stone-game-ix/) 的余数分类讨论。
 
 一句话方法论：**先找不变量（每步总变化量、终局条件）——不变量足够简单时博弈退化成数学，否则才上 DP / SG**。
-
----
 
 ## 6. 面试要点
 
@@ -194,12 +184,12 @@ class Solution:
 
    - 两条路：(a) 不变量论证（如上）；(b) 小规模对拍——记忆化 `win(a, b)` 暴力与奇偶判定在 $a, b \le 20$ 内全量比对，闭合公式再与 $O(nm)$ 逐对计数在 $n, m \le 50$ 内对拍。能主动提对拍思路是加分项。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [292. Nim 游戏](https://leetcode.cn/problems/nim-game/)：「找规律出 O(1) 公式」的假博弈代表作，结论 $n \bmod 4 \neq 0$，与本题同属策略无关型
-- [877. 石子游戏](https://leetcode.cn/problems/stone-game/)（[题解](../0801-0900/877_石子游戏.md)）：真博弈——收益不对称、需要区间 DP + Minimax，与本题「策略无关」形成鲜明对照
-- [486. 预测赢家](https://leetcode.cn/problems/predict-the-winner/)：博弈 DP 入门，判断先手能否不输，练「先手必胜/不败」的状态设计
-- [319. 灯泡开关](https://leetcode.cn/problems/bulb-switcher/)：纯数学找规律推闭合公式 $\lfloor\sqrt{n}\rfloor$，训练「从模拟到公式」的化简直觉
-- [2029. 石子游戏 IX](https://leetcode.cn/problems/stone-game-ix/)：胜负由奇偶性与余数分类主导的博弈，练「按局面分类讨论」的严谨性
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 292 | [Nim 游戏](https://leetcode.cn/problems/nim-game/) | 「找规律出 O(1) 公式」的假博弈代表作，结论 $n \bmod 4 \neq 0$，与本题同属策略无关型 |
+| 877 | [石子游戏](https://leetcode.cn/problems/stone-game/)（[题解](../0801-0900/877_石子游戏.md)） | 真博弈——收益不对称、需要区间 DP + Minimax，与本题「策略无关」形成鲜明对照 |
+| 486 | [预测赢家](https://leetcode.cn/problems/predict-the-winner/) | 博弈 DP 入门，判断先手能否不输，练「先手必胜/不败」的状态设计 |
+| 319 | [灯泡开关](https://leetcode.cn/problems/bulb-switcher/) | 纯数学找规律推闭合公式 $\lfloor\sqrt{n}\rfloor$，训练「从模拟到公式」的化简直觉 |
+| 2029 | [石子游戏 IX](https://leetcode.cn/problems/stone-game-ix/) | 胜负由奇偶性与余数分类主导的博弈，练「按局面分类讨论」的严谨性 |

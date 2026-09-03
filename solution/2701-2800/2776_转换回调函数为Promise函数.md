@@ -1,15 +1,15 @@
-# 转换回调函数为 Promise 函数
-
-- **题目名称**：转换回调函数为 Promise 函数
-- **链接**：[2776. Convert Callback Based Function to Promise Based Function](https://leetcode.cn/problems/convert-callback-based-function-to-promise-based-function/)
-- **难度**：中等
-- **标签**：Promise、回调函数、闭包、`util.promisify`
+# LeetCode 转换回调函数为 Promise 函数 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：转换回调函数为 Promise 函数（#2776，medium）
+- **链接**：https://leetcode.cn/problems/convert-callback-based-function-to-promise-based-function/
+- **难度**：中等
+- **标签**：Promise、回调函数、闭包、`util.promisify`
+
 > ⚠️ 本题为 LeetCode 付费题，题意描述根据官方示例用例与 hints 重建，可能与官方题面有出入。
 
-给定一个**回调式异步函数** `fn`，它的签名是 `fn(callback, ...args)`：第一个参数是回调函数 `callback`，其余参数是业务参数 `...args`。函数内部会**同步或异步**地调用 `callback` 来通知结果。
+**题意**：给定一个**回调式异步函数** `fn`，它的签名是 `fn(callback, ...args)`：第一个参数是回调函数 `callback`，其余参数是业务参数 `...args`。函数内部会**同步或异步**地调用 `callback` 来通知结果。
 
 请你实现一个 `promisify(fn)`，它返回一个**新的函数**：新函数接受同样的业务参数 `...args`，但**不再需要 callback**，而是返回一个 `Promise`。该 Promise 的 resolve / reject 由 `callback` 的调用方式决定：
 
@@ -40,15 +40,13 @@ args = [4, 5, 6]
       callback 有第二个真值参数 error → Promise reject("Promise Rejected")。value=120 被丢弃。
 ```
 
-**约束条件**：
+**约束**：
 
 - `fn` 是一个接受 `(callback, ...args)` 的函数；
 - `args` 是传给原函数的业务参数数组；
 - 本题仅开放 JavaScript / TypeScript 提交。
 
 > 💡 本题是 LeetCode「30 天 JavaScript」系列的进阶题，考点不在算法复杂度，而在**回调 → Promise 的范式转换**——即 Node.js `util.promisify` 的核心思想。关键要读懂「callback 的两个参数分别表示什么」：本题采用**值在前、错误在后**（`callback(value, error)`）的契约，与 Node.js 标准的**错误在前**（`callback(err, ...results)`）恰好参数顺序相反，但判定错误的逻辑同构（「错误是否为真值」）。下文以 JS 为提交语言，并给出 Python 概念等价实现。
-
----
 
 ## 2. 解题思路
 
@@ -104,8 +102,6 @@ args = [4, 5, 6]
 | 2 | `callback(120, "Promise Rejected")` | 2 | `"Promise Rejected"`（真值） | `reject("Promise Rejected")` | rejected: `"Promise Rejected"` |
 
 > 💡 **示例 2 的关键点**：`value = 120` 被计算了（`4*5*6`），但因为有 error，它被**丢弃**——Promise 直接 reject，调用方拿到的 rejection reason 是 `"Promise Rejected"` 而非 `120`。这对应「失败时不关心成功值」的语义：error 一旦为真，整个 Promise 立即失败。
-
----
 
 ## 3. 参考代码
 
@@ -195,8 +191,6 @@ def promisify(fn):
 
 > ⚠️ Python 中 `set_exception` 接收一个异常对象而非裸字符串，故把 `error` 包成 `Exception(error)`。同时用 `future.done()` 防护「callback 被重复调用」导致 `InvalidStateError`——JS Promise 天然忽略二次 settle（resolve/reject 只生效一次），Python Future 需手动守护。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -205,8 +199,6 @@ def promisify(fn):
 | 空间复杂度 | $O(1)$（不含 `fn` 闭包） | 仅持有 `callback` 闭包与一个 Promise 对象的引用 |
 
 > 💡 本题复杂度不体现算法效率，而在**范式桥接的开销**：`promisify` 是一层极薄的适配器（adapter），把回调式接口适配为 Promise 式接口。适配器本身 $O(1)$，不改变底层 `fn` 的时间空间。这正是设计模式中「适配器」的精髓——不重写逻辑，只转换接口形态。
-
----
 
 ## 5. 扩展：Node.js `util.promisify` 与错误优先契约
 
@@ -253,8 +245,6 @@ function callback(...cbArgs) {
 
 > 💡 标准 `util.promisify` 对多结果的处理：当 `err` 为 falsy 时，`resolve(results)` 只取**第一个** result（即 `...results` 的首元素）。若需全部，用 `util.promisify.custom` 自定义。本题仅单 value，无需此扩展。
 
----
-
 ## 6. 面试要点
 
 1. **为什么不能用 `async/await` 简化本题？**
@@ -279,12 +269,12 @@ function callback(...cbArgs) {
 
 > 💡 **一句话总结**：2776 = 「`new Promise` 内构造 `callback(value, error)`，据 `error` 真值分派 `resolve/reject`，把 callback 作为第一参注入 `fn`」。本质是把回调式接口适配为 Promise 式接口的薄适配器——`util.promisify` 的「值在前」变体。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2723. 两个 Promise 对象相加](https://leetcode.cn/problems/add-two-promises/)（[题解](2723_两个Promise对象相加.md)）：`async + await` **消费**已有 Promise 取值求和，与本题 `new Promise` **构造** Promise 形成对照——Promise 的消费面 vs 构造面
-- [2637. 有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/)（[题解](../2601-2700/2637_有时间限制的Promise对象.md)）：`Promise.race` 在 `fn` 与超时 Promise 间赛跑，复用「闭包捕获 resolve/reject」的桥接手法，把本题的回调嫁接升级为竞速取消
-- [2721. 并行执行异步函数](https://leetcode.cn/problems/execute-asynchronous-functions-in-parallel/)（[题解](2721_并行执行异步函数.md)）：手写 `Promise.all`，在多个 Promise 间用闭包计数器桥接 resolve/reject——闭包捕获同一手法的多值并发版
-- [2621. 睡眠函数](https://leetcode.cn/problems/sleep/)（[题解](../2601-2700/2621_睡眠函数.md)）：`new Promise` + `setTimeout` 回调里调 `resolve`，是最简的「回调→Promise 桥接」，承接本题的 `new Promise` 构造范式
-- [2715. 执行可取消的延迟函数](https://leetcode.cn/problems/timeout-cancellation/)（[题解](2715_执行可取消的延迟函数.md)）：`setTimeout` + `clearTimeout` 的定时器生命周期管理，同属「30 天 JS」异步系列，从 Promise 构造转向回调/定时器治理
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2723 | [两个 Promise 对象相加](https://leetcode.cn/problems/add-two-promises/)（[题解](2723_两个Promise对象相加.md)） | `async + await` **消费**已有 Promise 取值求和，与本题 `new Promise` **构造** Promise 形成对照——Promise 的消费面 vs 构造面 |
+| 2637 | [有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/)（[题解](../2601-2700/2637_有时间限制的Promise对象.md)） | `Promise.race` 在 `fn` 与超时 Promise 间赛跑，复用「闭包捕获 resolve/reject」的桥接手法，把本题的回调嫁接升级为竞速取消 |
+| 2721 | [并行执行异步函数](https://leetcode.cn/problems/execute-asynchronous-functions-in-parallel/)（[题解](2721_并行执行异步函数.md)） | 手写 `Promise.all`，在多个 Promise 间用闭包计数器桥接 resolve/reject——闭包捕获同一手法的多值并发版 |
+| 2621 | [睡眠函数](https://leetcode.cn/problems/sleep/)（[题解](../2601-2700/2621_睡眠函数.md)） | `new Promise` + `setTimeout` 回调里调 `resolve`，是最简的「回调→Promise 桥接」，承接本题的 `new Promise` 构造范式 |
+| 2715 | [执行可取消的延迟函数](https://leetcode.cn/problems/timeout-cancellation/)（[题解](2715_执行可取消的延迟函数.md)） | `setTimeout` + `clearTimeout` 的定时器生命周期管理，同属「30 天 JS」异步系列，从 Promise 构造转向回调/定时器治理 |

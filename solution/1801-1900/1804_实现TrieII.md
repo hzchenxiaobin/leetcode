@@ -1,13 +1,13 @@
-# 实现 Trie II（前缀树）
-
-- **题目名称**：实现 Trie II（前缀树）
-- **链接**：[1804. 实现 Trie II（前缀树）](https://leetcode.cn/problems/implement-trie-ii-prefix-tree/)
-- **难度**：中等
-- **标签**：字典树、设计、哈希表
+# LeetCode 实现 Trie II（前缀树） 题解
 
 ## 1. 题目概述
 
-在 [208. 实现 Trie (前缀树)](../0201-0300/208_实现Trie.md) 的基础上增强：不仅支持插入与前缀查找，还要支持**计数**（统计某单词出现次数、统计某前缀下单词数）与**删除**。需要实现 `Trie2` 类：
+- **标题 / 题号**：实现 Trie II（前缀树）（#1804，medium）
+- **链接**：https://leetcode.cn/problems/implement-trie-ii-prefix-tree/
+- **难度**：中等
+- **标签**：字典树、设计、哈希表
+
+**题意**：在 [208. 实现 Trie (前缀树)](../0201-0300/208_实现Trie.md) 的基础上增强：不仅支持插入与前缀查找，还要支持**计数**（统计某单词出现次数、统计某前缀下单词数）与**删除**。需要实现 `Trie2` 类：
 
 - `Trie2()`：初始化前缀树。
 - `void insert(word)`：插入单词 `word`（允许重复插入）。
@@ -37,14 +37,12 @@ trie2.erase("apple");                     // 再删除一个 "apple"
 trie2.countWordsStartingWith("app");      // 返回 0（已无单词以 "app" 开头）
 ```
 
-**约束条件**：
+**约束**：
 
 - $1 \leq \text{word.length}, \text{prefix.length} \leq 1000$
 - `word` 和 `prefix` 仅由小写英文字母组成
 - `insert`、`countWordsEqualTo`、`countWordsStartingWith`、`erase` 的总调用次数不超过 $3 \times 10^4$
 - `erase` 调用时保证 `word` 在前缀树中存在
-
----
 
 ## 2. 解题思路
 
@@ -125,8 +123,6 @@ countWordsStartingWith(prefix):
 | 9 | countWordsStartingWith("app") | — | 读 pass=0 | **0** |
 
 > 💡 `countWordsStartingWith("app")` 走到第 2 个 `p` 节点直接读 `cnt_pass`——尽管从未插入过单词 `"app"`，该节点仍存在于 `"apple"` 的路径上，`pass` 反映的是「经过此节点的单词数」=2。两次 `erase` 后 `pass` 归 0，等价于该前缀已无单词。
-
----
 
 ## 3. 参考代码
 
@@ -237,8 +233,6 @@ class Trie2:
         node.cnt_end -= 1
 ```
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -251,8 +245,6 @@ class Trie2:
 
 > 与暴力 `HashMap` 方案对比：`countWordsStartingWith` 从 $O(N \cdot L)$ 降到 $O(L)$，是本题的核心收益。
 
----
-
 ## 5. 扩展：物理删除 vs 逻辑删除
 
 本解法 `erase` 只递减计数器，**不真正释放节点**（逻辑删除）。讨论两种策略：
@@ -263,8 +255,6 @@ class Trie2:
 | **物理删除** | 内存随删除释放 | `erase` 需回溯判断子节点是否全空再 `delete`，实现复杂；频繁插删时反复分配释放反增开销 |
 
 > ⚠️ 题目保证 `erase` 时 `word` 存在，逻辑删除下 `cnt_pass` / `cnt_end` 不会变负。若要支持「删除不存在单词」的鲁棒场景，需先 `countWordsEqualTo` 判 $>0$ 再执行递减。生产环境（如自动补全词典）通常采用逻辑删除 + 惰性回收：定期遍历清理 `cnt_pass == 0` 的子树。
-
----
 
 ## 6. 面试要点
 
@@ -295,12 +285,12 @@ class Trie2:
    - Unicode / 字符集大：用 `dict` 按需分配，空间省。
    - 与 208 的取舍完全一致，1804 只是在节点上多了两个 `int` 字段。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)：Trie 基础模板，本题为它的计数增强版，`is_end` → `cnt_end`/`cnt_pass`
-- [211. 添加与搜索单词 - 数据结构设计](https://leetcode.cn/problems/design-add-and-search-words-data-structure/)：Trie + 通配符 `.` 的 DFS 匹配，节点结构同 208
-- [677. 键值映射](https://leetcode.cn/problems/map-sum-pairs/)：Trie 节点存 `val`，`sum(prefix)` 需前缀聚合——与 `cnt_pass` 同源，可改为「路径上累加 val」
-- [648. 单词替换](https://leetcode.cn/problems/replace-words/)：Trie 前缀匹配找最短词根，复用 `_find` 走路径逻辑
-- [212. 单词搜索 II](https://leetcode.cn/problems/word-search-ii/)：Trie + DFS 回溯，Trie 作为「待匹配词典」的索引结构
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 208 | [实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/) | Trie 基础模板，本题为它的计数增强版，`is_end` → `cnt_end`/`cnt_pass` |
+| 211 | [添加与搜索单词 - 数据结构设计](https://leetcode.cn/problems/design-add-and-search-words-data-structure/) | Trie + 通配符 `.` 的 DFS 匹配，节点结构同 208 |
+| 677 | [键值映射](https://leetcode.cn/problems/map-sum-pairs/) | Trie 节点存 `val`，`sum(prefix)` 需前缀聚合——与 `cnt_pass` 同源，可改为「路径上累加 val」 |
+| 648 | [单词替换](https://leetcode.cn/problems/replace-words/) | Trie 前缀匹配找最短词根，复用 `_find` 走路径逻辑 |
+| 212 | [单词搜索 II](https://leetcode.cn/problems/word-search-ii/) | Trie + DFS 回溯，Trie 作为「待匹配词典」的索引结构 |

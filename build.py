@@ -137,42 +137,47 @@ def _parse_title(markdown_text: str, filename: str = "") -> str:
 
 
 def _extract_problem_number(markdown_text: str) -> Optional[str]:
-    """Extract the LeetCode problem number from the '**链接**：[123. ...]' line."""
+    """Extract the LeetCode problem number.
+
+    Tries the leetgpu-style '**标题 / 题号**：<名>（#123，easy）' line first,
+    then falls back to the legacy '**链接**：[123. ...]' line.
+    """
+    match = re.search(r"\*\*标题 / 题号\*\*[：:].*?（#([^，）]+)", markdown_text)
+    if match:
+        return match.group(1).strip()
     match = re.search(r"\*\*链接\*\*[：:]\s*\[(?:LC\s*)?(\d+)\.", markdown_text)
     return match.group(1) if match else None
 
 
 def _extract_page_meta(markdown_text: str) -> tuple:
-    """Extract 难度/标签 meta bullets and strip the meta bullet block from the body.
+    """Extract 难度/标签 meta bullets for the page-header badges.
 
-    The meta info is rendered as badges in the page header instead, so the
-    '**题目名称** / **链接** / **难度** / **标签**' bullet lines are removed
-    from the body when a difficulty or tags line is found. Returns
-    (meta_dict, cleaned_markdown).
+    The meta bullet block ('**标题 / 题号** / **链接** / **难度** / **标签**')
+    stays in the body (leetgpu style: rendered inside '## 1. 题目概述'), so the
+    markdown is returned unchanged — only the badge fields are extracted.
     """
     patterns = {
-        "name": r"^-\s*\*\*题目名称\*\*[：:].*$",
-        "link": r"^-\s*\*\*链接\*\*[：:].*$",
         "difficulty": r"^-\s*\*\*难度\*\*[：:]\s*(.+?)\s*$",
         "tags": r"^-\s*\*\*标签\*\*[：:]\s*(.+?)\s*$",
     }
     meta: Dict[str, str] = {}
-    matched_lines: List[str] = []
     for key, pat in patterns.items():
         m = re.search(pat, markdown_text, re.MULTILINE)
         if m:
-            matched_lines.append(m.group(0))
-            if key in ("difficulty", "tags"):
-                meta[key] = m.group(1).strip()
+            meta[key] = m.group(1).strip()
+    return meta, markdown_text
 
-    if "difficulty" not in meta and "tags" not in meta:
-        return {}, markdown_text
 
-    cleaned = markdown_text
-    for line in matched_lines:
-        cleaned = cleaned.replace(line + "\n", "", 1)
-        cleaned = cleaned.replace(line, "", 1)  # fallback: last line w/o newline
-    return meta, cleaned
+def _nav_label(title: str) -> str:
+    """Short label for sidebar / list entries: drop 'LeetCode ' and ' 题解'.
+
+    '# LeetCode 两数之和 题解' -> '两数之和'; 'Q1. LeetCode X 题解' -> 'Q1. X'.
+    Titles without the prefix (topics, curated pages) pass through unchanged.
+    """
+    m = re.match(r"^(Q\d+\.\s*)?LeetCode\s+(.*?)\s*题解$", title)
+    if m:
+        return (m.group(1) or "") + m.group(2)
+    return title
 
 
 _DIFFICULTY_CLASS = {"简单": "diff-easy", "中等": "diff-medium", "困难": "diff-hard"}
@@ -202,8 +207,13 @@ def _page_meta_html(meta: Dict[str, str], leetcode_url: Optional[str]) -> str:
 
 
 def _header_title(title: str, number: Optional[str]) -> str:
-    """Compose the page-header title, prefixing the problem number when useful."""
-    if number and not re.match(r"^Q\d", title) and not title.startswith(number):
+    """Compose the page-header title, prefixing the problem number when useful.
+
+    Titles in leetgpu style ('LeetCode X 题解') already carry the site brand, so
+    the numeric prefix is skipped for them (matches the leetgpu page header).
+    """
+    if number and not title.startswith("LeetCode") \
+            and not re.match(r"^Q\d", title) and not title.startswith(number):
         return f'<span class="page-title-num">{number}.</span> {title}'
     return title
 
@@ -328,7 +338,7 @@ def _build_nav(current_slug: Optional[str], problems: List[Dict], root_prefix: s
 
         for p in node.get("problems", []):
             cls = "nav-link active" if current_slug == p["slug"] else "nav-link"
-            label = p["title"]
+            label = _nav_label(p["title"])
             if p.get("number"):
                 label = f'{p["number"]}. {label}'
             result.append(
@@ -669,7 +679,7 @@ def main() -> None:
         number = num_match.group(1) if num_match else _extract_problem_number(markdown_text)
         leetcode_url = _extract_leetcode_url(markdown_text)
 
-        # 提取难度/标签为页头徽章，并从正文中移除对应的元信息行
+        # 提取难度/标签为页头徽章；元信息列表保留在正文中（leetgpu 样式）
         meta, markdown_text = _extract_page_meta(markdown_text)
 
         problems.append({
@@ -723,7 +733,7 @@ def main() -> None:
             daily_markdown += (
                 f'    <a class="leetcode-problem-link" href="./problems/{p["slug"]}.html">'
                 f'{num_html}'
-                f'<span class="leetcode-problem-title">{p["title"]}</span>'
+                f'<span class="leetcode-problem-title">{_nav_label(p["title"])}</span>'
                 f'</a>\n'
             )
         daily_markdown += '  </div>\n'
@@ -748,7 +758,7 @@ def main() -> None:
         for p in group_problems:
             contest_markdown += (
                 f'    <a class="leetcode-problem-link" href="./problems/{p["slug"]}.html">'
-                f'<span class="leetcode-problem-title">{p["title"]}</span>'
+                f'<span class="leetcode-problem-title">{_nav_label(p["title"])}</span>'
                 f'</a>\n'
             )
         contest_markdown += '  </div>\n'
@@ -759,7 +769,7 @@ def main() -> None:
     for p in problems:
         if p.get("leetcode_url") and p["slug"] not in seen_slugs:
             seen_slugs.add(p["slug"])
-            picker_problems.append({"title": p["title"], "url": p["leetcode_url"]})
+            picker_problems.append({"title": _nav_label(p["title"]), "url": p["leetcode_url"]})
     problems_json = json.dumps(picker_problems, ensure_ascii=False)
 
     random_picker_html = f"""<div class="random-pick">
@@ -778,7 +788,7 @@ def main() -> None:
         topic_cards_html += (
             f'<a class="topic-card" href="./problems/{p["slug"]}.html">'
             f'<span class="topic-card-icon">{icon}</span>'
-            f'<span class="topic-card-name">{p["title"]}</span>'
+            f'<span class="topic-card-name">{_nav_label(p["title"])}</span>'
             f'<span class="topic-card-arrow">→</span>'
             f'</a>\n'
         )

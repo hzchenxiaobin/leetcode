@@ -1,13 +1,13 @@
-# 实现 Trie (前缀树)
-
-- **题目名称**：实现 Trie (前缀树)
-- **链接**：[208. 实现 Trie (前缀树)](https://leetcode.cn/problems/implement-trie-prefix-tree/)
-- **难度**：中等
-- **标签**：字典树、设计、哈希表
+# LeetCode 实现 Trie (前缀树) 题解
 
 ## 1. 题目概述
 
-实现一个 Trie（前缀树），支持以下操作：
+- **标题 / 题号**：实现 Trie (前缀树)（#208，medium）
+- **链接**：https://leetcode.cn/problems/implement-trie-prefix-tree/
+- **难度**：中等
+- **标签**：字典树、设计、哈希表
+
+**题意**：实现一个 Trie（前缀树），支持以下操作：
 - `insert(word)`：插入单词
 - `search(word)`：查找单词是否存在
 - `startsWith(prefix)`：查找是否有单词以给定前缀开头
@@ -24,12 +24,10 @@ trie.insert("app");
 trie.search("app");       // true
 ```
 
-**约束条件**：
+**约束**：
 
 - `1 <= word.length, prefix.length <= 1000`
 - `word` 和 `prefix` 仅由小写英文字母组成
-
----
 
 ## 2. 解题思路
 
@@ -75,8 +73,6 @@ root → a → p → p → l → e (is_end)
 | search("app") | a→p→p, is_end=T | True |
 | search("ap") | a→p, is_end=F | False |
 | startsWith("ap") | a→p, 存在 | True |
-
----
 
 ## 3. 参考代码
 
@@ -161,8 +157,6 @@ class Trie:
         return node
 ```
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -172,15 +166,11 @@ class Trie:
 | startsWith 时间 | `O(L)` | 同上 |
 | 空间 | `O(N×L)` | N=单词数，L=平均长度 |
 
----
-
 ## 5. 扩展：用数组 vs dict
 
 - **数组** `children[26]`：查找 O(1)，但固定 26 个指针，空间浪费大（稀疏时）
 - **dict** `children{}`：查找 O(1) 均摊，按需分配，空间省
 - **生产环境**：Unicode 场景用 dict；纯小写字母用数组更快
-
----
 
 ## 6. 面试要点
 
@@ -217,9 +207,10 @@ class Trie:
    - 按需分配键，空间省
    - 缺点：不如数组快（哈希开销），但 Python 本身慢，差异不大
 
----
+## 同类练习题
 
-## 7. 同类练习题
-- [211. 添加与搜索单词](https://leetcode.cn/problems/design-add-and-search-words-data-structure/)：字典树 + 通配符
-- [212. 单词搜索 II](https://leetcode.cn/problems/word-search-ii/)：字典树 + DFS
-- [648. 单词替换](https://leetcode.cn/problems/replace-words/)：字典树前缀匹配
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 211 | [添加与搜索单词](https://leetcode.cn/problems/design-add-and-search-words-data-structure/) | 字典树 + 通配符 |
+| 212 | [单词搜索 II](https://leetcode.cn/problems/word-search-ii/) | 字典树 + DFS |
+| 648 | [单词替换](https://leetcode.cn/problems/replace-words/) | 字典树前缀匹配 |

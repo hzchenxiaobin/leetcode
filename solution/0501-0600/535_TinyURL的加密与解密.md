@@ -1,13 +1,13 @@
-# TinyURL 的加密与解密
-
-- **题目名称**：TinyURL 的加密与解密
-- **链接**：[535. TinyURL 的加密与解密](https://leetcode.cn/problems/encode-and-decode-tinyurl/)
-- **难度**：中等
-- **标签**：设计、哈希表、字符串、数学
+# LeetCode TinyURL 的加密与解密 题解
 
 ## 1. 题目概述
 
-TinyURL 是一个短链接服务：把一条冗长的 URL（如 `https://leetcode.com/problems/...`）映射成一条短 URL（如 `http://tinyurl.com/4e9iAk`），用户访问短 URL 时会被还原到原 URL。
+- **标题 / 题号**：TinyURL 的加密与解密（#535，medium）
+- **链接**：https://leetcode.cn/problems/encode-and-decode-tinyurl/
+- **难度**：中等
+- **标签**：设计、哈希表、字符串、数学
+
+**题意**：TinyURL 是一个短链接服务：把一条冗长的 URL（如 `https://leetcode.com/problems/...`）映射成一条短 URL（如 `http://tinyurl.com/4e9iAk`），用户访问短 URL 时会被还原到原 URL。
 
 请实现 `Solution` 类：
 
@@ -29,8 +29,6 @@ TinyURL 是一个短链接服务：把一条冗长的 URL（如 `https://leetcod
 ```
 
 > 💡 **题目本质**：这是一道**系统设计骨架题**，重点不在「能不能跑通」，而在「短码怎么生成」。短码生成策略决定了**是否碰撞、是否幂等、短码长度、能否抗预测**。下面先给最经典的自增 id + base62 方案，再横向对比哈希法与随机法。
-
----
 
 ## 2. 解题思路
 
@@ -115,8 +113,6 @@ $$
 - **encode #3** `leetcode.com/1`（同 #1）：**`long2code` 命中**，直接返回 `"1"`，**不分配新 id**，两张表无任何变化。
 
 > 💡 **关键不变量**：①**幂等**——同一长 URL 永远拿到同一短码，因为 `long2code` 先查后写；②**无碰撞**——`id` 严格自增，base62 是双射，code 严格唯一。这两个不变量是自增 id 方案相比随机法/纯哈希法的核心优势。
-
----
 
 ## 3. 参考代码
 
@@ -218,8 +214,6 @@ class Solution:
 > （1）**忘了幂等查询**。若 `encode` 不先查 `long2code`，同一长 URL 会被反复分配新 id，短码浪费且语义混乱（同一篇文章出现多个短链）。先查后写是「短链服务」的基本契约。
 > （2）**下标错位**。`id` 从 1 开始（避免 `id=0` 与「未分配」混淆），而数组下标从 0 开始，故 `code2long[id - 1]`。若用哈希表存 `code2long` 则无此问题，但数组更省内存且 $O(1)$。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -229,8 +223,6 @@ class Solution:
 | 空间复杂度 | $O(N \cdot L)$ | $N$ = 不同长 URL 条数，$L$ = 平均长度；存 `long2code` 与 `code2long` |
 
 > 💡 由于短码长度 $\log_{62} N$ 增长极慢（$N = 10^9$ 时仅 6 位），编解码的「编码部分」开销可视为常数级，主要成本是哈希表操作的 $O(L)$。对绝大多数 URL（$L < 200$），单次 `encode` / `decode` 都是微秒级。
-
----
 
 ## 5. 扩展：三种短码策略横向对比
 
@@ -283,8 +275,6 @@ def encode(self, longUrl):
 
 > ⚠️ **分布式下的自增 id**：单机自增 id 在多机部署时会成为瓶颈，通常用「**预分配 id 段**」（如号段模式：中央发号器给每台机器发一段 `[a, b]`，机器内自增）或 **Snowflake** 类算法生成趋势递增 id。本题单机评测，无需此层复杂度。
 
----
-
 ## 6. 面试要点
 
 1. **为什么选 base62 而不是 base64 或 base36？**
@@ -307,11 +297,11 @@ def encode(self, longUrl):
 
    - 不能。短码只是 id 的 base62 表示，与长 URL 内容**无信息关联**（自增 id 方案中，id 是顺序编号，不含 URL 任何信息）。必须有一张 `id → longUrl` 的映射表，`decode` 才能还原。哈希截断法看似「短码由 URL 算出」，但 MD5 不可逆，同样需要存映射。短链服务的「短」是用**存储换长度**：用一张表记录 `(短码, 长URL)` 的对应关系。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [168. Excel 表列名称](https://leetcode.cn/problems/excel-sheet-column-title/)（[题解](../0101-0200/168_Excel表列名称.md)）：1-indexed 进制转换（先减 1 再取余），与本题 base62 编码同属「进制转换」家族的编码方向
-- [171. Excel 表列序号](https://leetcode.cn/problems/excel-sheet-column-number/)（[题解](../0101-0200/171_Excel表列序号.md)）：Horner 累乘加的合成方向，与本题 `_to_id` 解码逻辑完全同构，是 168 的逆向姊妹题
-- [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/)（[题解](../0101-0200/146_LRU缓存.md)）：经典设计题，哈希表 + 双向链表组合，与本题「双表映射」的设计范式同源
-- [981. 基于时间的键值存储](https://leetcode.cn/problems/time-based-key-value-store/)（[题解](../0901-1000/981_基于时间的键值存储.md)）：HashMap + 有序数组做 key→value 检索，与本题 `long2code` 哈希检索思路一致，多了时间戳维度
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 168 | [Excel 表列名称](https://leetcode.cn/problems/excel-sheet-column-title/)（[题解](../0101-0200/168_Excel表列名称.md)） | 1-indexed 进制转换（先减 1 再取余），与本题 base62 编码同属「进制转换」家族的编码方向 |
+| 171 | [Excel 表列序号](https://leetcode.cn/problems/excel-sheet-column-number/)（[题解](../0101-0200/171_Excel表列序号.md)） | Horner 累乘加的合成方向，与本题 `_to_id` 解码逻辑完全同构，是 168 的逆向姊妹题 |
+| 146 | [LRU 缓存](https://leetcode.cn/problems/lru-cache/)（[题解](../0101-0200/146_LRU缓存.md)） | 经典设计题，哈希表 + 双向链表组合，与本题「双表映射」的设计范式同源 |
+| 981 | [基于时间的键值存储](https://leetcode.cn/problems/time-based-key-value-store/)（[题解](../0901-1000/981_基于时间的键值存储.md)） | HashMap + 有序数组做 key→value 检索，与本题 `long2code` 哈希检索思路一致，多了时间戳维度 |

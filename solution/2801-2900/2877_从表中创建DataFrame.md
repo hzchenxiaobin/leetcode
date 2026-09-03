@@ -1,13 +1,13 @@
-# 从表中创建 DataFrame
-
-- **题目名称**：从表中创建 DataFrame
-- **链接**：[2877. 从表中创建 DataFrame](https://leetcode.cn/problems/create-a-dataframe-from-list/)
-- **难度**：简单
-- **标签**：Pandas、DataFrame 构造
+# LeetCode 从表中创建 DataFrame 题解
 
 ## 1. 题目概述
 
-编写一个解决方案，基于名为 `student_data` 的**二维列表**创建一个 DataFrame。这个二维列表包含一些学生的 ID 和年龄信息。
+- **标题 / 题号**：从表中创建 DataFrame（#2877，easy）
+- **链接**：https://leetcode.cn/problems/create-a-dataframe-from-list/
+- **难度**：简单
+- **标签**：Pandas、DataFrame 构造
+
+**题意**：编写一个解决方案，基于名为 `student_data` 的**二维列表**创建一个 DataFrame。这个二维列表包含一些学生的 ID 和年龄信息。
 
 DataFrame 应该有两列，`student_id` 和 `age`，并且**与原始二维列表的顺序相同**。
 
@@ -35,14 +35,12 @@ student_data:
 基于 student_data 创建了一个 DataFrame，包含 student_id 和 age 两列。
 ```
 
-**约束条件**：
+**约束**：
 
 - `student_data` 为二维整数列表，每行长度为 2，形如 `[student_id, age]`
 - 数据规模在 $10^3$ 量级（纯构造题，规模不构成瓶颈）
 
 > 💡 本题是 LeetCode「Pandas 入门」系列的**第一题**，仅提供 Python（Pandas）提交入口。它考察的不是算法，而是对 `pd.DataFrame` 构造器的第一手熟悉度——二维列表（行式数据）怎么进来、列名怎么贴上去、顺序如何保持。
-
----
 
 ## 2. 解题思路
 
@@ -114,8 +112,6 @@ pd.DataFrame(student_data, columns=['student_id', 'age'])
 
 > 💡 一句话：**数据按行进、名字按列贴**——`columns` 的长度必须等于每行的元素个数，名字按位置对应。
 
----
-
 ## 3. 参考代码
 
 ### Python（pandas 一行版，推荐）
@@ -150,8 +146,6 @@ def createDataframe(student_data: List[List[int]]) -> pd.DataFrame:
 
 > 💡 **对照说明**：这是「列式字典」构造路径——先把行式数据手工转置成列式，再交给构造器。结果与推荐写法完全一致，但每多一列就多一行推导式，列名与下标的对应靠人肉维护。它存在的意义是让你看清楚：**pandas 推荐写法里「按行装载」与「按位置贴名」这两件事，构造器已经替你做了**。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -161,8 +155,6 @@ def createDataframe(student_data: List[List[int]]) -> pd.DataFrame:
 
 > - 手工构建版同样是 $O(n) / O(n)$——差别只在常数与代码量，不在量级。
 > - $10^3$ 量级下任何写法都瞬时完成，本题的区分度在** API 正确性**而非性能。
-
----
 
 ## 5. 扩展：DataFrame 构造器的常用输入姿势
 
@@ -180,8 +172,6 @@ def createDataframe(student_data: List[List[int]]) -> pd.DataFrame:
 1. **`from_records` 是 list of lists 的语义化别名**：`pd.DataFrame.from_records(student_data, columns=['student_id', 'age'])` 与推荐写法等价——名字直白地提醒你「按记录（行）装载」；
 2. **`index` 参数控制行标签**：本题不传即得默认 `RangeIndex`；传 `index=['a','b',...]` 可自定义行标签（长度必须等于行数）；
 3. **dtype 自动推断**：全整数列推断为 `int64`，混合类型会退化为 `object`——若行内混入字符串，整列 dtype 就不再是数值，后续数值运算会集体失效。
-
----
 
 ## 6. 面试要点
 
@@ -207,12 +197,12 @@ def createDataframe(student_data: List[List[int]]) -> pd.DataFrame:
 
 > 💡 **一句话总结**：2877 是 **Pandas 入门第一课**——行式二维列表交给 `pd.DataFrame(data, columns=[...])` 一步成表：**数据按行进、名字按列贴、顺序天然保持**。最大的坑不是不会构造，而是漏传 `columns` 后静默得到的整数列名。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2878. 获取 DataFrame 的大小](https://leetcode.cn/problems/get-the-size-of-a-dataframe/)：`df.shape` 取行列数，构造之后的第一个「读属性」动作
-- [2879. 显示前三行](https://leetcode.cn/problems/display-the-first-three-rows/)：`df.head(3)` 取前几行，与本题「保持前缀顺序」的约定衔接
-- [2880. 数据选取](https://leetcode.cn/problems/select-data/)：按列名与布尔掩码选子表，练习本题「列名必须贴对」之后的取数环节
-- [2881. 创建新列](https://leetcode.cn/problems/create-a-new-column/)：`df['new'] = ...` 增列，构造 → 变形的下一步
-- [2885. 重命名列](https://leetcode.cn/problems/rename-columns/)：`df.rename` 改列名——若本题漏传 `columns`，这就是事后补救的正道
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2878 | [获取 DataFrame 的大小](https://leetcode.cn/problems/get-the-size-of-a-dataframe/) | `df.shape` 取行列数，构造之后的第一个「读属性」动作 |
+| 2879 | [显示前三行](https://leetcode.cn/problems/display-the-first-three-rows/) | `df.head(3)` 取前几行，与本题「保持前缀顺序」的约定衔接 |
+| 2880 | [数据选取](https://leetcode.cn/problems/select-data/) | 按列名与布尔掩码选子表，练习本题「列名必须贴对」之后的取数环节 |
+| 2881 | [创建新列](https://leetcode.cn/problems/create-a-new-column/) | `df['new'] = ...` 增列，构造 → 变形的下一步 |
+| 2885 | [重命名列](https://leetcode.cn/problems/rename-columns/) | `df.rename` 改列名——若本题漏传 `columns`，这就是事后补救的正道 |

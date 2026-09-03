@@ -1,15 +1,15 @@
-# 将 undefined 转为 null
-
-- **题目名称**：将 undefined 转为 null
-- **链接**：[2775. 将 undefined 转为 null](https://leetcode.cn/problems/undefined-to-null/)
-- **难度**：中等
-- **标签**：递归、JSON、类型分派、深度优先
+# LeetCode 将 undefined 转为 null 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：将 undefined 转为 null（#2775，medium）
+- **链接**：https://leetcode.cn/problems/undefined-to-null/
+- **难度**：中等
+- **标签**：递归、JSON、类型分派、深度优先
+
 > ⚠️ 本题为 LeetCode 付费题（Plus 会员专享），题意描述根据官方示例用例与同系列姊妹题（[2705. 精简对象](2705_精简对象.md)）信息重建，可能与官方题面有出入。
 
-给定一个对象或数组 `obj`（可嵌套），返回一个**新结构**：将其在**任意深度**上出现的所有 `undefined` 值**替换为 `null`**，其余键、下标与取值原样保留。
+**题意**：给定一个对象或数组 `obj`（可嵌套），返回一个**新结构**：将其在**任意深度**上出现的所有 `undefined` 值**替换为 `null`**，其余键、下标与取值原样保留。
 
 - `undefined` 出现在**对象值位**（如 `{"a": undefined}`）→ 该值变 `null`，键保留；
 - `undefined` 出现在**数组元素位**（如 `["a", undefined]`）→ 该元素变 `null`，下标保留；
@@ -31,15 +31,13 @@
 解释：a 的 undefined → null；b 是数组，其 idx1 的 undefined → null，idx0 的 "a" 原样。
 ```
 
-**约束条件**：
+**约束**：
 
 - `obj` 为对象或数组（结构同构于 `JSON.parse` 的输出，但值位允许出现 `undefined`）；
 - 嵌套深度有限、无循环引用；
 - 键 / 元素总数不超过 $10^5$（递归栈深度可控）。
 
 > 💡 本题是 LeetCode「30 天 JavaScript」系列题目，**仅提供 JavaScript / TypeScript 提交入口**，核心考察**递归 + 类型分派 + 哨兵值替换**。它与 [2705. 精简对象](2705_精简对象.md)、[2628. 完全相等的 JSON 对象](2628_完全相等的JSON对象.md) 同属「沿 JSON 文法递归」一族——同一套类型分派骨架，换个动作：2705 递归**精简**一棵树（删假值），2628 递归**比对**两棵树，本题递归**替换**一棵树中的哨兵值。本文以 JS 为提交语言，并给出 Python 概念等价实现。
-
----
 
 ## 2. 解题思路
 
@@ -110,8 +108,6 @@ JSON 值的文法本身是**递归**的——数组的元素、对象的值又�
 自底向上组装：idx0→`"a"`、idx1→`null` 拼成 `b = ["a", null]`；key a→`null`、key b→`["a", null]` 拼成根对象 `{"a": null, "b": ["a", null]}`。
 
 > 💡 **嵌套下钻细节**：两处 `undefined`——一处在**对象值位**（`a`）、一处在**数组元素位**（`b[1]`）——都由同一个递归基 `obj === undefined → null` 收口。数组/对象本身**不变换值**，只把子节点"递归后的结果"按原下标/原键组装回去，因此输出结构与输入同构，仅 `undefined` 叶子被改写。
-
----
 
 ## 3. 参考代码
 
@@ -200,8 +196,6 @@ def undefined_to_null(obj):
 
 > ⚠️ **Python 的 `isinstance` 判定天然排除 `None`**：`isinstance(None, dict)` 与 `isinstance(None, list)` 均为 `False`，故 Python 判普通对象无需像 JS 那样额外拦 `null`——这是两语言类型系统的差异点（与 [2705](2705_精简对象.md)、[2755](2755_深度合并两个对象.md) 中"`bool` 是 `int` 子类""`typeof null === 'object'`"的陷阱同源，都是语言历史包袱）。哨兵用 `object()` 实例保证 `is` 比较的唯一性，避免与任何真实值撞车。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -211,8 +205,6 @@ def undefined_to_null(obj):
 
 > 💡 本质是**一次结构同构的遍历**：递归沿 JSON 树逐层下钻，每个节点判定类型后要么变换（`undefined`→`null`）、要么下钻（容器）、要么透传（原始值）。输出结构与输入**同构**——键集与下标都不变，仅 `undefined` 叶子被改写为 `null`，规模不超过输入，故空间 $O(n)$。
 
----
-
 ## 5. 扩展：`undefined` 与 `null` 的二元性，以及哨兵替换的通用骨架
 
 - **JS 的 `undefined` vs `null`**：`undefined` 表示"压根没赋值"（变量未初始化、对象属性不存在、函数无返回值、缺失实参），`null` 表示"显式置空"。二者在 `==` 下相等（`undefined == null` 为 `true`），但在 `===` 下不同。本题把它们**解耦**——把"未赋值"语义统一改写成"显式置空"，让输出成为不含 `undefined` 的"干净"结构（更利于 `JSON.stringify` 保留键、跨语言序列化）。
@@ -221,8 +213,6 @@ def undefined_to_null(obj):
 - **哨兵替换的通用骨架**：把 `obj === undefined` 换成 `obj === SENTINEL`、把 `return null` 换成 `return TARGET`，本骨架就适用于任何"沿嵌套结构把某哨兵值替换成目标值"的需求（如深度默认值填充：把 `null`/哨兵换成 `0`、`""`、`{}`）。这是"递归 + 类型分派"骨架的又一变体——序列化（[2633](2633_将对象转换为JSON字符串.md)）、深度相等（[2628](2628_完全相等的JSON对象.md)）、精简（[2705](2705_精简对象.md)）、合并（[2755](2755_深度合并两个对象.md)）、替换（本题）都是这套骨架换不同动作。
 
 > 💡 工程实践中，"递归 + 类型分派"是处理任意嵌套 JSON 的通用骨架——掌握它，就抓住了 JSON 操作类题目的母题。本题是该骨架最简的变体（只替换叶子、不删不增不动结构），是理解 2705/2755 这类"带结构变更"变体的最佳入门。
-
----
 
 ## 6. 面试要点
 
@@ -248,12 +238,12 @@ def undefined_to_null(obj):
 
 > 💡 **一句话总结**：2775 = 「沿 JSON 文法递归 + 四分支类型分派 + undefined→null 哨兵替换」。`undefined` 命中返回 `null`、数组逐下标递归、对象逐值递归、`null`/原始值原样透传。先判 `undefined`、再判数组、再判普通对象（排除 `null`）、最后兜底；数组用显式 `for+push` 处理空洞——一次遍历 $O(n)$ 搞定，输出与输入同构。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2705. 精简对象](https://leetcode.cn/problems/compact-object/)（[题解](2705_精简对象.md)）：沿 JSON 文法**递归精简**一棵树（删假值），与本题**递归替换**共用同一套类型分派骨架，一删一换
-- [2628. 完全相等的 JSON 对象](https://leetcode.cn/problems/json-deep-equal/)（[题解](2628_完全相等的JSON对象.md)）：沿 JSON 文法**递归比对**两棵树，复用"先拦 `null`"排雷与类型分派骨架，一判等一替换
-- [2633. 将对象转换为 JSON 字符串](https://leetcode.cn/problems/convert-object-to-json-string/)（[题解](2633_将对象转换为JSON字符串.md)）：沿 JSON 文法**递归序列化**，揭示 `JSON.stringify` 对 `undefined` 的丢弃语义——正是本题"替换"要规避的坑
-- [2755. 深度合并两个对象](https://leetcode.cn/problems/deep-merge-of-two-objects/)（[题解](2755_深度合并两个对象.md)）：沿 JSON 文法**递归合并**两棵树，同属 30 天 JS 系列姊妹题，对照"配对后者优先 vs 哨兵替换"的边界
-- [2625. 扁平化嵌套数组](https://leetcode.cn/problems/flatten-deeply-nested-array/)（[题解](2625_扁平化嵌套数组.md)）：递归遍历嵌套数组按深度剪枝，同属"JSON 文法递归"家族，巩固对数组/对象递归的运用
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2705 | [精简对象](https://leetcode.cn/problems/compact-object/)（[题解](2705_精简对象.md)） | 沿 JSON 文法**递归精简**一棵树（删假值），与本题**递归替换**共用同一套类型分派骨架，一删一换 |
+| 2628 | [完全相等的 JSON 对象](https://leetcode.cn/problems/json-deep-equal/)（[题解](2628_完全相等的JSON对象.md)） | 沿 JSON 文法**递归比对**两棵树，复用"先拦 `null`"排雷与类型分派骨架，一判等一替换 |
+| 2633 | [将对象转换为 JSON 字符串](https://leetcode.cn/problems/convert-object-to-json-string/)（[题解](2633_将对象转换为JSON字符串.md)） | 沿 JSON 文法**递归序列化**，揭示 `JSON.stringify` 对 `undefined` 的丢弃语义——正是本题"替换"要规避的坑 |
+| 2755 | [深度合并两个对象](https://leetcode.cn/problems/deep-merge-of-two-objects/)（[题解](2755_深度合并两个对象.md)） | 沿 JSON 文法**递归合并**两棵树，同属 30 天 JS 系列姊妹题，对照"配对后者优先 vs 哨兵替换"的边界 |
+| 2625 | [扁平化嵌套数组](https://leetcode.cn/problems/flatten-deeply-nested-array/)（[题解](2625_扁平化嵌套数组.md)） | 递归遍历嵌套数组按深度剪枝，同属"JSON 文法递归"家族，巩固对数组/对象递归的运用 |

@@ -1,13 +1,13 @@
-# 获取 DataFrame 的大小
-
-- **题目名称**：获取 DataFrame 的大小
-- **链接**：[2878. 获取 DataFrame 的大小](https://leetcode.cn/problems/get-the-size-of-a-dataframe/)
-- **难度**：简单
-- **标签**：Pandas、DataFrame 属性
+# LeetCode 获取 DataFrame 的大小 题解
 
 ## 1. 题目概述
 
-编写一个解决方案，计算并显示 `players` 的**行数和列数**，将结果作为一个**数组**返回：`[number of rows, number of columns]`。
+- **标题 / 题号**：获取 DataFrame 的大小（#2878，easy）
+- **链接**：https://leetcode.cn/problems/get-the-size-of-a-dataframe/
+- **难度**：简单
+- **标签**：Pandas、DataFrame 属性
+
+**题意**：编写一个解决方案，计算并显示 `players` 的**行数和列数**，将结果作为一个**数组**返回：`[number of rows, number of columns]`。
 
 DataFrame `players` 的部分结构如下（列数不固定，`...` 表示还有更多列）：
 
@@ -47,14 +47,12 @@ DataFrame `players` 的部分结构如下（列数不固定，`...` 表示还有
 这个 DataFrame 包含 10 行和 5 列。
 ```
 
-**约束条件**：
+**约束**：
 
 - `players` 为 `pd.DataFrame`，行数与列数均不定（结构中的 `...` 列可能存在）
 - 返回类型为 `List[int]`，即 `[行数, 列数]`
 
 > 💡 本题是「Pandas 入门」系列的**第二题**（上一题 2877 学构造，本题学**读形状**）。它同样不考算法，考的是对 `df.shape` 这一最常用属性的直觉——顺便避开幕后两个经典坑：把 `df.size` 当形状、把 `.shape` 当方法调用。
-
----
 
 ## 2. 解题思路
 
@@ -121,8 +119,6 @@ list(players.shape)  # [10, 5] ← 题目要的返回形态
 
 > 💡 一句话：**形状问 shape、行数问 len、列数问 columns、size 是乘积**——四个 API 各就各位，本题只需要第一个。
 
----
-
 ## 3. 参考代码
 
 ### Python（pandas 一行版，推荐）
@@ -154,8 +150,6 @@ def getDataframeSize(players: pd.DataFrame) -> List[int]:
 
 > 💡 **对照说明**：`len(df)` 数的是**行**（沿 `axis=0` 的长度），`len(df.columns)` 数的是列——它印证了 `shape` 的内部定义 `(len(index), len(columns))`。两处属性访问合起来与推荐写法完全等价，但「形状」本是元数据里的一体信息，`.shape` 一次取出更贴合语义。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -165,8 +159,6 @@ def getDataframeSize(players: pd.DataFrame) -> List[int]:
 
 > - `len(df)` 组合版同样是 $O(1) + O(1)$——差别只在两次属性访问与代码量，不在量级。
 > - 本题的区分度在 **API 语义正确性**（shape / size / tuple / list），而非性能。
-
----
 
 ## 5. 扩展：形状类 API 一张表
 
@@ -185,8 +177,6 @@ def getDataframeSize(players: pd.DataFrame) -> List[int]:
 
 1. **`count()` 不是形状 API**：它逐列统计**非缺失**条目，遇到含 `NaN` 的表返回值会小于行数——求形状时误用它是最隐蔽的错法；
 2. **`shape` 可按位索引**：`df.shape[0]` / `df.shape[1]` 分别取行、列数，在只关心一维的场合比 `len(...)` 更紧凑（如 `range(df.shape[1])` 遍历列下标）。
-
----
 
 ## 6. 面试要点
 
@@ -212,12 +202,12 @@ def getDataframeSize(players: pd.DataFrame) -> List[int]:
 
 > 💡 **一句话总结**：2878 是 Pandas 入门的「读形状」一课——`list(df.shape)` 一步返回 `[行数, 列数]`：**属性无括号、tuple 转 list、size 是乘积**，三个细节就是本题的全部考点。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2877. 从表中创建 DataFrame](https://leetcode.cn/problems/create-a-dataframe-from-list/)：上一题的 `pd.DataFrame(data, columns=...)` 构造，构造完用本题的 `.shape` 自查形状最稳妥
-- [2879. 显示前三行](https://leetcode.cn/problems/display-the-first-three-rows/)：`df.head(3)` 按行截取，继续熟悉「行是主轴」的约定（`len(df)` 数行的原因）
-- [2880. 数据选取](https://leetcode.cn/problems/select-data/)：按列名选子表，操作前后用 `.shape` 对比即可直观看到列数变化
-- [2885. 重命名列](https://leetcode.cn/problems/rename-columns/)：修改 `columns` 元数据而不动数据块——形状不变，正好印证 `shape` 读的是元数据
-- [2888. 重塑数据：级联](https://leetcode.cn/problems/reshape-data-concatenate/)：两张表级联后行数相加，用 `.shape` 验证级联结果是天然的调试手段
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2877 | [从表中创建 DataFrame](https://leetcode.cn/problems/create-a-dataframe-from-list/) | 上一题的 `pd.DataFrame(data, columns=...)` 构造，构造完用本题的 `.shape` 自查形状最稳妥 |
+| 2879 | [显示前三行](https://leetcode.cn/problems/display-the-first-three-rows/) | `df.head(3)` 按行截取，继续熟悉「行是主轴」的约定（`len(df)` 数行的原因） |
+| 2880 | [数据选取](https://leetcode.cn/problems/select-data/) | 按列名选子表，操作前后用 `.shape` 对比即可直观看到列数变化 |
+| 2885 | [重命名列](https://leetcode.cn/problems/rename-columns/) | 修改 `columns` 元数据而不动数据块——形状不变，正好印证 `shape` 读的是元数据 |
+| 2888 | [重塑数据：级联](https://leetcode.cn/problems/reshape-data-concatenate/) | 两张表级联后行数相加，用 `.shape` 验证级联结果是天然的调试手段 |

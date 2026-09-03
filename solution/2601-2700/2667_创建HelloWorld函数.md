@@ -1,13 +1,13 @@
-# 创建 Hello World 函数
-
-- **题目名称**：创建 Hello World 函数
-- **链接**：[2667. 创建 Hello World 函数](https://leetcode.cn/problems/create-hello-world-function/)
-- **难度**：简单
-- **标签**：闭包、函数式编程、高阶函数、Rest 参数
+# LeetCode 创建 Hello World 函数 题解
 
 ## 1. 题目概述
 
-请你编写一个名为 `createHelloWorld` 的函数。它应该返回一个新的函数，该函数总是返回 `"Hello World"`。
+- **标题 / 题号**：创建 Hello World 函数（#2667，easy）
+- **链接**：https://leetcode.cn/problems/create-hello-world-function/
+- **难度**：简单
+- **标签**：闭包、函数式编程、高阶函数、Rest 参数
+
+**题意**：请你编写一个名为 `createHelloWorld` 的函数。它应该返回一个新的函数，该函数总是返回 `"Hello World"`。
 
 **示例 1**：
 
@@ -33,13 +33,11 @@ f({}, null, 42); // "Hello World"
 可以传递任何参数给函数，但它应始终返回 "Hello World"。
 ```
 
-**约束条件**：
+**约束**：
 
 - `0 <= args.length <= 10`
 
 > 💡 本题是 30 Days of JavaScript 系列的**入门第一题**，不考算法复杂度，考的是「**函数是一等值**」与「**闭包**」这两条语言基石：一个函数可以**返回另一个函数**，而返回的函数可以**忽略一切输入、恒返回定值**。题目官方以 JavaScript 为载体，但「常量函数」思想跨语言通用，下文给出 C++ 与 Python 的等价实现。
-
----
 
 ## 2. 解题思路
 
@@ -94,8 +92,6 @@ createHelloWorld(): return "Hello World"     // 错！返回的是字符串
 | 示例 2（三参混合） | `[{}, null, 42]` | `"Hello World"` |
 
 两行参数天差地别——空数组、对象、`null`、数字——输出却完全一致，因为参数根本没被读取。调用链始终是 `const f = createHelloWorld(); f(...args);` 两步：先拿函数，再调用。
-
----
 
 ## 3. 参考代码
 
@@ -196,8 +192,6 @@ def createHelloWorld2():
 > };
 > ```
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -206,8 +200,6 @@ def createHelloWorld2():
 | **空间复杂度** | $O(1)$ | 只分配一个函数对象（闭包），不随参数或调用次数增长 |
 
 > 💡 本题没有「规模」可言，复杂度恒为常数。`args.length <= 10` 只说明测试参数个数有限，不影响渐近分析。考点在「函数作为返回值」的语义理解，而非性能。
-
----
 
 ## 5. 扩展：常量函数与「函数即值」
 
@@ -218,8 +210,6 @@ def createHelloWorld2():
 - **`...args` vs 无参声明**：JS 函数声明形参个数不限制实参个数——声明 `function()` 也能被 `f(1, 2, 3)` 调用，多余实参静默忽略；声明 `function(...args)` 则把所有实参收进数组。后者**不改变行为**，但让「我接受任意参数」的意图进入签名，更自文档化。在 TS 中，`(...args: unknown[])` 还能把这条意图编入类型检查。
 
 - **闭包的「记忆」**：本题闭包「记住」的是常量，甚至无需捕获外层变量——内层直接返回字面量。对比 2620 计数器「记住可变 `n`」、2666「记住是否已调用」、2623 记忆函数「记住缓存表」，本题是闭包光谱上「零状态」的极端：闭包机制仍在（内层函数确实被外层返回并独立存活），只是它无可变状态可记。掌握这一极简形态，有助于看清「闭包 = 函数 + 它能访问的环境」这条定义的最小内核。
-
----
 
 ## 6. 面试要点
 
@@ -243,11 +233,11 @@ def createHelloWorld2():
 
    > 在**本题中无差别**——两者都返回字符串、都无状态。箭头函数是单表达式隐式返回，更简洁；但它没有自己的 `this` 与 `arguments`。本题既不碰 `this` 也不用 `arguments`，故等价。若将来需要内层用 `this`（如方法回调），则必须用普通 `function`。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2620. 计数器](https://leetcode.cn/problems/counter/)（[题解](../2601-2700/2620_计数器.md)）：同属 30 Days of JS 开篇系列，闭包「记住**可变**状态 `n`」，对照本题闭包「记住**常量**」的零状态极简形态
-- [2666. 只允许一次函数调用](https://leetcode.cn/problems/allow-one-function-call/)：闭包加一个布尔标志位实现「调用一次后失效」，同一封装思想、不同语义（有状态 ↔ 一次性状态）
-- [2665. 计数器 II](https://leetcode.cn/problems/counter-ii/)：返回 `counter/reset/increment/decrement` 一组方法共享同一私有状态，巩固「闭包封装多个操作」
-- [2623. 记忆函数](https://leetcode.cn/problems/memoize/)：闭包持有缓存字典，把「记忆」状态封进函数，是「函数 + 私有状态」的典型应用
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2620 | [计数器](https://leetcode.cn/problems/counter/)（[题解](../2601-2700/2620_计数器.md)） | 同属 30 Days of JS 开篇系列，闭包「记住**可变**状态 `n`」，对照本题闭包「记住**常量**」的零状态极简形态 |
+| 2666 | [只允许一次函数调用](https://leetcode.cn/problems/allow-one-function-call/) | 闭包加一个布尔标志位实现「调用一次后失效」，同一封装思想、不同语义（有状态 ↔ 一次性状态） |
+| 2665 | [计数器 II](https://leetcode.cn/problems/counter-ii/) | 返回 `counter/reset/increment/decrement` 一组方法共享同一私有状态，巩固「闭包封装多个操作」 |
+| 2623 | [记忆函数](https://leetcode.cn/problems/memoize/) | 闭包持有缓存字典，把「记忆」状态封进函数，是「函数 + 私有状态」的典型应用 |

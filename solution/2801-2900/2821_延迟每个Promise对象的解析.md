@@ -1,15 +1,15 @@
-# 延迟每个 Promise 对象的解析
-
-- **题目名称**：延迟每个 Promise 对象的解析
-- **链接**：[2821. Delay the Resolution of Each Promise](https://leetcode.cn/problems/delay-the-resolution-of-each-promise/)
-- **难度**：中等
-- **标签**：Promise、`async/await`、`setTimeout`、JavaScript
+# LeetCode 延迟每个 Promise 对象的解析 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：延迟每个 Promise 对象的解析（#2821，medium）
+- **链接**：https://leetcode.cn/problems/delay-the-resolution-of-each-promise/
+- **难度**：中等
+- **标签**：Promise、`async/await`、`setTimeout`、JavaScript
+
 > ⚠️ 本题为 LeetCode 付费题，题意描述根据官方示例用例与 hints 重建，可能与官方题面有出入。
 
-给定一个**函数数组** `functions`，其中每个函数被调用时返回一个 `Promise`；再给定一个以毫秒为单位的延迟值 `ms`。
+**题意**：给定一个**函数数组** `functions`，其中每个函数被调用时返回一个 `Promise`；再给定一个以毫秒为单位的延迟值 `ms`。
 
 要求返回一个**新的函数数组**，数组中的每个新函数对应 `functions` 中的同名函数（保持顺序），但行为如下：调用新函数时，它会调用对应的原始函数得到一个 `Promise`，当该 `Promise` **settle**（resolve 或 reject）后，**再等待 `ms` 毫秒**，然后将同样的结果（resolve 的 value 或 reject 的 reason）传播出去。
 
@@ -47,15 +47,13 @@
      fn2 原始 100ms reject → 延迟后 130ms reject。
 ```
 
-**约束条件**：
+**约束**：
 
 - `functions` 是一个返回 `Promise` 的函数数组
 - `1 <= functions.length <= 10`
 - `20 <= ms <= 1000`
 
 > 💡 本题是 LeetCode「30 天 JavaScript」系列，**仅提供 JavaScript / TypeScript 提交入口**。核心是「在 Promise settle 后插入固定延迟」，难点在**必须同时覆盖 resolve 和 reject 两条路径**——很多人只延迟了 resolve，忘了 reject 也要延迟。
-
----
 
 ## 2. 解题思路
 
@@ -116,8 +114,6 @@ var delayAll = function(functions, ms) {
 | 3 | 30 | 20ms / 100ms reject | **50ms** / **130ms** reject | 红色路径×2 |
 
 > 💡 公式很简单：**延迟 settle 时间 = 原始 settle 时间 + ms**。无论 resolve 还是 reject，延迟都在原始 settle 之后再叠加。
-
----
 
 ## 3. 参考代码
 
@@ -214,8 +210,6 @@ def delay_all(functions: list[Callable[..., Awaitable[Any]]], ms: int) -> list[C
 
 > ⚠️ Python 的 `asyncio.sleep` 单位是秒，需把毫秒 `ms` 除以 1000。`try/except/raise` 与 JS 的 `try/catch/throw` 语义一致。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -224,8 +218,6 @@ def delay_all(functions: list[Callable[..., Awaitable[Any]]], ms: int) -> list[C
 | 空间复杂度 | $O(n)$ | 返回 $n$ 个新函数的数组；每个函数闭包捕获 `fn` 和 `sleep` |
 
 > 💡 本题无算法复杂度可言，本质是「正确处理 Promise 的两条 settle 路径」。真正考察的是对**异步控制流**与**错误传播**的理解。
-
----
 
 ## 5. 扩展：then 链 vs async/await & Promise.finally
 
@@ -255,8 +247,6 @@ return functions.map(fn => async (...args) => {
 
 两者完全等价，选择取决于团队风格偏好。`async/await` 版在现代 JS 中更主流。
 
----
-
 ## 6. 面试要点
 
 1. **为什么不能只 `await fn()` 后再 `sleep`？**
@@ -281,12 +271,12 @@ return functions.map(fn => async (...args) => {
 
 > 💡 **一句话总结**：2821 = 「`try` 里 `await fn()` 成功后 `sleep` 再 `return`，`catch` 里 `sleep` 后再 `throw`」。核心考点是**reject 路径也必须延迟**——`finally` 做不到，必须显式双路处理。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2621. 睡眠函数](https://leetcode.cn/problems/sleep/)：用 `setTimeout` 包成 `Promise`，`await` 后继续——是本题 `sleep` 函数的原型，定时器与异步语义一脉相承（[题解](../2601-2700/2621_睡眠函数.md)）
-- [2637. 有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/)：给 Promise 加超时取消，超时则 reject——与本题「延迟 settle」对照，一者是延后传播、一者是提前截断，都需处理 resolve/reject 双路径（[题解](../2601-2700/2637_有时间限制的Promise对象.md)）
-- [2715. 执行可取消的延迟函数](https://leetcode.cn/problems/timeout-cancellation/)：`setTimeout` 句柄 + `clearTimeout` 闭包——同为「30 天 JS」闭包设计题，对照「定时器控制」的不同用法（[题解](../2701-2800/2715_执行可取消的延迟函数.md)）
-- [2723. 两个 Promise 对象相加](https://leetcode.cn/problems/add-two-promises/)：`Promise.all` 等待多个 Promise 后求和——与本题「每个 Promise 独立延迟」对比，一个聚合、一个各自延迟（[题解](../2701-2800/2723_两个Promise对象相加.md)）
-- [2721. 并行执行异步函数](https://leetcode.cn/problems/execute-asynchronous-functions-in-parallel/)：`Promise.all` 手写实现并行等待——与本题「每个 Promise 独立延迟」对比，一个聚合并发、一个各自延后，都需正确处理 resolve/reject 双路径（[题解](../2701-2800/2721_并行执行异步函数.md)）
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2621 | [睡眠函数](https://leetcode.cn/problems/sleep/) | 用 `setTimeout` 包成 `Promise`，`await` 后继续——是本题 `sleep` 函数的原型，定时器与异步语义一脉相承（[题解](../2601-2700/2621_睡眠函数.md)） |
+| 2637 | [有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/) | 给 Promise 加超时取消，超时则 reject——与本题「延迟 settle」对照，一者是延后传播、一者是提前截断，都需处理 resolve/reject 双路径（[题解](../2601-2700/2637_有时间限制的Promise对象.md)） |
+| 2715 | [执行可取消的延迟函数](https://leetcode.cn/problems/timeout-cancellation/) | `setTimeout` 句柄 + `clearTimeout` 闭包——同为「30 天 JS」闭包设计题，对照「定时器控制」的不同用法（[题解](../2701-2800/2715_执行可取消的延迟函数.md)） |
+| 2723 | [两个 Promise 对象相加](https://leetcode.cn/problems/add-two-promises/) | `Promise.all` 等待多个 Promise 后求和——与本题「每个 Promise 独立延迟」对比，一个聚合、一个各自延迟（[题解](../2701-2800/2723_两个Promise对象相加.md)） |
+| 2721 | [并行执行异步函数](https://leetcode.cn/problems/execute-asynchronous-functions-in-parallel/) | `Promise.all` 手写实现并行等待——与本题「每个 Promise 独立延迟」对比，一个聚合并发、一个各自延后，都需正确处理 resolve/reject 双路径（[题解](../2701-2800/2721_并行执行异步函数.md)） |

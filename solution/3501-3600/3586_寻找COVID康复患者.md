@@ -1,13 +1,13 @@
-# 寻找COVID康复患者
-
-- **题目名称**：寻找COVID康复患者
-- **链接**：[3586. 寻找 COVID 康复患者](https://leetcode.cn/problems/find-covid-recovery-patients/)
-- **难度**：中等
-- **标签**：SQL、数据库、聚合函数、`MIN`、CTE、JOIN、窗口函数、`DATEDIFF`、双键排序
+# LeetCode 寻找COVID康复患者 题解
 
 ## 1. 题目概述
 
-两张表：`patients` 记录患者基本信息，`covid_tests` 记录核酸检测结果（阳性 Positive / 阴性 Negative / 不确定 Inconclusive）。编写一个解决方案，找出**从 COVID 中康复**的患者——先检出阳性、之后又检出阴性的人，返回 `patient_id`、`patient_name`、`age` 与**康复时间**（天数），按康复时间**升序**、患者姓名**升序**排序。
+- **标题 / 题号**：寻找COVID康复患者（#3586，medium）
+- **链接**：https://leetcode.cn/problems/find-covid-recovery-patients/
+- **难度**：中等
+- **标签**：SQL、数据库、聚合函数、`MIN`、CTE、JOIN、窗口函数、`DATEDIFF`、双键排序
+
+**题意**：两张表：`patients` 记录患者基本信息，`covid_tests` 记录核酸检测结果（阳性 Positive / 阴性 Negative / 不确定 Inconclusive）。编写一个解决方案，找出**从 COVID 中康复**的患者——先检出阳性、之后又检出阴性的人，返回 `patient_id`、`patient_name`、`age` 与**康复时间**（天数），按康复时间**升序**、患者姓名**升序**排序。
 
 **表结构**：
 
@@ -95,14 +95,12 @@ covid_tests 表:
 | David Wilson | 01-10 阳 → 01-18 阳 | 2023-01-10 | 无 | 出局（阳性后无阴性） |
 | Emma Brown | 02-15 阴 → 02-20 阴 | 无 | — | 出局（从未阳性） |
 
-**约束条件**：
+**约束**：
 
 - `patient_id`、`test_id` 分别是两表主键，`covid_tests.patient_id` 指向 `patients.patient_id`
 - 结果按 `recovery_time` **升序**、`patient_name` **升序**排序
 
 > 💡 **读题关键**：① 阴性必须在**首次阳性之后**——阳性**之前**的阴性不算数（Carol 的反例）；② 两个锚点都是"首次"：**首次阳性**、以及该日期**之后**的**首次阴性**——本质是两个 `MIN`，但第二个 `MIN` 的候选集依赖第一个 `MIN` 的结果；③ Inconclusive 行完全透明，既不是阳性也不是阴性。
-
----
 
 ## 2. 解题思路
 
@@ -172,8 +170,6 @@ sort output by recovery_time asc, patient_name asc
 - **② 阶段（回表过滤）**：Carol 的 01-20 阴性虽是她的全局首次阴性，但 `test_date > first_pos` 不成立，被连接条件剔除——这正是依赖聚合必须回表（或广播）的原因；
 - **③ 阶段（双内连接）**：David（① 有 ② 无）、Emma（① 无）自动出局，一行 `WHERE` 都没写；
 - **⑤ 阶段（排序）**：Alice（10）与 Carol（10）同分，按姓名升序 Alice 在前，Bob（11）最后 $\to$ `Alice, Carol, Bob`，与预期输出一致。
-
----
 
 ## 3. 参考代码
 
@@ -277,8 +273,6 @@ def find_covid_recovery_patients(patients: pd.DataFrame,
 > - `agg(first_pos=('first_pos', 'first'), ...)`：`first_pos` 组内恒同值，取 `first` 即可；`(first_neg - first_pos).dt.days` 对应 `DATEDIFF`（LeetCode 的 date 列为 `datetime64`）；
 > - `merge(..., how='inner')` 与 `sort_values` 对应双内连接与双键排序。
 
----
-
 ## 4. 复杂度分析
 
 设 $n$ = `covid_tests` 行数，$m$ = `patients` 行数，$k$ = 结果行数。
@@ -291,8 +285,6 @@ def find_covid_recovery_patients(patients: pd.DataFrame,
 | **是否需排序** | 是 | 分组（隐式）+ 结果 `ORDER BY`（显式，只作用于 $k$ 行） |
 
 > ⚠️ 面试中说清"两次聚合各扫一遍、瓶颈在分组（有索引时可降为索引扫描）、最终排序只作用于 $k$ 行"即可。要避免的是对每个患者写**相关子查询**——每患者两次重复扫表，最坏 $O(n^2)$。
-
----
 
 ## 5. 扩展
 
@@ -322,8 +314,6 @@ Carol 的检测序列：01-20 阴 $\to$ 02-10 阳 $\to$ 02-20 阴。她的**全�
 
 LeetCode 数据库题默认 MySQL，本题 `DATEDIFF(first_neg, first_pos)` 即正天数。
 
----
-
 ## 6. 面试要点
 
 **Q1：为什么不能在同一次 `GROUP BY` 里算出康复时间？**
@@ -348,12 +338,12 @@ LeetCode 数据库题默认 MySQL，本题 `DATEDIFF(first_neg, first_pos)` 即�
 
 > 💡 **一句话总结**：3586 = 依赖聚合（首阳 `MIN` $\to$ 回表筛 `> first_pos` $\to$ 首阴 `MIN`）+ 双 INNER JOIN 天然过滤"仅有阴/仅有阳" + `DATEDIFF` 天数差 + 双键排序。考点在"第二个聚合依赖第一个聚合"这个结构，以及"阴性必须在首次阳性**之后**"的边界。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [550. 游戏玩法分析 IV](https://leetcode.cn/problems/game-play-analysis-iv/)（[站内题解](../0501-0600/550_游戏玩法分析IV.md)）：首次登录日期 + 次日回访判定，同款"依赖聚合"母题（首日聚合 $\to$ 回表比较）
-- [1070. 产品销售分析 III](https://leetcode.cn/problems/product-sales-analysis-iii/)（[站内题解](../1001-1100/1070_产品销售分析III.md)）：组内 `MIN` 取首次，本题 CTE① 的最简版
-- [1549. 每件商品的最新订单](https://leetcode.cn/problems/the-most-recent-orders-for-each-product/)（[站内题解](../1501-1600/1549_每件商品的最新订单.md)）：组内按时间取最新一条，"聚合锚点"思想的纯化版
-- [197. 上升的温度](https://leetcode.cn/problems/rising-temperature/)：`DATEDIFF` 日期差 + "比某条记录更晚"的过滤，练日期比较的基本功
-- [1454. 活跃用户](https://leetcode.cn/problems/active-users/)（[站内题解](../1401-1500/1454_活跃用户.md)）：首次出现后连续存在的判定，依赖聚合 + 日期运算的综合练习
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 550 | [游戏玩法分析 IV](https://leetcode.cn/problems/game-play-analysis-iv/)（[站内题解](../0501-0600/550_游戏玩法分析IV.md)） | 首次登录日期 + 次日回访判定，同款"依赖聚合"母题（首日聚合 $\to$ 回表比较） |
+| 1070 | [产品销售分析 III](https://leetcode.cn/problems/product-sales-analysis-iii/)（[站内题解](../1001-1100/1070_产品销售分析III.md)） | 组内 `MIN` 取首次，本题 CTE① 的最简版 |
+| 1549 | [每件商品的最新订单](https://leetcode.cn/problems/the-most-recent-orders-for-each-product/)（[站内题解](../1501-1600/1549_每件商品的最新订单.md)） | 组内按时间取最新一条，"聚合锚点"思想的纯化版 |
+| 197 | [上升的温度](https://leetcode.cn/problems/rising-temperature/) | `DATEDIFF` 日期差 + "比某条记录更晚"的过滤，练日期比较的基本功 |
+| 1454 | [活跃用户](https://leetcode.cn/problems/active-users/)（[站内题解](../1401-1500/1454_活跃用户.md)） | 首次出现后连续存在的判定，依赖聚合 + 日期运算的综合练习 |

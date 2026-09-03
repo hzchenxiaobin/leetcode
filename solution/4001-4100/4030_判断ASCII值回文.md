@@ -1,13 +1,13 @@
-# 判断 ASCII 值回文
-
-- **题目名称**：判断 ASCII 值回文
-- **链接**：[4030. 判断 ASCII 值回文](https://leetcode.cn/problems/check-ascii-palindromic/)
-- **难度**：简单
-- **标签**：字符串、位运算、双指针
+# LeetCode 判断 ASCII 值回文 题解
 
 ## 1. 题目概述
 
-给你一个由**小写英文字母**组成的字符串 $s$。
+- **标题 / 题号**：判断 ASCII 值回文（#4030，easy）
+- **链接**：https://leetcode.cn/problems/check-ascii-palindromic/
+- **难度**：简单
+- **标签**：字符串、位运算、双指针
+
+**题意**：给你一个由**小写英文字母**组成的字符串 $s$。
 
 将 $s$ 中的每个字符替换为其 ASCII 值对应的 **8 位二进制表示**（**包括前导零**），并保持字符原有顺序，从而构造一个**二进制字符串**。
 
@@ -35,14 +35,12 @@
 拼接得到 01101100011001010110010101110100，不是回文串。
 ```
 
-**约束条件**：
+**约束**：
 
 - $1 \le s.length \le 100$
 - $s$ 仅由小写英文字母组成
 
 > 💡 **审题关键**：① 每个字符**固定**展开为 8 位且**含前导零**，位串长度恒为 $8n$；② 判的是**位串**回文，不是字符回文——`"vv"` 不是（字符回文但位串不是），`"nv"` 反而是（位串回文但字符不回文）；③ 小写字母 ASCII 为 $97 \sim 122$，每个字节天生以 `011` 开头，这个"公共前缀"能推出极强的必要条件（见第 5 节）。
-
----
 
 ## 2. 解题思路
 
@@ -109,8 +107,6 @@ $$\text{bit}(i) \;=\; \Bigl( s[\,i \gg 3\,] \;\gg\; \bigl(7 - (i \,\&\, 7)\bigr)
 
 第二步即失配，返回 $\mathbf{false}$——与观察三一致：`l` 根本不在 $\{f, n, v\}$ 里，看首字符就能出局。
 
----
-
 ## 3. 参考代码
 
 ### C++
@@ -150,8 +146,6 @@ class Solution:
 > - 位串至多 800 位，$O(n)$ 空间毫无压力，比双指针版更清晰易写；
 > - 想练 $O(1)$ 空间可照 C++ 版写双指针：`bit = lambda i: (ord(s[i >> 3]) >> (7 - (i & 7))) & 1`。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -159,8 +153,6 @@ class Solution:
 | 时间 | $O(n)$ | 双指针至多 $8n/2 = 4n$ 次取位比较；拼接版同样 $O(8n)$ |
 | 空间 | $O(1)$（双指针版） | 位串按需计算、不落内存；拼接版为 $O(8n)$，本题规模下同样可接受 |
 | 答案规模 | 布尔值 | 无溢出问题 |
-
----
 
 ## 5. 扩展：字节级刻画——$\mathrm{rev}_8$ 与 {f, n, v} 定理
 
@@ -190,8 +182,6 @@ $$s \text{ 是 ASCII 回文} \;\Longleftrightarrow\; \text{每个字符} \in \{f
 
 于是"字节级"算法浮现：一趟扫描判断 $\mathrm{rev}_8(s_j) = s_{n-1-j}$ 对所有 $j$ 成立，比较次数是逐位版的 $1/8$。对本题纯属杀鸡用牛刀，但它是「**看清结构 ⇒ 折叠等价条件**」这一思维的好练习。
 
----
-
 ## 6. 面试要点
 
 **Q1：位串回文和字符回文是一回事吗？**
@@ -214,12 +204,12 @@ $$s \text{ 是 ASCII 回文} \;\Longleftrightarrow\; \text{每个字符} \in \{f
 
 > ① 单字符：只有 `"f"` 是 `true`，其余 25 个字母都是 `false`；② 偶长度：`"vv"`（字符回文但位串不是，防"想当然"）、`"nv"`、`"vvnn"`（位串回文）；③ 奇长度：中轴不是 `f` 必 `false`，如 `"fnf"`；④ 规模上界：$n = 100$ 全 `f`，位串 800 位全回文，`true`。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [125. 验证回文串](https://leetcode.cn/problems/valid-palindrome/)：最基础的双指针判回文模板，本题把"指针"搬到了虚拟位串上
-- [9. 回文数](https://leetcode.cn/problems/palindrome-number/)：反转一半数字即可判定，与双指针收缩同源的"只看一半"思想
-- [190. 颠倒二进制位](https://leetcode.cn/problems/reverse-bits/)：$\mathrm{rev}_8$ 就是它的 8 位迷你版，第 5 节字节级刻画的基石
-- [234. 回文链表](https://leetcode.cn/problems/palindrome-linked-list/)：结构不可随机访问时的回文判定，与"虚拟位串"异曲同工
-- [4021. 得到旋转回文字符串的最少操作次数 I](https://leetcode.cn/problems/minimum-operations-to-make-a-rotated-palindrome-i/)：同目录近邻题，回文判定在"旋转"变体下的运用
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 125 | [验证回文串](https://leetcode.cn/problems/valid-palindrome/) | 最基础的双指针判回文模板，本题把"指针"搬到了虚拟位串上 |
+| 9 | [回文数](https://leetcode.cn/problems/palindrome-number/) | 反转一半数字即可判定，与双指针收缩同源的"只看一半"思想 |
+| 190 | [颠倒二进制位](https://leetcode.cn/problems/reverse-bits/) | $\mathrm{rev}_8$ 就是它的 8 位迷你版，第 5 节字节级刻画的基石 |
+| 234 | [回文链表](https://leetcode.cn/problems/palindrome-linked-list/) | 结构不可随机访问时的回文判定，与"虚拟位串"异曲同工 |
+| 4021 | [得到旋转回文字符串的最少操作次数 I](https://leetcode.cn/problems/minimum-operations-to-make-a-rotated-palindrome-i/) | 同目录近邻题，回文判定在"旋转"变体下的运用 |

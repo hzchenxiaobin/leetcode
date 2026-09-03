@@ -1,15 +1,15 @@
-# 并行执行 Promise 以获取独有的结果
-
-- **题目名称**：并行执行 Promise 以获取独有的结果
-- **链接**：[2795. 并行执行 Promise 以获取独有的结果](https://leetcode.cn/problems/parallel-execution-of-promises-for-individual-results-retrieval/)
-- **难度**：中等
-- **标签**：Promise、并发、`Promise.allSettled` 手写、闭包、计数器
+# LeetCode 并行执行 Promise 以获取独有的结果 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：并行执行 Promise 以获取独有的结果（#2795，medium）
+- **链接**：https://leetcode.cn/problems/parallel-execution-of-promises-for-individual-results-retrieval/
+- **难度**：中等
+- **标签**：Promise、并发、`Promise.allSettled` 手写、闭包、计数器
+
 > ⚠️ 本题为 LeetCode 付费题，题意描述根据官方示例用例与 hints 重建，可能与官方题面有出入。
 
-给定一个异步函数数组 `functions`，返回一个新的 promise 对象 `promise`。数组中的每个函数都不接受参数并返回一个 promise。所有的 promise 都应该**并行执行**。
+**题意**：给定一个异步函数数组 `functions`，返回一个新的 promise 对象 `promise`。数组中的每个函数都不接受参数并返回一个 promise。所有的 promise 都应该**并行执行**。
 
 与「首拒即拒」的 `Promise.all` 不同，本题要求**逐个收集每个 promise 的独立结果**：
 
@@ -57,14 +57,12 @@
      外层并不短路；200ms 时第一个 promise 解析 30，此时全部定型，外层以 [30, "Error"] 解析。
 ```
 
-**约束条件**：
+**约束**：
 
 - 函数 `functions` 是一个返回 promise 的函数数组
 - $1 \leq \text{functions.length} \leq 10$
 
 > 💡 本题是 2721「并行执行异步函数」（手写 `Promise.all`）的姊妹篇：2721 是「首拒即拒、短路」，本题是「拒绝也收、不短路」——也就是手写 `Promise.allSettled`。考点在于理解「拒绝原因也能落位」与「计数器不区分成败」两点。
-
----
 
 ## 2. 解题思路
 
@@ -138,8 +136,6 @@ async function promiseAllSettled(functions) {
 | 100ms | $f_1$ resolve 15 | `[20, 15]` | 2 | `count===n` → `resolve([20,15])` |
 
 > 💡 全部成功时，本题与 2721 行为一致——差别只在「若有拒绝」时是否短路。可把本题视作 2721 的「容错加强版」。
-
----
 
 ## 3. 参考代码
 
@@ -243,8 +239,6 @@ async def promise_all_settled(functions):
 
 > ⚠️ Python 中 `asyncio.gather` 默认「首拒即抛」（`return_exceptions=False`），与 JS 的 `Promise.all` 一致；传 `return_exceptions=True` 后，任一协程抛出的异常不会被立刻传播，而是作为对应位置的结果返回——这与 JS 的 `Promise.allSettled` 把拒绝原因收进数组完全同构。注意：Python 会把异常**对象**放回结果列表（而非异常消息字符串），使用时按需 `.args[0]` 取消息。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -253,8 +247,6 @@ async def promise_all_settled(functions):
 | **空间** | $O(n)$ | 预分配 `results` 数组（$n$ 个槽位）+ 计数器，$n = \text{functions.length}$ |
 
 > 💡 **与 2721 的时间对比**：2721 在「有拒绝」时总耗时是首拒时刻（如示例 2 的 100ms），而本题即使有拒绝也要等到全部定型（如示例 3 的 200ms）。这是「短路」与「不短路」在耗时上的直接体现：不短路必等最慢者，短路可能在更早时刻结束。
-
----
 
 ## 5. 扩展：从 `Promise.all` 到 `Promise.allSettled` 的「一字之差」
 
@@ -305,8 +297,6 @@ var promiseAllSettled = function (functions) {
 - 用 `Promise.all`：当「任一失败则整体失败」时（如加载多个必需资源，一个失败就放弃全部）。
 - 用 `Promise.allSettled`：当「每个结果都重要、失败也要记录」时（如批量请求，部分失败不影响其余结果收集）。
 
----
-
 ## 6. 面试要点
 
 1. **`Promise.allSettled` 和 `Promise.all` 的本质区别是什么？**
@@ -331,11 +321,11 @@ var promiseAllSettled = function (functions) {
 
 > 💡 **一句话总结**：2795 = 手写 `Promise.allSettled`——「同步循环并发触发 + `.then` 闭包按索引落位 + 拒绝原因也落位 + 计数器不区分成败地收尾」。与 2721 只差三处：构造器删 `reject`、拒绝回调改落位、计数器数全部定型。本质是把「拒绝」从错误信号降格为「一份要收集的结果」。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2721. 并行执行异步函数](https://leetcode.cn/problems/execute-asynchronous-functions-in-parallel/)：手写 `Promise.all`——「首拒即拒、短路」版，与本题「拒绝也收、不短路」一字之差，对照阅读效果最佳（[题解](../2701-2800/2721_并行执行异步函数.md)）
-- [2723. 两个 Promise 对象相加](https://leetcode.cn/problems/add-two-promises/)：两个 Promise 求和，串行 `await` 即可——`await` 串行语义的前置题，对照理解为何并发题不能用串行 `await`（[题解](../2701-2800/2723_两个Promise对象相加.md)）
-- [2637. 有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/)：`Promise.race` 在 `fn` 与超时 promise 间赛跑——`Promise.race`（任一定型即定型）的招牌题，与本题「全部定型才定型」形成对比（[题解](../2601-2700/2637_有时间限制的Promise对象.md)）
-- [2636. Promise 对象池](https://leetcode.cn/problems/promise-pool/)：控制并发池上限，手动调度 N 个 promise——承接并发调度思想，加入「限流」维度，进阶练习手动管理 promise 生命周期（[题解](../2601-2700/2636_Promise对象池.md)）
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2721 | [并行执行异步函数](https://leetcode.cn/problems/execute-asynchronous-functions-in-parallel/) | 手写 `Promise.all`——「首拒即拒、短路」版，与本题「拒绝也收、不短路」一字之差，对照阅读效果最佳（[题解](../2701-2800/2721_并行执行异步函数.md)） |
+| 2723 | [两个 Promise 对象相加](https://leetcode.cn/problems/add-two-promises/) | 两个 Promise 求和，串行 `await` 即可——`await` 串行语义的前置题，对照理解为何并发题不能用串行 `await`（[题解](../2701-2800/2723_两个Promise对象相加.md)） |
+| 2637 | [有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/) | `Promise.race` 在 `fn` 与超时 promise 间赛跑——`Promise.race`（任一定型即定型）的招牌题，与本题「全部定型才定型」形成对比（[题解](../2601-2700/2637_有时间限制的Promise对象.md)） |
+| 2636 | [Promise 对象池](https://leetcode.cn/problems/promise-pool/) | 控制并发池上限，手动调度 N 个 promise——承接并发调度思想，加入「限流」维度，进阶练习手动管理 promise 生命周期（[题解](../2601-2700/2636_Promise对象池.md)） |

@@ -1,15 +1,15 @@
-# Promise 对象池
-
-- **题目名称**：Promise 对象池
-- **链接**：[2636. Promise 对象池](https://leetcode.cn/problems/promise-pool/)
-- **难度**：中等
-- **标签**：Promise、异步、并发控制、高阶函数
+# LeetCode Promise 对象池 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：Promise 对象池（#2636，medium）
+- **链接**：https://leetcode.cn/problems/promise-pool/
+- **难度**：中等
+- **标签**：Promise、异步、并发控制、高阶函数
+
 > ⚠️ 本题为 LeetCode 付费题，题意描述根据官方示例用例与 hints 重建，可能与官方题面有出入。
 
-编写函数 `promisePool(functions, n)`，接收：
+**题意**：编写函数 `promisePool(functions, n)`，接收：
 
 | 参数 | 含义 |
 |------|------|
@@ -59,15 +59,13 @@
 输出：pool 的 Promise 在 t=900 resolve（= Σ 单个耗时）
 ```
 
-**约束条件**：
+**约束**：
 
 - `1 <= functions.length`（示例 3 处于长度为 3 的小规模场景）
 - `1 <= n`
 - 每个 `functions[i]` 返回一个 Promise，resolve 时无显式返回值
 
 > 💡 本题是 [2637. 有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/) 的姊妹题——2637 给单个 Promise 加超时，2636 把多个 Promise 装进一个**有界并发池**统一调度。它不考算法复杂度，考的是 **Promise 的事件驱动调度**：如何用回调式补位维持"并发不超 n"的不变式。
-
----
 
 ## 2. 解题思路
 
@@ -129,8 +127,6 @@ for (const f of functions) await f();  // 并发数 = 1，浪费槽位
 | t=500 | f₂ resolve | 3 | 2→3 | 1→0 | `completed===3` → `resolve()` 收尾 |
 
 输出 pool 的 Promise 在 `t=500` resolve。注意 `t=300` 时 `i` 已经到 3（全部已启动），但 `completed` 只有 1——**不能**用 `i` 判收尾，这正是头号 bug 的出处。`t=400` 时 `next()` 检测到 `i === total` 直接返回（不启动新函数），等待最后剩的 `f₂` 在 `t=500` 完成。
-
----
 
 ## 3. 参考代码
 
@@ -248,8 +244,6 @@ async def promise_pool(functions, n):
 
 > ⚠️ Python 的 `asyncio.wait(return_when=FIRST_COMPLETED)` 对应 JS 的 `.then(onResolve)`——"谁先完成就先补位"。但 `ThreadPoolExecutor` 用**线程**而非**事件循环**，对 CPU 密集任务才有真并行意义；对纯 I/O 异步，`asyncio` 池语义更贴切。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -260,8 +254,6 @@ async def promise_pool(functions, n):
 > ⚠️ 上面 $O(m)$ 是**调度开销**——每个函数启动一次、`.then` 注册一次。**真正的执行耗时**由 `n` 与各函数实际耗时共同决定：`n` 越大越接近 $\max_i t_i$ 的下界，`n=1` 退化为 $\sum_i t_i$ 的串行上界。这是并发控制题目的典型"空间换时间"权衡：池越大，吞吐越高，但资源占用也越高。
 
 > 💡 **不变式验证**：`running = i - completed`。初始循环 `n` 次 `next()` 后 `i=n`、`completed=0`、`running=n`；之后每 `onResolve` 先 `completed++`（`running→n-1`）再 `next()`（若队列非空 `i++`，`running→n`）。故 `running ∈ [0, n]` 恒成立——并发上限得到保证。
-
----
 
 ## 5. 扩展：车道划分 vs 真池，与 `p-limit` 等库
 
@@ -317,8 +309,6 @@ await Promise.all(
 
 > 💡 本题的"对象池"本质就是**计数信号量**的 Promise 版：`n` 是许可数，`next()` 是获取许可+启动任务，`onResolve` 里 `completed++` 隐含"释放许可+唤醒等待者"。理解了信号量，就理解了所有并发限流的原型。
 
----
-
 ## 6. 面试要点
 
 1. **为什么用 `completed === total` 判收尾，而不是 `i === total`？**
@@ -343,12 +333,12 @@ await Promise.all(
 
 > 💡 **一句话总结**：2636 = 「`new Promise` + 共享 `i`/`completed` + `next()` 递归补位」。初始填满 `n` 槽，每次 resolve 先 `completed++` 再 `next()` 补队头，`completed === total` 时收尾。不变式 `running = i - completed ≤ n` 恒成立——这就是计数信号量的 Promise 化身。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2637. 有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/)：给单个 Promise 加超时取消，与本题给一批 Promise 加并发上限是 Promise 调度题的两面——一个控"超时"，一个控"并发"
-- [2721. 并行执行异步函数](https://leetcode.cn/problems/execute-asynchronous-functions-in-parallel/)：本题 `n` 等于数组长度时的退化情形，先理解无界并行（`Promise.all`）再看有界池，层次分明
-- [2723. 两个 Promise 对象相加](https://leetcode.cn/problems/add-two-promises/)：`Promise.all` 接收两个 Promise 后 `.then` 拿值，是"等待并发 Promise 全部完成"的最小用例，对照本题池收尾时 `completed === total` 的"全部完成"判定
-- [2627. 函数防抖](https://leetcode.cn/problems/debounce/)：同属"事件驱动调度"家族——防抖靠 `clearTimeout/setTimeout` 在调用间重置时钟，对象池靠 `onResolve/next()` 在 resolve 间补位，都是"用回调管时序"
-- [2626. 数组归约运算](https://leetcode.cn/problems/array-reduce-transformation/)：`reduce` 的串行累加器是 `n=1` 串行调度的同步版缩影，对比异步池把"串行依赖"放松成"至多 `n` 并发"
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2637 | [有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/) | 给单个 Promise 加超时取消，与本题给一批 Promise 加并发上限是 Promise 调度题的两面——一个控"超时"，一个控"并发" |
+| 2721 | [并行执行异步函数](https://leetcode.cn/problems/execute-asynchronous-functions-in-parallel/) | 本题 `n` 等于数组长度时的退化情形，先理解无界并行（`Promise.all`）再看有界池，层次分明 |
+| 2723 | [两个 Promise 对象相加](https://leetcode.cn/problems/add-two-promises/) | `Promise.all` 接收两个 Promise 后 `.then` 拿值，是"等待并发 Promise 全部完成"的最小用例，对照本题池收尾时 `completed === total` 的"全部完成"判定 |
+| 2627 | [函数防抖](https://leetcode.cn/problems/debounce/) | 同属"事件驱动调度"家族——防抖靠 `clearTimeout/setTimeout` 在调用间重置时钟，对象池靠 `onResolve/next()` 在 resolve 间补位，都是"用回调管时序" |
+| 2626 | [数组归约运算](https://leetcode.cn/problems/array-reduce-transformation/) | `reduce` 的串行累加器是 `n=1` 串行调度的同步版缩影，对比异步池把"串行依赖"放松成"至多 `n` 并发" |

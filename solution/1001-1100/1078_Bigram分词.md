@@ -1,13 +1,13 @@
-# Bigram 分词
-
-- **题目名称**：Bigram 分词
-- **链接**：[1078. Bigram 分词](https://leetcode.cn/problems/occurrences-after-bigram/)
-- **难度**：简单
-- **标签**：字符串、模拟
+# LeetCode Bigram 分词 题解
 
 ## 1. 题目概述
 
-给出第一个词 `first` 和第二个词 `second`，考虑在某些文本 `text` 中可能以 `"first second third"` 形式出现的情况，其中 `second` 紧随 `first` 出现，`third` 紧随 `second` 出现。
+- **标题 / 题号**：Bigram 分词（#1078，easy）
+- **链接**：https://leetcode.cn/problems/occurrences-after-bigram/
+- **难度**：简单
+- **标签**：字符串、模拟
+
+**题意**：给出第一个词 `first` 和第二个词 `second`，考虑在某些文本 `text` 中可能以 `"first second third"` 形式出现的情况，其中 `second` 紧随 `first` 出现，`third` 紧随 `second` 出现。
 
 对于每种这样的情况，将第三个词 `third` 添加到答案中，并返回答案。
 
@@ -32,7 +32,7 @@
   ⚠ 两次命中共用下标 2 的 "we"（既是前一次的 third，又是后一次的 first），匹配允许重叠
 ```
 
-**约束条件**：
+**约束**：
 
 - $1 \leq \text{text.length} \leq 1000$
 - `text` 由小写英文字母和空格组成
@@ -42,8 +42,6 @@
 - `text` 不包含任何前缀或尾随空格
 
 > 💡 关键点：题目已保证单词间**单空格分隔**且**无前后导空格**，因此直接按空格切分即可得到干净的单词数组，无需处理多空格或边界。
-
----
 
 ## 2. 解题思路
 
@@ -102,8 +100,6 @@
 
 > ⚠️ 注意 $i=0$ 命中后窗口**不跳过 3 格**，而是继续步进到 $i=1$、$i=2$。$i=0$ 的第三位 `we`（下标 2）正是 $i=2$ 的首位——若命中后跳过，会漏掉 $i=2$ 的 `"rock"`。**步进恒为 1** 是处理重叠匹配的关键。
 
----
-
 ## 3. 参考代码
 
 ### C++
@@ -143,8 +139,6 @@ class Solution:
 
 > 💡 代码要点：① Python 直接 `split(" ")` 即得单词数组（题目保证单空格分隔）；C++ 用 `stringstream >>` 自动按空白切分，更稳健；② 循环上界写 `i + 2 < n`（C++）/ `range(len(words) - 2)`（Python），保证访问 `words[i+2]` 不越界，无需额外判断；③ 步进恒为 1，不因命中而跳过，正确处理重叠匹配。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -153,8 +147,6 @@ class Solution:
 | **空间** | $O(n)$ | 存储切分后的单词数组 `words` |
 
 > 💡 若不显式切分、改为双指针在原串上抽取单词边走边比，可做到 $O(1)$ 额外空间，但代码复杂度上升、收益有限。本题 $n \leq 1000$，切分方案最清晰。
-
----
 
 ## 5. 扩展：不切分原位扫描（$O(1)$ 额外空间）
 
@@ -184,8 +176,6 @@ class Solution:
 
 > ⚠️ 本法等价于「流式处理」，适合 `text` 极长或无法一次性载入的场景；本题约束小，切分法更直观。
 
----
-
 ## 6. 面试要点
 
 **Q1：为什么窗口步进恒为 1，命中后不跳过？**
@@ -208,12 +198,12 @@ class Solution:
 
 > 本题是**最朴素的定长模式匹配**——模式长度固定为 3（两个锚点 + 一个待收集位）。当模式变长或带通配符时，需升级为 KMP（单模式）、AC 自动机（多模式）或正则。本题规模小、模式固定，一次线性扫描足矣。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [28. 找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)（[题解](../0001-0100/28_找出字符串中第一个匹配项的下标.md)）：单模式字符串匹配母题，KMP 入门，对比本题的单词级朴素匹配
-- [8. 字符串转换整数 (atoi)](https://leetcode.cn/problems/string-to-integer-atoi/)（[题解](../0001-0100/8_字符串转换整数atoi.md)）：字符串模拟 + 边界处理，同为「扫描 + 状态收集」范式
-- [58. 最后一个单词的长度](https://leetcode.cn/problems/length-of-last-word/)（[题解](../0001-0100/58_最后一个单词的长度.md)）：从右向左扫描跳过尾随空格 + 数单词，单词级遍历的对照练习
-- [2109. 向字符串添加空格](https://leetcode.cn/problems/adding-spaces-to-a-string/)：在指定位置插入空格，字符串切分/拼接的逆向操作
-- [1816. 截断句子](https://leetcode.cn/problems/truncate-sentence/)：按空格切分取前 k 个单词重组，单词数组操作的基础练手
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 28 | [找出字符串中第一个匹配项的下标](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)（[题解](../0001-0100/28_找出字符串中第一个匹配项的下标.md)） | 单模式字符串匹配母题，KMP 入门，对比本题的单词级朴素匹配 |
+| 8 | [字符串转换整数 (atoi)](https://leetcode.cn/problems/string-to-integer-atoi/)（[题解](../0001-0100/8_字符串转换整数atoi.md)） | 字符串模拟 + 边界处理，同为「扫描 + 状态收集」范式 |
+| 58 | [最后一个单词的长度](https://leetcode.cn/problems/length-of-last-word/)（[题解](../0001-0100/58_最后一个单词的长度.md)） | 从右向左扫描跳过尾随空格 + 数单词，单词级遍历的对照练习 |
+| 2109 | [向字符串添加空格](https://leetcode.cn/problems/adding-spaces-to-a-string/) | 在指定位置插入空格，字符串切分/拼接的逆向操作 |
+| 1816 | [截断句子](https://leetcode.cn/problems/truncate-sentence/) | 按空格切分取前 k 个单词重组，单词数组操作的基础练手 |

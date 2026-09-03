@@ -1,13 +1,13 @@
-# Excel表列序号
-
-- **题目名称**：Excel表列序号
-- **链接**：[171. Excel表列序号](https://leetcode.cn/problems/excel-sheet-column-number/)
-- **难度**：简单
-- **标签**：数学、字符串
+# LeetCode Excel表列序号 题解
 
 ## 1. 题目概述
 
-给定一个字符串 `columnTitle`，表示 Excel 表格中的列名称，返回它对应的**列序号**。Excel 列的命名规则与 26 进制类似但**并非普通 26 进制**：
+- **标题 / 题号**：Excel表列序号（#171，easy）
+- **链接**：https://leetcode.cn/problems/excel-sheet-column-number/
+- **难度**：简单
+- **标签**：数学、字符串
+
+**题意**：给定一个字符串 `columnTitle`，表示 Excel 表格中的列名称，返回它对应的**列序号**。Excel 列的命名规则与 26 进制类似但**并非普通 26 进制**：
 
 ```text
 A -> 1
@@ -41,15 +41,13 @@ AB -> 28
 输出：701
 ```
 
-**约束条件**：
+**约束**：
 
 - $1 \le \text{columnTitle.length} \le 7$
 - `columnTitle` 仅由大写英文字母组成
 - `columnTitle` 在范围 `["A", "FXSHRXW"]` 内（即结果 $\le 2^{31}-1$）
 
 > 💡 本题是 [168. Excel表列名称](../0001-0100/168_Excel表列名称.md) 的**逆问题**：168 是「整数 → 字符串」（分解），171 是「字符串 → 整数」（合成）。两题合看，才能完整理解「1-indexed 进制」的两个方向。有趣的是，**合成方向比分解方向简单得多**——171 不需要 168 那个让人头疼的「每轮先减 1」修正，原因见 2.2 节。
-
----
 
 ## 2. 解题思路
 
@@ -125,8 +123,6 @@ $$\text{digit}(ch) = \text{ord}(ch) - \text{ord}(\text{'A'}) + 1 \in [1, 26]$$
 
 > 💡 **观察 `res` 的单调性**：每一步 `res` 从旧值变到 `res×26 + digit`，由于 `digit ≥ 1` 且 `26 > 1`，新值严格大于旧值。这意味着**中间累加值始终 ≤ 最终结果**——只要最终结果不溢出，中间过程就不会溢出（详见第 4 节的溢出分析）。
 
----
-
 ## 3. 参考代码
 
 ### C++
@@ -157,8 +153,6 @@ class Solution:
 
 > 💡 两版逻辑完全一致，核心只有一行 `res = res * 26 + (ord(ch) - ord('A') + 1)`。C++ 用 `long long` 是防御性写法（题目保证结果 $\le 2^{31}-1$，`int` 其实够用，但用 `long long` 可消除「万一溢出」的疑虑，详见第 4 节）。Python 整数任意精度，无溢出问题。注意数码取值用 `ord(ch) - ord('A') + 1`——**末尾的 `+1` 不可省**，它把 $0 \sim 25$ 平移成 $1 \sim 26$，正是 1-indexed 的体现（但与 168 不同，这里的 `+1` 是「映射到正确数码」，不是「修正除法」）。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -169,8 +163,6 @@ class Solution:
 > ⚠️ **溢出分析**（C++ 才需关心）：题目保证 `columnTitle` 在 `["A", "FXSHRXW"]` 内，即结果 $\le 2^{31}-1 = \text{INT\_MAX}$。由于 `res` 单调递增（见 2.4），所有中间值 $\le$ 最终值 $\le \text{INT\_MAX}$，故用 `int` 不会溢出。但「单调性」这个结论依赖 `digit ≥ 1`——若哪天题目改成允许「代表 0 的字母」，单调性可能被打破。用 `long long` 是不依赖题意细节的稳健写法，面试时说出这层分析比直接写 `int` 更显严谨。
 >
 > 验证上界：`"FXSHRXW"` 逐位累加 $\to 2147483647 = 2^{31}-1$ ✓。
-
----
 
 ## 5. 扩展：与 168 的对照——1-indexed 进制的两个方向
 
@@ -206,8 +198,6 @@ def str_to_int(s, base, digit_of):
 
 模板对「数码是否含 0」不敏感——这是 Horner 法相对于「按位权展开 $\sum d_i \cdot \text{base}^i$」的最大优势：不用求幂、不用反向、对数码偏移透明。
 
----
-
 ## 6. 面试要点
 
 1. **为什么 171 不需要像 168 那样「先减 1」？**
@@ -232,11 +222,11 @@ def str_to_int(s, base, digit_of):
 
 > 💡 **一句话总结**：171 是「1-indexed 26 进制」的合成方向，用 Horner 累乘加 `res = res*26 + (ord(ch)-ord('A')+1)` 一遍扫完，O(n)/O(1)，无分支无反转。它比逆问题 168 简单的根源在于——合成只用乘加、不涉及取余，故对「数码不含 0」完全不敏感，无需 off-by-one 修正。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [168. Excel表列名称](https://leetcode.cn/problems/excel-sheet-column-title/)（[题解](../0001-0100/168_Excel表列名称.md)）：本题逆问题，分解方向，对比理解「合成无需平移、分解需要平移」
-- [8. 字符串转换整数 (atoi)](https://leetcode.cn/problems/string-to-integer-atoi/)：十进制版的「字符串转整数」，同一套 Horner 累乘加骨架（基数 10、数码 `ch-'0'`），多出符号与溢出处理
-- [13. 罗马数字转整数](https://leetcode.cn/problems/roman-to-integer/)：另一类「符号串 → 整数」转换，但罗马数字用「左小右大则减」的贪心规则而非位权累加，可对比两种映射思路
-- [504. 七进制数](https://leetcode.cn/problems/base-7/)：标准 0-indexed 进制转换（含负数与分解方向），对比「数码含 0」时分解方向也无需 off-by-one 的简单情况
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 168 | [Excel表列名称](https://leetcode.cn/problems/excel-sheet-column-title/)（[题解](../0001-0100/168_Excel表列名称.md)） | 本题逆问题，分解方向，对比理解「合成无需平移、分解需要平移」 |
+| 8 | [字符串转换整数 (atoi)](https://leetcode.cn/problems/string-to-integer-atoi/) | 十进制版的「字符串转整数」，同一套 Horner 累乘加骨架（基数 10、数码 `ch-'0'`），多出符号与溢出处理 |
+| 13 | [罗马数字转整数](https://leetcode.cn/problems/roman-to-integer/) | 另一类「符号串 → 整数」转换，但罗马数字用「左小右大则减」的贪心规则而非位权累加，可对比两种映射思路 |
+| 504 | [七进制数](https://leetcode.cn/problems/base-7/) | 标准 0-indexed 进制转换（含负数与分解方向），对比「数码含 0」时分解方向也无需 off-by-one 的简单情况 |

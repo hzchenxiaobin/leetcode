@@ -1,13 +1,13 @@
-# 交替打印 FooBar
-
-- **题目名称**：交替打印 FooBar
-- **链接**：[1115. 交替打印 FooBar](https://leetcode.cn/problems/print-foobar-alternately/)
-- **难度**：中等
-- **标签**：并发、多线程、互斥锁、条件变量、信号量
+# LeetCode 交替打印 FooBar 题解
 
 ## 1. 题目概述
 
-现有两个线程，一个 `foo` 线程、一个 `bar` 线程。给类 `FooBar` 传入整数 `n`，两个线程会被分别调用 `n` 次：
+- **标题 / 题号**：交替打印 FooBar（#1115，medium）
+- **链接**：https://leetcode.cn/problems/print-foobar-alternately/
+- **难度**：中等
+- **标签**：并发、多线程、互斥锁、条件变量、信号量
+
+**题意**：现有两个线程，一个 `foo` 线程、一个 `bar` 线程。给类 `FooBar` 传入整数 `n`，两个线程会被分别调用 `n` 次：
 
 - `foo(function printFoo)` 会被调用 `n` 次，每次执行 `printFoo()` 输出 `"foo"`
 - `bar(function printBar)` 会被调用 `n` 次，每次执行 `printBar()` 输出 `"bar"`
@@ -30,14 +30,12 @@
 解释：输出 "foo" → "bar" → "foo" → "bar"。
 ```
 
-**约束条件**：
+**约束**：
 
 - `1 <= n <= 1000`
 - 两个线程并发执行，调度顺序由操作系统决定，**不能假设**谁先获得执行权
 
 > ⚠️ 关键约束：题目只要求**最终输出顺序**正确，对调度次数、是否忙等等不做限制。但若用纯自旋（busy wait）会让一个线程空转占用 CPU，属于可用但不够优雅的解法。
-
----
 
 ## 2. 解题思路
 
@@ -81,8 +79,6 @@
 | 4 | Bar | lock → wait(F✓) → printBar → turn=T → notify | true |
 
 最终输出 `"foobarfoobar"`，共 `n=2` 组 ✓。
-
----
 
 ## 3. 参考代码
 
@@ -156,8 +152,6 @@ class FooBar:
 
 > 💡 **注意**：C++ 的 `cv.wait(lock, pred)` 与 Python 的 `cv.wait_for(pred)` 都是**带谓词**的等待，内部等价于 `while (!pred) cv.wait()`，能自动抵御虚假唤醒。务必使用这种形式，而不是裸 `cv.wait()` + 手动 `if` 判断——后者在虚假唤醒下会出错。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -166,8 +160,6 @@ class FooBar:
 | 空间复杂度 | $O(1)$ | 仅常数个同步对象（互斥锁、条件变量、turn 标志），不随 `n` 增长 |
 
 > ⚠️ 严格来说线程调度开销不是 $O(1)$（涉及内核态切换），但与 `n` 仍是线性关系，不改变整体 $O(n)$ 的规模。
-
----
 
 ## 5. 扩展：其他同步方案
 
@@ -266,8 +258,6 @@ public:
 
 > 💡 `yield()` 比 `while(...);` 空转稍好——主动让出时间片，减少无谓的 CPU 占用，但仍不如条件变量/信号量那种真正阻塞的方案优雅。
 
----
-
 ## 6. 面试要点
 
 1. **为什么 `turn` 初值要设成 `true`？**
@@ -285,12 +275,12 @@ public:
 5. **自旋方案在什么场景下反而更优？**
    - 当临界区极短、且线程数不超过物理核数时，自旋避免了内核态阻塞/唤醒的上下文切换开销，延迟更低（这也是自旋锁的设计动机）。本题打印动作虽短，但 `n` 可能到 1000，忙等的 CPU 浪费累积明显，故仍以阻塞方案为主。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [1114. 按序打印](https://leetcode.cn/problems/print-in-order/)：三线程按 first→second→third 顺序执行，同样是同步原语入门，本题的「接力」模型直接套用
-- [1116. 打印零与奇偶数](https://leetcode.cn/problems/print-zero-even-odd/)：四个线程交替打印 0 与奇偶数，条件变量需配合「下一棒是谁」的状态机，承接本题的 turn 翻转
-- [1117. H2O 生成](https://leetcode.cn/problems/building-h2o/)：两 H 一 O 交替释放，信号量配额控制（2 个 H 名额 + 1 个 O 名额），本题信号量方案的进阶
-- [1195. Fizz Buzz 多线程](https://leetcode.cn/problems/fizz-buzz-multithreaded/)：四线程按数字整除关系分工，条件变量需区分多种状态转移，本题的多分支版
-- [1226. 哲学家进餐问题](https://leetcode.cn/problems/the-dining-philosophers/)：五线程共享叉子资源，避免死锁的经典并发题，对比本题只需「乒乓」两线程的简单性
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 1114 | [按序打印](https://leetcode.cn/problems/print-in-order/) | 三线程按 first→second→third 顺序执行，同样是同步原语入门，本题的「接力」模型直接套用 |
+| 1116 | [打印零与奇偶数](https://leetcode.cn/problems/print-zero-even-odd/) | 四个线程交替打印 0 与奇偶数，条件变量需配合「下一棒是谁」的状态机，承接本题的 turn 翻转 |
+| 1117 | [H2O 生成](https://leetcode.cn/problems/building-h2o/) | 两 H 一 O 交替释放，信号量配额控制（2 个 H 名额 + 1 个 O 名额），本题信号量方案的进阶 |
+| 1195 | [Fizz Buzz 多线程](https://leetcode.cn/problems/fizz-buzz-multithreaded/) | 四线程按数字整除关系分工，条件变量需区分多种状态转移，本题的多分支版 |
+| 1226 | [哲学家进餐问题](https://leetcode.cn/problems/the-dining-philosophers/) | 五线程共享叉子资源，避免死锁的经典并发题，对比本题只需「乒乓」两线程的简单性 |

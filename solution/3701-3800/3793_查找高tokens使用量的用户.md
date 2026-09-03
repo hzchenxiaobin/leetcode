@@ -1,11 +1,11 @@
-# 查找高tokens使用量的用户
-
-- **题目名称**：查找高tokens使用量的用户
-- **链接**：[3793. Find Users with High Token Usage](https://leetcode.cn/problems/find-users-with-high-token-usage/)
-- **难度**：简单
-- **标签**：数据库、SQL、聚合函数、`GROUP BY` + `HAVING`、`MAX > AVG` 存在性判定、`ROUND` 保留小数
+# LeetCode 查找高tokens使用量的用户 题解
 
 ## 1. 题目概述
+
+- **标题 / 题号**：查找高tokens使用量的用户（#3793，easy）
+- **链接**：https://leetcode.cn/problems/find-users-with-high-token-usage/
+- **难度**：简单
+- **标签**：数据库、SQL、聚合函数、`GROUP BY` + `HAVING`、`MAX > AVG` 存在性判定、`ROUND` 保留小数
 
 **表结构**：`prompts`
 
@@ -59,8 +59,6 @@
 > ② 条件 4 的比较对象是**未舍入**的平均值（`AVG(tokens)` 原值），`ROUND` 只负责展示；
 > ③ 两个过滤条件**彼此独立**：用户 2 的最大值 70 > 自己的平均 65，条件 4 通过，却因只有 2 条提示词倒在条件 3；
 > ④ `avg_tokens` 是输出列名，`ORDER BY avg_tokens DESC` 引用的是**舍入后**的值，`user_id` 升序作第二键防并列乱序。
-
----
 
 ## 2. 解题思路
 
@@ -121,8 +119,6 @@
 | 3 | 300, 250, 180, 220 | 4 | 950/4 = 237.5 | ✓ | 300 > 237.5 ✓ | ✅ 入选 |
 
 两个幸存者按 `avg_tokens` 降序：237.5 > 133.33 → 输出 `3, 1`，与官方一致 ✓。注意用户 2 的 `MAX > avg` 实际是**通过**的（70 > 65），出局的唯一原因是条数不足——两个条件彼此独立，正是 2.2 观察二「组级断言缺一不可」的活例子。
-
----
 
 ## 3. 参考代码
 
@@ -198,8 +194,6 @@ def find_users_with_high_token_usage(prompts: pd.DataFrame) -> pd.DataFrame:
 > - 布尔条件用 `&` 连接必须逐个加括号（`&` 的优先级低于比较运算符）；
 > - ⚠️ `Series.round` 是**银行家舍入**（round-half-even），MySQL `ROUND` 对 DECIMAL 是四舍五入：均值恰落 `.xx5` 时两者可能差 0.01（如 sum=1、count=8 → 0.125，pandas 得 0.12、MySQL 得 0.13），详见第 5 节。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -209,8 +203,6 @@ def find_users_with_high_token_usage(prompts: pd.DataFrame) -> pd.DataFrame:
 
 > - 对比「JOIN 统计表 + 逐行比对 + DISTINCT」的暴力版：表扫两遍 + JOIN + 去重，复杂度阶未必更差，但代码量与中间结果规模都翻倍；
 > - 窗口函数版物化 $n$ 行派生表，空间 $O(n)$，换取的是「逐行谓词」的直观性——本题数据量小无所谓，大表场景 A 更省。
-
----
 
 ## 5. 扩展：舍入的三个坑与 `HAVING` vs `WHERE`
 
@@ -228,8 +220,6 @@ def find_users_with_high_token_usage(prompts: pd.DataFrame) -> pd.DataFrame:
 | `HAVING` | 分组**后**的组级统计 | ✓ | `COUNT(*) ≥ 3` 且 `MAX > AVG` |
 
 > 💡 判别口诀：谓词里出现聚合函数（`COUNT/AVG/MAX/...`）→ 必须进 `HAVING`；只涉及原始列 → 优先 `WHERE`（过滤前移、减小分组规模）。
-
----
 
 ## 6. 面试要点
 
@@ -255,12 +245,12 @@ def find_users_with_high_token_usage(prompts: pd.DataFrame) -> pd.DataFrame:
 
 > 💡 **一句话总结**：3793 = `GROUP BY` 三聚合 + `HAVING` 双条件 + 展示层 `ROUND`。带走三件事：存在性坍缩成 `MAX > AVG`、聚合谓词进 `HAVING`、舍入只发生在 SELECT。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [1934. 确认率](https://leetcode.cn/problems/confirmation-rate/)（[题解](../1901-2000/1934_确认率.md)）：同款「每用户平均值 + `ROUND(..., 2)`」输出，叠加 `LEFT JOIN` 零记录用户按 0 处理的考点
-- [1211. 查询结果的质量和占比](https://leetcode.cn/problems/queries-quality-and-percentage/)（[题解](../1201-1300/1211_查询结果的质量和占比.md)）：每查询两个 `ROUND(AVG(...))` 指标 + `SUM(条件)/COUNT` 条件聚合，与本题的聚合量同构
-- [586. 订单最多的客户](https://leetcode.cn/problems/customer-placing-the-largest-number-of-orders/)（[题解](../0501-0600/586_订单最多的客户.md)）：`GROUP BY` 计数 + 排序取最值——本题的 `prompt_count` 单拎出来就是它
-- [619. 只出现一次的最大数字](https://leetcode.cn/problems/biggest-single-number/)（[题解](../0601-0700/619_只出现一次的最大数字.md)）：`HAVING COUNT(*) = 1` 的存在性过滤 + 空集兜底，感受「组级断言」的另一个形态
-- [1045. 买下所有产品的客户](https://leetcode.cn/problems/customers-who-bought-all-products/)（[题解](../1001-1100/1045_买下所有产品的客户.md)）：`HAVING COUNT(DISTINCT ...) = 子查询全集`——组级断言的「完备性」进阶版
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 1934 | [确认率](https://leetcode.cn/problems/confirmation-rate/)（[题解](../1901-2000/1934_确认率.md)） | 同款「每用户平均值 + `ROUND(..., 2)`」输出，叠加 `LEFT JOIN` 零记录用户按 0 处理的考点 |
+| 1211 | [查询结果的质量和占比](https://leetcode.cn/problems/queries-quality-and-percentage/)（[题解](../1201-1300/1211_查询结果的质量和占比.md)） | 每查询两个 `ROUND(AVG(...))` 指标 + `SUM(条件)/COUNT` 条件聚合，与本题的聚合量同构 |
+| 586 | [订单最多的客户](https://leetcode.cn/problems/customer-placing-the-largest-number-of-orders/)（[题解](../0501-0600/586_订单最多的客户.md)） | `GROUP BY` 计数 + 排序取最值——本题的 `prompt_count` 单拎出来就是它 |
+| 619 | [只出现一次的最大数字](https://leetcode.cn/problems/biggest-single-number/)（[题解](../0601-0700/619_只出现一次的最大数字.md)） | `HAVING COUNT(*) = 1` 的存在性过滤 + 空集兜底，感受「组级断言」的另一个形态 |
+| 1045 | [买下所有产品的客户](https://leetcode.cn/problems/customers-who-bought-all-products/)（[题解](../1001-1100/1045_买下所有产品的客户.md)） | `HAVING COUNT(DISTINCT ...) = 子查询全集`——组级断言的「完备性」进阶版 |

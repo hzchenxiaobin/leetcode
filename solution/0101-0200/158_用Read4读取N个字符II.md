@@ -1,13 +1,13 @@
-# 用 Read4 读取 N 个字符 II（多次调用）
-
-- **题目名称**：用 Read4 读取 N 个字符 II（多次调用）
-- **链接**：[158. Read N Characters Given Read4 II - Call multiple times](https://leetcode.cn/problems/read-n-characters-given-read4-ii-call-multiple-times/)
-- **难度**：困难
-- **标签**：字符串、模拟、交互式 API、设计
+# LeetCode 用 Read4 读取 N 个字符 II（多次调用） 题解
 
 ## 1. 题目概述
 
-给定一个**只读文件**与一个已实现的接口 `read4`，要求你实现 `read`，从文件中读取**至多 `n` 个字符**写入调用方提供的缓冲区 `buf`，并返回**实际读取的字符数**。与 [157](https://leetcode.cn/problems/read-n-characters-given-read4/) 的唯一区别是：**`read` 在整个测试中会被调用多次**，且各次调用共享同一个文件游标——你必须保证上次 `read4`「多读」的字符不丢失，在下次 `read` 中优先交付。
+- **标题 / 题号**：用 Read4 读取 N 个字符 II（多次调用）（#158，hard）
+- **链接**：https://leetcode.cn/problems/read-n-characters-given-read4-ii-call-multiple-times/
+- **难度**：困难
+- **标签**：字符串、模拟、交互式 API、设计
+
+**题意**：给定一个**只读文件**与一个已实现的接口 `read4`，要求你实现 `read`，从文件中读取**至多 `n` 个字符**写入调用方提供的缓冲区 `buf`，并返回**实际读取的字符数**。与 [157](https://leetcode.cn/problems/read-n-characters-given-read4/) 的唯一区别是：**`read` 在整个测试中会被调用多次**，且各次调用共享同一个文件游标——你必须保证上次 `read4`「多读」的字符不丢失，在下次 `read` 中优先交付。
 
 **接口契约**：
 
@@ -42,7 +42,7 @@ file = "leetcode"，read(buf, 5) → 返回 5，buf = "leetc"
   返回 5。若紧接着再 read(buf, 5)，下次会先消费 "ode" 再调 read4。
 ```
 
-**约束条件**：
+**约束**：
 
 - `1 <= file.length <= 500`
 - `1 <= n <= 1000`
@@ -50,8 +50,6 @@ file = "leetcode"，read(buf, 5) → 返回 5，buf = "leetc"
 - `read` 在整个测试中**会被调用多次**（这是本题与 157 的本质区别）
 
 > 💡 本题是 [157](https://leetcode.cn/problems/read-n-characters-given-read4/) 的多次调用版。157 中 `buf4` 是局部变量、用完即丢；158 中 `buf4` 必须升格为**成员变量**，配一个消费指针 `buf4Ptr` 与已读计数 `buf4Cnt`，把「上次多读的字符」从「丢弃」改成「跨调用暂存」。骨架（`while total < n` + `need = min(...)` + 双出口）完全沿用 157，只加一层持久化。
-
----
 
 ## 2. 解题思路
 
@@ -132,8 +130,6 @@ total += need
 
 > 💡 **观察「暂存」与「丢弃」的边界**：暂存发生在「`read4` 给的比本轮 `read` 需要的多」时，即 `buf4Cnt - buf4Ptr > n - total`。157 把这部分丢弃（局部变量），158 把这部分保留（成员变量）。两者分界线就是 `buf4` 的存储期——这是 158 相对 157 的**唯一**新增语义。
 
----
-
 ## 3. 参考代码
 
 ### C++
@@ -208,8 +204,6 @@ class Solution:
 
 > ⚠️ **Python `__init__` 不能省**：LeetCode 的 Solution 对象在一次测试中被复用（多次调 `read`），`__init__` 在对象创建时执行一次，把三个状态量初始化为 0/空。若把初始化写进 `read` 里，每次调用都会清空缓存，退化成 157 的错误版本。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -221,8 +215,6 @@ class Solution:
 | `read4` EOF 探测次数 | $\le q$ | 返回 0 的调用数：仅在缓存空且 `total < n` 时探测，每次 `read` 至多 1 次 |
 
 > ⚠️ 关键不变量：**`read4` 返回 $> 0$ 的调用数 = $\lceil \text{file.length} / 4 \rceil$**，与 `read` 被拆成多少次调用无关。因为缓存保证「读过的字符必先交付给某个 `read`，绝不丢弃」，故 `read4` 只会单调前进直到 EOF。若你的实现中**返回 $> 0$ 的 `read4` 调用数**超过这个值，说明缓存逻辑有 bug（重复读了已读部分）。注意：缓存空且文件已尽时仍会调一次 `read4` 拿到 0 来确认 EOF——这是「EOF 探测」，不读数据，每次 `read` 至多一次。
-
----
 
 ## 5. 扩展：与 157 的对照与流式包装器模式
 
@@ -252,8 +244,6 @@ class Solution:
 
 > 💡 **设计精髓**：底层 I/O 按「块」读（减少系统调用/磁盘寻道，摊销开销），上层按「字节/少量字节」消费。两者粒度不匹配时，中间用一块缓冲区消解——多读的暂存，少读的再补。158 的 `buf4` 就是这块缓冲区的最小化形（容量仅 4），`buf4Ptr`/`buf4Cnt` 就是缓冲区的读游标与有效长度。把这个最小原型想通，再看 `BufferedReader` 源码会豁然开朗。
 
----
-
 ## 6. 面试要点
 
 1. **158 与 157 的本质区别是什么？为什么不能直接套用 157 的代码？**
@@ -278,12 +268,12 @@ class Solution:
 
 > 💡 **一句话总结**：158 的灵魂是「**4 字节中转区升格为成员变量 + 跨调用暂存多读字符**」——把 157 的局部 `buf4` 加两个下标 `buf4Ptr`/`buf4Cnt` 升格为成员，`read` 开头先消费缓存里剩下的再调 `read4`，骨架（`while total<n` + `need=min(供给, 需求)` + 双出口）完全沿用 157。这是所有「流式 I/O 包装器」（`BufferedReader` / `fread` / `Scanner`）的最小原型：用一块内部缓冲区消解底层粗粒度与上层细粒度之间的不匹配。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [157. 用 Read4 读取 N 个字符](https://leetcode.cn/problems/read-n-characters-given-read4/)：本题的单次调用版，`buf4` 是局部变量、多读可丢。先做 157 掌握「中转区 + 按需拷贝 + min 守边界」骨架，再加一层持久化即得 158
-- [232. 用栈实现队列](https://leetcode.cn/problems/implement-queue-using-stacks/)：双栈倒换摊销 O(1)，与本题「中转区 + 跨操作暂存」同属「用内部缓冲区适配两种粒度/两种顺序」的设计模式
-- [933. 最近的请求次数](https://leetcode.cn/problems/number-of-recent-calls/)：跨多次调用维护一个队列状态，对照本题跨多次 `read` 维护 `buf4` 缓存状态
-- [715. Range 模块](https://leetcode.cn/problems/range-module/)：跨多次调用维护区间状态的设计题，对照本题跨调用维护缓冲区状态
-- [139. 单词拆分](https://leetcode.cn/problems/word-break/)：用 `dp` 数组缓存子问题结果避免重复计算，对照本题用 `buf4` 缓存多读字符避免重复读文件——都是「缓存换 I/O/计算」的思维
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 157 | [用 Read4 读取 N 个字符](https://leetcode.cn/problems/read-n-characters-given-read4/) | 本题的单次调用版，`buf4` 是局部变量、多读可丢。先做 157 掌握「中转区 + 按需拷贝 + min 守边界」骨架，再加一层持久化即得 158 |
+| 232 | [用栈实现队列](https://leetcode.cn/problems/implement-queue-using-stacks/) | 双栈倒换摊销 O(1)，与本题「中转区 + 跨操作暂存」同属「用内部缓冲区适配两种粒度/两种顺序」的设计模式 |
+| 933 | [最近的请求次数](https://leetcode.cn/problems/number-of-recent-calls/) | 跨多次调用维护一个队列状态，对照本题跨多次 `read` 维护 `buf4` 缓存状态 |
+| 715 | [Range 模块](https://leetcode.cn/problems/range-module/) | 跨多次调用维护区间状态的设计题，对照本题跨调用维护缓冲区状态 |
+| 139 | [单词拆分](https://leetcode.cn/problems/word-break/) | 用 `dp` 数组缓存子问题结果避免重复计算，对照本题用 `buf4` 缓存多读字符避免重复读文件——都是「缓存换 I/O/计算」的思维 |

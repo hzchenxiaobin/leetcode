@@ -1,13 +1,13 @@
-# Hopper公司查询III
-
-- **题目名称**：Hopper公司查询III
-- **链接**：[1651. Hopper Company Queries III](https://leetcode.cn/problems/hopper-company-queries-iii/)
-- **难度**：困难
-- **标签**：数据库、SQL、`WITH RECURSIVE`、`LEFT JOIN`、`COALESCE`、`GROUP BY`、窗口函数 `SUM OVER`、自连接、`YEAR()`/`MONTH()`、`ROUND()`
+# LeetCode Hopper公司查询III 题解
 
 ## 1. 题目概述
 
-给定 `Drivers`（司机）、`Rides`（乘车请求）和 `AcceptedRides`（已接单）三张表，编写 SQL 查询，计算 **2020 年每个 3 个月滑动窗口**的 `average_ride_distance` 和 `average_ride_duration`，窗口从 **1–3 月**滑动到 **10–12 月**，共 **10 个窗口**。
+- **标题 / 题号**：Hopper公司查询III（#1651，hard）
+- **链接**：https://leetcode.cn/problems/hopper-company-queries-iii/
+- **难度**：困难
+- **标签**：数据库、SQL、`WITH RECURSIVE`、`LEFT JOIN`、`COALESCE`、`GROUP BY`、窗口函数 `SUM OVER`、自连接、`YEAR()`/`MONTH()`、`ROUND()`
+
+**题意**：给定 `Drivers`（司机）、`Rides`（乘车请求）和 `AcceptedRides`（已接单）三张表，编写 SQL 查询，计算 **2020 年每个 3 个月滑动窗口**的 `average_ride_distance` 和 `average_ride_duration`，窗口从 **1–3 月**滑动到 **10–12 月**，共 **10 个窗口**。
 
 1. **`average_ride_distance`**：窗口内三个月的 `ride_distance` 总和除以 3。
 2. **`average_ride_duration`**：窗口内三个月的 `ride_duration` 总和除以 3。
@@ -122,7 +122,7 @@ AcceptedRides 表（2020 年部分）:
 
 > 💡 **关键理解**：分母**始终为 3**（三个月），而非窗口内接单数。无接单的月份贡献 0 到分子，但分母不变。这不同于"按接单数取平均"——本题是对**时间窗口**取平均，不是对**单次骑行**取平均。
 
-**约束条件**：
+**约束**：
 
 - `driver_id` 是 `Drivers` 表主键。
 - `ride_id` 是 `Rides` 表和 `AcceptedRides` 表的主键。
@@ -131,8 +131,6 @@ AcceptedRides 表（2020 年部分）:
 - 分母固定为 3，`ROUND` 到两位小数。
 
 > 💡 本题是 SQL **"月度汇总 + 滑动窗口聚合"招牌题**——Hopper 公司查询系列的第三题（I → II → III）。承接 1635（Hopper I，月度计数）和 1645（Hopper II，月度均值）的三表 JOIN + 月度统计骨架，新增**定长滑动窗口**聚合层。核心难点：① 月度汇总需 LEFT JOIN 补零；② 滑动窗口可用**自连接三表**或**窗口函数 `SUM OVER`** 两种实现。
-
----
 
 ## 2. 解题思路
 
@@ -311,8 +309,6 @@ WINDOW w AS (ORDER BY month ROWS BETWEEN CURRENT ROW AND 2 FOLLOWING)
 
 > 💡 **观察窗口 1/2/3**：三个月窗口的起始月不同，但覆盖的月份集合有重叠（都包含 3 月的 63），只是位置不同——`(0,0,63)`、`(0,63,0)`、`(63,0,0)` 的和都是 63，除以 3 都是 21.00。滑动窗口的特点是"窗口滑动但大小不变"。
 
----
-
 ## 3. 参考代码
 
 ### SQL（解法 A：CTE + 自连接三表，推荐）
@@ -452,8 +448,6 @@ def hopper_company_queries_iii(
 > - `shift(-1)` / `shift(-2)` 对应自连接的 `m1.month + 1` / `m1.month + 2`——pandas 的负向 shift 取"未来行"，相当于 SQL 的 `FOLLOWING`。也可用 `rolling` 反向实现，但 `shift` 更直观。
 > - `.round(2)` 对应 `ROUND(…, 2)`。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 解法 A（自连接） | 解法 B（窗口函数） | pandas |
@@ -468,8 +462,6 @@ def hopper_company_queries_iii(
 > - **时间**：两解法第一、二、三阶段（生成 months、JOIN 取月、月度汇总）均为 $O(r + a)$。差异在第四阶段：解法 A 自连接 3 份 12 行表，$O(12^2) = O(144)$；解法 B 窗口函数排序 + 扫描，$O(12 \log 12)$。数据量极小（12 行），实际差异可忽略。
 > - **空间**：CTE 物化 12 行 months + 12 行 monthly_totals，$O(12)$。pandas 需 $O(r + a)$ 存 DataFrame。
 > - **索引优化**：`Rides(ride_id)` 和 `AcceptedRides(ride_id)` 上的主键索引使 JOIN 高效；`Rides(requested_at)` 上的索引可加速 `WHERE YEAR = 2020` 筛选（建议改用范围比较 `>= '2020-01-01' AND < '2021-01-01'` 以走索引，见 5.2 节）。
-
----
 
 ## 5. 扩展：滑动窗口的 SQL 实现方法对比
 
@@ -540,8 +532,6 @@ ROUND(0.125, 2) -- MySQL 8.0: 0.13（传统四舍五入）
 
 > 💡 MySQL 的 `ROUND()` 使用"远离零的方向"四舍五入（`ROUND(2.5) = 3`，`ROUND(-2.5) = -3`），而非银行家舍入（Banker's Rounding，`ROUND(2.5) = 2`）。本题示例中 `38/3 = 12.666…` 四舍五入为 `12.67`，`73/3 = 24.333…` 四舍五入为 `24.33`，均符合传统四舍五入。pandas 的 `.round()` 默认使用银行家舍入，在边界值（恰好 .5）上可能与 SQL 有微小差异，但本题数据不触发此边界。
 
----
-
 ## 6. 面试要点
 
 1. **滑动窗口的分母为什么始终是 3 而不是窗口内接单数？**
@@ -566,12 +556,12 @@ ROUND(0.125, 2) -- MySQL 8.0: 0.13（传统四舍五入）
 
 > 💡 **一句话总结**：1651 是 SQL **"月度汇总 + 定长滑动窗口"招牌题**——核心模板「`WITH RECURSIVE months` → `LEFT JOIN + COALESCE` 月度汇总 → 自连接三表 / `SUM OVER` 窗口函数 → `ROUND(÷3, 2)`」。三大要点：**月度补零保完整性、滑动窗口两解法（自连接 vs 窗口函数）、WHERE 与窗口函数的执行顺序陷阱**。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [1635. Hopper Company Queries I](https://leetcode.cn/problems/hopper-company-queries-i/)（[题解](../1601-1700/1635_Hopper公司查询I.md)）：同表同骨架的前驱题——月度活跃司机数（累积计数）+ 接单数（分组计数），对照 1651 的滑动窗口平均，巩固"月度汇总 + LEFT JOIN 补零"模板
-- [1645. Hopper Company Queries II](https://leetcode.com/problems/hopper-company-queries-ii/)（[题解](../1601-1700/1645_Hopper公司查询II.md)）：Hopper 系列第二题——月度均值（AVG），与 1651 的窗口均值对照：II 是"每月独立取平均"，III 是"3 月窗口取平均"，巩固 COUNT → AVG → SUM+窗口的演进
-- [1321. 餐厅营业额变化](https://leetcode.com/problems/restaurant-growth/)：`WITH RECURSIVE` + 窗口函数实现 7 天滚动和——同样是"生成序列 + 滑动窗口聚合"模式，窗口大小为 7 而非 3，对照自连接 vs 窗口函数两种实现
-- [180. 连续出现的数字](https://leetcode.cn/problems/consecutive-numbers/)（[题解](../0101-0200/180_连续出现的数字.md)）：`LEFT JOIN` 自连接取连续 3 行——与 1651 解法 A 的自连接三表同套路，`id = t1.id + 1` 对应 `month = m1.month + 1`
-- [1204. Web 开发者最后能进入的人数](https://leetcode.cn/problems/last-person-to-fit-in-the-bus/)：`SUM OVER` 累积和 + 条件筛选——窗口函数的另一种应用（累积和 vs 滑动窗口和），对照 `ROWS UNBOUNDED PRECEDING` 与 `ROWS 2 FOLLOWING` 的区别
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 1635 | [Hopper Company Queries I](https://leetcode.cn/problems/hopper-company-queries-i/)（[题解](../1601-1700/1635_Hopper公司查询I.md)） | 同表同骨架的前驱题——月度活跃司机数（累积计数）+ 接单数（分组计数），对照 1651 的滑动窗口平均，巩固"月度汇总 + LEFT JOIN 补零"模板 |
+| 1645 | [Hopper Company Queries II](https://leetcode.com/problems/hopper-company-queries-ii/)（[题解](../1601-1700/1645_Hopper公司查询II.md)） | Hopper 系列第二题——月度均值（AVG），与 1651 的窗口均值对照：II 是"每月独立取平均"，III 是"3 月窗口取平均"，巩固 COUNT → AVG → SUM+窗口的演进 |
+| 1321 | [餐厅营业额变化](https://leetcode.com/problems/restaurant-growth/) | `WITH RECURSIVE` + 窗口函数实现 7 天滚动和——同样是"生成序列 + 滑动窗口聚合"模式，窗口大小为 7 而非 3，对照自连接 vs 窗口函数两种实现 |
+| 180 | [连续出现的数字](https://leetcode.cn/problems/consecutive-numbers/)（[题解](../0101-0200/180_连续出现的数字.md)） | `LEFT JOIN` 自连接取连续 3 行——与 1651 解法 A 的自连接三表同套路，`id = t1.id + 1` 对应 `month = m1.month + 1` |
+| 1204 | [Web 开发者最后能进入的人数](https://leetcode.cn/problems/last-person-to-fit-in-the-bus/) | `SUM OVER` 累积和 + 条件筛选——窗口函数的另一种应用（累积和 vs 滑动窗口和），对照 `ROWS UNBOUNDED PRECEDING` 与 `ROWS 2 FOLLOWING` 的区别 |

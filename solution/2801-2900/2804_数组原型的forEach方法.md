@@ -1,15 +1,15 @@
-# 数组原型的forEach方法
-
-- **题目名称**：数组原型的forEach方法
-- **链接**：[2804. Array Prototype ForEach](https://leetcode.cn/problems/array-prototype-foreach/)
-- **难度**：简单
-- **标签**：数组、设计、迭代器、this 绑定
+# LeetCode 数组原型的forEach方法 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：数组原型的forEach方法（#2804，easy）
+- **链接**：https://leetcode.cn/problems/array-prototype-foreach/
+- **难度**：简单
+- **标签**：数组、设计、迭代器、this 绑定
+
 > ⚠️ 本题为 LeetCode 付费题，题意描述根据官方示例用例与 hints 重建，可能与官方题面有出入。
 
-请你实现 `Array.prototype.forEach` 方法。该方法对数组的每个元素执行一次给定的回调函数。
+**题意**：请你实现 `Array.prototype.forEach` 方法。该方法对数组的每个元素执行一次给定的回调函数。
 
 **方法签名**：
 
@@ -53,14 +53,12 @@ Array.prototype.forEach = function(callback, context) { ... }
 解释：回调对每个布尔值取反，context 不影响结果。
 ```
 
-**约束条件**：
+**约束**：
 
 - 数组长度 $n$ 不超过 $10^5$
 - 本题仅开放 JavaScript / TypeScript 提交
 
 > 💡 `context` 参数在测试框架中以 `{"context": X}` 包装，实际语义是将 `X`（如 `true`、`false`、`5`）绑定为回调内部的 `this`。示例 2 中 `this === false`，示例 3 中回调未使用 `this`，故 `context` 不影响结果。本题考察**原型方法实现 + `this` 绑定 + 数组迭代规范**三个要点。
-
----
 
 ## 2. 解题思路
 
@@ -151,8 +149,6 @@ callback.call(context, this[i], i, this)
 - 回调未使用 `this`，`context` 不影响结果
 - 逐元素取反：`[!true, !true, !false, !false]` = `[false,false,true,true]` $\checkmark$
 
----
-
 ## 3. 参考代码
 
 ### JavaScript / TypeScript（提交语言）
@@ -224,8 +220,6 @@ print(arr)  # [False, False, False, False]
 
 > ⚠️ Python 中用闭包 `make_callback(context)` 模拟 JS 的 `this` 绑定——`context` 被闭包捕获，等价于 `callback.call(context, ...)` 将 `this` 设为 `context`。Python 的 `True`/`False` 是 `bool` 类型（`int` 子类），与 JS 的 `true`/`false` 在类型系统上不同，但取反逻辑 `not val` 与 `!val` 语义一致。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -234,8 +228,6 @@ print(arr)  # [False, False, False, False]
 | 空间复杂度 | $O(1)$ | 仅维护 `len`、`i` 两个标量，无额外数据结构 |
 
 > 💡 `i in this` 操作在数组上是 $O(1)$（内部哈希查找），不影响整体线性复杂度。`callback.call` 的开销取决于回调函数本身的复杂度，不计入 `forEach` 本身。
-
----
 
 ## 5. 扩展：`forEach` 与 `map` / `filter` / `reduce` 的同构骨架
 
@@ -281,8 +273,6 @@ arr.some((v) => {
 
 > ⚠️ 这不是 `forEach` 的"缺陷"而是设计取舍：`forEach` 语义是"对每个元素执行副作用"，不关心提前终止；`some`/`every` 语义是"判定"，天然支持短路。
 
----
-
 ## 6. 面试要点
 
 1. **`callback.call(context, ...)` 中的 `.call` 起什么作用？**
@@ -307,12 +297,12 @@ arr.some((v) => {
 
 > 💡 **一句话总结**：2804 = 「`callback.call(context, this[i], i, this)` + 缓存长度 + 跳过空洞」。核心是 `.call` 绑定 `this` + 三参数（值、下标、数组）传递；规范行为靠 `const len` 和 `i in this` 保障。朴素循环可过示例，规范实现能应对边界。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2634. 过滤数组中的元素](https://leetcode.cn/problems/filter-elements-from-array/)（[题解](../2601-2700/2634_过滤数组中的元素.md)）：实现 `filter`，与 `forEach` 共享迭代骨架，回调返回值为布尔，决定元素去留
-- [2635. 转换数组中的每个元素](https://leetcode.cn/problems/apply-transform-over-each-element-in-array/)（[题解](../2601-2700/2635_转换数组中的每个元素.md)）：实现 `map`，与 `forEach` 共享迭代骨架，回调返回值收集到新数组
-- [2626. 数组归约运算](https://leetcode.cn/problems/array-reduce-transformation/)（[题解](../2601-2700/2626_数组归约运算.md)）：实现 `reduce`，与 `forEach` 共享遍历骨架，回调返回累加值传至下一轮
-- [2705. 精简对象](https://leetcode.cn/problems/compact-object/)（[题解](../2701-2800/2705_精简对象.md)）：JS 30 天系列题目，从数组遍历转向对象递归，同属 JS 原生 API 实现族
-- [2704. 相等还是不相等](https://leetcode.cn/problems/to-be-or-not-to-be/)（[题解](../2701-2800/2704_相等还是不相等.md)）：JS 30 天系列题目，考察闭包与 `throw` 语义，与本题同属 JS 语言特性系列
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2634 | [过滤数组中的元素](https://leetcode.cn/problems/filter-elements-from-array/)（[题解](../2601-2700/2634_过滤数组中的元素.md)） | 实现 `filter`，与 `forEach` 共享迭代骨架，回调返回值为布尔，决定元素去留 |
+| 2635 | [转换数组中的每个元素](https://leetcode.cn/problems/apply-transform-over-each-element-in-array/)（[题解](../2601-2700/2635_转换数组中的每个元素.md)） | 实现 `map`，与 `forEach` 共享迭代骨架，回调返回值收集到新数组 |
+| 2626 | [数组归约运算](https://leetcode.cn/problems/array-reduce-transformation/)（[题解](../2601-2700/2626_数组归约运算.md)） | 实现 `reduce`，与 `forEach` 共享遍历骨架，回调返回累加值传至下一轮 |
+| 2705 | [精简对象](https://leetcode.cn/problems/compact-object/)（[题解](../2701-2800/2705_精简对象.md)） | JS 30 天系列题目，从数组遍历转向对象递归，同属 JS 原生 API 实现族 |
+| 2704 | [相等还是不相等](https://leetcode.cn/problems/to-be-or-not-to-be/)（[题解](../2701-2800/2704_相等还是不相等.md)） | JS 30 天系列题目，考察闭包与 `throw` 语义，与本题同属 JS 语言特性系列 |

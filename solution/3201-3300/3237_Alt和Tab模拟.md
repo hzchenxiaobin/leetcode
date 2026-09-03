@@ -1,15 +1,15 @@
-# Alt 和 Tab 模拟
-
-- **题目名称**：Alt 和 Tab 模拟
-- **链接**：[3237. Alt 和 Tab 模拟](https://leetcode.cn/problems/alt-and-tab-simulation/)
-- **难度**：中等
-- **标签**：数组、哈希表、模拟
+# LeetCode Alt 和 Tab 模拟 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：Alt 和 Tab 模拟（#3237，medium）
+- **链接**：https://leetcode.cn/problems/alt-and-tab-simulation/
+- **难度**：中等
+- **标签**：数组、哈希表、模拟
+
 > ⚠️ 本题为 LeetCode 付费题，题意描述根据官方示例用例与 hints 重建，可能与官方题面有出入。
 
-操作系统里，**Alt + Tab** 是切换窗口的经典快捷键：选中某个窗口时，它会被「拉」到所有窗口的最前面（z 序顶端）。
+**题意**：操作系统里，**Alt + Tab** 是切换窗口的经典快捷键：选中某个窗口时，它会被「拉」到所有窗口的最前面（z 序顶端）。
 
 给定两个整数数组：
 
@@ -45,8 +45,6 @@
 **约束**（按官方示例与 hints 推断，具体量级以官网为准）：两个数组的长度均可达 $10^5$ 量级；`windows` 中 id 互不相同；`queries` 中的 id 都出现在 `windows` 中。
 
 > 💡 **审题关键**：① 问的是**最终一层快照**而非过程——查询全部给定，可以**离线倒着推**；② 同一窗口被选多次，**只有最后一次**说了算；③ 从未选中的窗口**相对顺序永远不变**。
-
----
 
 ## 2. 解题思路
 
@@ -99,8 +97,6 @@ $$\text{最终 z 序} = \underbrace{\text{被选中的（按最后选中时间�
 | `windows=[1,4,2,3]`, `queries=[4,1,3]` | 倒扫 3,1,4 → 收 3、1、4 → `[3,1,4]` | 2 未见过 → 接尾 | `[3,1,4,2]` |
 
 第一行 `queries=[3,3,2]` 里有重复的 3：倒扫时第二次遇到 3 直接跳过（早已收入），正体现「重复选中只算最后一次」。
-
----
 
 ## 3. 参考代码
 
@@ -159,8 +155,6 @@ class Solution:
 
 > 💡 对拍版忠实复刻「提到顶端」语义，$O(n \cdot q)$，用于在随机小数据上与正解对拍验证。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -168,8 +162,6 @@ class Solution:
 | **时间（正解）** | $O(n + q)$ | 逆序扫 queries 一次 + 正序扫 windows 一次，哈希集合 $O(1)$ 判重 |
 | **时间（暴力）** | $O(n \cdot q)$ | 每次查询的定位 / 删除 / 头插均为 $O(n)$ |
 | **空间** | $O(n)$ | `seen` 集合至多存全部 $n$ 个 id（`ans` 为返回值不计） |
-
----
 
 ## 5. 扩展：在线版怎么办？——LRU 式「哈希 + 双向链表」
 
@@ -180,8 +172,6 @@ class Solution:
 - 输出：沿链表从头扫到尾，$O(n)$。
 
 这正是 [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/) 的 move-to-front 套路：本题正向模拟的每一步，就是一次 LRU 的「访问」。**能离线就倒着想，必须在线就上链表**——两种视角合起来才是这类题的完整答案。
-
----
 
 ## 6. 面试要点
 
@@ -205,11 +195,11 @@ class Solution:
 
    放弃离线倒推，用哈希表 + 双向链表（LRU 套路）每次 $O(1)$ move-to-front，输出时 $O(n)$ 遍历链表。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [146. LRU 缓存](https://leetcode.cn/problems/lru-cache/)：访问即提到最前的**在线**版，哈希 + 双向链表 $O(1)$ 搬移
-- [3217. 从链表中移除在数组中存在的节点](https://leetcode.cn/problems/delete-nodes-from-linked-list-present-in-array/)：同款「哈希集合判重 + 保序拼接」组合拳
-- [950. 按递增顺序显示卡牌](https://leetcode.cn/problems/reveal-cards-in-increasing-order/)：逆向模拟经典题——正着难推就倒着构造
-- [380. O(1) 时间插入、删除和获取随机元素](https://leetcode.cn/problems/insert-delete-getrandom-o1/)：哈希表与另一结构互相索引的通用手法，与本题扩展节的哈希↔链表互指同源
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 146 | [LRU 缓存](https://leetcode.cn/problems/lru-cache/) | 访问即提到最前的**在线**版，哈希 + 双向链表 $O(1)$ 搬移 |
+| 3217 | [从链表中移除在数组中存在的节点](https://leetcode.cn/problems/delete-nodes-from-linked-list-present-in-array/) | 同款「哈希集合判重 + 保序拼接」组合拳 |
+| 950 | [按递增顺序显示卡牌](https://leetcode.cn/problems/reveal-cards-in-increasing-order/) | 逆向模拟经典题——正着难推就倒着构造 |
+| 380 | [O(1) 时间插入、删除和获取随机元素](https://leetcode.cn/problems/insert-delete-getrandom-o1/) | 哈希表与另一结构互相索引的通用手法，与本题扩展节的哈希↔链表互指同源 |

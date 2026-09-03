@@ -1,15 +1,15 @@
-# Hopper公司查询II
-
-- **题目名称**：Hopper公司查询II
-- **链接**：[1645. Hopper Company Queries II](https://leetcode.com/problems/hopper-company-queries-ii/)
-- **难度**：困难
-- **标签**：数据库、SQL、`WITH RECURSIVE`、`LEFT JOIN`、`AVG()`、`ROUND()`、`COALESCE`、`GROUP BY`、`YEAR()`/`MONTH()`
+# LeetCode Hopper公司查询II 题解
 
 > ⚠️ **题目来源说明**：本题在 leetcode.cn 与 leetcode.com 均为 **Plus 会员专享题**，官方题面接口返回 `content = null`，无法直接抓取。下述题意、表结构与示例数据依据 **1635. Hopper Company Queries I**（同系列、共享 `Drivers`/`Rides`/`AcceptedRides` 三表与同一组样例）与该题的官方要求重建，并已在文中标注假设。若与官方题面有出入，以官方为准。
 
 ## 1. 题目概述
 
-给定 `Rides`（乘车请求）和 `AcceptedRides`（已接单）两张表，编写 SQL 查询，统计 **2020 年每个月**已接单乘车的：
+- **标题 / 题号**：Hopper公司查询II（#1645，hard）
+- **链接**：https://leetcode.com/problems/hopper-company-queries-ii/
+- **难度**：困难
+- **标签**：数据库、SQL、`WITH RECURSIVE`、`LEFT JOIN`、`AVG()`、`ROUND()`、`COALESCE`、`GROUP BY`、`YEAR()`/`MONTH()`
+
+**题意**：给定 `Rides`（乘车请求）和 `AcceptedRides`（已接单）两张表，编写 SQL 查询，统计 **2020 年每个月**已接单乘车的：
 
 1. **`average_ride_distance`**：该月所有**已接单**乘车的 `ride_distance` **平均值**，`ROUND` 到 2 位小数。
 2. **`average_ride_duration`**：该月所有**已接单**乘车的 `ride_duration` **平均值**，`ROUND` 到 2 位小数。
@@ -111,7 +111,7 @@ AcceptedRides 表（2020 年部分）:
 
 > 💡 **11 月是关键样例**：该月有两条已接单（ride 20 与 ride 5），均值不再是某条记录自身，而是 `(121+42)/2 = 81.50`、`(92+101)/2 = 96.50`。这一行验证了 `AVG` 真的在「多单取平均」而非简单取值。
 
-**约束条件**：
+**约束**：
 
 - `ride_id` 是 `Rides` 表和 `AcceptedRides` 表的主键。
 - `AcceptedRides` 中的每条记录保证在 `Rides` 表中存在。
@@ -120,8 +120,6 @@ AcceptedRides 表（2020 年部分）:
 - 月份归属以 `Rides.requested_at` 为准（`AcceptedRides` 无日期列）。
 
 > 💡 本题是 SQL **"JOIN 取日期 + 聚合求均值 + 序列补零 + 取整"综合题**——三大要点：① `AcceptedRides` 无日期列，须 `JOIN Rides` 取 `requested_at`；② `AVG` 对空分组返回 `NULL`，需 `COALESCE` 补 0 再 `ROUND`；③ 用 `WITH RECURSIVE` 生成 1–12 月骨架，保证无接单月也输出。
-
----
 
 ## 2. 解题思路
 
@@ -264,8 +262,6 @@ for month m in 1..12:
 
 > 💡 **与 1635 的对比**：1635 的 `accepted_rides` 是**计数**（`COUNT`，整数），无接单月补 `0`；1645 的 `average_*` 是**均值**（`AVG`，小数），无接单月补 `0.00` 并需 `ROUND` 取整。两者骨架完全一致，仅聚合函数与收尾处理不同——这正体现了「同模板、不同聚合」的 SQL 套路化思维。
 
----
-
 ## 3. 参考代码
 
 ### SQL（解法 A：WITH RECURSIVE + LEFT JOIN + COALESCE + ROUND，推荐）
@@ -365,8 +361,6 @@ def hopper_company_queries_ii(
 > - `.dt.year == 2020` 对应 `WHERE YEAR = 2020`；`.dt.month` 对应 `MONTH()`；`.groupby('month').agg(mean)` 对应 `GROUP BY MONTH + AVG`。
 > - `.merge(monthly, how='left') + fillna(0) + round(2)` 对应 `LEFT JOIN + COALESCE + ROUND`——无接单月补 0 并取整。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 解法 A（CTE + LEFT JOIN） | 解法 B（子查询） | pandas |
@@ -382,8 +376,6 @@ def hopper_company_queries_ii(
 > - **时间**：解法 A 的 `accepted_monthly` 做 JOIN + GROUP BY，$O(r + a)$；主查询 `LEFT JOIN` 12 行骨架，$O(12 + a)$。解法 B 每行执行两个相关子查询各做一次 JOIN，$O(12 \times (r + a))$，略慢。pandas 向量化 $O(r + a)$。
 > - **空间**：CTE 物化 12 行 months + $a$ 行 accepted，$O(12 + a)$。pandas 需 $O(r + a)$ 存 DataFrame。
 > - **索引优化**：`Rides(ride_id)` 与 `AcceptedRides(ride_id)` 主键索引使 JOIN 高效；`Rides(requested_at)` 上的索引可加速 `WHERE YEAR = 2020` 筛选（详见 5.3）。
-
----
 
 ## 5. 扩展：均值聚合的 NULL 陷阱与取整顺序
 
@@ -457,8 +449,6 @@ WHERE r.requested_at >= '2020-01-01' AND r.requested_at < '2021-01-01'
 
 > 💡 **模板复用**：两题共享「`WITH RECURSIVE months` → 聚合 CTE → `LEFT JOIN` + `COALESCE`」三段式骨架。掌握这一模板，可顺推整个 Hopper 系列（I 计数、II 均值、III 进一步聚合）。
 
----
-
 ## 6. 面试要点
 
 1. **`AVG` 对空分组返回什么？为什么本题必须 `COALESCE`？**
@@ -483,12 +473,12 @@ WHERE r.requested_at >= '2020-01-01' AND r.requested_at < '2021-01-01'
 
 > 💡 **一句话总结**：1645 是 1635 的「计数→均值」升级版——同模板（`WITH RECURSIVE months` → 聚合 CTE → `LEFT JOIN + COALESCE`），把 `COUNT` 换成 `AVG` 并追加 `ROUND` 取整。核心陷阱：**`AVG` 空集返回 `NULL` 必须 `COALESCE` 补零，`ROUND` 与 `COALESCE` 的顺序要保证 `NULL` 被兜底**。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [1635. Hopper Company Queries I](https://leetcode.com/problems/hopper-company-queries-i/)（[题解](../1601-1700/1635_Hopper公司查询I.md)）：同系列前作，`COUNT` 计数版——共享三表与 12 月骨架模板，对照 `COUNT`（空集返回 0）与 `AVG`（空集返回 NULL）的本质区别
-- [1174. 即时食物配送 II](https://leetcode.cn/problems/immediate-food-delivery-ii/)：多表 JOIN + `AVG` + 比率计算——同样是"JOIN 后聚合求均值"骨架，巩固 `AVG` 与 `GROUP BY` 配合
-- [511. 游戏玩法分析 I](https://leetcode.cn/problems/game-play-analysis-i/)：`MIN` + `GROUP BY` 首次登录——最简聚合题，对照 `AVG`/`MIN`/`MAX` 等聚合函数的空集行为
-- [1321. 餐厅营业额变化](https://leetcode.com/problems/restaurant-growth/)：`WITH RECURSIVE` + 累积窗口 + `AVG`——同样是"生成序列 + 聚合统计"模式，用窗口函数实现 7 天滚动均值，对照 1645 的按月静态均值
-- [180. 连续出现的数字](https://leetcode.cn/problems/consecutive-numbers/)（[题解](../0101-0200/180_连续出现的数字.md)）：`LEFT JOIN` 自连接 + 条件筛选——`LEFT JOIN` 补缺行的思路对照，巩固"序列骨架 + LEFT JOIN 保行数"模式
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 1635 | [Hopper Company Queries I](https://leetcode.com/problems/hopper-company-queries-i/)（[题解](../1601-1700/1635_Hopper公司查询I.md)） | 同系列前作，`COUNT` 计数版——共享三表与 12 月骨架模板，对照 `COUNT`（空集返回 0）与 `AVG`（空集返回 NULL）的本质区别 |
+| 1174 | [即时食物配送 II](https://leetcode.cn/problems/immediate-food-delivery-ii/) | 多表 JOIN + `AVG` + 比率计算——同样是"JOIN 后聚合求均值"骨架，巩固 `AVG` 与 `GROUP BY` 配合 |
+| 511 | [游戏玩法分析 I](https://leetcode.cn/problems/game-play-analysis-i/) | `MIN` + `GROUP BY` 首次登录——最简聚合题，对照 `AVG`/`MIN`/`MAX` 等聚合函数的空集行为 |
+| 1321 | [餐厅营业额变化](https://leetcode.com/problems/restaurant-growth/) | `WITH RECURSIVE` + 累积窗口 + `AVG`——同样是"生成序列 + 聚合统计"模式，用窗口函数实现 7 天滚动均值，对照 1645 的按月静态均值 |
+| 180 | [连续出现的数字](https://leetcode.cn/problems/consecutive-numbers/)（[题解](../0101-0200/180_连续出现的数字.md)） | `LEFT JOIN` 自连接 + 条件筛选——`LEFT JOIN` 补缺行的思路对照，巩固"序列骨架 + LEFT JOIN 保行数"模式 |

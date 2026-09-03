@@ -1,13 +1,13 @@
-# Hopper公司查询I
-
-- **题目名称**：Hopper公司查询I
-- **链接**：[1635. Hopper Company Queries I](https://leetcode.com/problems/hopper-company-queries-i/)
-- **难度**：困难
-- **标签**：数据库、SQL、`WITH RECURSIVE`、`LEFT JOIN`、`COALESCE`、累积计数、`GROUP BY`、`YEAR()`/`MONTH()`
+# LeetCode Hopper公司查询I 题解
 
 ## 1. 题目概述
 
-给定 `Drivers`（司机）、`Rides`（乘车请求）和 `AcceptedRides`（已接单）三张表，编写 SQL 查询，统计 **2020 年每个月**的两项指标：
+- **标题 / 题号**：Hopper公司查询I（#1635，hard）
+- **链接**：https://leetcode.com/problems/hopper-company-queries-i/
+- **难度**：困难
+- **标签**：数据库、SQL、`WITH RECURSIVE`、`LEFT JOIN`、`COALESCE`、累积计数、`GROUP BY`、`YEAR()`/`MONTH()`
+
+**题意**：给定 `Drivers`（司机）、`Rides`（乘车请求）和 `AcceptedRides`（已接单）三张表，编写 SQL 查询，统计 **2020 年每个月**的两项指标：
 
 1. **`active_drivers`**：截至该月底，**已加入** Hopper 公司的司机总数（`join_date` ≤ 该月末）。
 2. **`accepted_rides`**：该月内**被接受**的乘车请求数（按 `Rides.requested_at` 的月份归属）。
@@ -130,7 +130,7 @@ AcceptedRides 表（2020 年部分）:
 
 > ⚠️ driver 6 的 `join_date` 为 `2021-1-5`，不在 2020 年范围内，因此 2020 年任何月份都不计入 `active_drivers`。
 
-**约束条件**：
+**约束**：
 
 - `driver_id` 是 `Drivers` 表主键。
 - `ride_id` 是 `Rides` 表和 `AcceptedRides` 表的主键。
@@ -139,8 +139,6 @@ AcceptedRides 表（2020 年部分）:
 - `active_drivers` 是**累积值**（截至月末已加入的司机总数），`accepted_rides` 是**当月值**（该月被接受的请求数）。
 
 > 💡 本题是 SQL **"多表 JOIN + 递归生成序列 + 累积计数 + LEFT JOIN 补零"综合招牌题**——三大难点：① 用 `WITH RECURSIVE` 生成 1–12 月骨架；② `active_drivers` 按 `join_date ≤ 月末`做累积计数（非分组聚合，是 LEFT JOIN + 条件筛选）；③ `accepted_rides` 需 JOIN 两表后按月分组计数，再用 `LEFT JOIN + COALESCE` 把无接单月补零。
-
----
 
 ## 2. 解题思路
 
@@ -317,8 +315,6 @@ for month m in 1..12:
 
 > 💡 **关键对比**：`active_drivers` 是**单调递增**的累积值（只增不减，因为司机加入后不会退出）；`accepted_rides` 是**按月独立**的当月值（每月各自计数，互不影响）。两类指标的计算逻辑完全不同——前者用 LEFT JOIN + 条件筛选 + COUNT，后者用 INNER JOIN + GROUP BY + COUNT。
 
----
-
 ## 3. 参考代码
 
 ### SQL（解法 A：WITH RECURSIVE + 双路 LEFT JOIN，推荐）
@@ -421,8 +417,6 @@ def hopper_company_queries_i(
 > - `.dt.year == 2020` 对应 `WHERE YEAR = 2020`；`.dt.month` 对应 `MONTH()`；`.groupby('month').size()` 对应 `GROUP BY MONTH + COUNT`。
 > - `.merge(ride_counts, how='left') + fillna(0)` 对应 `LEFT JOIN + COALESCE`——无接单月补零。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 解法 A（CTE + LEFT JOIN） | 解法 B（子查询） | pandas |
@@ -437,8 +431,6 @@ def hopper_company_queries_i(
 > - **时间**：解法 A 的 `active_drivers_cte` 对每个月 LEFT JOIN Drivers 并 COUNT，$O(12 \times d)$；`accepted_rides_cte` JOIN + GROUP BY，$O(r + a)$。解法 B 每行执行两个相关子查询，$O(12 \times (d + r + a))$，略慢。pandas 向量化操作 $O(d + r + a)$。
 > - **空间**：CTE 物化 12 行 months + $a$ 行 accepted_rides，$O(12 + a)$。pandas 需 $O(d + r + a)$ 存 DataFrame。
 > - **索引优化**：`Drivers(join_date)` 上建索引可加速累积计数；`Rides(ride_id)` 和 `AcceptedRides(ride_id)` 上的主键索引使 JOIN 高效；`Rides(requested_at)` 上的索引可加速 `WHERE YEAR = 2020` 筛选。
-
----
 
 ## 5. 扩展：序列生成方法对比 + 累积计数模式
 
@@ -539,8 +531,6 @@ WHERE r.requested_at >= '2020-01-01' AND r.requested_at < '2021-01-01'
 
 > ⚠️ `YEAR(col)` / `MONTH(col)` 在列上套函数，数据库无法直接利用 `requested_at` 上的索引（需全表扫描后逐行计算函数值）。生产环境应改用**范围比较**（`>= 起始日 AND < 下月起始日`），让优化器走索引范围扫描。LeetCode 数据量小不影响，但面试时提到此优化可展示索引意识。
 
----
-
 ## 6. 面试要点
 
 1. **为什么需要 `WITH RECURSIVE` 生成 1–12 月序列？不能直接 `GROUP BY MONTH` 吗？**
@@ -565,12 +555,12 @@ WHERE r.requested_at >= '2020-01-01' AND r.requested_at < '2021-01-01'
 
 > 💡 **一句话总结**：1635 是 SQL **"多表 JOIN + 递归序列 + 累积计数 + LEFT JOIN 补零"综合招牌题**——核心模板「`WITH RECURSIVE months` → 双路 CTE（LEFT JOIN 累积 + GROUP BY 分组）→ `LEFT JOIN + COALESCE` 合并补零」。三大要点：**序列生成保行数、累积 vs 分组辨析、COALESCE 补零收尾**。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [1636. 按照频率将数组升序排序](https://leetcode.cn/problems/sort-array-by-increasing-frequency/)：`GROUP BY` + `COUNT` + 多级排序——同样是"分组计数"骨架，但作用于数组而非表，巩固 `GROUP BY + COUNT` 模板
-- [1174. 即时食物配送 II](https://leetcode.cn/problems/immediate-food-delivery-ii/)（[题解](../1101-1200/1174_即时食物配送II.md)）：多表 JOIN + `GROUP BY` + 比率计算——与 1635 同为"JOIN 后分组统计"骨架，对照累积 vs 分组两种计数模式
-- [602. 好友申请 II 谁有最多好友](https://leetcode.cn/problems/friend-requests-ii-who-has-the-most-friends/)：`UNION ALL` 合并两列 + `GROUP BY` + 排序——序列合并与分组计数的组合，巩固"多源数据合并后分组"思路
-- [1321. 餐厅营业额变化](https://leetcode.com/problems/restaurant-growth/)：`WITH RECURSIVE` + 累积窗口 + `GROUP BY`——同样是"生成序列 + 累积统计"模式，用窗口函数实现 7 天滚动和，对照 1635 的 LEFT JOIN 累积计数
-- [180. 连续出现的数字](https://leetcode.cn/problems/consecutive-numbers/)（[题解](../0101-0200/180_连续出现的数字.md)）：`LEFT JOIN` 自连接 + 条件筛选——累积/连续判定型 JOIN，对照 1635 的 LEFT JOIN 累积计数思路
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 1636 | [按照频率将数组升序排序](https://leetcode.cn/problems/sort-array-by-increasing-frequency/) | `GROUP BY` + `COUNT` + 多级排序——同样是"分组计数"骨架，但作用于数组而非表，巩固 `GROUP BY + COUNT` 模板 |
+| 1174 | [即时食物配送 II](https://leetcode.cn/problems/immediate-food-delivery-ii/)（[题解](../1101-1200/1174_即时食物配送II.md)） | 多表 JOIN + `GROUP BY` + 比率计算——与 1635 同为"JOIN 后分组统计"骨架，对照累积 vs 分组两种计数模式 |
+| 602 | [好友申请 II 谁有最多好友](https://leetcode.cn/problems/friend-requests-ii-who-has-the-most-friends/) | `UNION ALL` 合并两列 + `GROUP BY` + 排序——序列合并与分组计数的组合，巩固"多源数据合并后分组"思路 |
+| 1321 | [餐厅营业额变化](https://leetcode.com/problems/restaurant-growth/) | `WITH RECURSIVE` + 累积窗口 + `GROUP BY`——同样是"生成序列 + 累积统计"模式，用窗口函数实现 7 天滚动和，对照 1635 的 LEFT JOIN 累积计数 |
+| 180 | [连续出现的数字](https://leetcode.cn/problems/consecutive-numbers/)（[题解](../0101-0200/180_连续出现的数字.md)） | `LEFT JOIN` 自连接 + 条件筛选——累积/连续判定型 JOIN，对照 1635 的 LEFT JOIN 累积计数思路 |

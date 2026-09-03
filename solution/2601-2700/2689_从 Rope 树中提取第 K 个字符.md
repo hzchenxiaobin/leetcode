@@ -1,15 +1,15 @@
-# 从 Rope 树中提取第 K 个字符
-
-- **题目名称**：从 Rope 树中提取第 K 个字符
-- **链接**：[2689. 从 Rope 树中提取第 K 个字符](https://leetcode.cn/problems/extract-kth-character-from-the-rope-tree/)
-- **难度**：简单
-- **标签**：树、深度优先搜索、二叉树
+# LeetCode 从 Rope 树中提取第 K 个字符 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：从 Rope 树中提取第 K 个字符（#2689，easy）
+- **链接**：https://leetcode.cn/problems/extract-kth-character-from-the-rope-tree/
+- **难度**：简单
+- **标签**：树、深度优先搜索、二叉树
+
 > ⚠️ 本题为 LeetCode 付费题，题意描述根据官方示例用例与 hints 重建，可能与官方题面有出入。
 
-**Rope 树**（绳索树）是一种用二叉树表示字符串的数据结构。树的每个节点定义如下：
+**题意**：**Rope 树**（绳索树）是一种用二叉树表示字符串的数据结构。树的每个节点定义如下：
 
 ```python
 # Definition for a rope tree node.
@@ -80,8 +80,6 @@ S(root) = "ropetree"
 - 叶子节点的 `val` 为非空小写英文字符串，内部节点 `val` 为空串；
 - $k$ 合法：$1 \le k \le S(\text{root})$ 的长度（即 $k \le \text{root.len}$）。
 
----
-
 ## 2. 解题思路
 
 ### 2.1 暴力思路：拼接整串再取第 k 个
@@ -143,8 +141,6 @@ $$\text{leftLen} = \begin{cases} u.\text{left}.\text{len}, & u.\text{left}\ne\te
 
 > 💡 **对比示例 2**（$k=3$）：root.leftLen=6，$3\le6$ 走左；左子内部节点的 leftLen=3，$3\le3$ 再走左，到 `"abc"` 叶子返回 `val[2]`$=$`'c'`。注意边界用 $\le$：$k$ 恰等于 leftLen 时仍属左子树。
 
----
-
 ## 3. 参考代码
 
 ### C++
@@ -205,8 +201,6 @@ class Solution:
 
 > 💡 Python 中 `str[k-1]` 返回长度为 1 的字符串即字符，与函数返回类型 `str` 一致；C++ 中 `std::string::operator[]` 返回 `char`，函数签名返回 `char`。两者语义对应。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -216,8 +210,6 @@ class Solution:
 | 对照：暴力拼接 | $O(L)$ / $O(L)$ | 必须构造整条 $S(\text{root})$ 再取字符，时间空间都随整串长度线性增长 |
 
 > 💡 本题难度为「简单」，整串规模有限时暴力拼接也能通过。但当整串很长（如频繁查询的单字符定位）时，`len` 导航把单次查询从 $O(L)$ 降到 $O(h)$，这正是 Rope 这种数据结构被发明出来的核心理由——支持 $O(\log n)$ 的随机访问而不物化整串。
-
----
 
 ## 5. 扩展：不依赖 `len` 的自算长度版本
 
@@ -243,8 +235,6 @@ public:
 
 代价：`length` 自身在退化（链状）树上是 $O(\text{子树大小})$，逐层调用累计最坏 $O(L^2)$；但对平衡树仍是 $O(L)$。因此**只有当 `len` 不可信时才用此版**，否则优先用直接读 `left.len` 的 $O(h)$ 版。也可对 `length` 加记忆化（哈希存每个节点算过的长度）回到 $O(L)$ 预处理 + $O(h)$ 查询，但已超出本题需求。
 
----
-
 ## 6. 面试要点
 
 1. **为什么不直接拼接整串？什么时候必须用 `len` 导航？**
@@ -269,11 +259,11 @@ public:
 
 > 💡 **一句话总结**：Rope 树叶子存串、内部节点拼串，而 `len` 字段已记录每个子树的真实串长——沿根到目标逐层用 $k$ 与 `left.len` 比一次即可定位，单查询 $O(h)$，永不物化整串。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [230. 二叉搜索树中第K小的元素](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/)（[题解](../0201-0300/230_二叉搜索树中第K小的元素.md)）：同为「在树里找第 $k$ 个」，BST 用中序性质导航、本题用 `len` 元数据导航，对照「树结构元信息加速定位」的两种范式
-- [606. 根据二叉树创建字符串](https://leetcode.cn/problems/construct-string-from-binary-tree/)（[题解](../0601-0700/606_根据二叉树创建字符串.md)）：方向相反的「树↔串」转换——把树按规则拼成字符串，承接 Rope「树表示串」的主题
-- [988. 从叶结点开始的最小字符串](https://leetcode.cn/problems/smallest-string-starting-from-leaf/)（[题解](../0901-1000/988_从叶结点开始的最小字符串.md)）：在树上 DFS 收集叶到根的路径串并取最小，对照「树 + 字符串 + DFS」主题
-- [2583. 二叉树中的第 K 大层和](https://leetcode.cn/problems/kth-largest-sum-in-a-binary-tree/)（[题解](../2501-2600/2583_二叉树中的第K大层和.md)）：二叉树上收集元数据（层和）再求第 $k$，对照「利用树形元数据回答第 $k$ 类查询」的思路
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 230 | [二叉搜索树中第K小的元素](https://leetcode.cn/problems/kth-smallest-element-in-a-bst/)（[题解](../0201-0300/230_二叉搜索树中第K小的元素.md)） | 同为「在树里找第 $k$ 个」，BST 用中序性质导航、本题用 `len` 元数据导航，对照「树结构元信息加速定位」的两种范式 |
+| 606 | [根据二叉树创建字符串](https://leetcode.cn/problems/construct-string-from-binary-tree/)（[题解](../0601-0700/606_根据二叉树创建字符串.md)） | 方向相反的「树↔串」转换——把树按规则拼成字符串，承接 Rope「树表示串」的主题 |
+| 988 | [从叶结点开始的最小字符串](https://leetcode.cn/problems/smallest-string-starting-from-leaf/)（[题解](../0901-1000/988_从叶结点开始的最小字符串.md)） | 在树上 DFS 收集叶到根的路径串并取最小，对照「树 + 字符串 + DFS」主题 |
+| 2583 | [二叉树中的第 K 大层和](https://leetcode.cn/problems/kth-largest-sum-in-a-binary-tree/)（[题解](../2501-2600/2583_二叉树中的第K大层和.md)） | 二叉树上收集元数据（层和）再求第 $k$，对照「利用树形元数据回答第 $k$ 类查询」的思路 |

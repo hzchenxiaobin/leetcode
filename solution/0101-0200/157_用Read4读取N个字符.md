@@ -1,13 +1,13 @@
-# 用 Read4 读取 N 个字符
-
-- **题目名称**：用 Read4 读取 N 个字符
-- **链接**：[157. Read N Characters Given Read4](https://leetcode.cn/problems/read-n-characters-given-read4/)
-- **难度**：简单
-- **标签**：字符串、模拟、交互式 API
+# LeetCode 用 Read4 读取 N 个字符 题解
 
 ## 1. 题目概述
 
-给定一个**只读文件**与一个已实现的接口 `read4`，要求你实现 `read`，从文件中读取**至多 `n` 个字符**写入调用方提供的缓冲区 `buf`，并返回**实际读取的字符数**。
+- **标题 / 题号**：用 Read4 读取 N 个字符（#157，easy）
+- **链接**：https://leetcode.cn/problems/read-n-characters-given-read4/
+- **难度**：简单
+- **标签**：字符串、模拟、交互式 API
+
+**题意**：给定一个**只读文件**与一个已实现的接口 `read4`，要求你实现 `read`，从文件中读取**至多 `n` 个字符**写入调用方提供的缓冲区 `buf`，并返回**实际读取的字符数**。
 
 **接口契约**：
 
@@ -46,7 +46,7 @@ int read(char *buf, int n);
 解释：3 次 read4 各返回 4，共 12 个字符，正好读满。
 ```
 
-**约束条件**：
+**约束**：
 
 - `1 <= file.length <= 500`
 - `1 <= n <= 1000`
@@ -54,8 +54,6 @@ int read(char *buf, int n);
 - `read` 在整个测试中**只被调用一次**（本题是单次调用版；多次调用版见 [158](https://leetcode.cn/problems/read-n-characters-given-read4-ii-call-multiple-times/)）
 
 > 💡 本题是「**API 模拟 + 内部缓冲区**」家族的入门款。核心是处理 `read4` 一次产出 **4 个字符**与 `read` 一次需要 **`n` 个字符**之间的**粒度不匹配**：要么 `read4` 读多了要丢弃，要么 `read4` 读少了（EOF）要提前结束。下文 2.2 给出统一处理范式。
-
----
 
 ## 2. 解题思路
 
@@ -127,8 +125,6 @@ return total
 
 > 💡 **观察「丢弃」的发生条件**：仅当 `got > n - total` 即 `read4` 这一桶给得比剩余需求多时才有丢弃。这种丢弃在单次调用中无害（`buf4` 是局部的，函数返回即销毁）；但它是 158 多次调用版必须解决的痛点——多读的字符要存进成员变量供下次 `read` 优先消费。
 
----
-
 ## 3. 参考代码
 
 ### C++
@@ -186,8 +182,6 @@ class Solution:
 
 > 💡 两版等价，骨架完全一致：`while total < n` 主循环 + `need = min(got, n - total)` 按需拷贝 + `got < 4` 双出口。C++ 用 `memcpy(buf + total, buf4, need)` 也可替代手写循环（更短且可能更快），但手写循环更直观地展示「按下标逐字符拷贝」的语义，便于面试讲解。注意 `buf4` 在 Python 版中每轮重建——因为 `read4` 是按引用写入 `buf4` 的，重建无副作用且免去手动清空。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -197,8 +191,6 @@ class Solution:
 | `read4` 调用次数 | $\lceil \min(n, \text{file.length}) / 4 \rceil$ | 读满 $n$ 或撞 EOF 即停，不会多调（读满后 `total==n` 直接退出循环，不再调 `read4`） |
 
 > ⚠️ 注意「读多了」场景下 `read4` 可能多读至多 3 个字符（最后一轮 `got=4` 但只拷 `need≤3`），但**至多一轮**的过量读取——因为拷完 `need` 后 `total==n` 立即退出循环，不会再调 `read4`。故 `read4` 调用次数仍为 $\lceil n/4 \rceil$（文件足够长时），过量读取量 $\le 3$。
-
----
 
 ## 5. 扩展：多次调用版（LeetCode 158）
 
@@ -238,8 +230,6 @@ class Solution {
 
 > ⚠️ **158 的最易踩坑点**：`buf4Ptr == buf4Cnt`（缓存消费完）时必须**重置 `buf4Ptr = 0`** 并在下一轮重新调 `read4`；否则 `buf4Ptr` 越界读到上次残留数据。本题 157 因为 `buf4` 是局部的、每轮重建，不存在这个坑——这正是单次调用版简单的根本原因。
 
----
-
 ## 6. 面试要点
 
 1. **`read4` 的返回值含义是什么？为什么 `< 4` 是 EOF 信号？**
@@ -264,12 +254,12 @@ class Solution {
 
 > 💡 **一句话总结**：157 的灵魂是「**4 字节中转区 + 按需拷贝**」——`read4` 是粒度为 4 的舀水桶，`buf` 是粒度为 `n` 的目标容器，`need = min(got, n - total)` 用一行 `min` 同时守住「读多了」与「读少了」两端边界，双出口（`total == n` / `got < 4`）覆盖满与 EOF。这个「中转区 + 按需拷贝 + min 守边界」模板是所有流式 I/O 包装器的最小原型，158 仅在其上加一层持久化。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [158. 用 Read4 读取 N 个字符 II（多次调用）](https://leetcode.cn/problems/read-n-characters-given-read4-ii-call-multiple-times/)：本题的多次调用版，把 `buf4` 升格为成员变量 + 缓存指针，处理跨调用的「多读暂存」，骨架相同只加一层持久化
-- [682. 棒球比赛](https://leetcode.cn/problems/baseball-game/)：另一类「按规则操作缓冲区」的模拟题，用栈记录历史得分，对照本题的「按 API 契约操作缓冲区」
-- [1700. 无法吃午餐的学生数量](https://leetcode.cn/problems/number-of-students-unable-to-eat-lunch/)：双队列模拟 + 提前退出判定，同属「模拟 + 边界条件触发停止」家族
-- [860. 柠檬水找零](https://leetcode.cn/problems/lemonade-change/)：贪心模拟 + 状态变量记录可用零钱，对照本题用 `total` 状态变量记录已读进度
-- [159. 至多包含两个不同字符的最长子串](https://leetcode.cn/problems/longest-substring-with-at-most-two-distinct-characters/)：滑动窗口「按需扩展/收缩」的边界控制，对照本题「按需拷贝/停止」的边界控制思维
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 158 | [用 Read4 读取 N 个字符 II（多次调用）](https://leetcode.cn/problems/read-n-characters-given-read4-ii-call-multiple-times/) | 本题的多次调用版，把 `buf4` 升格为成员变量 + 缓存指针，处理跨调用的「多读暂存」，骨架相同只加一层持久化 |
+| 682 | [棒球比赛](https://leetcode.cn/problems/baseball-game/) | 另一类「按规则操作缓冲区」的模拟题，用栈记录历史得分，对照本题的「按 API 契约操作缓冲区」 |
+| 1700 | [无法吃午餐的学生数量](https://leetcode.cn/problems/number-of-students-unable-to-eat-lunch/) | 双队列模拟 + 提前退出判定，同属「模拟 + 边界条件触发停止」家族 |
+| 860 | [柠檬水找零](https://leetcode.cn/problems/lemonade-change/) | 贪心模拟 + 状态变量记录可用零钱，对照本题用 `total` 状态变量记录已读进度 |
+| 159 | [至多包含两个不同字符的最长子串](https://leetcode.cn/problems/longest-substring-with-at-most-two-distinct-characters/) | 滑动窗口「按需扩展/收缩」的边界控制，对照本题「按需拷贝/停止」的边界控制思维 |

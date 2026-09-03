@@ -1,15 +1,15 @@
-# 统计 Spotify 排行榜上艺术家出现次数
-
-- **题目名称**：统计 Spotify 排行榜上艺术家出现次数
-- **链接**：[2669. 统计 Spotify 排行榜上艺术家出现次数](https://leetcode.cn/problems/count-artist-occurrences-on-spotify-ranking-list/)
-- **难度**：简单
-- **标签**：数据库、SQL、`GROUP BY`、`COUNT(*)` 聚合、`ORDER BY` 排序、分组计数、LeetCode 锁题
+# LeetCode 统计 Spotify 排行榜上艺术家出现次数 题解
 
 ## 1. 题目概述
 
+- **标题 / 题号**：统计 Spotify 排行榜上艺术家出现次数（#2669，easy）
+- **链接**：https://leetcode.cn/problems/count-artist-occurrences-on-spotify-ranking-list/
+- **难度**：简单
+- **标签**：数据库、SQL、`GROUP BY`、`COUNT(*)` 聚合、`ORDER BY` 排序、分组计数、LeetCode 锁题
+
 > ⚠️ 本题为 LeetCode 付费题，题意描述根据官方示例用例与 hints 重建，可能与官方题面有出入。
 
-给定 `Spotify` 排行榜表，每行记录一首曲目及其演唱艺术家。编写 SQL 查询，统计**每位艺术家在排行榜上出现的次数**（即每位艺术家有几首曲目入榜）。结果包含 `artist`（艺术家名）和 `occurrences`（出现次数）两列，按出现次数降序排列，次数相同者按艺术家名升序排列。
+**题意**：给定 `Spotify` 排行榜表，每行记录一首曲目及其演唱艺术家。编写 SQL 查询，统计**每位艺术家在排行榜上出现的次数**（即每位艺术家有几首曲目入榜）。结果包含 `artist`（艺术家名）和 `occurrences`（出现次数）两列，按出现次数降序排列，次数相同者按艺术家名升序排列。
 
 **表结构**：
 
@@ -67,7 +67,7 @@ Sia 有 1 首曲目入榜（Shape of you）。
 | DJ Khalid | I'm the one, Young Dumb & Broke | 2 | **2** |
 | Sia | Shape of you | 1 | **1** |
 
-**约束条件**：
+**约束**：
 
 - `id` 是 `Spotify` 表的主键，每行唯一。
 - `track_name` 和 `artist` 为字符串。
@@ -76,8 +76,6 @@ Sia 有 1 首曲目入榜（Shape of you）。
 - 结果按 `occurrences` 降序、`artist` 升序排列。
 
 > 💡 **审题关键**：① 「出现次数」= 每位艺术家有几**行**（几首曲目），不是去重后的曲目数——`id` 已保证行唯一，`COUNT(*)` 直接数行即可；② 输出列名 `occurrences` 要与题意一致；③ 排序是「次数降序 → 名字升序」二级排序，同次数时按字母序。掌握这三点，本题退化为一行 `SELECT artist, COUNT(*) FROM ... GROUP BY artist ORDER BY ...`。
-
----
 
 ## 2. 解题思路
 
@@ -178,8 +176,6 @@ $$\text{occurrences}_a = \left| \{\, \text{row} \in \text{Spotify} \mid \text{ro
 
 > ⚠️ **同次数时按名字排序**：DJ Khalid 和 Ed Sheeran 都是 2 次，按 `artist ASC` 排序时比较字符串 "DJ Khalid" < "Ed Sheeran"（首字母 'D' < 'E'），故 DJ Khalid 排前。漏写 `artist ASC` 会导致这两个的顺序不确定。
 
----
-
 ## 3. 参考代码
 
 ### SQL（解法 A：`GROUP BY` + `COUNT(*)`，推荐）
@@ -243,8 +239,6 @@ def count_artist_occurrences(spotify: pd.DataFrame) -> pd.DataFrame:
 > - `.sort_values(['occurrences', 'artist'], ascending=[False, True])` 对应 `ORDER BY occurrences DESC, artist ASC`——`ascending=[False, True]` 表示第一列降序、第二列升序。
 > - 注意 `.size()` 返回的是行数（含所有行），与 `COUNT(*)` 行为一致；若需去重可用 `.nunique()`。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 解法 A（`GROUP BY`+`COUNT(*)`） | 解法 B（子查询） | 解法 C（`COUNT(id)`） | pandas |
@@ -258,8 +252,6 @@ def count_artist_occurrences(spotify: pd.DataFrame) -> pd.DataFrame:
 > - **时间**：全表扫描一次 $O(n)$ + 分组聚合 $O(k)$ + 排序 $O(k \log k)$。因 $k \le n$，总体 $O(n \log k)$。若 `artist` 列有索引，`GROUP BY` 可走索引扫描，降至 $O(\log n + n)$（索引范围扫描 + 聚合）。
 > - **空间**：分组需物化 $k$ 组的聚合结果 $O(k)$；pandas 需 $O(n)$ 存 DataFrame。
 > - **索引优化**：在 `artist` 列建索引可加速分组（索引有序，扫描即可分组）；若查询频繁且只取 `artist` + 计数，可建 `(artist, id)` 复合索引实现 index-only scan（覆盖索引），避免回表。
-
----
 
 ## 5. 扩展：`COUNT(*)` vs `COUNT(col)` vs `COUNT(DISTINCT col)`
 
@@ -301,8 +293,6 @@ ORDER BY occurrences DESC, artist ASC;
 
 > 💡 这正是 `GROUP BY` 骨架的扩展——当条件从「行级」（单行属性）升级为「组级」（聚合后的属性）时，`WHERE` 无法表达（`WHERE` 在 `GROUP BY` 之前执行，此时还没有组），必须用 `HAVING`（在 `GROUP BY` 之后执行，对组做过滤）。理解「行级条件用 `WHERE`，组级条件用 `HAVING`」的分工，是 SQL 查询设计的基础认知。
 
----
-
 ## 6. 面试要点
 
 1. **为什么用 `COUNT(*)` 而非 `COUNT(DISTINCT artist)`？**
@@ -327,11 +317,11 @@ ORDER BY occurrences DESC, artist ASC;
 
 > 💡 **一句话总结**：2669 是 SQL **"分组计数入门招牌题"**——核心就一句 `SELECT artist, COUNT(*) AS occurrences FROM Spotify GROUP BY artist ORDER BY occurrences DESC, artist ASC`。考点覆盖三要素：**分组（`GROUP BY artist`，同艺术家归组）、组内计数（`COUNT(*)`，数行数无需 DISTINCT）、二级排序（`occurrences DESC, artist ASC`，次数降序 + 名字升序）**。理解「分组后组内无需去重」「排序键顺序即优先级」这两点，所有「分组 + 计数 + 排序」类 SQL 题都能覆盖。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [596. 超过 5 名学生的课](https://leetcode.cn/problems/classes-with-at-least-5-students/)：`GROUP BY` + `HAVING COUNT(*) >= 5` 组级过滤——在 2669 的分组计数骨架上叠加 `HAVING`，从「数所有组」到「只留满足条件的组」
-- [1757. 可回收且低脂的产品](https://leetcode.cn/problems/recyclable-and-low-fat-products/)：`WHERE` 双布尔条件 + `COUNT`——对照 2669 理解「行级过滤后计数」与「分组后计数」的区别（前者无 `GROUP BY`，后者有）
-- [1148. 文章浏览 I](https://leetcode.cn/problems/article-views-i/)：`WHERE` 等值过滤 + `DISTINCT` 去重——对照 2669 理解「去重列出不同值」与「分组计数」的区别（`DISTINCT` 不做聚合，`GROUP BY` 可做聚合）
-- [2082. 富有客户的数量](https://leetcode.cn/problems/the-number-of-rich-customers/)（[题解](../2001-2100/2082_富有客户的数量.md)）：`WHERE` + `COUNT(DISTINCT customer_id)`——对照 2669 的「先分组后 `COUNT(*)`」，2082 是「先过滤后 `COUNT(DISTINCT)`」，辨析两种计数路径的去重需求差异
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 596 | [超过 5 名学生的课](https://leetcode.cn/problems/classes-with-at-least-5-students/) | `GROUP BY` + `HAVING COUNT(*) >= 5` 组级过滤——在 2669 的分组计数骨架上叠加 `HAVING`，从「数所有组」到「只留满足条件的组」 |
+| 1757 | [可回收且低脂的产品](https://leetcode.cn/problems/recyclable-and-low-fat-products/) | `WHERE` 双布尔条件 + `COUNT`——对照 2669 理解「行级过滤后计数」与「分组后计数」的区别（前者无 `GROUP BY`，后者有） |
+| 1148 | [文章浏览 I](https://leetcode.cn/problems/article-views-i/) | `WHERE` 等值过滤 + `DISTINCT` 去重——对照 2669 理解「去重列出不同值」与「分组计数」的区别（`DISTINCT` 不做聚合，`GROUP BY` 可做聚合） |
+| 2082 | [富有客户的数量](https://leetcode.cn/problems/the-number-of-rich-customers/)（[题解](../2001-2100/2082_富有客户的数量.md)） | `WHERE` + `COUNT(DISTINCT customer_id)`——对照 2669 的「先分组后 `COUNT(*)`」，2082 是「先过滤后 `COUNT(DISTINCT)`」，辨析两种计数路径的去重需求差异 |

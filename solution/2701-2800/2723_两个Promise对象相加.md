@@ -1,13 +1,13 @@
-# 两个 Promise 对象相加
-
-- **题目名称**：两个 Promise 对象相加
-- **链接**：[2723. Add Two Promises](https://leetcode.cn/problems/add-two-promises/)
-- **难度**：简单
-- **标签**：Promise、async/await、`Promise.all`
+# LeetCode 两个 Promise 对象相加 题解
 
 ## 1. 题目概述
 
-给定两个 promise 对象 `promise1` 和 `promise2`，返回一个新的 promise。`promise1` 和 `promise2` 都会被解析为一个数字。返回的 Promise 应该解析为这两个数字的和。
+- **标题 / 题号**：两个 Promise 对象相加（#2723，easy）
+- **链接**：https://leetcode.cn/problems/add-two-promises/
+- **难度**：简单
+- **标签**：Promise、async/await、`Promise.all`
+
+**题意**：给定两个 promise 对象 `promise1` 和 `promise2`，返回一个新的 promise。`promise1` 和 `promise2` 都会被解析为一个数字。返回的 Promise 应该解析为这两个数字的和。
 
 **示例 1**：
 
@@ -30,14 +30,12 @@ promise2 = new Promise(resolve => setTimeout(() => resolve(-12), 30))
 解释：两个输入的 Promise 分别解析为值 10 和 -12。返回的 Promise 应该解析为 10 + -12 = -2。
 ```
 
-**约束条件**：
+**约束**：
 
 - `promise1` 和 `promise2` 都是被解析为一个数字的 promise 对象
 - 本题仅开放 JavaScript / TypeScript 提交
 
 > 💡 本题是 LeetCode「30 天 JavaScript」系列题目，考点不在算法复杂度，而在 **Promise 组合**——理解「两个异步值如何聚合为一个异步值」。核心是 `async/await` 让异步代码写出同步形态，或用 `Promise.all` 并发等待再求和。下文以 JS 为提交语言，并给出 Python 的概念等价实现。
-
----
 
 ## 2. 解题思路
 
@@ -86,8 +84,6 @@ promise1.then(v1 => promise2.then(v2 => v1 + v2))
 
 > 💡 **示例 1 的时间线**：`promise1` 在 20ms resolve，`promise2` 在 60ms resolve。`await promise1` 挂起 20ms 取到 `2`，此时 `promise2` 已并发跑了 20ms，`await promise2` 只需再等 40ms 取到 `5`，总耗时 60ms（= `max(20, 60)`，而非 `20 + 60 = 80`）。示例 2 同理：`promise2` 在 30ms 就 resolve 了，`await promise1` 挂起 50ms 取到 `10` 后，`await promise2` 立刻返回 `-12`（早已 resolve），总耗时 50ms。
 
----
-
 ## 3. 参考代码
 
 ### JavaScript（提交语言：async/await）
@@ -135,8 +131,6 @@ async def add_two_promises(promise1, promise2):
 
 > ⚠️ Python 中 `asyncio.Future` / `Task` 对应 JS 的 Promise，`await` 语义一致。但 Python 需在事件循环中运行 coroutine（`asyncio.run(...)`），JS 的 Promise 由运行时事件循环自动驱动。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -145,8 +139,6 @@ async def add_two_promises(promise1, promise2):
 | **空间** | $O(1)$ | 仅持有两个 resolve 值 `a`、`b` 的引用 |
 
 > 💡 若两个 Promise 在 `await` 处才创建（非入参时），串行 `await` 会退化至 $O(t_1 + t_2)$。此时应改用 `Promise.all` 并发等待（见第 5 节）。
-
----
 
 ## 5. 扩展：`Promise.all` 并发等待与 N 个 Promise 求和
 
@@ -183,8 +175,6 @@ async function sumPromises(promises) {
 
 > 💡 `Promise.all` + `reduce` 是异步聚合的标准范式：先并发等待全部完成，再同步归约。对应到同步世界就是 `arr.reduce(add)`，只是前置一层 `await Promise.all`。
 
----
-
 ## 6. 面试要点
 
 1. **`async` 函数的返回值是什么？为什么不用手动包 `Promise.resolve`？**
@@ -209,12 +199,12 @@ async function sumPromises(promises) {
 
 > 💡 **一句话总结**：2723 = 「`async` 函数内 `await` 两个 Promise 取值，`return a + b` 自动包 Promise」。本质是异步值的同步式组合，是 Promise 链式调用的语法糖。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [2621. 睡眠函数](https://leetcode.cn/problems/sleep/)：用 `setTimeout` 包成 Promise 再 `await`，把「t ms 后执行」升级为「t ms 后 resolve」——是理解 `await` 暂停语义的前置练习（[题解](../2601-2700/2621_睡眠函数.md)）
-- [2637. 有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/)：`Promise.race` 在 `fn` 与超时 Promise 间赛跑——是 `Promise.all`（全部等待）的对照面（任一完成），同为 Promise 组合范式（[题解](../2601-2700/2637_有时间限制的Promise对象.md)）
-- [2636. Promise 对象池](https://leetcode.cn/problems/promise-pool/)：用 `Promise.all` 管理并发池，控制同时运行的 Promise 数量——是「N 个 Promise 调度」的进阶，承接本题的 `Promise.all` 思想（[题解](../2601-2700/2636_Promise对象池.md)）
-- [2715. 执行可取消的延迟函数](https://leetcode.cn/problems/timeout-cancellation/)：`setTimeout` + `clearTimeout` 的定时器管理，与本题同属「30 天 JS」异步系列，从 Promise 组合转向定时器生命周期（[题解](../2701-2800/2715_执行可取消的延迟函数.md)）
-- [2665. 计数器 II](https://leetcode.cn/problems/counter-ii/)（[题解](../2601-2700/2665_计数器II.md)）：闭包封装私有状态，同为「30 天 JS」设计题，对照「闭包捕获」与「async/await 捕获」两种异步值封装模式
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 2621 | [睡眠函数](https://leetcode.cn/problems/sleep/) | 用 `setTimeout` 包成 Promise 再 `await`，把「t ms 后执行」升级为「t ms 后 resolve」——是理解 `await` 暂停语义的前置练习（[题解](../2601-2700/2621_睡眠函数.md)） |
+| 2637 | [有时间限制的 Promise 对象](https://leetcode.cn/problems/promise-time-limit/) | `Promise.race` 在 `fn` 与超时 Promise 间赛跑——是 `Promise.all`（全部等待）的对照面（任一完成），同为 Promise 组合范式（[题解](../2601-2700/2637_有时间限制的Promise对象.md)） |
+| 2636 | [Promise 对象池](https://leetcode.cn/problems/promise-pool/) | 用 `Promise.all` 管理并发池，控制同时运行的 Promise 数量——是「N 个 Promise 调度」的进阶，承接本题的 `Promise.all` 思想（[题解](../2601-2700/2636_Promise对象池.md)） |
+| 2715 | [执行可取消的延迟函数](https://leetcode.cn/problems/timeout-cancellation/) | `setTimeout` + `clearTimeout` 的定时器管理，与本题同属「30 天 JS」异步系列，从 Promise 组合转向定时器生命周期（[题解](../2701-2800/2715_执行可取消的延迟函数.md)） |
+| 2665 | [计数器 II](https://leetcode.cn/problems/counter-ii/)（[题解](../2601-2700/2665_计数器II.md)） | 闭包封装私有状态，同为「30 天 JS」设计题，对照「闭包捕获」与「async/await 捕获」两种异步值封装模式 |

@@ -1,14 +1,15 @@
-# 计算子数组的 x-sum II
+# LeetCode 计算子数组的 x-sum II 题解
 
-- **题目名称**：计算子数组的 x-sum II
-- **链接**：[3321. 计算子数组的 x-sum II](https://leetcode.cn/problems/find-x-sum-of-all-k-long-subarrays-ii/)
-- **难度**：困难
-- **标签**：数组、哈希表、滑动窗口、堆（优先队列）
 - **关联**：[3318（版本 I）](https://leetcode.cn/problems/find-x-sum-of-all-k-long-subarrays-i/)是本题的小数据版（$n \le 50$、$nums[i] \le 50$，逐窗口暴力可过）；本题把 $n$ 放大到 $10^5$，考察**双平衡树增量维护滑动窗口 top-x** 的标准姿势
 
 ## 1. 题目概述
 
-给你一个长度为 $n$ 的整数数组 `nums` 和两个整数 `k`、`x`。
+- **标题 / 题号**：计算子数组的 x-sum II（#3321，hard）
+- **链接**：https://leetcode.cn/problems/find-x-sum-of-all-k-long-subarrays-ii/
+- **难度**：困难
+- **标签**：数组、哈希表、滑动窗口、堆（优先队列）
+
+**题意**：给你一个长度为 $n$ 的整数数组 `nums` 和两个整数 `k`、`x`。
 
 数组的 **x-sum** 按如下步骤计算：
 
@@ -39,7 +40,7 @@
 解释：k == x，每个窗口的不同元素至多 2 个，x-sum 恒为窗口总和。
 ```
 
-**约束条件**：
+**约束**：
 
 - $n = \text{nums.length}$
 - $1 \le n \le 10^5$
@@ -47,8 +48,6 @@
 - $1 \le x \le k \le n$
 
 > 💡 **读题关键**：① 排序键是 **(频率, 数值) 二元组**——频率平局时比数值，这是全题最易错的一处；② 窗口和上界 $k \cdot \max(\text{nums}) \approx 10^{14}$，C++ 必须用 `long long`；③ 「不同元素不足 x 个取总和」这个边界，选对数据结构后**不需要一行特判**（见 2.2）；④ 相邻两个窗口的频率表只差「一个值 +1、一个值 −1」——增量维护的信号已经拉满。
-
----
 
 ## 2. 解题思路
 
@@ -130,8 +129,6 @@ $$\min(L) \;>\; \max(R) \qquad (\text{L 内任意条目} > \text{R 内任意条�
 4. **错位检查**：$\min(L) = (1,4) > \max(R) = (1,3)$，无需互换。$(1,4)$ 能压过同频率的 $(1,3)$，靠的正是**平局比数值**的规则。
 
 answer = $[6, 10, 12]$ ✓。
-
----
 
 ## 3. 参考代码
 
@@ -261,8 +258,6 @@ class Solution:
 
 > 💡 **实现细节**：① LeetCode 会**复用同一个 Solution 实例**跑多组用例，成员状态（`freq/L/R/sumL`）必须在入口重置——笔者对拍时就栽在这一步，第二组样例直接 WA；② 新条目**一律先进 R**、统一交给 balance 调度，免去「插入时判断该进 L 还是 R」的双分支；③ 摘牌定位依赖分离不变量，所以**每次更新后必须立刻 balance**（见 2.2 的 ⚠️）；④ C++ `multiset` 删单个等值元素要传**迭代器**（`erase(it)`），传键值 `erase(key)` 会把等值元素一锅端；⑤ LeetCode 的 Python3 环境自带 `sortedcontainers`，可放心 `import`。
 
----
-
 ## 4. 复杂度分析
 
 | 维度 | 复杂度 | 说明 |
@@ -272,8 +267,6 @@ class Solution:
 | 暴力对照 | $O(nk \log k)$ 时间 | $k = n/2 = 5 \times 10^4$ 时约 $4 \times 10^{10}$ 步，超出时限约三个数量级（版本 I 的 $n \le 50$ 可过） |
 
 实测：两组官方样例分别得 $[6,10,12]$ / $[11,15,15,15,12]$ ✓；与逐窗口暴力对拍随机数据 10000+ 组（值域压到 $\le 6$ 制造频率回摆、$nums[i] = nums[i-k]$ 制造同值进出窗）全部一致，另做 C++ / Python 双语言 500 组同数据交叉校验，校验和一致；$n = 10^5$、$k = 5 \times 10^4$、$x = 3 \times 10^4$ 下 C++ 0.09 s、Python（SortedList）0.87 s 通过。
-
----
 
 ## 5. 扩展：没有平衡树时——懒删除双堆
 
@@ -379,8 +372,6 @@ class Solution:
 
 实测 $n = 10^5$ 用例 0.59 s，反而比 SortedList 略快——堆的常数更小，代价是三处坑都得踩对。两版对拍 4000+ 组随机数据全部一致。
 
----
-
 ## 6. 面试要点
 
 1. **为什么一个 top-x 堆不够，非要 L/R 两个结构？**
@@ -403,12 +394,12 @@ class Solution:
 
    ① $k \cdot \max(\text{nums}) \approx 10^{14} > 2^{31}$，C++ 全程 `long long`（返回类型就是 `vector<long long>`）；② 不同值少于 x 时 R 被吸干，`sumL` 自动等于窗口总和，无需特判；③ `multiset` 删单个元素要传迭代器；④ LeetCode 复用 Solution 实例，成员状态在入口重置——多组用例共享残留状态是最隐蔽的 WA 来源。
 
----
+## 同类练习题
 
-## 7. 同类练习题
-
-- [3318. 计算子数组的 x-sum I](https://leetcode.cn/problems/find-x-sum-of-all-k-long-subarrays-i/)：本题的小数据版（$n \le 50$），逐窗口暴力可过，正好当对拍基准
-- [480. 滑动窗口中位数](https://leetcode.cn/problems/sliding-window-median/)（[站内题解](../0401-0500/480_滑动窗口中位数.md)）：「双有序集合切两半维护滑动窗口」的母题——那边按中位数切，这边按 top-x 门槛切，骨架完全同款
-- [347. 前 K 个高频元素](https://leetcode.cn/problems/top-k-frequent-elements/)（[站内题解](../0301-0400/347_前K个高频元素.md)）：静态数组取前 K 高频，本题是它的滑动窗口增量版（条目键在窗内还会变）
-- [239. 滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)（[站内题解](../0201-0300/239_滑动窗口最大值.md)）：对照题——那边元素入窗即定序，单调队列 $O(n)$；这边键 (freq, value) 在窗内涨落，单调性被破坏，只能上平衡树
-- [220. 存在重复元素 III](https://leetcode.cn/problems/contains-duplicate-iii/)（[站内题解](../0201-0300/220_存在重复元素III.md)）：滑动窗口 + 有序集合的入门题（窗口内查邻居），本题升级为窗口内维护全局 top-x
+| # | 题目 | 与本题的关联 |
+|---|------|-------------|
+| 3318 | [计算子数组的 x-sum I](https://leetcode.cn/problems/find-x-sum-of-all-k-long-subarrays-i/) | 本题的小数据版（$n \le 50$），逐窗口暴力可过，正好当对拍基准 |
+| 480 | [滑动窗口中位数](https://leetcode.cn/problems/sliding-window-median/)（[站内题解](../0401-0500/480_滑动窗口中位数.md)） | 「双有序集合切两半维护滑动窗口」的母题——那边按中位数切，这边按 top-x 门槛切，骨架完全同款 |
+| 347 | [前 K 个高频元素](https://leetcode.cn/problems/top-k-frequent-elements/)（[站内题解](../0301-0400/347_前K个高频元素.md)） | 静态数组取前 K 高频，本题是它的滑动窗口增量版（条目键在窗内还会变） |
+| 239 | [滑动窗口最大值](https://leetcode.cn/problems/sliding-window-maximum/)（[站内题解](../0201-0300/239_滑动窗口最大值.md)） | 对照题——那边元素入窗即定序，单调队列 $O(n)$；这边键 (freq, value) 在窗内涨落，单调性被破坏，只能上平衡树 |
+| 220 | [存在重复元素 III](https://leetcode.cn/problems/contains-duplicate-iii/)（[站内题解](../0201-0300/220_存在重复元素III.md)） | 滑动窗口 + 有序集合的入门题（窗口内查邻居），本题升级为窗口内维护全局 top-x |
