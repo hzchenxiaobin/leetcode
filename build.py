@@ -142,6 +142,72 @@ def _extract_problem_number(markdown_text: str) -> Optional[str]:
     return match.group(1) if match else None
 
 
+def _extract_page_meta(markdown_text: str) -> tuple:
+    """Extract 难度/标签 meta bullets and strip the meta bullet block from the body.
+
+    The meta info is rendered as badges in the page header instead, so the
+    '**题目名称** / **链接** / **难度** / **标签**' bullet lines are removed
+    from the body when a difficulty or tags line is found. Returns
+    (meta_dict, cleaned_markdown).
+    """
+    patterns = {
+        "name": r"^-\s*\*\*题目名称\*\*[：:].*$",
+        "link": r"^-\s*\*\*链接\*\*[：:].*$",
+        "difficulty": r"^-\s*\*\*难度\*\*[：:]\s*(.+?)\s*$",
+        "tags": r"^-\s*\*\*标签\*\*[：:]\s*(.+?)\s*$",
+    }
+    meta: Dict[str, str] = {}
+    matched_lines: List[str] = []
+    for key, pat in patterns.items():
+        m = re.search(pat, markdown_text, re.MULTILINE)
+        if m:
+            matched_lines.append(m.group(0))
+            if key in ("difficulty", "tags"):
+                meta[key] = m.group(1).strip()
+
+    if "difficulty" not in meta and "tags" not in meta:
+        return {}, markdown_text
+
+    cleaned = markdown_text
+    for line in matched_lines:
+        cleaned = cleaned.replace(line + "\n", "", 1)
+        cleaned = cleaned.replace(line, "", 1)  # fallback: last line w/o newline
+    return meta, cleaned
+
+
+_DIFFICULTY_CLASS = {"简单": "diff-easy", "中等": "diff-medium", "困难": "diff-hard"}
+
+
+def _page_meta_html(meta: Dict[str, str], leetcode_url: Optional[str]) -> str:
+    """Render difficulty badge + tag chips + LeetCode link for the page header."""
+    if not meta and not leetcode_url:
+        return ""
+    parts = []
+    difficulty = meta.get("difficulty")
+    if difficulty:
+        cls = _DIFFICULTY_CLASS.get(difficulty, "diff-other")
+        parts.append(f'<span class="meta-diff {cls}">{difficulty}</span>')
+    tags = meta.get("tags")
+    if tags:
+        for tag in re.split(r"[、，,/]", tags):
+            tag = tag.strip()
+            if tag:
+                parts.append(f'<span class="meta-tag">{tag}</span>')
+    if leetcode_url:
+        parts.append(
+            f'<a class="meta-leetcode" href="{leetcode_url}" target="_blank" '
+            f'rel="noopener noreferrer">LeetCode 原题 ↗</a>'
+        )
+    return f'<div class="page-meta">{"".join(parts)}</div>' if parts else ""
+
+
+def _header_title(title: str, number: Optional[str]) -> str:
+    """Compose the page-header title, prefixing the problem number when useful."""
+    if number and not re.match(r"^Q\d", title) and not title.startswith(number):
+        return f'<span class="page-title-num">{number}.</span> {title}'
+    return title
+
+
 def _extract_leetcode_url(markdown_text: str) -> Optional[str]:
     match = re.search(r"https://leetcode\.cn/problems/([^/\s)]+)/?", markdown_text)
     if match:
@@ -300,13 +366,24 @@ def page_template(
     page_title: Optional[str] = None,
     sidebar_title: str = "LeetCode 题解",
     sidebar_title_style: str = "font-size: 1.5rem; margin-bottom: 0;",
+    title_html: Optional[str] = None,
+    meta_html: str = "",
+    back_href: Optional[str] = None,
 ) -> str:
     """Generate a standard HTML page with sidebar navigation and markdown content."""
     escaped_markdown = escape_for_template_string(markdown)
     if page_title is None:
         page_title = title
+    if title_html is None:
+        title_html = title
 
     title_style_attr = f' style="{sidebar_title_style}"' if sidebar_title_style else ""
+
+    back_link_html = (
+        f'<a class="page-back" href="{back_href}">← 返回题解列表</a>'
+        if back_href
+        else ""
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
@@ -314,7 +391,7 @@ def page_template(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=11">
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=12">
     <!-- Marked.js for Markdown rendering -->
     <script src="{root_prefix}js/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -354,7 +431,9 @@ def page_template(
 
     <main class="main-content">
         <div class="page-header">
-            <h1 class="page-title">{title}</h1>
+            {back_link_html}
+            <h1 class="page-title">{title_html}</h1>
+            {meta_html}
         </div>
         <div class="content-shell">
             <article class="content" id="content"></article>
@@ -394,7 +473,7 @@ def page_template(
             console.error('Markdown render error:', err);
         }}
     </script>
-    <script src="{root_prefix}js/main.js?v=11"></script>
+    <script src="{root_prefix}js/main.js?v=12"></script>
 </body>
 </html>
 """
@@ -447,8 +526,8 @@ def landing_template(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeetCode 题解</title>
     <meta name="description" content="面试高频题与周赛题的中文题解集合，配套手绘 SVG 图解、复杂度分析与面试 Q&A。">
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=11">
-    <script src="{root_prefix}js/main.js?v=11" defer></script>
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=12">
+    <script src="{root_prefix}js/main.js?v=12" defer></script>
 </head>
 <body class="landing">
     <header class="landing-nav">
@@ -588,12 +667,17 @@ def main() -> None:
 
         num_match = re.match(r"(\d+)_", md_file.stem)
         number = num_match.group(1) if num_match else _extract_problem_number(markdown_text)
+        leetcode_url = _extract_leetcode_url(markdown_text)
+
+        # 提取难度/标签为页头徽章，并从正文中移除对应的元信息行
+        meta, markdown_text = _extract_page_meta(markdown_text)
 
         problems.append({
             "slug": slug_by_path[md_file.resolve()],
             "title": title,
             "number": number,
-            "leetcode_url": _extract_leetcode_url(markdown_text),
+            "leetcode_url": leetcode_url,
+            "meta_html": _page_meta_html(meta, leetcode_url),
             "category": info["category"],
             "contest": info["contest"],
             "week": info["week"],
@@ -767,9 +851,12 @@ def main() -> None:
         problem_markdown = p["markdown"].replace("](images/", "](../images/")
         html = page_template(
             title=p["title"],
+            title_html=_header_title(p["title"], p["number"]),
             nav_html=_build_nav(current_slug=p["slug"], problems=problems, root_prefix="../"),
             markdown=problem_markdown,
             root_prefix="../",
+            meta_html=p["meta_html"],
+            back_href="../index.html#problems",
         )
         slug_html = f"{p['slug']}.html"
         problems_dir.mkdir(parents=True, exist_ok=True)
