@@ -121,18 +121,35 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Add copy buttons to code blocks
+    // Add language-label header + copy button to code blocks
+    const CODE_LANG_LABELS = {
+        cpp: 'C++', c: 'C', python: 'Python', py: 'Python', text: 'text',
+        sql: 'SQL', bash: 'Bash', shell: 'Shell', javascript: 'JavaScript',
+        js: 'JavaScript', typescript: 'TypeScript', ts: 'TypeScript',
+        java: 'Java', xml: 'XML', json: 'JSON', go: 'Go', rust: 'Rust',
+    };
     document.querySelectorAll('.content pre').forEach(pre => {
         const wrapper = document.createElement('div');
         wrapper.className = 'code-block-wrapper';
         pre.parentNode.insertBefore(wrapper, pre);
-        wrapper.appendChild(pre);
+
+        const code = pre.querySelector('code');
+        const classNames = ((code && code.className) || '') + ' ' + (pre.className || '');
+        const langMatch = classNames.match(/language-([a-z+-]+)/i);
+        const langKey = langMatch ? langMatch[1].toLowerCase() : '';
+        const langLabel = CODE_LANG_LABELS[langKey] || langKey || 'code';
+
+        const header = document.createElement('div');
+        header.className = 'code-header';
+        const langSpan = document.createElement('span');
+        langSpan.className = 'code-lang';
+        langSpan.textContent = langLabel;
+        header.appendChild(langSpan);
 
         const button = document.createElement('button');
         button.className = 'copy-button';
         button.textContent = 'Copy';
         button.addEventListener('click', async function() {
-            const code = pre.querySelector('code');
             const text = code ? code.textContent : pre.textContent;
             try {
                 await navigator.clipboard.writeText(text);
@@ -149,7 +166,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }, 2000);
             }
         });
-        wrapper.appendChild(button);
+        header.appendChild(button);
+
+        wrapper.appendChild(header);
+        wrapper.appendChild(pre);
     });
 
     // Back to top button
