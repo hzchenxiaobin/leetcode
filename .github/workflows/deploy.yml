@@ -30,11 +30,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # 4100+ 页单次构建内存超出 runner 上限，按 BATCH_TOTAL 分批并行构建，最后合并产物
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        batch: [0, 1, 2, 3]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -48,8 +50,39 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build website (VitePress)
+      - name: Build batch ${{ matrix.batch }} (VitePress)
         run: npm run build
+        env:
+          BATCH_INDEX: ${{ matrix.batch }}
+          BATCH_TOTAL: 4
+          NODE_OPTIONS: --max-old-space-size=6144
+
+      - name: Upload batch artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-batch-${{ matrix.batch }}
+          path: dist_${{ matrix.batch }}
+          retention-days: 1
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download batch artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: dist-batch-*
+          path: batches
+
+      - name: Merge batches
+        run: |
+          mkdir -p dist
+          for d in batches/dist-batch-*/; do cp -r "$d". dist/; done
+          # 合并后必须有首页（第 0 批产物），否则说明批次漏了
+          test -f dist/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

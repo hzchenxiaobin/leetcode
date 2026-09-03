@@ -62,17 +62,44 @@ function loadContests() {
 const solutionOrder = loadSolutions()
 const contestOrder = loadContests()
 
+// ---- 分批构建 ----
+// 全量 4100+ 页单次构建的内存超出 CI runner 上限（打包器模块图常驻堆内存），
+// CI 用 BATCH_INDEX/BATCH_TOTAL 把 solution/ 按区间目录切成多批，分别构建再合并产物；
+// 不带环境变量时（本地开发）仍是单批全量。
+const batchTotal = Math.max(1, parseInt(process.env.BATCH_TOTAL || '1', 10))
+const batchIndex = Math.max(0, parseInt(process.env.BATCH_INDEX || '0', 10))
+const batching = batchTotal > 1
+
+const solutionDir = path.resolve(root, '../solution')
+const allRanges = fs.existsSync(solutionDir)
+  ? fs.readdirSync(solutionDir).filter(d => /^\d{4}-\d{4}$/.test(d)).sort()
+  : []
+const perBatch = Math.ceil(allRanges.length / batchTotal)
+const myRanges = new Set(allRanges.slice(batchIndex * perBatch, (batchIndex + 1) * perBatch))
+
+const batchExclude: string[] = !batching ? [] : [
+  ...allRanges.filter(d => !myRanges.has(d)).map(d => `solution/${d}/**`),
+  // 共享页面（首页/索引/周赛/专题）只在第 0 批构建，避免合并产物时互相覆盖
+  ...(batchIndex === 0 ? [] : [
+    'contest/**', 'topics/**',
+    'index.md', 'solutions.md', 'contests.md', 'topics.md',
+    'hot-interview.md', '10-week-plan.md'
+  ])
+]
+
 export default defineConfig({
   title: 'LeetCode 题解',
   description: 'LeetCode 题解 · 面试高频 · 周赛实战',
   lang: 'zh-CN',
   base: '/leetcode/',
-  // 旧版 Python 生成器与文档不纳入站点构建（保留在仓库中作存档）
+  // 旧版 Python 生成器与文档不纳入站点构建（保留在仓库中作存档）；
+  // dist*/** 排除各批构建产物目录
   srcExclude: [
     'README.md', '**/SKILL.md', '**/INDEX.md',
-    'build/**', 'static/**', 'public/**', 'dist/**'
+    'build/**', 'static/**', 'public/**', 'dist*/**',
+    ...batchExclude
   ],
-  outDir: './dist',
+  outDir: batching ? `./dist_${batchIndex}` : './dist',
   ignoreDeadLinks: true, // 正文里有指向仓库内非页面文件的相对链接
   lastUpdated: false,
   // 4100+ 页 SSR 渲染默认 64 并发会把 Node 内存打爆，限制并发
@@ -121,8 +148,10 @@ export default defineConfig({
         }
       }
       // VitePress 自带的行尾 {…} 属性语法会把正文里的集合记号（如 {i love you:5, …}、{0, 1, 2}）
-      // 误解析成 HTML 属性，禁用之（本站内容不使用该语法）
+      // 误解析成 HTML 属性，禁用之（本站内容不使用该语法）；
+      // 1.x 规则名是 curly_attributes，2.x 起改为 attrs（含表格单元格属性）
       md.core.ruler.disable('curly_attributes', true)
+      md.core.ruler.disable('attrs', true)
       // 周赛题解中的 images/xxx.svg 是仓库根 images/ 目录的引用，改写为根绝对路径
       const defaultImage = md.renderer.rules.image!
       md.renderer.rules.image = (tokens, idx, options, env, self) => {
@@ -191,8 +220,9 @@ export default defineConfig({
 
     outline: { level: [2, 3], label: '本页目录' },
 
-    search: {
-      provider: 'local',
+    // 分批构建时每批只能索引到本批页面，合并后搜索结果会残缺，因此分批模式下关闭搜索
+    ...(!batching ? { search: {
+      provider: 'local' as const,
       options: {
         // 4100+ 页全量索引：剔除代码块，显著降低索引体积与构建内存
         _render(src: string, env: any, md: any) {
@@ -229,7 +259,7 @@ export default defineConfig({
           }
         }
       }
-    },
+    } } : {}),
 
     docFooter: { prev: '上一题', next: '下一题' },
     darkModeSwitchLabel: '外观',
