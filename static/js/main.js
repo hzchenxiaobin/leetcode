@@ -168,6 +168,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Problem list: collapsible groups + live search + state persistence
+    initProblemListControls();
+
     // Random LeetGPU problem picker on overview page
     const randomPickBtn = document.getElementById('random-pick-btn');
     if (randomPickBtn) {
@@ -217,6 +220,134 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+function initProblemListControls() {
+    const overview = document.querySelector('.leetcode-overview-row');
+    if (!overview) return;
+
+    const sections = Array.from(overview.querySelectorAll('details.leetcode-section'));
+    const links = Array.from(overview.querySelectorAll('.leetcode-problem-link'));
+    const searchInput = document.getElementById('problem-search');
+    const countEl = document.getElementById('problem-search-count');
+    const emptyEl = document.getElementById('problem-list-empty');
+    const expandBtn = document.getElementById('expand-all-btn');
+    const collapseBtn = document.getElementById('collapse-all-btn');
+    const STORAGE_KEY = 'leetcode-open-sections';
+
+    links.forEach(link => {
+        link._searchText = link.textContent.toLowerCase();
+    });
+
+    // Restore previously expanded groups (falls back to the server-rendered
+    // default: only the newest contest is open).
+    let savedIds = null;
+    try {
+        savedIds = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+    } catch (e) {}
+    if (Array.isArray(savedIds)) {
+        sections.forEach(sec => { sec.open = savedIds.indexOf(sec.id) !== -1; });
+    }
+
+    function persistOpenState() {
+        if (searchInput && searchInput.value.trim()) return; // don't persist search state
+        const openIds = sections.filter(s => s.open).map(s => s.id);
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(openIds)); } catch (e) {}
+    }
+    sections.forEach(sec => sec.addEventListener('toggle', persistOpenState));
+
+    if (expandBtn) {
+        expandBtn.addEventListener('click', () => sections.forEach(s => { s.open = true; }));
+    }
+    if (collapseBtn) {
+        collapseBtn.addEventListener('click', () => sections.forEach(s => { s.open = false; }));
+    }
+
+    if (!searchInput) return;
+
+    function escapeHtml(text) {
+        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function highlight(link, query) {
+        link.querySelectorAll('.leetcode-problem-num, .leetcode-problem-title').forEach(span => {
+            if (span._origHtml === undefined) span._origHtml = span.innerHTML;
+            const text = span.textContent;
+            const idx = text.toLowerCase().indexOf(query);
+            if (idx === -1) {
+                span.innerHTML = span._origHtml;
+            } else {
+                span.innerHTML =
+                    escapeHtml(text.slice(0, idx)) +
+                    '<mark class="list-hl">' + escapeHtml(text.slice(idx, idx + query.length)) + '</mark>' +
+                    escapeHtml(text.slice(idx + query.length));
+            }
+        });
+    }
+
+    function clearHighlight(link) {
+        link.querySelectorAll('.leetcode-problem-num, .leetcode-problem-title').forEach(span => {
+            if (span._origHtml !== undefined) {
+                span.innerHTML = span._origHtml;
+                span._origHtml = undefined;
+            }
+        });
+    }
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.trim().toLowerCase();
+
+        if (!query) {
+            // Restore pre-search open state and visibility
+            sections.forEach(sec => {
+                sec.style.display = '';
+                if (sec._preSearchOpen !== undefined) {
+                    sec.open = sec._preSearchOpen;
+                    sec._preSearchOpen = undefined;
+                }
+            });
+            links.forEach(link => {
+                link.style.display = '';
+                clearHighlight(link);
+            });
+            if (countEl) countEl.textContent = '';
+            if (emptyEl) emptyEl.hidden = true;
+            overview.style.display = '';
+            return;
+        }
+
+        // Snapshot open state the first time a search begins
+        sections.forEach(sec => {
+            if (sec._preSearchOpen === undefined) sec._preSearchOpen = sec.open;
+        });
+
+        let matched = 0;
+        sections.forEach(sec => {
+            const secLinks = Array.from(sec.querySelectorAll('.leetcode-problem-link'));
+            let secMatched = 0;
+            secLinks.forEach(link => {
+                const hit = link._searchText.indexOf(query) !== -1;
+                link.style.display = hit ? '' : 'none';
+                if (hit) {
+                    secMatched++;
+                    highlight(link, query);
+                } else {
+                    clearHighlight(link);
+                }
+            });
+            if (secMatched > 0) {
+                sec.style.display = '';
+                sec.open = true;
+                matched += secMatched;
+            } else {
+                sec.style.display = 'none';
+            }
+        });
+
+        if (countEl) countEl.textContent = '匹配 ' + matched + ' 题';
+        if (emptyEl) emptyEl.hidden = matched > 0;
+        overview.style.display = matched > 0 ? '' : 'none';
+    });
+}
 
 function enhanceInterviewQA() {
     const content = document.querySelector('.content');
