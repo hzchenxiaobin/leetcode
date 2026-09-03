@@ -1,24 +1,33 @@
 # LeetCode 题解
 
-面试高频题与周赛题的中文题解集合，配套手绘 sketch 风 SVG 插图，通过 `build.py` 生成静态网站并部署到 GitHub Pages。
+面试高频题与周赛题的中文题解集合，配套手绘 sketch 风 SVG 插图，基于 VitePress 构建静态网站并部署到 GitHub Pages（样式对齐 [leetgpu 题解](https://hzchenxiaobin.github.io/leetgpu/)）。
 
 ## 在线预览
 
 推送 `main` 分支后由 GitHub Actions 自动构建并部署，站点结构：
 
-- 首页：题解列表（每日一题按题号区间分组 + 周赛按场次降序），含「随机选一道题练习」按钮
-- 高频面试题页：`hot-interview.md` 汇总 Hot 100 / CodeTop / 剑指 Offer 高频题，逐题链接站内题解（侧边栏「🔥 高频面试题」入口）
-- 算法专题页：`topics/` 下按算法类别组织的专题文档，含核心思想、模板、剪枝/去重技巧、例题精讲与课后练习（侧边栏「📚 专题」目录自动收录 `topics/` 下全部文档）
-- 题解页：每篇 Markdown 渲染为独立页面，含侧边栏导航、KaTeX 数学公式、Prism 代码高亮、手绘 SVG 插图
+- 首页：hero + 每日一题 / 周赛 / 专题 / 高频面试四个入口卡片
+- 题解列表页（`/solutions.html`）：全部每日一题按题号区间分组折叠，支持按题号 / 标题 / 标签搜索，难度用 🟢🟡🔴 标注
+- 周赛列表页（`/contests.html`）：按场次降序分组，每场 Q1-Q4
+- 专题页（`/topics.html`）：`topics/` 下按算法类别组织的专题文档，含核心思想、模板、剪枝/去重技巧、例题精讲与课后练习
+- 高频面试题页（`/hot-interview.html`）：汇总 Hot 100 / CodeTop / 剑指 Offer 高频题，逐题链接站内题解
+- 题解页：无侧边栏，正文 + 右侧本页目录，顶部有返回列表链接，底部按题号自动推导「上一题 / 下一题」，支持 KaTeX 数学公式、代码行号、图片点击放大、全站本地搜索
 
 ## 仓库结构
 
 ```
 .
-├── build.py                 # 静态网站生成器（扫描 .md → public/）
+├── index.md                 # 站点首页（VitePress home 布局）
+├── solutions.md             # 题解列表页（SolutionList 组件）
+├── contests.md              # 周赛列表页（ContestList 组件）
+├── topics.md                # 专题索引页
 ├── hot-interview.md         # 高频算法面试题汇总页（Hot 100 / CodeTop / 剑指 Offer，链接站内题解）
 ├── 10-week-plan.md          # 10 周刷题计划（按类别组织 198 道高频题，链接站内题解）
 ├── cannbot_hello.sh         # 调用 cannbot 按 SKILL.md 自动产出题解的脚本
+├── .vitepress/              # VitePress 站点配置
+│   ├── config.mts           # 站点配置（导航、搜索、KaTeX、上一题/下一题推导）
+│   ├── data/                # createContentLoader 数据源（题解 / 周赛列表）
+│   └── theme/               # 主题扩展（custom.css、SolutionList、ContestList、BackLink）
 ├── solution/                # 每日一题 / 面试高频题题解
 │   ├── 0001-0100/           # 按题号每 100 题一个区间目录
 │   ├── 0101-0200/
@@ -30,42 +39,30 @@
 │   ├── 187/                 # 以周赛编号命名，每场 4 题（Q1-Q4）
 │   ├── 503/
 │   ├── ...
-│   ├── 512/
+│   ├── 517/
 │   └── SKILL.md             # 周赛题解写作规范（含正确性证明、边界情况）
-├── topics/                   # 算法专题文档（侧边栏「📚 专题」自动收录）
+├── topics/                  # 算法专题文档
 ├── images/                  # 周赛 SVG/PNG 插图（与每日题解共享）
-├── static/                  # 网站静态资源
-│   ├── css/                 # style.css + Prism 主题
-│   └── js/                  # marked.js、Prism（C/C++/Python/Bash）、KaTeX 适配、main.js
+├── build.py + static/       # 旧版 Python 静态网站生成器（已存档，不参与构建）
 ├── .github/workflows/
 │   └── deploy.yml           # GitHub Pages 部署工作流
-└── public/                  # 构建输出（gitignore，由 build.py 生成）
+└── dist/                    # 构建输出（gitignore，由 vitepress build 生成）
 ```
 
 ## 本地构建
 
-依赖 Python 3.11，无需额外安装第三方库（仅用标准库）：
+依赖 Node.js 18+：
 
 ```bash
-python3 build.py
-```
-
-构建产物输出到 `public/`：
-
-- `public/index.html` — 首页（每日一题 + 周赛题目列表）
-- `public/problems/<slug>.html` — 每篇题解一个页面
-- `public/images/` — 合并 `images/` 与 `solution/images/` 的全部插图
-- `public/css/`、`public/js/` — 从 `static/` 复制
-
-本地预览可用任意静态服务器，例如：
-
-```bash
-python3 -m http.server 8000 --directory public
+npm install
+npm run dev      # 本地开发预览（热更新）
+npm run build    # 构建到 dist/
+npm run preview  # 预览构建产物
 ```
 
 ## 部署
 
-`.github/workflows/deploy.yml` 在 `main` 分支推送 `build.py`、`static/**`、`contest/**`、`images/**` 等路径时触发，执行 `python3 build.py` 后将 `public/` 上传到 GitHub Pages。也支持 `workflow_dispatch` 手动触发。
+`.github/workflows/deploy.yml` 在 `main` 分支推送 `solution/**`、`contest/**`、`topics/**`、`images/**`、`.vitepress/**` 等路径时触发，执行 `npm install && npm run build` 后将 `dist/` 上传到 GitHub Pages。也支持 `workflow_dispatch` 手动触发。
 
 ## 题解写作规范
 
