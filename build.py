@@ -314,7 +314,7 @@ def page_template(
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{page_title}</title>
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=10">
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=11">
     <!-- Marked.js for Markdown rendering -->
     <script src="{root_prefix}js/marked.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -394,7 +394,7 @@ def page_template(
             console.error('Markdown render error:', err);
         }}
     </script>
-    <script src="{root_prefix}js/main.js?v=10"></script>
+    <script src="{root_prefix}js/main.js?v=11"></script>
 </body>
 </html>
 """
@@ -447,8 +447,8 @@ def landing_template(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeetCode 题解</title>
     <meta name="description" content="面试高频题与周赛题的中文题解集合，配套手绘 SVG 图解、复杂度分析与面试 Q&A。">
-    <link rel="stylesheet" href="{root_prefix}css/style.css?v=10">
-    <script src="{root_prefix}js/main.js?v=10" defer></script>
+    <link rel="stylesheet" href="{root_prefix}css/style.css?v=11">
+    <script src="{root_prefix}js/main.js?v=11" defer></script>
 </head>
 <body class="landing">
     <header class="landing-nav">
@@ -490,9 +490,21 @@ def landing_template(
 
         <section class="landing-section" id="problems">
             <h2 class="section-title">题解列表</h2>
-            <p class="section-subtitle">每日一题按题号区间分组 + 周赛按场次降序，点击题目进入题解。</p>
+            <p class="section-subtitle">每日一题按题号区间分组 + 周赛按场次降序，点击题目进入题解。分组可折叠，支持按题号 / 标题搜索。</p>
             {random_picker_html}
+            <div class="list-toolbar">
+                <div class="list-search">
+                    <svg class="list-search-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.6"/><path d="m10.6 10.6 3 3"/></svg>
+                    <input type="search" id="problem-search" placeholder="搜索题号或标题，如 42 / 接雨水" autocomplete="off" spellcheck="false">
+                    <span class="list-search-count" id="problem-search-count"></span>
+                </div>
+                <div class="list-toolbar-actions">
+                    <button type="button" class="list-toggle-btn" id="expand-all-btn">全部展开</button>
+                    <button type="button" class="list-toggle-btn" id="collapse-all-btn">全部收起</button>
+                </div>
+            </div>
             {problem_list_html}
+            <div class="list-empty" id="problem-list-empty" hidden>没有匹配的题目，换个关键词试试。</div>
         </section>
     </main>
 
@@ -600,36 +612,61 @@ def main() -> None:
         match = re.search(r'(\d+)$', name)
         return int(match.group(1)) if match else 0
 
+    def sort_key_problem(p: Dict):
+        num = p.get("number") or ""
+        return (0, int(num)) if num.isdigit() else (1, p["slug"])
+
     daily_markdown = ""
     for folder in sorted(solution_groups.keys(), key=_range_start):
         label = _range_label(folder)
         group_problems = solution_groups.get(folder, [])
-        group_problems.sort(key=lambda x: x["slug"])
-        daily_markdown += f'<div class="leetcode-section">\n'
-        daily_markdown += f'  <div class="leetcode-section-title">{label}</div>\n'
-        daily_markdown += f'  <div class="leetcode-problem-list">\n'
+        group_problems.sort(key=sort_key_problem)
+        daily_markdown += f'<details class="leetcode-section" id="sec-daily-{folder}">\n'
+        daily_markdown += (
+            f'  <summary class="leetcode-section-title">'
+            f'<span class="leetcode-section-label">{label}</span>'
+            f'<span class="leetcode-section-meta">'
+            f'<span class="leetcode-section-count">{len(group_problems)} 题</span>'
+            f'<span class="leetcode-section-chevron" aria-hidden="true"></span>'
+            f'</span></summary>\n'
+        )
+        daily_markdown += '  <div class="leetcode-problem-list">\n'
         for p in group_problems:
+            num = p["number"] or ""
+            num_html = f'<span class="leetcode-problem-num">{num}</span>' if num else ''
             daily_markdown += (
                 f'    <a class="leetcode-problem-link" href="./problems/{p["slug"]}.html">'
+                f'{num_html}'
                 f'<span class="leetcode-problem-title">{p["title"]}</span>'
                 f'</a>\n'
             )
         daily_markdown += '  </div>\n'
-        daily_markdown += '</div>\n\n'
+        daily_markdown += '</details>\n\n'
 
     contest_markdown = ""
-    for contest in sorted(contest_groups.keys(), key=sort_key_numeric, reverse=True):
-        contest_markdown += f'<div class="leetcode-section">\n'
-        contest_markdown += f'  <div class="leetcode-section-title">周赛 {contest}</div>\n'
-        contest_markdown += f'  <div class="leetcode-problem-list">\n'
-        for p in contest_groups[contest]:
+    contests_sorted = sorted(contest_groups.keys(), key=sort_key_numeric, reverse=True)
+    for idx, contest in enumerate(contests_sorted):
+        group_problems = contest_groups[contest]
+        # 默认仅展开最新一场周赛
+        open_attr = " open" if idx == 0 else ""
+        contest_markdown += f'<details class="leetcode-section" id="sec-contest-{contest}"{open_attr}>\n'
+        contest_markdown += (
+            f'  <summary class="leetcode-section-title">'
+            f'<span class="leetcode-section-label">周赛 {contest}</span>'
+            f'<span class="leetcode-section-meta">'
+            f'<span class="leetcode-section-count">{len(group_problems)} 题</span>'
+            f'<span class="leetcode-section-chevron" aria-hidden="true"></span>'
+            f'</span></summary>\n'
+        )
+        contest_markdown += '  <div class="leetcode-problem-list">\n'
+        for p in group_problems:
             contest_markdown += (
                 f'    <a class="leetcode-problem-link" href="./problems/{p["slug"]}.html">'
-                f'{p["title"]}'
+                f'<span class="leetcode-problem-title">{p["title"]}</span>'
                 f'</a>\n'
             )
         contest_markdown += '  </div>\n'
-        contest_markdown += '</div>\n\n'
+        contest_markdown += '</details>\n\n'
 
     picker_problems = []
     seen_slugs = set()
@@ -696,12 +733,16 @@ def main() -> None:
             f'</div>\n'
         )
 
+    daily_total = sum(len(v) for v in solution_groups.values())
+    contest_total = sum(len(v) for v in contest_groups.values())
     problem_list_html = (
         '<div class="leetcode-overview-row">\n'
         '  <div class="leetcode-col leetcode-col-daily">\n'
+        f'    <div class="leetcode-col-title">每日一题<span class="leetcode-col-count">{daily_total} 题 · 按题号分组</span></div>\n'
         f'{daily_markdown}'
         '  </div>\n'
         '  <div class="leetcode-col leetcode-col-contest">\n'
+        f'    <div class="leetcode-col-title">周赛<span class="leetcode-col-count">{contest_total} 题 · 按场次降序</span></div>\n'
         f'{contest_markdown}'
         '  </div>\n'
         '</div>\n'
