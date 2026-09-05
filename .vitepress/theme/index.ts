@@ -29,7 +29,26 @@ export default {
         margin: 24
       })
     }
-    onMounted(initZoom)
+    onMounted(() => {
+      initZoom()
+      // Open every link in a new tab. VitePress intercepts clicks on internal
+      // links for SPA routing, so we capture the click first, stop the router,
+      // and open the URL ourselves. Same-page anchors keep default behavior.
+      document.addEventListener(
+        'click',
+        (e) => {
+          if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return
+          const link = (e.target as HTMLElement).closest?.('a')
+          if (!link) return
+          const rawHref = link.getAttribute('href') || ''
+          if (!rawHref || rawHref.startsWith('#')) return
+          e.preventDefault()
+          e.stopImmediatePropagation()
+          window.open(link.href, '_blank', 'noopener,noreferrer')
+        },
+        true
+      )
+    })
     watch(() => route.path, () => nextTick(initZoom))
   }
 }
