@@ -217,27 +217,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Enhance interview Q&A section into styled cards
     enhanceInterviewQA();
 
-    // Open external links in new tab; on non-landing pages, open all non-sidebar
-    // links in new tab (existing behavior). On the landing page, only external
-    // links get target="_blank" so internal navigation stays in-tab.
+    // Open all links in a new tab; same-page anchors stay in-tab so
+    // scrolling to a heading still works.
     document.querySelectorAll('a').forEach(link => {
-        if (link.closest('.sidebar') || link.closest('.top-nav')) {
+        const href = link.getAttribute('href') || '';
+        if (href.startsWith('#')) {
             return;
         }
-        if (document.body.classList.contains('landing')) {
-            const href = link.getAttribute('href') || '';
-            if (href.startsWith('http://') || href.startsWith('https://')) {
-                try {
-                    if (new URL(href).origin !== window.location.origin) {
-                        link.setAttribute('target', '_blank');
-                        link.setAttribute('rel', 'noopener noreferrer');
-                    }
-                } catch (e) {}
-            }
-        } else {
-            link.setAttribute('target', '_blank');
-            link.setAttribute('rel', 'noopener noreferrer');
-        }
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
     });
 });
 
