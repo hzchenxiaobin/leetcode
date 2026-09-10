@@ -1,7 +1,7 @@
 import DefaultTheme from 'vitepress/theme'
 import { h, onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vitepress'
-import mediumZoom from 'medium-zoom'
+import { initLightbox } from './lightbox'
 import SolutionList from './SolutionList.vue'
 import ContestList from './ContestList.vue'
 import BackLink from './BackLink.vue'
@@ -21,14 +21,6 @@ export default {
   },
   setup() {
     const route = useRoute()
-    let zoom: ReturnType<typeof mediumZoom> | null = null
-    const initZoom = () => {
-      zoom?.detach()
-      zoom = mediumZoom('.vp-doc img', {
-        background: 'rgba(0, 0, 0, 0.75)',
-        margin: 24
-      })
-    }
     const openInNewTab = () => {
       // VitePress's router (window capture-phase click handler) skips anchors
       // that carry a `target` attribute, so tagging links with target="_blank"
@@ -41,11 +33,10 @@ export default {
       })
     }
     onMounted(() => {
-      initZoom()
+      initLightbox()
       nextTick(openInNewTab)
     })
     watch(() => route.path, () => nextTick(() => {
-      initZoom()
       openInNewTab()
     }))
   }
