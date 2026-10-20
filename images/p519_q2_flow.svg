@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 610"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="610" fill="#fafafa"/>
+
+  <text x="260" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：打表回文数 + 奇偶分流 + 二分</text>
+
+  <!-- 开始 -->
+  <ellipse cx="260" cy="66" rx="62" ry="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="71" text-anchor="middle" font-size="13" fill="#33455c" filter="url(#rough2)">开始</text>
+
+  <!-- 预处理生成 -->
+  <rect x="90" y="104" width="340" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="124" text-anchor="middle" font-size="12" fill="#2e4d26" filter="url(#rough2)">预处理：枚举长度 d = 1..10</text>
+  <text x="260" y="144" text-anchor="middle" font-size="12" fill="#2e4d26" filter="url(#rough2)">由前半部分镜像生成全部回文数（共 199998 个）</text>
+
+  <!-- 拆分排序 -->
+  <rect x="100" y="177" width="320" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="203" text-anchor="middle" font-size="12" fill="#2e4d26" filter="url(#rough2)">按奇偶拆成 odd[] 与 even[]，各自升序排序</text>
+
+  <!-- 菱形：还有元素？ -->
+  <polygon points="260,250 364,288 260,326 156,288" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="293" text-anchor="middle" font-size="12.5" fill="#6b5320" filter="url(#rough2)">还有元素 x 未处理？</text>
+
+  <!-- 输出 -->
+  <path d="M 364 288 L 452 288 L 452 244" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <text x="378" y="280" font-size="11.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <ellipse cx="452" cy="222" rx="56" ry="20" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="452" y="227" text-anchor="middle" font-size="13" fill="#7c3a36" filter="url(#rough2)">输出 ans</text>
+
+  <!-- 是 → 下 -->
+  <path d="M 260 326 L 260 362" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <text x="270" y="350" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 菱形：x 奇偶？ -->
+  <polygon points="260,366 352,408 260,450 168,408" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="413" text-anchor="middle" font-size="12.5" fill="#6b5320" filter="url(#rough2)">x 是奇数？</text>
+
+  <!-- 是 → odd -->
+  <path d="M 168 408 L 158 408" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <text x="148" y="397" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="24" y="387" width="132" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="90" y="413" text-anchor="middle" font-size="12" fill="#33455c" filter="url(#rough2)">在 odd[] 中二分</text>
+
+  <!-- 否 → even -->
+  <path d="M 352 408 L 362 408" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <text x="370" y="397" font-size="11.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="366" y="387" width="132" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="432" y="413" text-anchor="middle" font-size="12" fill="#33455c" filter="url(#rough2)">在 even[] 中二分</text>
+
+  <!-- 汇合 → 取候选 -->
+  <path d="M 90 429 L 90 464" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <path d="M 432 429 L 432 464" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <rect x="70" y="468" width="380" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="490" text-anchor="middle" font-size="12" fill="#33455c" filter="url(#rough2)">pos = lower_bound(P, x)，检查 P[pos−1] 与 P[pos]</text>
+  <text x="260" y="510" text-anchor="middle" font-size="12" fill="#33455c" filter="url(#rough2)">代价 = min |t − x| ÷ 2</text>
+
+  <!-- 累加 -->
+  <path d="M 260 524 L 260 545" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <rect x="185" y="549" width="150" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="573" text-anchor="middle" font-size="12.5" fill="#2e4d26" filter="url(#rough2)">ans += 代价</text>
+
+  <!-- 回路 -->
+  <path d="M 185 568 L 24 568 L 24 288 L 150 288" stroke="#d6a040" stroke-width="1.8" fill="none" stroke-dasharray="6 4" filter="url(#rough2)" marker-end="url(#arrO)"/>
+  <text x="96" y="560" text-anchor="middle" font-size="10.5" fill="#a5822e" filter="url(#rough2)">回环：处理下一个元素</text>
+</svg>
