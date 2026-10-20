@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">从高位到低位：检查点 + 自由块上的逐位贪心</text>
+  <path d="M 240 42 Q 470 50 700 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel A ===== -->
+  <text x="470" y="74" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 高位处理完后，排列被固定成「检查点 + 自由块」</text>
+
+  <!-- checkpoint labels -->
+  <text x="410" y="96" text-anchor="middle" font-size="11" fill="#b03a3a" font-weight="bold">c₁ = 4</text>
+  <text x="560" y="96" text-anchor="middle" font-size="11" fill="#b03a3a" font-weight="bold">c₂ = 6</text>
+
+  <!-- block strip: K0 4 cells, K1 2 cells, tail 3 cells + dots -->
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="110" y="104" width="75" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="185" y="104" width="75" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="260" y="104" width="75" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="335" y="104" width="75" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="410" y="104" width="75" height="40" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="485" y="104" width="75" height="40" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="560" y="104" width="75" height="40" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <g filter="url(#sk)"><rect x="635" y="104" width="75" height="40" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <g filter="url(#sk)"><rect x="710" y="104" width="75" height="40" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="810" y="130" font-size="16" fill="#999">⋯</text>
+    <text x="872" y="130" font-size="10" fill="#999">位置 n</text>
+    <text x="147" y="129" text-anchor="middle" fill="#2e6e2e" font-weight="bold" font-size="11">?</text>
+    <text x="222" y="129" text-anchor="middle" fill="#2e6e2e" font-weight="bold" font-size="11">?</text>
+    <text x="297" y="129" text-anchor="middle" fill="#2e6e2e" font-weight="bold" font-size="11">?</text>
+    <text x="372" y="129" text-anchor="middle" fill="#2e6e2e" font-weight="bold" font-size="11">?</text>
+    <text x="447" y="129" text-anchor="middle" fill="#7a5415" font-weight="bold" font-size="11">?</text>
+    <text x="522" y="129" text-anchor="middle" fill="#7a5415" font-weight="bold" font-size="11">?</text>
+    <text x="597" y="129" text-anchor="middle" fill="#999" font-size="11">?</text>
+    <text x="672" y="129" text-anchor="middle" fill="#999" font-size="11">?</text>
+    <text x="747" y="129" text-anchor="middle" fill="#999" font-size="11">?</text>
+  </g>
+  <!-- checkpoint dashed lines -->
+  <path d="M 410 98 L 410 156" stroke="#b03a3a" stroke-width="1.4" stroke-dasharray="5 3" filter="url(#sk)"/>
+  <path d="M 560 98 L 560 156" stroke="#b03a3a" stroke-width="1.4" stroke-dasharray="5 3" filter="url(#sk)"/>
+
+  <text x="260" y="172" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">块 K₀：前 c₁ 个 = 集合 C₁，高位已卡死</text>
+  <text x="487" y="172" text-anchor="middle" font-size="10" fill="#7a5415" font-weight="bold">块 K₁：前 c₂ 个 = C₂</text>
+  <text x="722" y="172" text-anchor="middle" font-size="10" fill="#999">尾块：完全自由</text>
+  <text x="470" y="196" text-anchor="middle" font-size="11" fill="#444">块内元素的先后顺序仍可任意调整 —— 这就是后续位贪心的「自由度」</text>
+
+  <!-- ===== Panel B ===== -->
+  <text x="470" y="232" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">② 处理位 b：块 j 的候选延伸 = c<sub>j</sub> + |K<sub>j</sub> ∩ B<sub>b</sub>|，前提：更靠前的块整体 ⊆ B<sub>b</sub></text>
+
+  <!-- left: can extend across checkpoint -->
+  <text x="240" y="260" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">块 0 全为 1 → 可跨过检查点继续延伸</text>
+  <g font-size="12">
+    <g filter="url(#sk)"><rect x="80" y="272" width="60" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="140" y="272" width="60" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="200" y="272" width="60" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="268" y="272" width="60" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="328" y="272" width="60" height="38" fill="#f4e3e3" stroke="#b85450" stroke-width="1.5"/></g>
+    <text x="110" y="296" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="170" y="296" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="230" y="296" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="298" y="296" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="358" y="296" text-anchor="middle" fill="#b03a3a" font-weight="bold">0</text>
+  </g>
+  <path d="M 262 266 L 262 258" stroke="#b03a3a" stroke-width="1.3" stroke-dasharray="4 3" filter="url(#sk)"/>
+  <text x="262" y="252" text-anchor="middle" font-size="10" fill="#b03a3a">c₁ = 3</text>
+  <path d="M 84 330 L 330 330" stroke="#4a8e4a" stroke-width="2.2" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="200" y="348" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">m = c₁ + |K₁∩B_b| = 3+1 = 4</text>
+
+  <!-- right: cannot extend -->
+  <text x="700" y="260" text-anchor="middle" font-size="11" font-weight="bold" fill="#b03a3a">块 0 出现 0 → 延伸断在块内部</text>
+  <g font-size="12">
+    <g filter="url(#sk)"><rect x="540" y="272" width="60" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="600" y="272" width="60" height="38" fill="#f4e3e3" stroke="#b85450" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="660" y="272" width="60" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="728" y="272" width="60" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="788" y="272" width="60" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <text x="570" y="296" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="630" y="296" text-anchor="middle" fill="#b03a3a" font-weight="bold">0</text>
+    <text x="690" y="296" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="758" y="296" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="818" y="296" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+  </g>
+  <path d="M 722 266 L 722 258" stroke="#b03a3a" stroke-width="1.3" stroke-dasharray="4 3" filter="url(#sk)"/>
+  <text x="722" y="252" text-anchor="middle" font-size="10" fill="#b03a3a">c₁ = 3</text>
+  <path d="M 544 330 L 612 330" stroke="#4a8e4a" stroke-width="2.2" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="690" y="348" text-anchor="middle" font-size="10" fill="#b03a3a" font-weight="bold">m = |K₀∩B_b| = 1，跨不过 c₁</text>
+
+  <!-- ===== Panel C ===== -->
+  <text x="470" y="392" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">③ 最大候选 m 落进哪块，就把那块劈成「1 段 + 0 段」，产生新检查点</text>
+
+  <!-- strip with split -->
+  <path d="M 100 408 L 100 470" stroke="#b03a3a" stroke-width="1.4" stroke-dasharray="4 3" filter="url(#sk)"/>
+  <text x="100" y="402" text-anchor="middle" font-size="10" fill="#b03a3a" font-weight="bold">c_{j*}</text>
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="104" y="412" width="72" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <g filter="url(#sk)"><rect x="176" y="412" width="72" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <g filter="url(#sk)"><rect x="256" y="412" width="72" height="40" fill="#f0ede4" stroke="#bbb" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="328" y="412" width="72" height="40" fill="#f0ede4" stroke="#bbb" stroke-width="1.5"/></g>
+    <g filter="url(#sk)"><rect x="400" y="412" width="72" height="40" fill="#f0ede4" stroke="#bbb" stroke-width="1.5"/></g>
+    <text x="140" y="437" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="212" y="437" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="292" y="437" text-anchor="middle" fill="#999" font-weight="bold">0</text>
+    <text x="364" y="437" text-anchor="middle" fill="#999" font-weight="bold">0</text>
+    <text x="436" y="437" text-anchor="middle" fill="#999" font-weight="bold">0</text>
+  </g>
+  <path d="M 250 408 L 250 470" stroke="#b03a3a" stroke-width="1.8" stroke-dasharray="5 3" filter="url(#sk)"/>
+  <text x="250" y="402" text-anchor="middle" font-size="11" fill="#b03a3a" font-weight="bold">m = c_{j*} + 2</text>
+  <path d="M 104 486 L 246 486" stroke="#4a8e4a" stroke-width="2.2" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="175" y="504" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">g(b) = m</text>
+  <text x="185" y="478" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">K_{j*} ∩ B_b（留在前面）</text>
+  <text x="395" y="478" text-anchor="middle" font-size="10" fill="#999" font-weight="bold">K_{j*} \ B_b（推到后面）</text>
+  <path d="M 258 486 L 400 486" stroke="#bbb" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- note box -->
+  <g filter="url(#sk)">
+    <rect x="80" y="522" width="780" height="118" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="100" y="546" font-size="12" font-weight="bold" fill="#2b2b2b">为什么「断点约束」不用专门维护？</text>
+  <text x="100" y="568" font-size="11" fill="#444">· 若 m 严格落在块内部：位置 m+1 起全是 bit=0 的元素，perm[m] 的第 b 位自然为 0</text>
+  <text x="100" y="588" font-size="11" fill="#444">· 若 m 恰好顶满整块：说明下一块的 bit=1 计数为 0（否则候选更大），断点同样自动成立</text>
+  <text x="100" y="608" font-size="11" fill="#444">· 若 m = 已有检查点或 0：不产生新块，什么也不用改 —— 每位最多新增 1 个检查点，块数 ≤ 16</text>
+  <text x="100" y="630" font-size="11" fill="#7a2828" font-weight="bold">★ 关键：检查点把「动态的排列约束」固化成「静态的集合事实」，后续位只管在块内腾挪</text>
+</svg>

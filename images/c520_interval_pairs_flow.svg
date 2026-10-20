@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="410" viewBox="0 0 780 410" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="780" height="410" fill="#fafafa"/>
+
+  <text x="390" y="36" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：排序右端点 + 逐区间二分 + 容斥相减</text>
+  <path d="M 150 46 Q 390 54 630 46" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- ===== 步骤 1 ===== -->
+  <g filter="url(#rough2)"><rect x="40" y="90" width="160" height="100" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="120" y="116" text-anchor="middle" font-size="13" font-weight="bold" fill="#33526e" filter="url(#rough2)">① 提取右端点</text>
+  <text x="120" y="140" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">ends = [end1, …, endn]</text>
+  <text x="120" y="168" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">O(n)</text>
+
+  <path d="M 202 140 L 232 140" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ===== 步骤 2 ===== -->
+  <g filter="url(#rough2)"><rect x="235" y="90" width="160" height="100" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="315" y="116" text-anchor="middle" font-size="13" font-weight="bold" fill="#33526e" filter="url(#rough2)">② 排序</text>
+  <text x="315" y="140" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">E = sort(ends)</text>
+  <text x="315" y="168" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">O(n log n)</text>
+
+  <path d="M 397 140 L 427 140" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ===== 步骤 3 ===== -->
+  <g filter="url(#rough2)"><rect x="430" y="90" width="160" height="100" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="510" y="116" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e" filter="url(#rough2)">③ 逐区间二分</text>
+  <text x="510" y="140" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">disjoint += lb(E, start_i)</text>
+  <text x="510" y="168" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">每次 O(log n)</text>
+
+  <path d="M 592 140 L 622 140" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ===== 步骤 4 ===== -->
+  <g filter="url(#rough2)"><rect x="625" y="90" width="115" height="100" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="682" y="116" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6510" filter="url(#rough2)">④ 容斥</text>
+  <text x="682" y="140" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">ans = C(n,2)</text>
+  <text x="682" y="156" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">− disjoint</text>
+  <text x="682" y="178" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">O(1)</text>
+
+  <!-- ===== lower_bound 语义说明 ===== -->
+  <g filter="url(#rough2)"><rect x="40" y="216" width="700" height="92" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="62" y="240" font-size="13" font-weight="bold" fill="#8a6510" filter="url(#rough2)">lower_bound 的关键语义：必须「严格小于」</text>
+  <text x="62" y="264" font-size="12" fill="#333" filter="url(#rough2)">lower_bound(E, start_i) = 第一个 ≥ start_i 的位置，其前缀长度 = 严格小于 start_i 的 end 个数</text>
+  <text x="62" y="288" font-size="12" fill="#b85450" filter="url(#rough2)">end_j = start_i（共享端点）算相交，不计入 disjoint，故不能用 upper_bound</text>
+
+  <!-- ===== 复杂度说明 ===== -->
+  <g filter="url(#rough2)"><rect x="40" y="322" width="700" height="66" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="62" y="348" font-size="13" font-weight="bold" fill="#2e5e2e" filter="url(#rough2)">复杂度</text>
+  <text x="62" y="372" font-size="12" fill="#333" filter="url(#rough2)">时间 O(n log n)：排序 O(n log n) + n 次二分共 O(n log n)；空间 O(n)：右端点数组 E</text>
+</svg>

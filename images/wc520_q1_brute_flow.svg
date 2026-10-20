@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 475"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="475" fill="#fafafa"/>
+  <text x="260" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">O(n²) 暴力枚举流程</text>
+
+  <!-- 开始 -->
+  <ellipse cx="260" cy="56" rx="52" ry="19" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="61" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">开始</text>
+  <path d="M260,75 L260,92" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 双重循环 -->
+  <rect x="140" y="96" width="240" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="116" text-anchor="middle" font-size="13" fill="#8a6d1f" filter="url(#rough2)">双重循环枚举下标对 (i, j)</text>
+  <text x="260" y="136" text-anchor="middle" font-size="12" fill="#8a6d1f" filter="url(#rough2)">0 ≤ i &lt; j &lt; n，每对一次</text>
+  <path d="M260,146 L260,164" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 计算 L / R -->
+  <rect x="140" y="168" width="240" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="188" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">L = max(start_i, start_j)</text>
+  <text x="260" y="208" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">R = min(end_i, end_j)</text>
+  <path d="M260,218 L260,236" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定菱形 -->
+  <polygon points="260,240 368,278 260,316 152,278" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="283" text-anchor="middle" font-size="14" fill="#4a7a3a" filter="url(#rough2)">L ≤ R ?</text>
+
+  <!-- 是：count++ -->
+  <path d="M368,278 L394,278" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="380" y="270" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="398" y="258" width="110" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="453" y="283" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">相交，count++</text>
+  <path d="M453,298 L453,332 L268,332" stroke="#666" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+
+  <!-- 否：直接汇合 -->
+  <path d="M260,316 L260,362" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="272" y="340" font-size="12" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- 取下一对 -->
+  <rect x="170" y="366" width="180" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="392" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">取下一对 (i, j)</text>
+
+  <!-- 循环回路 -->
+  <path d="M170,387 L95,387 L95,121 L134,121" stroke="#999" stroke-width="1.6" stroke-dasharray="7 5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="84" y="255" transform="rotate(-90 84 255)" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">未枚举完，继续</text>
+
+  <!-- 枚举完：输出 -->
+  <path d="M350,387 L384,387" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="364" y="378" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">枚举完</text>
+  <rect x="388" y="365" width="120" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="448" y="392" text-anchor="middle" font-size="14" fill="#8a6d1f" filter="url(#rough2)">输出 count</text>
+  <path d="M448,409 L448,426" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <ellipse cx="448" cy="443" rx="42" ry="17" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="448" y="448" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">结束</text>
+</svg>

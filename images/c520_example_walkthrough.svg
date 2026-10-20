@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="620" viewBox="0 0 940 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="8" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrK" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="620" fill="#fdfcf7"/>
+  <text x="470" y="36" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough)">示例 1 演算：nums = [1, 5, 2]</text>
+  <path d="M 320 46 Q 470 54 620 46" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- ===== Step 1: signed array and prefix ===== -->
+  <text x="470" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#rough)">① 带符号权重与前缀和：t_k = (−1)^k · nums[k]</text>
+
+  <!-- signs -->
+  <g font-size="13" text-anchor="middle" fill="#446688">
+    <text x="200" y="112" filter="url(#rough)">+</text>
+    <text x="320" y="112" filter="url(#rough)">−</text>
+    <text x="440" y="112" filter="url(#rough)">+</text>
+  </g>
+  <!-- nums cells -->
+  <g filter="url(#rough)">
+    <rect x="160" y="120" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="280" y="120" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="400" y="120" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+  </g>
+  <g font-size="14" text-anchor="middle" fill="#34507a" font-weight="bold">
+    <text x="200" y="148" filter="url(#rough)">1</text>
+    <text x="320" y="148" filter="url(#rough)">5</text>
+    <text x="440" y="148" filter="url(#rough)">2</text>
+  </g>
+  <!-- t values -->
+  <g font-size="11.5" text-anchor="middle" fill="#2e6e2e">
+    <text x="200" y="186" filter="url(#rough)">t0 = 1</text>
+    <text x="320" y="186" filter="url(#rough)">t1 = −5</text>
+    <text x="440" y="186" filter="url(#rough)">t2 = 2</text>
+  </g>
+  <!-- pre box -->
+  <g filter="url(#rough)">
+    <rect x="160" y="204" width="320" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="320" y="230" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough)">pre = [0, 1, −4, −2]</text>
+  <text x="540" y="230" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough)">原始脉冲 P = pre[3] = −2</text>
+
+  <!-- ===== Step 2: pairing ===== -->
+  <text x="470" y="284" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#rough)">② 枚举同奇偶对，求最小差 M</text>
+
+  <!-- axes -->
+  <path d="M 150 310 L 150 460" stroke="#999" stroke-width="1.2" filter="url(#rough)"/>
+  <path d="M 150 460 L 560 460" stroke="#999" stroke-width="1.2" filter="url(#rough)"/>
+  <text x="128" y="390" font-size="11" fill="#888" filter="url(#rough)">pre</text>
+
+  <!-- polyline -->
+  <path d="M 180 356 L 290 336 L 400 436 L 510 396" stroke="#c9c4b4" stroke-width="1.2" fill="none" stroke-dasharray="4 3" filter="url(#rough)"/>
+
+  <!-- pair arrows -->
+  <path d="M 188 362 C 250 436, 330 456, 390 436" stroke="#4a7a3a" stroke-width="2.4" fill="none" marker-end="url(#arrG)" filter="url(#rough)"/>
+  <text x="288" y="452" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough)">(0,2)：−4 − 0 = −4 ⟹ Δ = +8</text>
+  <path d="M 298 330 C 360 312, 440 330, 502 388" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#rough)"/>
+  <text x="440" y="322" text-anchor="middle" font-size="11" font-weight="bold" fill="#b07a20" filter="url(#rough)">(1,3)：−2 − 1 = −3 ⟹ Δ = +6</text>
+
+  <!-- points -->
+  <g filter="url(#rough)">
+    <circle cx="180" cy="356" r="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <circle cx="290" cy="336" r="8" fill="#fff3dd" stroke="#d6a040" stroke-width="2.2"/>
+    <circle cx="400" cy="436" r="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <circle cx="510" cy="396" r="8" fill="#fff3dd" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <g font-size="11" text-anchor="middle">
+    <text x="180" y="340" fill="#34507a" filter="url(#rough)">pre[0]=0</text>
+    <text x="290" y="320" fill="#b07a20" filter="url(#rough)">pre[1]=1</text>
+    <text x="400" y="462" fill="#34507a" filter="url(#rough)">pre[2]=−4</text>
+    <text x="510" y="382" fill="#b07a20" filter="url(#rough)">pre[3]=−2</text>
+  </g>
+
+  <!-- M result -->
+  <g filter="url(#rough)">
+    <rect x="610" y="330" width="290" height="76" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="755" y="356" text-anchor="middle" font-size="12" fill="#8c3a36" filter="url(#rough)">M = min(0, −4, −3) = −4</text>
+  <text x="755" y="380" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8c3a36" filter="url(#rough)">答案 = P − 2·M</text>
+  <text x="755" y="400" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8c3a36" filter="url(#rough)">= −2 − 2×(−4) = 6</text>
+
+  <!-- ===== Step 3: corresponding operation ===== -->
+  <text x="470" y="502" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#rough)">③ 最优对 (i,j)=(0,2) 对应操作 (l,r)=(0,1)：左移一位即交换</text>
+
+  <g filter="url(#rough)">
+    <rect x="200" y="524" width="64" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="272" y="524" width="64" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="344" y="524" width="64" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g font-size="13" text-anchor="middle">
+    <text x="232" y="550" fill="#34507a" filter="url(#rough)">1</text>
+    <text x="304" y="550" fill="#b07a20" font-weight="bold" filter="url(#rough)">5</text>
+    <text x="376" y="550" fill="#34507a" filter="url(#rough)">2</text>
+  </g>
+  <path d="M 476 544 L 524 544" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#arrK)" filter="url(#rough)"/>
+  <text x="500" y="532" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough)">左移</text>
+
+  <g filter="url(#rough)">
+    <rect x="544" y="524" width="64" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="616" y="524" width="64" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="688" y="524" width="64" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g font-size="13" text-anchor="middle">
+    <text x="576" y="550" fill="#b07a20" font-weight="bold" filter="url(#rough)">5</text>
+    <text x="648" y="550" fill="#34507a" filter="url(#rough)">1</text>
+    <text x="720" y="550" fill="#34507a" filter="url(#rough)">2</text>
+  </g>
+  <text x="790" y="550" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough)">5 − 1 + 2 = 6 ✓</text>
+</svg>
