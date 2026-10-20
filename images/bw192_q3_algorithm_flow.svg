@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：定左端点 i，右端 j 一路向右扫，残差打标记</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">每对 (i, j) 摊还 O(1) —— 时间 O(n²)，n ≤ 1000 共约百万次操作</text>
+
+  <rect x="50" y="70" width="240" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="90" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">for i = 0 .. n−1（ans ≥ n − i 即剪枝退出）</text>
+  <text x="170" y="108" text-anchor="middle" font-size="10.5" fill="#555">重置 s = 0，seen 清空</text>
+
+  <path d="M 170 120 V 144" stroke="#666" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="50" y="146" width="240" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="166" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">for j = i .. n−1</text>
+  <text x="170" y="184" text-anchor="middle" font-size="10.5" fill="#555">s += nums[j]，标记 (2·nums[j]) mod k 进 seen</text>
+
+  <path d="M 170 198 V 222" stroke="#666" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="170,226 276,265 170,304 64,265" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="170" y="259" text-anchor="middle" font-size="11" fill="#8a6d1a" font-weight="bold">r = s mod k</text>
+  <text x="170" y="278" text-anchor="middle" font-size="10.5" fill="#8a6d1a" font-weight="bold">r == 0 或 r 在 seen 中 ?</text>
+
+  <text x="288" y="256" font-size="11" fill="#4a7a3a" font-weight="bold">是</text>
+  <path d="M 276 265 H 304" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="308" y="240" width="228" height="50" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="422" y="261" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">ans = max(ans, j − i + 1)</text>
+  <text x="422" y="279" text-anchor="middle" font-size="10.5" fill="#555">这个 (i, j) 有效，刷新最长长度</text>
+
+  <text x="182" y="318" font-size="11" fill="#b85450" font-weight="bold">否</text>
+  <path d="M 170 304 V 324" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="50" y="326" width="240" height="42" fill="#ffffff" stroke="#999" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="344" text-anchor="middle" font-size="11" fill="#666" font-weight="bold">本轮 (i, j) 无效</text>
+  <text x="170" y="360" text-anchor="middle" font-size="10.5" fill="#555">继续右扩 j</text>
+
+  <path d="M 170 368 V 388 H 544 V 170 H 296" stroke="#999" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 536 265 H 544" stroke="#999" stroke-width="1.5" stroke-dasharray="5 4" fill="none" filter="url(#rough2)"/>
+  <text x="540" y="160" text-anchor="end" font-size="10" fill="#999">→ j + 1</text>
+
+  <rect x="308" y="70" width="228" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="422" y="92" text-anchor="middle" font-size="11" fill="#a07820" font-weight="bold">⚠ 时间戳免清空</text>
+  <text x="422" y="110" text-anchor="middle" font-size="10.5" fill="#555">ver[x] = i：残差 x 在第 i 轮出现过</text>
+  <text x="422" y="128" text-anchor="middle" font-size="10.5" fill="#555">访问时比对轮号即可，省去每轮 O(k) memset</text>
+
+  <rect x="308" y="146" width="228" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="422" y="167" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">只需存在性，不需计数</text>
+  <text x="422" y="185" text-anchor="middle" font-size="10.5" fill="#555">Python：每轮新建一个 set</text>
+  <text x="422" y="202" text-anchor="middle" font-size="10.5" fill="#555">C++：ver[x] 存轮号 i 充当时间戳</text>
+
+  <rect x="308" y="316" width="228" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="422" y="336" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">⚠ 负数取模</text>
+  <text x="422" y="354" text-anchor="middle" font-size="10.5" fill="#555">C++ 的 % 对负数给出负余数</text>
+  <text x="422" y="372" text-anchor="middle" font-size="10.5" fill="#555">统一写 ((x % k) + k) % k，Python 无此坑</text>
+
+  <text x="280" y="410" text-anchor="middle" font-size="10" fill="#999">每对 (i, j) 恰好判定一次 —— 时间 O(n²) · 额外空间 O(min(n, k))</text>
+</svg>
