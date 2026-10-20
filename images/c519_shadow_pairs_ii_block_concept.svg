@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3"
+            orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 Z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">分治：递归算半内，只统计跨越 mid 的 (i, j)</text>
+
+  <!-- left half -->
+  <rect x="40" y="66" width="205" height="168" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="142" y="88" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">左半 [l, mid]</text>
+  <rect x="95" y="118" width="44" height="34" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="117" y="140" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">i</text>
+  <text x="176" y="130" text-anchor="start" font-size="12" fill="#333" filter="url(#rough2)">…</text>
+  <text x="176" y="150" text-anchor="start" font-size="12" fill="#333" filter="url(#rough2)">mid</text>
+
+  <!-- right half -->
+  <rect x="315" y="66" width="205" height="168" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="417" y="88" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">右半 [mid+1, r]</text>
+  <rect x="360" y="148" width="44" height="34" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="382" y="170" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">j</text>
+  <text x="430" y="140" text-anchor="start" font-size="12" fill="#333" filter="url(#rough2)">mid+1</text>
+  <text x="430" y="160" text-anchor="start" font-size="12" fill="#333" filter="url(#rough2)">…</text>
+
+  <!-- split line -->
+  <line x1="280" y1="66" x2="280" y2="234" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="280" y="250" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">mid</text>
+
+  <!-- b[i] annotation -->
+  <path d="M139 135 L210 135" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="180" y="176" width="200" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="192" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">b[i]：i 之后（左半内）</text>
+  <text x="280" y="208" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">大于 nums[i] 的最小值</text>
+
+  <!-- c[j] annotation -->
+  <path d="M360 165 L300 165" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="150" y="176" width="200" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="250" y="192" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">c[j]：j 之前（右半内）</text>
+  <text x="250" y="208" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">小于 nums[j] 的最大值</text>
+
+  <!-- condition -->
+  <rect x="80" y="288" width="400" height="52" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="312" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">合法 ⟺ c[j] ≤ nums[i] &lt; nums[j] ≤ b[i]</text>
+  <text x="280" y="330" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">（中间的所有阻挡都被 b[i] 与 c[j] 捕获）</text>
+</svg>
