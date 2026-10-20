@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="500" fill="#fafafa"/>
+  <text x="330" y="24" text-anchor="middle" font-size="15.5" fill="#333" filter="url(#rough2)">算法流程：合并目标 → 排序 → 逐段「跳过 / 进入 / 推进」</text>
+
+  <!-- 开始 -->
+  <rect x="190" y="36" width="280" height="44" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="330" y="54" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">目标排序合并成不相交段（s ≤ 上段右端才并）</text>
+  <text x="330" y="71" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">可用区间按左端排序；cur = cnt = i = 0，堆空</text>
+
+  <path d="M330,80 L330,98" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 取下一段 -->
+  <rect x="200" y="100" width="260" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="122" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">取下一段 [s, e]（没有剩余段 → 输出 cnt）</text>
+
+  <path d="M330,134 L330,146" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 1：cur >= e? -->
+  <polygon points="330,148 432,186 330,224 228,186" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="330" y="191" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">cur ≥ e？</text>
+  <text x="342" y="222" font-size="11" fill="#4a7a3a" filter="url(#rough2)">否</text>
+
+  <!-- 菱形 1 的"是"：回到取下一段 -->
+  <path d="M432,186 L560,186 L560,124 L466,124" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="497" y="178" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是：整段已被白嫖，跳过</text>
+
+  <path d="M330,224 L330,238" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 2：cur < s? -->
+  <polygon points="330,240 432,278 330,316 228,278" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="330" y="283" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">cur &lt; s？</text>
+
+  <!-- 是 → 进入框 A -->
+  <path d="M228,278 L115,278 L115,324" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="196" y="270" font-size="11" fill="#446688" filter="url(#rough2)">是</text>
+
+  <!-- 否 → 推进框 B -->
+  <path d="M432,278 L545,278 L545,324" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="446" y="270" font-size="11" fill="#8a6d1f" filter="url(#rough2)">否</text>
+
+  <!-- 进入框 A -->
+  <rect x="25" y="326" width="180" height="88" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="115" y="345" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">【进入】p = s</text>
+  <text x="115" y="363" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">左端 ≤ s 的区间全部入堆</text>
+  <text x="115" y="380" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">弹出右端 &lt; s 的废区间</text>
+  <text x="115" y="397" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">堆空 → -1</text>
+  <text x="115" y="408" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">否则 cur ← 堆顶，cnt++</text>
+
+  <!-- 推进框 B -->
+  <rect x="455" y="326" width="180" height="88" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="545" y="345" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">【推进】while cur &lt; e</text>
+  <text x="545" y="363" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">左端 ≤ cur 的区间全部入堆</text>
+  <text x="545" y="380" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">弹出右端 ≤ cur 的废区间</text>
+  <text x="545" y="397" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">堆空 → -1</text>
+  <text x="545" y="408" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">否则 cur ← 堆顶，cnt++</text>
+
+  <!-- A → B -->
+  <path d="M205,370 L455,370" stroke="#8a6d1f" stroke-width="1.6" stroke-dasharray="5,4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="330" y="362" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">进入后若 cur &lt; e，转入推进</text>
+
+  <!-- 回边：A、B → 取下一段（左侧共享干道） -->
+  <path d="M25,380 L12,380 L12,117 L192,117" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="22" y="250" font-size="10.5" fill="#4a7a3a" transform="rotate(-90 22 250)" text-anchor="middle" filter="url(#rough2)">cur ≥ e：本段完成，取下一段</text>
+
+  <!-- 返回 -1 -->
+  <rect x="260" y="446" width="140" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="330" y="470" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough2)">返回 -1 ✗</text>
+  <path d="M115,414 L115,465 L252,465" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M545,414 L545,465 L408,465" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="160" y="440" font-size="10" fill="#b85450" filter="url(#rough2)">堆空</text>
+  <text x="500" y="440" font-size="10" fill="#b85450" filter="url(#rough2)">堆空</text>
+</svg>
