@@ -41,6 +41,7 @@ TOPIC_ICONS = {
     "greedy": "💰",
     "interval-dp": "📊",
     "monotonic-stack": "📉",
+    "postorder-dfs": "🌳",
 }
 
 

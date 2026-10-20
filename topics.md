@@ -8,6 +8,7 @@
 - [贪心算法专题](/topics/greedy) —— 局部最优到全局最优的经典模型
 - [区间 DP 专题](/topics/interval-dp) —— 区间划分与合并的动态规划范式
 - [单调栈专题](/topics/monotonic-stack) —— 下一个更大元素系列问题
+- [后序 DFS 专题](/topics/postorder-dfs) —— 树上信息自底向上流动的树形 DP 与子树统计
 
 ## 刷题资源
 

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="480" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="16" fill="#444" font-weight="bold">543 直径演算：返回单边（绿），节点处拼两边（红）</text>
+
+  <!-- tree edges -->
+  <g stroke="#999" stroke-width="1.8" fill="none" filter="url(#rough2)">
+    <path d="M 300 92 L 190 152"/>
+    <path d="M 324 92 L 434 152"/>
+    <path d="M 178 164 L 122 224"/>
+    <path d="M 202 164 L 258 224"/>
+    <path d="M 270 236 L 270 296"/>
+  </g>
+
+  <!-- nodes with return values -->
+  <g font-size="12" fill="#333">
+    <!-- root 1 -->
+    <circle cx="312" cy="80" r="18" fill="#fff" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+    <text x="312" y="84" text-anchor="middle">1</text>
+    <!-- node 2 -->
+    <circle cx="190" cy="158" r="18" fill="#fff" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+    <text x="190" y="162" text-anchor="middle">2</text>
+    <!-- node 3 -->
+    <circle cx="442" cy="158" r="18" fill="#fff" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+    <text x="442" y="162" text-anchor="middle">3</text>
+    <!-- node 4 -->
+    <circle cx="116" cy="238" r="18" fill="#fff" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+    <text x="116" y="242" text-anchor="middle">4</text>
+    <!-- node 5 -->
+    <circle cx="264" cy="238" r="18" fill="#fff" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+    <text x="264" y="242" text-anchor="middle">5</text>
+    <!-- node 6 -->
+    <circle cx="270" cy="310" r="18" fill="#fff" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+    <text x="270" y="314" text-anchor="middle">6</text>
+  </g>
+
+  <!-- return value labels (green) -->
+  <g font-size="11" fill="#4a7a3a" font-weight="bold">
+    <text x="116" y="276" text-anchor="middle" filter="url(#rough2)">返回 1</text>
+    <text x="270" y="348" text-anchor="middle" filter="url(#rough2)">返回 1</text>
+    <text x="300" y="234" text-anchor="start" filter="url(#rough2)">返回 2</text>
+    <text x="152" y="192" text-anchor="middle" filter="url(#rough2)">返回 3</text>
+    <text x="470" y="192" text-anchor="start" filter="url(#rough2)">返回 1</text>
+    <text x="348" y="104" text-anchor="start" filter="url(#rough2)">返回 4</text>
+  </g>
+
+  <!-- candidate labels (red) -->
+  <g font-size="11" fill="#b85450">
+    <text x="190" y="128" text-anchor="middle" filter="url(#rough2)">拼 1+2=3</text>
+    <text x="380" y="140" text-anchor="start" filter="url(#rough2)">拼 0+1</text>
+    <text x="312" y="50" text-anchor="middle" font-weight="bold" filter="url(#rough2)">拼 3+1=4 ← 直径!</text>
+  </g>
+
+  <!-- upload arrows (green, upward beside edges) -->
+  <g stroke="#4a7a3a" stroke-width="1.6" fill="none" stroke-dasharray="4,3" filter="url(#rough2)">
+    <path d="M 106 222 L 176 172" marker-end="url(#arr)"/>
+    <path d="M 282 296 L 276 258" marker-end="url(#arr)"/>
+    <path d="M 248 226 L 206 178" marker-end="url(#arr)"/>
+    <path d="M 176 148 L 298 96" marker-end="url(#arr)"/>
+    <path d="M 428 148 L 330 98" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- right panel: how it runs -->
+  <rect x="452" y="220" width="168" height="200" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="536" y="244" text-anchor="middle" font-size="12" fill="#444" font-weight="bold" filter="url(#rough2)">递归返回值逐层上传</text>
+  <g font-size="10.5" fill="#555">
+    <text x="464" y="268" filter="url(#rough2)">dfs(4) = 1</text>
+    <text x="464" y="288" filter="url(#rough2)">dfs(6) = 1</text>
+    <text x="464" y="308" filter="url(#rough2)">dfs(5) = max(0,1)+1 = 2</text>
+    <text x="464" y="328" filter="url(#rough2)">dfs(3) = 1</text>
+    <text x="464" y="348" filter="url(#rough2)">dfs(2) = max(1,2)+1 = 3</text>
+    <text x="464" y="368" filter="url(#rough2)">dfs(1) = max(3,1)+1 = 4</text>
+    <text x="464" y="396" fill="#b85450" font-weight="bold" filter="url(#rough2)">ans = max(各处拼接) = 4</text>
+  </g>
+
+  <!-- bottom note -->
+  <rect x="24" y="396" width="404" height="62" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="226" y="420" text-anchor="middle" font-size="12" fill="#444" font-weight="bold" filter="url(#rough2)">单边传父亲，拐弯在节点</text>
+  <text x="226" y="440" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">return max(l, r) + 1　⚠ 千万别把 l + r 传上去</text>
+</svg>
