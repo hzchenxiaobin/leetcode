@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 556"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="556" fill="#fafafa"/>
+  <text x="300" y="22" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">算法流程：按 start 依次处理，双指针在 end 序列上维护 best</text>
+
+  <!-- 初始化 -->
+  <rect x="110" y="36" width="380" height="50" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="56" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">① 下标按 start 升序 → 处理序列 S；按 end 升序 → 指针序列 E</text>
+  <text x="300" y="76" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">② best = −∞，j = 0，ans = 0</text>
+
+  <path d="M300,86 L300,102" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 循环判定 -->
+  <polygon points="300,108 492,158 300,208 108,158" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="154" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">S 中还有会议 i？</text>
+  <text x="300" y="172" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">记 i = (s, e, rev)</text>
+
+  <text x="310" y="230" font-size="12" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <path d="M300,208 L300,244" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- while 指针前移 -->
+  <rect x="140" y="248" width="320" height="54" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="268" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">③ while j 小于 n 且 E[j].end ≤ s：</text>
+  <text x="300" y="288" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">　　best = max(best, dp[E[j]] − end)，j 加一</text>
+
+  <path d="M300,302 L300,318" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- dp 转移 -->
+  <rect x="140" y="322" width="320" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="342" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">④ dp[i] = rev；若 best 大于 −∞：</text>
+  <text x="300" y="362" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">　　dp[i] = max(dp[i], rev + s + best)</text>
+
+  <path d="M300,376 L300,392" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ans 更新 -->
+  <rect x="180" y="396" width="240" height="36" rx="8" fill="#ececec" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="300" y="419" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">ans = max(ans, dp[i])</text>
+
+  <!-- 回到循环 -->
+  <path d="M180,414 L60,414 L60,158 L104,158" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="66" y="146" font-size="9.5" fill="#999" filter="url(#rough2)">取 S 中下一个 i</text>
+
+  <!-- 否 → 返回 -->
+  <text x="500" y="146" font-size="12" fill="#b85450" filter="url(#rough2)">否（S 空）</text>
+  <path d="M492,158 L548,158 L548,458" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="438" y="462" width="140" height="36" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="508" y="485" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">返回 ans ★</text>
+
+  <!-- 底部说明 -->
+  <text x="300" y="522" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">正确性关键：end_p ≤ s_i ⇒ start_p 小于 s_i ⇒ p 已在 S 中先于 i 处理，dp[p] 已定型</text>
+  <text x="300" y="542" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">s_i 沿 S 单调不减 ⇒ j 只前进、best 只增大；排序占大头，总计 O(n log n)</text>
+</svg>
