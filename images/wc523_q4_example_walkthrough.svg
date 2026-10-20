@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#666" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="440" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">示例演算：n = 15, s = 18 的两步贪心重构</text>
+  <text x="260" y="48" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">S* = 18（5+13 / 7+11 / 2+3+13 / 2+5+11），k* = 2（1 个质数拼不出 18）</text>
+
+  <text x="60" y="78" text-anchor="start" font-size="12.5" fill="#446688" filter="url(#rough2)">第 1 位 · 定首元素（r = 2, v = 18）</text>
+
+  <rect x="22" y="90" width="152" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="98" y="112" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">试 2 → 余 16 需 1 个</text>
+  <text x="98" y="134" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">16 不是质数 ✗</text>
+
+  <rect x="184" y="90" width="152" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="112" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">试 3 → 余 15 需 1 个</text>
+  <text x="260" y="134" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">15 不是质数 ✗</text>
+
+  <rect x="346" y="90" width="152" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="422" y="112" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">试 5 → 余 13 需 1 个</text>
+  <text x="422" y="134" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">13 恰是质数 ✓ 选 5</text>
+
+  <text x="60" y="178" text-anchor="start" font-size="12.5" fill="#446688" filter="url(#rough2)">第 2 位 · 定次元素（r = 1, v = 13，只许 &gt; 5）</text>
+
+  <rect x="22" y="190" width="152" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="98" y="212" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">试 7 → 余 6 需 0 个</text>
+  <text x="98" y="234" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">6 ≠ 0 ✗</text>
+
+  <rect x="184" y="190" width="152" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="212" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">试 11 → 余 2 需 0 个</text>
+  <text x="260" y="234" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">2 ≠ 0 ✗</text>
+
+  <rect x="346" y="190" width="152" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="422" y="212" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">试 13 → 余 0 需 0 个</text>
+  <text x="422" y="234" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">0 = 0 ✓ 选 13</text>
+
+  <text x="260" y="276" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">每步取「能补全的最小质数」——同级候选等长，逐位比小，首元素定胜负</text>
+
+  <rect x="90" y="292" width="340" height="72" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="260" y="324" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">答案 [5, 13]</text>
+  <text x="260" y="348" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">总和 18 = S* 最大 · 个数 2 = k* 最少 · 字典序最小（5 &lt; 7）</text>
+
+  <text x="260" y="396" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">每步查询 g[j+1][r−1][v−pⱼ] = 1，O(1) 判定能否补全</text>
+
+  <text x="260" y="424" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">下标 j 严格递增 ⇒ 答案自动升序，且每个质数至多选一次</text>
+</svg>

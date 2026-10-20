@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">示例 1 演算：s = "1502"（n = 4）</text>
+  <text x="280" y="46" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">第一步算不操作的总费用 base，第二步 O(1) 枚举每个 k</text>
+
+  <!-- base 计算 -->
+  <rect x="40" y="60" width="480" height="58" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="60" y="84" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">base：</text>
+  <text x="118" y="84" font-size="13" fill="#333" filter="url(#rough2)">δ(0,1) + δ(1,5) + δ(5,0) + δ(0,2) = 1 + 4 + 5 + 2 =</text>
+  <text x="452" y="84" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">12</text>
+  <text x="118" y="106" font-size="12" fill="#666" filter="url(#rough2)">指针路径 0 → 1 → 5 → 0 → 2，每段取环形距离 min(d, 10−d)</text>
+
+  <!-- 增量公式 -->
+  <text x="280" y="142" text-anchor="middle" font-size="13" fill="#8a6d1f" filter="url(#rough2)">total(k) = base − δ(prev, s[k]) + δ(prev, s[n−1])，其中 prev = 0（k=0）或 s[k−1]，s[n−1] = 2</text>
+
+  <!-- 表头 -->
+  <rect x="40" y="156" width="480" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="66" y="175" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">方案</text>
+  <text x="148" y="175" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">prev</text>
+  <text x="252" y="175" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">旧衔接边</text>
+  <text x="362" y="175" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">新衔接边</text>
+  <text x="462" y="175" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">total</text>
+
+  <!-- 行 1：不操作 -->
+  <rect x="40" y="184" width="480" height="26" fill="#ffffff" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+  <text x="66" y="202" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">不操作</text>
+  <text x="148" y="202" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">—</text>
+  <text x="252" y="202" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">—</text>
+  <text x="362" y="202" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">—</text>
+  <text x="462" y="202" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">12</text>
+
+  <!-- 行 2：k=0 -->
+  <rect x="40" y="210" width="480" height="26" fill="#fdfdf8" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+  <text x="66" y="228" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">k=0</text>
+  <text x="148" y="228" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">0（起点）</text>
+  <text x="252" y="228" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">δ(0,1)=1</text>
+  <text x="362" y="228" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">δ(0,2)=2</text>
+  <text x="462" y="228" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">13</text>
+
+  <!-- 行 3：k=1（最优，高亮） -->
+  <rect x="40" y="236" width="480" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="66" y="256" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">k=1 ★</text>
+  <text x="148" y="256" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">s[0]=1</text>
+  <text x="252" y="256" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">δ(1,5)=4</text>
+  <text x="362" y="256" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">δ(1,2)=1</text>
+  <text x="462" y="256" text-anchor="middle" font-size="14" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">9</text>
+
+  <!-- 行 4：k=2 -->
+  <rect x="40" y="266" width="480" height="26" fill="#fdfdf8" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+  <text x="66" y="284" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">k=2</text>
+  <text x="148" y="284" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">s[1]=5</text>
+  <text x="252" y="284" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">δ(5,0)=5</text>
+  <text x="362" y="284" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">δ(5,2)=3</text>
+  <text x="462" y="284" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">10</text>
+
+  <!-- 行 5：k=3 -->
+  <rect x="40" y="292" width="480" height="26" fill="#ffffff" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+  <text x="66" y="310" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">k=3</text>
+  <text x="148" y="310" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">s[2]=0</text>
+  <text x="252" y="310" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">δ(0,2)=2</text>
+  <text x="362" y="310" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">δ(0,2)=2</text>
+  <text x="462" y="310" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">12</text>
+
+  <!-- 列分隔线 -->
+  <path d="M 104,156 L 104,318" stroke="#ccc" stroke-width="1" fill="none" filter="url(#rough2)"/>
+  <path d="M 192,156 L 192,318" stroke="#ccc" stroke-width="1" fill="none" filter="url(#rough2)"/>
+  <path d="M 308,156 L 308,318" stroke="#ccc" stroke-width="1" fill="none" filter="url(#rough2)"/>
+  <path d="M 416,156 L 416,318" stroke="#ccc" stroke-width="1" fill="none" filter="url(#rough2)"/>
+
+  <!-- 反转示意 -->
+  <text x="280" y="344" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">k=1 反转后缀 "502" 得 "1205"：</text>
+  <text x="196" y="372" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">0</text>
+  <path d="M 214,368 L 234,368" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="252" y="372" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">1</text>
+  <path d="M 270,368 L 290,368" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="308" y="372" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">2</text>
+  <path d="M 326,368 L 346,368" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="364" y="372" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">0</text>
+  <path d="M 382,368 L 402,368" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="420" y="372" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">5</text>
+  <text x="280" y="396" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">各段 1 + 1 + 2 + 5 = 9 = min{12, 13, 9, 10, 12}</text>
+
+  <!-- 底注 -->
+  <text x="280" y="422" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">k=0 换的是起点边（prev=0）；k=3 单字符后缀反转无效，公式自动退化为 base</text>
+</svg>

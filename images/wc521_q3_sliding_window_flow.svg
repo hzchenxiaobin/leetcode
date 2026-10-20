@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 450"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="450" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：双指针 + 值域桶，冲突只查新元素</text>
+
+  <!-- 初始化 -->
+  <rect x="170" y="48" width="220" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="66" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">初始化：l = 0，cnt[1..500] 清零</text>
+  <text x="280" y="84" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">ans = 0，窗口为空必然有效</text>
+  <path d="M280,92 L280,108" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 枚举 r -->
+  <rect x="150" y="112" width="260" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="130" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">枚举右端 r = 0 … n−1</text>
+  <text x="280" y="148" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">记 x = nums[r]，先不入桶</text>
+  <path d="M280,156 L280,172" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断菱形 -->
+  <polygon points="280,176 400,236 280,296 160,236" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="232" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">把 x 加入窗口</text>
+  <text x="280" y="252" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">会冲突吗？</text>
+
+  <!-- 右侧两类检查说明 -->
+  <rect x="414" y="198" width="140" height="78" rx="8" fill="#fafafa" stroke="#d6a040" stroke-width="1.3" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="484" y="218" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">检查 A：∃a + b = x</text>
+  <text x="484" y="236" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">检查 B：∃a，a 与 a + x</text>
+  <text x="484" y="254" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">同在窗口桶中</text>
+  <text x="484" y="270" text-anchor="middle" font-size="10" fill="#d6a040" filter="url(#rough2)">各扫一遍值域 O(V)</text>
+  <path d="M400,236 L410,236" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 是：收缩 -->
+  <text x="146" y="226" font-size="12" fill="#b85450" filter="url(#rough2)">是</text>
+  <path d="M160,236 L140,236" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="14" y="216" width="124" height="42" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="76" y="234" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">cnt[nums[l]] −−</text>
+  <text x="76" y="251" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">l++（左端出窗）</text>
+  <path d="M76,216 L76,192 L244,192" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="96" y="186" font-size="10" fill="#b85450" filter="url(#rough2)">重新检查</text>
+
+  <!-- 否：加入并统计 -->
+  <text x="292" y="308" font-size="12" fill="#4a7a3a" filter="url(#rough2)">否</text>
+  <path d="M280,296 L280,318" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="150" y="322" width="260" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="342" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">cnt[x] += 1；ans = max(ans, r − l + 1)</text>
+  <text x="280" y="362" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">此时窗口 [l, r] 必然有效，刷新答案</text>
+
+  <!-- 回到枚举 r -->
+  <path d="M410,348 L496,348 L496,134 L414,134" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="504" y="244" font-size="10" fill="#666" filter="url(#rough2)">r++</text>
+
+  <!-- 结束 -->
+  <path d="M280,374 L280,396" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="180" y="400" width="200" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="424" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">处理完所有 r ⇒ 返回 ans</text>
+</svg>

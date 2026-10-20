@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#666" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="470" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">算法流程：先求最优值，再重构字典序最小方案</text>
+
+  <rect x="150" y="40" width="220" height="26" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="58" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">第一问 · 求最优值 S* 与 k*</text>
+
+  <rect x="70" y="76" width="380" height="42" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="94" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">① 埃氏筛：质数表 P（升序，π(1000) = 168 个）</text>
+  <text x="260" y="110" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">O(n log log n)</text>
+
+  <path d="M 260 118 L 260 134" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="138" width="380" height="52" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="158" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② 01 背包（v 从 s 往 p 倒序）：c[v] = min(c[v], c[v−p]+1)</text>
+  <text x="260" y="176" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">c[v] = 总和恰为 v 的最少质数个数　O(π(n)·s)</text>
+
+  <path d="M 260 190 L 260 206" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="210" width="380" height="52" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="230" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ S* = max{ v : c[v] &lt; ∞ }，k* = c[S*]</text>
+  <text x="260" y="248" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">S* = 0（n &lt; 2 或 s &lt; 2）→ 直接返回空数组</text>
+
+  <path d="M 260 262 L 260 286" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="276" y="280" text-anchor="start" font-size="11" fill="#888" filter="url(#rough2)">带着 (S*, k*) 进入第二问</text>
+
+  <rect x="150" y="292" width="220" height="26" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="310" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">第二问 · 重构字典序最小方案</text>
+
+  <rect x="70" y="328" width="380" height="52" rx="8" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="348" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">④ 后缀 DP：g[i][t][v] = g[i+1][t][v] ∨ g[i+1][t−1][v−pᵢ]</text>
+  <text x="260" y="366" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">= 从 P[i…] 恰取 t 个、总和恰为 v 是否可行　O(π(n)·k*·S*)</text>
+
+  <path d="M 260 380 L 260 396" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="400" width="380" height="52" rx="8" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="420" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">⑤ 从小到大贪心：每步取最小 pⱼ 使 g[j+1][r−1][v−pⱼ] = 1</text>
+  <text x="260" y="438" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">选后 v −= pⱼ、r −= 1、下标只许更大，直至 r = 0</text>
+
+  <text x="260" y="466" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">①–③ 回答「选到什么程度」，④–⑤ 回答「具体选哪些」</text>
+</svg>
