@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 450"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="450" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">核心观察：总收益按「链尾」逐段拆分，sᵢ 可从前驱比较中提出</text>
+
+  <!-- 时间轴 -->
+  <rect x="55" y="95" width="45" height="30" fill="#f0f0f0" stroke="#bbb" stroke-width="1" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="77" y="88" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">开始前空闲×</text>
+  <rect x="460" y="95" width="55" height="30" fill="#f0f0f0" stroke="#bbb" stroke-width="1" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="487" y="88" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">结束后空闲×</text>
+
+  <line x1="50" y1="125" x2="518" y2="125" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 会议块（示例3：m1=[1,2,2] m2=[4,5,2] m3=[7,9,3]） -->
+  <rect x="100" y="95" width="45" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="122" y="114" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">m₁</text>
+  <text x="122" y="147" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">t=1</text>
+  <rect x="235" y="95" width="45" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="257" y="114" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">m₂</text>
+  <text x="257" y="147" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">t=4</text>
+  <rect x="370" y="95" width="90" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="415" y="114" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">m₃</text>
+  <text x="415" y="147" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">t=7</text>
+
+  <!-- 空闲 gap -->
+  <rect x="145" y="100" width="90" height="22" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="190" y="115" text-anchor="middle" font-size="11" fill="#d6a040" filter="url(#rough2)">空闲 +2</text>
+  <rect x="280" y="100" width="90" height="22" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="325" y="115" text-anchor="middle" font-size="11" fill="#d6a040" filter="url(#rough2)">空闲 +2</text>
+
+  <!-- 收益构成 -->
+  <rect x="24" y="165" width="512" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="280" y="184" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">总收益 = (r₁+r₂+r₃) + (空闲₁+空闲₂) = (2+2+3) + (2+2) = 11</text>
+  <text x="280" y="200" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">首尾之外的空闲不产生收益 ⟺ DP 只需管「链内」的相邻衔接</text>
+
+  <!-- 链尾拆分 -->
+  <rect x="24" y="222" width="512" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="280" y="245" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">以 m₃ 收尾的链 = 以 m₂ 收尾的链 + 空闲(s₃−e₂) + r₃</text>
+  <text x="280" y="267" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">f(m₃) = f(m₂) + (7−5) + 3 = 6 + 2 + 3 = 11</text>
+
+  <!-- 代数提取 -->
+  <rect x="24" y="296" width="512" height="72" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="318" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">f(j) + (sᵢ−eⱼ) + rᵢ = (rᵢ + sᵢ) + (f(j) − eⱼ)</text>
+  <text x="280" y="340" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">固定 i 时 sᵢ 是常数 ⟹ 前驱之间只需比较 f(j) − eⱼ 的大小</text>
+  <text x="280" y="358" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">f(i) = rᵢ + max(0, sᵢ + max{f(j)−eⱼ : eⱼ ≤ sᵢ})</text>
+
+  <!-- 恒等式视角 -->
+  <rect x="24" y="384" width="512" height="48" rx="8" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="280" y="403" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">另一个视角（恒等式）：总收益 = Σ(rₜ − durₜ) + e_尾 − s_首</text>
+  <text x="280" y="421" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">每场会议按「收益 − 时长」计净价值，首尾端点再把整段时间补回来</text>
+</svg>
