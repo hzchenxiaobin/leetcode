@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 448" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="448" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：|和 − goal| ≥ k ⟺ P[l] 落在数轴两端</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">拆开绝对值 → 对每个 r，在左侧 P[0..r−1] 中统计落在两端的个数</text>
+
+  <!-- 数轴三段 -->
+  <g filter="url(#rough2)">
+    <rect x="48" y="104" width="120" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="168" y="104" width="224" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="392" y="104" width="120" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle">
+    <text x="108" y="122" fill="#3a5a30" font-weight="bold">P[l] ≤ t1</text>
+    <text x="108" y="136" fill="#4a7a3a">✓ 计数</text>
+    <text x="280" y="122" fill="#8a3a36" font-weight="bold">近区（t1, t2）</text>
+    <text x="280" y="136" fill="#b85450">✗ 不计数</text>
+    <text x="452" y="122" fill="#3a5a30" font-weight="bold">P[l] ≥ t2</text>
+    <text x="452" y="136" fill="#4a7a3a">✓ 计数</text>
+  </g>
+
+  <!-- 数轴主线 -->
+  <path d="M 36 132 L 520 132" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="534" y="136" font-size="10.5" fill="#666">P[l]</text>
+
+  <!-- 分界虚线与标签 -->
+  <path d="M 168 92 L 168 178" stroke="#888" stroke-width="1.2" stroke-dasharray="4 3" fill="none" filter="url(#rough2)"/>
+  <path d="M 392 92 L 392 178" stroke="#888" stroke-width="1.2" stroke-dasharray="4 3" fill="none" filter="url(#rough2)"/>
+  <text x="168" y="192" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">t1 = P[r]−goal−k</text>
+  <text x="392" y="192" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">t2 = P[r]−goal+k</text>
+
+  <!-- 中心点 c 与样例点 -->
+  <path d="M 280 82 L 280 100" stroke="#446688" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+  <text x="280" y="76" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">c = P[r]−goal</text>
+  <g filter="url(#rough2)">
+    <path d="M 280 126 L 285 132 L 280 138 L 275 132 z" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="96" cy="132" r="5" fill="#4a7a3a"/>
+    <circle cx="452" cy="132" r="5" fill="#4a7a3a"/>
+    <circle cx="322" cy="132" r="5" fill="#b85450"/>
+  </g>
+  <g filter="url(#rough2)" font-size="9.5" text-anchor="middle" fill="#666">
+    <text x="96" y="154">远 ✓</text>
+    <text x="452" y="154">远 ✓</text>
+    <text x="322" y="154">近 ✗</text>
+  </g>
+
+  <!-- 两个计数条件 -->
+  <rect x="40" y="204" width="240" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="160" y="226" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">条件 A（和偏大）：P[l] ≤ t1</text>
+  <text x="160" y="244" text-anchor="middle" font-size="10" fill="#555">⟺ P[r]−P[l]−goal ≥ k</text>
+  <text x="160" y="256" text-anchor="middle" font-size="10" fill="#3a5a30">计数：ans += count_le(t1)</text>
+
+  <rect x="292" y="204" width="236" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="410" y="226" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">条件 B（和偏小）：P[l] ≥ t2</text>
+  <text x="410" y="244" text-anchor="middle" font-size="10" fill="#555">⟺ P[r]−P[l]−goal ≤ −k</text>
+  <text x="410" y="256" text-anchor="middle" font-size="10" fill="#3a4a66">计数：ans += r − count_le(t2−1)</text>
+
+  <!-- 汇总 -->
+  <rect x="80" y="276" width="400" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="296" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">每个子数组 ⟺ 一对 (l, r)，0 ≤ l &lt; r ≤ n</text>
+  <text x="280" y="312" text-anchor="middle" font-size="10.5" fill="#8a6a20">答案 = Σ (count_le(t1) + count_ge(t2))，单次 O(log n)</text>
+
+  <!-- k=0 陷阱 -->
+  <rect x="40" y="336" width="480" height="80" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="60" y="360" font-size="11.5" fill="#8a3a36" font-weight="bold">⚠ 最大陷阱：k = 0 时 t1 = t2 = c，两段在 P[l] = c 处重叠一个点</text>
+  <text x="60" y="380" font-size="10.5" fill="#555">「和恰好等于 goal」的子数组会被两个条件各数一次 → 重复计数</text>
+  <text x="60" y="400" font-size="10.5" fill="#555">先特判 k = 0：|和 − goal| ≥ 0 恒成立，直接返回 n(n+1)/2</text>
+
+  <text x="280" y="438" text-anchor="middle" font-size="10" fill="#999">k ≥ 1 时 t1 &lt; t2，两段不交不漏，直接相加即可</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 448" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="448" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：离散化 + 树状数组，一次线性扫描</text>
+
+  <rect x="212" y="40" width="136" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="59" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">输入 nums, goal, k</text>
+
+  <path d="M 280 70 L 280 82" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="188" y="84" width="184" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="103" text-anchor="middle" font-size="11" fill="#3a4a66">① 前缀和 P[0..n]，P[0] = 0</text>
+
+  <path d="M 280 114 L 280 126" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="158" y="128" width="244" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="147" text-anchor="middle" font-size="11" fill="#3a4a66">② 全部 P 值排序去重 → sortedP</text>
+
+  <path d="M 280 158 L 280 168" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断 k=0 -->
+  <polygon points="280,170 356,194 280,218 204,194" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="280" y="199" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">k = 0 ?</text>
+
+  <path d="M 356 194 L 408 194" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="380" y="186" text-anchor="middle" font-size="10" fill="#8a6a20" font-weight="bold">是</text>
+  <rect x="412" y="178" width="132" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="478" y="192" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold">返回 n(n+1)/2</text>
+  <text x="478" y="204" text-anchor="middle" font-size="9" fill="#998">全部子数组都遥远</text>
+
+  <path d="M 280 218 L 280 240" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="293" y="233" font-size="10" fill="#666" font-weight="bold">否</text>
+
+  <!-- 主循环 -->
+  <rect x="140" y="242" width="280" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="258" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold">③ for r = 1 .. n</text>
+  <text x="280" y="274" text-anchor="middle" font-size="10" fill="#4a7a3a">查询时 BIT 恰含 P[0..r−1]（先插 P[0]，先查后插）</text>
+
+  <path d="M 175 282 L 175 300" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 385 282 L 385 300" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="36" y="302" width="242" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="157" y="320" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold">查询 A：ans += count_le(P[r]−goal−k)</text>
+  <text x="157" y="338" text-anchor="middle" font-size="9.5" fill="#4a7a3a">和偏大的一侧（≤ t1）</text>
+
+  <rect x="292" y="302" width="232" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="408" y="320" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold">查询 B：ans += r − count_le(P[r]−goal+k−1)</text>
+  <text x="408" y="338" text-anchor="middle" font-size="9.5" fill="#4a7a3a">和偏小的一侧（≥ t2）</text>
+
+  <path d="M 175 346 L 240 362" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 385 346 L 320 362" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="196" y="364" width="168" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="382" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">④ BIT 插入 P[r]</text>
+
+  <!-- 回边 -->
+  <path d="M 196 378 L 116 378 L 116 262 L 136 262" stroke="#446688" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="106" y="330" text-anchor="middle" font-size="9.5" fill="#446688">r+1</text>
+  <text x="106" y="344" text-anchor="middle" font-size="9.5" fill="#446688">≤ n</text>
+
+  <path d="M 280 392 L 280 404" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="298" y="402" font-size="9.5" fill="#666">r &gt; n</text>
+
+  <rect x="198" y="406" width="164" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="424" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold">返回 ans</text>
+
+  <text x="280" y="446" text-anchor="middle" font-size="10" fill="#999">每轮 2 次查询 + 1 次插入，各一次二分定位：总复杂度 O(n log n)</text>
+</svg>

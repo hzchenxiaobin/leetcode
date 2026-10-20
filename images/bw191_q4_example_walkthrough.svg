@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 448" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="448" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例演算：nums = [1,2,1], goal = 4, k = 1</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">P = [0, 1, 3, 4]；t1 = P[r] − 5，t2 = P[r] − 3</text>
+
+  <!-- 演算表 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="60" width="488" height="140" fill="#ffffff" stroke="#888" stroke-width="1.5" rx="4"/>
+    <path d="M 36 92 L 524 92" stroke="#888" stroke-width="1.2" fill="none"/>
+    <path d="M 36 130 L 524 130" stroke="#aaa" stroke-width="1" fill="none"/>
+    <path d="M 36 165 L 524 165" stroke="#aaa" stroke-width="1" fill="none"/>
+    <path d="M 64 60 L 64 200" stroke="#888" stroke-width="1.2" fill="none"/>
+    <path d="M 108 60 L 108 200" stroke="#888" stroke-width="1.2" fill="none"/>
+    <path d="M 214 60 L 214 200" stroke="#888" stroke-width="1.2" fill="none"/>
+    <path d="M 262 60 L 262 200" stroke="#888" stroke-width="1.2" fill="none"/>
+    <path d="M 310 60 L 310 200" stroke="#888" stroke-width="1.2" fill="none"/>
+    <path d="M 452 60 L 452 200" stroke="#888" stroke-width="1.2" fill="none"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle" fill="#444" font-weight="bold">
+    <text x="50" y="80">r</text>
+    <text x="86" y="80">P[r]</text>
+    <text x="161" y="80">BIT 已插入</text>
+    <text x="238" y="80">t1</text>
+    <text x="286" y="80">t2</text>
+    <text x="381" y="80">命中 l（条件）</text>
+    <text x="488" y="80">贡献</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle" fill="#333">
+    <text x="50" y="114">1</text>
+    <text x="86" y="114">1</text>
+    <text x="161" y="114">{0}</text>
+    <text x="238" y="114" fill="#b85450">−4</text>
+    <text x="286" y="114" fill="#4a7a3a">−2</text>
+    <text x="381" y="114">l=0（0 ≥ −2）</text>
+    <text x="488" y="114" fill="#3a5a30" font-weight="bold">1</text>
+
+    <text x="50" y="150">2</text>
+    <text x="86" y="150">3</text>
+    <text x="161" y="150">{0,1}</text>
+    <text x="238" y="150" fill="#b85450">−2</text>
+    <text x="286" y="150" fill="#4a7a3a">0</text>
+    <text x="381" y="150">l=0,1（P ≥ 0）</text>
+    <text x="488" y="150" fill="#3a5a30" font-weight="bold">2</text>
+
+    <text x="50" y="186">3</text>
+    <text x="86" y="186">4</text>
+    <text x="161" y="186">{0,1,3}</text>
+    <text x="238" y="186" fill="#b85450">−1</text>
+    <text x="286" y="186" fill="#4a7a3a">1</text>
+    <text x="381" y="186">l=1,2（P ≥ 1）</text>
+    <text x="488" y="186" fill="#3a5a30" font-weight="bold">2</text>
+  </g>
+
+  <text x="60" y="216" font-size="9.5" fill="#888" filter="url(#rough2)">红 = t1 侧查询（本例恒为 0），绿 = t2 侧命中</text>
+
+  <!-- 逐行解释 -->
+  <rect x="36" y="226" width="488" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="6" filter="url(#rough2)"/>
+  <text x="52" y="243" font-size="10.5" fill="#3a5a30">r=1：命中 l=0 → 子数组 [1]，|1−4| = 3 ≥ 1 ✓</text>
+
+  <rect x="36" y="258" width="488" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="6" filter="url(#rough2)"/>
+  <text x="52" y="275" font-size="10.5" fill="#3a5a30">r=2：命中 l=0,1 → [1,2] 差 1 ✓、[2] 差 2 ✓</text>
+
+  <rect x="36" y="290" width="488" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="6" filter="url(#rough2)"/>
+  <text x="52" y="307" font-size="10.5" fill="#3a5a30">r=3：命中 l=1,2 → [2,1] 差 1 ✓、[1] 差 3 ✓</text>
+
+  <!-- 近区反例 -->
+  <rect x="36" y="324" width="488" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="52" y="341" font-size="10.5" fill="#8a3a36" font-weight="bold">r=3 时 P[0]=0 ∈ (t1, t2) = (−1, 1) 落在近区</text>
+  <text x="52" y="357" font-size="10.5" fill="#555">→ 子数组 [1,2,1] 的和恰为 goal，差 0 &lt; 1，不计数 ✗</text>
+
+  <!-- 答案 -->
+  <rect x="110" y="374" width="340" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="392" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold">ans = 1 + 2 + 2 = 5 ✓</text>
+  <text x="280" y="410" text-anchor="middle" font-size="9.5" fill="#998">本例命中全在 t2 侧（和偏小），两条查询完全对称</text>
+
+  <text x="280" y="438" text-anchor="middle" font-size="10" fill="#999">先查后插：第 r 轮查询时 BIT 恰含 P[0..r−1]，保证 l &lt; r 不重不漏</text>
+</svg>
