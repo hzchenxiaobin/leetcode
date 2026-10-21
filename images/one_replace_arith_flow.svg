@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="53"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#667"/></marker>
+  </defs>
+  <rect width="560" height="500" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：O(n) 三类候选取最大</text>
+
+  <!-- 预处理 -->
+  <rect x="100" y="42" width="360" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#r)"/>
+  <text x="280" y="62" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#r)">预处理（两次线性扫描）</text>
+  <text x="280" y="78" text-anchor="middle" font-size="10" fill="#333" filter="url(#r)">diff[i] = nums[i+1] − nums[i]</text>
+  <text x="280" y="92" text-anchor="middle" font-size="10" fill="#333" filter="url(#r)">left[i] / right[i]：以 i 结尾 / 开头的最长等差段长度</text>
+  <path d="M280,100 L280,120" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+
+  <!-- 枚举 p -->
+  <rect x="180" y="122" width="200" height="32" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#r)"/>
+  <text x="280" y="142" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040" filter="url(#r)">枚举替换位 p（含不替换）</text>
+  <path d="M280,154 L280,166 L90,166 L90,184" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+  <path d="M280,154 L280,184" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+  <path d="M280,154 L280,166 L465,166 L465,184" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+
+  <!-- 候选一 -->
+  <rect x="15" y="186" width="150" height="80" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="90" y="206" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#r)">候选一：不替换</text>
+  <text x="90" y="224" text-anchor="middle" font-size="10" fill="#333" filter="url(#r)">子数组避开替换位</text>
+  <text x="90" y="242" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#r)">ans ← max(left)</text>
+  <text x="90" y="258" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">（原数组最长等差段）</text>
+
+  <!-- 候选二 -->
+  <rect x="185" y="186" width="180" height="80" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#r)"/>
+  <text x="275" y="206" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#d6a040" filter="url(#r)">候选二：p 为端点</text>
+  <text x="275" y="224" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#r)">ans ← 1 + right[p+1]</text>
+  <text x="275" y="241" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#r)">ans ← 1 + left[p−1]</text>
+  <text x="275" y="258" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">（v 任意适配公差）</text>
+
+  <!-- 候选三 -->
+  <rect x="385" y="186" width="160" height="80" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#r)"/>
+  <text x="465" y="206" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">候选三：p 在内部</text>
+  <text x="465" y="224" text-anchor="middle" font-size="10" fill="#333" filter="url(#r)">l &lt; p &lt; r</text>
+  <text x="465" y="241" text-anchor="middle" font-size="10" fill="#333" filter="url(#r)">s = nums[p+1] − nums[p−1]</text>
+  <text x="465" y="258" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">（两侧须同公差）</text>
+  <path d="M465,266 L465,286" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+
+  <!-- 奇偶判定菱形 -->
+  <polygon points="465,288 520,318 465,348 410,318" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#r)"/>
+  <text x="465" y="322" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">s 为偶数？</text>
+  <path d="M520,318 L546,318" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+  <text x="531" y="310" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#r)">否</text>
+  <text x="533" y="334" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">跳过</text>
+  <path d="M465,348 L465,368" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+  <text x="474" y="362" font-size="10" fill="#4a7a3a" filter="url(#r)">是</text>
+
+  <!-- 内部替换计算 -->
+  <rect x="300" y="372" width="245" height="62" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#r)"/>
+  <text x="422" y="390" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#r)">d = s / 2</text>
+  <text x="422" y="406" text-anchor="middle" font-size="10" fill="#333" filter="url(#r)">L = (diff[p−2] = d) ? left[p−1] : 1，R 对称</text>
+  <text x="422" y="424" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">ans ← L + 1 + R</text>
+
+  <!-- 汇总 -->
+  <path d="M90,266 L90,469 L181,469" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+  <path d="M275,266 L275,450" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+  <path d="M422,434 L422,469 L379,469" stroke="#667" stroke-width="1.5" marker-end="url(#arr)" fill="none" filter="url(#r)"/>
+  <rect x="185" y="452" width="190" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#r)"/>
+  <text x="280" y="473" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#r)">返回 ans（三类候选最大）</text>
+</svg>
