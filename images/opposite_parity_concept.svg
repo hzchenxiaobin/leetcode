@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="113" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="360" fill="#fdfcf7"/>
+  <text x="320" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：右侧奇偶分布 = 两个计数器</text>
+  <path d="M 170 42 Q 320 52 470 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- array cells -->
+  <g filter="url(#sk)">
+    <rect x="40" y="70" width="64" height="46" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/>
+    <rect x="108" y="70" width="64" height="46" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2.4"/>
+    <rect x="176" y="70" width="64" height="46" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/>
+    <rect x="244" y="70" width="64" height="46" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/>
+  </g>
+  <g text-anchor="middle" font-weight="bold">
+    <text x="72" y="92" font-size="16" fill="#b85450">1</text>
+    <text x="140" y="92" font-size="16" fill="#4a8edb">2</text>
+    <text x="208" y="92" font-size="16" fill="#b85450">3</text>
+    <text x="276" y="92" font-size="16" fill="#4a8edb">4</text>
+  </g>
+  <g text-anchor="middle" font-size="9.5" fill="#999">
+    <text x="72" y="108">奇</text>
+    <text x="140" y="108">偶</text>
+    <text x="208" y="108">奇</text>
+    <text x="276" y="108">偶</text>
+  </g>
+  <g text-anchor="middle" font-size="11" fill="#666">
+    <text x="72" y="130">0</text>
+    <text x="140" y="130">1</text>
+    <text x="208" y="130">2</text>
+    <text x="276" y="130">3</text>
+  </g>
+
+  <!-- i pointer -->
+  <text x="140" y="50" text-anchor="middle" font-size="14" font-weight="bold" fill="#c98a2b">i</text>
+  <path d="M 140 54 L 140 66" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="140" y="148" text-anchor="middle" font-size="11" fill="#c98a2b">当前 i</text>
+
+  <!-- suffix dashed box -->
+  <rect x="168" y="62" width="148" height="62" rx="8" fill="none" stroke="#888" stroke-width="1.3" stroke-dasharray="5 4" filter="url(#sk)"/>
+  <text x="242" y="148" text-anchor="middle" font-size="11.5" fill="#666">右侧（j &gt; i）</text>
+
+  <!-- compress arrow -->
+  <path d="M 322 100 L 396 100" stroke="#3a3a3a" stroke-width="2.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="358" y="88" text-anchor="middle" font-size="12" fill="#666">压缩</text>
+
+  <!-- counters -->
+  <text x="520" y="58" text-anchor="middle" font-size="11" fill="#888">下标 &gt; 1 的奇 / 偶个数</text>
+  <g filter="url(#sk)">
+    <rect x="420" y="66" width="200" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+    <rect x="420" y="122" width="200" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="520" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450" font-family="monospace">cntOdd = 1 ← {3}</text>
+  <text x="520" y="149" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a8edb" font-family="monospace">cntEven = 1 ← {4}</text>
+
+  <!-- formula -->
+  <g filter="url(#sk)">
+    <rect x="120" y="190" width="400" height="46" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="212" text-anchor="middle" font-size="14" fill="#2e6e2e" font-family="monospace" font-weight="bold">ans[i] = nums[i] 为偶 ? cntOdd : cntEven</text>
+  <text x="320" y="254" text-anchor="middle" font-size="12" fill="#666">偶数问奇、奇数问偶 —— O(1) 选「对面」计数器</text>
+
+  <!-- note -->
+  <g filter="url(#sk)">
+    <rect x="70" y="266" width="500" height="52" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="288" text-anchor="middle" font-size="12" fill="#7a5415">倒序扫描：i 每左移一格，右侧恰新增一个元素 ⇒ 计数器单次 +1</text>
+  <text x="320" y="308" text-anchor="middle" font-size="12" fill="#7a5415">先查（对面）后插（本方）：作答瞬间计数器恰为「严格右侧」全体</text>
+
+  <text x="320" y="346" text-anchor="middle" font-size="11" fill="#888">时间 O(n) · 空间 O(1)；n ≤ 100 时暴力 O(n²) 也能过</text>
+</svg>

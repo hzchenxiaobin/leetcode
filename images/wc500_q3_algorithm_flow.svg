@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="500" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：预处理两套前缀和 + 查询 O(1) 分方向取差</text>
+
+  <!-- A 输入 -->
+  <rect x="250" y="44" width="180" height="34" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="340" y="66" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">输入 nums（严格递增）</text>
+  <path d="M340,78 L340,98" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- B 间隙 -->
+  <rect x="215" y="102" width="250" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="340" y="125" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">间隙：d[i] = nums[i+1] − nums[i]，i = 0 … n−2</text>
+  <path d="M340,138 L340,158" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- C 方向数组 -->
+  <rect x="195" y="162" width="290" height="52" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="340" y="182" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">方向 c[i]：c[0]=+1，c[n−1]=−1</text>
+  <text x="340" y="202" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">中间：d[i−1] ≤ d[i] ⇒ −1（并列取小），否则 +1</text>
+  <path d="M340,214 L340,234" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D 单价与前缀和 -->
+  <rect x="185" y="238" width="310" height="64" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="340" y="257" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">单价：R[i] = c[i]=+1 ? 1 : d[i]；L[i] = c[i+1]=−1 ? 1 : d[i]</text>
+  <text x="340" y="276" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">前缀和：PR[i+1] = PR[i] + R[i]</text>
+  <text x="340" y="294" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">PL[i+1] = PL[i] + L[i]</text>
+  <path d="M340,302 L340,322" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- E 查询菱形 -->
+  <polygon points="340,326 420,364 340,402 260,364" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="340" y="361" text-anchor="middle" font-size="13" fill="#8a6d1f" filter="url(#rough2)">查询 [l, r]</text>
+  <text x="340" y="380" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">l 与 r ？</text>
+
+  <!-- 左出口 l = r -->
+  <path d="M260,364 L182,364" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="221" y="356" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">l = r</text>
+  <rect x="66" y="342" width="114" height="44" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="123" y="368" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">ans ← 0</text>
+
+  <!-- 右出口 l > r -->
+  <path d="M420,364 L498,364" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="459" y="356" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">l &gt; r</text>
+  <rect x="502" y="342" width="160" height="44" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="582" y="368" text-anchor="middle" font-size="13" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">ans ← PL[l] − PL[r]</text>
+
+  <!-- 下出口 l < r -->
+  <path d="M340,402 L340,432" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="356" y="422" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">l &lt; r</text>
+  <rect x="245" y="436" width="190" height="44" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="340" y="462" text-anchor="middle" font-size="13" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">ans ← PR[r] − PR[l]</text>
+
+  <text x="340" y="492" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">（对 queries 中每个查询重复判定，每次 O(1)）</text>
+
+  <!-- 图例 -->
+  <text x="90" y="70" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">绿：输入 / 输出</text>
+  <text x="90" y="90" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">蓝：预处理</text>
+  <text x="90" y="110" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">黄：判定</text>
+</svg>
