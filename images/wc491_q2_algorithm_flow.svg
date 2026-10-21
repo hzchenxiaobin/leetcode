@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="430" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：从「指数枚举」收敛到「一行闭式」</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">比赛节奏：DP 保底 → 打表观察 → 猜想 → 证明 → O(1) 收尾</text>
+
+  <!-- chain -->
+  <rect x="60" y="64" width="380" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="250" y="84" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">① 读题：把 n 拆成 n 个 1</text>
+  <text x="250" y="102" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">一次操作 x → a + b（a,b 为正整数），代价 a·b，最小化总代价</text>
+  <path d="M250,112 L250,134" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="138" width="380" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="250" y="158" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">② 暴力：枚举完整拆分树 ✗</text>
+  <text x="250" y="176" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">树形有 Catalan(n−1) 种 × 每个内部节点的拆分方式，指数爆炸</text>
+  <path d="M250,186 L250,208" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="212" width="380" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="250" y="232" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">③ 记忆化 DP：O(n²) ✓（先交保底）</text>
+  <text x="250" y="250" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">f(x) = min{ a(x−a) + f(a) + f(x−a) }，f(1) = 0，n ≤ 500 轻松过</text>
+  <path d="M250,260 L250,282" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="286" width="380" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="250" y="306" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">④ 打表：f(1..6) = 0, 1, 3, 6, 10, 15</text>
+  <text x="250" y="324" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">恰是三角形数——猜想 f(x) = C(x,2) = x(x−1)/2</text>
+  <path d="M250,334 L250,356" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="360" width="380" height="48" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="250" y="380" text-anchor="middle" font-size="11.5" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">⑤ 证明不变量 ⇒ 一行收尾：return n(n−1)/2</text>
+  <text x="250" y="398" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">数对计数 / 势能函数：总代价与拆法无关，O(1) 时间空间</text>
+
+  <!-- right column -->
+  <rect x="460" y="64" width="164" height="140" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="542" y="88" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">复杂度阶梯</text>
+  <text x="542" y="112" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">枚举：指数级 ✗</text>
+  <text x="542" y="136" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">DP：O(n²) ✓</text>
+  <text x="542" y="160" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">闭式：O(1) ✓✓</text>
+  <text x="542" y="186" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">n ≤ 500 时前两者都能过</text>
+
+  <rect x="460" y="224" width="164" height="132" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="542" y="248" text-anchor="middle" font-size="11.5" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">比赛实战</text>
+  <text x="542" y="272" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">① DP 保底先交</text>
+  <text x="542" y="294" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">② 打表见三角形数</text>
+  <text x="542" y="316" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">③ 证明后换闭式</text>
+  <text x="542" y="340" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">全程约两分钟</text>
+</svg>
