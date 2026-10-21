@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="880" viewBox="0 0 920 880" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="920" height="880" fill="#fdfcf7"/>
+  <text x="460" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">值域线段树：值条件 → 区间最大值查询，下标条件 → 入树时机</text>
+  <path d="M 280 42 Q 460 50 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 面板 A：树 T_D ===== -->
+  <text x="60" y="68" font-size="14" font-weight="bold" fill="#2a5a92">① 树 T_D（叶子按「值」存前驱的 D）—— 算 U[j]：查前缀 [1, nums[j]−1]</text>
+
+  <!-- 树 A 边 -->
+  <g stroke="#b9c8d8" stroke-width="1.4" fill="none" filter="url(#sk)">
+    <path d="M 400 116 L 250 154"/><path d="M 400 116 L 550 154"/>
+    <path d="M 250 186 L 175 224"/><path d="M 250 186 L 325 224"/>
+    <path d="M 550 186 L 475 224"/><path d="M 550 186 L 625 224"/>
+    <path d="M 175 256 L 137 294"/><path d="M 175 256 L 212 294"/>
+    <path d="M 325 256 L 287 294"/><path d="M 325 256 L 362 294"/>
+    <path d="M 475 256 L 437 294"/><path d="M 475 256 L 512 294"/>
+    <path d="M 625 256 L 587 294"/><path d="M 625 256 L 662 294"/>
+  </g>
+
+  <!-- 树 A 节点 -->
+  <g filter="url(#sk)">
+    <rect x="370" y="84" width="60" height="32" rx="6" fill="#eef3f8" stroke="#8aa4bd" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#44607a" filter="url(#sk)">12</text>
+
+  <g filter="url(#sk)">
+    <rect x="220" y="154" width="60" height="32" rx="6" fill="#eef3f8" stroke="#8aa4bd" stroke-width="1.5"/>
+    <rect x="520" y="154" width="60" height="32" rx="6" fill="#eef3f8" stroke="#8aa4bd" stroke-width="1.5"/>
+  </g>
+  <text x="250" y="175" text-anchor="middle" font-size="14" font-weight="bold" fill="#44607a" filter="url(#sk)">12</text>
+  <text x="550" y="175" text-anchor="middle" font-size="14" font-weight="bold" fill="#44607a" filter="url(#sk)">5</text>
+
+  <g filter="url(#sk)">
+    <rect x="145" y="224" width="60" height="32" rx="6" fill="#dbeafe" stroke="#4a8edb" stroke-width="2.4"/>
+    <rect x="295" y="224" width="60" height="32" rx="6" fill="#eef3f8" stroke="#8aa4bd" stroke-width="1.5"/>
+    <rect x="445" y="224" width="60" height="32" rx="6" fill="#eef3f8" stroke="#8aa4bd" stroke-width="1.5"/>
+    <rect x="595" y="224" width="60" height="32" rx="6" fill="#eef3f8" stroke="#8aa4bd" stroke-width="1.5"/>
+  </g>
+  <text x="175" y="245" text-anchor="middle" font-size="14" font-weight="bold" fill="#2a5a92" filter="url(#sk)">10</text>
+  <text x="325" y="245" text-anchor="middle" font-size="14" font-weight="bold" fill="#44607a" filter="url(#sk)">12</text>
+  <text x="475" y="245" text-anchor="middle" font-size="14" font-weight="bold" fill="#44607a" filter="url(#sk)">5</text>
+  <text x="625" y="245" text-anchor="middle" font-size="14" font-weight="bold" fill="#44607a" filter="url(#sk)">0</text>
+
+  <!-- 树 A 叶子 -->
+  <g filter="url(#sk)" font-size="14" text-anchor="middle">
+    <rect x="110" y="294" width="54" height="42" rx="4" fill="#f4f6f8" stroke="#b0bcc8" stroke-width="1.4"/>
+    <rect x="185" y="294" width="54" height="42" rx="4" fill="#f4f6f8" stroke="#b0bcc8" stroke-width="1.4"/>
+    <rect x="260" y="294" width="54" height="42" rx="4" fill="#dbeafe" stroke="#4a8edb" stroke-width="2.4"/>
+    <rect x="335" y="294" width="54" height="42" rx="4" fill="#fdf1f1" stroke="#b85450" stroke-width="2" stroke-dasharray="5 3"/>
+    <rect x="410" y="294" width="54" height="42" rx="4" fill="#f4f6f8" stroke="#b0bcc8" stroke-width="1.4"/>
+    <rect x="485" y="294" width="54" height="42" rx="4" fill="#f4f6f8" stroke="#b0bcc8" stroke-width="1.4"/>
+    <rect x="560" y="294" width="54" height="42" rx="4" fill="#f4f6f8" stroke="#b0bcc8" stroke-width="1.4"/>
+    <rect x="635" y="294" width="54" height="42" rx="4" fill="#f4f6f8" stroke="#b0bcc8" stroke-width="1.4"/>
+    <text x="137" y="320" fill="#9aa6b0">—</text>
+    <text x="212" y="320" fill="#44607a">10</text>
+    <text x="287" y="320" fill="#2a5a92" font-weight="bold">3</text>
+    <text x="362" y="320" fill="#b85450" font-weight="bold">12</text>
+    <text x="437" y="320" fill="#44607a">5</text>
+    <text x="512" y="320" fill="#9aa6b0">—</text>
+    <text x="587" y="320" fill="#9aa6b0">—</text>
+    <text x="662" y="320" fill="#9aa6b0">—</text>
+  </g>
+  <g font-size="11" fill="#888" text-anchor="middle" filter="url(#sk)">
+    <text x="137" y="352">值1</text><text x="212" y="352">值2</text><text x="287" y="352">值3</text><text x="362" y="352">值4</text>
+    <text x="437" y="352">值5</text><text x="512" y="352">值6</text><text x="587" y="352">值7</text><text x="662" y="352">值8</text>
+  </g>
+  <text x="460" y="378" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a5a92" filter="url(#sk)">nums[j] = 4：查询 [1, 3] 拆成「节点[值1..2] + 叶子值3」（蓝色）→ max = 10 → U[j] = 4 + 10 = 14</text>
+  <text x="460" y="398" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#sk)">叶子值4 = nums[j] 被排除（虚线红框）——等值不能相邻，保证「严格」交替</text>
+
+  <!-- ===== 面板 B：树 T_U ===== -->
+  <text x="60" y="436" font-size="14" font-weight="bold" fill="#2e6e2e">② 树 T_U（叶子按「值」存前驱的 U）—— 算 D[j]：查后缀 [nums[j]+1, V]</text>
+
+  <g stroke="#c2d4c2" stroke-width="1.4" fill="none" filter="url(#sk)">
+    <path d="M 400 482 L 250 520"/><path d="M 400 482 L 550 520"/>
+    <path d="M 250 552 L 175 590"/><path d="M 250 552 L 325 590"/>
+    <path d="M 550 552 L 475 590"/><path d="M 550 552 L 625 590"/>
+    <path d="M 175 622 L 137 660"/><path d="M 175 622 L 212 660"/>
+    <path d="M 325 622 L 287 660"/><path d="M 325 622 L 362 660"/>
+    <path d="M 475 622 L 437 660"/><path d="M 475 622 L 512 660"/>
+    <path d="M 625 622 L 587 660"/><path d="M 625 622 L 662 660"/>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="370" y="450" width="60" height="32" rx="6" fill="#f0f5f0" stroke="#9bb89b" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="471" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">8</text>
+
+  <g filter="url(#sk)">
+    <rect x="220" y="520" width="60" height="32" rx="6" fill="#f0f5f0" stroke="#9bb89b" stroke-width="1.5"/>
+    <rect x="520" y="520" width="60" height="32" rx="6" fill="#d9efe0" stroke="#4a7a3a" stroke-width="2.4"/>
+  </g>
+  <text x="250" y="541" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">7</text>
+  <text x="550" y="541" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">8</text>
+
+  <g filter="url(#sk)">
+    <rect x="145" y="590" width="60" height="32" rx="6" fill="#f0f5f0" stroke="#9bb89b" stroke-width="1.5"/>
+    <rect x="295" y="590" width="60" height="32" rx="6" fill="#f0f5f0" stroke="#9bb89b" stroke-width="1.5"/>
+    <rect x="445" y="590" width="60" height="32" rx="6" fill="#f0f5f0" stroke="#9bb89b" stroke-width="1.5"/>
+    <rect x="595" y="590" width="60" height="32" rx="6" fill="#f0f5f0" stroke="#9bb89b" stroke-width="1.5"/>
+  </g>
+  <text x="175" y="611" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">2</text>
+  <text x="325" y="611" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">7</text>
+  <text x="475" y="611" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">8</text>
+  <text x="625" y="611" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">0</text>
+
+  <g filter="url(#sk)" font-size="14" text-anchor="middle">
+    <rect x="110" y="660" width="54" height="42" rx="4" fill="#f4f6f4" stroke="#b4c2b4" stroke-width="1.4"/>
+    <rect x="185" y="660" width="54" height="42" rx="4" fill="#f4f6f4" stroke="#b4c2b4" stroke-width="1.4"/>
+    <rect x="260" y="660" width="54" height="42" rx="4" fill="#f4f6f4" stroke="#b4c2b4" stroke-width="1.4"/>
+    <rect x="335" y="660" width="54" height="42" rx="4" fill="#f4f6f4" stroke="#b4c2b4" stroke-width="1.4"/>
+    <rect x="410" y="660" width="54" height="42" rx="4" fill="#f4f6f4" stroke="#b4c2b4" stroke-width="1.4"/>
+    <rect x="485" y="660" width="54" height="42" rx="4" fill="#f4f6f4" stroke="#b4c2b4" stroke-width="1.4"/>
+    <rect x="560" y="660" width="54" height="42" rx="4" fill="#f4f6f4" stroke="#b4c2b4" stroke-width="1.4"/>
+    <rect x="635" y="660" width="54" height="42" rx="4" fill="#f4f6f4" stroke="#b4c2b4" stroke-width="1.4"/>
+    <text x="137" y="686" fill="#9aa69a">—</text>
+    <text x="212" y="686" fill="#4a7a3a">2</text>
+    <text x="287" y="686" fill="#4a7a3a">3</text>
+    <text x="362" y="686" fill="#4a7a3a">7</text>
+    <text x="437" y="686" fill="#2e6e2e" font-weight="bold">8</text>
+    <text x="512" y="686" fill="#9aa69a">—</text>
+    <text x="587" y="686" fill="#9aa69a">—</text>
+    <text x="662" y="686" fill="#9aa69a">—</text>
+  </g>
+  <g font-size="11" fill="#888" text-anchor="middle" filter="url(#sk)">
+    <text x="137" y="718">值1</text><text x="212" y="718">值2</text><text x="287" y="718">值3</text><text x="362" y="718">值4</text>
+    <text x="437" y="718">值5</text><text x="512" y="718">值6</text><text x="587" y="718">值7</text><text x="662" y="718">值8</text>
+  </g>
+  <text x="460" y="744" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">nums[j] = 4：查询 [5, 8] 恰是整节点[值5..8]（绿色）→ max = 8 → D[j] = 4 + 8 = 12</text>
+  <text x="460" y="764" text-anchor="middle" font-size="11.5" fill="#7a7a7a" filter="url(#sk)">（叶子状态对应示例 2 演算中 j = 4 时刻，见演算图）</text>
+
+  <!-- ===== 面板 C：入树时机 ===== -->
+  <text x="60" y="798" font-size="14" font-weight="bold" fill="#444">③ 下标条件 → 入树时机（示意 k = 3，当前处理 j = 7）</text>
+  <g filter="url(#sk)" font-size="14" text-anchor="middle">
+    <rect x="140" y="810" width="46" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="196" y="810" width="46" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="252" y="810" width="46" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="308" y="810" width="46" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="364" y="810" width="46" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="420" y="810" width="46" height="32" rx="4" fill="#f0f0f0" stroke="#b0b0b0" stroke-width="1.5"/>
+    <rect x="476" y="810" width="46" height="32" rx="4" fill="#f0f0f0" stroke="#b0b0b0" stroke-width="1.5"/>
+    <rect x="532" y="810" width="46" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="588" y="810" width="46" height="32" rx="4" fill="#f0f0f0" stroke="#b0b0b0" stroke-width="1.5"/>
+    <rect x="644" y="810" width="46" height="32" rx="4" fill="#f0f0f0" stroke="#b0b0b0" stroke-width="1.5"/>
+    <text x="163" y="831" fill="#2e6e2e">0</text><text x="219" y="831" fill="#2e6e2e">1</text>
+    <text x="275" y="831" fill="#2e6e2e">2</text><text x="331" y="831" fill="#2e6e2e">3</text>
+    <text x="387" y="831" fill="#2e6e2e">4</text><text x="443" y="831" fill="#8a8a8a">5</text>
+    <text x="499" y="831" fill="#8a8a8a">6</text><text x="555" y="831" fill="#b85450" font-weight="bold">7</text>
+    <text x="611" y="831" fill="#8a8a8a">8</text><text x="667" y="831" fill="#8a8a8a">9</text>
+  </g>
+  <path d="M 387 850 Q 470 862 555 848" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="470" y="876" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">处理 j 前先把下标 j−k=4 入树 → 树中恰好是 [0, j−k] 的全部合法前驱</text>
+</svg>
