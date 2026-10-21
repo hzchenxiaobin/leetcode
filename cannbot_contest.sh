@@ -38,7 +38,8 @@ for prefix, kind in (('weekly-contest-', '周赛'), ('biweekly-contest-', '双�
     else:
         pool = [n for n in local if n < 300]
     start = min(pool, default=latest_done + 1)
-    for n in range(start, latest_done + 1):
+    numbers = range(latest_done, start - 1, -1) if kind == '周赛' else range(start, latest_done + 1)
+    for n in numbers:
         print(f'{prefix}{n}')
 ")
 
@@ -102,6 +103,13 @@ except Exception:
             echo ">>> [第 $num 场${KIND} Q$q] 警告: cannbot 执行失败，继续下一题" >&2
         fi
     done
+
+    # 每场题解处理完成后单独提交
+    COMMIT_MESSAGE="请把第 ${num} 场${KIND}题解产生的所有改动 git 提交"
+    echo
+    echo "======== 第 $num 场${KIND}提交 ========"
+    echo ">>> 发送: $COMMIT_MESSAGE"
+    cannbot run "$COMMIT_MESSAGE"
 done
 
 # ========== 3. 全部写完后提交并推送 ==========
