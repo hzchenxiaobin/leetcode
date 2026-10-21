@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">滚动哈希：O(1) 提取任意子数组的「指纹」</text>
+  <path d="M 300 42 Q 470 50 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: prefix hash ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="64" width="420" height="280" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="84" y="92" font-size="13" font-weight="bold" fill="#2b6e9e">① 前缀哈希：把每个前缀看成一个 B 进制数</text>
+
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="100" y="108" width="56" height="36" fill="#fdfcf7" stroke="#446688" stroke-width="1.3"/></g>
+    <text x="128" y="132" text-anchor="middle" fill="#446688" font-weight="bold">5</text>
+    <g filter="url(#sk)"><rect x="162" y="108" width="56" height="36" fill="#fdfcf7" stroke="#446688" stroke-width="1.3"/></g>
+    <text x="190" y="132" text-anchor="middle" fill="#446688" font-weight="bold">3</text>
+    <g filter="url(#sk)"><rect x="224" y="108" width="56" height="36" fill="#fdfcf7" stroke="#446688" stroke-width="1.3"/></g>
+    <text x="252" y="132" text-anchor="middle" fill="#446688" font-weight="bold">8</text>
+    <g filter="url(#sk)"><rect x="286" y="108" width="56" height="36" fill="#fdfcf7" stroke="#446688" stroke-width="1.3"/></g>
+    <text x="314" y="132" text-anchor="middle" fill="#446688" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="348" y="108" width="56" height="36" fill="#fdfcf7" stroke="#446688" stroke-width="1.3"/></g>
+    <text x="376" y="132" text-anchor="middle" fill="#446688" font-weight="bold">9</text>
+  </g>
+  <g font-size="9.5" fill="#999">
+    <text x="128" y="160" text-anchor="middle">0</text>
+    <text x="190" y="160" text-anchor="middle">1</text>
+    <text x="252" y="160" text-anchor="middle">2</text>
+    <text x="314" y="160" text-anchor="middle">3</text>
+    <text x="376" y="160" text-anchor="middle">4</text>
+  </g>
+
+  <!-- H chain -->
+  <g font-size="10.5" font-family="monospace">
+    <g filter="url(#sk)"><rect x="92" y="182" width="48" height="30" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/></g>
+    <text x="116" y="202" text-anchor="middle" fill="#444">0</text>
+    <g filter="url(#sk)"><rect x="152" y="182" width="48" height="30" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/></g>
+    <text x="176" y="202" text-anchor="middle" fill="#444">5</text>
+    <g filter="url(#sk)"><rect x="212" y="182" width="48" height="30" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/></g>
+    <text x="236" y="202" text-anchor="middle" fill="#444">53</text>
+    <g filter="url(#sk)"><rect x="272" y="182" width="48" height="30" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/></g>
+    <text x="296" y="202" text-anchor="middle" fill="#444">538</text>
+    <g filter="url(#sk)"><rect x="332" y="182" width="48" height="30" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/></g>
+    <text x="356" y="202" text-anchor="middle" fill="#444">5381</text>
+    <g filter="url(#sk)"><rect x="392" y="182" width="56" height="30" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/></g>
+    <text x="420" y="202" text-anchor="middle" fill="#444">53819</text>
+  </g>
+  <g font-size="9" fill="#888">
+    <text x="116" y="228" text-anchor="middle">H₀</text>
+    <text x="176" y="228" text-anchor="middle">H₁</text>
+    <text x="236" y="228" text-anchor="middle">H₂</text>
+    <text x="296" y="228" text-anchor="middle">H₃</text>
+    <text x="356" y="228" text-anchor="middle">H₄</text>
+    <text x="420" y="228" text-anchor="middle">H₅</text>
+  </g>
+  <text x="84" y="258" font-size="11" font-family="monospace" fill="#444">H[0] = 0</text>
+  <text x="84" y="282" font-size="12" font-family="monospace" fill="#b03a3a" font-weight="bold">H[i+1] = (H[i]·B + nums[i]) mod M</text>
+  <text x="84" y="306" font-size="10.5" fill="#666">示意图取 B=10 便于心算；实际用 B=131、137 等大模数</text>
+  <text x="84" y="326" font-size="10.5" fill="#666">预处理 O(n)，之后任何子段指纹都是 O(1)</text>
+
+  <!-- ===== Panel 2: difference ===== -->
+  <g filter="url(#sk)">
+    <rect x="510" y="64" width="380" height="280" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="530" y="92" font-size="13" font-weight="bold" fill="#2e6e2e">② 差分：O(1) 取出子段 [l, r] 的指纹</text>
+
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="545" y="112" width="56" height="36" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="573" y="136" text-anchor="middle" fill="#999">5</text>
+    <g filter="url(#sk)"><rect x="607" y="112" width="56" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+    <text x="635" y="136" text-anchor="middle" fill="#2e6e2e" font-weight="bold">3</text>
+    <g filter="url(#sk)"><rect x="669" y="112" width="56" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+    <text x="697" y="136" text-anchor="middle" fill="#2e6e2e" font-weight="bold">8</text>
+    <g filter="url(#sk)"><rect x="731" y="112" width="56" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+    <text x="759" y="136" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="793" y="112" width="56" height="36" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="821" y="136" text-anchor="middle" fill="#999">9</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="603" y="106" width="188" height="48" fill="none" stroke="#2e6e2e" stroke-width="2"/>
+  </g>
+  <text x="697" y="172" text-anchor="middle" font-size="10.5" fill="#2e6e2e" font-weight="bold">子段 [l=1, r=3] = [3,8,1]</text>
+
+  <text x="530" y="206" font-size="11" font-family="monospace" fill="#444">H[l] = H[1] = 5，H[r+1] = H[4] = 5381</text>
+  <text x="530" y="234" font-size="11.5" font-family="monospace" fill="#b03a3a" font-weight="bold">h(l..r) = (H[r+1] − H[l]·B^(r−l+1)) mod M</text>
+  <text x="530" y="260" font-size="11.5" font-family="monospace" fill="#444">= 5381 − 5·10³ = 381</text>
+  <text x="530" y="286" font-size="11.5" font-family="monospace" fill="#2e6e2e" font-weight="bold">= 381 → 正是子段 [3,8,1] ✓</text>
+  <text x="530" y="316" font-size="10" fill="#888">减去 H[l]·B^len 就是把「高位前缀」抹掉</text>
+
+  <!-- ===== Panel 3: double hash + counting ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="368" width="830" height="152" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="84" y="396" font-size="13" font-weight="bold" fill="#7a5415">③ 双哈希 + 计数：判定「长度 L 是否存在唯一子数组」</text>
+
+  <g filter="url(#sk)">
+    <rect x="84" y="414" width="150" height="56" rx="6" fill="#fdfcf7" stroke="#d6a040" stroke-width="1.3"/>
+  </g>
+  <text x="159" y="437" text-anchor="middle" font-size="10.5" fill="#444">所有长度 L 的子数组</text>
+  <text x="159" y="456" text-anchor="middle" font-size="10" fill="#999">共 n−L+1 个</text>
+
+  <path d="M 240 442 L 288 442" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="292" y="414" width="200" height="56" rx="6" fill="#fdfcf7" stroke="#d6a040" stroke-width="1.3"/>
+  </g>
+  <text x="392" y="437" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">双哈希指纹 key = (h₁,h₂)</text>
+  <text x="392" y="456" text-anchor="middle" font-size="10" fill="#999" font-family="monospace">h₁ mod M₁，h₂ mod M₂</text>
+
+  <path d="M 498 442 L 546 442" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="550" y="414" width="150" height="56" rx="6" fill="#fdfcf7" stroke="#d6a040" stroke-width="1.3"/>
+  </g>
+  <text x="625" y="437" text-anchor="middle" font-size="10.5" fill="#444">哈希表计数</text>
+  <text x="625" y="456" text-anchor="middle" font-size="10" fill="#999" font-family="monospace">cnt[key] += 1</text>
+
+  <path d="M 706 442 L 748 442" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="752" y="410" width="120" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="812" y="432" text-anchor="middle" font-size="10.5" fill="#2e6e2e" font-weight="bold">cnt = 1 → 唯一 ✓</text>
+  <g filter="url(#sk)">
+    <rect x="752" y="450" width="120" height="34" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/>
+  </g>
+  <text x="812" y="472" text-anchor="middle" font-size="10.5" fill="#b03a3a">cnt ≥ 2 → 重复</text>
+
+  <text x="84" y="500" font-size="10.5" fill="#666">取 M₁ = 2⁶¹−1、M₂ = 998244353：不同子数组指纹撞车的概率 ≈ n²/(2·M₁·M₂) ≈ 10⁻¹⁸，可视为无误判</text>
+
+  <!-- ===== Panel 4: cautions ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="544" width="830" height="92" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="84" y="570" font-size="12" font-weight="bold" fill="#2b2b2b">实现注意</text>
+  <text x="84" y="592" font-size="10.5" fill="#444">Python 的 % 恒非负；C++ 中减法可能为负，要 (+ M) 再 % M</text>
+  <text x="84" y="612" font-size="10.5" fill="#444">1 ≤ nums[i] ≤ 10⁵，元素值可直接当哈希「字符」用，无需离散化</text>
+  <text x="84" y="632" font-size="10.5" fill="#444">C++ 中可把 (h₁,h₂) 压成一个 long long：key = h₁·M₂ + h₂，避免 pair 开销</text>
+</svg>

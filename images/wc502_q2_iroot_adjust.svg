@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="520" viewBox="0 0 640 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="520" fill="#fdfcf7"/>
+  <text x="320" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">整数 k 次根：浮点初值 + 双向微调</text>
+  <path d="M 190 42 Q 320 50 450 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 坑展示区 -->
+  <g filter="url(#sk)">
+    <rect x="46" y="60" width="262" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="177" y="82" text-anchor="middle" font-size="13" fill="#2b5a80">pow(64, 1.0/3) = 3.9999999…</text>
+
+  <path d="M 177 96 L 177 116" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="187" y="110" font-size="10" fill="#666">int() 截断</text>
+
+  <g filter="url(#sk)">
+    <rect x="46" y="120" width="262" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="177" y="142" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">3 ✗ —— 漏掉 64 = 4³</text>
+
+  <path d="M 130 156 Q 130 178 177 178 Q 224 178 224 154" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="250" y="176" font-size="11" fill="#2e6e2e" font-weight="bold">双向微调纠正</text>
+
+  <g filter="url(#sk)">
+    <rect x="46" y="184" width="262" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="177" y="206" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">4 ✓（64 = 4³ 被找回）</text>
+
+  <!-- 右侧说明 -->
+  <g filter="url(#sk)">
+    <rect x="340" y="60" width="262" height="72" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="471" y="84" text-anchor="middle" font-size="11" fill="#7a5415">浮点 pow 只有 ~15~16 位有效数字，</text>
+  <text x="471" y="100" text-anchor="middle" font-size="11" fill="#7a5415">换算成整数底数可能偏差 1，</text>
+  <text x="471" y="116" text-anchor="middle" font-size="11" fill="#7a5415">直接截断是最经典的 WA 原因</text>
+
+  <g filter="url(#sk)">
+    <rect x="340" y="146" width="262" height="72" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="471" y="170" text-anchor="middle" font-size="11" fill="#2b5a80">t ≤ 10⁹ 时底数 ≤ 31623，</text>
+  <text x="471" y="186" text-anchor="middle" font-size="11" fill="#2b5a80">浮点绝对误差 ≪ 1，</text>
+  <text x="471" y="202" text-anchor="middle" font-size="11" fill="#2b5a80">两个 while 合计至多走 1~2 步</text>
+
+  <!-- 流程区 -->
+  <g filter="url(#sk)">
+    <rect x="190" y="238" width="260" height="34" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="320" y="260" text-anchor="middle" font-size="12" fill="#2b5a80">x̂ = (int)pow(t, 1.0/k)（浮点估计）</text>
+  <path d="M 320 272 L 320 296" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 判断1 -->
+  <g filter="url(#sk)">
+    <polygon points="320,300 425,334 320,368 215,334" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="330" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">x̂ &gt; 0 且 x̂^k &gt; t ?</text>
+  <text x="320" y="346" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">（估大了）</text>
+
+  <path d="M 215 334 L 128 334 L 128 255 L 186 255" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="168" y="326" text-anchor="middle" font-size="11" fill="#b03a3a" font-weight="bold">是：x̂−−</text>
+
+  <path d="M 320 368 L 320 392" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="328" y="384" font-size="11" fill="#2e6e2e" font-weight="bold">否</text>
+
+  <!-- 判断2 -->
+  <g filter="url(#sk)">
+    <polygon points="320,396 425,430 320,464 215,430" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="426" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">(x̂+1)^k ≤ t ?</text>
+  <text x="320" y="442" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">（估小了）</text>
+
+  <path d="M 425 430 L 512 430 L 512 255 L 454 255" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="472" y="422" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">是：x̂++</text>
+
+  <path d="M 320 464 L 320 484" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="328" y="478" font-size="11" fill="#2e6e2e" font-weight="bold">否</text>
+
+  <g filter="url(#sk)">
+    <rect x="230" y="486" width="180" height="30" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="506" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">返回 g(t) = x̂ + 1</text>
+
+  <!-- 左下警示 -->
+  <g filter="url(#sk)">
+    <rect x="36" y="396" width="150" height="110" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/>
+  </g>
+  <text x="111" y="418" text-anchor="middle" font-size="11" font-weight="bold" fill="#b03a3a">C++ 防溢出：</text>
+  <text x="111" y="436" text-anchor="middle" font-size="10.5" fill="#b03a3a">k=30, x≈31623 时</text>
+  <text x="111" y="452" text-anchor="middle" font-size="10.5" fill="#b03a3a">x^k 远超 long long，</text>
+  <text x="111" y="468" text-anchor="middle" font-size="10.5" fill="#b03a3a">用 __int128 并在</text>
+  <text x="111" y="484" text-anchor="middle" font-size="10.5" fill="#b03a3a">&gt; 2×10⁹ 时截断返回</text>
+  <text x="111" y="500" text-anchor="middle" font-size="10.5" fill="#b03a3a">（只需与 t ≤ 10⁹ 比较）</text>
+</svg>

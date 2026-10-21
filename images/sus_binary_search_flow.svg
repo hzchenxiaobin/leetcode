@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="680" viewBox="0 0 940 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="680" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">整体框架：二分答案 + 滚动哈希判定</text>
+  <path d="M 300 42 Q 470 50 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== main flow ===== -->
+  <g filter="url(#sk)">
+    <rect x="160" y="62" width="180" height="38" rx="16" fill="#fdfcf7" stroke="#666" stroke-width="1.4"/>
+  </g>
+  <text x="250" y="86" text-anchor="middle" font-size="11.5" fill="#333" font-weight="bold">开始：读入 nums（长 n）</text>
+
+  <path d="M 250 100 L 250 118" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="125" y="122" width="250" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="250" y="140" text-anchor="middle" font-size="10.5" fill="#2b6e9e" font-weight="bold">预处理前缀哈希 H₁,H₂</text>
+  <text x="250" y="158" text-anchor="middle" font-size="10.5" fill="#2b6e9e" font-weight="bold">与幂表 P₁,P₂ —— O(n)</text>
+
+  <path d="M 250 166 L 250 192" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#sk)">
+    <polygon points="160,232 250,198 340,232 250,266" fill="#fdfcf7" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="250" y="228" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold">lo &lt; hi ?</text>
+  <text x="250" y="244" text-anchor="middle" font-size="9" fill="#999">（初始 lo=1, hi=n）</text>
+
+  <path d="M 340 232 L 376 232" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="356" y="224" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold">否</text>
+
+  <g filter="url(#sk)">
+    <rect x="380" y="208" width="180" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="470" y="228" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">返回 lo</text>
+  <text x="470" y="246" text-anchor="middle" font-size="9.5" fill="#666">（最小唯一长度）</text>
+
+  <path d="M 250 266 L 250 284" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="262" y="280" font-size="10" fill="#4a7a3a" font-weight="bold">是</text>
+
+  <g filter="url(#sk)">
+    <rect x="160" y="288" width="180" height="36" rx="6" fill="#fdfcf7" stroke="#666" stroke-width="1.4"/>
+  </g>
+  <text x="250" y="311" text-anchor="middle" font-size="11.5" fill="#333" font-family="monospace">mid = (lo + hi) / 2</text>
+
+  <path d="M 250 324 L 250 350" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2 -->
+  <g filter="url(#sk)">
+    <polygon points="155,390 250,352 345,390 250,428" fill="#fdfcf7" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="250" y="386" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold">check(mid) ?</text>
+  <text x="250" y="402" text-anchor="middle" font-size="9" fill="#999">（判定过程见右侧）</text>
+
+  <!-- true branch: hi = mid, loop back -->
+  <path d="M 155 390 L 112 390" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="133" y="382" text-anchor="middle" font-size="10" fill="#4a7a3a" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="20" y="372" width="92" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="66" y="395" text-anchor="middle" font-size="11" fill="#2b6e9e" font-family="monospace" font-weight="bold">hi = mid</text>
+  <path d="M 66 372 L 66 232 L 156 232" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="70" y="300" font-size="9.5" fill="#4a8e4a">继续二分</text>
+
+  <!-- false branch: lo = mid+1, loop back -->
+  <path d="M 345 390 L 391 390" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="368" y="382" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold">否</text>
+  <g filter="url(#sk)">
+    <rect x="395" y="372" width="130" height="36" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="460" y="395" text-anchor="middle" font-size="11" fill="#b03a3a" font-family="monospace" font-weight="bold">lo = mid + 1</text>
+  <path d="M 525 390 L 590 390 L 590 172 L 295 172 L 295 213" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="598" y="280" font-size="9.5" fill="#4a8e4a">继续二分</text>
+
+  <!-- ===== check panel ===== -->
+  <g filter="url(#sk)">
+    <rect x="640" y="100" width="270" height="430" rx="12" fill="#f3f7fc" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="775" y="128" text-anchor="middle" font-size="14" fill="#2b6e9e" font-weight="bold" font-family="monospace">check(L)</text>
+  <text x="775" y="148" text-anchor="middle" font-size="10" fill="#888">长度 L 是否存在唯一子数组</text>
+
+  <g filter="url(#sk)">
+    <rect x="660" y="164" width="230" height="32" rx="6" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="775" y="185" text-anchor="middle" font-size="10.5" fill="#333" font-family="monospace">cnt ← 空哈希表</text>
+
+  <path d="M 775 196 L 775 212" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="660" y="216" width="230" height="32" rx="6" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="775" y="237" text-anchor="middle" font-size="10.5" fill="#333" font-family="monospace">for i = 0 … n−L</text>
+
+  <path d="M 775 248 L 775 264" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="660" y="268" width="230" height="52" rx="6" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="775" y="289" text-anchor="middle" font-size="10.5" fill="#333" font-family="monospace">O(1) 提取 (h₁,h₂) =</text>
+  <text x="775" y="308" text-anchor="middle" font-size="10.5" fill="#333" font-family="monospace">nums[i..i+L−1] 的双哈希</text>
+
+  <path d="M 775 320 L 775 336" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="660" y="340" width="230" height="32" rx="6" fill="#fdfcf7" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="775" y="361" text-anchor="middle" font-size="10.5" fill="#333" font-family="monospace">cnt[key] += 1</text>
+
+  <path d="M 775 372 L 775 388" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="690,418 775,388 860,418 775,448" fill="#fdfcf7" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="775" y="415" text-anchor="middle" font-size="10.5" fill="#2b6e9e" font-weight="bold">存在 cnt=1 ？</text>
+  <text x="775" y="431" text-anchor="middle" font-size="9" fill="#999">（有出现次数为 1 的指纹）</text>
+
+  <path d="M 730 448 L 710 470" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="716" y="464" font-size="9.5" fill="#4a7a3a" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="655" y="474" width="110" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="710" y="495" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">true ✓</text>
+
+  <path d="M 820 448 L 840 470" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="834" y="464" font-size="9.5" fill="#b85450" font-weight="bold">否</text>
+  <g filter="url(#sk)">
+    <rect x="785" y="474" width="110" height="32" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="840" y="495" text-anchor="middle" font-size="11" fill="#b03a3a" font-weight="bold">false ✗</text>
+
+  <!-- ===== complexity ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="560" width="860" height="92" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="84" y="588" font-size="13" font-weight="bold" fill="#2e6e2e">复杂度</text>
+  <text x="84" y="612" font-size="11" fill="#444">二分 O(log n) 轮 × 每轮提取 n−L+1 个指纹、计数 O(n) → <tspan font-weight="bold" fill="#2e6e2e">时间 O(n log n)，空间 O(n)</tspan></text>
+  <text x="84" y="636" font-size="10.5" fill="#666">n = 10⁵ 时约 17 轮 × 10⁵ ≈ 1.7×10⁶ 次哈希运算，轻松通过</text>
+</svg>
