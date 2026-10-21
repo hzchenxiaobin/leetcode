@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="500" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">观察二：区间异或 = 前缀异或之异或，窗口内查最大异或用 01-Trie 贪心</text>
+  <path d="M 90 38 Q 320 46 550 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- ① 前缀异或 -->
+  <text x="320" y="64" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">① 前缀异或：XOR(nums[l..r]) = pre[r+1] ⊕ pre[l]</text>
+
+  <text x="112" y="98" text-anchor="end" font-size="11.5" fill="#888" filter="url(#rough2)">nums =</text>
+  <rect x="150" y="78" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="200" y="78" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="250" y="78" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="300" y="78" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="172" y="98" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">5</text>
+  <text x="222" y="98" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">4</text>
+  <text x="272" y="98" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">5</text>
+  <text x="322" y="98" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">6</text>
+
+  <text x="112" y="134" text-anchor="end" font-size="11.5" fill="#888" filter="url(#rough2)">pre =</text>
+  <rect x="150" y="114" width="44" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="200" y="114" width="44" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <rect x="250" y="114" width="44" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="300" y="114" width="44" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="350" y="114" width="44" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="172" y="134" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">0</text>
+  <text x="222" y="134" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">5</text>
+  <text x="272" y="134" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="322" y="134" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">4</text>
+  <text x="372" y="134" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">2</text>
+
+  <text x="320" y="164" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">例：l=1, r=3 ⟹ XOR = pre[4] ⊕ pre[1] = 2 ⊕ 5 = 7 = 4⊕5⊕6 ✓</text>
+
+  <!-- ② 01-Trie 贪心查询 -->
+  <text x="320" y="192" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">② 01-Trie 贪心查询（3 位示意）：查询 v = 010₂，候选 {000, 001, 100, 101}</text>
+
+  <!-- 左侧：每位的贪心决策 -->
+  <text x="22" y="264" font-size="10" fill="#b85450" filter="url(#rough2)">第2位 v=0 → 走 1</text>
+  <text x="22" y="304" font-size="10" fill="#b85450" filter="url(#rough2)">第1位 v=1 → 走 0</text>
+  <text x="22" y="344" font-size="10" fill="#b85450" filter="url(#rough2)">第0位 v=0 → 走 1</text>
+
+  <!-- 位层标签 -->
+  <text x="585" y="264" font-size="10" fill="#888" filter="url(#rough2)">bit2</text>
+  <text x="585" y="304" font-size="10" fill="#888" filter="url(#rough2)">bit1</text>
+  <text x="585" y="344" font-size="10" fill="#888" filter="url(#rough2)">bit0</text>
+
+  <!-- 边 -->
+  <line x1="330" y1="218" x2="220" y2="260" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <line x1="330" y1="218" x2="440" y2="260" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <line x1="220" y1="260" x2="175" y2="300" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <line x1="440" y1="260" x2="485" y2="300" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <line x1="175" y1="300" x2="135" y2="340" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <line x1="175" y1="300" x2="215" y2="340" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <line x1="485" y1="300" x2="445" y2="340" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <line x1="485" y1="300" x2="525" y2="340" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+
+  <!-- 边上的 0/1 标签 -->
+  <text x="266" y="234" font-size="10.5" fill="#666" filter="url(#rough2)">0</text>
+  <text x="392" y="234" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">1</text>
+  <text x="188" y="280" font-size="10.5" fill="#666" filter="url(#rough2)">0</text>
+  <text x="472" y="280" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">0</text>
+  <text x="144" y="318" font-size="10.5" fill="#666" filter="url(#rough2)">0</text>
+  <text x="204" y="318" font-size="10.5" fill="#666" filter="url(#rough2)">1</text>
+  <text x="454" y="318" font-size="10.5" fill="#666" filter="url(#rough2)">0</text>
+  <text x="514" y="318" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">1</text>
+
+  <!-- 节点 -->
+  <circle cx="330" cy="218" r="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="206" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">root</text>
+
+  <circle cx="220" cy="260" r="9" fill="#f0ede4" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <circle cx="440" cy="260" r="9" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+
+  <circle cx="175" cy="300" r="9" fill="#f0ede4" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <circle cx="485" cy="300" r="9" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+
+  <circle cx="135" cy="340" r="9" fill="#f0ede4" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <circle cx="215" cy="340" r="9" fill="#f0ede4" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <circle cx="445" cy="340" r="9" fill="#f0ede4" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <circle cx="525" cy="340" r="9" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+
+  <!-- 叶子值 -->
+  <text x="135" y="364" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">000</text>
+  <text x="215" y="364" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">001</text>
+  <text x="445" y="364" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">100</text>
+  <text x="525" y="364" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">101</text>
+
+  <text x="320" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">贪心每位尽量「反着走」：命中 101₂ = 5，得 010 ⊕ 101 = 111₂ = 7 ✓</text>
+
+  <!-- ③ 支持删除 -->
+  <rect x="45" y="400" width="550" height="88" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="65" y="422" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">③ 让 Trie 跟着窗口滑动：每个节点维护 cnt（经过它的前缀个数）</text>
+  <text x="65" y="444" font-size="11" fill="#444" filter="url(#rough2)">插入 pre[l]：路径上 cnt+1 ｜ 窗口左移删 pre[L]：路径上 cnt−1（懒删除）</text>
+  <text x="65" y="464" font-size="11" fill="#444" filter="url(#rough2)">查询时 cnt=0 的子树视为不存在 ⟹ Trie =（窗口内前缀）的可删多重集合</text>
+  <text x="65" y="482" font-size="10.5" fill="#666" filter="url(#rough2)">★ 不同 l 可能有相同 pre 值，cnt 天然支持多重计数</text>
+</svg>
