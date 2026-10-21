@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 432" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="432" fill="#fafafa"/>
+  <text x="320" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#333" filter="url(#rough2)">判定流程：最小值的奇偶 + 是否存在奇数</text>
+  <path d="M 170 42 Q 320 50 470 42" stroke="#333" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 判断框 1 -->
+  <g filter="url(#rough2)">
+    <rect x="210" y="58" width="220" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="84" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">mn = min(nums1) 是奇数？</text>
+
+  <!-- 是 → 左侧绿色 true 框 -->
+  <path d="M 246 100 Q 130 150 119 226" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="140" y="150" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">是</text>
+
+  <!-- 否 → 判断框 2 -->
+  <path d="M 320 100 L 320 144" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="330" y="128" font-size="11.5" font-weight="bold" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 判断框 2 -->
+  <g filter="url(#rough2)">
+    <rect x="210" y="148" width="220" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="174" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">数组中存在奇数？</text>
+
+  <!-- 是 → 中间红色 false 框 -->
+  <path d="M 320 190 L 320 226" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="330" y="212" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <!-- 否 → 右侧绿色 true 框 -->
+  <path d="M 430 190 Q 500 202 518 226" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="448" y="200" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">否（全偶）</text>
+
+  <!-- 左框：true 构造全奇 -->
+  <g filter="url(#rough2)">
+    <rect x="24" y="230" width="190" height="158" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="119" y="254" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">true：构造全奇 ✓</text>
+  <text x="119" y="278" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">奇数：保留原值</text>
+  <text x="119" y="296" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">偶数 e：e − mn</text>
+  <text x="119" y="314" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">（偶 − 奇 = 奇）</text>
+  <text x="119" y="344" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">→ nums2 全为奇数</text>
+  <text x="119" y="372" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">如 [6,1,4] → [5,1,3]</text>
+
+  <!-- 中框：false -->
+  <g filter="url(#rough2)">
+    <rect x="225" y="230" width="190" height="158" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+  </g>
+  <text x="320" y="254" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough2)">false ✗</text>
+  <text x="320" y="278" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">最小奇数 o：没有更小奇数</text>
+  <text x="320" y="296" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">可减的全是偶数 → 白减</text>
+  <text x="320" y="314" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">o 永远是奇，与 P = 偶矛盾</text>
+  <text x="320" y="344" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">→ 无公共奇偶</text>
+  <text x="320" y="372" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">如 [2,3] 、[2,3,5]</text>
+
+  <!-- 右框：true 全偶 -->
+  <g filter="url(#rough2)">
+    <rect x="426" y="230" width="190" height="158" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="521" y="254" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">true：全为偶数 ✓</text>
+  <text x="521" y="278" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">mn 为偶且没有奇数</text>
+  <text x="521" y="296" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">全体保留原值</text>
+  <text x="521" y="344" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">→ nums2 全为偶数</text>
+  <text x="521" y="372" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">如 [4,6]</text>
+
+  <!-- 底部一句话代码 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="402" width="440" height="24" rx="6" fill="#fffdf3" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <text x="320" y="418" text-anchor="middle" font-size="11" fill="#7a5415" font-family="monospace" filter="url(#rough2)">return mn % 2 == 1 or all(x % 2 == 0)</text>
+</svg>
