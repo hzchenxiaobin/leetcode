@@ -14,7 +14,7 @@ echo ">>> 工作目录: $(pwd)"
 
 # ========== 1. 计算待检查的周赛与双周赛场次 ==========
 # 规则：下一场即将开赛的场次编号（LeetCode upcomingContests）减一 = 已结束的最新场次
-# 范围：从本地该类型最小场次到最新已结束场次（逐题判缺，覆盖部分完成的场次）
+# 范围：周赛固定从第 300 场开始，双周赛从本地最小场次开始，均检查到最新已结束场次
 # 区分：周赛编号 >= 300（当前 5xx），双周赛编号 < 300（当前 19x）
 mapfile -t MISSING_LIST < <(curl -s 'https://leetcode.com/graphql' \
     -H 'Content-Type: application/json' \
@@ -34,10 +34,10 @@ for prefix, kind in (('weekly-contest-', '周赛'), ('biweekly-contest-', '双�
         continue
     latest_done = int(slug.rsplit('-', 1)[1]) - 1
     if kind == '周赛':
-        pool = [n for n in local if n >= 300]
+        start = 300
     else:
         pool = [n for n in local if n < 300]
-    start = min(pool, default=latest_done + 1)
+        start = min(pool, default=latest_done + 1)
     numbers = range(latest_done, start - 1, -1) if kind == '周赛' else range(start, latest_done + 1)
     for n in numbers:
         print(f'{prefix}{n}')
