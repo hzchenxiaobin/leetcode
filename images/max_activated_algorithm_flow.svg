@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="580" viewBox="0 0 940 580" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="8" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="580" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：并查集 + 最大两块</text>
+  <path d="M 280 42 Q 470 50 660 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== left: flow ===== -->
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="72" width="400" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="94" font-size="12" font-weight="bold" fill="#2b6e9e">① 哈希离散化</text>
+  <text x="100" y="114" font-size="11" fill="#444">x 值 → 节点 [0,n)，y 值 → 节点 [n,2n)</text>
+  <path d="M 280 128 L 280 152" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="156" width="400" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="178" font-size="12" font-weight="bold" fill="#2b6e9e">② 并查集连边</text>
+  <text x="100" y="198" font-size="11" fill="#444">每个点 (x,y)：union(X_x, Y_y)，路径压缩</text>
+  <path d="M 280 212 L 280 236" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="240" width="400" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="262" font-size="12" font-weight="bold" fill="#2b6e9e">③ 统计块大小</text>
+  <text x="100" y="282" font-size="11" fill="#444">遍历每个点，给 find(X_x) 计数 +1（边数即点数）</text>
+  <path d="M 280 296 L 280 320" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="324" width="400" height="50" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="344" font-size="12" font-weight="bold" fill="#2b6e9e">④ 找最大块 top1、次大块 top2</text>
+  <text x="100" y="364" font-size="11" fill="#444">一次遍历计数表即可</text>
+  <path d="M 280 374 L 280 400" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <path d="M 280 406 L 380 448 L 280 490 L 180 448 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="444" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold">连通块数 ≥ 2 ?</text>
+  <text x="280" y="462" text-anchor="middle" font-size="10" fill="#888">(计数表条目数)</text>
+
+  <!-- yes branch -->
+  <path d="M 180 448 L 120 448 L 120 492" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="150" y="440" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="40" y="496" width="160" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="120" y="518" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">桥接两块</text>
+  <text x="120" y="536" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">top1+top2+1</text>
+
+  <!-- no branch -->
+  <path d="M 380 448 L 440 448 L 440 492" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="406" y="440" font-size="11" fill="#2e6e2e" font-weight="bold">否</text>
+  <g filter="url(#sk)">
+    <rect x="360" y="496" width="160" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="440" y="518" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">仅 1 块</text>
+  <text x="440" y="536" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">n + 1</text>
+
+  <!-- ===== right: complexity + trap ===== -->
+  <g filter="url(#sk)">
+    <rect x="540" y="72" width="380" height="100" rx="8" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="560" y="96" font-size="13" font-weight="bold" fill="#2e6e2e">复杂度</text>
+  <text x="560" y="120" font-size="12" fill="#444" font-weight="bold">时间 O(n · α(n))，空间 O(n)</text>
+  <text x="560" y="142" font-size="11" fill="#666">n ≤ 10⁵，坐标 ±10⁹ → 哈希表离散化</text>
+  <text x="560" y="160" font-size="11" fill="#666">不能开桶数组，值域太大</text>
+
+  <g filter="url(#sk)">
+    <rect x="540" y="192" width="380" height="170" rx="8" fill="#fce4ec" stroke="#b03a3a" stroke-width="1.4"/>
+  </g>
+  <text x="560" y="216" font-size="13" font-weight="bold" fill="#b03a3a">⚠ 最大陷阱：X 值与 Y 值不能合并</text>
+  <text x="560" y="240" font-size="11" fill="#444">值 v 既作某些点的 x、又作另一些点的 y 时，</text>
+  <text x="560" y="258" font-size="11" fill="#444">X_v 与 Y_v 必须是两个不同节点。</text>
+  <text x="560" y="282" font-size="11" fill="#444">反例：[[1,5],[9,5],[5,2],[5,8],[3,4],[3,6]]</text>
+  <text x="560" y="300" font-size="11" fill="#444">正确答案 5；若合并值 5 会误得一个 4 点</text>
+  <text x="560" y="318" font-size="11" fill="#444">大块，错算成 7。</text>
+  <text x="560" y="344" font-size="11" fill="#b03a3a" font-weight="bold">激活匹配的是「点的 x 坐标 / y 坐标」</text>
+
+  <g filter="url(#sk)">
+    <rect x="540" y="382" width="380" height="164" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="560" y="406" font-size="12" font-weight="bold" fill="#2b2b2b">为什么跨块取值总是合法？</text>
+  <text x="560" y="430" font-size="11" fill="#444">· 每个块至少含一个 X 节点和一个 Y 节点</text>
+  <text x="560" y="448" font-size="11" fill="#444">  （块内每条边都连接 X 与 Y）</text>
+  <text x="560" y="472" font-size="11" fill="#444">· 跨块选 (x,y)：若与已有点重合，则该点</text>
+  <text x="560" y="490" font-size="11" fill="#444">  的边会把两块连通，与「两块不同」矛盾</text>
+  <text x="560" y="514" font-size="11" fill="#444">· 仅 1 块时：取块内任意 x 值 + 全新 y 值</text>
+  <text x="560" y="532" font-size="11" fill="#444">  （如 max+1），同样激活整块 → n + 1</text>
+</svg>
