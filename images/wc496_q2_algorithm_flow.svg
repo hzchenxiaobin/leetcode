@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 410"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="410" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">算法流程：枚举对 → 哈希计数 → 收集排序</text>
+
+  <!-- 开始 -->
+  <rect x="60" y="48" width="280" height="34" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="70" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">开始：读入 n（1 ≤ n ≤ 10⁹）</text>
+
+  <path d="M200,82 L200,102" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 外层循环 -->
+  <rect x="60" y="106" width="280" height="52" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="128" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#d6a040" filter="url(#rough2)">外层：a = 1, 2, 3, …</text>
+  <text x="200" y="148" text-anchor="middle" font-size="11.5" fill="#8a6d1a" filter="url(#rough2)">2a³ &gt; n 时终止（b ≥ a ⇒ s ≥ 2a³）</text>
+
+  <path d="M200,158 L200,178" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 内层循环 -->
+  <rect x="60" y="182" width="280" height="52" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="204" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#d6a040" filter="url(#rough2)">内层：b = a, a+1, …</text>
+  <text x="200" y="224" text-anchor="middle" font-size="11.5" fill="#8a6d1a" filter="url(#rough2)">s = a³ + b³ &gt; n 时 break（s 随 b 单调增）</text>
+
+  <path d="M200,234 L200,254" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 哈希计数 -->
+  <rect x="60" y="258" width="280" height="52" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="280" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">cnt[s] += 1（哈希表计数）</text>
+  <text x="200" y="300" text-anchor="middle" font-size="11.5" fill="#a04340" filter="url(#rough2)">每个和自动“报到”，第几次报到一目了然</text>
+
+  <path d="M200,310 L200,330" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 收集 + 排序 -->
+  <rect x="60" y="334" width="280" height="52" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="356" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">收集 cnt[s] ≥ 2 的 s，排序输出</text>
+  <text x="200" y="376" text-anchor="middle" font-size="11.5" fill="#3d6a3d" filter="url(#rough2)">key 天然去重：87539319 三组表示只留一份</text>
+
+  <!-- 侧注 -->
+  <rect x="368" y="106" width="172" height="280" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="380" y="134" font-size="11.5" fill="#2d5a2d" filter="url(#rough2)">· 枚举 Θ(n^⅔) ≈ 44 万对</text>
+  <text x="380" y="162" font-size="11.5" fill="#2d5a2d" filter="url(#rough2)">· 排序仅 1554 个好数</text>
+  <text x="380" y="190" font-size="11.5" fill="#2d5a2d" filter="url(#rough2)">· C++ 中间量用 long long</text>
+  <text x="380" y="218" font-size="11.5" fill="#2d5a2d" filter="url(#rough2)">· n &lt; 1729 输出空数组</text>
+  <text x="380" y="246" font-size="11.5" fill="#2d5a2d" filter="url(#rough2)">· a ≤ b 从源头防重复计数</text>
+  <text x="380" y="274" font-size="11.5" fill="#2d5a2d" filter="url(#rough2)">· 计数与收集必须分开：</text>
+  <text x="380" y="296" font-size="11" fill="#5a7a5a" filter="url(#rough2)">  边计数边输出会漏/乱序</text>
+  <text x="380" y="326" font-size="11" fill="#5a7a5a" filter="url(#rough2)">总复杂度 O(n^⅔)：</text>
+  <text x="380" y="348" font-size="11" fill="#5a7a5a" filter="url(#rough2)">  10⁹ 规模 0.1 秒内跑完</text>
+</svg>
