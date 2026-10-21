@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="580" viewBox="0 0 680 580" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="211" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="580" fill="#fdfcf7"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：一次预处理 + 按因数逐块 O(1) 判定</text>
+  <path d="M 190 38 Q 340 46 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- A 起点 -->
+  <g filter="url(#sk)">
+    <ellipse cx="230" cy="66" rx="118" ry="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="230" y="70" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66">预处理：s、px / ps、D</text>
+  <text x="378" y="62" font-size="10" fill="#888">排序 + 前缀和</text>
+  <text x="378" y="76" font-size="10" fill="#888">O(n log n)</text>
+
+  <g filter="url(#sk)">
+    <path d="M 230 90 V 112" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- B 因数循环 -->
+  <g filter="url(#sk)">
+    <rect x="110" y="116" width="240" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="230" y="134" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66">对每个因数 k</text>
+  <text x="230" y="150" text-anchor="middle" font-size="10" fill="#667">k·k ≤ n 成对枚举，d(n) ≤ 128</text>
+
+  <g filter="url(#sk)">
+    <path d="M 230 160 V 184" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- C 块循环 -->
+  <g filter="url(#sk)">
+    <rect x="95" y="188" width="270" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="230" y="208" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66">对每块 [l, r)</text>
+  <text x="230" y="224" text-anchor="middle" font-size="10" fill="#667">l = 0, k, 2k, …，r = l + k，共 n/k 块</text>
+
+  <g filter="url(#sk)">
+    <path d="M 230 236 V 260" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- D 判定1 -->
+  <g filter="url(#sk)">
+    <polygon points="230,260 350,310 230,360 110,310" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="230" y="306" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">① 多重集相同？</text>
+  <text x="230" y="324" text-anchor="middle" font-size="9.5" fill="#666">px[r]−px[l] = ps[r]−ps[l]</text>
+  <text x="240" y="278" font-size="10.5" fill="#2e6e2e">是</text>
+  <text x="356" y="302" font-size="10.5" fill="#b03a3a">否</text>
+
+  <g filter="url(#sk)">
+    <path d="M 230 360 V 384" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- E 判定2 -->
+  <g filter="url(#sk)">
+    <polygon points="230,384 350,434 230,484 110,434" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="230" y="430" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">② 环形下降数 ≤ 1？</text>
+  <text x="230" y="448" text-anchor="middle" font-size="9.5" fill="#666">D[r−1]−D[l] + [nums[r−1] &gt; nums[l]] ≤ 1</text>
+  <text x="240" y="402" font-size="10.5" fill="#2e6e2e">是</text>
+  <text x="356" y="426" font-size="10.5" fill="#b03a3a">否</text>
+
+  <g filter="url(#sk)">
+    <path d="M 230 484 V 508" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- G 通过 -->
+  <g filter="url(#sk)">
+    <rect x="130" y="512" width="200" height="46" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="230" y="530" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">该块通过 ✓</text>
+  <text x="230" y="547" text-anchor="middle" font-size="10" fill="#567">n/k 块全部通过 → ans += k</text>
+
+  <!-- F 淘汰 -->
+  <g filter="url(#sk)">
+    <rect x="470" y="290" width="150" height="40" rx="8" fill="#f5e0e0" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="545" y="306" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">k 不可排序 ✗</text>
+  <text x="545" y="322" text-anchor="middle" font-size="9.5" fill="#a66">跳到下一个因数</text>
+
+  <!-- E否 -> F -->
+  <g filter="url(#sk)">
+    <path d="M 350 434 H 445 V 310 H 466" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <!-- D否 -> F -->
+  <g filter="url(#sk)">
+    <path d="M 350 310 H 466" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- F -> B（右侧回环） -->
+  <g filter="url(#sk)">
+    <path d="M 620 290 V 138 H 354" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="632" y="216" font-size="10.5" fill="#b03a3a" transform="rotate(-90 632 216)">下一个 k</text>
+
+  <!-- G -> B（最右回环） -->
+  <g filter="url(#sk)">
+    <path d="M 330 526 H 660 V 126 H 354" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="672" y="340" font-size="10.5" fill="#2e6e2e" transform="rotate(-90 672 340)">ans += k 后继续</text>
+
+  <!-- G -> C（左侧回环：下一块） -->
+  <g filter="url(#sk)">
+    <path d="M 130 535 H 44 V 212 H 91" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="34" y="380" font-size="10.5" fill="#2e6e2e" transform="rotate(-90 34 380)">下一块</text>
+
+  <!-- B -> 终点（虚线） -->
+  <g filter="url(#sk)">
+    <path d="M 110 126 H 66 V 536 H 404" stroke="#888" stroke-width="1.4" fill="none" stroke-dasharray="6,4" marker-end="url(#ar)"/>
+  </g>
+  <g filter="url(#sk)">
+    <ellipse cx="518" cy="536" rx="112" ry="24" fill="#e8f0fa" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="518" y="540" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66">返回 ans（求和）</text>
+  <text x="150" y="568" font-size="10" fill="#888">所有因数处理完</text>
+</svg>
