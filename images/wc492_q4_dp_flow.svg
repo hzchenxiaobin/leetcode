@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="470" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：前缀和 + 对半分治取 min</text>
+
+  <!-- A: prefix sum -->
+  <g filter="url(#rough2)">
+    <rect x="160" y="40" width="240" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="280" y="61" text-anchor="middle" font-size="11.5" fill="#333">预处理 pre[i] = s[0..i) 中 '1' 的个数</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 280 74 L 280 94" stroke="#446688" stroke-width="1.8" marker-end="url(#arrf)"/>
+  </g>
+
+  <!-- B: recursion entry -->
+  <g filter="url(#rough2)">
+    <rect x="160" y="98" width="240" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="280" y="119" text-anchor="middle" font-size="11.5" fill="#333">递归 f(i, L)：处理段 [i, i+L)</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 280 132 L 280 150" stroke="#446688" stroke-width="1.8" marker-end="url(#arrf)"/>
+  </g>
+
+  <!-- Diamond 1: X == 0? -->
+  <g filter="url(#rough2)">
+    <polygon points="175,188 280,154 385,188 280,222" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="280" y="184" text-anchor="middle" font-size="11" fill="#333">X = pre[i+L] − pre[i]</text>
+    <text x="280" y="200" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">X = 0 ？</text>
+    <text x="288" y="146" font-size="10" fill="#888">进入每个段</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 385 188 L 428 188" stroke="#446688" stroke-width="1.8" marker-end="url(#arrf)"/>
+    <text x="396" y="180" font-size="10" fill="#4a7a3a" font-weight="bold">是</text>
+    <rect x="432" y="164" width="118" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <text x="491" y="184" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">return flatCost</text>
+    <text x="491" y="201" text-anchor="middle" font-size="9.5" fill="#888">剪枝：拆开 2·flat 更贵</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 280 222 L 280 244" stroke="#446688" stroke-width="1.8" marker-end="url(#arrf)"/>
+    <text x="288" y="238" font-size="10" fill="#b85450" font-weight="bold">否</text>
+  </g>
+
+  <!-- C: base cost -->
+  <g filter="url(#rough2)">
+    <rect x="160" y="248" width="240" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="280" y="269" text-anchor="middle" font-size="11.5" fill="#333">base = L · X · encCost（不拆的费用）</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 280 282 L 280 302" stroke="#446688" stroke-width="1.8" marker-end="url(#arrf)"/>
+  </g>
+
+  <!-- Diamond 2: L even? -->
+  <g filter="url(#rough2)">
+    <polygon points="185,338 280,306 375,338 280,370" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="280" y="343" text-anchor="middle" font-size="11.5" fill="#333" font-weight="bold">L 为偶数？</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 375 338 L 418 338" stroke="#446688" stroke-width="1.8" marker-end="url(#arrf)"/>
+    <text x="388" y="330" font-size="10" fill="#4a7a3a" font-weight="bold">否</text>
+    <rect x="422" y="314" width="122" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <text x="483" y="334" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">return base</text>
+    <text x="483" y="351" text-anchor="middle" font-size="9.5" fill="#888">奇数长，拆不了</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 280 370 L 280 392" stroke="#446688" stroke-width="1.8" marker-end="url(#arrf)"/>
+    <text x="288" y="386" font-size="10" fill="#4a7a3a" font-weight="bold">是</text>
+  </g>
+
+  <!-- E: combine -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="396" width="420" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="280" y="417" text-anchor="middle" font-size="11.5" fill="#2f5d24" font-weight="bold">return min( base , f(i, L/2) + f(i+L/2, L/2) )</text>
+    <text x="280" y="435" text-anchor="middle" font-size="10" fill="#557">两个子段各自递归取最优后相加，再与「不拆」比较</text>
+  </g>
+
+  <!-- bottom note -->
+  <g filter="url(#rough2)">
+    <text x="280" y="462" text-anchor="middle" font-size="10.5" fill="#8a6a1a">递归树 = 拆分树本身：每个段恰被访问一次，无需记忆化</text>
+  </g>
+</svg>
