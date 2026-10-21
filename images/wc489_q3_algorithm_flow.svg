@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 556"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="556" fill="#fafafa"/>
+  <text x="320" y="24" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：中心扩展 + 一次容错（2n−1 个中心）</text>
+
+  <!-- 开始 -->
+  <rect x="270" y="38" width="100" height="26" rx="13" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="55" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">开始</text>
+  <path d="M320,64 L320,76" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 1 -->
+  <rect x="140" y="80" width="360" height="26" rx="13" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="97" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">① 枚举中心对 (l₀, r₀)：奇中心 (c, c)，偶中心 (c, c+1)</text>
+  <path d="M320,106 L320,118" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="110" y="122" width="420" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="138" text-anchor="middle" font-size="11.5" fill="#446688" font-family="monospace" filter="url(#rough2)">② while l≥0 且 r&lt;n 且 s[l]==s[r]： l−−, r++</text>
+  <text x="320" y="154" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">纯扩展到第一个失配 / 越界对 (l, r)，[l+1, r−1] 是最大纯回文</text>
+  <path d="M320,160 L320,172" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="95" y="176" width="450" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="193" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#rough2)">③ 纯回文长度 ≥ 2 ⇒ ans = max(ans, r−l−1)（纯回文也是准回文）</text>
+
+  <!-- 分叉 -->
+  <path d="M320,202 Q200,212 170,216" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M320,202 Q440,212 470,216" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 左菱形：k=l 在界内？ -->
+  <polygon points="170,218 252,246 170,274 88,246" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="170" y="242" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">l ≥ 0 ？</text>
+  <text x="170" y="257" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">（删的字符存在）</text>
+  <text x="76" y="240" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <text x="170" y="292" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M170,274 L170,298" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- 右菱形：k=r 在界内？ -->
+  <polygon points="470,218 552,246 470,274 388,246" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="470" y="242" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">r &lt; n ？</text>
+  <text x="470" y="257" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">（删的字符存在）</text>
+  <text x="564" y="240" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <text x="470" y="292" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M470,274 L470,298" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- 两个分支框 -->
+  <rect x="50" y="302" width="240" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="170" y="320" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold" filter="url(#rough2)">④a 删左：k = l，跳过 s[l]</text>
+  <text x="170" y="338" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">从 (l−1, r) 继续纯匹配到 (ll, rr)</text>
+
+  <rect x="350" y="302" width="240" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="470" y="320" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold" filter="url(#rough2)">④b 删右：k = r，跳过 s[r]</text>
+  <text x="470" y="338" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">从 (l, r+1) 继续纯匹配到 (ll, rr)</text>
+
+  <path d="M170,346 L170,362 L300,362 L300,368" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M470,346 L470,362 L340,362 L340,368" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 5：候选区间 -->
+  <rect x="60" y="372" width="520" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="390" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#rough2)">⑤ 候选区间 = [min(纯区左, 分支区左, k), max(纯区右, 分支区右, k)]</text>
+  <text x="320" y="408" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">校验回文部分非空（纯区 ≥ 1 或分支匹配出一对）⇒ ans = max(ans, 区间长度)</text>
+
+  <!-- 还有中心？ -->
+  <path d="M320,418 L320,428" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <polygon points="320,430 425,455 320,480 215,455" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="451" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">还有中心未处理？</text>
+  <text x="320" y="466" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">（共 2n−1 个）</text>
+
+  <!-- 是 → 回边 -->
+  <text x="437" y="449" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M425,455 L596,455 L596,93 L504,93" stroke="#888" stroke-width="1.5" fill="none" stroke-dasharray="5,4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="590" y="270" text-anchor="end" font-size="10" fill="#888" filter="url(#rough2)" transform="rotate(90 590 270)">下一个中心</text>
+
+  <!-- 否 → 结束 -->
+  <text x="320" y="497" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <path d="M320,480 L320,494" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="255" y="498" width="130" height="26" rx="13" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="515" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">返回 ans</text>
+
+  <!-- 底部要点 -->
+  <rect x="40" y="516" width="560" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="530" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">⚠️ 失配与越界统一当作"停止"：越界时删除仍可发生在界内一侧（如 zzabba）</text>
+  <text x="320" y="545" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">⚠️ 纯回文候选必须单独统计（如 aaaa 分支两侧 k 均越界）；偶中心初始失配需校验 p 非空</text>
+</svg>
