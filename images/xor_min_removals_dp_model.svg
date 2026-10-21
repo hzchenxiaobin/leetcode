@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#666"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="420" fill="#fafafa"/>
+  <text x="320" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#333" filter="url(#rough2)">值域 DP：dp[v] = 异或和为 v 的最小子集大小</text>
+  <path d="M 170 44 Q 320 52 470 44" stroke="#333" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="28" y="62" width="182" height="118" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="119" y="86" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">值域观察</text>
+  <text x="119" y="108" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#rough2)">nums[i] ≤ 10⁴</text>
+  <text x="119" y="126" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#rough2)">10⁴ &lt; 2¹⁴ = 16384</text>
+  <text x="119" y="144" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#rough2)">子集异或和全部落在</text>
+  <text x="119" y="162" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#rough2)">[0, 2¹⁴) 内</text>
+
+  <text x="246" y="66" text-anchor="start" font-size="12.5" fill="#666" filter="url(#rough2)">旧行 dp —— 前 i−1 个元素的最优解</text>
+
+  <g filter="url(#rough2)">
+    <rect x="240" y="74" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="292" y="74" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="344" y="74" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="396" y="74" width="58" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="458" y="74" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="510" y="74" width="50" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="562" y="74" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+  </g>
+  <text x="265" y="94" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">0</text>
+  <text x="317" y="94" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">1</text>
+  <text x="369" y="94" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">…</text>
+  <text x="425" y="94" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a10" filter="url(#rough2)">v⊕num</text>
+  <text x="483" y="94" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">…</text>
+  <text x="535" y="94" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">v</text>
+  <text x="587" y="94" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">…</text>
+
+  <path d="M 535 106 L 535 168" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 425 106 C 425 140 535 128 535 166" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+
+  <text x="549" y="128" text-anchor="start" font-size="11" fill="#666" filter="url(#rough2)">不选 num</text>
+  <text x="549" y="142" text-anchor="start" font-size="10.5" fill="#888" filter="url(#rough2)">（大小不变）</text>
+  <text x="400" y="126" text-anchor="end" font-size="11.5" font-weight="bold" fill="#a06a10" filter="url(#rough2)">选 num</text>
+  <text x="400" y="141" text-anchor="end" font-size="10.5" fill="#a06a10" filter="url(#rough2)">dp[v⊕num] + 1</text>
+
+  <text x="246" y="164" text-anchor="start" font-size="12.5" fill="#666" filter="url(#rough2)">新行 ndp —— 加入第 i 个元素后</text>
+
+  <g filter="url(#rough2)">
+    <rect x="240" y="174" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="292" y="174" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="344" y="174" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="396" y="174" width="58" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="458" y="174" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="510" y="174" width="50" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="562" y="174" width="50" height="30" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+  </g>
+  <text x="265" y="194" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">0</text>
+  <text x="317" y="194" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">1</text>
+  <text x="369" y="194" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">…</text>
+  <text x="425" y="194" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">v⊕num</text>
+  <text x="483" y="194" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">…</text>
+  <text x="535" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">v</text>
+  <text x="587" y="194" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">…</text>
+
+  <g filter="url(#rough2)">
+    <rect x="228" y="226" width="390" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="423" y="252" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">ndp[v] = min( dp[v] , dp[v⊕num] + 1 )</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="290" width="560" height="80" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="320" y="314" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a10" filter="url(#rough2)">为什么必须复制一行（滚动数组）？</text>
+  <text x="320" y="334" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">转移只能读「旧行」的值：原地单行更新时 v 与 v⊕num 互相污染，</text>
+  <text x="320" y="350" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">同一个 num 可能被计入两次，破坏 0/1 背包语义</text>
+
+  <text x="320" y="400" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">时间 O(n · 2¹⁴) = 40 × 16384 ≈ 6.5×10⁵，空间 O(2¹⁴)</text>
+</svg>
