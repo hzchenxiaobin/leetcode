@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="460" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">状态设计：进位 × a 的阶段 × b 的阶段</text>
+  <text x="320" y="47" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">每个数各带一套「活跃 / 已结束」小状态机；个位必须填非零数字，保证 a、b ≥ 1</text>
+
+  <!-- 左：阶段状态机 -->
+  <text x="164" y="70" text-anchor="middle" font-size="13" font-weight="bold" fill="#333" filter="url(#rough2)">单个数的「阶段」状态机（a、b 各一套）</text>
+
+  <path d="M 72 120 C 55 90, 155 90, 138 120" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="105" y="87" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">填 1~9 → 继续活跃</text>
+
+  <ellipse cx="105" cy="140" rx="48" ry="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="105" y="138" text-anchor="middle" font-size="14" font-weight="bold" fill="#2f5d25" filter="url(#rough2)">活跃</text>
+  <text x="105" y="154" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">仍在写 1~9</text>
+
+  <path d="M 138 164 Q 176 194 200 230" fill="none" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="178" y="192" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">填 0 → 封笔</text>
+
+  <ellipse cx="228" cy="252" rx="54" ry="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="228" y="250" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">已结束</text>
+  <text x="228" y="266" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">此后只能补 0</text>
+
+  <path d="M 200 279 C 214 298, 250 298, 262 279" fill="none" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="230" y="311" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">恒填 0</text>
+
+  <rect x="35" y="320" width="260" height="50" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="165" y="341" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">第 0 位（个位）必须填 1~9</text>
+  <text x="165" y="359" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">保证 a、b ≥ 1，不能一上来就封笔</text>
+
+  <!-- 右：整体状态 / 转移 / 初始终态 -->
+  <rect x="320" y="62" width="292" height="92" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="334" y="86" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">整体状态：进位 × 两个数的阶段</text>
+  <text x="334" y="108" font-size="11.5" fill="#333" filter="url(#rough2)">进位 c ∈ {0, 1}——由加法逐列传递</text>
+  <text x="334" y="127" font-size="11.5" fill="#333" filter="url(#rough2)">a 的阶段 ∈ {活跃, 已结束}，b 同理</text>
+  <text x="334" y="146" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">共 2 × 2 × 2 = 8 个状态</text>
+
+  <rect x="320" y="164" width="292" height="104" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="334" y="188" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">每列转移（低位 → 高位逐列做）</text>
+  <text x="334" y="210" font-size="11.5" fill="#333" filter="url(#rough2)">枚举数字对 (x, y)：x、y 取各自合法数字</text>
+  <text x="334" y="230" font-size="11.5" fill="#333" filter="url(#rough2)">校验：(x + y + c) mod 10 = n 的当前位</text>
+  <text x="334" y="250" font-size="11.5" fill="#333" filter="url(#rough2)">新进位 = ⌊(x + y + c) / 10⌋，非 0 即 1</text>
+
+  <rect x="320" y="278" width="292" height="92" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="334" y="302" font-size="13" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">初始与终态</text>
+  <text x="334" y="324" font-size="11.5" fill="#333" filter="url(#rough2)">初始（第 0 列前）：(0, 活跃, 活跃) = 1</text>
+  <text x="334" y="344" font-size="11.5" fill="#333" filter="url(#rough2)">终态（做完最高列）：只保留进位 = 0 的状态</text>
+  <text x="334" y="362" font-size="11.5" fill="#b85450" filter="url(#rough2)">末进位 = 1 ⇒ a + b 比 n 多一个最高位，丢弃</text>
+
+  <!-- 底部位链 -->
+  <rect x="30" y="382" width="582" height="58" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="321" y="406" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">位链：第 0 列 → 第 1 列 → ⋯ → 第 L−1 列，每一步是 8 个状态的批量转移</text>
+  <text x="321" y="428" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">n ≤ 10¹⁵ ⇒ L ≤ 16，总转移数 ≤ 16 × 8 × 100，瞬间完成</text>
+</svg>
