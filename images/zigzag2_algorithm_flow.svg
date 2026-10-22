@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="480" fill="#fafafa"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="15.5" fill="#333" filter="url(#rough2)">整体流程：镜像减半 → 矩阵快速幂 → 奇偶补步</text>
+
+  <!-- 主流程 -->
+  <rect x="125" y="52" width="230" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="240" y="73" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">输入 n, l, r</text>
+
+  <path d="M 240 86 L 240 104" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="105" y="106" width="270" height="34" rx="8" fill="#fafafa" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="240" y="127" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">m = r − l + 1（值平移到 0..m−1）</text>
+
+  <path d="M 240 140 L 240 158" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="105" y="160" width="270" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="240" y="181" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">构造 T：T[v][w] = min(v,w)（m×m）</text>
+
+  <path d="M 240 194 L 240 212" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="85" y="214" width="310" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="240" y="235" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">k = ⌊(n−1)/2⌋；x ← Tᵏ · 全 1 向量（快速幂）</text>
+
+  <path d="M 240 248 L 240 266" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 判断菱形 -->
+  <polygon points="240,268 330,308 240,348 150,308" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="240" y="313" text-anchor="middle" font-size="12.5" fill="#8a6a10" filter="url(#rough2)">n 是偶数？</text>
+
+  <!-- 是分支 -->
+  <path d="M 330 308 L 388 308" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="359" y="300" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="392" y="286" width="220" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="502" y="305" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">补一步单步转移（后缀和，O(m)）</text>
+  <text x="502" y="322" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">x[v] ← Σ_{w&gt;m−1−v} x[w]</text>
+
+  <!-- 汇合 -->
+  <path d="M 502 330 Q 502 368 372 372" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- 否分支 -->
+  <path d="M 240 348 L 240 366" fill="none" stroke="#d6a040" stroke-width="1.6" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="258" y="362" text-anchor="start" font-size="11.5" fill="#8a6a10" filter="url(#rough2)">否</text>
+
+  <!-- 汇合点 -->
+  <circle cx="376" cy="372" r="3.5" fill="#446688" filter="url(#rough2)"/>
+
+  <rect x="180" y="390" width="270" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="315" y="412" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">答案 = 2 · Σ_v x[v]　(mod 10⁹+7)</text>
+
+  <!-- 侧注 1：×2 的由来 -->
+  <rect x="440" y="52" width="180" height="100" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="530" y="74" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a10" filter="url(#rough2)">为何 ×2？</text>
+  <text x="530" y="94" text-anchor="middle" font-size="10.5" fill="#8a6a10" filter="url(#rough2)">镜像对称：</text>
+  <text x="530" y="110" text-anchor="middle" font-size="10.5" fill="#8a6a10" filter="url(#rough2)">down[v] = up[m−1−v]</text>
+  <text x="530" y="126" text-anchor="middle" font-size="10.5" fill="#8a6a10" filter="url(#rough2)">up / down 两类各占一半，</text>
+  <text x="530" y="142" text-anchor="middle" font-size="10.5" fill="#8a6a10" filter="url(#rough2)">只算 up 再翻倍</text>
+
+  <!-- 侧注 2：复杂度 -->
+  <rect x="30" y="150" width="160" height="88" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="110" y="172" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">复杂度</text>
+  <text x="110" y="192" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">O(m³ log n)</text>
+  <text x="110" y="210" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">= 75³ × 30</text>
+  <text x="110" y="228" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">≈ 2.4×10⁷ 次模乘</text>
+
+  <!-- 侧注 3：补步顺序 -->
+  <rect x="30" y="296" width="100" height="76" rx="10" fill="#fafafa" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="80" y="316" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">单步 R 与</text>
+  <text x="80" y="332" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">T = R² 可交换，</text>
+  <text x="80" y="348" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">补步先后</text>
+  <text x="80" y="364" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">无所谓</text>
+
+  <!-- 底部提示 -->
+  <rect x="105" y="442" width="430" height="28" rx="8" fill="#fafafa" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="320" y="460" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">全程与 n 有关的只有指数 k —— 这正是 n ≤ 10⁹ 也能秒算的原因</text>
+</svg>
