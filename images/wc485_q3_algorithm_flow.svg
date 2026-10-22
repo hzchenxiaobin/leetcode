@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="480" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：写操作「覆盖真相 + 入堆」，查询「堆顶对账循环」</text>
+
+  <!-- 左列：写操作 -->
+  <text x="170" y="50" text-anchor="middle" font-size="10" fill="#33506b" filter="url(#rough2)">写操作（三者同构）</text>
+
+  <rect x="60" y="58" width="220" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="170" y="81" text-anchor="middle" font-size="11" fill="#33506b" font-weight="bold" filter="url(#rough2)">addBid / updateBid (u, i, a)</text>
+
+  <path d="M170,96 L170,118" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="120" width="220" height="40" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="170" y="144" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">覆盖真相：cur[i][u] = a</text>
+
+  <path d="M170,160 L170,182" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="184" width="220" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="170" y="208" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">候选入堆：hp[i] ← (a, u)</text>
+
+  <path d="M170,224 L170,246" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="170" y="262" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">二者实现完全相同，可共用一个函数</text>
+
+  <rect x="60" y="280" width="220" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="170" y="302" text-anchor="middle" font-size="11" fill="#a0433f" font-weight="bold" filter="url(#rough2)">removeBid (u, i)</text>
+  <text x="170" y="322" text-anchor="middle" font-size="10.5" fill="#a0433f" filter="url(#rough2)">cur[i].erase(u) —— 堆不动！</text>
+
+  <!-- 右列：查询 -->
+  <text x="490" y="50" text-anchor="middle" font-size="10" fill="#33506b" filter="url(#rough2)">查询操作</text>
+
+  <rect x="380" y="58" width="220" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="490" y="81" text-anchor="middle" font-size="11" fill="#33506b" font-weight="bold" filter="url(#rough2)">getHighestBidder (i)</text>
+
+  <path d="M490,96 L490,122" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="490,122 585,158 490,194 395,158" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="490" y="163" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">堆空？</text>
+
+  <path d="M585,158 L618,158" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="601" y="150" text-anchor="middle" font-size="9" fill="#666" filter="url(#rough2)">是</text>
+  <rect x="620" y="145" width="34" height="26" rx="4" fill="#eeeeee" stroke="#888888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="637" y="162" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">-1</text>
+
+  <path d="M490,194 L490,222" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="500" y="214" text-anchor="start" font-size="9" fill="#666" filter="url(#rough2)">否</text>
+
+  <polygon points="490,222 600,266 490,310 380,266" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="490" y="262" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">堆顶 (a, u) 与真相</text>
+  <text x="490" y="280" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">一致？（cur[u] == a）</text>
+
+  <path d="M600,266 L634,266" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="617" y="258" text-anchor="middle" font-size="9" fill="#666" filter="url(#rough2)">是</text>
+  <rect x="612" y="251" width="44" height="30" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="634" y="270" text-anchor="middle" font-size="9.5" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">返回 u</text>
+
+  <path d="M490,310 L490,338" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="500" y="330" text-anchor="start" font-size="9" fill="#666" filter="url(#rough2)">否</text>
+
+  <rect x="410" y="340" width="160" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="490" y="358" text-anchor="middle" font-size="10.5" fill="#a0433f" filter="url(#rough2)">弹出堆顶</text>
+  <text x="490" y="376" text-anchor="middle" font-size="10.5" fill="#a0433f" filter="url(#rough2)">（陈旧条目）</text>
+
+  <!-- 循环回边 -->
+  <path d="M410,362 L352,362 L352,158 L391,158" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="366" y="212" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">继</text>
+  <text x="366" y="226" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">续</text>
+  <text x="366" y="240" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">对</text>
+  <text x="366" y="254" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">账</text>
+
+  <!-- 底部要点 -->
+  <rect x="60" y="414" width="560" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="434" text-anchor="middle" font-size="11" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">每个堆条目至多被弹出一次 —— 弹出代价摊还给压入它的写操作</text>
+  <text x="340" y="452" text-anchor="middle" font-size="10.5" fill="#2f5d24" filter="url(#rough2)">写 O(log Q)，查询均摊 O(log Q)，总计 O(Q log Q)</text>
+</svg>
