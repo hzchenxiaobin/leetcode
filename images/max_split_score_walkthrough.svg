@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例 1 演算：枚举全部 n−1 个分割点</text>
+  <path d="M 190 40 Q 340 48 490 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="62" text-anchor="middle" font-size="12.5" fill="#666" font-family="monospace">nums = [10, −1, 3, −4, −5]</text>
+
+  <!-- table header -->
+  <g filter="url(#sk)">
+    <rect x="60" y="82" width="90" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="150" y="82" width="150" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="300" y="82" width="160" height="34" rx="4" fill="#fff3e0" stroke="#c98a2b" stroke-width="1.4"/>
+    <rect x="460" y="82" width="140" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <g filter="url(#sk)" font-size="12.5" font-weight="bold" text-anchor="middle">
+    <text x="105" y="104" fill="#2b6e9e">分割点 i</text>
+    <text x="225" y="104" fill="#2b6e9e">prefixSum(i)</text>
+    <text x="380" y="104" fill="#7a5415">suffixMin(i)</text>
+    <text x="530" y="104" fill="#2e6e2e">score(i)</text>
+  </g>
+
+  <!-- row i=0 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="118" width="90" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="150" y="118" width="150" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="300" y="118" width="160" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="460" y="118" width="140" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+  </g>
+  <g filter="url(#sk)" font-size="12.5" fill="#444" text-anchor="middle" font-family="monospace">
+    <text x="105" y="139">0</text>
+    <text x="225" y="139">10</text>
+    <text x="380" y="139">min(−1,3,−4,−5) = −5</text>
+    <text x="530" y="139">15</text>
+  </g>
+
+  <!-- row i=1 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="152" width="90" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="150" y="152" width="150" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="300" y="152" width="160" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="460" y="152" width="140" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+  </g>
+  <g filter="url(#sk)" font-size="12.5" fill="#444" text-anchor="middle" font-family="monospace">
+    <text x="105" y="173">1</text>
+    <text x="225" y="173">10+(−1) = 9</text>
+    <text x="380" y="173">min(3,−4,−5) = −5</text>
+    <text x="530" y="173">14</text>
+  </g>
+
+  <!-- row i=2 : highlight -->
+  <g filter="url(#sk)">
+    <rect x="52" y="188" width="556" height="38" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="60" y="192" width="90" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <rect x="150" y="192" width="150" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <rect x="300" y="192" width="160" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <rect x="460" y="192" width="140" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+  </g>
+  <g filter="url(#sk)" font-size="12.5" fill="#b03a3a" text-anchor="middle" font-family="monospace" font-weight="bold">
+    <text x="105" y="212">2 ★</text>
+    <text x="225" y="212">9+3 = 12</text>
+    <text x="380" y="212">min(−4,−5) = −5</text>
+    <text x="530" y="212">12−(−5) = 17</text>
+  </g>
+
+  <!-- row i=3 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="230" width="90" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="150" y="230" width="150" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="300" y="230" width="160" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="460" y="230" width="140" height="32" rx="4" fill="#fbfbf9" stroke="#bbb" stroke-width="1.1"/>
+  </g>
+  <g filter="url(#sk)" font-size="12.5" fill="#444" text-anchor="middle" font-family="monospace">
+    <text x="105" y="251">3</text>
+    <text x="225" y="251">12+(−4) = 8</text>
+    <text x="380" y="251">min(−5) = −5</text>
+    <text x="530" y="251">13</text>
+  </g>
+
+  <!-- prefix arrow -->
+  <g filter="url(#sk)">
+    <path d="M 175 285 Q 225 278 275 285" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="225" y="303" text-anchor="middle" font-size="11" fill="#2b6e9e">前缀和逐行 +nums[i]，滚动维护</text>
+
+  <!-- non-monotonic remark -->
+  <g filter="url(#sk)">
+    <rect x="60" y="318" width="560" height="52" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="80" y="340" font-size="12" font-weight="bold" fill="#2b2b2b">score 序列 15 → 14 → 17 → 13，先降后升再降：</text>
+  <text x="80" y="359" font-size="11" fill="#444">score(i) 关于 i 没有单调性，不能贪心只看端点，必须把 0 … n−2 全部枚举一遍取 max。</text>
+
+  <!-- answer box -->
+  <g filter="url(#sk)">
+    <rect x="200" y="382" width="280" height="38" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="407" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" font-family="monospace">答案 = max = 17 ✓</text>
+</svg>
