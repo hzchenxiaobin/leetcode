@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="480" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：排序 → 前缀最大容量 → 双指针枚举每台机器</text>
+
+  <!-- A 打包排序 -->
+  <rect x="170" y="48" width="300" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="72" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">(cost, cap) 打包，按成本升序排序</text>
+  <path d="M320,88 L320,106" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- B 前缀 max -->
+  <rect x="170" y="108" width="300" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="132" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">构建 pre[k] = max(cap[0..k−1])</text>
+  <path d="M320,148 L320,166" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- C 循环头 -->
+  <rect x="170" y="168" width="300" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="192" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">枚举 j = 0 … n−1（指针 p 初始为 n）</text>
+  <path d="M320,208 L320,226" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D 窗口左缩 -->
+  <rect x="110" y="228" width="420" height="64" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="250" text-anchor="middle" font-size="11.5" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">while p &gt; 0 且 cost[p−1] + cost[j] ≥ budget：p −−</text>
+  <text x="320" y="268" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">搭档窗口 [0, p) 左缩：p 单调不增，全程总计 O(n)</text>
+  <text x="320" y="284" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">（等价写法：二分 p = upper_bound(cost, budget − cost[j] − 1)）</text>
+  <path d="M320,292 L320,310" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- E 配对候选 -->
+  <rect x="110" y="312" width="420" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="334" text-anchor="middle" font-size="11.5" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">m = min(p, j)；若 m ≥ 1：ans = max(ans, cap[j] + pre[m])</text>
+  <text x="320" y="352" text-anchor="middle" font-size="10" fill="#2f5d24" filter="url(#rough2)">最佳搭档藏在排序后前缀 [0, m) 里，min 掉 j 自身</text>
+  <path d="M320,364 L320,382" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- F 单台 -->
+  <rect x="110" y="384" width="420" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="408" text-anchor="middle" font-size="11.5" fill="#2f5d24" filter="url(#rough2)">若 cost[j] &lt; budget：ans = max(ans, cap[j])（只买一台）</text>
+
+  <!-- 循环回边 -->
+  <path d="M530,404 L585,404 L585,188 L474,188" stroke="#666" stroke-width="1.6" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="594" y="300" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">j+1</text>
+
+  <!-- 返回 -->
+  <path d="M320,424 L320,440" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="170" y="442" width="300" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="463" text-anchor="middle" font-size="11.5" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">返回 ans（含 0 = 一台都不买）</text>
+</svg>
