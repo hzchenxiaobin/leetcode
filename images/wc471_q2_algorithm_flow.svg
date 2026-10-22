@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 575"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="575" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：定左端点单向生长 + 上界剪枝</text>
+  <path d="M 150 38 Q 320 46 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- A -->
+  <g filter="url(#sk)">
+    <rect x="100" y="52" width="300" height="40" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="77" text-anchor="middle" font-size="13" fill="#2f4a6b">① 外层：枚举左端点 l = 0 … n−1</text>
+  <path d="M 250 92 L 250 108" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- B prune diamond -->
+  <g filter="url(#sk)">
+    <polygon points="250,108 365,150 250,192 135,150" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="146" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">② ans ≥ n−l ?</text>
+  <text x="250" y="166" text-anchor="middle" font-size="10.5" fill="#7a5415">（剪枝）</text>
+  <path d="M 365 150 L 445 150" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="405" y="142" text-anchor="middle" font-size="11.5" fill="#8c3a36" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="448" y="122" width="172" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="534" y="145" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8c3a36">break · 返回 ans</text>
+  <text x="534" y="165" text-anchor="middle" font-size="10" fill="#8c3a36">以 l 开头至多 n−l 长</text>
+  <path d="M 250 192 L 250 212" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="264" y="206" font-size="11.5" fill="#557" font-weight="bold">否</text>
+
+  <!-- C -->
+  <g filter="url(#sk)">
+    <rect x="100" y="215" width="300" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="240" text-anchor="middle" font-size="12.5" fill="#2f4a6b">③ 每轮归零：cnt[26]=0，distinct = maxFreq = 0</text>
+  <path d="M 250 255 L 250 271" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D -->
+  <g filter="url(#sk)">
+    <rect x="100" y="274" width="300" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="292" text-anchor="middle" font-size="12.5" fill="#2f4a6b">④ r 从 l 向右生长</text>
+  <text x="250" y="308" text-anchor="middle" font-size="11" fill="#2f4a6b">窗口 s[l..r] 只扩不缩</text>
+  <path d="M 250 314 L 250 330" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- E -->
+  <g filter="url(#sk)">
+    <rect x="100" y="333" width="300" height="54" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="353" text-anchor="middle" font-size="12" fill="#2e5e22">⑤ c = s[r]：cnt[c]++；cnt[c]=1 ⇒ distinct++</text>
+  <text x="250" y="373" text-anchor="middle" font-size="12" fill="#2e5e22">maxFreq = max(maxFreq, cnt[c])（只增不减）</text>
+  <path d="M 250 387 L 250 403" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- F check diamond -->
+  <g filter="url(#sk)">
+    <polygon points="250,403 385,452 250,501 115,452" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="448" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">⑥ maxFreq × distinct</text>
+  <text x="250" y="468" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">= r−l+1 ?</text>
+  <path d="M 385 452 L 445 452" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="415" y="444" text-anchor="middle" font-size="11.5" fill="#2e5e22" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="448" y="424" width="172" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="534" y="447" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22">ans = max(ans, r−l+1)</text>
+  <text x="534" y="467" text-anchor="middle" font-size="10" fill="#2e5e22">命中后继续向右生长</text>
+  <path d="M 250 501 L 250 521" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="264" y="516" font-size="11.5" fill="#557" font-weight="bold">否</text>
+  <path d="M 534 480 Q 534 542 596 542 L 404 542" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- G -->
+  <g filter="url(#sk)">
+    <rect x="100" y="524" width="300" height="38" rx="10" fill="#f0f0f0" stroke="#8a8a8a" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="548" text-anchor="middle" font-size="12" fill="#555">⑦ r+1 回 ④；r 到 n 后 l+1 回 ②</text>
+
+  <!-- loop back arrow G -> D -->
+  <path d="M 100 543 L 52 543 Q 44 543 44 535 L 44 302 Q 44 294 52 294 L 96 294" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="34" y="420" font-size="11.5" fill="#446688" font-weight="bold" transform="rotate(-90 34 420)" text-anchor="middle">r + 1</text>
+</svg>
