@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="600" viewBox="0 0 640 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="600" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">计数流程：位数分桶 + 贴上界（n 的位数 L ≤ 16）</text>
+  <path d="M 120 40 Q 320 48 520 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <rect x="200" y="58" width="240" height="34" rx="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33517a" filter="url(#sk)">开始：n → 数字串 s，L = 位数</text>
+  <path d="M 320 92 L 320 112" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- phase 1 -->
+  <rect x="170" y="114" width="300" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="132" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">阶段一：ans ← Σ 9^k（k = 1 … L−1）</text>
+  <text x="320" y="150" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">位数不足 L 的无零数全收，9 + 81 + … </text>
+  <path d="M 320 158 L 320 178" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- init i -->
+  <rect x="210" y="180" width="220" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="200" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33517a" filter="url(#sk)">i ← 0（从最高位贴上界）</text>
+  <path d="M 320 210 L 320 232" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="320,236 400,270 320,304 240,270" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="266" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6520" filter="url(#sk)">这一位 d = 0 ?</text>
+  <text x="320" y="284" text-anchor="middle" font-size="10.5" fill="#8a6520" filter="url(#sk)">(d = s[i])</text>
+
+  <path d="M 400 270 L 443 270" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="418" y="262" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#sk)">是</text>
+  <rect x="445" y="248" width="168" height="44" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#sk)"/>
+  <text x="529" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">break：0 贴不住</text>
+  <text x="529" y="284" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">提前收工（防负数！）</text>
+
+  <path d="M 320 304 L 320 326" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="334" y="318" text-anchor="start" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">否</text>
+
+  <!-- accumulate -->
+  <rect x="185" y="328" width="270" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="345" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33517a" filter="url(#sk)">ans += (d − 1) · 9^(L−1−i)</text>
+  <text x="320" y="361" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">这一位填小，后面自由</text>
+  <path d="M 320 366 L 320 388" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- diamond 2 -->
+  <polygon points="320,392 395,424 320,456 245,424" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="421" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6520" filter="url(#sk)">扫完 L 位 ?</text>
+  <text x="320" y="439" text-anchor="middle" font-size="10.5" fill="#8a6520" filter="url(#sk)">(i = L−1 且没 break)</text>
+
+  <path d="M 245 424 L 78 424 Q 70 424 70 412 L 70 282 Q 70 270 82 270 L 236 270" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="150" y="414" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#sk)">否，i++ 看下一位</text>
+
+  <path d="M 320 456 L 320 478" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="334" y="470" text-anchor="start" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">是</text>
+
+  <!-- plus one -->
+  <rect x="185" y="480" width="270" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="502" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">ans += 1（n 本尊无零，补上）</text>
+  <path d="M 320 514 L 320 534" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- break path joins return -->
+  <path d="M 529 292 L 529 548 Q 529 560 517 560 L 425 560" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="560" y="430" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#sk)">直</text>
+  <text x="560" y="444" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#sk)">接</text>
+  <text x="560" y="458" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#sk)">出</text>
+
+  <!-- return -->
+  <rect x="230" y="544" width="180" height="32" rx="16" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="565" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450" filter="url(#sk)">return ans</text>
+</svg>
