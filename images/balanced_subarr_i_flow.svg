@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="500" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：定左端点单向生长 + O(1) 去重判定</text>
+  <path d="M 150 38 Q 320 46 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- A: outer loop -->
+  <g filter="url(#sk)">
+    <rect x="125" y="52" width="210" height="38" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="230" y="76" text-anchor="middle" font-size="13" fill="#2f4a6b" font-weight="bold">① 枚举左端点 l = 0 … n−1</text>
+
+  <path d="M 230 90 L 230 102" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- B: prune diamond -->
+  <polygon points="230,106 322,134 230,162 138,134" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="230" y="139" text-anchor="middle" font-size="12" fill="#8c3a36" font-weight="bold">ans ≥ n−l ?（剪枝）</text>
+  <path d="M 322 134 L 408 134" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="352" y="127" text-anchor="middle" font-size="11" fill="#b85450">是</text>
+  <g filter="url(#sk)">
+    <rect x="412" y="117" width="190" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="507" y="139" text-anchor="middle" font-size="12" fill="#8c3a36" font-weight="bold">break → 返回 ans</text>
+  <path d="M 230 162 L 230 176" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="174" font-size="11" fill="#888">否</text>
+
+  <!-- C: init -->
+  <g filter="url(#sk)">
+    <rect x="100" y="180" width="260" height="36" rx="8" fill="#f4f4f4" stroke="#888" stroke-width="1.4"/>
+  </g>
+  <text x="230" y="203" text-anchor="middle" font-size="12.5" fill="#444">② odd = even = 0（本轮时间戳 = l）</text>
+  <path d="M 230 216 L 230 230" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D: inner loop -->
+  <g filter="url(#sk)">
+    <rect x="100" y="234" width="260" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="230" y="257" text-anchor="middle" font-size="12.5" fill="#2e5e22" font-weight="bold">③ r 从 l 到 n−1，取 x = nums[r]</text>
+  <path d="M 230 270 L 230 284" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- E: first-seen diamond -->
+  <polygon points="230,288 315,318 230,348 145,318" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="230" y="316" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold">ver[x] ≠ l ?</text>
+  <text x="230" y="332" text-anchor="middle" font-size="10.5" fill="#7a5415">（x 是窗口内首现值吗）</text>
+  <path d="M 315 318 L 398 318" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="348" y="311" text-anchor="middle" font-size="11" fill="#2e5e22">是</text>
+  <g filter="url(#sk)">
+    <rect x="402" y="296" width="212" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="508" y="315" text-anchor="middle" font-size="12" fill="#2e5e22" font-weight="bold">④ 首现入桶：ver[x] = l</text>
+  <text x="508" y="333" text-anchor="middle" font-size="12" fill="#2e5e22">x 奇 → odd++；x 偶 → even++</text>
+  <path d="M 508 342 Q 508 384 320 384 Q 250 384 238 400" stroke="#4a7a3a" stroke-width="1.5" fill="none" stroke-dasharray="5,4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 230 348 L 230 372" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="364" font-size="11" fill="#888">否（重复值，跳过）</text>
+
+  <!-- F: balance diamond -->
+  <polygon points="230,376 315,406 230,436 145,406" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="230" y="411" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">odd == even ?</text>
+  <path d="M 315 406 L 408 406" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="350" y="399" text-anchor="middle" font-size="11" fill="#7a5415">是</text>
+  <g filter="url(#sk)">
+    <rect x="412" y="389" width="200" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="512" y="411" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold">⑤ ans = max(ans, r−l+1)</text>
+  <path d="M 230 436 L 230 450" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="448" font-size="11" fill="#888">否</text>
+
+  <!-- loop-back note -->
+  <g filter="url(#sk)">
+    <rect x="80" y="454" width="480" height="34" rx="8" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+  </g>
+  <text x="320" y="476" text-anchor="middle" font-size="11.5" fill="#666">r 未扫完 → 回 ③（r++）；扫完 → 回 ①（l++）；所有轮次结束 → 返回 ans</text>
+</svg>
