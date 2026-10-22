@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="480" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">从「(v, u) 二维最长链」到「排序 + 最长不下降子序列」</text>
+
+  <!-- 左：(v,u) 平面 -->
+  <path d="M110,390 L352,390" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M110,390 L110,108" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="231" y="414" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">v（想占的新下标）→</text>
+  <text x="64" y="102" font-size="11.5" fill="#666" filter="url(#rough2)">u（垫背</text>
+  <text x="64" y="118" font-size="11.5" fill="#666" filter="url(#rough2)">删除数）↑</text>
+  <text x="110" y="404" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">0</text>
+  <text x="165" y="404" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">1</text>
+  <text x="220" y="404" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">2</text>
+  <text x="275" y="404" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">3</text>
+  <text x="100" y="394" text-anchor="end" font-size="10" fill="#999" filter="url(#rough2)">0</text>
+  <text x="100" y="324" text-anchor="end" font-size="10" fill="#999" filter="url(#rough2)">1</text>
+  <text x="100" y="254" text-anchor="end" font-size="10" fill="#999" filter="url(#rough2)">2</text>
+
+  <!-- 链箭头 (0,1)→(1,1)→(2,2) -->
+  <path d="M119,320 L154,320" stroke="#4a7a3a" stroke-width="2.2" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <path d="M173,314 L211,258" stroke="#4a7a3a" stroke-width="2.2" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <!-- 非法箭头 (2,2)→(3,0) -->
+  <path d="M228,256 L269,381" stroke="#b85450" stroke-width="2" stroke-dasharray="6,5" fill="none" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="292" y="330" font-size="11.5" fill="#b85450" filter="url(#rough2)">u 减小，</text>
+  <text x="292" y="346" font-size="11.5" fill="#b85450" filter="url(#rough2)">非法 ✗</text>
+
+  <!-- 点 -->
+  <ellipse cx="110" cy="320" rx="8" ry="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <ellipse cx="165" cy="320" rx="8" ry="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <ellipse cx="220" cy="250" rx="8" ry="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <ellipse cx="275" cy="390" rx="8" ry="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="96" y="306" text-anchor="end" font-size="11" fill="#446688" filter="url(#rough2)">(0,1)</text>
+  <text x="165" y="304" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">(1,1)</text>
+  <text x="238" y="240" font-size="11" fill="#446688" filter="url(#rough2)">(2,2)</text>
+  <text x="289" y="404" font-size="11" fill="#446688" filter="url(#rough2)">(3,0)</text>
+
+  <text x="200" y="438" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">合法链：v 严格递增（→），u 不减（↑ 或 →）</text>
+  <text x="200" y="456" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">例中 (0,1)→(1,1)→(2,2) 长度 3；(3,0) 的 u 最小，只能孤点</text>
+
+  <!-- 右：三步流程 -->
+  <rect x="400" y="56" width="244" height="76" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="522" y="78" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">① 筛候选</text>
+  <text x="522" y="99" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">保留 nums[i] ≤ i 的下标 i</text>
+  <text x="522" y="119" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">生成点 (v, u) = (nums[i], i−nums[i])</text>
+  <path d="M522,136 L522,152" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="400" y="158" width="244" height="76" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="522" y="180" text-anchor="middle" font-size="13" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">② 排序（关键 tie-break）</text>
+  <text x="522" y="201" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">v 升序；v 相同时按 u 降序</text>
+  <text x="522" y="221" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">同 v 的点争夺同一新下标，至多取一</text>
+  <path d="M522,238 L522,254" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="400" y="260" width="244" height="88" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="522" y="282" text-anchor="middle" font-size="13" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">③ 求 u 的最长不下降子序列</text>
+  <text x="522" y="303" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">贪心 + 二分维护 tails</text>
+  <text x="522" y="323" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">不下降 ⇒ upper_bound / bisect_right</text>
+  <text x="522" y="341" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">答案 = tails 的长度</text>
+
+  <!-- 为何降序 -->
+  <rect x="400" y="364" width="244" height="100" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="522" y="386" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">为何同 v 要按 u 降序？</text>
+  <text x="522" y="407" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">若按升序，同 v 的两个点</text>
+  <text x="522" y="425" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">会被不下降子序列同时取走，</text>
+  <text x="522" y="443" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">答案偏大；降序则天然至多取一</text>
+</svg>
