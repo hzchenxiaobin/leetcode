@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="440" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">一个间隙的四种方向组合 → 相邻耦合的链上 DP</text>
+
+  <rect x="48" y="100" width="84" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="90" y="117" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">rᵢ</text>
+  <text x="90" y="133" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">射程 dᵢ</text>
+  <rect x="528" y="100" width="84" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="570" y="117" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">rⱼ</text>
+  <text x="570" y="133" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">射程 dⱼ</text>
+
+  <rect x="140" y="104" width="160" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1" rx="3" filter="url(#rough2)"/>
+  <rect x="400" y="104" width="120" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1" rx="3" filter="url(#rough2)"/>
+  <rect x="300" y="104" width="100" height="24" fill="none" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5,4" rx="3" filter="url(#rough2)"/>
+
+  <rect x="190" y="98" width="9" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="2" filter="url(#rough2)"/>
+  <rect x="235" y="98" width="9" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="2" filter="url(#rough2)"/>
+  <rect x="280" y="98" width="9" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="2" filter="url(#rough2)"/>
+  <rect x="345" y="98" width="9" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="2" filter="url(#rough2)"/>
+  <rect x="430" y="98" width="9" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="2" filter="url(#rough2)"/>
+  <rect x="475" y="98" width="9" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="2" filter="url(#rough2)"/>
+
+  <path d="M300,92 L300,140" stroke="#4a7a3a" stroke-width="1.2" stroke-dasharray="4,3" filter="url(#rough2)"/>
+  <path d="M400,92 L400,140" stroke="#d6a040" stroke-width="1.2" stroke-dasharray="4,3" filter="url(#rough2)"/>
+
+  <text x="220" y="86" text-anchor="middle" font-size="10" fill="#2f5d26" filter="url(#rough2)">rᵢ 向右覆盖的前缀（w ≤ rᵢ+dᵢ）</text>
+  <text x="460" y="86" text-anchor="middle" font-size="10" fill="#9a7218" filter="url(#rough2)">rⱼ 向左覆盖的后缀（w ≥ rⱼ−dⱼ）</text>
+  <text x="350" y="120" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">hole</text>
+  <text x="300" y="158" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">rᵢ+dᵢ</text>
+  <text x="400" y="158" text-anchor="middle" font-size="10" fill="#9a7218" filter="url(#rough2)">rⱼ−dⱼ</text>
+
+  <rect x="30" y="185" width="146" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="103" y="208" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">（右, 右）</text>
+  <text x="103" y="228" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">只有前缀：得分 aᵢ</text>
+
+  <rect x="190" y="185" width="146" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="263" y="208" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d26" filter="url(#rough2)">（右, 左）</text>
+  <text x="263" y="228" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">并集：total − hole</text>
+
+  <rect x="350" y="185" width="146" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="423" y="208" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a7218" filter="url(#rough2)">（左, 左）</text>
+  <text x="423" y="228" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">只有后缀：得分 bᵢ</text>
+
+  <rect x="510" y="185" width="146" height="58" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="583" y="208" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">（左, 右）</text>
+  <text x="583" y="228" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">谁都不打：得分 0</text>
+
+  <text x="330" y="272" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">每个机器人只有 L / R 两个状态 → 滚动 DP</text>
+
+  <rect x="78" y="288" width="38" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="97" y="304" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a7218" filter="url(#rough2)">L</text>
+  <rect x="124" y="288" width="38" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="143" y="304" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d26" filter="url(#rough2)">R</text>
+  <rect x="288" y="288" width="38" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="307" y="304" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a7218" filter="url(#rough2)">L</text>
+  <rect x="334" y="288" width="38" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="353" y="304" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d26" filter="url(#rough2)">R</text>
+  <rect x="498" y="288" width="38" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="517" y="304" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a7218" filter="url(#rough2)">L</text>
+  <rect x="544" y="288" width="38" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="563" y="304" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d26" filter="url(#rough2)">R</text>
+
+  <path d="M166,300 L282,300" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <path d="M376,300 L492,300" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="224" y="292" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">+ gᵢ(·,·)</text>
+  <text x="434" y="292" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">+ gᵢ₊₁(·,·)</text>
+
+  <circle cx="120" cy="340" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="120" y="345" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">rᵢ₋₁</text>
+  <circle cx="330" cy="340" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="330" y="345" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">rᵢ</text>
+  <circle cx="540" cy="340" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="540" y="345" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">rᵢ₊₁</text>
+
+  <text x="120" y="374" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">dp 初值：dp₁[L]=c_L</text>
+  <text x="330" y="374" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">dp 逐个机器人右移</text>
+  <text x="540" y="374" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">末端：dpₙ[R] 补 c_R</text>
+
+  <rect x="40" y="390" width="580" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="330" y="408" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f5d26" filter="url(#rough2)">ans = base（同位置墙） + max( dpₙ[L], dpₙ[R] + c_R )</text>
+  <text x="330" y="424" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">c_L / c_R：两端外侧间隙里各自射程内的墙数</text>
+</svg>
