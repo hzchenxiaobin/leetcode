@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="420" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="15.5" fill="#333" filter="url(#rough2)">状压 DP：dp[S] = 把子集 S 的所有列表合成一个的最小总成本</text>
+
+  <!-- 状态转移公式（橙框） -->
+  <rect x="30" y="42" width="600" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="330" y="66" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">dp[{i}] = 0（叶子：单个原始列表，无需合并）</text>
+  <text x="330" y="90" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">dp[S] = len(S) + min 空集⊊A⊊S [ dp[A] + dp[S∖A] + |med(A) − med(S∖A)| ]</text>
+  <text x="330" y="108" text-anchor="middle" font-size="10" fill="#8a7a50" filter="url(#rough2)">len(a)+len(b) = len(S) 与划分方式无关，提出来只加一次</text>
+
+  <!-- 左：预处理（蓝框） -->
+  <rect x="30" y="136" width="300" height="128" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="180" y="158" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">预处理（对每个子集 S）</text>
+  <text x="48" y="182" font-size="11" fill="#333" filter="url(#rough2)">· len(S)：S 中各列表长度之和</text>
+  <text x="48" y="204" font-size="11" fill="#333" filter="url(#rough2)">· med(S)：S 中全部元素排序后</text>
+  <text x="64" y="222" font-size="11" fill="#333" filter="url(#rough2)">取第 ⌊(L−1)/2⌋ 个（偶数取左中）</text>
+  <text x="48" y="246" font-size="10.5" fill="#5a7099" filter="url(#rough2)">C++ nth_element / Python sorted</text>
+
+  <!-- 右：转移（绿框） -->
+  <rect x="350" y="136" width="280" height="128" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="490" y="158" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">转移：枚举子集（含最低位）</text>
+  <g font-size="10.5" fill="#333" filter="url(#rough2)">
+    <text x="366" y="180">low = S &amp; (−S)</text>
+    <text x="366" y="197">A = (S−1)&amp;S  // 经典子集枚举</text>
+    <text x="366" y="214">if A 含 low:  // 划分只算一次</text>
+    <text x="382" y="231">B = S ⊕ A</text>
+    <text x="382" y="248">dp[S] ← min(dp[A]+dp[B]+|Δmed|)</text>
+  </g>
+
+  <!-- 规模 chips -->
+  <rect x="52" y="286" width="176" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="17" filter="url(#rough2)"/>
+  <text x="140" y="307" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">状态数 2¹² = 4096</text>
+  <rect x="248" y="286" width="196" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="17" filter="url(#rough2)"/>
+  <text x="346" y="307" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">转移总量 3¹² ≈ 5.3×10⁵</text>
+  <rect x="464" y="286" width="146" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="17" filter="url(#rough2)"/>
+  <text x="537" y="307" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">共 n−1 = 11 次合并</text>
+
+  <!-- 无后效性说明（红框） -->
+  <rect x="30" y="340" width="600" height="64" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="330" y="362" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">为什么无后效性：一次合并的成本只依赖 (A, B) 这一对子集；</text>
+  <text x="330" y="382" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">子树内部按什么顺序合并，不改变子集的 len / med，也不影响外部任何成本。</text>
+</svg>
