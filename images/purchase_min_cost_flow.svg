@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="58" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">O(1) 算法流程：只查三个候选捆绑数</text>
+  <path d="M 180 40 Q 340 48 500 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 1 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="60" width="600" height="52" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/>
+  </g>
+  <text x="60" y="82" font-size="13" font-weight="bold" fill="#2b6e9e">① 求两个需求端点</text>
+  <text x="60" y="102" font-size="12" fill="#444" font-family="monospace">m = min(need1, need2)    M = max(need1, need2)</text>
+
+  <g filter="url(#sk)">
+    <path d="M 340 112 L 340 132" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- Step 2 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="136" width="600" height="52" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="60" y="158" font-size="13" font-weight="bold" fill="#2e6e2e">② 确定候选捆绑数集合</text>
+  <text x="60" y="178" font-size="12" fill="#444" font-family="monospace">z ∈ { 0, m, M }    # f(z) 分段线性，折点恰为这三个值</text>
+
+  <g filter="url(#sk)">
+    <path d="M 340 188 L 340 208" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- Step 3 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="212" width="600" height="66" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="60" y="234" font-size="13" font-weight="bold" fill="#7a5415">③ 对每个候选 z 计算花费（单品数向下 clamp 到 0）</text>
+  <text x="60" y="254" font-size="12" fill="#444" font-family="monospace">cost(z) = max(0, need1 − z)·cost1 + max(0, need2 − z)·cost2 + z·costBoth</text>
+  <text x="60" y="271" font-size="11" fill="#888">固定 z 后单品个数唯一确定：不足才补，绝不超买</text>
+
+  <g filter="url(#sk)">
+    <path d="M 340 278 L 340 298" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- Step 4 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="302" width="600" height="48" rx="8" fill="#f5e0e0" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="60" y="324" font-size="13" font-weight="bold" fill="#b03a3a">④ 取三者最小值</text>
+  <text x="60" y="343" font-size="12" fill="#444" font-family="monospace">return min( cost(0), cost(m), cost(M) )</text>
+
+  <!-- complexity box -->
+  <g filter="url(#sk)">
+    <rect x="40" y="362" width="600" height="52" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="60" y="383" font-size="12" font-weight="bold" fill="#2b2b2b">复杂度</text>
+  <text x="130" y="383" font-size="11.5" fill="#444">时间 O(1)、空间 O(1)；只算 3 个候选，无需枚举 10^9 个 z</text>
+  <text x="60" y="403" font-size="11.5" fill="#b03a3a">溢出注意：need ≤ 10^9、cost ≤ 10^6，花费可达 2×10^15，C++ 必须用 long long</text>
+</svg>
