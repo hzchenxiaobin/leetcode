@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arBlue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2b6e9e"/>
+    </marker>
+    <marker id="arOrange" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">线性 DP：dp[j] = nums[j] + best[p[j−1]]</text>
+  <path d="M 170 42 Q 340 52 510 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="66" text-anchor="middle" font-size="12" fill="#888">best[c] = 已扫过的位置中，前缀残差为 c 的最小 dp 值（best[0] 初始为 0，代表"前面全删"）</text>
+
+  <!-- left: array with previous kept i and current j -->
+  <g filter="url(#sk)">
+    <rect x="56"  y="118" width="42" height="40" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1"/>
+    <rect x="104" y="118" width="42" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="152" y="118" width="42" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="200" y="118" width="42" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="248" y="118" width="42" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="296" y="118" width="46" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5"/>
+  </g>
+  <text x="77" y="142" text-anchor="middle" font-size="12" fill="#999" font-family="monospace">…</text>
+  <text x="125" y="142" text-anchor="middle" font-size="12" fill="#2d4d22" font-weight="bold" font-family="monospace">i</text>
+  <text x="173" y="142" text-anchor="middle" font-size="11" fill="#a06a10" font-family="monospace">·</text>
+  <text x="221" y="142" text-anchor="middle" font-size="11" fill="#a06a10" font-family="monospace">·</text>
+  <text x="269" y="142" text-anchor="middle" font-size="11" fill="#a06a10" font-family="monospace">·</text>
+  <text x="319" y="142" text-anchor="middle" font-size="12" fill="#2d4d22" font-weight="bold" font-family="monospace">j</text>
+  <text x="125" y="172" text-anchor="middle" font-size="10" fill="#4a7a3a">上一个保留</text>
+  <text x="319" y="172" text-anchor="middle" font-size="10" fill="#4a7a3a">当前保留</text>
+  <text x="221" y="172" text-anchor="middle" font-size="10" fill="#b08020">间隙 (i, j−1]：和须 ≡ 0 (mod k)</text>
+
+  <g filter="url(#sk)">
+    <path d="M 125 108 Q 221 84 313 108" stroke="#2b6e9e" stroke-width="2" fill="none" stroke-dasharray="6,4" marker-end="url(#arBlue)"/>
+  </g>
+  <rect x="148" y="82" width="150" height="22" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#sk)"/>
+  <text x="223" y="97" text-anchor="middle" font-size="11" fill="#2b4a66">要求 p[i] = p[j−1]</text>
+
+  <!-- right: residue buckets -->
+  <text x="528" y="108" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">残差桶 best[0..k−1]</text>
+  <g filter="url(#sk)">
+    <rect x="408" y="118" width="46" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="460" y="118" width="46" height="34" rx="4" fill="#ffffff" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="512" y="118" width="46" height="34" rx="4" fill="#ffffff" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="564" y="118" width="46" height="34" rx="4" fill="#ffffff" stroke="#c5c5c5" stroke-width="1.2"/>
+  </g>
+  <text x="431" y="140" text-anchor="middle" font-size="11.5" fill="#2d4d22" font-weight="bold" font-family="monospace">0</text>
+  <text x="483" y="140" text-anchor="middle" font-size="11" fill="#999" font-family="monospace">∞</text>
+  <text x="535" y="140" text-anchor="middle" font-size="11" fill="#999" font-family="monospace">∞</text>
+  <text x="587" y="140" text-anchor="middle" font-size="11" fill="#999" font-family="monospace">…</text>
+  <g font-size="9.5" fill="#888" text-anchor="middle">
+    <text x="431" y="166">c=0</text>
+    <text x="483" y="166">c=1</text>
+    <text x="535" y="166">c=2</text>
+    <text x="587" y="166">…</text>
+  </g>
+  <g filter="url(#sk)">
+    <path d="M 342 136 Q 376 128 404 134" stroke="#2b6e9e" stroke-width="1.8" fill="none" marker-end="url(#arBlue)"/>
+    <path d="M 454 210 Q 500 192 530 156" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arOrange)"/>
+  </g>
+  <text x="366" y="122" font-size="10" fill="#2b6e9e">① 查 p[j−1]</text>
+  <text x="452" y="226" font-size="10" fill="#a06a10">⑤ dp[j] 放入桶 p[j]</text>
+
+  <!-- middle formula box -->
+  <rect x="56" y="196" width="280" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="196" y="218" text-anchor="middle" font-size="12.5" fill="#7a5510" font-family="monospace">dp[j] = nums[j] + best[p[j−1]]</text>
+  <text x="196" y="238" text-anchor="middle" font-size="10.5" fill="#a06a10">桶里存的是 min，转移 O(1) 查询</text>
+
+  <!-- answer condition -->
+  <rect x="392" y="196" width="240" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="512" y="218" text-anchor="middle" font-size="12" fill="#8a3a34" font-family="monospace">若 p[j] = p[n]：ans = min(ans, dp[j])</text>
+  <text x="512" y="238" text-anchor="middle" font-size="10.5" fill="#b85450">④ 尾间隙条件在扫描中即时判定</text>
+
+  <!-- bottom pipeline -->
+  <g filter="url(#sk)">
+    <rect x="40"  y="300" width="112" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="170" y="300" width="112" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="300" y="300" width="112" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="430" y="300" width="112" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+    <rect x="560" y="300" width="86" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="96"  y="319" text-anchor="middle" font-size="11" fill="#2b4a66">① 扫描 j</text>
+  <text x="96"  y="334" text-anchor="middle" font-size="9.5" fill="#557" font-family="monospace">j = 1…n</text>
+  <text x="226" y="319" text-anchor="middle" font-size="11" fill="#2b4a66">② 算 p[j]</text>
+  <text x="226" y="334" text-anchor="middle" font-size="9.5" fill="#557" font-family="monospace">p = (p+nums[j])%k</text>
+  <text x="356" y="319" text-anchor="middle" font-size="11" fill="#2b4a66">③ 查桶转移</text>
+  <text x="356" y="334" text-anchor="middle" font-size="9.5" fill="#557" font-family="monospace">best[p[j−1]]</text>
+  <text x="486" y="319" text-anchor="middle" font-size="11" fill="#8a3a34">④ 更新答案</text>
+  <text x="486" y="334" text-anchor="middle" font-size="9.5" fill="#a55" font-family="monospace">p[j]=p[n]?</text>
+  <text x="603" y="319" text-anchor="middle" font-size="11" fill="#7a5510">⑤ 入桶</text>
+  <text x="603" y="334" text-anchor="middle" font-size="9.5" fill="#a76" font-family="monospace">best[p[j]]</text>
+  <g filter="url(#sk)">
+    <path d="M 152 322 L 168 322" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 282 322 L 298 322" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 412 322 L 428 322" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 542 322 L 558 322" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <rect x="40" y="366" width="606" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="343" y="384" text-anchor="middle" font-size="11.5" fill="#2d4d22">初始 best[0] = 0（虚拟起点：允许 j 之前的元素全部删除）；若 p[n] = 0，则整个数组可删空，答案直接为 0。</text>
+  <text x="343" y="400" text-anchor="middle" font-size="11.5" fill="#2d4d22">一轮扫描 O(n) 完成，无需保存 dp 数组——只需"桶 + 当前答案"两个状态。</text>
+</svg>

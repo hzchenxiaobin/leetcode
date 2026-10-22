@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="500" viewBox="0 0 680 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arBlue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2b6e9e"/>
+    </marker>
+  </defs>
+  <rect width="680" height="500" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：保留元素是"隔板"，每个间隙独立地要求"和 ≡ 0 (mod k)"</text>
+  <path d="M 110 44 Q 340 54 570 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="72" text-anchor="middle" font-size="12" fill="#888">以 nums = [3, 1, 4, 1, 5]，k = 3 为例：保留 5（答案 5），前 4 个元素构成间隙 G₀</text>
+
+  <!-- residue arc: p[0] = p[4] -->
+  <g filter="url(#sk)">
+    <path d="M 118 152 Q 310 76 502 152" stroke="#2b6e9e" stroke-width="2.2" fill="none" stroke-dasharray="7,5" marker-end="url(#arBlue)"/>
+  </g>
+  <rect x="196" y="86" width="228" height="26" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="310" y="104" text-anchor="middle" font-size="12" fill="#2b4a66">p[0] = p[4] = 0 ⇒ 间隙和 ≡ 0 (mod 3)</text>
+
+  <!-- kept element pillar -->
+  <g filter="url(#sk)">
+    <rect x="506" y="118" width="52" height="72" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5"/>
+    <rect x="518" y="96" width="28" height="22" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="532" y="112" text-anchor="middle" font-size="10" fill="#3a5c2e">保留</text>
+  <text x="532" y="146" text-anchor="middle" font-size="15" font-weight="bold" fill="#2d4d22" font-family="monospace">5</text>
+  <text x="532" y="164" text-anchor="middle" font-size="9.5" fill="#4a7a3a">t₁</text>
+  <text x="560" y="200" text-anchor="middle" font-size="10" fill="#4a7a3a">永远在场</text>
+  <text x="560" y="213" text-anchor="middle" font-size="10" fill="#4a7a3a">挡住删除块</text>
+
+  <!-- gap cells 1..4 (to be deleted) -->
+  <g filter="url(#sk)">
+    <rect x="118" y="122" width="94" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="218" y="122" width="94" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="318" y="122" width="94" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="418" y="122" width="88" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="165" y="148" text-anchor="middle" font-size="14" fill="#a06a10" font-weight="bold" font-family="monospace">3</text>
+  <text x="265" y="148" text-anchor="middle" font-size="14" fill="#a06a10" font-weight="bold" font-family="monospace">1</text>
+  <text x="365" y="148" text-anchor="middle" font-size="14" fill="#a06a10" font-weight="bold" font-family="monospace">4</text>
+  <text x="462" y="148" text-anchor="middle" font-size="14" fill="#a06a10" font-weight="bold" font-family="monospace">1</text>
+  <text x="293" y="166" text-anchor="middle" font-size="10" fill="#b08020">间隙 G₀：和 = 9 ≡ 0 (mod 3)，可整段删除</text>
+
+  <!-- residues under boundaries -->
+  <g font-size="11.5" fill="#2b6e9e" font-family="monospace" text-anchor="middle">
+    <text x="112" y="206">p₀=0</text>
+    <text x="216" y="206">p₁=0</text>
+    <text x="316" y="206">p₂=1</text>
+    <text x="416" y="206">p₃=2</text>
+    <text x="510" y="206">p₄=0</text>
+    <text x="590" y="206">p₅=2</text>
+  </g>
+  <text x="612" y="152" text-anchor="middle" font-size="10.5" fill="#b85450">尾部间隙为空</text>
+  <text x="612" y="166" text-anchor="middle" font-size="10.5" fill="#b85450">p₄ = p₅? 否，</text>
+  <text x="612" y="179" text-anchor="middle" font-size="10.5" fill="#b85450">但 5 之后无元素</text>
+
+  <!-- equivalence of two deletion orders -->
+  <text x="340" y="248" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">"先删 [1,4,1] 再删合拢后的 [3]" 与 "一次删掉整个间隙" 等价：</text>
+  <g filter="url(#sk)">
+    <rect x="52" y="266" width="576" height="42" rx="8" fill="#ffffff" stroke="#c5c5c5" stroke-width="1.2"/>
+  </g>
+  <text x="74" y="292" font-size="12.5" fill="#333" font-family="monospace">[3,1,4,1,5]</text>
+  <text x="168" y="292" font-size="11" fill="#a06a10">删[1,4,1]</text>
+  <path d="M 232 288 L 268 288" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="282" y="292" font-size="12.5" fill="#333" font-family="monospace">[3,5]</text>
+  <text x="334" y="292" font-size="11" fill="#a06a10">删[3]</text>
+  <path d="M 380 288 L 416 288" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="428" y="292" font-size="12.5" fill="#2d4d22" font-weight="bold" font-family="monospace">[5]</text>
+  <text x="486" y="292" font-size="15" font-weight="bold" fill="#4a7a3a">=</text>
+  <text x="516" y="292" font-size="11" fill="#2b6e9e">一次删 [3,1,4,1]</text>
+
+  <!-- general model -->
+  <text x="340" y="348" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">通用模型：保留 t₁ &lt; t₂ &lt; … &lt; t_m，两侧与之间的间隙各自独立判定</text>
+  <g filter="url(#sk)">
+    <rect x="60"  y="368" width="88" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="156" y="368" width="44" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="208" y="368" width="88" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="304" y="368" width="44" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="356" y="368" width="60" height="34" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="424" y="368" width="88" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="104" y="389" text-anchor="middle" font-size="12" fill="#2b4a66" font-family="monospace">G₀</text>
+  <text x="178" y="389" text-anchor="middle" font-size="12" fill="#2d4d22" font-weight="bold" font-family="monospace">t₁</text>
+  <text x="252" y="389" text-anchor="middle" font-size="12" fill="#2b4a66" font-family="monospace">G₁</text>
+  <text x="326" y="389" text-anchor="middle" font-size="12" fill="#2d4d22" font-weight="bold" font-family="monospace">t₂</text>
+  <text x="386" y="389" text-anchor="middle" font-size="12" fill="#999">…</text>
+  <text x="468" y="389" text-anchor="middle" font-size="12" fill="#2b4a66" font-family="monospace">G_m</text>
+
+  <g font-size="11" fill="#2b6e9e" text-anchor="middle">
+    <text x="104" y="424">p₀ = p[t₁−1]</text>
+    <text x="252" y="424">p[t₁] = p[t₂−1]</text>
+    <text x="468" y="424">p[t_m] = p[n]</text>
+  </g>
+  <text x="252" y="452" text-anchor="middle" font-size="11" fill="#888">（尾部还需 p[t_m] = p[n]，即最后一个保留元素之后的部分和 ≡ 0）</text>
+  <rect x="60" y="466" width="560" height="24" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#sk)"/>
+  <text x="340" y="482" text-anchor="middle" font-size="11.5" fill="#2d4d22">⇒ 每个间隙两端的"前缀残差相等" ⇔ 间隙和被 k 整除 ⇔ 间隙可被（可能借助合并的）删除清空</text>
+</svg>
