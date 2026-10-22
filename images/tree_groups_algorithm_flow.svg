@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="480" fill="#fdfcf7"/>
+  <text x="229" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：一次逆 BFS 序合并</text>
+  <path d="M 70 42 Q 229 52 390 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 步骤 1 -->
+  <g filter="url(#sk)"><rect x="36" y="60" width="386" height="66" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="229" y="84" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6b" filter="url(#sk)">① 建邻接表 + 从 0 号点 BFS</text>
+  <text x="229" y="106" text-anchor="middle" font-size="11.5" fill="#4a6a88" filter="url(#sk)">得到 parent[] 与 BFS 序 order[]（迭代，无递归爆栈）</text>
+  <path d="M 229 126 L 229 142" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+
+  <!-- 步骤 2 -->
+  <g filter="url(#sk)"><rect x="36" y="146" width="386" height="66" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="229" y="170" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6b" filter="url(#sk)">② 统计各组总数 total[g]</text>
+  <text x="229" y="192" text-anchor="middle" font-size="11.5" fill="#4a6a88" filter="url(#sk)">group 值域仅 1..20，开长度 21 的数组计数</text>
+  <path d="M 229 212 L 229 228" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+
+  <!-- 步骤 3 -->
+  <g filter="url(#sk)"><rect x="36" y="232" width="386" height="140" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="229" y="256" text-anchor="middle" font-size="14" font-weight="bold" fill="#9a6d1a" filter="url(#sk)">③ 按 BFS 序逆序处理每个节点 v</text>
+  <text x="56" y="282" font-size="12" fill="#7a5415" font-family="monospace" filter="url(#sk)">cnt[v][group[v]] += 1</text>
+  <text x="290" y="282" font-size="11" fill="#a8863a" filter="url(#sk)">← 自己入账</text>
+  <text x="56" y="306" font-size="12" fill="#7a5415" font-family="monospace" filter="url(#sk)">v 非根：ans += Σ_g cnt[v][g]×(total[g]−cnt[v][g])</text>
+  <text x="56" y="324" font-size="11" fill="#a8863a" filter="url(#sk)">（即边 (v, parent[v]) 的贡献，每条边恰好统计一次）</text>
+  <text x="56" y="348" font-size="12" fill="#7a5415" font-family="monospace" filter="url(#sk)">cnt[parent[v]][g] += cnt[v][g]</text>
+  <text x="300" y="348" font-size="11" fill="#a8863a" filter="url(#sk)">← 计数上抛</text>
+  <path d="M 229 372 L 229 388" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+
+  <!-- 步骤 4 -->
+  <g filter="url(#sk)"><rect x="36" y="392" width="386" height="58" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="229" y="416" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">④ 输出 ans</text>
+  <text x="229" y="438" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#sk)">必须 long long：答案上界约 5×10^14</text>
+
+  <!-- 右侧：自底向上示意 -->
+  <g filter="url(#sk)"><rect x="446" y="60" width="158" height="230" rx="10" fill="#faf6f0" stroke="#c9b89a" stroke-width="1.2"/></g>
+  <text x="525" y="86" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5a2a" filter="url(#sk)">逆序 = 先孩子后父亲</text>
+  <g filter="url(#sk)"><circle cx="525" cy="122" r="16" fill="#dbe9fb" stroke="#446688" stroke-width="2"/></g>
+  <text x="525" y="127" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6b" filter="url(#sk)">v</text>
+  <g filter="url(#sk)"><circle cx="483" cy="190" r="15" fill="#ffe9c4" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="483" y="195" text-anchor="middle" font-size="12" fill="#9a6d1a" filter="url(#sk)">a</text>
+  <g filter="url(#sk)"><circle cx="567" cy="190" r="15" fill="#ffe9c4" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="567" y="195" text-anchor="middle" font-size="12" fill="#9a6d1a" filter="url(#sk)">b</text>
+  <g filter="url(#sk)"><circle cx="483" cy="254" r="13" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="483" y="259" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#sk)">c</text>
+  <path d="M 483 176 L 519 136" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <path d="M 567 176 L 531 136" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <path d="M 483 241 L 483 206" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="525" y="222" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#sk)">cnt 上抛</text>
+
+  <!-- 右下说明 -->
+  <g filter="url(#sk)"><rect x="446" y="304" width="158" height="146" rx="10" fill="#eef4fc" stroke="#446688" stroke-width="1.2"/></g>
+  <text x="525" y="330" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6b" filter="url(#sk)">为什么逆 BFS 序？</text>
+  <text x="525" y="352" text-anchor="middle" font-size="11" fill="#4a6a88" filter="url(#sk)">孩子一定排在 v 之后入序</text>
+  <text x="525" y="371" text-anchor="middle" font-size="11" fill="#4a6a88" filter="url(#sk)">→ 更早被处理并上抛计数</text>
+  <text x="525" y="390" text-anchor="middle" font-size="11" fill="#4a6a88" filter="url(#sk)">→ 轮到 v 时 cnt[v] 已含</text>
+  <text x="525" y="409" text-anchor="middle" font-size="11" fill="#4a6a88" filter="url(#sk)">全部后代，恰为子树计数</text>
+  <text x="525" y="436" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a6b" filter="url(#sk)">每节点只存 21 个计数</text>
+</svg>
