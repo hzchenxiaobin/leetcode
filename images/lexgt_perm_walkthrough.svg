@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 430"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="660" height="430" fill="#fafafa"/>
+  <text x="330" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">示例演算：s = "abc"，target = "bba"</text>
+  <path d="M 200 40 Q 330 48 460 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- table frame -->
+  <g filter="url(#sk)">
+    <rect x="20" y="56" width="620" height="240" rx="6" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.6"/>
+    <rect x="20" y="56" width="620" height="30" rx="6" fill="#f0f0ea" stroke="#8a8a8a" stroke-width="1.6"/>
+  </g>
+  <g font-size="12" font-weight="bold" fill="#444" text-anchor="middle">
+    <text x="50" y="75">i</text>
+    <text x="135" y="75">前缀（已消耗）</text>
+    <text x="255" y="75">剩余桶</text>
+    <text x="410" y="75">抬升字符</text>
+    <text x="570" y="75">候选结果</text>
+  </g>
+  <!-- column separators -->
+  <path d="M 80 86 L 80 296" stroke="#c9c9c9" stroke-width="1" filter="url(#sk)"/>
+  <path d="M 190 86 L 190 296" stroke="#c9c9c9" stroke-width="1" filter="url(#sk)"/>
+  <path d="M 320 86 L 320 296" stroke="#c9c9c9" stroke-width="1" filter="url(#sk)"/>
+  <path d="M 500 86 L 500 296" stroke="#c9c9c9" stroke-width="1" filter="url(#sk)"/>
+  <!-- row separators -->
+  <path d="M 22 146 Q 330 152 638 146" stroke="#c9c9c9" stroke-width="1" fill="none" filter="url(#sk)"/>
+  <path d="M 22 216 Q 330 222 638 216" stroke="#c9c9c9" stroke-width="1" fill="none" filter="url(#sk)"/>
+
+  <!-- row 2 highlight -->
+  <rect x="23" y="149" width="614" height="66" fill="#fff8e1" opacity="0.55" filter="url(#sk)"/>
+
+  <!-- row 1: i=0 -->
+  <g font-size="12.5" fill="#444" text-anchor="middle">
+    <text x="50" y="115" font-weight="bold">0</text>
+    <text x="135" y="115" fill="#999">（空）</text>
+    <text x="255" y="108">a:1  b:1  c:1</text>
+    <text x="255" y="126" font-size="10.5" fill="#888">尚未消耗</text>
+    <text x="410" y="108">target[0]='b'，取 &gt;'b' 的最小</text>
+    <text x="410" y="126" font-weight="bold" fill="#b85450">'c' ✓</text>
+    <text x="570" y="115" font-weight="bold" fill="#888">"cab"</text>
+    <text x="570" y="133" font-size="10.5" fill="#999">可行，但分叉偏早</text>
+  </g>
+
+  <!-- row 2: i=1 -->
+  <g font-size="12.5" fill="#444" text-anchor="middle">
+    <text x="50" y="185" font-weight="bold">1</text>
+    <text x="135" y="178">"b"</text>
+    <text x="135" y="196" font-size="10.5" fill="#888">扣掉 1 个 b</text>
+    <text x="255" y="178">a:1  c:1</text>
+    <text x="255" y="196" font-size="10.5" fill="#888">b 已用尽</text>
+    <text x="410" y="178">target[1]='b'，取 &gt;'b' 的最小</text>
+    <text x="410" y="196" font-weight="bold" fill="#b85450">'c' ✓</text>
+    <text x="570" y="185" font-weight="bold" fill="#d6a040" font-size="14">"bca"</text>
+    <text x="570" y="203" font-size="10.5" fill="#a0782a">最晚可行 ⟹ 答案</text>
+  </g>
+
+  <!-- row 3: i=2 -->
+  <g font-size="12.5" fill="#444" text-anchor="middle">
+    <text x="50" y="255" font-weight="bold">2</text>
+    <text x="135" y="248">"b"</text>
+    <text x="135" y="266" font-size="10.5" fill="#888">前缀停在 1 位</text>
+    <text x="255" y="248">a:1</text>
+    <text x="255" y="266" font-size="10.5" fill="#888">只剩 a</text>
+    <text x="410" y="248">target[2]='a'，桶中无 &gt;'a'</text>
+    <text x="410" y="266" font-weight="bold" fill="#b85450">无候选</text>
+    <text x="570" y="255" font-weight="bold" fill="#b85450" font-size="13">break</text>
+    <text x="570" y="273" font-size="10.5" fill="#a03a36">cnt[b]=0，前缀对不齐</text>
+  </g>
+
+  <!-- conclusion -->
+  <path d="M 330 298 L 330 312" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="170" y="318" width="320" height="44" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="330" y="345" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#7a5415">答案 = "bca"："cab" &gt; "bca" &gt; "bba"</text>
+
+  <text x="330" y="396" text-anchor="middle" font-size="11" fill="#888">每个 i 只做一次 O(26) 的抬升字符查找与 O(1) 的消耗判定 —— i=2 处 cnt[b]=0 直接终止，无需再看更晚位置</text>
+  <text x="330" y="414" text-anchor="middle" font-size="11" fill="#888">覆盖式记录：i 递增扫描，可行就覆盖 best，天然保留「最晚分叉」的构造</text>
+</svg>
