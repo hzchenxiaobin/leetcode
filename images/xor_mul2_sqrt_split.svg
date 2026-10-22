@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="576" viewBox="0 0 720 576" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="61" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="576" fill="#fdfcf7"/>
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">根号分治：按步长 k 与阈值 B 分流</text>
+  <text x="360" y="56" text-anchor="middle" font-size="12" fill="#888">阈值 B = ⌊√q⌋ ≈ 316；暴力要 q·n = 10¹⁰ 次模乘，分治后两条支路各 ≈ 3×10⁷</text>
+
+  <!-- query box -->
+  <g filter="url(#sk)">
+    <rect x="290" y="72" width="140" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="360" y="96" text-anchor="middle" font-size="13" fill="#2b2b2b">查询 [l, r, k, v]</text>
+  <g filter="url(#sk)">
+    <path d="M 360 110 L 360 132" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <polygon points="360,138 448,166 360,194 272,166" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="360" y="171" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5a10">k &gt; B ?</text>
+
+  <!-- branch arrows -->
+  <g filter="url(#sk)">
+    <path d="M 270 166 L 163 166 L 163 212" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+    <path d="M 450 166 L 557 166 L 557 212" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="214" y="156" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold">否：k ≤ B（小步长）</text>
+  <text x="508" y="156" text-anchor="middle" font-size="11.5" fill="#a06a10" font-weight="bold">是：k &gt; B（大步长）</text>
+
+  <!-- small-k box -->
+  <g filter="url(#sk)">
+    <rect x="48" y="218" width="230" height="118" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="163" y="242" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">小步长：拆链 + 乘法差分</text>
+  <text x="163" y="264" text-anchor="middle" font-size="11.5" fill="#333">按 l mod k 把数组拆成 k 条链</text>
+  <text x="163" y="281" text-anchor="middle" font-size="11.5" fill="#333">查询 = 链上一段连续区间乘</text>
+  <text x="163" y="298" text-anchor="middle" font-size="11.5" fill="#333">diff[l] ×= v，diff[last+k] ×= v⁻¹</text>
+  <text x="163" y="315" text-anchor="middle" font-size="11.5" fill="#333">每种 k 一轮 O(n)，至多 B 种</text>
+
+  <!-- big-k box -->
+  <g filter="url(#sk)">
+    <rect x="442" y="218" width="230" height="118" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="557" y="242" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a10">大步长：直接枚举落点</text>
+  <text x="557" y="264" text-anchor="middle" font-size="11.5" fill="#333">idx = l, l+k, l+2k, …（≤ r）</text>
+  <text x="557" y="281" text-anchor="middle" font-size="11.5" fill="#333">单查询落点 ≤ n/B + 1 ≈ √q 个</text>
+  <text x="557" y="298" text-anchor="middle" font-size="11.5" fill="#333">q 个查询合计 O(qn/B)</text>
+  <text x="557" y="315" text-anchor="middle" font-size="11.5" fill="#333">就是 I 版的暴力循环，原样保留</text>
+
+  <!-- left mini strip: chain k=2 -->
+  <text x="163" y="356" text-anchor="middle" font-size="11.5" fill="#446688">k = 2：链 c = 0 只看 {0, 2, 4, 6}</text>
+  <g filter="url(#sk)">
+    <rect x="49" y="364" width="26" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="78" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="107" y="364" width="26" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="136" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="165" y="364" width="26" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="194" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="223" y="364" width="26" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="252" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+  </g>
+  <text x="62" y="410" text-anchor="middle" font-size="9" fill="#446688" font-family="monospace">0</text>
+  <text x="91" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">1</text>
+  <text x="120" y="410" text-anchor="middle" font-size="9" fill="#446688" font-family="monospace">2</text>
+  <text x="149" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">3</text>
+  <text x="178" y="410" text-anchor="middle" font-size="9" fill="#446688" font-family="monospace">4</text>
+  <text x="207" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">5</text>
+  <text x="236" y="410" text-anchor="middle" font-size="9" fill="#446688" font-family="monospace">6</text>
+  <text x="265" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">7</text>
+
+  <!-- right mini strip: sparse jumps k=4 -->
+  <text x="557" y="356" text-anchor="middle" font-size="11.5" fill="#a06a10">k = 4，l = 1：只摸 {1, 5}，跳着走</text>
+  <g filter="url(#sk)">
+    <rect x="443" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="472" y="364" width="26" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="501" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="530" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="559" y="364" width="26" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="588" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="617" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <rect x="646" y="364" width="26" height="32" rx="4" fill="#f2f2f2" stroke="#c5c5c5" stroke-width="1.2"/>
+    <path d="M 485 360 Q 543 326 601 360" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="543" y="336" text-anchor="middle" font-size="10.5" fill="#a06a10">+k</text>
+  <text x="456" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">0</text>
+  <text x="485" y="410" text-anchor="middle" font-size="9" fill="#a06a10" font-family="monospace">1</text>
+  <text x="514" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">2</text>
+  <text x="543" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">3</text>
+  <text x="572" y="410" text-anchor="middle" font-size="9" fill="#a06a10" font-family="monospace">4</text>
+  <text x="601" y="410" text-anchor="middle" font-size="9" fill="#a06a10" font-family="monospace">5</text>
+  <text x="630" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">6</text>
+  <text x="659" y="410" text-anchor="middle" font-size="9" fill="#999" font-family="monospace">7</text>
+
+  <!-- converge arrows -->
+  <g filter="url(#sk)">
+    <path d="M 163 420 L 163 446" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 557 420 L 557 446" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- mult box -->
+  <g filter="url(#sk)">
+    <rect x="140" y="450" width="440" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="360" y="475" text-anchor="middle" font-size="12.5" fill="#2b2b2b">mult[i] ← 覆盖 i 的所有查询的 v 之积（mod 10⁹ + 7）</text>
+  <g filter="url(#sk)">
+    <path d="M 360 490 L 360 506" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- final box -->
+  <g filter="url(#sk)">
+    <rect x="200" y="510" width="320" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="360" y="534" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">ans = ⊕ nums[i]·mult[i] mod p</text>
+  <text x="360" y="568" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">两侧合计 O(n√q + q) ≈ 6×10⁷ 次模乘 —— 稳过</text>
+</svg>
