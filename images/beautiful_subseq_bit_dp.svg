@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="580" viewBox="0 0 940 580" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="580" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：对每个 d，在「倍数序列」上用值域 BIT 数严格递增子序列</text>
+  <path d="M 180 42 Q 470 50 760 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 流程四框 -->
+  <g filter="url(#sk)">
+    <rect x="42" y="64" width="198" height="66" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="288" y="64" width="198" height="66" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="534" y="64" width="198" height="66" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="780" y="64" width="118" height="66" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="141" y="90" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5e8e">① 抽出 d 的倍数</text>
+  <text x="141" y="112" text-anchor="middle" font-size="11" fill="#557">occ 值域桶收集下标</text>
+  <text x="387" y="90" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5e8e">② 按原下标排序</text>
+  <text x="387" y="112" text-anchor="middle" font-size="11" fill="#557">y = x/d，值域压到 1..V/d</text>
+  <text x="633" y="90" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5e8e">③ 依序 DP + BIT</text>
+  <text x="633" y="112" text-anchor="middle" font-size="11" fill="#557">c = 1 + query(y−1)，add(y,c)</text>
+  <text x="839" y="90" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e">④ 聚合</text>
+  <text x="839" y="112" text-anchor="middle" font-size="11" fill="#456">ans += φ(d)·h(d)</text>
+  <path d="M 242 97 L 286 97" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+  <path d="M 488 97 L 532 97" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+  <path d="M 734 97 L 778 97" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+
+  <!-- 实例标题 -->
+  <text x="470" y="168" text-anchor="middle" font-size="15" font-weight="bold" fill="#7a5415">实例：d = 2，nums = [3, 4, 6, 8]</text>
+
+  <!-- 原数组 -->
+  <text x="70" y="196" font-size="12" fill="#888">原数组：</text>
+  <g filter="url(#sk)">
+    <rect x="130" y="180" width="48" height="40" rx="4" fill="#ffffff" stroke="#c8d0da" stroke-width="1.3"/>
+    <rect x="184" y="180" width="48" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/>
+    <rect x="238" y="180" width="48" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/>
+    <rect x="292" y="180" width="48" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/>
+  </g>
+  <text x="154" y="205" text-anchor="middle" font-size="15" fill="#b0b8c2">3</text>
+  <text x="208" y="205" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b5e8e">4</text>
+  <text x="262" y="205" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b5e8e">6</text>
+  <text x="316" y="205" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b5e8e">8</text>
+  <text x="154" y="234" text-anchor="middle" font-size="10" fill="#999">i=0</text>
+  <text x="208" y="234" text-anchor="middle" font-size="10" fill="#999">i=1</text>
+  <text x="262" y="234" text-anchor="middle" font-size="10" fill="#999">i=2</text>
+  <text x="316" y="234" text-anchor="middle" font-size="10" fill="#999">i=3</text>
+  <path d="M 356 200 Q 396 200 416 210" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+  <text x="430" y="196" font-size="12.5" fill="#333">倍数 4(i₁), 6(i₂), 8(i₃) 天然按原下标有序</text>
+  <text x="430" y="220" font-size="12.5" fill="#333">除以 d=2 得 y 序列 <tspan font-weight="bold" fill="#2b5e8e">[2, 3, 4]</tspan>，值域只需 1..4</text>
+  <text x="430" y="244" font-size="11" fill="#999">（若不有序，须先按下标 sort —— 见底部警示）</text>
+
+  <!-- BIT 演示：左列快照 -->
+  <text x="62" y="292" font-size="13" font-weight="bold" fill="#2b2b2b">值域 BIT（大小 ⌊V/d⌋ = 4）逐步快照：</text>
+  <g font-size="10" fill="#999">
+    <text x="132" y="322" text-anchor="middle">1</text>
+    <text x="186" y="322" text-anchor="middle">2</text>
+    <text x="240" y="322" text-anchor="middle">3</text>
+    <text x="294" y="322" text-anchor="middle">4</text>
+  </g>
+  <!-- 快照行 1 -->
+  <g filter="url(#sk)">
+    <rect x="108" y="330" width="48" height="36" rx="4" fill="#ffffff" stroke="#c8d0da" stroke-width="1.2"/>
+    <rect x="162" y="330" width="48" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+    <rect x="216" y="330" width="48" height="36" rx="4" fill="#ffffff" stroke="#c8d0da" stroke-width="1.2"/>
+    <rect x="270" y="330" width="48" height="36" rx="4" fill="#ffffff" stroke="#c8d0da" stroke-width="1.2"/>
+  </g>
+  <text x="132" y="353" text-anchor="middle" font-size="14" fill="#c8ced6">0</text>
+  <text x="186" y="353" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b5e8e">1</text>
+  <text x="240" y="353" text-anchor="middle" font-size="14" fill="#c8ced6">0</text>
+  <text x="294" y="353" text-anchor="middle" font-size="14" fill="#c8ced6">0</text>
+  <!-- 快照行 2 -->
+  <g filter="url(#sk)">
+    <rect x="108" y="376" width="48" height="36" rx="4" fill="#ffffff" stroke="#c8d0da" stroke-width="1.2"/>
+    <rect x="162" y="376" width="48" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/>
+    <rect x="216" y="376" width="48" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+    <rect x="270" y="376" width="48" height="36" rx="4" fill="#ffffff" stroke="#c8d0da" stroke-width="1.2"/>
+  </g>
+  <text x="132" y="399" text-anchor="middle" font-size="14" fill="#c8ced6">0</text>
+  <text x="186" y="399" text-anchor="middle" font-size="14" fill="#2b5e8e">1</text>
+  <text x="240" y="399" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b5e8e">2</text>
+  <text x="294" y="399" text-anchor="middle" font-size="14" fill="#c8ced6">0</text>
+  <!-- 快照行 3 -->
+  <g filter="url(#sk)">
+    <rect x="108" y="422" width="48" height="36" rx="4" fill="#ffffff" stroke="#c8d0da" stroke-width="1.2"/>
+    <rect x="162" y="422" width="48" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/>
+    <rect x="216" y="422" width="48" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/>
+    <rect x="270" y="422" width="48" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="132" y="445" text-anchor="middle" font-size="14" fill="#c8ced6">0</text>
+  <text x="186" y="445" text-anchor="middle" font-size="14" fill="#2b5e8e">1</text>
+  <text x="240" y="445" text-anchor="middle" font-size="14" fill="#2b5e8e">2</text>
+  <text x="294" y="445" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b5e8e">4</text>
+
+  <!-- 右列步骤说明 -->
+  <g font-size="13">
+    <text x="400" y="348" fill="#333">① y=2：query(1) = 0 → <tspan font-weight="bold" fill="#2b5e8e">c=1</tspan>；add(2, 1)</text>
+    <text x="400" y="394" fill="#333">② y=3：query(2) = 1 → <tspan font-weight="bold" fill="#2b5e8e">c=2</tspan>；add(3, 2)</text>
+    <text x="400" y="440" fill="#333">③ y=4：query(3) = 1+2 = 3 → <tspan font-weight="bold" fill="#2b5e8e">c=4</tspan>；add(4, 4)</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="400" y="462" width="330" height="34" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="565" y="484" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">h(2) = 1 + 2 + 4 = 7，ans += φ(2) × 7</text>
+
+  <!-- 底部警示框 -->
+  <g filter="url(#sk)">
+    <rect x="42" y="516" width="856" height="48" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="62" y="536" font-size="13" font-weight="bold" fill="#8c5e14">⚠ 顺序必须按原下标：若按「值从小到大」处理（如 nums = [3,1,2]，d=1 时先插 1、2 再插 3），会把 (3,2) 这类</text>
+  <text x="62" y="556" font-size="13" font-weight="bold" fill="#8c5e14">非子序列也计入 —— BIT 里存的是「更早出现的更小值」，顺序即前缀语义，错了就多算。</text>
+</svg>
