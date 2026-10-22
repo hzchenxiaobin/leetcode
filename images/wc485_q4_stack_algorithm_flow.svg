@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="460" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">单调栈：两条弹栈通道 + 无条件入栈 + 尾部修剪</text>
+
+  <!-- 左列：扫描阶段 -->
+  <text x="185" y="52" text-anchor="middle" font-size="11" fill="#33506b" font-weight="bold" filter="url(#rough2)">扫描阶段（逐字符）</text>
+
+  <rect x="115" y="60" width="140" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="185" y="81" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">读入字符 c</text>
+  <path d="M185,92 L185,112" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="185,112 265,148 185,184 105,148" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="185" y="144" text-anchor="middle" font-size="10.5" fill="#33506b" filter="url(#rough2)">栈顶 t 存在</text>
+  <text x="185" y="160" text-anchor="middle" font-size="10.5" fill="#33506b" filter="url(#rough2)">且 t &gt; c ？</text>
+
+  <path d="M265,148 L305,148" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="285" y="140" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">否</text>
+
+  <rect x="305" y="131" width="110" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="360" y="152" text-anchor="middle" font-size="11.5" fill="#2f5d24" filter="url(#rough2)">入栈 c</text>
+  <path d="M360,131 C360,100 300,100 262,84" stroke="#4a7a3a" stroke-width="1.6" fill="none" stroke-dasharray="5 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="340" y="103" text-anchor="middle" font-size="9" fill="#4a7a3a" filter="url(#rough2)">下一个字符</text>
+
+  <path d="M185,184 L185,206" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="196" y="200" font-size="9.5" fill="#666" filter="url(#rough2)">是</text>
+
+  <polygon points="185,206 275,242 185,278 95,242" fill="#ffffff" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="185" y="236" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">后缀还有 t ？</text>
+  <text x="185" y="252" text-anchor="middle" font-size="10" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">或 栈内 t ≥ 2 份？</text>
+
+  <path d="M275,242 L360,242 L360,165" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="300" y="234" font-size="9.5" fill="#666" filter="url(#rough2)">否（保底，不许弹）</text>
+
+  <path d="M185,278 L185,300" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="196" y="294" font-size="9.5" fill="#666" filter="url(#rough2)">是</text>
+
+  <rect x="115" y="300" width="140" height="32" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="185" y="321" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">弹出 t</text>
+  <path d="M115,316 L60,316 L60,148 L105,148" stroke="#d6a040" stroke-width="1.6" fill="none" stroke-dasharray="5 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="62" y="230" text-anchor="middle" font-size="9" fill="#8a6d1f" transform="rotate(-90 62 230)" filter="url(#rough2)">继续判断新栈顶</text>
+
+  <!-- 右列：修剪阶段 -->
+  <text x="505" y="52" text-anchor="middle" font-size="11" fill="#33506b" font-weight="bold" filter="url(#rough2)">扫描结束（尾部修剪）</text>
+
+  <polygon points="505,112 600,150 505,188 410,150" fill="#ffffff" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="505" y="146" text-anchor="middle" font-size="10" fill="#a0433f" filter="url(#rough2)">栈顶字母在栈内</text>
+  <text x="505" y="162" text-anchor="middle" font-size="10" fill="#a0433f" font-weight="bold" filter="url(#rough2)">出现 ≥ 2 次？</text>
+
+  <path d="M600,150 L622,150 L622,240 L565,240" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="618" y="200" font-size="9.5" fill="#666" transform="rotate(90 618 200)" filter="url(#rough2)">是</text>
+
+  <rect x="445" y="224" width="120" height="32" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="505" y="245" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">弹出栈顶</text>
+  <path d="M445,240 L415,240 L415,150 L410,150" stroke="#d6a040" stroke-width="1.6" fill="none" stroke-dasharray="5 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M505,188 L505,214" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="516" y="206" font-size="9.5" fill="#666" filter="url(#rough2)">否</text>
+
+  <rect x="430" y="290" width="150" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="505" y="313" text-anchor="middle" font-size="12" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">输出 st = 答案</text>
+  <path d="M505,256 L505,290" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 底部注释 -->
+  <rect x="36" y="360" width="568" height="26" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="377" text-anchor="middle" font-size="10" fill="#2f5d24" filter="url(#rough2)">通道一「后缀还有」= LC316 原版许可：后面补得回来，先用更小的 c</text>
+
+  <rect x="36" y="392" width="568" height="26" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="409" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">通道二「栈内还有备份」= 本题新增：弹掉一份仍保覆盖；入栈无条件 = 宽进试探</text>
+
+  <rect x="36" y="424" width="568" height="26" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="441" text-anchor="middle" font-size="10" fill="#a0433f" filter="url(#rough2)">尾部修剪 = 末字母必唯一：没有更大后继接棒的试探字符，最后收回</text>
+</svg>
