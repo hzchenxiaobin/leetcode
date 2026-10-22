@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
+    <filter id="rough2"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="32" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">算法流程：按值分组 + 相邻三次出现</text>
+
+  <!-- 左侧流程 -->
+  <rect x="36" y="62" width="248" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="160" y="86" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">① 一趟扫描</text>
+  <text x="160" y="106" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">pos[v] 记录每个值的出现位置（升序）</text>
+
+  <path d="M160 120 L160 140" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="36" y="144" width="248" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="160" y="168" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">② 对每个值，枚举相邻三次出现</text>
+  <text x="160" y="188" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">窗口 (p[s], p[s+1], p[s+2])</text>
+
+  <path d="M160 202 L160 222" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="36" y="226" width="248" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="160" y="246" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">③ 更新最小跨度</text>
+  <text x="160" y="264" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">best = min(best, p[s+2] − p[s])</text>
+
+  <path d="M160 274 L160 294" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="36" y="298" width="248" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="160" y="318" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">④ 无候选 → 返回 −1</text>
+  <text x="160" y="336" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">否则返回 2 × best</text>
+
+  <!-- 右侧示例 -->
+  <text x="405" y="66" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">例：pos[v] = [1, 3, 7, 9]</text>
+
+  <rect x="318" y="80" width="36" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="336" y="102" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="360" y="80" width="36" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="378" y="102" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">3</text>
+  <rect x="402" y="80" width="36" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="420" y="102" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">7</text>
+  <rect x="444" y="80" width="36" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="462" y="102" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">9</text>
+
+  <rect x="354" y="72" width="132" height="50" fill="none" stroke="#b85450" stroke-width="2" stroke-dasharray="6 4" rx="6" filter="url(#rough2)"/>
+  <text x="405" y="142" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">相邻三次出现 (3, 7, 9)</text>
+  <text x="405" y="160" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">跨度 = 9 − 3 = 6</text>
+
+  <rect x="310" y="180" width="190" height="130" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="405" y="206" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">任取三元组，把左端收紧</text>
+  <text x="405" y="226" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">到相邻出现，跨度只减不增</text>
+  <text x="405" y="246" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">→ 最优跨度必在某个</text>
+  <text x="405" y="266" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">相邻三次窗口取得</text>
+  <text x="405" y="292" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">窗口每次右移一格即可</text>
+</svg>
