@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：BFS 定序 → 逆序求 down → 正序换根</text>
+
+  <!-- step 1 -->
+  <rect x="70" y="46" width="420" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="66" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">① 建邻接表（无向边双向）；从 0 出发 BFS</text>
+  <text x="280" y="84" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">得 order[]（父先于子）与 parent[]</text>
+  <path d="M 280 92 L 280 112" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- side note 1 -->
+  <text x="502" y="66" font-size="9.5" fill="#446688" filter="url(#rough2)">全程迭代</text>
+  <text x="502" y="79" font-size="9.5" fill="#446688" filter="url(#rough2)">无递归，</text>
+  <text x="502" y="92" font-size="9.5" fill="#446688" filter="url(#rough2)">链树不爆栈</text>
+
+  <!-- step 2 -->
+  <rect x="70" y="114" width="420" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="134" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② 逆序扫 order（孩子先于父亲）：</text>
+  <text x="280" y="152" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">down[u] = w(u) + Σ max(0, down[孩子])</text>
+  <path d="M 280 160 L 280 180" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- side note 2 -->
+  <text x="502" y="134" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">down[u] &gt; 0</text>
+  <text x="502" y="147" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">才上抛，</text>
+  <text x="502" y="160" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">即 max(0,·)</text>
+
+  <!-- step 3 -->
+  <rect x="70" y="182" width="420" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="202" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ 正序扫 order（父先于子）换根：</text>
+  <text x="280" y="220" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">g[u] = down[u] + max(0, g[p] − max(0, down[u]))</text>
+  <text x="280" y="234" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#rough2)">根：g[0] = down[0]（无父侧）</text>
+  <path d="M 280 238 L 280 258" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- side note 3 -->
+  <text x="502" y="200" font-size="9.5" fill="#d6a040" filter="url(#rough2)">求和型贡献</text>
+  <text x="502" y="213" font-size="9.5" fill="#d6a040" filter="url(#rough2)">可减：一条减法</text>
+  <text x="502" y="226" font-size="9.5" fill="#d6a040" filter="url(#rough2)">排除 u 分支，</text>
+  <text x="502" y="239" font-size="9.5" fill="#d6a040" filter="url(#rough2)">免前后缀/top-2</text>
+
+  <!-- step 4 -->
+  <rect x="70" y="260" width="420" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="285" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">④ 返回 g[] —— 每个点的答案</text>
+
+  <!-- complexity box -->
+  <rect x="70" y="326" width="420" height="58" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="348" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">时间 O(n)：每条边两端各访问一次，Σdeg = 2(n−1)</text>
+  <text x="280" y="370" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">空间 O(n)：邻接表 + order / parent / down / g</text>
+</svg>

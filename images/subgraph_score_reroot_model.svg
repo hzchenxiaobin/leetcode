@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="470" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">核心观察：包含 u 的最优连通块 = u + 各方向分支独立拼装</text>
+  <text x="280" y="47" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">删掉 u，树裂成 deg(u) 块领地——每个方向可选可不选，选了就取该方向最优，负贡献剪掉</text>
+
+  <!-- up region: outside subtree -->
+  <rect x="105" y="58" width="350" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" stroke-dasharray="6 4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="77" text-anchor="middle" font-size="11" fill="#d6a040" filter="url(#rough2)">父侧（u 子树之外的世界）</text>
+  <text x="280" y="96" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">父侧贡献 up(u) = g[p] − max(0, down[u])</text>
+
+  <!-- edge p-u -->
+  <path d="M 280 152 L 280 205" stroke="#d6a040" stroke-width="2" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="292" y="185" font-size="10.5" fill="#d6a040" filter="url(#rough2)">up(u)</text>
+
+  <!-- node p -->
+  <circle cx="280" cy="134" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="139" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">p</text>
+
+  <!-- node u -->
+  <circle cx="280" cy="228" r="21" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="280" y="234" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">u</text>
+
+  <!-- edge u-c1 (kept, green solid) -->
+  <path d="M 261 241 L 162 311" stroke="#4a7a3a" stroke-width="2.2" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="196" y="266" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">max(0, down[c₁])</text>
+
+  <!-- edge u-c2 (pruned, red dashed) -->
+  <path d="M 300 242 L 415 311" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="377" y="266" font-size="10.5" fill="#b85450" filter="url(#rough2)">✗ down[c₂] &lt; 0</text>
+
+  <!-- branch c1: child subtree -->
+  <circle cx="148" cy="327" r="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="148" y="332" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">c₁</text>
+  <circle cx="82" cy="384" r="11" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <circle cx="192" cy="388" r="11" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <path d="M 137 339 L 92 376" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <path d="M 160 340 L 186 378" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="148" y="416" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">down[c₁] = +2 → 收下 ✓</text>
+
+  <!-- branch c2: pruned child subtree -->
+  <circle cx="432" cy="327" r="16" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="432" y="332" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">c₂</text>
+  <circle cx="375" cy="386" r="11" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <circle cx="487" cy="386" r="11" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <path d="M 421 339 L 384 376" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <path d="M 444 339 L 480 376" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="432" y="416" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">down[c₂] = −3 → 整支剪掉 ✗</text>
+
+  <!-- summary formula -->
+  <rect x="48" y="428" width="464" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="450" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">g[u] = down[u] + max(0, g[p] − max(0, down[u]))，其中 down[u] = w(u) + Σ max(0, down[孩子])</text>
+</svg>
