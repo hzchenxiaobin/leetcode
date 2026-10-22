@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="480" fill="#fdfcf7"/>
+  <text x="320" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：同值分组 → 哈希数对 → 相邻零修正</text>
+  <path d="M 150 42 Q 320 52 490 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="58" width="480" height="54" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="80" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e">① 求前缀和</text>
+  <text x="320" y="100" text-anchor="middle" font-size="13" fill="#2b6e9e">P[0] ＝ 0，P[i+1] ＝ P[i] ＋ a[i]</text>
+
+  <path d="M 320 114 L 320 132" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="136" width="480" height="54" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="158" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e">② 按值分组</text>
+  <text x="320" y="178" text-anchor="middle" font-size="13" fill="#2b6e9e">pos[v] ＝ 值为 v 的下标列表（升序）</text>
+
+  <path d="M 320 192 L 320 210" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="214" width="480" height="74" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="236" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e5e22">③ 组内从左到右枚举 r（cnt 记录更早组员的 P[l]）</text>
+  <text x="320" y="258" text-anchor="middle" font-size="13" fill="#2e5e22">先查：ans ＋＝ cnt[P[r] − 2v]</text>
+  <text x="320" y="278" text-anchor="middle" font-size="13" fill="#2e5e22">再插：cnt[P[r]] ＋＝ 1</text>
+
+  <path d="M 320 292 L 320 308" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="312" width="480" height="54" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="334" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415">④ 修正：减去相邻双零对数</text>
+  <text x="320" y="354" text-anchor="middle" font-size="13" fill="#7a5415">ans −＝ #{ i ： a[i] ＝ a[i+1] ＝ 0 }</text>
+
+  <g filter="url(#sk)">
+    <rect x="30" y="386" width="580" height="80" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="410" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8e3a34">⚠ 为何只需减「相邻零」？数对允许 r ＝ l+1（长度 2，非法）</text>
+  <text x="320" y="432" text-anchor="middle" font-size="12.5" fill="#8e3a34">此时需 P[l] ＋ v ＝ P[l] ＋ 2v ⟹ v ＝ 0</text>
+  <text x="320" y="454" text-anchor="middle" font-size="12.5" fill="#8e3a34">即：只有相邻双零会被误计、且一定会被误计 —— 恰好减掉其个数</text>
+</svg>
