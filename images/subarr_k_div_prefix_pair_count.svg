@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="470" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：前缀和 ＋ 逐块扫描哈希数对</text>
+  <path d="M 130 40 Q 320 50 510 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="36" y="66" width="330" height="62" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="201" y="90" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e">① 预处理</text>
+  <text x="201" y="112" text-anchor="middle" font-size="12" fill="#2b6e9e">前缀和 P[0]=0，P[i+1]=P[i]+nums[i]；按相等值分块 (v, L)</text>
+
+  <path d="M 201 128 L 201 150" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="36" y="156" width="330" height="128" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="201" y="180" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e5e22">② 从左到右逐块扫描（当前块 e）</text>
+  <text x="201" y="206" text-anchor="middle" font-size="12" fill="#2e5e22">查询：对块内每个右端 t，</text>
+  <text x="201" y="226" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22">ans ＋＝ cnt[ P[t+1] mod k ]</text>
+  <text x="201" y="252" text-anchor="middle" font-size="12" fill="#2e5e22">插入：块内查询完后，对块内每个起点 s，</text>
+  <text x="201" y="272" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22">cnt[ P[s] mod k ] ＋＝ 1</text>
+
+  <path d="M 388 278 Q 414 220 388 162" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="428" y="228" font-size="11.5" fill="#4a7a3a">下一块</text>
+
+  <path d="M 201 284 L 201 306" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="36" y="312" width="330" height="62" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="201" y="336" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415">③ 单块贡献（按长度去重）</text>
+  <text x="201" y="358" text-anchor="middle" font-size="12.5" fill="#7a5415">每块 ans ＋＝ ⌊L / (k / gcd(v,k))⌋</text>
+
+  <path d="M 201 374 L 201 396" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="36" y="402" width="330" height="46" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="201" y="431" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a3a36">返回 ans</text>
+
+  <g filter="url(#sk)">
+    <rect x="398" y="66" width="212" height="158" rx="10" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="504" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">循环不变量</text>
+  <g font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="504" y="114">cnt 中只含「更早的块」</text>
+    <text x="504" y="132">全部起点的 P[s] mod k</text>
+    <text x="504" y="158">⇒ 查询自动保证</text>
+    <text x="504" y="176">block(s) ＜ block(t) 严格成立</text>
+    <text x="504" y="202" font-weight="bold" fill="#b85450">同块 (s,t) 绝不混入</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="398" y="244" width="212" height="120" rx="10" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="504" y="268" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">两个易错点</text>
+  <g font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="504" y="292">查询用 P[t+1]（错一位），</text>
+    <text x="504" y="310">插入用 P[s]（起点自身）</text>
+    <text x="504" y="336">先整块查询、再整块插入，</text>
+    <text x="504" y="354">不可逐位置交错</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="398" y="384" width="212" height="64" rx="10" fill="#f4f0fa" stroke="#7a5aa0" stroke-width="1.4"/>
+  </g>
+  <text x="504" y="408" text-anchor="middle" font-size="12" fill="#5a4a80">良好 ⇔ 和被 k 整除</text>
+  <text x="504" y="430" text-anchor="middle" font-size="12" fill="#5a4a80">⇔ P[t+1] ≡ P[s] (mod k)</text>
+</svg>
