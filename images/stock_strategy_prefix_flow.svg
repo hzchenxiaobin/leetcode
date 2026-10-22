@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="77" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fdfcf7"/>
+  <text x="340" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：双前缀和 + 枚举定长窗口</text>
+  <path d="M 170 42 Q 340 52 510 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="70" width="170" height="64" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="145" y="94" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">① 算原始利润 base</text>
+  <text x="145" y="114" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">base = Σ sᵢ·pᵢ</text>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="290" y="70" width="170" height="64" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="375" y="94" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">② 建两组前缀和</text>
+  <text x="375" y="114" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">A = Σ s·p，B = Σ p</text>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="520" y="70" width="110" height="64" rx="10" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="575" y="94" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a06a10">③ 保底</text>
+  <text x="575" y="114" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">ans = base</text>
+
+  <g filter="url(#sk)">
+    <path d="M 230 102 L 288 102" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)"/>
+    <path d="M 460 102 L 518 102" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)"/>
+  </g>
+
+  <!-- step 4: loop box -->
+  <g filter="url(#sk)">
+    <rect x="150" y="180" width="380" height="176" rx="12" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2" stroke-dasharray="7 5"/>
+  </g>
+  <text x="340" y="206" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">④ 枚举窗口起点 l = 0 … n−k（共 n−k+1 个）</text>
+
+  <g filter="url(#sk)">
+    <rect x="175" y="220" width="150" height="52" rx="8" fill="#fdfcf7" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="250" y="241" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">old = A[l+k] − A[l]</text>
+  <text x="250" y="260" text-anchor="middle" font-size="10.5" fill="#888">原窗口贡献</text>
+
+  <g filter="url(#sk)">
+    <rect x="355" y="220" width="150" height="52" rx="8" fill="#fdfcf7" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="430" y="241" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">cur = B[l+k] − B[l+k/2]</text>
+  <text x="430" y="260" text-anchor="middle" font-size="10.5" fill="#888">后 k/2 天价格和</text>
+
+  <g filter="url(#sk)">
+    <path d="M 325 246 L 353 246" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar2)"/>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="205" y="288" width="270" height="50" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="309" text-anchor="middle" font-size="11.5" fill="#8a2e2a" font-weight="bold" font-family="monospace">⑤ ans = max(ans, base − old + cur)</text>
+  <text x="340" y="328" text-anchor="middle" font-size="10.5" fill="#8a2e2a">每窗 O(1)，不重算窗外</text>
+
+  <g filter="url(#sk)">
+    <path d="M 340 332 Q 340 356 340 372" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar2)"/>
+    <path d="M 150 330 Q 90 330 90 220 Q 90 150 130 138" stroke="#8aa88a" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ar2)"/>
+  </g>
+  <text x="76" y="240" text-anchor="middle" font-size="10.5" fill="#6a8a6a">下一个 l</text>
+
+  <!-- final -->
+  <g filter="url(#sk)">
+    <rect x="230" y="378" width="220" height="42" rx="10" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="405" text-anchor="middle" font-size="14" font-weight="bold" fill="#a06a10" font-family="monospace">⑥ 返回 ans</text>
+</svg>
