@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">n = 44, k = 3：DFS 搜索树（整除性 + d^t ≤ rem 剪枝）</text>
+  <path d="M 200 42 Q 470 50 740 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 根节点 ===== -->
+  <g filter="url(#sk)">
+    <rect x="390" y="58" width="160" height="48" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="470" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">起点：rem = 44</text>
+  <text x="470" y="96" text-anchor="middle" font-size="10" fill="#888">t = 3，start = 1</text>
+
+  <!-- 根 → A / B 的边 -->
+  <path d="M 425 106 Q 270 118 158 164" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="268" y="126" font-size="11" fill="#2b6e9e" font-weight="bold">d₁ = 1</text>
+  <path d="M 515 106 Q 670 118 782 164" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="636" y="126" font-size="11" fill="#2b6e9e" font-weight="bold">d₁ = 2</text>
+
+  <!-- ===== 第二层：A / 剪枝 / B ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="168" width="190" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="155" y="188" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">d₁ = 1 → rem = 44</text>
+  <text x="155" y="205" text-anchor="middle" font-size="10" fill="#888">t = 2，start = 1</text>
+
+  <g filter="url(#sk)">
+    <rect x="335" y="168" width="270" height="58" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5 3"/>
+  </g>
+  <text x="470" y="190" text-anchor="middle" font-size="11" fill="#8c3a36">✗ d₁ = 3：3³ = 27 ≤ 44，但 3 ∤ 44</text>
+  <text x="470" y="212" text-anchor="middle" font-size="11" fill="#8c3a36">✗ d₁ = 4：4³ = 64 &gt; 44，循环终止</text>
+
+  <g filter="url(#sk)">
+    <rect x="690" y="168" width="190" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="785" y="188" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">d₁ = 2 → rem = 22</text>
+  <text x="785" y="205" text-anchor="middle" font-size="10" fill="#888">t = 2，start = 2</text>
+
+  <!-- ===== A → 叶子 ===== -->
+  <path d="M 140 214 Q 125 260 122 314" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="88" y="268" font-size="11" fill="#444" font-weight="bold">d₂ = 1</text>
+  <path d="M 165 214 Q 250 250 326 314" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="242" y="252" font-size="11" fill="#444" font-weight="bold">d₂ = 2</text>
+  <path d="M 195 214 Q 380 262 532 314" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="408" y="268" font-size="11" fill="#444" font-weight="bold">d₂ = 4</text>
+
+  <!-- ===== B → 叶子 ===== -->
+  <path d="M 780 214 Q 774 262 772 314" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="830" y="268" font-size="11" fill="#444" font-weight="bold">d₂ = 2</text>
+
+  <!-- ===== 叶子 ===== -->
+  <g filter="url(#sk)">
+    <rect x="30" y="318" width="185" height="60" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="122" y="342" text-anchor="middle" font-size="13" fill="#333">(1, 1, 44)</text>
+  <text x="122" y="364" text-anchor="middle" font-size="12" fill="#888">diff = 43</text>
+
+  <g filter="url(#sk)">
+    <rect x="238" y="318" width="185" height="60" rx="6" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="330" y="342" text-anchor="middle" font-size="13" fill="#333">(1, 2, 22)</text>
+  <text x="330" y="364" text-anchor="middle" font-size="12" fill="#888">diff = 21</text>
+
+  <g filter="url(#sk)">
+    <rect x="446" y="318" width="185" height="60" rx="6" fill="#ffffff" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="538" y="342" text-anchor="middle" font-size="13" fill="#333">(1, 4, 11)</text>
+  <text x="538" y="364" text-anchor="middle" font-size="12" fill="#c98a2b">diff = 10</text>
+
+  <g filter="url(#sk)">
+    <rect x="680" y="318" width="185" height="60" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.4"/>
+  </g>
+  <text x="772" y="342" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold">(2, 2, 11)</text>
+  <text x="772" y="364" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">diff = 9 ✓ 最优</text>
+
+  <!-- 剪枝注释 -->
+  <text x="40" y="408" font-size="11" fill="#b85450">✗ d₂ = 3, 5, 6：d₂² ≤ 44，但 d₂ ∤ 44</text>
+  <text x="640" y="408" font-size="11" fill="#b85450">✗ d₂ = 3, 4：d₂² ≤ 22，但 d₂ ∤ 22</text>
+
+  <!-- ===== best 更新轨迹 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="440" width="820" height="160" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="466" font-size="13" font-weight="bold" fill="#2b2b2b">best 的更新轨迹（DFS 按字典序依次访问 4 片叶子）</text>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="484" width="140" height="44" rx="10" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/>
+  </g>
+  <text x="150" y="502" text-anchor="middle" font-size="11" fill="#5a3a7a">保底 [1,1,44]</text>
+  <text x="150" y="520" text-anchor="middle" font-size="11" fill="#5a3a7a" font-weight="bold">diff = 43</text>
+
+  <path d="M 225 506 L 245 506" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="250" y="484" width="140" height="44" rx="10" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="320" y="502" text-anchor="middle" font-size="11" fill="#666">(1,1,44) 不更新</text>
+  <text x="320" y="520" text-anchor="middle" font-size="11" fill="#666" font-weight="bold">diff = 43</text>
+
+  <path d="M 395 506 L 415 506" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="420" y="484" width="130" height="44" rx="10" fill="#ffffff" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="485" y="502" text-anchor="middle" font-size="11" fill="#666">(1,2,22)</text>
+  <text x="485" y="520" text-anchor="middle" font-size="11" fill="#666" font-weight="bold">diff = 21</text>
+
+  <path d="M 555 506 L 575 506" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="580" y="484" width="130" height="44" rx="10" fill="#ffffff" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="645" y="502" text-anchor="middle" font-size="11" fill="#7a5415">(1,4,11)</text>
+  <text x="645" y="520" text-anchor="middle" font-size="11" fill="#7a5415" font-weight="bold">diff = 10</text>
+
+  <path d="M 715 506 L 735 506" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="740" y="484" width="130" height="44" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2"/>
+  </g>
+  <text x="805" y="502" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">(2,2,11) ✓</text>
+  <text x="805" y="520" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">diff = 9</text>
+
+  <text x="80" y="560" font-size="11" fill="#444">整棵树只有 7 次函数调用、12 次整除判断 —— 搜索树本质是 n 的「乘法分拆树」，天然很小；</text>
+  <text x="80" y="582" font-size="11" fill="#444">n ≤ 10⁵、k ≤ 5 时全范围最坏也仅 2864 个节点、9497 次整除判断（n = 90720, k = 5）</text>
+</svg>
