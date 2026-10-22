@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="480" viewBox="0 0 620 480"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="480" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">数位 DP 模型：定长 n 位、交替正负号、状态 (i, diff, tight)</text>
+  <text x="310" y="48" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#sk)">以 x = 129（n = 3）为例：前导 0 放行，从左往右逐位填 d ∈ [0, up]</text>
+
+  <!-- slot row -->
+  <g filter="url(#sk)">
+    <text x="96" y="76" text-anchor="middle" font-size="10" fill="#888">i = 0</text>
+    <text x="176" y="76" text-anchor="middle" font-size="10" fill="#888">i = 1</text>
+    <text x="256" y="76" text-anchor="middle" font-size="10" fill="#888">i = 2</text>
+    <rect x="70" y="82" width="52" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="150" y="82" width="52" height="44" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="230" y="82" width="52" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="96" y="110" text-anchor="middle" font-size="14" fill="#333" font-weight="bold">d₀</text>
+    <text x="176" y="110" text-anchor="middle" font-size="14" fill="#333" font-weight="bold">d₁</text>
+    <text x="256" y="110" text-anchor="middle" font-size="14" fill="#333" font-weight="bold">d₂</text>
+    <text x="113" y="95" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">+</text>
+    <text x="193" y="95" text-anchor="middle" font-size="11" fill="#d6a040" font-weight="bold">−</text>
+    <text x="273" y="95" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">+</text>
+    <text x="96" y="140" text-anchor="middle" font-size="10" fill="#b03a3a">up = 1</text>
+    <text x="176" y="140" text-anchor="middle" font-size="10" fill="#b03a3a">up = 2</text>
+    <text x="256" y="140" text-anchor="middle" font-size="10" fill="#7a8a5a">up = 9</text>
+    <text x="410" y="112" font-size="11" fill="#33506b">蓝 = 奇位（+），橙 = 偶位（−）</text>
+    <text x="410" y="130" font-size="11" fill="#7a4a48">贴界时 up = s[i]，一旦填小变 9</text>
+  </g>
+
+  <!-- state machine -->
+  <g filter="url(#sk)">
+    <rect x="40" y="176" width="150" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="115" y="203" text-anchor="middle" font-size="12.5" fill="#33506b" font-weight="bold">状态 (i, diff, tight)</text>
+
+    <path d="M 192 198 L 240 198" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <text x="216" y="188" text-anchor="middle" font-size="10" fill="#666">枚举 d</text>
+
+    <rect x="242" y="176" width="215" height="44" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="350" y="203" text-anchor="middle" font-size="11.5" fill="#2f5d24" font-weight="bold">(i+1, diff ± d, tight ∧ d = up)</text>
+
+    <path d="M 459 198 L 497 198" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+
+    <rect x="499" y="168" width="112" height="60" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="555" y="190" text-anchor="middle" font-size="10.5" fill="#8a6d1a" font-weight="bold">i = n 终止：</text>
+    <text x="555" y="206" text-anchor="middle" font-size="10.5" fill="#8a6d1a">diff = 0 计 1</text>
+    <text x="555" y="220" text-anchor="middle" font-size="10.5" fill="#8a6d1a">否则计 0</text>
+
+    <path d="M 350 222 Q 240 258 122 226" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arg)" stroke-dasharray="5 4"/>
+    <text x="240" y="252" text-anchor="middle" font-size="10.5" fill="#2f5d24">记忆化：同一状态只展开一次</text>
+  </g>
+
+  <!-- diff walk -->
+  <g filter="url(#sk)">
+    <text x="80" y="290" font-size="13" fill="#2b2b2b" font-weight="bold">diff 的游走（n = 3，每填一位走一步）</text>
+    <text x="105" y="312" text-anchor="middle" font-size="9.5" fill="#888">起点</text>
+    <text x="205" y="312" text-anchor="middle" font-size="9.5" fill="#888">填 d₀ (+)</text>
+    <text x="305" y="312" text-anchor="middle" font-size="9.5" fill="#888">填 d₁ (−)</text>
+    <text x="405" y="312" text-anchor="middle" font-size="9.5" fill="#888">填 d₂ (+)</text>
+
+    <line x1="80" y1="390" x2="450" y2="390" stroke="#999" stroke-width="1.4"/>
+    <text x="68" y="394" text-anchor="end" font-size="10" fill="#888">0</text>
+    <text x="68" y="361" text-anchor="end" font-size="10" fill="#888">+1</text>
+    <text x="68" y="424" text-anchor="end" font-size="10" fill="#888">−1</text>
+
+    <!-- 110: 0 -> +1 -> 0 -> 0 -->
+    <path d="M 105 390 L 205 356 L 305 390 L 405 390" stroke="#4a7a3a" stroke-width="2.2" fill="none"/>
+    <circle cx="105" cy="390" r="4" fill="#4a7a3a"/>
+    <circle cx="205" cy="356" r="4" fill="#4a7a3a"/>
+    <circle cx="305" cy="390" r="4" fill="#4a7a3a"/>
+    <circle cx="405" cy="390" r="4.5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="462" y="382" font-size="11" fill="#2f5d24" font-weight="bold">110 ✓</text>
+
+    <!-- 121: 0 -> +1 -> -1 -> 0 -->
+    <path d="M 105 390 L 205 356 L 305 424 L 405 390" stroke="#446688" stroke-width="2" fill="none"/>
+    <circle cx="205" cy="356" r="4" fill="#446688"/>
+    <circle cx="305" cy="424" r="4" fill="#446688"/>
+    <circle cx="405" cy="390" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="462" y="366" font-size="11" fill="#33506b" font-weight="bold">121 ✓</text>
+
+    <!-- 120: 0 -> +1 -> -1 -> -1 -->
+    <path d="M 105 390 L 205 356 L 305 424 L 405 424" stroke="#b85450" stroke-width="2" fill="none" stroke-dasharray="6 4"/>
+    <circle cx="405" cy="424" r="4" fill="#b85450"/>
+    <text x="462" y="428" font-size="11" fill="#b03a3a" font-weight="bold">120 ✗</text>
+
+    <rect x="480" y="330" width="126" height="120" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="543" y="350" text-anchor="middle" font-size="10.5" fill="#8a6d1a" font-weight="bold">|diff| ≤ 9⌈n/2⌉ ≤ 72</text>
+    <text x="543" y="368" text-anchor="middle" font-size="10.5" fill="#8a6d1a">(n ≤ 16)</text>
+    <text x="543" y="390" text-anchor="middle" font-size="10.5" fill="#8a6d1a">状态数 ≤ 17×145×2</text>
+    <text x="543" y="408" text-anchor="middle" font-size="10.5" fill="#8a6d1a">≈ 5×10³</text>
+    <text x="543" y="430" text-anchor="middle" font-size="10.5" fill="#8a6d1a">每个状态转移</text>
+    <text x="543" y="444" text-anchor="middle" font-size="10.5" fill="#8a6d1a">至多枚举 10 个数字</text>
+  </g>
+</svg>
