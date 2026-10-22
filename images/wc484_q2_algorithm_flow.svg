@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 530"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="530" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">算法流程：外层固定左端点，内层右扩 + O(1) 增量判定</text>
+
+  <!-- 初始化 + 外层 -->
+  <rect x="160" y="44" width="260" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="290" y="66" text-anchor="middle" font-size="10.5" fill="#33506b" filter="url(#rough2)">ans ← 0；外层 i = 0 … n−1（固定左端点）</text>
+  <path d="M290,80 L290,96" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 重置 -->
+  <rect x="160" y="98" width="260" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="290" y="120" text-anchor="middle" font-size="10.5" fill="#33506b" filter="url(#rough2)">重置：sum ← 0，vals ← ∅（新一轮窗口）</text>
+  <path d="M290,134 L290,150" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 内层 -->
+  <rect x="160" y="152" width="260" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="290" y="174" text-anchor="middle" font-size="10.5" fill="#33506b" filter="url(#rough2)">内层 j = i … n−1（右端点逐格右扩）</text>
+  <path d="M290,188 L290,204" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 增量更新 -->
+  <rect x="140" y="206" width="300" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="290" y="225" text-anchor="middle" font-size="10.5" fill="#2f5d24" filter="url(#rough2)">sum += nums[j]（和：O(1) 累加）</text>
+  <text x="290" y="242" text-anchor="middle" font-size="10.5" fill="#2f5d24" filter="url(#rough2)">vals.insert(nums[j])（值集合：O(1) 插入）</text>
+  <path d="M290,252 L290,268" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 右侧提示框 -->
+  <rect x="470" y="206" width="160" height="70" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="550" y="226" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">💡 先更新、后判定</text>
+  <text x="550" y="242" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">单元素窗口 [j,j]：</text>
+  <text x="550" y="258" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">sum = nums[j] 刚插入</text>
+  <text x="550" y="272" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">→ 自动命中，无需特判</text>
+
+  <!-- 判定菱形 -->
+  <polygon points="290,270 416,308 290,346 164,308" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="290" y="304" text-anchor="middle" font-size="11" fill="#33506b" filter="url(#rough2)">sum ∈ vals ?</text>
+  <text x="290" y="320" text-anchor="middle" font-size="9" fill="#33506b" filter="url(#rough2)">（和等于窗口内某元素？）</text>
+  <text x="432" y="298" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <path d="M416,308 L448,308" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="452" y="290" width="126" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="515" y="312" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f5d24" filter="url(#rough2)">ans ← ans + 1</text>
+  <path d="M515,326 L515,377 L374,377" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="298" y="360" text-anchor="start" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <path d="M290,346 L290,360" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- j 右移 -->
+  <rect x="210" y="362" width="160" height="30" rx="8" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="290" y="381" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">j ← j + 1（右扩一格）</text>
+  <path d="M290,392 L290,406" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 内层循环判定 -->
+  <polygon points="290,408 400,440 290,472 180,440" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="290" y="444" text-anchor="middle" font-size="11" fill="#33506b" filter="url(#rough2)">j ≤ n−1 ?</text>
+  <text x="152" y="430" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <path d="M180,440 L96,440 L96,229 L134,229" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="104" y="316" font-size="9.5" fill="#777" filter="url(#rough2)">内层循环</text>
+  <text x="298" y="466" text-anchor="start" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <path d="M290,472 L290,488" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 外层收尾 -->
+  <rect x="160" y="490" width="260" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="290" y="509" text-anchor="middle" font-size="10.5" fill="#33506b" filter="url(#rough2)">内层结束 → i ← i + 1，回到重置</text>
+  <path d="M160,505 L60,505 L60,116 L156,116" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="68" y="300" font-size="9.5" fill="#777" filter="url(#rough2)">外层循环</text>
+  <path d="M420,505 L466,505" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="470" y="490" width="120" height="30" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="530" y="509" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">返回 ans</text>
+</svg>

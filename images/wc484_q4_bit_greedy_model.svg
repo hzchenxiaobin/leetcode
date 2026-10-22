@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">按位贪心：从高位到低位，试填答案的每个二进制位</text>
+  <path d="M 250 42 Q 470 50 690 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: bit trial -> mask R ===== -->
+  <text x="250" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 已确定的位拼上候选位，得到掩码 R = ans | 2^b</text>
+
+  <!-- bit labels above boxes -->
+  <g font-size="9" fill="#999" text-anchor="middle">
+    <text x="130" y="102">bit5</text>
+    <text x="180" y="102">bit4</text>
+    <text x="230" y="102">bit3</text>
+    <text x="280" y="102">bit2</text>
+    <text x="330" y="102">bit1</text>
+    <text x="380" y="102">bit0</text>
+  </g>
+
+  <!-- ans row -->
+  <text x="110" y="130" text-anchor="end" font-size="12" fill="#444" font-weight="bold">ans =</text>
+  <g font-size="13" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="108" y="108" width="44" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" rx="4"/></g>
+    <text x="130" y="130" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="158" y="108" width="44" height="34" fill="#f0ede4" stroke="#bbb" stroke-width="1.2" rx="4"/></g>
+    <text x="180" y="130" fill="#999">0</text>
+    <g filter="url(#sk)"><rect x="208" y="108" width="44" height="34" fill="#fef6e6" stroke="#c98a2b" stroke-width="2.2" rx="4"/></g>
+    <text x="230" y="130" fill="#b0721b" font-weight="bold">?</text>
+    <g filter="url(#sk)"><rect x="258" y="108" width="44" height="34" fill="#faf8f2" stroke="#ddd" stroke-width="1" rx="4"/></g>
+    <text x="280" y="130" fill="#ccc">·</text>
+    <g filter="url(#sk)"><rect x="308" y="108" width="44" height="34" fill="#faf8f2" stroke="#ddd" stroke-width="1" rx="4"/></g>
+    <text x="330" y="130" fill="#ccc">·</text>
+    <g filter="url(#sk)"><rect x="358" y="108" width="44" height="34" fill="#faf8f2" stroke="#ddd" stroke-width="1" rx="4"/></g>
+    <text x="380" y="130" fill="#ccc">·</text>
+  </g>
+  <g font-size="9" text-anchor="middle">
+    <text x="130" y="154" fill="#2e6e2e" font-weight="bold">已保留</text>
+    <text x="180" y="154" fill="#999">已放弃</text>
+    <text x="230" y="154" fill="#b0721b" font-weight="bold">正在尝试 b</text>
+    <text x="330" y="154" fill="#bbb">更低位待定</text>
+  </g>
+
+  <path d="M 230 146 Q 234 164 230 180" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <!-- R row -->
+  <text x="110" y="204" text-anchor="end" font-size="12" fill="#444" font-weight="bold">R =</text>
+  <g font-size="13" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="108" y="182" width="44" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" rx="4"/></g>
+    <text x="130" y="204" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="158" y="182" width="44" height="34" fill="#f0ede4" stroke="#bbb" stroke-width="1.2" rx="4"/></g>
+    <text x="180" y="204" fill="#999">0</text>
+    <g filter="url(#sk)"><rect x="208" y="182" width="44" height="34" fill="#fef6e6" stroke="#c98a2b" stroke-width="2.2" rx="4"/></g>
+    <text x="230" y="204" fill="#b0721b" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="258" y="182" width="44" height="34" fill="#f0ede4" stroke="#bbb" stroke-width="1" rx="4"/></g>
+    <text x="280" y="204" fill="#999">0</text>
+    <g filter="url(#sk)"><rect x="308" y="182" width="44" height="34" fill="#f0ede4" stroke="#bbb" stroke-width="1" rx="4"/></g>
+    <text x="330" y="204" fill="#999">0</text>
+    <g filter="url(#sk)"><rect x="358" y="182" width="44" height="34" fill="#f0ede4" stroke="#bbb" stroke-width="1" rx="4"/></g>
+    <text x="380" y="204" fill="#999">0</text>
+  </g>
+  <text x="245" y="240" text-anchor="middle" font-size="10" fill="#888">R 只含「已保留的位 + 候选位」，其余位为 0（此处 R = 101000₂）</text>
+
+  <!-- right semantic box -->
+  <g filter="url(#sk)">
+    <rect x="450" y="90" width="450" height="158" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="114" font-size="12" font-weight="bold" fill="#2b6e9e">R 的语义（判定目标）</text>
+  <text x="470" y="138" font-size="11" fill="#444">选出 m 个元素，各自 +1 若干次（总次数 ≤ k），要求</text>
+  <text x="470" y="160" font-size="12" fill="#b03a3a" font-weight="bold" font-family="monospace">每个最终值 v 都满足 v &amp; R == R</text>
+  <text x="470" y="182" font-size="11" fill="#444">⟺ 这 m 个最终值的按位与 AND ⊇ R</text>
+  <text x="470" y="206" font-size="10" fill="#888">★ AND 多出来的 1 位无妨，更低的位会继续贪心</text>
+  <text x="470" y="226" font-size="10" fill="#888">★ b 从 bit30 扫到 bit0（最终值 &lt; 2^31）</text>
+
+  <!-- ===== Panel 2: decision flow ===== -->
+  <text x="470" y="286" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">② 每个候选位的可行性判定：元素间代价独立 → 可加</text>
+
+  <g filter="url(#sk)">
+    <rect x="45" y="308" width="235" height="66" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="162" y="334" text-anchor="middle" font-size="11" fill="#2b6e9e" font-weight="bold">对每个元素 xᵢ 计算</text>
+  <text x="162" y="356" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">c_R(xᵢ) = 变成 ⊇R 的最小增量</text>
+
+  <path d="M 285 341 L 322 341" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="330" y="308" width="235" height="66" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="447" y="334" text-anchor="middle" font-size="11" fill="#2b6e9e" font-weight="bold">排序，取最小的 m 个代价</text>
+  <text x="447" y="356" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">求和 S = Σ c_R</text>
+
+  <path d="M 570 341 L 607 341" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="735,296 855,341 735,386 615,341" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="735" y="337" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold" font-family="monospace">S ≤ k ?</text>
+  <text x="735" y="356" text-anchor="middle" font-size="9" fill="#a9844e">总预算够不够</text>
+
+  <path d="M 700 380 Q 672 412 650 428" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="646" y="412" text-anchor="end" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 770 380 Q 798 412 820 428" stroke="#b03a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="826" y="412" text-anchor="start" font-size="11" fill="#b03a3a" font-weight="bold">否</text>
+
+  <g filter="url(#sk)">
+    <rect x="545" y="432" width="185" height="52" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="637" y="454" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">保留该位</text>
+  <text x="637" y="472" text-anchor="middle" font-size="11" fill="#2e6e2e" font-family="monospace">ans = R</text>
+
+  <g filter="url(#sk)">
+    <rect x="760" y="432" width="185" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="852" y="454" text-anchor="middle" font-size="11" fill="#b03a3a" font-weight="bold">放弃该位</text>
+  <text x="852" y="472" text-anchor="middle" font-size="11" fill="#b03a3a" font-family="monospace">ans 不变</text>
+
+  <path d="M 637 484 Q 637 505 600 505 L 240 505 Q 200 505 200 480 Q 200 340 240 320" stroke="#888" stroke-width="1.3" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="420" y="498" text-anchor="middle" font-size="10" fill="#888">b → b−1，处理下一个更低的位，直到 bit 0 后输出 ans</text>
+
+  <!-- ===== insight ===== -->
+  <g filter="url(#sk)">
+    <rect x="45" y="530" width="900" height="106" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="65" y="554" font-size="12" font-weight="bold" fill="#2b2b2b">关键洞察：为什么「按位贪心」而不是「二分答案数值」？</text>
+  <text x="65" y="576" font-size="11" fill="#444">「AND ≥ V」无法拆成逐位条件：V = 3 时 AND = 4 满足 ≥ 3，却不含 3 的任何一个 1 位 → 判定无从下手</text>
+  <text x="65" y="598" font-size="11" fill="#444">「AND ⊇ R」则逐元素独立、代价可加 → 一次判定 O(n·B)，见下方「最小代价构造」</text>
+  <text x="65" y="620" font-size="11" fill="#7a2828">「只能 +1」⇒ 每个元素存在唯一的最小目标值 v（≥ x 且 ⊇ R）⇒ c_R(x) 良定义</text>
+</svg>
