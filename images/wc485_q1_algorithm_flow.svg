@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="520" fill="#fafafa"/>
+  <text x="320" y="24" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">算法流程：先过「是字母」门，再分元音 / 辅音，收尾防除零</text>
+
+  <!-- 开始 -->
+  <rect x="280" y="36" width="80" height="26" rx="13" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="53" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">开始</text>
+  <path d="M320,62 L320,76" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 初始化 -->
+  <rect x="210" y="80" width="220" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="99" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">v ← 0，c ← 0</text>
+  <path d="M320,110 L320,124" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 循环 pill -->
+  <rect x="180" y="128" width="280" height="24" rx="12" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="144" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">取下一个字符 ch（至多 n 轮）</text>
+  <path d="M320,152 L320,168" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 1：是字母？ -->
+  <polygon points="320,168 448,200 320,232 192,200" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="196" text-anchor="middle" font-size="11" fill="#33506b" filter="url(#rough2)">ch 是字母？</text>
+  <text x="320" y="212" text-anchor="middle" font-size="9.5" fill="#33506b" filter="url(#rough2)">（isalpha）</text>
+
+  <!-- 否：跳过 -->
+  <text x="461" y="196" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <path d="M448,200 L476,200" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="480" y="182" width="140" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="550" y="198" text-anchor="middle" font-size="10.5" fill="#a0433f" filter="url(#rough2)">跳过：空格 / 数字</text>
+  <text x="550" y="212" text-anchor="middle" font-size="9" fill="#a0433f" filter="url(#rough2)">两边都不算</text>
+  <path d="M550,182 L550,148 L464,148" stroke="#888" stroke-width="1.5" fill="none" stroke-dasharray="5,4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="500" y="143" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">下一轮</text>
+
+  <!-- 是：判元音 -->
+  <text x="330" y="248" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M320,232 L320,248" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 2：是元音？ -->
+  <polygon points="320,248 448,280 320,312 192,280" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="274" text-anchor="middle" font-size="11" fill="#33506b" filter="url(#rough2)">ch 是元音？</text>
+  <text x="320" y="290" text-anchor="middle" font-size="9.5" fill="#33506b" filter="url(#rough2)">（a, e, i, o, u）</text>
+
+  <!-- 是：v++ -->
+  <text x="180" y="270" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是·元音</text>
+  <path d="M192,280 L168,280" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="26" y="262" width="142" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="97" y="284" text-anchor="middle" font-size="11.5" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">v ← v + 1</text>
+  <path d="M97,262 L97,140 L176,140" stroke="#888" stroke-width="1.5" fill="none" stroke-dasharray="5,4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="130" y="134" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">下一轮</text>
+
+  <!-- 否：c++ -->
+  <text x="460" y="270" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">否·辅音</text>
+  <path d="M448,280 L472,280" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="476" y="262" width="142" height="36" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="547" y="284" text-anchor="middle" font-size="11.5" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">c ← c + 1</text>
+  <path d="M618,280 L632,280 L632,140 L464,140" stroke="#888" stroke-width="1.5" fill="none" stroke-dasharray="5,4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="566" y="133" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">下一轮</text>
+
+  <!-- 扫完 -->
+  <text x="330" y="326" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">全部扫完</text>
+  <path d="M320,312 L320,330" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 3：c > 0 ? -->
+  <polygon points="320,332 440,364 320,396 200,364" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="369" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">c &gt; 0 ?</text>
+
+  <!-- 是：返回 v/c -->
+  <text x="186" y="354" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M200,364 L174,364" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="30" y="346" width="142" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="101" y="362" text-anchor="middle" font-size="11" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">返回 v / c</text>
+  <text x="101" y="376" text-anchor="middle" font-size="9" fill="#2f5d24" filter="url(#rough2)">非负整除 = ⌊v/c⌋</text>
+
+  <!-- 否：返回 0 -->
+  <text x="456" y="354" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <path d="M440,364 L466,364" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="470" y="346" width="142" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="541" y="362" text-anchor="middle" font-size="11" fill="#a0433f" font-weight="bold" filter="url(#rough2)">返回 0</text>
+  <text x="541" y="376" text-anchor="middle" font-size="9" fill="#a0433f" filter="url(#rough2)">除零保护</text>
+
+  <!-- 结束 -->
+  <path d="M101,382 L101,426 L281,426" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M541,382 L541,426 L359,426" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="285" y="414" width="70" height="24" rx="12" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="430" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">结束</text>
+
+  <!-- 底部警示 -->
+  <rect x="60" y="452" width="520" height="30" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="471" text-anchor="middle" font-size="10.5" fill="#a0433f" filter="url(#rough2)">⚠️ 判定顺序不能反：「不是元音就 c++」会让空格 / 数字混进 c——官方示例恰好测不出</text>
+  <rect x="60" y="488" width="520" height="26" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="505" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">非负整数除法即 ⌊v/c⌋：C++ 用 /（截断 = floor），Python 用 //；c = 0 先拦下再除</text>
+</svg>
