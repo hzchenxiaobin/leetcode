@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="510" viewBox="0 0 940 510" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="510" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">SOS DP（高维前缀最大值）：逐位松弛，f[m] 逐步吸收子掩码信息</text>
+  <path d="M 190 42 Q 470 50 750 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="60" y="66" font-size="12" fill="#888">迷你演示：nums = [1, 2, 4]，3 位宇宙（f 的下标 = 掩码）</text>
+
+  <!-- 表头 -->
+  <g filter="url(#sk)">
+    <rect x="210" y="76" width="76" height="48" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1.3"/>
+    <rect x="296" y="76" width="76" height="48" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1.3"/>
+    <rect x="382" y="76" width="76" height="48" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1.3"/>
+    <rect x="468" y="76" width="76" height="48" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1.3"/>
+    <rect x="554" y="76" width="76" height="48" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1.3"/>
+    <rect x="640" y="76" width="76" height="48" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1.3"/>
+    <rect x="726" y="76" width="76" height="48" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1.3"/>
+    <rect x="812" y="76" width="76" height="48" rx="4" fill="#eef1f4" stroke="#8a94a0" stroke-width="1.3"/>
+  </g>
+  <text x="248" y="97" text-anchor="middle" font-size="14" font-weight="bold" fill="#555">0</text>
+  <text x="334" y="97" text-anchor="middle" font-size="14" font-weight="bold" fill="#555">1</text>
+  <text x="420" y="97" text-anchor="middle" font-size="14" font-weight="bold" fill="#555">2</text>
+  <text x="506" y="97" text-anchor="middle" font-size="14" font-weight="bold" fill="#555">3</text>
+  <text x="592" y="97" text-anchor="middle" font-size="14" font-weight="bold" fill="#555">4</text>
+  <text x="678" y="97" text-anchor="middle" font-size="14" font-weight="bold" fill="#555">5</text>
+  <text x="764" y="97" text-anchor="middle" font-size="14" font-weight="bold" fill="#555">6</text>
+  <text x="850" y="97" text-anchor="middle" font-size="14" font-weight="bold" fill="#555">7</text>
+  <text x="248" y="115" text-anchor="middle" font-size="10" fill="#999">000</text>
+  <text x="334" y="115" text-anchor="middle" font-size="10" fill="#999">001</text>
+  <text x="420" y="115" text-anchor="middle" font-size="10" fill="#999">010</text>
+  <text x="506" y="115" text-anchor="middle" font-size="10" fill="#999">011</text>
+  <text x="592" y="115" text-anchor="middle" font-size="10" fill="#999">100</text>
+  <text x="678" y="115" text-anchor="middle" font-size="10" fill="#999">101</text>
+  <text x="764" y="115" text-anchor="middle" font-size="10" fill="#999">110</text>
+  <text x="850" y="115" text-anchor="middle" font-size="10" fill="#999">111</text>
+
+  <!-- 行标签 -->
+  <text x="200" y="157" text-anchor="end" font-size="13" fill="#444">① 初始化 f[v] = v</text>
+  <text x="200" y="209" text-anchor="end" font-size="13" fill="#444">② 松弛 bit0</text>
+  <text x="200" y="261" text-anchor="end" font-size="13" fill="#444">③ 松弛 bit1</text>
+  <text x="200" y="313" text-anchor="end" font-size="13" fill="#444">④ 松弛 bit2（最终）</text>
+
+  <!-- 行 1：初始 [0,1,2,0,4,0,0,0] -->
+  <g filter="url(#sk)">
+    <rect x="210" y="132" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+    <rect x="296" y="132" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="382" y="132" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="468" y="132" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+    <rect x="554" y="132" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="640" y="132" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+    <rect x="726" y="132" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+    <rect x="812" y="132" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+  </g>
+  <text x="248" y="158" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+  <text x="334" y="158" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">1</text>
+  <text x="420" y="158" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">2</text>
+  <text x="506" y="158" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+  <text x="592" y="158" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">4</text>
+  <text x="678" y="158" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+  <text x="764" y="158" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+  <text x="850" y="158" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+
+  <!-- 行 2：bit0 后 [0,1,2,2,4,4,0,0]，变化 idx3 idx5 -->
+  <g filter="url(#sk)">
+    <rect x="210" y="184" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+    <rect x="296" y="184" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="382" y="184" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="468" y="184" width="76" height="42" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="2"/>
+    <rect x="554" y="184" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="640" y="184" width="76" height="42" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="2"/>
+    <rect x="726" y="184" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+    <rect x="812" y="184" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+  </g>
+  <text x="248" y="210" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+  <text x="334" y="210" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">1</text>
+  <text x="420" y="210" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">2</text>
+  <text x="506" y="210" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">2</text>
+  <text x="592" y="210" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">4</text>
+  <text x="678" y="210" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">4</text>
+  <text x="764" y="210" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+  <text x="850" y="210" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+
+  <!-- 行 3：bit1 后 [0,1,2,2,4,4,4,4]，变化 idx6 idx7 -->
+  <g filter="url(#sk)">
+    <rect x="210" y="236" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+    <rect x="296" y="236" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="382" y="236" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="468" y="236" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="554" y="236" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="640" y="236" width="76" height="42" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="726" y="236" width="76" height="42" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="2"/>
+    <rect x="812" y="236" width="76" height="42" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="2"/>
+  </g>
+  <text x="248" y="262" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+  <text x="334" y="262" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">1</text>
+  <text x="420" y="262" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">2</text>
+  <text x="506" y="262" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">2</text>
+  <text x="592" y="262" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">4</text>
+  <text x="678" y="262" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">4</text>
+  <text x="764" y="262" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">4</text>
+  <text x="850" y="262" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">4</text>
+
+  <!-- 行 4：bit2 后（最终）[0,1,2,2,4,4,4,4] -->
+  <g filter="url(#sk)">
+    <rect x="210" y="288" width="76" height="42" rx="4" fill="#ffffff" stroke="#ccd4dc" stroke-width="1.3"/>
+    <rect x="296" y="288" width="76" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="382" y="288" width="76" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="468" y="288" width="76" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="554" y="288" width="76" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="640" y="288" width="76" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="726" y="288" width="76" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="812" y="288" width="76" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="248" y="314" text-anchor="middle" font-size="14" fill="#c0c8d0">0</text>
+  <text x="334" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">1</text>
+  <text x="420" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">2</text>
+  <text x="506" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">2</text>
+  <text x="592" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">4</text>
+  <text x="678" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">4</text>
+  <text x="764" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">4</text>
+  <text x="850" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">4</text>
+
+  <!-- 松弛箭头示例 -->
+  <path d="M 432 172 Q 468 186 498 196" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 604 172 Q 640 186 670 196" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 632 226 Q 700 240 748 252" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 718 226 Q 786 240 834 252" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <text x="60" y="346" font-size="12" fill="#888">每一轮：对所有含位 b 的 m 执行 f[m] ← max( f[m], f[m 去掉位 b] ) —— 子掩码的信息逐位流向超集</text>
+
+  <!-- 查询框 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="366" width="828" height="94" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="80" y="392" font-size="13" font-weight="bold" fill="#2b6e9e">查询阶段：搭档必须 ⊆ ~x，直接读 f[~x]</text>
+  <text x="80" y="416" font-size="12.5" fill="#333">x = 2 (010)：查 f[101] = 4 → 2 × 4 = 8 ✓（最优对 2 × 4）</text>
+  <text x="80" y="438" font-size="12.5" fill="#333">x = 4 (100)：查 f[011] = 2 → 8；x = 1 (001)：查 f[110] = 4 → 4</text>
+  <text x="60" y="486" font-size="11.5" fill="#888">题目为 20 位：2²⁰ ≈ 1.05×10⁶ 个状态 × 20 轮 ≈ 2.1×10⁷ 次松弛；int 数组约 4 MB，f[111] 最终汇聚全部子掩码的最大值</text>
+</svg>
