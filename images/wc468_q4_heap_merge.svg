@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="560" fill="#fafafa"/>
+  <text x="320" y="24" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">算法流程：大根堆 k 路归并 + ST 表 O(1) 求值</text>
+
+  <!-- ① ST 表预处理 -->
+  <rect x="200" y="42" width="240" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="59" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">① ST 表预处理区间 max / min</text>
+  <text x="320" y="75" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">O(n log n)，单次查询 O(1)</text>
+  <path d="M320,82 L320,104" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 队首入堆 -->
+  <rect x="150" y="104" width="340" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="122" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">② 每个左端点 l：队首入堆</text>
+  <text x="320" y="140" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">push( f(l, n−1), l, n−1 )，共 n 个条目</text>
+  <path d="M320,148 L320,170" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ 菱形：已弹满 k 次？ -->
+  <polygon points="320,170 415,212 320,254 225,212" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="208" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">③ 已弹满</text>
+  <text x="320" y="226" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">k 次？</text>
+  <path d="M415,212 L466,212" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="438" y="204" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="470" y="192" width="140" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="540" y="209" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">返回 ans</text>
+  <text x="540" y="225" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">前 k 大值之和</text>
+  <path d="M320,254 L320,276" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="332" y="270" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- ④ 弹出堆顶 -->
+  <rect x="170" y="276" width="300" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="294" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">④ 弹出堆顶 (v, l, r)</text>
+  <text x="320" y="311" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">ans += v（堆顶即当前全体未取值的最大）</text>
+  <path d="M320,320 L320,342" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ⑤ 菱形：r > l？ -->
+  <polygon points="320,342 408,382 320,422 232,382" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="387" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">⑤ r &gt; l ?</text>
+  <path d="M320,422 L320,446" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="332" y="438" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <path d="M408,382 L456,382" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="426" y="374" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="460" y="362" width="165" height="40" rx="8" fill="#f0f0f0" stroke="#bbb" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="542" y="379" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">该列已耗尽</text>
+  <text x="542" y="394" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">( r = l，单元素区间值 0 )</text>
+
+  <!-- ⑥ 压入后继 -->
+  <rect x="160" y="446" width="320" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="464" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">⑥ 压入同列后继</text>
+  <text x="320" y="481" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">push( f(l, r−1), l, r−1 )</text>
+
+  <!-- 循环回边 -->
+  <path d="M160,468 L100,468 L100,212 L219,212" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="76" y="300" text-anchor="middle" font-size="9.5" fill="#4a7a3a" transform="rotate(-90 76 300)" filter="url(#rough2)">回到 ③，循环 k 次</text>
+
+  <!-- 底部不变量说明 -->
+  <rect x="80" y="508" width="480" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="526" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">不变量：每个未耗尽列的最大剩余元素始终在堆中</text>
+  <text x="320" y="543" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">⟹ 堆顶 = 全体未取出子数组值中的最大者，第 t 次弹出即第 t 大</text>
+</svg>
