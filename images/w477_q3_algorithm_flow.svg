@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
+    <filter id="rough2"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：一趟预处理三前缀 + 幂表，每个查询 O(1)</text>
+
+  <rect x="22" y="50" width="228" height="212" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="136" y="74" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">预处理（一趟 O(m)）</text>
+  <text x="34" y="100" font-size="11" fill="#446688" filter="url(#rough2)">扫 i = 0 .. m−1：</text>
+  <text x="34" y="122" font-size="11" fill="#888" filter="url(#rough2)">s[i] = '0' → P/S/C 原地踏步</text>
+  <text x="34" y="146" font-size="11" fill="#446688" filter="url(#rough2)">s[i] = d ≠ '0' →</text>
+  <text x="46" y="166" font-size="11" fill="#333" filter="url(#rough2)">P ← (P·10 + d) mod M</text>
+  <text x="46" y="184" font-size="11" fill="#333" filter="url(#rough2)">S ← S + d，C ← C + 1</text>
+  <text x="34" y="212" font-size="11" fill="#446688" filter="url(#rough2)">幂表：pow10[0] = 1</text>
+  <text x="34" y="230" font-size="11" fill="#333" filter="url(#rough2)">pow10[k] = pow10[k−1]·10 mod M</text>
+  <text x="34" y="250" font-size="9.5" fill="#888" filter="url(#rough2)">（只需开到 C[m]，即非零总数）</text>
+
+  <path d="M254 150 L 286 150" fill="none" stroke="#b85450" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="138" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">一次</text>
+
+  <rect x="292" y="50" width="206" height="212" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="395" y="74" text-anchor="middle" font-size="12.5" fill="#7a5a10" font-weight="bold" filter="url(#rough2)">查询 [l, r]（O(1)）</text>
+  <text x="304" y="100" font-size="11" fill="#333" filter="url(#rough2)">① k = C[r+1] − C[l]</text>
+  <text x="304" y="126" font-size="11" fill="#333" filter="url(#rough2)">② x = P[r+1] − P[l]·pow10[k]</text>
+  <text x="316" y="146" font-size="10" fill="#a07818" filter="url(#rough2)">（mod M；C++ 为负则 +M）</text>
+  <text x="304" y="172" font-size="11" fill="#333" filter="url(#rough2)">③ sum = S[r+1] − S[l]</text>
+  <text x="304" y="198" font-size="11" fill="#333" filter="url(#rough2)">④ answer = x·sum mod M</text>
+  <text x="304" y="228" font-size="10" fill="#999" filter="url(#rough2)">6 次数组访问 +</text>
+  <text x="304" y="246" font-size="10" fill="#999" filter="url(#rough2)">常数次模乘，零特判</text>
+
+  <rect x="48" y="290" width="424" height="50" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="310" text-anchor="middle" font-size="12" fill="#2f5a24" font-weight="bold" filter="url(#rough2)">时间 O(m + q)，空间 O(m)</text>
+  <text x="260" y="330" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">对比暴力 O(m·q) 最坏 10^10 次字符处理 → 约 2×10^5 次数组操作</text>
+</svg>
