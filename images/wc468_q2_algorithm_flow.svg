@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：一遍扫描求极值，公式一行出答案</text>
+
+  <!-- 第一行流程 -->
+  <ellipse cx="85" cy="90" rx="38" ry="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="85" y="95" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">开始</text>
+  <path d="M123,90 L148,90" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="152" y="68" width="150" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="227" y="88" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">mx = mn = nums[0]</text>
+  <text x="227" y="104" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">初值取首元素，别用哨兵 0</text>
+  <path d="M302,90 L327,90" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="331" y="58" width="170" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="416" y="78" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">一遍扫描 x ∈ nums</text>
+  <text x="416" y="96" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">mx = max(mx, x)</text>
+  <text x="416" y="112" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">mn = min(mn, x)</text>
+  <path d="M416,122 L416,160" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 第二行流程（从右往左） -->
+  <rect x="331" y="166" width="170" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="416" y="186" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">d = mx − mn</text>
+  <text x="416" y="202" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">极差 ≤ 10⁹，本身不溢出</text>
+  <path d="M327,190 L302,190" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="132" y="164" width="165" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="214" y="184" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">return (long long)k * d</text>
+  <text x="214" y="204" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">乘法前转型：64 位</text>
+  <path d="M128,190 L103,190" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <ellipse cx="65" cy="190" rx="38" ry="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="65" y="195" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">结束</text>
+
+  <!-- 溢出警示框 -->
+  <rect x="60" y="236" width="520" height="64" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="258" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">溢出警示：k × d 最高 10⁵ × 10⁹ = 10¹⁴</text>
+  <text x="320" y="278" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">远超 int 上限约 2.1 × 10⁹；C++/Java 须在乘法前转 64 位，Python 天然安全</text>
+
+  <!-- 免特判说明框 -->
+  <rect x="60" y="316" width="520" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="338" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">n = 1 或全数组相等 ⟹ d = 0 ⟹ 答案 0</text>
+  <text x="320" y="358" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">公式自动覆盖，无需特判；时间 O(n)，空间 O(1)</text>
+</svg>
