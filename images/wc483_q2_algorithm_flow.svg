@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+  <text x="226" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：预排序 + 四重循环，逐层内联剪枝</text>
+
+  <!-- ① 排序 -->
+  <rect x="56" y="46" width="340" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="226" y="65" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">① w = sorted(words)</text>
+  <text x="226" y="82" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">预排序：words 两两互异 ⇒ w 严格递增</text>
+  <path d="M226,90 L226,104" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② top -->
+  <rect x="56" y="106" width="340" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="226" y="124" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">② for i：枚举 top = w[i]</text>
+  <text x="226" y="141" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">i = 0 … n−1</text>
+  <path d="M226,148 L226,162" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ left -->
+  <rect x="56" y="164" width="340" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="226" y="184" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">③ for j ≠ i：枚举 left = w[j]</text>
+  <text x="226" y="203" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">剪枝：w[j][0] == w[i][0]（左上角）</text>
+  <path d="M226,214 L226,228" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ right -->
+  <rect x="56" y="230" width="340" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="226" y="250" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">④ for k ∉ {i, j}：枚举 right = w[k]</text>
+  <text x="226" y="269" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">剪枝：w[k][0] == w[i][3]（右上角）</text>
+  <path d="M226,280 L226,294" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ⑤ bottom -->
+  <rect x="56" y="296" width="340" height="60" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="226" y="315" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">⑤ for l ∉ {i, j, k}：枚举 bottom = w[l]</text>
+  <text x="226" y="333" text-anchor="middle" font-size="11" fill="#d6a040" filter="url(#rough2)">剪枝：w[l][0] == w[j][3] 且 w[l][3] == w[k][3]</text>
+  <text x="226" y="349" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#rough2)">（左下 + 右下两个角等式同时卡）</text>
+  <path d="M226,356 L226,370" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ⑥ 收集 -->
+  <rect x="56" y="372" width="340" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="226" y="392" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">⑥ 收集 [top, left, right, bottom]</text>
+  <text x="226" y="410" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">嵌套枚举顺序 = 字典序，天然有序，免最终 sort</text>
+
+  <!-- 右侧注记 -->
+  <rect x="412" y="164" width="140" height="56" rx="6" fill="#fafafa" stroke="#d6a040" stroke-width="1.2" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="482" y="182" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">剪枝从第 2 层开始：</text>
+  <text x="482" y="197" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">首字母不符的 left</text>
+  <text x="482" y="212" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">整支丢弃，不进内层</text>
+
+  <rect x="412" y="296" width="140" height="72" rx="6" fill="#fafafa" stroke="#b85450" stroke-width="1.2" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="482" y="314" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">最内层两式同卡</text>
+  <text x="482" y="330" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">bottom[0]==left[3]</text>
+  <text x="482" y="345" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">bottom[3]==right[3]</text>
+  <text x="482" y="360" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">缺一不可！</text>
+
+  <rect x="412" y="380" width="140" height="40" rx="6" fill="#fafafa" stroke="#446688" stroke-width="1.2" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="482" y="396" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">规模上界 A(15,4)</text>
+  <text x="482" y="412" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">= 32760，毫秒级完成</text>
+</svg>
