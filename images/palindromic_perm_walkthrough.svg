@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="700" height="500" fill="#fafafa"/>
+  <text x="350" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例演算：s = "baba"，target = "abba"（n = 4，h = 2）</text>
+  <path d="M 120 40 Q 350 48 580 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- panel 1: case A -->
+  <g filter="url(#sk)">
+    <rect x="40" y="62" width="96" height="28" rx="13" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="88" y="81" text-anchor="middle" font-size="12.5" fill="#2e5e22" font-weight="bold">情况 A</text>
+  <text x="152" y="81" font-size="12.5" fill="#333">P₀ = pal(target[:2]) = pal("ab") = "abba"</text>
+  <text x="152" y="104" font-size="12.5" fill="#333">是 s 的排列 ✓，但 P₀ = target，不严格大于 ✗ → 放弃</text>
+  <path d="M 60 122 Q 350 130 640 122" stroke="#ddd" stroke-width="1.2" fill="none" stroke-dasharray="4,4" filter="url(#sk)"/>
+
+  <!-- panel 2: case B i=1 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="138" width="96" height="28" rx="13" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="88" y="157" text-anchor="middle" font-size="12.5" fill="#2b4a6e" font-weight="bold">B：i = 1</text>
+  <text x="152" y="157" font-size="12.5" fill="#333">前缀 "a" 消耗 (a,a) → 剩余计数 a:0，b:2</text>
+  <text x="152" y="180" font-size="12.5" fill="#333">需要 c &gt; target[1] = 'b' 且剩余 ≥ 2：没有这样的字符 ✗</text>
+  <path d="M 60 198 Q 350 206 640 198" stroke="#ddd" stroke-width="1.2" fill="none" stroke-dasharray="4,4" filter="url(#sk)"/>
+
+  <!-- panel 3: case B i=0 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="214" width="96" height="28" rx="13" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="88" y="233" text-anchor="middle" font-size="12.5" fill="#2b4a6e" font-weight="bold">B：i = 0</text>
+  <text x="152" y="233" font-size="12.5" fill="#333">c &gt; target[0] = 'a' 的最小可用字符是 'b'（剩 b:2 ≥ 2）✓</text>
+  <text x="152" y="256" font-size="12.5" fill="#333">位置 0 放 'b'（消耗 b,b），剩 a:2 升序填入位置 1 → 左半 "ba"</text>
+  <text x="152" y="279" font-size="12.5" fill="#333">镜像拼出整个回文：</text>
+  <g filter="url(#sk)">
+    <rect x="300" y="262" width="42" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="346" y="262" width="42" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="392" y="262" width="42" height="38" rx="4" fill="#f4f4f4" stroke="#999" stroke-width="1.4" stroke-dasharray="5,3"/>
+    <rect x="438" y="262" width="42" height="38" rx="4" fill="#f4f4f4" stroke="#999" stroke-width="1.4" stroke-dasharray="5,3"/>
+  </g>
+  <text x="321" y="287" text-anchor="middle" font-size="16" fill="#7a5416" font-weight="bold">b</text>
+  <text x="367" y="287" text-anchor="middle" font-size="16" fill="#2e5e22" font-weight="bold">a</text>
+  <text x="413" y="287" text-anchor="middle" font-size="16" fill="#666">a</text>
+  <text x="459" y="287" text-anchor="middle" font-size="16" fill="#666">b</text>
+  <text x="321" y="316" text-anchor="middle" font-size="10.5" fill="#7a5416">选 c='b'</text>
+  <text x="367" y="316" text-anchor="middle" font-size="10.5" fill="#2e5e22">剩余升序</text>
+  <text x="436" y="316" text-anchor="middle" font-size="10.5" fill="#8a8a8a">← 镜像 →</text>
+
+  <!-- result -->
+  <g filter="url(#sk)">
+    <rect x="150" y="336" width="400" height="60" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="350" y="362" text-anchor="middle" font-size="15" fill="#8e3a34" font-weight="bold">答案 = "ba" + "ab" = "baab"</text>
+  <text x="350" y="386" text-anchor="middle" font-size="13" fill="#8e3a34">"baab" &gt; "abba" ✓，且是 s 的回文排列 ✓</text>
+
+  <text x="350" y="432" text-anchor="middle" font-size="12" fill="#666">复盘：s 的回文排列只有 "abba" 与 "baab"，</text>
+  <text x="350" y="452" text-anchor="middle" font-size="12" fill="#666">"abba" = target 被排除，故最小合法答案就是 "baab"</text>
+</svg>
