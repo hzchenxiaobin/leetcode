@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="440" viewBox="0 0 680 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="440" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：逐查询跳跃模拟，最后整体异或</text>
+  <path d="M 140 40 Q 340 50 540 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <ellipse cx="230" cy="72" rx="44" ry="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="230" y="77" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">开始</text>
+  <path d="M 230 92 L 230 112" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- A: take query -->
+  <g filter="url(#sk)">
+    <rect x="105" y="114" width="250" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="230" y="141" text-anchor="middle" font-size="12.5" fill="#2b2b2b">取查询 [l, r, k, v]，置 idx ← l</text>
+  <path d="M 230 158 L 230 190" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D1: idx <= r ? -->
+  <g filter="url(#sk)">
+    <path d="M 164 226 L 230 194 L 296 226 L 230 258 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="230" y="231" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a06a10">idx ≤ r ?</text>
+  <path d="M 230 258 L 230 292" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="244" y="280" font-size="11.5" fill="#2e6e2e" font-weight="bold">是</text>
+
+  <!-- B: multiply + step (core op) -->
+  <g filter="url(#sk)">
+    <rect x="80" y="296" width="300" height="66" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+  </g>
+  <text x="230" y="322" text-anchor="middle" font-size="12.5" fill="#8a3a36">nums[idx] ← (nums[idx] × v) mod (10⁹+7)</text>
+  <text x="230" y="348" text-anchor="middle" font-size="12.5" fill="#8a3a36">idx ← idx + k</text>
+
+  <!-- loop back to D1 -->
+  <g filter="url(#sk)">
+    <path d="M 80 329 C 36 329 36 226 164 226" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="76" y="286" text-anchor="middle" font-size="10.5" fill="#2b6e9e">跳跃循环</text>
+
+  <!-- D1 no -> D2 -->
+  <path d="M 296 226 L 456 226" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="377" y="214" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold">否（越过 r）</text>
+
+  <!-- D2: more queries? -->
+  <g filter="url(#sk)">
+    <path d="M 458 226 L 520 196 L 582 226 L 520 256 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="520" y="231" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a06a10">还有查询 ?</text>
+  <g filter="url(#sk)">
+    <path d="M 520 196 Q 520 136 357 136" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="534" y="168" font-size="11.5" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 520 256 L 520 302" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="533" y="284" font-size="11.5" fill="#b85450" font-weight="bold">否</text>
+
+  <!-- C: xor -->
+  <g filter="url(#sk)">
+    <rect x="395" y="306" width="250" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="520" y="329" text-anchor="middle" font-size="12.5" fill="#2b2b2b">ans ← 0</text>
+  <text x="520" y="351" text-anchor="middle" font-size="12.5" fill="#2b2b2b">逐个 ans ^= nums[i]</text>
+  <path d="M 520 364 L 520 384" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- end -->
+  <g filter="url(#sk)">
+    <ellipse cx="520" cy="404" rx="44" ry="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="520" y="409" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">输出 ans</text>
+
+  <text x="230" y="406" text-anchor="middle" font-size="11" fill="#888888">k ≥ 1 ⇒ 跳跃循环必终止；异或只对最终数组做一次</text>
+</svg>
