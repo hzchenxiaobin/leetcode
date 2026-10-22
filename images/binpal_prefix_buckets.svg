@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 430"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="700" height="430" fill="#fafafa"/>
+  <text x="350" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">计数策略：按位数分层，同位数按前缀分桶</text>
+  <path d="M 170 40 Q 350 48 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- shorter lengths -->
+  <g filter="url(#sk)">
+    <rect x="40" y="58" width="150" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="210" y="58" width="450" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="115" y="83" text-anchor="middle" font-size="13" fill="#2e5e22" font-weight="bold">k = 0：+1</text>
+  <text x="435" y="83" text-anchor="middle" font-size="13" fill="#2e5e22" font-weight="bold">位数 t = 1 … L−1：整段计入，各 +2^(⌈t/2⌉−1) 个</text>
+
+  <!-- same length axis -->
+  <text x="350" y="132" text-anchor="middle" font-size="13.5" fill="#446688" font-weight="bold">位数 t = L（n 的位数）：前缀 p 数轴（p = 回文数的高 H 位）</text>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="158" width="230" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="318" y="158" width="52" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5"/>
+    <rect x="378" y="158" width="240" height="34" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <path d="M 60 226 L 640 226" stroke="#555" stroke-width="2" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+  <path d="M 80 218 L 80 234" stroke="#555" stroke-width="2" filter="url(#sk)"/>
+  <path d="M 344 218 L 344 234" stroke="#555" stroke-width="2" filter="url(#sk)"/>
+  <path d="M 618 218 L 618 234" stroke="#555" stroke-width="2" filter="url(#sk)"/>
+  <text x="80" y="252" text-anchor="middle" font-size="12" fill="#555">base = 2^(H−1)</text>
+  <text x="344" y="252" text-anchor="middle" font-size="12" fill="#555">h = n ≫ W</text>
+  <text x="610" y="252" text-anchor="middle" font-size="12" fill="#555">2^H − 1</text>
+
+  <text x="195" y="180" text-anchor="middle" font-size="12.5" fill="#2e5e22" font-weight="bold">p ∈ [base, h−1]</text>
+  <text x="344" y="180" text-anchor="middle" font-size="14" fill="#7a5416" font-weight="bold">p = h</text>
+  <text x="498" y="180" text-anchor="middle" font-size="12.5" fill="#8e3a34" font-weight="bold">p ∈ [h+1, 2^H−1]</text>
+
+  <text x="350" y="284" text-anchor="middle" font-size="12.5" fill="#2e5e22">高半更小 ⟹ pal(p) &lt; n：全部计入，共 h − base 个</text>
+  <text x="350" y="308" text-anchor="middle" font-size="12.5" fill="#7a5416">与 n 高半相同 ⟹ 只比低 W 位：pal(h) ≤ n 则 +1，否则 +0</text>
+  <text x="350" y="332" text-anchor="middle" font-size="12.5" fill="#8e3a34">高半更大 ⟹ pal(p) &gt; n：不计入</text>
+
+  <!-- formula box -->
+  <g filter="url(#sk)">
+    <rect x="70" y="352" width="560" height="58" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="350" y="376" text-anchor="middle" font-size="14" fill="#7a5416" font-weight="bold">ans = 1 + Σ(t=1…L−1) 2^(⌈t/2⌉−1) + (h − base) + [pal(h) ≤ n]</text>
+  <text x="350" y="398" text-anchor="middle" font-size="12" fill="#7a5416">全程不枚举任何回文数，只做位运算与一次构造比较</text>
+</svg>
