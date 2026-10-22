@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
+    <filter id="rough2"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">实现要点：双行滚动 + c 维截断</text>
+
+  <!-- 左：滚动数组 -->
+  <text x="128" y="54" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">按行双数组滚动，pre / cur</text>
+
+  <text x="46" y="86" font-size="12" fill="#888" filter="url(#rough2)">pre（第 i−1 行）</text>
+  <rect x="46" y="94" width="50" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="71" y="116" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">j−1</text>
+  <rect x="100" y="94" width="50" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" rx="4" filter="url(#rough2)"/>
+  <text x="125" y="116" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">j</text>
+  <rect x="154" y="94" width="50" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="179" y="116" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">j+1</text>
+  <text x="46" y="152" font-size="12" fill="#888" filter="url(#rough2)">cur（第 i 行）</text>
+  <rect x="46" y="160" width="50" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4" filter="url(#rough2)"/>
+  <text x="71" y="182" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">j−1</text>
+  <rect x="100" y="160" width="50" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="4" filter="url(#rough2)"/>
+  <text x="125" y="176" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">j ←</text>
+  <text x="125" y="190" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">正在算</text>
+  <rect x="154" y="160" width="50" height="34" fill="#f5f5f5" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" rx="4" filter="url(#rough2)"/>
+  <text x="179" y="182" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">…</text>
+
+  <path d="M125 128 L125 152" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="132" y="144" font-size="10" fill="#446688" filter="url(#rough2)">上方旧值</text>
+  <path d="M96 177 L94 177" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="71" y="206" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">← 左方新值（本行已更新）</text>
+
+  <rect x="30" y="222" width="226" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="143" y="244" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">cur[j][c] 由 pre[j][c−cost] 与</text>
+  <text x="143" y="262" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">cur[j−1][c−cost] 取 max 后 +score</text>
+
+  <rect x="30" y="288" width="226" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="143" y="310" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">处理完一行 swap(pre, cur)，</text>
+  <text x="143" y="328" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">空间 O(n · K)，三维秒变两维</text>
+
+  <!-- 右：三个提醒框 -->
+  <rect x="278" y="58" width="224" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="390" y="80" text-anchor="middle" font-size="13" fill="#d6a040" filter="url(#rough2)">① c 维截断：K = min(k, m+n−2)</text>
+  <text x="390" y="102" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">路径长 m+n−1，起点免费，</text>
+  <text x="390" y="120" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">花费至多 m+n−2 ≤ 398 ≪ k = 10³</text>
+  <text x="390" y="138" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">到 (i,j) 更可截到 c ≤ i + j</text>
+
+  <rect x="278" y="156" width="224" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="390" y="178" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">② −1 哨兵陷阱</text>
+  <text x="390" y="200" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">来源不可达（−1）时不能 +score：</text>
+  <text x="390" y="218" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">−1 + 2 = 1，凭空「伪可达」！</text>
+  <text x="390" y="236" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">先判 &lt; 0 再转移，或用 −10⁹ 当哨兵</text>
+
+  <rect x="278" y="254" width="224" height="90" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="390" y="276" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">③ 收尾要扫全 c ≤ k</text>
+  <text x="390" y="298" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">ans = max{ f[m−1][n−1][c] : 0 ≤ c ≤ k }</text>
+  <text x="390" y="316" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">全为 −1 → 返回 −1（无合法路径）</text>
+  <text x="390" y="334" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">1×1 网格天然得 0：起点即终点</text>
+</svg>

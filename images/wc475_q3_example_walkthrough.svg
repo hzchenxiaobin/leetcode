@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
+    <filter id="rough2"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">示例演算：grid = [[0,1],[2,0]]，k = 1</text>
+
+  <!-- 左：网格与两条路径 -->
+  <text x="120" y="56" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">只有两条单调路径</text>
+
+  <rect x="62" y="70" width="56" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="90" y="99" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">0</text>
+  <text x="90" y="63" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">起点 S</text>
+
+  <rect x="122" y="70" width="56" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="150" y="99" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">1</text>
+
+  <rect x="62" y="122" width="56" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="90" y="151" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">2</text>
+
+  <rect x="122" y="122" width="56" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="150" y="151" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">0</text>
+  <text x="150" y="186" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">终点 E</text>
+
+  <path d="M112 82 Q 128 74 140 82" fill="none" stroke="#446688" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M140 118 Q 148 126 148 132" fill="none" stroke="#446688" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="196" y="80" font-size="11" fill="#446688" filter="url(#rough2)">A：右→下</text>
+  <text x="196" y="95" font-size="11" fill="#446688" filter="url(#rough2)">0+1+0：分1 花1</text>
+
+  <path d="M90 120 L90 134" fill="none" stroke="#b85450" stroke-width="2.5" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M120 146 Q 130 142 136 146" fill="none" stroke="#b85450" stroke-width="2.5" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="34" y="132" font-size="11" fill="#b85450" filter="url(#rough2)">B：</text>
+  <text x="34" y="147" font-size="11" fill="#b85450" filter="url(#rough2)">下→右</text>
+  <text x="34" y="162" font-size="11" fill="#b85450" filter="url(#rough2)">0+2+0</text>
+
+  <rect x="30" y="200" width="212" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="136" y="222" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">B 同样只花 1，却多捡一个 2</text>
+  <text x="136" y="240" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">→ 分数 2，胜出 ✓</text>
+
+  <rect x="30" y="262" width="212" height="80" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="136" y="284" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">对照示例 2：[[0,1],[1,2]]，k = 1</text>
+  <text x="136" y="304" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">两条路径都要花 2 &gt; k</text>
+  <text x="136" y="326" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">→ 无合法路径，返回 −1</text>
+
+  <!-- 右：DP 表 -->
+  <text x="392" y="56" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">DP 表：每格存 c = 0..k 各档最大分数</text>
+
+  <rect x="282" y="68" width="220" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="292" y="90" font-size="12" fill="#333" filter="url(#rough2)">f(0,0)：</text>
+  <text x="352" y="90" font-size="12" fill="#333" filter="url(#rough2)">c=0 → 0（起点免费）</text>
+
+  <path d="M330 102 L330 114" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="282" y="118" width="220" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="292" y="140" font-size="12" fill="#333" filter="url(#rough2)">f(0,1)：</text>
+  <text x="352" y="140" font-size="12" fill="#333" filter="url(#rough2)">c=1 → 1（格值 1）</text>
+
+  <rect x="282" y="160" width="220" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="292" y="182" font-size="12" fill="#333" filter="url(#rough2)">f(1,0)：</text>
+  <text x="352" y="182" font-size="12" fill="#333" filter="url(#rough2)">c=1 → 2（格值 2）</text>
+
+  <path d="M330 194 L330 206" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="282" y="210" width="220" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="6" filter="url(#rough2)"/>
+  <text x="292" y="231" font-size="12" fill="#333" filter="url(#rough2)">f(1,1)：</text>
+  <text x="352" y="231" font-size="12" fill="#333" filter="url(#rough2)">c=1 → max(1, 2) + 0 = 2</text>
+  <text x="352" y="250" font-size="11" fill="#888" filter="url(#rough2)">c=0 不可达（前两格已花 1）</text>
+
+  <rect x="282" y="274" width="220" height="68" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="392" y="298" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">答案 = max{ f(1,1)[c] : c ≤ 1 }</text>
+  <text x="392" y="318" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">= max(−∞, 2) = 2</text>
+  <text x="392" y="334" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">逐档取 max，别只看 c = k 那一档</text>
+</svg>
