@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 415"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="415" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="16.5" font-weight="bold" fill="#2b2b2b">核心观察：相同「前缀签名」配对，间距 = 平衡子串长度</text>
+  <path d="M 130 38 Q 320 46 510 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- prefix labels -->
+  <g font-size="11" fill="#666" text-anchor="middle">
+    <text x="69" y="76">i=0</text>
+    <text x="165" y="76">i=1</text>
+    <text x="261" y="76">i=2</text>
+    <text x="357" y="76">i=3</text>
+    <text x="453" y="76">i=4</text>
+    <text x="549" y="76">i=5</text>
+  </g>
+
+  <!-- prefix cards: (a,b,c) counts + sig_ab -->
+  <g filter="url(#sk)">
+    <rect x="30" y="84" width="78" height="58" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="126" y="84" width="78" height="58" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="222" y="84" width="78" height="58" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="318" y="84" width="78" height="58" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="414" y="84" width="78" height="58" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="510" y="84" width="78" height="58" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g font-size="13" fill="#333" text-anchor="middle">
+    <text x="69" y="108">(0,0,0)</text>
+    <text x="165" y="108">(1,0,0)</text>
+    <text x="261" y="108">(1,1,0)</text>
+    <text x="357" y="108">(1,2,0)</text>
+    <text x="453" y="108">(2,2,0)</text>
+    <text x="549" y="108">(2,2,1)</text>
+  </g>
+  <g font-size="10.5" fill="#556" text-anchor="middle">
+    <text x="69" y="130">sig (0,0)</text>
+    <text x="165" y="130">sig (1,0)</text>
+    <text x="261" y="130">sig (0,0)</text>
+    <text x="357" y="130">sig (−1,0)</text>
+    <text x="453" y="130">sig (0,0)</text>
+    <text x="549" y="130">sig (0,1)</text>
+  </g>
+
+  <!-- read-in arrows with characters -->
+  <g stroke="#8a8a8a" stroke-width="1.4" fill="none">
+    <path d="M 108 113 L 124 113" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 204 113 L 220 113" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 300 113 L 316 113" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 396 113 L 412 113" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 492 113 L 508 113" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+  <g font-size="12" fill="#b85450" text-anchor="middle">
+    <text x="116" y="105">a</text>
+    <text x="212" y="105">b</text>
+    <text x="308" y="105">b</text>
+    <text x="404" y="105">a</text>
+    <text x="500" y="105">c</text>
+  </g>
+  <text x="572" y="117" font-size="9.5" fill="#888">读入</text>
+
+  <!-- pairing arcs -->
+  <path d="M 69 144 Q 165 164 261 144" stroke="#8a8a8a" stroke-width="1.4" stroke-dasharray="5 3"
+        fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="165" y="162" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#sk)">"ab" len 2</text>
+  <path d="M 69 144 Q 261 216 453 144" stroke="#4a7a3a" stroke-width="2.4"
+        fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="261" y="196" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e5e22" filter="url(#sk)">"abba" len 4 ✓ 最优</text>
+
+  <!-- deduction box -->
+  <g filter="url(#sk)">
+    <rect x="48" y="212" width="544" height="80" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="236" text-anchor="middle" font-size="12" fill="#7a5415" filter="url(#sk)">sig_ab(i) = sig_ab(j) ⟺ Δa = Δb 且 Δc = 0 —— 中段增量「抵消」</text>
+  <text x="320" y="260" text-anchor="middle" font-size="12" fill="#7a5415" filter="url(#sk)">子串非空 ⟹ Δa = Δb ≥ 1：恰由 a、b 组成且次数相等（d=2 平衡）</text>
+  <text x="320" y="284" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#sk)">固定右端 j，左端取该签名的「首现」⟹ 间距最大 ⟹ 子串最长</text>
+
+  <!-- generalization box -->
+  <g filter="url(#sk)">
+    <rect x="48" y="308" width="544" height="84" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="332" text-anchor="middle" font-size="12" fill="#33506b" filter="url(#sk)">换字符对 → {a,c}、{b,c} 两张同构表；三字符用二维差 (b−a, c−a)</text>
+  <text x="320" y="356" text-anchor="middle" font-size="12" fill="#33506b" filter="url(#sk)">d=1（全同字符）不需要签名 —— 最长同字符游程一遍扫出</text>
+  <text x="320" y="380" text-anchor="middle" font-size="12" font-weight="bold" fill="#33506b" filter="url(#sk)">合计：4 张「签名 → 首现」哈希表 + 游程，一趟扫描 O(n)</text>
+</svg>
