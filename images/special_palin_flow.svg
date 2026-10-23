@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="900" height="560" fill="#fafafa"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：枚举 (E, o) → 生成全部候选回文 → 取 &gt; n 的最小</text>
+  <path d="M 240 42 Q 450 52 660 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 主流程左列 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="66" width="310" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="225" y="88" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">枚举 E ⊆ {2,4,6,8}（16 种）</text>
+  <text x="225" y="106" text-anchor="middle" font-size="12.5" fill="#444">与 o ∈ {∅, 1, 3, 5, 7, 9}（6 种）</text>
+  <path d="M 225 118 L 225 136" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="140" width="310" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="225" y="162" text-anchor="middle" font-size="12" fill="#444">L = ΣE + o；构造前半多重集 H：</text>
+  <text x="225" y="182" text-anchor="middle" font-size="12" fill="#444">偶数 k 放 k/2 个，o 放 (o−1)/2 个</text>
+  <path d="M 225 196 L 225 214" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="225,218 345,254 225,290 105,254" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="225" y="250" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">1 ≤ L ≤ 16 ？</text>
+  <text x="225" y="268" text-anchor="middle" font-size="11" fill="#888">（否则跳过该组合）</text>
+  <path d="M 105 254 Q 60 254 58 130 Q 58 92 66 92" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="48" y="180" font-size="11" font-weight="bold" fill="#b85450" transform="rotate(-90 48 180)">否</text>
+  <path d="M 225 290 L 225 308" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="238" y="304" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="312" width="310" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="225" y="334" text-anchor="middle" font-size="12" fill="#444">排序 H，next_permutation</text>
+  <text x="225" y="354" text-anchor="middle" font-size="12" fill="#444">不重不漏枚举每个不同排列 p</text>
+  <path d="M 225 368 L 225 386" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="390" width="310" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="225" y="412" text-anchor="middle" font-size="12" fill="#444">拼回文：x = p + (o) + reverse(p)</text>
+  <text x="225" y="432" text-anchor="middle" font-size="12" fill="#444">转成整数（奇长度才拼中间位 o）</text>
+  <path d="M 225 446 L 225 464" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="468" width="310" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="225" y="489" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">若 x &gt; n：ans = min(ans, x)</text>
+  <text x="225" y="508" text-anchor="middle" font-size="11" fill="#4a7a3a">全部枚举完后返回 ans</text>
+
+  <!-- 右侧说明框 1：长度上界 -->
+  <g filter="url(#sk)">
+    <rect x="450" y="66" width="420" height="150" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="660" y="94" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#7a5415">为什么 L ≤ 16 就够？</text>
+  <text x="470" y="120" font-size="11.5" fill="#444">8888666226668888（S = {2,6,8} 的最大排列）</text>
+  <text x="470" y="140" font-size="11.5" fill="#444">本身是特殊数，且 ≈ 8.9×10^15 &gt; 10^15 ≥ n</text>
+  <text x="470" y="162" font-size="12" font-weight="bold" fill="#2e6e2e">⟹ 答案 ≤ 8888666226668888，不超过 16 位</text>
+  <text x="470" y="184" font-size="11.5" fill="#888">⟹ 只需枚举满足 ΣS ≤ 16 的组合（58 个）</text>
+  <text x="470" y="204" font-size="11" fill="#888">n ≤ 10^15 保证永远落在这个范围内</text>
+
+  <!-- 右侧说明框 2：规模 -->
+  <g filter="url(#sk)">
+    <rect x="450" y="236" width="420" height="140" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="660" y="264" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#2b4a6e">枚举规模：小到可以全生成</text>
+  <text x="470" y="290" font-size="11.5" fill="#444">· 合法 (E, o) 组合：58 个（ΣS ≤ 16）</text>
+  <text x="470" y="312" font-size="11.5" fill="#444">· 每个组合的排列数 ≤ 280（S = {2,6,8} 时最多）</text>
+  <text x="470" y="334" font-size="11.5" fill="#444">· 候选特殊数共 2296 个 —— 16 位以内全量</text>
+  <text x="470" y="360" font-size="12" font-weight="bold" fill="#2b4a6e">生成后取 &gt; n 的最小值即可，连排序都不用</text>
+
+  <!-- 右侧说明框 3：同长度比较 -->
+  <g filter="url(#sk)">
+    <rect x="450" y="396" width="420" height="122" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="660" y="424" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#2e6e2e">回文由前半唯一决定</text>
+  <text x="470" y="450" font-size="11.5" fill="#444">· 前半确定 ⟹ 整个回文确定（镜像 + 中位）</text>
+  <text x="470" y="472" font-size="11.5" fill="#444">· 同长度回文比较大小 = 比较前半字符串</text>
+  <text x="470" y="498" font-size="11.5" fill="#555">· 例：H = {2,6,6,6,8,8,8,8} 排序最小 ⟹</text>
+  <text x="470" y="514" font-size="11.5" fill="#555">   2666888888886662 是 16 位中的最小特殊数</text>
+</svg>
