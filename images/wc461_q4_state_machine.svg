@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 460"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="460" fill="#fafafa"/>
+  <text x="380" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">状态机 DP：给「形状进度」编码 —— Kadane 的四状态推广</text>
+  <text x="380" y="50" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">扫描到 x = nums[i]，与 prev = nums[i−1] 比较大小，决定状态如何转移</text>
+
+  <!-- 状态框 -->
+  <rect x="40" y="120" width="130" height="76" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="105" y="150" text-anchor="middle" font-size="15" font-weight="bold" fill="#446688" filter="url(#rough2)">f1 上升段</text>
+  <text x="105" y="172" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">长度 ≥ 1 · 可重启</text>
+
+  <rect x="220" y="120" width="130" height="76" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="285" y="150" text-anchor="middle" font-size="15" font-weight="bold" fill="#446688" filter="url(#rough2)">f2 上升段</text>
+  <text x="285" y="172" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">长度 ≥ 2 · 峰候选</text>
+
+  <rect x="400" y="120" width="130" height="76" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="465" y="150" text-anchor="middle" font-size="15" font-weight="bold" fill="#d6a040" filter="url(#rough2)">f3 增 + 降</text>
+  <text x="465" y="172" text-anchor="middle" font-size="11" fill="#d6a040" filter="url(#rough2)">降 ≥ 2 · 谷候选</text>
+
+  <rect x="580" y="120" width="130" height="76" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="645" y="150" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">f4 完整三段式</text>
+  <text x="645" y="172" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">第三段 ≥ 2 · 可结算</text>
+
+  <!-- 自环 -->
+  <path d="M70,120 C80,80 130,80 140,120" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="105" y="72" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">x &gt; prev：延伸或重启</text>
+  <text x="285" y="100" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">（无自环：延长经 f1，因 f1 ≥ f2）</text>
+  <path d="M430,120 C440,80 490,80 500,120" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="465" y="72" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#rough2)">x &lt; prev：下降延长</text>
+  <path d="M610,120 C620,80 670,80 680,120" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="645" y="72" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">x &gt; prev：尾段延长</text>
+
+  <!-- 状态间箭头 -->
+  <path d="M172,158 L216,158" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="195" y="145" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">x &gt; prev</text>
+  <text x="195" y="184" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">锁定长 ≥ 2</text>
+
+  <path d="M352,158 L396,158" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="375" y="145" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">x &lt; prev</text>
+  <text x="375" y="184" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">越过峰 p</text>
+
+  <path d="M532,158 L576,158" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="555" y="145" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">x &gt; prev</text>
+  <text x="555" y="184" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">越过谷 q</text>
+
+  <!-- 答案徽章 -->
+  <path d="M645,198 L645,228" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <rect x="545" y="232" width="200" height="38" rx="19" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="645" y="256" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">ans = max f4[i]</text>
+
+  <!-- 断裂提示 -->
+  <rect x="40" y="232" width="490" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="285" y="256" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">x = prev（相邻相等）或转折方向不符 → 相关状态清 −∞，只有 f1 能重启为 x</text>
+
+  <!-- 转移总览 -->
+  <rect x="40" y="286" width="680" height="156" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="380" y="312" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">转移总览（同一轮内全部使用旧值，先存临时变量再统一提交）</text>
+  <text x="380" y="340" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">升 x &gt; prev：  f1 = x + max(0, f1)    f2 = x + f1    f4 = x + max(f3, f4)</text>
+  <text x="380" y="366" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">降 x &lt; prev：  f3 = x + max(f2, f3)   （其余状态清 −∞）</text>
+  <text x="380" y="392" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">等 x = prev：  仅 f1 = x   （其余状态清 −∞）</text>
+  <text x="380" y="422" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">答案 = 所有位置的 f4 取最大（题目保证存在三段式子数组）</text>
+</svg>
