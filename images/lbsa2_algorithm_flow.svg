@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="420" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：右到左扫 l，区间加 + 找最右零，全程 O(n log n)</text>
+  <path d="M 150 38 Q 320 46 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="62" width="380" height="46" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="82" text-anchor="middle" font-size="12.5" fill="#2f4a6b" font-weight="bold">① 预处理 nxt[l]：倒序扫描，pos[v] 记录值 v 的下一次出现</text>
+  <text x="250" y="100" text-anchor="middle" font-size="11" fill="#2f4a6b">（无下一次则 nxt[l] = n+1；用值域数组 100001）</text>
+  <path d="M 250 108 Q 250 118 250 126" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="130" width="380" height="42" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="156" text-anchor="middle" font-size="12.5" fill="#2f4a6b" font-weight="bold">② l 从 n 递减到 1（活动窗口 [l, n] 向左扩一格）</text>
+  <path d="M 250 172 Q 250 182 250 190" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="194" width="380" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="215" text-anchor="middle" font-size="12.5" fill="#2e5e22" font-weight="bold">③ 区间加：s(l) = +1（偶）/ −1（奇）加到 [l, nxt[l]−1]</text>
+  <text x="250" y="235" text-anchor="middle" font-size="11" fill="#2e5e22">线段树节点维护 (min, max) + 懒标记 tag</text>
+  <path d="M 250 246 Q 250 256 250 264" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="268" width="380" height="52" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="289" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">④ walk：在 [l, n] 内找最右的 D==0 位置 r*</text>
+  <text x="250" y="309" text-anchor="middle" font-size="11" fill="#7a5415">剪枝 mn &gt; 0 或 mx &lt; 0 → 该段无零；先右后左下降</text>
+  <path d="M 250 320 Q 250 330 250 338" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 5 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="342" width="380" height="46" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="362" text-anchor="middle" font-size="12.5" fill="#2e5e22" font-weight="bold">⑤ r* ≠ −1 → ans = max(ans, r* − l + 1)</text>
+  <text x="250" y="380" text-anchor="middle" font-size="11" fill="#2e5e22">r* = −1 → 本轮无平衡子数组，直接下一轮</text>
+
+  <!-- loop back arrow: from step5 right edge up to step2 right edge -->
+  <path d="M 440 365 Q 520 365 520 260 Q 520 155 446 152" stroke="#446688" stroke-width="1.8" stroke-dasharray="7,5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="536" y="262" font-size="11.5" fill="#446688" text-anchor="middle" transform="rotate(90 536 262)">l−−，回到 ②</text>
+
+  <!-- final answer box -->
+  <g filter="url(#sk)">
+    <rect x="470" y="62" width="150" height="46" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="545" y="82" text-anchor="middle" font-size="12.5" fill="#8f3a36" font-weight="bold">⑥ 扫完返回 ans</text>
+  <text x="545" y="100" text-anchor="middle" font-size="10.5" fill="#8f3a36">（无平衡子数组则 0）</text>
+  <path d="M 440 380 Q 465 380 500 380 Q 552 380 552 112" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <text x="320" y="410" text-anchor="middle" font-size="11" fill="#888">每轮 1 次区间加 + 1 次 walk，各 O(log n) —— 总计 n 轮</text>
+</svg>
