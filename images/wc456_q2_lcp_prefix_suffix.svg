@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="680" viewBox="0 0 940 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="680" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：删除一个元素，只扰动两条相邻对</text>
+  <path d="M 250 42 Q 470 50 690 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: example words, deleted index, pair classification ===== -->
+  <text x="60" y="70" font-size="13" font-weight="bold" fill="#2b6e9e">① 示例：words = [jump, run, run, jump, run]，删除 i = 2（粉框）</text>
+
+  <!-- deleted marker above w2 -->
+  <text x="400" y="90" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">✗ 删除 i = 2</text>
+
+  <!-- word boxes: x = 100,224,348,472,596 ; y=96 h=44 w=104 -->
+  <g font-size="14">
+    <g filter="url(#sk)"><rect x="100" y="96" width="104" height="44" fill="#e8f0fe" stroke="#4a8edb" stroke-width="1.3" rx="4"/></g>
+    <text x="152" y="118" text-anchor="middle" fill="#2b2b2b">jump</text>
+    <text x="152" y="134" text-anchor="middle" font-size="10" fill="#888">w0</text>
+
+    <g filter="url(#sk)"><rect x="224" y="96" width="104" height="44" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="276" y="118" text-anchor="middle" fill="#2b2b2b">run</text>
+    <text x="276" y="134" text-anchor="middle" font-size="10" fill="#888">w1</text>
+
+    <g filter="url(#sk)"><rect x="348" y="96" width="104" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 3" rx="4"/></g>
+    <text x="400" y="118" text-anchor="middle" fill="#2b2b2b">run</text>
+    <text x="400" y="134" text-anchor="middle" font-size="10" fill="#b85450">w2（被删）</text>
+
+    <g filter="url(#sk)"><rect x="472" y="96" width="104" height="44" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="524" y="118" text-anchor="middle" fill="#2b2b2b">jump</text>
+    <text x="524" y="134" text-anchor="middle" font-size="10" fill="#888">w3</text>
+
+    <g filter="url(#sk)"><rect x="596" y="96" width="104" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="4"/></g>
+    <text x="648" y="118" text-anchor="middle" fill="#2b2b2b">run</text>
+    <text x="648" y="134" text-anchor="middle" font-size="10" fill="#888">w4</text>
+  </g>
+
+  <!-- pair brackets under boxes (smile arcs), color-coded -->
+  <g fill="none" stroke-width="1.6" filter="url(#sk)">
+    <path d="M 152 144 Q 214 160 276 144" stroke="#4a8edb"/>
+    <path d="M 276 144 Q 338 160 400 144" stroke="#b85450"/>
+    <path d="M 400 144 Q 462 160 524 144" stroke="#b85450"/>
+    <path d="M 524 144 Q 586 160 648 144" stroke="#d6a040"/>
+  </g>
+  <!-- strikethrough on the two dead pairs -->
+  <g stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" filter="url(#sk)">
+    <path d="M 292 172 L 384 156"/>
+    <path d="M 416 172 L 508 156"/>
+  </g>
+  <g font-size="11" text-anchor="middle">
+    <text x="214" y="176" fill="#2b6e9e">lcp[0]=0 ✓保留</text>
+    <text x="338" y="192" fill="#b85450" font-weight="bold">lcp[1]=3 ✗消失</text>
+    <text x="462" y="192" fill="#b85450" font-weight="bold">lcp[2]=0 ✗消失</text>
+    <text x="586" y="176" fill="#9a6d1a">lcp[3]=0 ✓保留</text>
+  </g>
+
+  <!-- born pair: green U arc from w1 bottom to w3 bottom -->
+  <path d="M 276 146 C 300 232, 500 232, 520 150" stroke="#4a8e4a" stroke-width="1.8" stroke-dasharray="6 4" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="400" y="228" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">新对 (w1, w3)：跨坑变相邻 → 现算 LCP(run, jump) = 0</text>
+
+  <!-- zone summary boxes -->
+  <g filter="url(#sk)"><rect x="70" y="250" width="256" height="40" rx="6" fill="#e8f0fe" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="198" y="266" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6e9e">左半段：对 j ≤ i−2 原样保留</text>
+  <text x="198" y="283" text-anchor="middle" font-size="10" fill="#555">O(1) 查前缀最大值 pre[i−2]</text>
+  <g filter="url(#sk)"><rect x="342" y="250" width="256" height="40" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/></g>
+  <text x="470" y="266" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">含 i 的两条对消失</text>
+  <text x="470" y="283" text-anchor="middle" font-size="10" fill="#555">(i−1, i) 与 (i, i+1) 不复存在</text>
+  <g filter="url(#sk)"><rect x="614" y="250" width="256" height="40" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/></g>
+  <text x="742" y="266" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a6d1a">右半段：对 j ≥ i+1 原样保留</text>
+  <text x="742" y="283" text-anchor="middle" font-size="10" fill="#555">O(1) 查后缀最大值 suf[i+1]</text>
+
+  <!-- ===== Panel 2: pre / suf arrays ===== -->
+  <text x="60" y="322" font-size="13" font-weight="bold" fill="#2b6e9e">② 预处理：lcp 数组 + 前缀 / 后缀最大值（本例 n = 5）</text>
+
+  <!-- lcp row -->
+  <text x="100" y="352" font-size="12" font-weight="bold" fill="#444">lcp =</text>
+  <g font-size="12" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="170" y="334" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="196" y="353" fill="#333">0</text>
+    <g filter="url(#sk)"><rect x="232" y="334" width="52" height="28" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3" rx="4"/></g>
+    <text x="258" y="353" fill="#2e6e2e" font-weight="bold">3</text>
+    <g filter="url(#sk)"><rect x="294" y="334" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="320" y="353" fill="#333">0</text>
+    <g filter="url(#sk)"><rect x="356" y="334" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="382" y="353" fill="#333">0</text>
+  </g>
+  <text x="470" y="348" font-size="11" fill="#444">lcp[j] = LCP(words[j], words[j+1])，j = 0 … n−2</text>
+  <text x="470" y="364" font-size="10" fill="#888">一趟逐对比较、止于首个失配，总代价 ≤ S</text>
+
+  <!-- pre row -->
+  <text x="100" y="400" font-size="12" font-weight="bold" fill="#444">pre =</text>
+  <g font-size="12" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="170" y="382" width="52" height="28" fill="#e8f0fe" stroke="#4a8edb" stroke-width="2.2" rx="4"/></g>
+    <text x="196" y="401" fill="#2b6e9e" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="232" y="382" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="258" y="401" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="294" y="382" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="320" y="401" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="356" y="382" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="382" y="401" fill="#333">3</text>
+  </g>
+  <text x="470" y="396" font-size="11" fill="#444">pre[k] = max(lcp[0..k]) —— 左半段 [0, i−2] 的最大值</text>
+  <text x="470" y="412" font-size="10" fill="#888">粗蓝框即本例要取的 pre[i−2] = pre[0]</text>
+
+  <!-- suf row -->
+  <text x="100" y="448" font-size="12" font-weight="bold" fill="#444">suf =</text>
+  <g font-size="12" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="170" y="430" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="196" y="449" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="232" y="430" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="258" y="449" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="294" y="430" width="52" height="28" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="320" y="449" fill="#333">0</text>
+    <g filter="url(#sk)"><rect x="356" y="430" width="52" height="28" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/></g>
+    <text x="382" y="449" fill="#9a6d1a" font-weight="bold">0</text>
+  </g>
+  <text x="470" y="444" font-size="11" fill="#444">suf[k] = max(lcp[k..n−2]) —— 右半段 [i+1, n−2] 的最大值</text>
+  <text x="470" y="460" font-size="10" fill="#888">粗橙框即本例要取的 suf[i+1] = suf[3]</text>
+
+  <!-- ===== Panel 3: formula ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="490" width="820" height="86" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="514" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">answer[i] = max( pre[i−2] ,  LCP(w[i−1], w[i+1]) ,  suf[i+1] )</text>
+  <text x="470" y="538" text-anchor="middle" font-size="11" fill="#444">不存在的项一律记 0：i = 0 无左半段与新对；i = n−1 无右半段与新对</text>
+  <text x="470" y="560" text-anchor="middle" font-size="10.5" fill="#888">本例 i = 2：max(pre[0]=0, LCP(run,jump)=0, suf[3]=0) = 0 ✓（=0 的 3 来自别处，见示例演算图）</text>
+
+  <!-- ===== insight ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="594" width="820" height="66" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="618" font-size="12" font-weight="bold" fill="#2b2b2b">关键洞察</text>
+  <text x="80" y="640" font-size="11" fill="#444">删除 = 局部扰动：左右半段的最大值查 pre / suf 表 O(1) 直取；唯一需要现算的增量是「跨坑新对」，</text>
+  <text x="80" y="656" font-size="11" fill="#2e6e2e" font-weight="bold">其总代价 ≤ 总字长 S → 整体 O(n + S)，恰好卡进「总长度 ≤ 10⁵」的约束设计</text>
+</svg>

@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="745" viewBox="0 0 940 745" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="940" height="745" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例演算：words = [jump, run, run, jump, run] 的逐 i 查表</text>
+  <path d="M 250 42 Q 470 50 690 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: preprocessing rows ===== -->
+  <text x="60" y="70" font-size="13" font-weight="bold" fill="#2b6e9e">① 预处理（n = 5）：lcp、pre、suf 三个数组</text>
+
+  <!-- words row -->
+  <g font-size="12" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="90" y="80" width="88" height="32" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="134" y="100" fill="#333">jump</text>
+    <g filter="url(#sk)"><rect x="196" y="80" width="88" height="32" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="240" y="100" fill="#333">run</text>
+    <g filter="url(#sk)"><rect x="302" y="80" width="88" height="32" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="346" y="100" fill="#333">run</text>
+    <g filter="url(#sk)"><rect x="408" y="80" width="88" height="32" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="452" y="100" fill="#333">jump</text>
+    <g filter="url(#sk)"><rect x="514" y="80" width="88" height="32" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="558" y="100" fill="#333">run</text>
+  </g>
+  <g font-size="9" fill="#888" text-anchor="middle">
+    <text x="134" y="124">0</text><text x="240" y="124">1</text><text x="346" y="124">2</text><text x="452" y="124">3</text><text x="558" y="124">4</text>
+  </g>
+
+  <!-- lcp row (boxes centered in gaps) -->
+  <text x="60" y="148" font-size="11" font-weight="bold" fill="#444">lcp</text>
+  <g font-size="11" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="166" y="132" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="188" y="150" fill="#333">0</text>
+    <g filter="url(#sk)"><rect x="272" y="132" width="44" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="294" y="150" fill="#2e6e2e" font-weight="bold">3</text>
+    <g filter="url(#sk)"><rect x="378" y="132" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="400" y="150" fill="#333">0</text>
+    <g filter="url(#sk)"><rect x="484" y="132" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="506" y="150" fill="#333">0</text>
+  </g>
+
+  <!-- pre row -->
+  <text x="60" y="182" font-size="11" font-weight="bold" fill="#444">pre</text>
+  <g font-size="11" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="166" y="166" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="188" y="184" fill="#333">0</text>
+    <g filter="url(#sk)"><rect x="272" y="166" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="294" y="184" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="378" y="166" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="400" y="184" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="484" y="166" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="506" y="184" fill="#333">3</text>
+  </g>
+
+  <!-- suf row -->
+  <text x="60" y="216" font-size="11" font-weight="bold" fill="#444">suf</text>
+  <g font-size="11" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="166" y="200" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="188" y="218" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="272" y="200" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="294" y="218" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="378" y="200" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="400" y="218" fill="#333">0</text>
+    <g filter="url(#sk)"><rect x="484" y="200" width="44" height="26" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="506" y="218" fill="#333">0</text>
+  </g>
+
+  <!-- right side notes -->
+  <g filter="url(#sk)"><rect x="620" y="126" width="272" height="52" rx="6" fill="#e8f0fe" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="636" y="147" font-size="10.5" fill="#2b6e9e" font-weight="bold">pre[k] = max(lcp[0..k])</text>
+  <text x="636" y="166" font-size="10" fill="#555">左半段 [0, i−2] 的最大值 → 取 pre[i−2]</text>
+  <g filter="url(#sk)"><rect x="620" y="186" width="272" height="52" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/></g>
+  <text x="636" y="207" font-size="10.5" fill="#9a6d1a" font-weight="bold">suf[k] = max(lcp[k..n−2])</text>
+  <text x="636" y="226" font-size="10" fill="#555">右半段 [i+1, n−2] 的最大值 → 取 suf[i+1]</text>
+
+  <!-- ===== Panel 2: per-i table ===== -->
+  <text x="60" y="262" font-size="13" font-weight="bold" fill="#2b6e9e">② 逐 i 三项取最大（“—” 表示该项不存在，记 0）</text>
+
+  <!-- header row: y=272 h=32 ; rows h=40 -->
+  <g filter="url(#sk)"><rect x="70" y="272" width="56" height="32" fill="#f2efe6" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="126" y="272" width="190" height="32" fill="#f2efe6" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="316" y="272" width="290" height="32" fill="#f2efe6" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="606" y="272" width="160" height="32" fill="#f2efe6" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="766" y="272" width="120" height="32" fill="#f2efe6" stroke="#999" stroke-width="1.1"/></g>
+  <g font-size="11" font-weight="bold" fill="#444" text-anchor="middle">
+    <text x="98" y="292">i</text>
+    <text x="221" y="292">左：pre[i−2]</text>
+    <text x="461" y="292">中：LCP(w[i−1], w[i+1])</text>
+    <text x="686" y="292">右：suf[i+1]</text>
+    <text x="826" y="292">answer[i]</text>
+  </g>
+
+  <!-- row i=0: y=304 -->
+  <g filter="url(#sk)"><rect x="70" y="304" width="56" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="126" y="304" width="190" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="316" y="304" width="290" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="606" y="304" width="160" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><rect x="766" y="304" width="120" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <g font-size="11" text-anchor="middle">
+    <text x="98" y="328" fill="#333">0</text>
+    <text x="221" y="328" fill="#999">—（i &lt; 2）</text>
+    <text x="461" y="328" fill="#999">—（i = 0 无左邻）</text>
+    <text x="686" y="328" fill="#9a6d1a" font-weight="bold">suf[1] = 3</text>
+    <text x="826" y="328" fill="#2e6e2e" font-weight="bold">3</text>
+  </g>
+
+  <!-- row i=1: y=344 -->
+  <g filter="url(#sk)"><rect x="70" y="344" width="56" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="126" y="344" width="190" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="316" y="344" width="290" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="606" y="344" width="160" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="766" y="344" width="120" height="40" fill="#f7f5ee" stroke="#999" stroke-width="1.1"/></g>
+  <g font-size="11" text-anchor="middle">
+    <text x="98" y="368" fill="#333">1</text>
+    <text x="221" y="368" fill="#999">—（i &lt; 2）</text>
+    <text x="461" y="368" fill="#333">LCP(jump, run) = 0</text>
+    <text x="686" y="368" fill="#333">suf[2] = 0</text>
+    <text x="826" y="368" fill="#333">0</text>
+  </g>
+
+  <!-- row i=2: y=384 -->
+  <g filter="url(#sk)"><rect x="70" y="384" width="56" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="126" y="384" width="190" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="316" y="384" width="290" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="606" y="384" width="160" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="766" y="384" width="120" height="40" fill="#f7f5ee" stroke="#999" stroke-width="1.1"/></g>
+  <g font-size="11" text-anchor="middle">
+    <text x="98" y="408" fill="#333">2</text>
+    <text x="221" y="408" fill="#333">pre[0] = 0</text>
+    <text x="461" y="408" fill="#333">LCP(run, jump) = 0</text>
+    <text x="686" y="408" fill="#333">suf[3] = 0</text>
+    <text x="826" y="408" fill="#333">0</text>
+  </g>
+
+  <!-- row i=3: y=424 -->
+  <g filter="url(#sk)"><rect x="70" y="424" width="56" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="126" y="424" width="190" height="40" fill="#e8f0fe" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><rect x="316" y="424" width="290" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><rect x="606" y="424" width="160" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="766" y="424" width="120" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <g font-size="11" text-anchor="middle">
+    <text x="98" y="448" fill="#333">3</text>
+    <text x="221" y="448" fill="#2b6e9e" font-weight="bold">pre[1] = 3</text>
+    <text x="461" y="448" fill="#2e6e2e" font-weight="bold">LCP(run, run) = 3</text>
+    <text x="686" y="448" fill="#999">—（无右半段）</text>
+    <text x="826" y="448" fill="#2e6e2e" font-weight="bold">3</text>
+  </g>
+
+  <!-- row i=4: y=464 -->
+  <g filter="url(#sk)"><rect x="70" y="464" width="56" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="126" y="464" width="190" height="40" fill="#e8f0fe" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><rect x="316" y="464" width="290" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="606" y="464" width="160" height="40" fill="#fdfcf7" stroke="#999" stroke-width="1.1"/></g>
+  <g filter="url(#sk)"><rect x="766" y="464" width="120" height="40" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <g font-size="11" text-anchor="middle">
+    <text x="98" y="488" fill="#333">4</text>
+    <text x="221" y="488" fill="#2b6e9e" font-weight="bold">pre[2] = 3</text>
+    <text x="461" y="488" fill="#999">—（i = n−1 无右邻）</text>
+    <text x="686" y="488" fill="#999">—（无右半段）</text>
+    <text x="826" y="488" fill="#2e6e2e" font-weight="bold">3</text>
+  </g>
+
+  <text x="70" y="528" font-size="11" fill="#555">输出 [3, 0, 0, 3, 3] ✓ —— i=0 的 3 来自右半段；i=3 的 3 由左半段与新对同时贡献；i=4 的 3 来自左半段</text>
+
+  <!-- ===== Panel 3: self-made example ===== -->
+  <text x="60" y="562" font-size="13" font-weight="bold" fill="#2b6e9e">③ 自拟：words = [ab, ab, ab] → [2, 2, 2]（答案全靠来源各不相同的项撑起）</text>
+  <g filter="url(#sk)"><rect x="70" y="576" width="816" height="104" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <text x="92" y="602" font-size="11" fill="#444">删 i = 0：左右半段皆空？不 —— 右半段 suf[1] = 2　→　answer[0] = 2（右半段贡献）</text>
+  <text x="92" y="630" font-size="11" font-weight="bold" fill="#2e6e2e">删 i = 1：左右半段皆空，全靠跨坑新对 LCP(w0, w2) = LCP(ab, ab) = 2 撑起 → answer[1] = 2（新对贡献）</text>
+  <text x="92" y="658" font-size="11" fill="#444">删 i = 2：左半段 pre[0] = 2　→　answer[2] = 2（左半段贡献）</text>
+
+  <!-- ===== Panel 4: example 2 ===== -->
+  <text x="60" y="712" font-size="11.5" fill="#555">④ 示例 2：words = [dog, racer, car]，lcp = [0, 0]，pre = suf = [0, 0]，三项全 0 → [0, 0, 0] ✓</text>
+</svg>
