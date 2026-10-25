@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="420" fill="#fafafa"/>
+
+  <text x="320" y="32" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">k 条线两两配对太慢 —— 平方和公式一步到位</text>
+
+  <!-- 左侧：每条线的供给能力 -->
+  <text x="165" y="62" text-anchor="middle" font-size="13" fill="#333" font-weight="bold" filter="url(#rough2)">每条线的供给能力 m = C(c, 2)</text>
+
+  <rect x="40" y="74" width="250" height="34" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="165" y="96" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">y=0（3 点）→ m = C(3,2) = 3</text>
+
+  <rect x="40" y="114" width="250" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="165" y="136" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">y=2（2 点）→ m = C(2,2) = 1</text>
+
+  <rect x="40" y="154" width="250" height="34" rx="6" fill="#f5f5f5" stroke="#999" stroke-width="1.2" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="165" y="176" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#rough2)">y=7（1 点）→ m = 0，直接跳过</text>
+
+  <rect x="40" y="200" width="250" height="72" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="165" y="228" text-anchor="middle" font-size="13.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">S = 3 + 1 = 4（m 之和）</text>
+  <text x="165" y="254" text-anchor="middle" font-size="13.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">Q = 9 + 1 = 10（m·m 之和）</text>
+
+  <path d="M296,130 L343,130" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 右侧：平方和展开 -->
+  <text x="477" y="62" text-anchor="middle" font-size="13" fill="#333" font-weight="bold" filter="url(#rough2)">展开总和的平方</text>
+
+  <rect x="345" y="74" width="265" height="100" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="477" y="100" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">S × S = Q + 2 ×（两两乘积之和）</text>
+  <text x="477" y="130" text-anchor="middle" font-size="14.5" fill="#446688" font-weight="bold" filter="url(#rough2)">答案 = 两两乘积之和</text>
+  <text x="477" y="158" text-anchor="middle" font-size="15" fill="#b85450" font-weight="bold" filter="url(#rough2)">= (S×S − Q) × inv2</text>
+
+  <rect x="345" y="188" width="265" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="477" y="214" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">代回示例 1：S×S = 16，Q = 10</text>
+  <text x="477" y="242" text-anchor="middle" font-size="14" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">(16 − 10) ÷ 2 = 3 ✓</text>
+
+  <!-- 底部警告 -->
+  <rect x="30" y="286" width="580" height="118" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="314" text-anchor="middle" font-size="14.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">⚠️ 两大数值陷阱：溢出 与 除法</text>
+  <text x="320" y="342" text-anchor="middle" font-size="12.5" fill="#555" filter="url(#rough2)">S 不取模可达 C(10^5, 2) ≈ 5×10^9，S×S ≈ 2.5×10^19，超出 64 位整数上限</text>
+  <text x="320" y="368" text-anchor="middle" font-size="12.5" fill="#555" filter="url(#rough2)">务必先取模再平方；模意义下除以 2 要乘逆元 inv2 = (MOD+1)/2 = 500000004</text>
+  <text x="320" y="392" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">Python 大整数无溢出之忧，但取模同样能让中间结果保持精简</text>
+</svg>
