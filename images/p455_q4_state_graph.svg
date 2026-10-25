@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 550"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="550" fill="#fafafa"/>
+
+  <text x="260" y="22" text-anchor="middle" font-size="13" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：把「局面」编码为 (mask, stage, side)，状态 = 节点、动作 = 边</text>
+  <text x="260" y="40" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">n ≤ 12 ⇒ mask 压营地集合 · 阶段对 m 取模循环 ⇒ 状态图有环 · 每步耗时恒正 ⇒ Dijkstra</text>
+
+  <!-- 渡河场景 -->
+  <rect x="28" y="64" width="130" height="84" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="93" y="80" text-anchor="middle" font-size="10.5" fill="#2a4666" font-weight="bold" filter="url(#rough2)">营地</text>
+  <circle cx="58" cy="122" r="10" fill="#fafafa" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="58" y="126" text-anchor="middle" font-size="9" fill="#2a4666" filter="url(#rough2)">0</text>
+  <circle cx="93" cy="122" r="10" fill="#fafafa" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="93" y="126" text-anchor="middle" font-size="9" fill="#2a4666" filter="url(#rough2)">1</text>
+  <circle cx="128" cy="122" r="10" fill="#fafafa" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="128" y="126" text-anchor="middle" font-size="9" fill="#2a4666" filter="url(#rough2)">2</text>
+  <circle cx="58" cy="122" r="13.5" fill="none" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <circle cx="128" cy="122" r="13.5" fill="none" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+
+  <rect x="362" y="64" width="130" height="84" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="427" y="80" text-anchor="middle" font-size="10.5" fill="#2a5a2a" font-weight="bold" filter="url(#rough2)">对岸</text>
+  <text x="427" y="112" text-anchor="middle" font-size="9" fill="#4a7a3a" filter="url(#rough2)">（目的地）</text>
+
+  <path d="M 172 102 q 12 -9 24 0 t 24 0 t 24 0 t 24 0 t 24 0 t 24 0 t 24 0" stroke="#88aacc" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+  <path d="M 172 118 q 12 -9 24 0 t 24 0 t 24 0 t 24 0 t 24 0 t 24 0 t 24 0" stroke="#88aacc" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+
+  <path d="M 168 76 L 350 76" stroke="#4a7a3a" stroke-width="2.2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="260" y="68" text-anchor="middle" font-size="10" fill="#2a5a2a" font-weight="bold" filter="url(#rough2)">渡河组 g：耗时 = max time[i] × mul[stage]</text>
+  <path d="M 352 140 L 170 140" stroke="#b85450" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="260" y="158" text-anchor="middle" font-size="10" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">返回人 r：耗时 = time[r] × mul[stage]（营地还有人时必须返）</text>
+
+  <!-- 阶段时钟 -->
+  <text x="260" y="180" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">阶段时钟：每移动一次前进 ⌊耗时⌋ % m 步，绕圈循环</text>
+  <circle cx="120" cy="211" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="120" y="207" text-anchor="middle" font-size="8" fill="#2a4666" filter="url(#rough2)">stage 0</text>
+  <text x="120" y="219" text-anchor="middle" font-size="9.5" fill="#2a4666" font-weight="bold" filter="url(#rough2)">×1.00</text>
+  <circle cx="260" cy="211" r="17" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="207" text-anchor="middle" font-size="8" fill="#8a6a20" filter="url(#rough2)">stage 1</text>
+  <text x="260" y="219" text-anchor="middle" font-size="9.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">×1.50</text>
+  <circle cx="400" cy="211" r="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="207" text-anchor="middle" font-size="8" fill="#2a5a2a" filter="url(#rough2)">stage 2</text>
+  <text x="400" y="219" text-anchor="middle" font-size="9.5" fill="#2a5a2a" font-weight="bold" filter="url(#rough2)">×0.75</text>
+  <path d="M 139 208 L 239 208" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 279 208 L 379 208" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 400 230 Q 260 262 122 230" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="260" y="256" text-anchor="middle" font-size="8.5" fill="#d6a040" filter="url(#rough2)">绕回 stage 0</text>
+
+  <!-- 状态图 -->
+  <rect x="20" y="276" width="480" height="164" fill="#f7f7f7" stroke="#aaa" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="30" y="292" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">状态图：2^n × m × 2 个节点（n=12, m=5 时 40960 个）</text>
+
+  <rect x="60" y="294" width="44" height="16" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="82" y="306" text-anchor="middle" font-size="8.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">★ 起点</text>
+  <rect x="38" y="306" width="112" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="6" filter="url(#rough2)"/>
+  <text x="94" y="324" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">mask = 111</text>
+  <text x="94" y="339" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">stage = 0</text>
+  <text x="94" y="354" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">船：营地</text>
+
+  <rect x="204" y="306" width="112" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="6" filter="url(#rough2)"/>
+  <text x="260" y="324" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">mask = 001</text>
+  <text x="260" y="339" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">stage = 2</text>
+  <text x="260" y="354" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">船：对岸</text>
+
+  <rect x="370" y="306" width="112" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="6" filter="url(#rough2)"/>
+  <text x="426" y="324" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">mask = 011</text>
+  <text x="426" y="339" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">stage = 0</text>
+  <text x="426" y="354" text-anchor="middle" font-size="9.5" fill="#2a4666" filter="url(#rough2)">船：营地</text>
+
+  <rect x="240" y="392" width="44" height="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="262" y="404" text-anchor="middle" font-size="8.5" fill="#2a5a2a" font-weight="bold" filter="url(#rough2)">★ 目标</text>
+  <rect x="204" y="400" width="112" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4" rx="6" filter="url(#rough2)"/>
+  <text x="260" y="417" text-anchor="middle" font-size="9.5" fill="#2a5a2a" filter="url(#rough2)">mask = 000</text>
+  <text x="260" y="431" text-anchor="middle" font-size="9.5" fill="#2a5a2a" font-weight="bold" filter="url(#rough2)">全部到达 ✓</text>
+
+  <path d="M 150 334 L 202 334" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="176" y="318" text-anchor="middle" font-size="8" fill="#2a5a2a" filter="url(#rough2)">①渡河{0,2}</text>
+  <text x="176" y="328" text-anchor="middle" font-size="8" fill="#2a5a2a" filter="url(#rough2)">8.0 分钟</text>
+
+  <path d="M 316 334 L 368 334" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="342" y="318" text-anchor="middle" font-size="8" fill="#8a3a36" filter="url(#rough2)">②返回 0</text>
+  <text x="342" y="328" text-anchor="middle" font-size="8" fill="#8a3a36" filter="url(#rough2)">1.5 分钟</text>
+
+  <path d="M 426 366 Q 400 404 318 412" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="398" y="392" text-anchor="middle" font-size="8" fill="#2a5a2a" filter="url(#rough2)">③渡河{0,1}</text>
+  <text x="398" y="402" text-anchor="middle" font-size="8" fill="#2a5a2a" filter="url(#rough2)">5.0 分钟</text>
+
+  <path d="M 260 302 Q 176 262 96 300" stroke="#d6a040" stroke-width="1.8" stroke-dasharray="5 4" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="178" y="266" text-anchor="middle" font-size="9" fill="#d6a040" font-weight="bold" filter="url(#rough2)">阶段绕一圈复原 —— 有环！</text>
+
+  <!-- 两个结论框 -->
+  <g filter="url(#rough2)">
+    <rect x="24" y="452" width="228" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="138" y="470" text-anchor="middle" font-size="10" fill="#8a3a36" font-weight="bold">有环 + mask 有增有减</text>
+    <text x="138" y="486" text-anchor="middle" font-size="10" fill="#8a3a36">⇒ 无拓扑序，常规 DP 无处下手</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="268" y="452" width="228" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="382" y="470" text-anchor="middle" font-size="10" fill="#2a5a2a" font-weight="bold">边权恒 ≥ 0.5 &gt; 0</text>
+    <text x="382" y="486" text-anchor="middle" font-size="10" fill="#2a5a2a">⇒ Dijkstra「首次出堆即最优」成立</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="506" width="472" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8"/>
+    <text x="260" y="521" text-anchor="middle" font-size="9.5" fill="#8a6a20">-1 的来源：k = 1 且 n ≥ 2 时每趟净迁移 0 人，堆弹空也见不到 mask = 0，算法自然返回 -1</text>
+    <text x="260" y="536" text-anchor="middle" font-size="9.5" fill="#8a6a20">环不只是麻烦：有时故意多跑一趟「等」低倍率窗口 —— 贪心全灭，必须建图搜状态</text>
+  </g>
+</svg>
