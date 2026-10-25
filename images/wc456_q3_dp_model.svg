@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="570" viewBox="0 0 880 570" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="570" fill="#fdfcf7"/>
+  <text x="440" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：枚举「最后一刀」—— max 打擂台，min 挑刀位</text>
+  <path d="M 230 42 Q 440 52 650 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- cut marker at position m -->
+  <path d="M418,66 L418,114" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none" filter="url(#sk)"/>
+  <text x="426" y="64" font-size="11" font-weight="bold" fill="#b85450">刀位 m</text>
+  <text x="598" y="92" font-size="12" font-weight="bold" fill="#b85450">← i（右端）</text>
+
+  <!-- index labels -->
+  <text x="166" y="68" text-anchor="middle" font-size="9" fill="#888">1</text>
+  <text x="222" y="68" text-anchor="middle" font-size="9" fill="#888">2</text>
+  <text x="278" y="68" text-anchor="middle" font-size="9" fill="#888">3</text>
+  <text x="334" y="68" text-anchor="middle" font-size="9" fill="#888">4</text>
+  <text x="390" y="68" text-anchor="middle" font-size="9" fill="#888">5</text>
+  <text x="446" y="68" text-anchor="middle" font-size="9" fill="#888">6</text>
+  <text x="502" y="68" text-anchor="middle" font-size="9" fill="#888">7</text>
+  <text x="558" y="68" text-anchor="middle" font-size="9" fill="#888">8</text>
+
+  <!-- array cells: first 5 blue (prefix subproblem), last 3 orange (last part) -->
+  <g filter="url(#sk)"><rect x="140" y="74" width="52" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="196" y="74" width="52" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="252" y="74" width="52" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="308" y="74" width="52" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="364" y="74" width="52" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="420" y="74" width="52" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="476" y="74" width="52" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="532" y="74" width="52" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="166" y="97" text-anchor="middle" font-size="13" fill="#333">3</text>
+  <text x="222" y="97" text-anchor="middle" font-size="13" fill="#333">7</text>
+  <text x="278" y="97" text-anchor="middle" font-size="13" fill="#333">4</text>
+  <text x="334" y="97" text-anchor="middle" font-size="13" fill="#333">2</text>
+  <text x="390" y="97" text-anchor="middle" font-size="13" fill="#333">5</text>
+  <text x="446" y="97" text-anchor="middle" font-size="13" fill="#333">9</text>
+  <text x="502" y="97" text-anchor="middle" font-size="13" fill="#333">6</text>
+  <text x="558" y="97" text-anchor="middle" font-size="13" fill="#333">8</text>
+
+  <!-- brackets -->
+  <path d="M140,116 v8 h276 v-8" stroke="#4a8edb" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <path d="M278,126 v10" stroke="#4a8edb" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M420,116 v8 h164 v-8" stroke="#d6a040" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <path d="M502,126 v10" stroke="#d6a040" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <text x="278" y="154" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">前 m 个元素 → 切 j−1 段（子问题）</text>
+  <text x="278" y="172" text-anchor="middle" font-size="10.5" fill="#555">其最优代价 dp[j−1][m] 已经算好</text>
+  <text x="502" y="154" text-anchor="middle" font-size="12" font-weight="bold" fill="#9a6d1a">最后一段 nums[m..i)</text>
+  <text x="502" y="172" text-anchor="middle" font-size="10.5" fill="#555">段 XOR = pre[i] ⊕ pre[m]，O(1) 直取</text>
+
+  <path d="M278,180 L278,196" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M502,180 L502,196" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- max box -->
+  <g filter="url(#sk)"><rect x="200" y="196" width="480" height="46" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="440" y="216" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">固定 m 这一刀：整份划分代价 = max(dp[j−1][m], pre[i] ⊕ pre[m])</text>
+  <text x="440" y="234" text-anchor="middle" font-size="10.5" fill="#555">max —— 最差的那一段拖后腿</text>
+
+  <path d="M440,242 L440,262" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- min box (the recurrence) -->
+  <g filter="url(#sk)"><rect x="160" y="262" width="560" height="58" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="440" y="286" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">dp[j][i] = min（m = j−1 … i−1）max(dp[j−1][m], pre[i] ⊕ pre[m])</text>
+  <text x="440" y="306" text-anchor="middle" font-size="10.5" fill="#555">min —— 在所有刀位里挑「最差段最小」的那一刀</text>
+
+  <path d="M440,320 L440,340" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- prefix xor box -->
+  <g filter="url(#sk)"><rect x="140" y="340" width="600" height="72" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <text x="160" y="362" font-size="12.5" font-weight="bold" fill="#2e6e2e">基本功 · 前缀异或（XOR 版前缀和）</text>
+  <text x="160" y="382" font-size="11.5" fill="#444">pre[0] = 0，pre[t] = nums[0] ⊕ … ⊕ nums[t−1]</text>
+  <text x="160" y="400" font-size="11.5" fill="#444">任意子段（下标 l…r−1）XOR = pre[r] ⊕ pre[l] —— 异或自逆、望远镜相消，O(1)</text>
+
+  <!-- why not greedy -->
+  <g filter="url(#sk)"><rect x="140" y="434" width="600" height="112" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="160" y="458" font-size="12.5" font-weight="bold" fill="#9a6d1a">⚠ 为何不能照搬「二分答案 + 贪心」（410 题那套）？</text>
+  <text x="160" y="480" font-size="11" fill="#555">· 段变长时 XOR 非单调：可能先变大再变小（相同元素一抵消就骤降）</text>
+  <text x="160" y="500" font-size="11" fill="#555">· 「当前段不超阈值就尽量延长」的贪心会错过靠后抵消出的更优刀位</text>
+  <text x="160" y="524" font-size="11.5" font-weight="bold" fill="#9a6d1a">→ 只好把「前 i 个元素、j 段」的整体最优记进状态：区间划分 DP</text>
+</svg>
