@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="620" viewBox="0 0 940 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="620" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">模拟算法流程（单趟扫描）</text>
+  <path d="M 300 42 Q 470 50 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="345" y="52" width="250" height="40" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="72" text-anchor="middle" font-size="12" fill="#2b6e9e">初始化 cur = ""，seen = ∅，ans = []</text>
+  <path d="M 470 92 L 470 110" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- read char -->
+  <g filter="url(#sk)">
+    <rect x="345" y="114" width="250" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="141" text-anchor="middle" font-size="12" fill="#2b6e9e">读入下一个字符 c：cur += c</text>
+  <path d="M 470 158 L 470 176" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#sk)">
+    <polygon points="470,180 570,226 470,272 370,226" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="222" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">cur ∈ seen ?</text>
+  <text x="470" y="244" text-anchor="middle" font-size="10" fill="#888">（之前出现过吗）</text>
+
+  <!-- yes branch: loop back left -->
+  <path d="M 370 226 L 210 226 L 210 136 L 341 136" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="218" y="218" font-size="11" fill="#b03a3a" font-weight="bold">是：重复 → 继续扩展</text>
+
+  <!-- no branch -->
+  <path d="M 470 272 L 470 290" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="486" y="288" font-size="11" fill="#2e6e2e" font-weight="bold">否：首次唯一 → 落刀！</text>
+
+  <!-- cut box -->
+  <g filter="url(#sk)">
+    <rect x="345" y="294" width="250" height="48" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="314" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">切分！</text>
+  <text x="470" y="332" text-anchor="middle" font-size="11" fill="#444">ans ← cur；seen ← cur；cur = ""</text>
+  <path d="M 470 342 L 470 360" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2 -->
+  <g filter="url(#sk)">
+    <polygon points="470,364 570,410 470,456 370,410" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="414" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">还有字符吗？</text>
+
+  <!-- yes branch: loop back right -->
+  <path d="M 570 410 L 740 410 L 740 136 L 599 136" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="752" y="280" font-size="11" fill="#b03a3a" font-weight="bold">是，回到读字符</text>
+
+  <!-- no branch -->
+  <path d="M 470 456 L 470 476" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="486" y="472" font-size="11" fill="#2e6e2e" font-weight="bold">否：扫描结束</text>
+
+  <!-- end -->
+  <g filter="url(#sk)">
+    <rect x="345" y="480" width="250" height="44" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="507" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3a7a">返回 ans（残留 cur 丢弃）</text>
+
+  <!-- note -->
+  <g filter="url(#sk)">
+    <rect x="60" y="548" width="820" height="58" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="570" font-size="11" font-weight="bold" fill="#7a2828">残留段为何能直接丢？若它首次变唯一，早在那一刻就已被切分；走到串尾仍是重复段，</text>
+  <text x="80" y="592" font-size="11" fill="#444">按过程定义它不属于任何「创建的段」。例："aaaa" → ["a","aa"]，末尾的 "a" 被丢弃。</text>
+</svg>
