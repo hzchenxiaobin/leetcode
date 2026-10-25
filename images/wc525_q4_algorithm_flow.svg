@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="620" viewBox="0 0 640 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="620" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：L 从右往左扫 + 活跃链表 + 首现链逐节推进</text>
+  <path d="M 100 35 Q 320 43 540 35" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- preprocess -->
+  <g filter="url(#sk)">
+    <rect x="40" y="50" width="560" height="62" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="74" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">预处理：occ[v] 值→出现位置表 · pre[i] 上次出现 · pos2rank[i]</text>
+  <text x="320" y="96" text-anchor="middle" font-size="12.5" fill="#2b6e9e">三角形数 T[k]=k(k+1)/2 · 双向链表 nxt/prv 初始 0..n−1（全活跃）</text>
+
+  <path d="M 320 112 L 320 130" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- L loop -->
+  <g filter="url(#sk)">
+    <rect x="170" y="134" width="300" height="40" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="159" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">for L = n−1 → 0（递减）</text>
+
+  <path d="M 320 174 L 320 192" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- deletion -->
+  <g filter="url(#sk)">
+    <rect x="70" y="196" width="500" height="52" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="218" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6415">删除链表中所有 pre[i] == L 的节点 i</text>
+  <text x="320" y="238" text-anchor="middle" font-size="11" fill="#8a6415">i 不再是 [L,·] 窗口的首现位置；L 递减 ⇒ 活跃集只缩不扩，删除总计 O(n)</text>
+
+  <path d="M 320 248 L 320 266" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- init -->
+  <g filter="url(#sk)">
+    <rect x="150" y="270" width="340" height="36" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="293" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">A = L，B = n−1，p = L，k = 0（p1 = L 恒活跃）</text>
+
+  <path d="M 320 306 L 320 324" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- chain loop -->
+  <g filter="url(#sk)">
+    <rect x="36" y="328" width="568" height="216" rx="12" fill="none" stroke="#8a8a8a" stroke-width="1.6" stroke-dasharray="7 5"/>
+  </g>
+  <text x="52" y="348" font-size="11.5" font-weight="bold" fill="#777777">while p &lt; n：沿首现链逐节推进，每节 O(1)</text>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="358" width="380" height="34" rx="8" fill="#ffffff" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="270" y="380" text-anchor="middle" font-size="12" fill="#2b6e9e">k++；v = nums[p]；ai = pos2rank[p] + k − 1</text>
+
+  <path d="M 270 392 L 270 406" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#sk)">
+    <polygon points="270,410 400,438 270,466 140,438" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="270" y="434" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6415">occ[v][ai] 存在？</text>
+  <text x="270" y="452" text-anchor="middle" font-size="11" fill="#8a6415">（v 自 p 起第 k 次出现）</text>
+
+  <path d="M 400 438 L 452 438" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="418" y="430" text-anchor="middle" font-size="11" fill="#b85450">否</text>
+  <g filter="url(#sk)">
+    <rect x="456" y="416" width="140" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="526" y="434" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a2e28">break：v 凑不齐 k 次</text>
+  <text x="526" y="451" text-anchor="middle" font-size="10.5" fill="#8a2e28">窗口含 v，永不命中</text>
+
+  <path d="M 270 466 L 270 480" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="284" y="478" font-size="11" fill="#2e6e2e">是</text>
+
+  <g filter="url(#sk)">
+    <rect x="66" y="484" width="508" height="50" rx="8" fill="#ffffff" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="320" y="504" text-anchor="middle" font-size="11.8" fill="#2e6e2e">a = occ[v][ai]，b = occ[v][ai+1] − 1（无则 n−1）；A = max(A,a)，B = min(B,b)</text>
+  <text x="320" y="524" text-anchor="middle" font-size="11.8" fill="#2e6e2e">R = L + T[k] − 1；若 max(A,p) ≤ R ≤ min(B, nxt[p]−1)：ans++</text>
+
+  <path d="M 320 534 L 320 546" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2: broken into decision bar -->
+  <g filter="url(#sk)">
+    <rect x="80" y="550" width="340" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="250" y="567" text-anchor="middle" font-size="11.3" font-weight="bold" fill="#8a6415">L + T[k+1] − 1 &gt; B 或 A &gt; B ？</text>
+  <text x="250" y="583" text-anchor="middle" font-size="10.5" fill="#8a6415">（未来 R 只增、B 只减 ⇒ 全不命中）</text>
+
+  <path d="M 420 570 L 452 570" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="434" y="562" text-anchor="middle" font-size="11" fill="#b85450">是</text>
+  <g filter="url(#sk)">
+    <rect x="456" y="552" width="140" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="526" y="575" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a2e28">break</text>
+
+  <path d="M 80 570 Q 56 570 56 400 Q 56 375 76 375" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="60" y="478" font-size="11" fill="#2e6e2e" transform="rotate(-90 60 478)">否：p = nxt[p]，回到链首</text>
+</svg>
