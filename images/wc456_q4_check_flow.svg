@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="680" viewBox="0 0 880 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="680" fill="#fdfcf7"/>
+  <text x="440" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">check(x) 判定流程：并查集三阶段，求「最小升级次数」</text>
+  <path d="M 230 42 Q 440 52 650 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)"><rect x="205" y="54" width="150" height="34" rx="16" fill="#f0f0f0" stroke="#666" stroke-width="1.4"/></g>
+  <text x="280" y="76" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">二分猜一个阈值 x</text>
+  <path d="M280,88 L280,104" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- phase 1: must -->
+  <g filter="url(#sk)"><rect x="150" y="106" width="260" height="64" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="280" y="130" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">① 并入全部 must 边</text>
+  <text x="280" y="150" text-anchor="middle" font-size="10.5" fill="#666">必须入树、不可升级 → 强度恒为 s</text>
+  <path d="M410,124 L512,124" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="516" y="108" width="300" height="30" rx="6" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/></g>
+  <text x="666" y="128" text-anchor="middle" font-size="11" fill="#777">✗ 任一 s &lt; x：阈值 x 不可行</text>
+  <path d="M410,152 L512,152" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="516" y="140" width="300" height="30" rx="6" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/></g>
+  <text x="666" y="160" text-anchor="middle" font-size="11" fill="#777">✗ 出现环：全局返回 -1（无合法树）</text>
+  <path d="M280,170 L280,188" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- phase 2: free -->
+  <g filter="url(#sk)"><rect x="150" y="190" width="260" height="64" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="280" y="214" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">② 并入全部免费边（s ≥ x）</text>
+  <text x="280" y="234" text-anchor="middle" font-size="10.5" fill="#666">不花升级预算，能并就并，comp−−</text>
+  <path d="M280,254 L280,272" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- phase 3: upgrade -->
+  <g filter="url(#sk)"><rect x="150" y="274" width="260" height="78" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="280" y="298" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#9a6d1a">③ 逐条尝试升级边（s &lt; x ≤ 2s）</text>
+  <text x="280" y="317" text-anchor="middle" font-size="10.5" fill="#666">每成功缝合一对连通块：up+1</text>
+  <text x="280" y="336" text-anchor="middle" font-size="10.5" fill="#666">直到 comp = 1 或升级边用尽</text>
+  <path d="M280,352 L280,374" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <path d="M280,382 L375,430 L280,478 L185,430 Z" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="280" y="434" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">连通？</text>
+  <text x="280" y="451" text-anchor="middle" font-size="9.5" fill="#666">comp == 1</text>
+  <path d="M375,430 L486,430" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="392" y="422" font-size="10.5" fill="#888">否</text>
+  <g filter="url(#sk)"><rect x="490" y="412" width="290" height="36" rx="6" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/></g>
+  <text x="635" y="435" text-anchor="middle" font-size="11" fill="#777">✗ comp &gt; 1：阈值 x 下连不起来</text>
+  <path d="M280,478 L280,498" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="290" y="493" font-size="10.5" fill="#4a8e4a">是</text>
+
+  <!-- diamond 2 -->
+  <path d="M280,506 L375,554 L280,602 L185,554 Z" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="280" y="558" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">up ≤ k ？</text>
+  <text x="280" y="575" text-anchor="middle" font-size="9.5" fill="#666">升级次数没超预算</text>
+  <path d="M375,554 L486,554" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="392" y="546" font-size="10.5" fill="#888">否</text>
+  <g filter="url(#sk)"><rect x="490" y="536" width="290" height="36" rx="6" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/></g>
+  <text x="635" y="559" text-anchor="middle" font-size="11" fill="#777">✗ up &gt; k：升级预算不够</text>
+  <path d="M280,602 L280,622" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="290" y="617" font-size="10.5" fill="#4a8e4a">是</text>
+
+  <!-- success -->
+  <g filter="url(#sk)"><rect x="178" y="624" width="204" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="280" y="649" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">✓ x 可行（up 已最小）</text>
+
+  <!-- side note -->
+  <g filter="url(#sk)"><rect x="516" y="200" width="300" height="152" rx="8" fill="#fffdf5" stroke="#d6a040" stroke-width="1.4" stroke-dasharray="6 4"/></g>
+  <text x="534" y="225" font-size="12" font-weight="bold" fill="#9a6d1a">为什么 up 是「最小升级次数」？</text>
+  <text x="534" y="248" font-size="10.5" fill="#555">把 must 森林缩点，可选边赋权：</text>
+  <text x="534" y="267" font-size="10.5" fill="#555">免费 = 0，升级 = 1，不可用 = ∞</text>
+  <text x="534" y="288" font-size="10.5" fill="#555">「权和 ≤ k 的生成树」= 0/1 权 MST，</text>
+  <text x="534" y="308" font-size="10.5" fill="#555">Kruskal 先 0 后 1 ⟹ 用的 1 权边最少</text>
+  <text x="534" y="330" font-size="10.5" font-weight="bold" fill="#9a6d1a">免费边全并后剩 c 块 ⟹ up = c − 1</text>
+  <text x="534" y="347" font-size="10" fill="#999">（证明见题解 §5 引理 3）</text>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="570" viewBox="0 0 880 570" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="570" fill="#fdfcf7"/>
+  <text x="440" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：二分阈值 x —— 可选边按强度分成三类</text>
+  <path d="M 230 42 Q 440 52 650 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- must box -->
+  <g filter="url(#sk)"><rect x="55" y="62" width="385" height="108" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="72" y="86" font-size="13" font-weight="bold" fill="#b85450">must 边（must=1）：没有三分类，只有硬约束</text>
+  <text x="72" y="108" font-size="11" fill="#555">· 必须入树 且 不可升级 → 有效强度恒为 s</text>
+  <text x="72" y="128" font-size="11" fill="#555">· 任一 must 边 s &lt; x ⟹ 阈值 x 直接判负</text>
+  <text x="72" y="148" font-size="11" font-weight="bold" fill="#b85450">→ 答案 ≤ min(must s)；must 边自身成环 ⟹ -1</text>
+
+  <!-- binary search box -->
+  <g filter="url(#sk)"><rect x="470" y="62" width="355" height="108" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="487" y="86" font-size="13" font-weight="bold" fill="#2b6e9e">为什么能二分？—— 可行性单调</text>
+  <text x="487" y="108" font-size="11" fill="#555">若存在稳定性 ≥ x 的生成树（x 可行）</text>
+  <text x="487" y="128" font-size="11" fill="#555">则同一棵树在 x−1 下依然合法 → x−1 也可行</text>
+  <text x="487" y="148" font-size="11" font-weight="bold" fill="#2b6e9e">→ 可行阈值是前缀区间 [1, x*]，二分找 x*</text>
+
+  <!-- three zones -->
+  <g filter="url(#sk)"><rect x="80" y="205" width="220" height="70" rx="6" fill="#f0f0f0" stroke="#999" stroke-width="1.4"/></g>
+  <g filter="url(#sk)"><rect x="300" y="205" width="200" height="70" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <g filter="url(#sk)"><rect x="500" y="205" width="300" height="70" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="190" y="227" text-anchor="middle" font-size="12" font-weight="bold" fill="#777">2s &lt; x：弃用边</text>
+  <text x="190" y="245" text-anchor="middle" font-size="10.5" fill="#888">升了也到不了 x</text>
+  <text x="190" y="262" text-anchor="middle" font-size="10.5" fill="#888">连进树都会拖垮稳定性</text>
+  <text x="400" y="227" text-anchor="middle" font-size="12" font-weight="bold" fill="#9a6d1a">x/2 ≤ s &lt; x：升级边</text>
+  <text x="400" y="245" text-anchor="middle" font-size="10.5" fill="#8a7040">花 1 次升级 → 2s ≥ x</text>
+  <text x="400" y="262" text-anchor="middle" font-size="10.5" fill="#8a7040">每边至多升 1 次</text>
+  <text x="650" y="227" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">s ≥ x：免费边</text>
+  <text x="650" y="245" text-anchor="middle" font-size="10.5" fill="#4a6a4a">不升级也达标</text>
+  <text x="650" y="262" text-anchor="middle" font-size="10.5" fill="#4a6a4a">优先用，不占升级预算</text>
+
+  <!-- threshold markers -->
+  <path d="M500,186 L500,300" stroke="#b85450" stroke-width="1.8" stroke-dasharray="6 4" fill="none" filter="url(#sk)"/>
+  <text x="500" y="179" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">阈值 x（二分变量）</text>
+  <path d="M300,186 L300,300" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="5 4" fill="none" filter="url(#sk)"/>
+  <text x="300" y="179" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#d6a040">x/2</text>
+
+  <!-- strength axis -->
+  <path d="M80,312 L800,312" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="84" y="332" font-size="10.5" fill="#666">强度 s = 1</text>
+  <text x="796" y="332" text-anchor="end" font-size="10.5" fill="#666">s = 2·max s（二分上界）</text>
+  <text x="440" y="352" text-anchor="middle" font-size="11" fill="#666">← 可选边（must=0）按强度 s 落到数轴上，落区决定身份 →</text>
+  <text x="440" y="372" text-anchor="middle" font-size="10.5" fill="#999">（升级是 ×2 而非 +c，所以分类边界恰好是 x 与 x/2 两条线）</text>
+
+  <!-- bottom box -->
+  <g filter="url(#sk)"><rect x="80" y="392" width="720" height="128" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="100" y="417" font-size="13" font-weight="bold" fill="#2e6e2e">判定 check(x) =「能否用 ≤ k 次升级，搭出所有边有效强度 ≥ x 的生成树」</text>
+  <text x="100" y="441" font-size="11.5" fill="#444">· 稳定性 = 树中边有效强度的 min ⟹ 稳定性 ≥ x ⟺ 每条树边都过 x 这条线</text>
+  <text x="100" y="463" font-size="11.5" fill="#444">· 免费边不花钱，先铺满；剩下的连通块只能靠升级边缝合，缝合数 = 剩余块数 − 1</text>
+  <text x="100" y="485" font-size="11.5" fill="#444">· 最小升级次数 ≤ k 且能连通 ⟹ x 可行 —— 这正是 0/1 权 Kruskal 的贪心</text>
+  <text x="100" y="509" font-size="11.5" font-weight="bold" fill="#2e6e2e">→ 对 x 二分（范围 [1, 2·max s]），每次判定一趟并查集 O(E·α(n))</text>
+
+  <text x="440" y="550" text-anchor="middle" font-size="11" fill="#aaa">免费 · 升级 · 弃用 —— 三分类是「每边至多升一次、升级 ×2」的直接推论</text>
+</svg>
