@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="620" viewBox="0 0 920 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="14" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="920" height="620" fill="#fafafa"/>
+  <text x="460" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 3 演算：value = [4,1,5,2]，limit = [3,3,2,3] ⟹ 答案 12</text>
+  <path d="M 220 44 Q 460 54 700 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 顶部：分组与配额 -->
+  <g filter="url(#sk)">
+    <rect x="56" y="64" width="250" height="104" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="181" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">组 2（limit=2）＝{ 2 }</text>
+  <text x="181" y="118" text-anchor="middle" font-size="12" fill="#444">配额 min(1, 2) = 1 → 取 2</text>
+  <text x="181" y="146" text-anchor="middle" font-size="11" fill="#888">水位顶到 2 时整组出局</text>
+
+  <g filter="url(#sk)">
+    <rect x="336" y="64" width="250" height="104" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="461" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">组 3（limit=3）＝{ 4, 1, 5 }</text>
+  <text x="461" y="118" text-anchor="middle" font-size="12" fill="#444">配额 min(3, 3) = 3 → 全取 4+1+5</text>
+  <text x="461" y="146" text-anchor="middle" font-size="11" fill="#888">水位顶到 3 时整组出局</text>
+
+  <g filter="url(#sk)">
+    <rect x="616" y="64" width="250" height="104" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="741" y="90" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e">贪心答案 = 2 + 10 = 12</text>
+  <text x="741" y="118" text-anchor="middle" font-size="12" fill="#444">激活顺序：组 2 → 组 3</text>
+  <text x="741" y="146" text-anchor="middle" font-size="11" fill="#888">（组内按 value 降序）</text>
+
+  <!-- 中部：走查表 -->
+  <g filter="url(#sk)">
+    <rect x="56" y="192" width="808" height="230" fill="#ffffff" stroke="#446688" stroke-width="1.5"/>
+    <rect x="56" y="192" width="808" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="430" y="226" width="120" height="49" fill="#fff8e1" stroke="none"/>
+    <rect x="430" y="275" width="120" height="49" fill="#fff8e1" stroke="none"/>
+    <rect x="430" y="324" width="120" height="49" fill="#fff8e1" stroke="none"/>
+    <rect x="430" y="373" width="120" height="49" fill="#fff8e1" stroke="none"/>
+  </g>
+  <g filter="url(#sk)" stroke="#c8d4e0" stroke-width="1">
+    <path d="M 56 226 L 864 226" fill="none"/>
+    <path d="M 56 275 L 864 275" fill="none"/>
+    <path d="M 56 324 L 864 324" fill="none"/>
+    <path d="M 56 373 L 864 373" fill="none"/>
+    <path d="M 120 192 L 120 422" fill="none"/>
+    <path d="M 300 192 L 300 422" fill="none"/>
+    <path d="M 430 192 L 430 422" fill="none"/>
+    <path d="M 550 192 L 550 422" fill="none"/>
+    <path d="M 760 192 L 760 422" fill="none"/>
+  </g>
+  <text x="88" y="213" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">步骤</text>
+  <text x="210" y="213" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">激活 i（value, limit）</text>
+  <text x="365" y="213" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">激活前活跃 a</text>
+  <text x="490" y="213" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">水位 x = a+1</text>
+  <text x="655" y="213" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">新失活（limit ≤ x）</text>
+  <text x="812" y="213" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">总和</text>
+
+  <text x="88" y="255" text-anchor="middle" font-size="12" fill="#444">1</text>
+  <text x="210" y="255" text-anchor="middle" font-size="12" fill="#444">2 号（v=5, L=2）</text>
+  <text x="365" y="255" text-anchor="middle" font-size="12" fill="#444">0</text>
+  <text x="490" y="255" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">1</text>
+  <text x="655" y="255" text-anchor="middle" font-size="11.5" fill="#666">—（无人 limit ≤ 1）</text>
+  <text x="812" y="255" text-anchor="middle" font-size="12" fill="#444">5</text>
+
+  <text x="88" y="304" text-anchor="middle" font-size="12" fill="#444">2</text>
+  <text x="210" y="304" text-anchor="middle" font-size="12" fill="#444">0 号（v=4, L=3）</text>
+  <text x="365" y="304" text-anchor="middle" font-size="12" fill="#444">1</text>
+  <text x="490" y="304" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">2</text>
+  <text x="655" y="304" text-anchor="middle" font-size="11.5" fill="#b85450">2 号失活（L=2 ≤ 2），名额返还</text>
+  <text x="812" y="304" text-anchor="middle" font-size="12" fill="#444">9</text>
+
+  <text x="88" y="353" text-anchor="middle" font-size="12" fill="#444">3</text>
+  <text x="210" y="353" text-anchor="middle" font-size="12" fill="#444">3 号（v=2, L=3）</text>
+  <text x="365" y="353" text-anchor="middle" font-size="12" fill="#444">1</text>
+  <text x="490" y="353" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">2</text>
+  <text x="655" y="353" text-anchor="middle" font-size="11.5" fill="#666">—</text>
+  <text x="812" y="353" text-anchor="middle" font-size="12" fill="#444">11</text>
+
+  <text x="88" y="402" text-anchor="middle" font-size="12" fill="#444">4</text>
+  <text x="210" y="402" text-anchor="middle" font-size="12" fill="#444">1 号（v=1, L=3）</text>
+  <text x="365" y="402" text-anchor="middle" font-size="12" fill="#444">2</text>
+  <text x="490" y="402" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">3</text>
+  <text x="655" y="402" text-anchor="middle" font-size="11.5" fill="#b85450">0 / 1 / 3 号 · 组 3 整组出局</text>
+  <text x="812" y="402" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">12</text>
+
+  <!-- 底部左：水位轨迹 -->
+  <g filter="url(#sk)" stroke="#d0d0d0" stroke-width="1" stroke-dasharray="4 4">
+    <path d="M 120 540 L 480 540" fill="none"/>
+    <path d="M 120 510 L 480 510" fill="none"/>
+    <path d="M 120 480 L 480 480" fill="none"/>
+  </g>
+  <g filter="url(#sk)" stroke="#666" stroke-width="1.5">
+    <path d="M 120 570 L 480 570" fill="none"/>
+    <path d="M 120 570 L 120 462" fill="none"/>
+  </g>
+  <text x="108" y="574" text-anchor="end" font-size="11" fill="#666">0</text>
+  <text x="108" y="544" text-anchor="end" font-size="11" fill="#666">1</text>
+  <text x="108" y="514" text-anchor="end" font-size="11" fill="#666">2</text>
+  <text x="108" y="484" text-anchor="end" font-size="11" fill="#666">3</text>
+  <text x="300" y="606" text-anchor="middle" font-size="11.5" fill="#666">激活步数</text>
+  <text x="150" y="588" text-anchor="middle" font-size="11" fill="#666">步 1</text>
+  <text x="230" y="588" text-anchor="middle" font-size="11" fill="#666">步 2</text>
+  <text x="310" y="588" text-anchor="middle" font-size="11" fill="#666">步 3</text>
+  <text x="390" y="588" text-anchor="middle" font-size="11" fill="#666">步 4</text>
+  <text x="86" y="516" text-anchor="middle" font-size="11.5" fill="#666" transform="rotate(-90 86 516)">水位 x</text>
+  <g filter="url(#sk)">
+    <path d="M 150 540 L 230 510 L 310 510 L 390 480" fill="none" stroke="#d6a040" stroke-width="2.5"/>
+    <circle cx="150" cy="540" r="4.5" fill="#d6a040"/>
+    <circle cx="230" cy="510" r="4.5" fill="#d6a040"/>
+    <circle cx="310" cy="510" r="4.5" fill="#d6a040"/>
+    <circle cx="390" cy="480" r="4.5" fill="#d6a040"/>
+  </g>
+  <text x="150" y="528" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">x=1</text>
+  <text x="230" y="498" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">x=2</text>
+  <text x="310" y="498" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">x=2</text>
+  <text x="390" y="468" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">x=3</text>
+  <g filter="url(#sk)">
+    <path d="M 262 548 Q 278 534 284 518" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arR)"/>
+  </g>
+  <text x="286" y="560" text-anchor="middle" font-size="10.5" fill="#b85450">2 号失活，a 回落 → 水位原地踏步</text>
+
+  <!-- 底部右：读图要点 -->
+  <g filter="url(#sk)">
+    <rect x="520" y="448" width="352" height="152" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="696" y="474" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">读图要点</text>
+  <text x="538" y="500" font-size="11.5" fill="#444">· 水位只在激活瞬间跳到 a+1，</text>
+  <text x="550" y="518" font-size="11.5" fill="#444">失活会让它下次少爬一格；</text>
+  <text x="538" y="544" font-size="11.5" fill="#444">· 残留小组在水位爬到自家 limit 时</text>
+  <text x="550" y="562" font-size="11.5" fill="#444">失活，名额即刻返还（锯齿爬升）；</text>
+  <text x="538" y="588" font-size="11.5" fill="#444">· 组 3 仍拿满 3 个，总和 12 ✓</text>
+</svg>
