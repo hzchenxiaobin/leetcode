@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 450" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrGray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="450" fill="#fafafa"/>
+
+  <text x="260" y="22" text-anchor="middle" font-size="13" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：一趟计数 → 逐频次试除判质数，命中即短路返回</text>
+  <text x="260" y="40" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">存在性问题：只要有一个质数频次就提前退出，最坏才扫完全部桶</text>
+
+  <!-- ============ N1: 计数 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="160" y="54" width="180" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="250" y="75" text-anchor="middle" font-size="11.5" fill="#2a4666" font-weight="bold">一趟计数：cnt[x]++</text>
+  </g>
+
+  <path d="M 250 86 L 250 110" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ============ N2: 取下一个频次 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="160" y="112" width="180" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="250" y="133" text-anchor="middle" font-size="11.5" fill="#2a4666" font-weight="bold">取下一个频次 f</text>
+  </g>
+
+  <path d="M 250 144 L 250 166" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ============ D1: f >= 2 ? ============ -->
+  <g filter="url(#rough2)">
+    <polygon points="250,168 340,198 250,228 160,198" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="250" y="203" text-anchor="middle" font-size="11.5" fill="#8a6d1f" font-weight="bold">f ≥ 2 ?</text>
+  </g>
+
+  <path d="M 250 228 L 250 258" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="258" y="247" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- ============ D2: 存在因数? ============ -->
+  <g filter="url(#rough2)">
+    <polygon points="250,260 345,290 250,320 155,290" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="250" y="287" text-anchor="middle" font-size="10.5" fill="#8a6d1f" font-weight="bold">存在 d ∈ [2, √f]</text>
+    <text x="250" y="301" text-anchor="middle" font-size="10.5" fill="#8a6d1f" font-weight="bold">使 d 整除 f ?</text>
+  </g>
+
+  <path d="M 250 320 L 250 350" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="258" y="339" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">否 → f 是质数</text>
+
+  <!-- ============ N3: return true ============ -->
+  <g filter="url(#rough2)">
+    <rect x="165" y="352" width="170" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="8"/>
+    <text x="250" y="374" text-anchor="middle" font-size="11.5" fill="#2a5a2a" font-weight="bold">return true ✓</text>
+  </g>
+
+  <!-- ============ N4: return false（频次用尽） ============ -->
+  <g filter="url(#rough2)">
+    <rect x="400" y="352" width="105" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="452" y="374" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold">return false</text>
+  </g>
+
+  <path d="M 340 128 L 452 128 L 452 350" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="378" y="120" font-size="10" fill="#b85450" filter="url(#rough2)">频次用尽，全非质数</text>
+
+  <!-- ============ 回边 1: f < 2 → 取下一个 ============ -->
+  <path d="M 160 198 L 100 198 L 100 122 L 158 122" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arrGray)" filter="url(#rough2)"/>
+  <text x="72" y="188" font-size="9.5" fill="#777" filter="url(#rough2)">否</text>
+  <text x="30" y="212" font-size="9" fill="#999" filter="url(#rough2)">f = 0 或 1</text>
+
+  <!-- ============ 回边 2: 合数 → 取下一个 ============ -->
+  <path d="M 155 290 L 58 290 L 58 138 L 158 138" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arrGray)" filter="url(#rough2)"/>
+  <text x="112" y="282" font-size="9.5" fill="#777" filter="url(#rough2)">是（合数）</text>
+
+  <!-- ============ 底部要点 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="404" width="440" height="36" fill="#f7f7f7" stroke="#aaa" stroke-width="1.2" rx="8"/>
+    <text x="260" y="420" text-anchor="middle" font-size="9.5" fill="#555">值域 0–100 → 桶长 101；频次 f ≤ 100 → 试除至多 10 次；两层否决：f &lt; 2 直接跳过，有 ≤ √f 的因数跳过</text>
+    <text x="260" y="434" text-anchor="middle" font-size="9.5" fill="#555">示例 1：扫到 cnt[4] = 2 命中最小质数 2，立即短路返回 true</text>
+  </g>
+</svg>

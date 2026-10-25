@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="340" fill="#fafafa"/>
+
+  <text x="260" y="22" text-anchor="middle" font-size="13" fill="#444" font-weight="bold" filter="url(#rough2)">isPrime(f) 试除细节：d 从 2 试到 ⌊√f⌋（d·d ≤ f）</text>
+
+  <!-- ============ Panel A: f = 9 合数 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="26" y="42" width="228" height="222" fill="#fdf3f4" stroke="#b85450" stroke-width="1.4" rx="10"/>
+    <text x="140" y="64" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold">f = 9（√9 = 3）→ 合数</text>
+
+    <rect x="44" y="78" width="192" height="38" fill="#fafafa" stroke="#bbb" stroke-width="1.2" rx="6"/>
+    <text x="140" y="94" text-anchor="middle" font-size="10" fill="#555">d = 2：9 % 2 = 1 ≠ 0</text>
+    <text x="140" y="108" text-anchor="middle" font-size="9" fill="#999">2×2 = 4 ≤ 9，继续 ↴</text>
+
+    <rect x="44" y="124" width="192" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="6"/>
+    <text x="140" y="140" text-anchor="middle" font-size="10" fill="#8a3a36" font-weight="bold">d = 3：9 % 3 = 0 ✓ 命中因数</text>
+    <text x="140" y="154" text-anchor="middle" font-size="9" fill="#8a3a36">9 = 3 × 3，提前退出试除</text>
+
+    <path d="M 140 164 L 140 180" stroke="#b85450" stroke-width="1.5" marker-end="url(#arr)" />
+
+    <rect x="44" y="184" width="192" height="34" fill="#fafafa" stroke="#b85450" stroke-width="1.6" rx="6"/>
+    <text x="140" y="206" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold">return false（非质数）</text>
+
+    <text x="140" y="242" text-anchor="middle" font-size="8.5" fill="#999">恰好试到 √9 = 3 就发现因数，</text>
+    <text x="140" y="254" text-anchor="middle" font-size="8.5" fill="#999">完全平方数的因数正好卡在 √f 上</text>
+  </g>
+
+  <!-- ============ Panel B: f = 7 质数 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="266" y="42" width="228" height="222" fill="#f3f9f3" stroke="#4a7a3a" stroke-width="1.4" rx="10"/>
+    <text x="380" y="64" text-anchor="middle" font-size="11.5" fill="#2a5a2a" font-weight="bold">f = 7（√7 ≈ 2.6）→ 质数</text>
+
+    <rect x="284" y="78" width="192" height="38" fill="#fafafa" stroke="#bbb" stroke-width="1.2" rx="6"/>
+    <text x="380" y="94" text-anchor="middle" font-size="10" fill="#555">d = 2：7 % 2 = 1 ≠ 0</text>
+    <text x="380" y="108" text-anchor="middle" font-size="9" fill="#999">2×2 = 4 ≤ 7，继续 ↴</text>
+
+    <rect x="284" y="124" width="192" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6"/>
+    <text x="380" y="140" text-anchor="middle" font-size="10" fill="#2a5a2a" font-weight="bold">d = 3：3×3 = 9 &gt; 7 循环结束</text>
+    <text x="380" y="154" text-anchor="middle" font-size="9" fill="#2a5a2a">没试除就退出——√f 以内无因数</text>
+
+    <path d="M 380 164 L 380 180" stroke="#4a7a3a" stroke-width="1.5" marker-end="url(#arr)" />
+
+    <rect x="284" y="184" width="192" height="34" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="380" y="206" text-anchor="middle" font-size="10.5" fill="#2a5a2a" font-weight="bold">return true（质数）</text>
+
+    <text x="380" y="242" text-anchor="middle" font-size="8.5" fill="#999">f = 2、3 时循环一次都不进：</text>
+    <text x="380" y="254" text-anchor="middle" font-size="8.5" fill="#999">2×2 = 4 &gt; 3 ≥ f，天然返回 true</text>
+  </g>
+
+  <!-- ============ 底部要点 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="26" y="280" width="468" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="260" y="299" text-anchor="middle" font-size="10" fill="#8a6d1f" font-weight="bold">⚠ 等号边界：f = 4 时 √f = 2，必须让 d = 2 进入循环才能发现 4 = 2 × 2</text>
+    <text x="260" y="316" text-anchor="middle" font-size="9.5" fill="#8a6d1f">C++ 写 d * d &lt;= f（乘法避免浮点开方）；Python 写 range(2, isqrt(f) + 1)，别漏 +1</text>
+  </g>
+</svg>
