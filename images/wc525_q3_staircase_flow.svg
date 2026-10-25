@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="612" viewBox="0 0 640 612" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="612" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：双重枚举 + good 计数器 O(1) 增量判定</text>
+  <path d="M 110 34 Q 320 42 530 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 1. outer loop -->
+  <g filter="url(#sk)">
+    <rect x="180" y="46" width="280" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="65" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">外层：枚举左端点 L</text>
+  <text x="320" y="83" text-anchor="middle" font-size="11" fill="#2b6e9e">k = 0，good = 0，窗口为空</text>
+
+  <path d="M 320 92 Q 320 100 320 106" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 2. inner loop -->
+  <g filter="url(#sk)">
+    <rect x="180" y="110" width="280" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="129" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">内层：R 从 L 扫到 n−1</text>
+  <text x="320" y="147" text-anchor="middle" font-size="11" fill="#2b6e9e">v = nums[R]</text>
+
+  <!-- dashed exit path (R exhausted) on the left -->
+  <path d="M 180 133 Q 44 133 44 590 L 104 590" stroke="#999999" stroke-width="1.5" fill="none" stroke-dasharray="6 5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="52" y="350" font-size="11" fill="#888888">R 扫完</text>
+
+  <path d="M 320 156 Q 320 164 320 170" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 3. diamond: new value? -->
+  <g filter="url(#sk)">
+    <polygon points="320,172 452,222 320,272 188,222" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6415">v 是窗口内</text>
+  <text x="320" y="236" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6415">新值？</text>
+
+  <path d="M 188 222 Q 168 240 168 284" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="146" y="244" font-size="12" font-weight="bold" fill="#4a8e4a">是</text>
+  <path d="M 452 222 Q 472 240 472 284" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="482" y="244" font-size="12" font-weight="bold" fill="#b85450">否</text>
+
+  <!-- 4. new value branch -->
+  <g filter="url(#sk)">
+    <rect x="36" y="286" width="264" height="84" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="168" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">新值入座</text>
+  <text x="168" y="328" text-anchor="middle" font-size="11" fill="#333333">pos[v] ← k，k++，cnt[v] ← 1</text>
+  <text x="168" y="348" text-anchor="middle" font-size="11" fill="#333333">good += (pos[v] == 0)</text>
+  <text x="168" y="364" text-anchor="middle" font-size="10" fill="#7a7a7a">新值频次为 1，仅座次 1 匹配</text>
+
+  <!-- 5. old value branch -->
+  <g filter="url(#sk)">
+    <rect x="340" y="286" width="264" height="84" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="472" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a2e28">旧值计数 +1</text>
+  <text x="472" y="328" text-anchor="middle" font-size="11" fill="#333333">good −= 旧匹配态；cnt[v]++</text>
+  <text x="472" y="348" text-anchor="middle" font-size="11" fill="#333333">good += 新匹配态</text>
+  <text x="472" y="364" text-anchor="middle" font-size="10" fill="#7a7a7a">匹配态 ⟺ cnt[v] = pos[v] + 1</text>
+
+  <path d="M 168 370 Q 168 392 252 404" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 472 370 Q 472 392 388 404" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 6. diamond: good == k? -->
+  <g filter="url(#sk)">
+    <polygon points="320,406 425,452 320,498 215,452" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="458" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6415">good == k？</text>
+
+  <path d="M 320 498 Q 312 508 288 512" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="322" y="512" font-size="12" font-weight="bold" fill="#4a8e4a">是</text>
+
+  <!-- 7. ans++ -->
+  <g filter="url(#sk)">
+    <rect x="56" y="514" width="280" height="48" rx="8" fill="#f5c6c0" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="196" y="543" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a2e28">ans++：[L, R] 是频次阶梯</text>
+
+  <!-- loop back: R++ -->
+  <path d="M 425 452 Q 582 448 582 133 L 466 133" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 336 538 Q 566 538 576 300" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="438" y="440" font-size="12" font-weight="bold" fill="#b85450">否</text>
+  <text x="570" y="300" text-anchor="end" font-size="11" fill="#3a3a3a">R++ 继续</text>
+
+  <!-- end strip -->
+  <g filter="url(#sk)">
+    <rect x="106" y="574" width="474" height="34" rx="8" fill="#f0f0f0" stroke="#999999" stroke-width="1.3"/>
+  </g>
+  <text x="343" y="596" text-anchor="middle" font-size="12" fill="#555555">R 扫完：按 order 复位 pos/cnt → L++；全部 L 扫完返回 ans</text>
+</svg>
