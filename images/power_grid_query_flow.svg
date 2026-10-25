@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">两类查询的处理流程</text>
+  <path d="M 300 42 Q 470 50 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 预处理 ===== -->
+  <g filter="url(#sk)">
+    <rect x="170" y="58" width="600" height="54" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="80" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">预处理：DSU 合并 connections</text>
+  <text x="470" y="100" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">每个电网 root 建 S[root] = 组内全部电站 id，offline[x] = false</text>
+
+  <path d="M 470 116 L 470 136" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== 查询分发 ===== -->
+  <g filter="url(#sk)">
+    <polygon points="470,140 590,178 470,216 350,178" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="176" text-anchor="middle" font-size="13" fill="#8a6a1a" font-weight="bold">查询类型？</text>
+  <text x="470" y="194" text-anchor="middle" font-size="11" fill="#8a6a1a">queries[i][0]</text>
+
+  <!-- 左分支: [2,x] -->
+  <path d="M 350 178 L 240 178 L 240 236" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="292" y="168" font-size="12" fill="#444" font-weight="bold">[2, x]</text>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="240" width="320" height="88" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="240" y="264" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">电站 x 离线（不可逆）</text>
+  <text x="240" y="288" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">offline[x] = true</text>
+  <text x="240" y="308" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">S[find(x)].erase(x)</text>
+  <text x="240" y="326" text-anchor="middle" font-size="10" fill="#888">重复 [2,x] 幂等：已删再删是 no-op</text>
+
+  <!-- 右分支: [1,x] -->
+  <path d="M 590 178 L 700 178 L 700 236" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="630" y="168" font-size="12" fill="#444" font-weight="bold">[1, x]</text>
+
+  <g filter="url(#sk)">
+    <polygon points="700,240 830,278 700,316 570,278" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="700" y="274" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold">x 在线？</text>
+  <text x="700" y="292" text-anchor="middle" font-size="10.5" fill="#b85450" font-family="monospace">!offline[x]</text>
+
+  <!-- 在线: 输出 x -->
+  <path d="M 700 316 L 700 356" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="712" y="340" font-size="12" fill="#2e6e2e" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="610" y="360" width="180" height="52" rx="10" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="700" y="382" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">答案 = x（自身！）</text>
+  <text x="700" y="402" text-anchor="middle" font-size="10" fill="#888">不查集合最小元</text>
+
+  <!-- 离线: 集合是否为空 -->
+  <path d="M 570 278 L 470 278 L 470 356" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="500" y="268" font-size="12" fill="#b85450" font-weight="bold">否</text>
+
+  <g filter="url(#sk)">
+    <polygon points="470,360 590,398 470,436 350,398" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="394" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold">S[find(x)] 为空？</text>
+  <text x="470" y="412" text-anchor="middle" font-size="10.5" fill="#b85450" font-family="monospace">同电网全离线</text>
+
+  <path d="M 470 436 L 470 476" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="482" y="460" font-size="12" fill="#444" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="390" y="480" width="160" height="46" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="470" y="508" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450">答案 = -1</text>
+
+  <path d="M 350 398 L 260 398 L 260 476" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="288" y="388" font-size="12" fill="#444" font-weight="bold">否</text>
+  <g filter="url(#sk)">
+    <rect x="140" y="480" width="240" height="46" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="260" y="508" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">答案 = *S[find(x)].begin()</text>
+
+  <!-- 汇合 -->
+  <path d="M 380 503 Q 420 540 460 528" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 550 503 Q 500 540 470 530" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 700 412 L 700 470 Q 700 500 560 520" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="290" y="540" width="360" height="44" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="470" y="568" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">按序追加到 ans，处理下一条查询</text>
+
+  <!-- 底部提示 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="602" width="780" height="46" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="630" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">⚠ 最易错：x 在线时直接输出 x，哪怕同电网有编号更小的在线电站！</text>
+</svg>

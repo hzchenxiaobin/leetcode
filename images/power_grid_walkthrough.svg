@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="88" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 1 演算：集合 S 的演化</text>
+  <path d="M 300 42 Q 470 50 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="470" y="62" text-anchor="middle" font-size="12" fill="#666" font-family="monospace">c=5, connections=[[1,2],[2,3],[3,4],[4,5]] → 全部同属电网 A</text>
+
+  <!-- 初始状态 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="80" width="780" height="66" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="106" font-size="13" font-weight="bold" fill="#2b6e9e">初始：全部在线</text>
+  <g filter="url(#sk)" font-size="12" text-anchor="middle" font-weight="bold">
+    <rect x="100" y="116" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="140" y="116" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="180" y="116" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="220" y="116" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="260" y="116" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#2b2b2b">
+    <text x="117" y="132">1</text><text x="157" y="132">2</text><text x="197" y="132">3</text><text x="237" y="132">4</text><text x="277" y="132">5</text>
+  </g>
+  <text x="330" y="132" font-size="12" fill="#444" font-family="monospace">S = {1,2,3,4,5}</text>
+
+  <!-- step 1: [1,3] -->
+  <g filter="url(#sk)">
+    <rect x="80" y="164" width="780" height="78" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="190" font-size="13" font-weight="bold" fill="#2e6e2e">查询 1：[1, 3] — 检查电站 3</text>
+  <text x="100" y="214" font-size="12" fill="#444">电站 3 在线 → 由它<b>自身</b>解决</text>
+  <g filter="url(#sk)">
+    <rect x="700" y="178" width="130" height="48" rx="10" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="765" y="208" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">ans = 3 ✓</text>
+
+  <!-- step 2: [2,1] -->
+  <g filter="url(#sk)">
+    <rect x="80" y="260" width="780" height="78" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="286" font-size="13" font-weight="bold" fill="#8a6a1a">查询 2：[2, 1] — 电站 1 离线</text>
+  <g filter="url(#sk)" font-size="12" text-anchor="middle" font-weight="bold">
+    <rect x="100" y="296" width="34" height="24" rx="5" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <rect x="140" y="296" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="180" y="296" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="220" y="296" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="260" y="296" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#2b2b2b">
+    <text x="117" y="312" fill="#b85450">1</text><text x="157" y="312">2</text><text x="197" y="312">3</text><text x="237" y="312">4</text><text x="277" y="312">5</text>
+  </g>
+  <text x="330" y="312" font-size="12" fill="#444" font-family="monospace">S = {2,3,4,5}（erase(1)）</text>
+
+  <!-- step 3: [1,1] -->
+  <g filter="url(#sk)">
+    <rect x="80" y="356" width="780" height="78" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="382" font-size="13" font-weight="bold" fill="#2e6e2e">查询 3：[1, 1] — 检查电站 1</text>
+  <text x="100" y="406" font-size="12" fill="#444">电站 1 已离线 → 由电网 A 中编号最小的在线电站解决 → *begin() = 2</text>
+  <g filter="url(#sk)">
+    <rect x="700" y="370" width="130" height="48" rx="10" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="765" y="400" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">ans = 2 ✓</text>
+
+  <!-- step 4: [2,2] -->
+  <g filter="url(#sk)">
+    <rect x="80" y="452" width="780" height="78" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="478" font-size="13" font-weight="bold" fill="#8a6a1a">查询 4：[2, 2] — 电站 2 离线</text>
+  <g filter="url(#sk)" font-size="12" text-anchor="middle" font-weight="bold">
+    <rect x="100" y="488" width="34" height="24" rx="5" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <rect x="140" y="488" width="34" height="24" rx="5" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <rect x="180" y="488" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="220" y="488" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="260" y="488" width="34" height="24" rx="5" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#2b2b2b">
+    <text x="117" y="504" fill="#b85450">1</text><text x="157" y="504" fill="#b85450">2</text><text x="197" y="504">3</text><text x="237" y="504">4</text><text x="277" y="504">5</text>
+  </g>
+  <text x="330" y="504" font-size="12" fill="#444" font-family="monospace">S = {3,4,5}</text>
+
+  <!-- step 5: [1,2] -->
+  <g filter="url(#sk)">
+    <rect x="80" y="548" width="780" height="78" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="100" y="574" font-size="13" font-weight="bold" fill="#2e6e2e">查询 5：[1, 2] — 检查电站 2</text>
+  <text x="100" y="598" font-size="12" fill="#444">电站 2 已离线 → *begin() = 3</text>
+  <g filter="url(#sk)">
+    <rect x="700" y="562" width="130" height="48" rx="10" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="765" y="592" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">ans = 3 ✓</text>
+  <text x="470" y="636" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" font-family="monospace">最终输出：[3, 2, 3]</text>
+</svg>
