@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arro" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="500" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：一趟 O(n²) 枚举 + 三组哈希表</text>
+
+  <!-- 步骤0 -->
+  <rect x="170" y="44" width="300" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="62" text-anchor="middle" font-size="12.5" fill="#446688" font-weight="bold" filter="url(#rough2)">枚举全部 C(n,2) 个点对 (i, j)</text>
+  <text x="320" y="78" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">n = 500 → 124,750 条线段</text>
+  <path d="M 320,84 L 320,102" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+
+  <!-- 步骤1：规范化 -->
+  <rect x="120" y="106" width="400" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="124" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">gcd 约分 → 本原方向 (dx, dy)，再统一符号</text>
+  <text x="320" y="142" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">要求 dx&gt;0 或 dx=0 且 dy&gt;0；垂直线即 (0,1)，全程无特判</text>
+
+  <!-- 分叉箭头 -->
+  <path d="M 320,150 L 320,164 L 130,164 L 130,180" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arro)" filter="url(#rough2)"/>
+  <path d="M 320,150 L 320,180" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <path d="M 320,150 L 320,164 L 510,164 L 510,180" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 三张表 -->
+  <rect x="30" y="184" width="200" height="72" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="130" y="206" text-anchor="middle" font-size="12" fill="#d6a040" font-weight="bold" filter="url(#rough2)">① 斜率表</text>
+  <text x="130" y="228" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">slopeCnt[(dx,dy)] += 1</text>
+  <text x="130" y="246" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">同斜率的线段进同桶</text>
+
+  <rect x="220" y="184" width="200" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="206" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">② 直线表</text>
+  <text x="320" y="228" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">lineCnt[(dy,−dx,c)] += 1</text>
+  <text x="320" y="246" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">c = dy·xᵢ − dx·yᵢ 区分平行线</text>
+
+  <rect x="410" y="184" width="200" height="72" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="510" y="206" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">③ 中点表（坐标×2）</text>
+  <text x="510" y="228" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">midCnt[(xᵢ+xⱼ, yᵢ+yⱼ)] += 1</text>
+  <text x="510" y="246" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">midSlope[(中点,(dx,dy))] += 1</text>
+
+  <!-- 汇聚箭头 -->
+  <path d="M 130,256 L 130,290 L 200,308" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arro)" filter="url(#rough2)"/>
+  <path d="M 320,256 L 320,290 L 260,304" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <path d="M 510,256 L 510,308" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 两个汇总框 -->
+  <rect x="50" y="316" width="270" height="92" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="185" y="342" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">T = Σ_s C(m_s,2) − Σ_L C(c_L,2)</text>
+  <text x="185" y="366" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">同斜率对（表①）− 同直线对（表②）</text>
+  <text x="185" y="388" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">= 平行且不共线的线段对</text>
+
+  <rect x="340" y="316" width="270" height="92" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="475" y="342" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">P = Σ_M C(t_M,2) − Σ C(c,2)</text>
+  <text x="475" y="366" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">同中点对（表③）− 同中点同斜率对</text>
+  <text x="475" y="388" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">= 平行四边形个数</text>
+
+  <!-- 最终答案 -->
+  <path d="M 185,408 L 185,432 L 260,440" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <path d="M 475,408 L 475,432 L 392,440" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="230" y="442" width="200" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4" filter="url(#rough2)"/>
+  <text x="330" y="460" text-anchor="middle" font-size="13.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">返回 T − P</text>
+  <text x="330" y="478" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">中间量必须用 64 位累加</text>
+</svg>
