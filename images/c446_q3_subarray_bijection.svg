@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="470" viewBox="0 0 680 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="470" fill="#fdfcf7"/>
+  <text x="340" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：删前后缀 ⟺ 选子数组；乘积只需余数，按右端点分桶</text>
+  <path d="M 160 35 Q 340 42 520 35" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 上半：数组与前后缀 -->
+  <text x="340" y="64" text-anchor="middle" font-size="12.5" fill="#555">一次操作 = 删一段前缀 + 一段后缀（可空），剩余必须非空</text>
+
+  <g filter="url(#sk)">
+    <rect x="150" y="80" width="46" height="38" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="173" y="104" text-anchor="middle" font-size="14" fill="#b85450">1</text>
+  <text x="173" y="134" text-anchor="middle" font-size="10" fill="#b85450">删</text>
+
+  <g filter="url(#sk)">
+    <rect x="196" y="80" width="46" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+  </g>
+  <text x="219" y="104" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">2</text>
+  <text x="219" y="134" text-anchor="middle" font-size="10" fill="#2e6e2e">留 ✓</text>
+
+  <g filter="url(#sk)">
+    <rect x="242" y="80" width="46" height="38" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="265" y="104" text-anchor="middle" font-size="14" fill="#b85450">3</text>
+  <g filter="url(#sk)">
+    <rect x="288" y="80" width="46" height="38" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="311" y="104" text-anchor="middle" font-size="14" fill="#b85450">4</text>
+  <g filter="url(#sk)">
+    <rect x="334" y="80" width="46" height="38" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="357" y="104" text-anchor="middle" font-size="14" fill="#b85450">5</text>
+  <text x="357" y="134" text-anchor="middle" font-size="10" fill="#b85450">删</text>
+
+  <text x="173" y="156" text-anchor="middle" font-size="10.5" fill="#b85450">前缀 nums[0..l−1]</text>
+  <text x="219" y="156" text-anchor="middle" font-size="10.5" fill="#2e6e2e">nums[l..r]</text>
+  <text x="311" y="156" text-anchor="middle" font-size="10.5" fill="#b85450">后缀 nums[r+1..n−1]</text>
+
+  <!-- 双射说明框 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="172" width="500" height="44" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="191" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6a1a">操作方式 ↔ 非空子数组 nums[l..r] 是双射（l ≤ r）</text>
+  <text x="340" y="208" text-anchor="middle" font-size="11" fill="#8a6a1a">⇒ 目标 = 数「乘积 mod k = x」的子数组个数，总数 n(n+1)/2</text>
+
+  <!-- 下半：余数分桶迁移 -->
+  <text x="340" y="240" text-anchor="middle" font-size="12.5" fill="#555">乘法同余 (a·b) mod k 只看余数 ⇒ 以 i 结尾的子数组压进 k 个桶滚动（示意 v = 2, k = 3）</text>
+
+  <text x="120" y="268" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">以 i−1 结尾 cnt</text>
+  <g filter="url(#sk)">
+    <rect x="52" y="278" width="46" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="75" y="300" text-anchor="middle" font-size="11" fill="#446688">余 0</text>
+  <text x="75" y="316" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">2</text>
+  <g filter="url(#sk)">
+    <rect x="98" y="278" width="46" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="121" y="300" text-anchor="middle" font-size="11" fill="#446688">余 1</text>
+  <text x="121" y="316" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">1</text>
+  <g filter="url(#sk)">
+    <rect x="144" y="278" width="46" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="167" y="300" text-anchor="middle" font-size="11" fill="#446688">余 2</text>
+  <text x="167" y="316" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">0</text>
+
+  <!-- 迁移箭头 r -> r*v mod k -->
+  <path d="M 200 295 C 250 285, 280 275, 322 292" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 146 300 C 240 330, 270 345, 320 345" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 148 322 C 240 385, 280 400, 380 405" stroke="#3a3a3a" stroke-width="1.2" fill="none" stroke-dasharray="4 4" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="240" y="252" width="150" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="315" y="267" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6a1a">延伸：整体乘 v</text>
+  <text x="315" y="281" text-anchor="middle" font-size="11" fill="#8a6a1a">r → (r·v) mod k</text>
+
+  <!-- 右侧新桶 -->
+  <text x="520" y="268" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">以 i 结尾 nxt</text>
+  <g filter="url(#sk)">
+    <rect x="452" y="278" width="46" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="475" y="300" text-anchor="middle" font-size="11" fill="#446688">余 0</text>
+  <text x="475" y="316" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">2</text>
+  <g filter="url(#sk)">
+    <rect x="498" y="278" width="46" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="521" y="300" text-anchor="middle" font-size="11" fill="#446688">余 1</text>
+  <text x="521" y="316" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">0</text>
+  <g filter="url(#sk)">
+    <rect x="544" y="278" width="46" height="46" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="567" y="300" text-anchor="middle" font-size="11" fill="#2e6e2e">余 2</text>
+  <text x="567" y="316" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">2</text>
+
+  <!-- +1 新段 -->
+  <g filter="url(#sk)">
+    <rect x="408" y="222" width="130" height="34" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="473" y="237" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">新起单元素段</text>
+  <text x="473" y="251" text-anchor="middle" font-size="11" fill="#2e6e2e">nxt[v] += 1</text>
+  <path d="M 505 256 C 540 265, 558 268, 564 274" stroke="#2e6e2e" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <text x="412" y="350" text-anchor="middle" font-size="10.5" fill="#777">0→0：2 个；1→2：1 个</text>
+  <text x="470" y="366" text-anchor="middle" font-size="10.5" fill="#777">2→1：0 个（虚线）</text>
+  <text x="546" y="344" text-anchor="middle" font-size="10.5" fill="#2e6e2e">2 = 1+1</text>
+
+  <!-- 底部 result 累加 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="392" width="500" height="52" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="413" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">每一步把 cnt 累进答案：result[r] += cnt[r]</text>
+  <text x="340" y="433" text-anchor="middle" font-size="11" fill="#2e6e2e">每个子数组在且仅在自己的右端点被数一次 —— 不重不漏</text>
+</svg>

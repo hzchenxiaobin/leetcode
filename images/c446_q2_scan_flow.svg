@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="440" viewBox="0 0 660 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="61" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="660" height="440" fill="#fdfcf7"/>
+  <text x="330" y="24" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：单趟扫描，维护左侧历史最大值 cur</text>
+  <path d="M 150 33 Q 330 40 510 33" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 初始化 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="56" width="180" height="38" rx="8" fill="#f7f7f7" stroke="#bbbbbb" stroke-width="1.3"/>
+  </g>
+  <text x="150" y="80" text-anchor="middle" font-size="12.5" fill="#444">初始化 cur = 0，ans = 0</text>
+  <path d="M 150 94 L 150 114" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 取元素 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="120" width="180" height="52" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="150" y="140" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">取 x = nums[i]</text>
+  <text x="150" y="158" text-anchor="middle" font-size="10" fill="#4a8edb">i = 0, 1, …, n−1，从左到右单趟</text>
+  <path d="M 150 172 L 150 180" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 判定 x >= cur ? -->
+  <g filter="url(#sk)">
+    <polygon points="150,184 228,224 150,264 72,224" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="150" y="229" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">x ≥ cur ?</text>
+
+  <!-- 是：幸存 -->
+  <path d="M 228 224 L 292 224" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="260" y="215" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">是 ✓</text>
+  <g filter="url(#sk)">
+    <rect x="300" y="198" width="204" height="52" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="402" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">ans++，cur = x</text>
+  <text x="402" y="236" text-anchor="middle" font-size="10" fill="#2e6e2e">x 是前缀最大值 ⇒ 幸存</text>
+
+  <!-- 否：吸收 -->
+  <path d="M 150 264 L 150 292" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="164" y="282" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">否</text>
+  <g filter="url(#sk)">
+    <rect x="60" y="296" width="180" height="52" rx="8" fill="#f2f2f2" stroke="#999999" stroke-width="1.5" stroke-dasharray="5 4"/>
+  </g>
+  <text x="150" y="316" text-anchor="middle" font-size="12" fill="#555">跳过：并入左侧某块</text>
+  <text x="150" y="334" text-anchor="middle" font-size="10" fill="#777">块最大值不变，无需模拟</text>
+
+  <!-- 幸存分支 → i<n 判定 -->
+  <path d="M 402 250 C 402 305, 330 285, 298 317" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="416" y="292" text-anchor="middle" font-size="10" fill="#888">i++</text>
+
+  <!-- 吸收分支 → i<n 判定 -->
+  <path d="M 150 348 L 150 355 L 217 355" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 判定 i < n ? -->
+  <g filter="url(#sk)">
+    <polygon points="295,321 367,355 295,389 223,355" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="295" y="360" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">i &lt; n ?</text>
+
+  <!-- 是：循环 -->
+  <path d="M 295 389 L 295 414 L 30 414 L 30 146 L 54 146" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="140" y="408" text-anchor="middle" font-size="10.5" fill="#888">是：i++，取下一个元素</text>
+
+  <!-- 否：返回 -->
+  <path d="M 367 355 L 396 355" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="381" y="347" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">否</text>
+  <g filter="url(#sk)">
+    <rect x="402" y="333" width="150" height="44" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="477" y="351" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">返回 ans</text>
+  <text x="477" y="368" text-anchor="middle" font-size="10" fill="#2e6e2e">= 幸存者个数 = 最大长度</text>
+</svg>
