@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="430" viewBox="0 0 940 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="430" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：排序之后，最小差一定产生在「相邻」的两个值之间</text>
+  <path d="M 200 42 Q 470 50 740 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: number line ===== -->
+  <text x="60" y="68" font-size="13" font-weight="bold" fill="#2b6e9e">① 以示例 3 的窗口 (0, 0) 为例：收集 {1, −2, 2, 3} → 排序得 [−2, 1, 2, 3]</text>
+
+  <!-- non-adjacent bracket -->
+  <path d="M 120,122 Q 370,86 620,122" stroke="#b03a3a" stroke-width="1.6" stroke-dasharray="6 3" fill="none" filter="url(#sk)"/>
+  <text x="370" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">非相邻对 |−2 − 2| = 4，不小于中间的相邻差 → 可忽略</text>
+
+  <!-- axis -->
+  <path d="M 90,150 L 830,150" stroke="#555" stroke-width="1.8" fill="none" filter="url(#sk)" marker-end="url(#arB)"/>
+  <g stroke="#555" stroke-width="1.6">
+    <path d="M 120,140 L 120,160" filter="url(#sk)"/>
+    <path d="M 480,140 L 480,160" filter="url(#sk)"/>
+    <path d="M 620,140 L 620,160" filter="url(#sk)"/>
+    <path d="M 760,140 L 760,160" filter="url(#sk)"/>
+  </g>
+  <g font-size="14" font-weight="bold" fill="#2b6e9e" text-anchor="middle">
+    <text x="120" y="130">−2</text>
+    <text x="480" y="130">1</text>
+    <text x="620" y="130">2</text>
+    <text x="760" y="130">3</text>
+  </g>
+
+  <!-- gap arcs -->
+  <path d="M 120,162 Q 300,186 480,162" stroke="#999" stroke-width="1.4" fill="none" filter="url(#sk)"/>
+  <path d="M 480,162 Q 550,186 620,162" stroke="#4a8e4a" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <path d="M 620,162 Q 690,186 760,162" stroke="#4a8e4a" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="272" y="192" width="56" height="26" fill="#f0eee6" stroke="#999" stroke-width="1.1" rx="8"/></g>
+  <text x="300" y="210" text-anchor="middle" font-size="12" fill="#777">差 3</text>
+  <g filter="url(#sk)"><rect x="516" y="192" width="68" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="8"/></g>
+  <text x="550" y="210" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">差 1 ★</text>
+  <g filter="url(#sk)"><rect x="656" y="192" width="68" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="8"/></g>
+  <text x="690" y="210" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">差 1 ★</text>
+
+  <g filter="url(#sk)"><rect x="500" y="232" width="260" height="32" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5" rx="8"/></g>
+  <text x="630" y="253" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">最小差 = 1，由相邻对 (1, 2) 产生 ✓</text>
+
+  <!-- ===== Panel 2: why adjacent ===== -->
+  <g filter="url(#sk)"><rect x="60" y="278" width="820" height="132" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" rx="8"/></g>
+  <text x="80" y="302" font-size="13" font-weight="bold" fill="#2b6e9e">② 为什么只需检查相邻对？</text>
+  <text x="80" y="328" font-size="11" fill="#444">任取一对「跳着比」的值 a &lt; b（中间还隔着别的值）：设 a 右边紧邻的值是 a′（a &lt; a′ ≤ b），</text>
+  <text x="80" y="352" font-size="11" fill="#444">则 b − a ≥ a′ − a —— 任何非相邻对的差，都不小于其左端点与右邻的相邻差，被相邻对「压住」；</text>
+  <text x="80" y="376" font-size="11" fill="#444">而相邻对本身也是合法数对 → 全局最小差必在相邻对中取到，检查相邻对就够了。</text>
+  <text x="80" y="400" font-size="11" font-weight="bold" fill="#b03a3a">收益：两两枚举 O(t²) → 排序 + 一遍扫描 O(t log t)，其中 t ≤ k² ≤ 900。</text>
+</svg>
