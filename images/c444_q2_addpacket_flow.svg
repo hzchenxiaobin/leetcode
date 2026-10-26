@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="640" viewBox="0 0 560 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="640" fill="#fdfcf7"/>
+  <text x="280" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">addPacket 决策流程：先查重 → 后淘汰 → 三本账登记</text>
+  <path d="M 90 38 Q 280 46 470 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 起点 -->
+  <g filter="url(#sk)">
+    <rect x="180" y="50" width="200" height="34" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="280" y="71" text-anchor="middle" font-size="12.5" fill="#2b2b2b">addPacket(s, d, t)</text>
+  <path d="M 280 84 L 280 98" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 菱形1：查重？ -->
+  <g filter="url(#sk)">
+    <path d="M 280 100 L 400 142 L 280 184 L 160 142 Z" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="138" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">(s,d,t) 在查重集合中？</text>
+  <text x="280" y="158" text-anchor="middle" font-size="10.5" fill="#7a5415">（命中 = 当前存储已有同键包）</text>
+  <text x="406" y="132" font-size="12" font-weight="bold" fill="#b85450">是</text>
+  <path d="M 400 142 L 426 142" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="430" y="118" width="116" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="488" y="140" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">return false</text>
+  <text x="488" y="156" text-anchor="middle" font-size="10.5" fill="#a04040">（重复，不淘汰）</text>
+  <text x="292" y="200" font-size="12" font-weight="bold" fill="#2e6e2e">否</text>
+  <path d="M 280 184 L 280 208" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 菱形2：满员？ -->
+  <g filter="url(#sk)">
+    <path d="M 280 210 L 398 252 L 280 294 L 162 252 Z" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="248" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">队列长度 == memoryLimit？</text>
+  <text x="280" y="268" text-anchor="middle" font-size="10.5" fill="#7a5415">（满员必须先腾位置）</text>
+  <text x="404" y="242" font-size="12" font-weight="bold" fill="#c98a2b">是</text>
+  <path d="M 398 252 L 422 252" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="426" y="222" width="132" height="60" rx="8" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="492" y="244" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">retire() 弹队首</text>
+  <text x="492" y="260" text-anchor="middle" font-size="10.5" fill="#7a5415">(s0,d0,t0) 出队</text>
+  <text x="492" y="274" text-anchor="middle" font-size="10.5" fill="#7a5415">三本账同步销账</text>
+  <path d="M 492 282 L 492 336 L 408 349" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="292" y="310" font-size="12" font-weight="bold" fill="#2e6e2e">否</text>
+  <path d="M 280 294 L 280 322" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 登记 -->
+  <g filter="url(#sk)">
+    <rect x="160" y="326" width="240" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="280" y="346" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b5f9e">三本账登记</text>
+  <text x="280" y="364" text-anchor="middle" font-size="10.5" fill="#2b2b2b">队列.push_back、集合.insert、桶 d 追加 t</text>
+  <path d="M 280 372 L 280 386" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 返回 true -->
+  <g filter="url(#sk)">
+    <rect x="200" y="388" width="160" height="34" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="409" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">return true ✓</text>
+
+  <!-- forwardPacket 卡片 -->
+  <g filter="url(#sk)">
+    <rect x="26" y="438" width="248" height="118" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="42" y="460" font-size="12.5" font-weight="bold" fill="#2e6e2e">forwardPacket()</text>
+  <text x="42" y="482" font-size="11" fill="#2b2b2b">队列空 → 返回 []</text>
+  <text x="42" y="502" font-size="11" fill="#2b2b2b">否则 retire()：弹队首包</text>
+  <text x="42" y="522" font-size="11" fill="#2b2b2b">三本账同步销账</text>
+  <text x="42" y="544" font-size="11" fill="#2b2b2b">返回 [s, d, t]</text>
+
+  <!-- getCount 卡片 -->
+  <g filter="url(#sk)">
+    <rect x="286" y="438" width="248" height="118" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="302" y="460" font-size="12.5" font-weight="bold" fill="#2b5f9e">getCount(d, st, en)</text>
+  <text x="302" y="482" font-size="11" fill="#2b2b2b">取桶 d 有效区间 [head, len)</text>
+  <text x="302" y="502" font-size="11" fill="#2b2b2b">cnt = ub(en) − lb(st)</text>
+  <text x="302" y="522" font-size="11" fill="#2b2b2b">天然有序，零遍历</text>
+  <text x="302" y="544" font-size="11" fill="#2b2b2b">单次 O(log L)</text>
+
+  <!-- 底注 -->
+  <g filter="url(#sk)">
+    <rect x="26" y="572" width="508" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/>
+  </g>
+  <text x="280" y="594" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04040">顺序铁律：查重必须在淘汰之前</text>
+  <text x="280" y="616" text-anchor="middle" font-size="11.5" fill="#a04040">满员时若新包与某个在存包同键 → 它仍是重复，返回 false 且不动任何人</text>
+</svg>
