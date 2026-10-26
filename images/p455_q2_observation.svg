@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="430" fill="#fafafa"/>
+
+  <text x="260" y="22" text-anchor="middle" font-size="13" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：金额 i 的全部凑法按「是否用到面值 i」二分</text>
+  <text x="260" y="40" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">正数面值 &gt; i 装不进和为 i 的多重集；面值 i 自身因 2i &gt; i 至多用一枚</text>
+
+  <!-- 顶部：全部多重集 -->
+  <g filter="url(#rough2)">
+    <rect x="140" y="52" width="240" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="260" y="73" text-anchor="middle" font-size="11.5" fill="#2a4666" font-weight="bold">面值集 S 生成的、和恰为 i 的全部多重集</text>
+  </g>
+
+  <!-- 分流箭头 -->
+  <path d="M 208 90 Q 162 102 140 120" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 312 90 Q 358 102 380 120" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 左：不含面值 i -->
+  <g filter="url(#rough2)">
+    <rect x="26" y="122" width="228" height="92" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+    <text x="140" y="141" text-anchor="middle" font-size="11.5" fill="#2a5a2a" font-weight="bold">不含面值 i 的多重集</text>
+    <text x="140" y="159" text-anchor="middle" font-size="10" fill="#333">· 只能由面值 &lt; i 的硬币组成</text>
+    <text x="140" y="174" text-anchor="middle" font-size="10" fill="#333">·（面值 &gt; i 的正数硬币装不进和 i）</text>
+    <text x="140" y="189" text-anchor="middle" font-size="10" fill="#333">· 这些面值在之前轮次已全部判定</text>
+    <text x="140" y="204" text-anchor="middle" font-size="10" fill="#2a5a2a" font-weight="bold">· 数目 = cur[i]（当前 DP 值）</text>
+  </g>
+
+  <!-- 右：恰含一枚面值 i -->
+  <g filter="url(#rough2)">
+    <rect x="266" y="122" width="228" height="92" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+    <text x="380" y="141" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">恰含一枚面值 i 的多重集</text>
+    <text x="380" y="159" text-anchor="middle" font-size="10" fill="#333">· 第二枚 i 就超出金额（2i &gt; i）</text>
+    <text x="380" y="174" text-anchor="middle" font-size="10" fill="#333">· 拿走这枚 i，剩余部分和为 0</text>
+    <text x="380" y="189" text-anchor="middle" font-size="10" fill="#333">· 和为 0 ⟹ 只能是空多重集</text>
+    <text x="380" y="204" text-anchor="middle" font-size="10" fill="#8a6a20" font-weight="bold">· 数目固定 = 1</text>
+  </g>
+
+  <!-- 公式条 -->
+  <g filter="url(#rough2)">
+    <rect x="95" y="232" width="330" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" rx="8"/>
+    <text x="260" y="250" text-anchor="middle" font-size="13.5" fill="#2a4666" font-weight="bold">numWays[i] = cur[i] + [ i ∈ S ]</text>
+    <text x="260" y="266" text-anchor="middle" font-size="9" fill="#555">cur[i]：只用已判定面值（全部 &lt; i）凑出 i 的方法数</text>
+  </g>
+
+  <!-- 结论框 -->
+  <g filter="url(#rough2)">
+    <rect x="32" y="288" width="456" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+    <text x="260" y="308" text-anchor="middle" font-size="11" fill="#2a5a2a" font-weight="bold">差 d = numWays[i] − cur[i] 被唯一逼出，只能取 0 或 1：</text>
+    <text x="260" y="326" text-anchor="middle" font-size="10.5" fill="#333">d = 1 ⟺ 面值 i 必须存在；　d = 0 ⟺ 面值 i 不存在</text>
+    <text x="260" y="346" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold">d ∉ {0, 1} ⟹ 任何面值集都生成不了 numWays → 返回 []</text>
+  </g>
+
+  <!-- 底部要点 -->
+  <g filter="url(#rough2)">
+    <rect x="22" y="378" width="476" height="42" fill="#f7f7f7" stroke="#aaa" stroke-width="1.2" rx="8"/>
+    <text x="260" y="394" text-anchor="middle" font-size="9.5" fill="#555">题面保证面值 ≤ n：从小到大扫 i = 1…n，每个可能面值被恰好判定一次，判定序天然升序</text>
+    <text x="260" y="410" text-anchor="middle" font-size="9.5" fill="#555">cur 的维护 = 「每发现一个面值 c，就做一趟 for t = c…n: cur[t] += cur[t−c]」（完全背包计数）</text>
+  </g>
+</svg>

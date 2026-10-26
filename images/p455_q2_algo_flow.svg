@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="500" fill="#fafafa"/>
+
+  <text x="280" y="20" text-anchor="middle" font-size="13" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：从小到大逐一面值判定，同步维护 cur</text>
+
+  <!-- 开始 -->
+  <g filter="url(#rough2)">
+    <rect x="88" y="34" width="220" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="198" y="54" text-anchor="middle" font-size="10.5" fill="#2a4666">cur[0]=1，cur[1…n]=0；i=1；ans=[]</text>
+  </g>
+  <path d="M 198 66 L 198 86" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 计算 d -->
+  <g filter="url(#rough2)">
+    <rect x="88" y="90" width="220" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="198" y="109" text-anchor="middle" font-size="10.5" fill="#2a4666">d ← numWays[i] − cur[i]</text>
+  </g>
+  <path d="M 198 120 L 198 142" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 1：d=1? -->
+  <g filter="url(#rough2)">
+    <polygon points="198,146 276,176 198,206 120,176" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="198" y="181" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">d = 1？</text>
+  </g>
+  <path d="M 276 176 L 306 176" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="291" y="168" text-anchor="middle" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M 198 206 L 198 226" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="207" y="221" font-size="10" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 绿框：加入面值 i -->
+  <g filter="url(#rough2)">
+    <rect x="310" y="138" width="210" height="80" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="10"/>
+    <text x="415" y="156" text-anchor="middle" font-size="11" fill="#2a5a2a" font-weight="bold">面值 i 存在 ✓</text>
+    <text x="415" y="172" text-anchor="middle" font-size="10" fill="#333">ans.push_back(i)</text>
+    <text x="415" y="188" text-anchor="middle" font-size="10" fill="#333">for t = i…n：</text>
+    <text x="415" y="204" text-anchor="middle" font-size="10" fill="#333">cur[t] += cur[t−i]（完全背包）</text>
+  </g>
+
+  <!-- 菱形 2：d=0? -->
+  <g filter="url(#rough2)">
+    <polygon points="198,230 272,258 198,286 124,258" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="198" y="263" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">d = 0？</text>
+  </g>
+  <path d="M 272 258 L 306 258" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="289" y="250" text-anchor="middle" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M 198 286 L 198 306" stroke="#b85450" stroke-width="1.6" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="207" y="301" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- 蓝框：面值 i 不存在 -->
+  <g filter="url(#rough2)">
+    <rect x="310" y="236" width="210" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+    <text x="415" y="254" text-anchor="middle" font-size="11" fill="#2a4666" font-weight="bold">面值 i 不存在</text>
+    <text x="415" y="270" text-anchor="middle" font-size="10" fill="#333">cur 保持不变</text>
+  </g>
+
+  <!-- 红框：矛盾 -->
+  <g filter="url(#rough2)">
+    <rect x="78" y="310" width="240" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+    <text x="198" y="331" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold">矛盾（d ≥ 2 或 d &lt; 0）→ 返回 []</text>
+  </g>
+
+  <!-- 右侧汇流轨道 -->
+  <path d="M 520 178 L 545 178 L 545 352 L 536 352" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 520 258 L 545 258" stroke="#4a7a3a" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+
+  <!-- i+1 -->
+  <g filter="url(#rough2)">
+    <rect x="310" y="336" width="224" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="422" y="356" text-anchor="middle" font-size="10.5" fill="#2a4666">i ← i + 1</text>
+  </g>
+  <path d="M 422 368 L 422 390" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 3：i>n? -->
+  <g filter="url(#rough2)">
+    <polygon points="422,394 486,420 422,446 358,420" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="422" y="425" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">i &gt; n？</text>
+  </g>
+  <path d="M 422 446 L 422 460" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="431" y="457" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- 返回 -->
+  <g filter="url(#rough2)">
+    <rect x="330" y="464" width="184" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="8"/>
+    <text x="422" y="483" text-anchor="middle" font-size="10.5" fill="#2a5a2a" font-weight="bold">返回 ans（天然升序）</text>
+  </g>
+
+  <!-- 回边 -->
+  <path d="M 358 420 L 24 420 L 24 105 L 84 105" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="32" y="412" font-size="10" fill="#446688" filter="url(#rough2)">否（继续判定下一面值）</text>
+</svg>
