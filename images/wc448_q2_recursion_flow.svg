@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="510" viewBox="0 0 680 510" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="680" height="510" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：fill(r, c, n, start) —— 切四段，按象限顺序递归</text>
+  <path d="M 190 40 Q 340 48 490 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 开始 -->
+  <g filter="url(#sk)"><rect x="200" y="54" width="280" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="340" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4b66">进入 fill(r, c, n, start)</text>
+  <text x="340" y="96" text-anchor="middle" font-size="10.5" fill="#555">左上角 (r, c)，边长 2^n，值域 [start, start + 4^n)</text>
+  <path d="M 340 106 L 340 122" stroke="#446688" stroke-width="1.6" fill="none" filter="url(#sk)" marker-end="url(#arrb)"/>
+
+  <!-- 判定 -->
+  <g filter="url(#sk)"><polygon points="340,126 430,164 340,202 250,164" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="340" y="169" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4b66">n = 0 ?</text>
+  <text x="240" y="156" text-anchor="end" font-size="12" font-weight="bold" fill="#4a7a3a">是</text>
+
+  <!-- 出口 -->
+  <path d="M 250 164 L 224 164" stroke="#4a7a3a" stroke-width="1.6" fill="none" filter="url(#sk)" marker-end="url(#arrg)"/>
+  <g filter="url(#sk)"><rect x="30" y="140" width="190" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="125" y="160" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">grid[r][c] = start</text>
+  <text x="125" y="178" text-anchor="middle" font-size="10" fill="#555">（1×1 网格天然特殊）</text>
+
+  <!-- 计算 half / block -->
+  <text x="352" y="218" font-size="12" font-weight="bold" fill="#b85450">否</text>
+  <path d="M 340 202 L 340 224" stroke="#b85450" stroke-width="1.6" fill="none" filter="url(#sk)" marker-end="url(#arrb)"/>
+  <g filter="url(#sk)"><rect x="230" y="228" width="220" height="52" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="340" y="249" text-anchor="middle" font-size="12" fill="#444">half = 2^(n−1)：子象限边长</text>
+  <text x="340" y="269" text-anchor="middle" font-size="12" fill="#444">block = 4^(n−1)：数值块大小</text>
+  <path d="M 340 280 L 340 298" stroke="#446688" stroke-width="1.6" fill="none" filter="url(#sk)" marker-end="url(#arrb)"/>
+
+  <!-- 四次递归调用（按象限位置摆放） -->
+  <g filter="url(#sk)"><rect x="233" y="302" width="424" height="148" rx="10" fill="none" stroke="#9ab0c4" stroke-width="1.2" stroke-dasharray="6 4"/></g>
+
+  <g filter="url(#sk)"><rect x="247" y="312" width="190" height="54" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="342" y="333" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">④ 左上（偏移 +3·block）</text>
+  <text x="342" y="353" text-anchor="middle" font-size="10.5" fill="#444">fill(r, c, n−1, start+3·block)</text>
+
+  <g filter="url(#sk)"><rect x="453" y="312" width="190" height="54" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="548" y="333" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">① 右上（偏移 +0）</text>
+  <text x="548" y="353" text-anchor="middle" font-size="10.5" fill="#444">fill(r, c+half, n−1, start)</text>
+
+  <g filter="url(#sk)"><rect x="247" y="386" width="190" height="54" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="342" y="407" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">③ 左下（偏移 +2·block）</text>
+  <text x="342" y="427" text-anchor="middle" font-size="10.5" fill="#444">fill(r+half, c, n−1, start+2·block)</text>
+
+  <g filter="url(#sk)"><rect x="453" y="386" width="190" height="54" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="548" y="407" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4b66">② 右下（偏移 +block）</text>
+  <text x="548" y="427" text-anchor="middle" font-size="10.5" fill="#444">fill(r+half, c+half, n−1, start+block)</text>
+
+  <!-- 串行顺序箭头 ①→②→③→④ -->
+  <path d="M 548 366 L 548 382" stroke="#555" stroke-width="1.5" fill="none" filter="url(#sk)" marker-end="url(#arrd)"/>
+  <path d="M 453 413 L 441 413" stroke="#555" stroke-width="1.5" fill="none" filter="url(#sk)" marker-end="url(#arrd)"/>
+  <path d="M 342 386 L 342 370" stroke="#555" stroke-width="1.5" fill="none" filter="url(#sk)" marker-end="url(#arrd)"/>
+  <text x="560" y="378" font-size="9.5" fill="#555">串行执行</text>
+
+  <!-- 回边：子问题继续递归 -->
+  <path d="M 657 376 L 672 376 L 672 80 L 484 80" stroke="#446688" stroke-width="1.6" fill="none" filter="url(#sk)" marker-end="url(#arrb)"/>
+  <text x="577" y="70" text-anchor="middle" font-size="11" fill="#446688">子问题继续四分（递归）</text>
+
+  <!-- 底部说明 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="466" width="560" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="340" y="490" text-anchor="middle" font-size="11" fill="#334455">四个数值块不重不漏：前一块完全填满才进入下一块；递归深度 N + 1 ≤ 11 层</text>
+</svg>
