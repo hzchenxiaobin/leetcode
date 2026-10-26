@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 640"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="640" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#446688" font-weight="bold" filter="url(#rough2)">总体思路：前缀相减 → 枚举数位和 → 数位 DP</text>
+
+  <!-- ① 原问题 -->
+  <rect x="70" y="46" width="420" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="72" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">① 统计 [l, r] 中「数位积 % 数位和 == 0」的数</text>
+
+  <path d="M 280,88 L 280,110" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 前缀相减 -->
+  <rect x="40" y="114" width="480" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="136" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② 美丽数在数轴上杂乱分布，无单调性</text>
+  <text x="280" y="156" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">区间计数转前缀相减：ans = f(r) − f(l−1)</text>
+
+  <path d="M 280,170 L 280,192" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ 枚举数位和 -->
+  <rect x="40" y="196" width="480" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="218" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ r &lt; 10⁹ → 至多 9 个数位 → 数位和 S ≤ 9×9 = 81</text>
+  <text x="280" y="238" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">外层枚举 S = 1…81，每次只统计「数位和恰为 S」的数</text>
+
+  <path d="M 280,252 L 280,274" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ 数位 DP -->
+  <rect x="40" y="278" width="480" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="304" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">④ 对每个 S 跑一遍数位 DP：数出 ≤ N、和为 S、S 整除积 的个数</text>
+
+  <!-- 状态 chips -->
+  <text x="280" y="342" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">DP 状态五元组：</text>
+  <rect x="46" y="352" width="86" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="89" y="372" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">位置 i</text>
+  <rect x="142" y="352" width="86" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="185" y="372" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">已填和 s</text>
+  <rect x="238" y="352" width="90" height="30" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="283" y="372" text-anchor="middle" font-size="12" fill="#d6a040" font-weight="bold" filter="url(#rough2)">质因 mask</text>
+  <rect x="338" y="352" width="86" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="381" y="372" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">贴上界 tight</text>
+  <rect x="434" y="352" width="80" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="474" y="372" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">前导 started</text>
+
+  <!-- 注释两行 -->
+  <text x="280" y="408" text-anchor="middle" font-size="11.5" fill="#d6a040" filter="url(#rough2)">mask = S 的质因子 2/3/5/7 各还缺几个（+ 大质数标志），S ≤ 81 时至多 12 种</text>
+  <text x="280" y="428" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">数位 0 → 乘积归零 → mask 清成全零（吸收态）：含 0 的数必美丽</text>
+
+  <path d="M 280,440 L 280,464" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ⑤ 结果 -->
+  <rect x="40" y="468" width="480" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="490" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">状态总量实测：f(10⁹−1) 全程仅触及约 8.1 万个状态</text>
+  <text x="280" y="512" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">C++ 约 9 ms，Python 约 0.65 s，轻松通过</text>
+
+  <!-- 底部要点 -->
+  <rect x="52" y="552" width="456" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="574" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">关键点：乘积本身不进状态，</text>
+  <text x="280" y="594" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">只保留「还差哪些质因子」——把 10⁹ 级的积压成 12 种 mask</text>
+</svg>
