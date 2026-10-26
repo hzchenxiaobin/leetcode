@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arK" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#999"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：按层 BFS 三元组状态，弹出「掩码全满」即得最少步数</text>
+  <path d="M 200 42 Q 470 50 740 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== left flow ===== -->
+  <g filter="url(#sk)"><rect x="80" y="62" width="280" height="58" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/></g>
+  <text x="220" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">初始化</text>
+  <text x="220" y="106" text-anchor="middle" font-size="11" fill="#666">定位 S；L 编号 0..K−1；K=0 → 返回 0</text>
+
+  <path d="M 220,120 L 220,144" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="80" y="148" width="280" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/></g>
+  <text x="220" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">按层弹出 (pos, mask, e)</text>
+  <text x="220" y="187" text-anchor="middle" font-size="11" fill="#666">steps = 当前层数</text>
+
+  <path d="M 220,194 L 220,218" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><polygon points="220,222 340,262 220,302 100,262" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="220" y="268" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">mask == full？</text>
+
+  <path d="M 340,262 L 414,262" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="372" y="252" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)"><rect x="418" y="238" width="214" height="48" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="525" y="258" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">返回 steps</text>
+  <text x="525" y="276" text-anchor="middle" font-size="10" fill="#555">即最少移动次数</text>
+
+  <path d="M 220,302 L 220,326" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="232" y="320" font-size="12" font-weight="bold" fill="#2b6e9e">否</text>
+
+  <g filter="url(#sk)"><polygon points="220,330 340,370 220,410 100,370" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="220" y="376" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">e == 0？</text>
+
+  <path d="M 340,370 L 414,370" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arK)" filter="url(#sk)"/>
+  <text x="372" y="360" text-anchor="middle" font-size="12" font-weight="bold" fill="#777">是</text>
+  <g filter="url(#sk)"><rect x="418" y="346" width="214" height="48" rx="8" fill="#f3f3f3" stroke="#999" stroke-width="1.4" stroke-dasharray="5 3"/></g>
+  <text x="525" y="366" text-anchor="middle" font-size="12" font-weight="bold" fill="#777">跳过该状态</text>
+  <text x="525" y="384" text-anchor="middle" font-size="10" fill="#999">能量耗尽，动弹不得</text>
+
+  <path d="M 220,410 L 220,434" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="232" y="428" font-size="12" font-weight="bold" fill="#2b6e9e">否</text>
+
+  <g filter="url(#sk)"><rect x="80" y="438" width="280" height="84" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/></g>
+  <text x="220" y="460" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">枚举 4 邻格，越界 / 'X' 丢弃</text>
+  <text x="220" y="482" text-anchor="middle" font-size="11" fill="#666">ne ← (目标 == 'R') ? E : e − 1</text>
+  <text x="220" y="502" text-anchor="middle" font-size="11" fill="#666">nmask ← mask | bit（踩 L 自动收集）</text>
+
+  <path d="M 220,522 L 220,546" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><polygon points="220,550 335,588 220,626 105,588" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="220" y="593" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">未访问过？</text>
+
+  <path d="M 335,588 L 409,588" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="368" y="578" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">是</text>
+  <g filter="url(#sk)"><rect x="413" y="564" width="219" height="48" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/></g>
+  <text x="522" y="584" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">标记 visited</text>
+  <text x="522" y="602" text-anchor="middle" font-size="10" fill="#555">加入下一层队列</text>
+
+  <!-- no-loop back to neighbors -->
+  <path d="M 220,626 L 220,634 L 58,634 L 58,480 L 76,480" stroke="#999" stroke-width="1.4" stroke-dasharray="5 3" fill="none" marker-end="url(#arK)" filter="url(#sk)"/>
+  <text x="232" y="620" font-size="11" font-weight="bold" fill="#777">否</text>
+  <text x="96" y="628" font-size="10" fill="#999">下一个邻格</text>
+
+  <!-- ===== right annotations ===== -->
+  <g filter="url(#sk)"><rect x="650" y="62" width="260" height="330" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="670" y="88" font-size="13" font-weight="bold" fill="#7a5415">实现要点</text>
+  <text x="670" y="118" font-size="11" fill="#444">· 判序不能反：先 mask==full</text>
+  <text x="670" y="138" font-size="11" fill="#444">   再 e==0 —— 最优解的</text>
+  <text x="670" y="158" font-size="11" fill="#444">   最后一步可能恰好耗尽能量</text>
+  <text x="670" y="188" font-size="11" fill="#444">· R 在「进入」时回满，可反复使用</text>
+  <text x="670" y="218" font-size="11" fill="#444">· 状态压成一维下标判重：</text>
+  <text x="670" y="238" font-size="11" font-family="Consolas,'Courier New',monospace" fill="#2b6e9e">idx=(mask·cells+pos)·(E+1)+e</text>
+  <text x="670" y="268" font-size="11" fill="#444">· 每个状态至多入队一次</text>
+  <text x="670" y="298" font-size="11" fill="#444">· L 收集后变空地，可重复经过</text>
+  <text x="670" y="328" font-size="11" fill="#444">· 同格不同掩码 / 能量 = 不同状态</text>
+  <text x="670" y="358" font-size="11" fill="#444">· visited 缺任何一维都会 WA</text>
+
+  <g filter="url(#sk)"><rect x="650" y="414" width="260" height="56" rx="8" fill="#f3f3f3" stroke="#999" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="780" y="438" text-anchor="middle" font-size="12" font-weight="bold" fill="#777">队列耗尽仍未全满</text>
+  <text x="780" y="458" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">→ 返回 −1（示例 3）</text>
+
+  <g filter="url(#sk)"><rect x="650" y="494" width="260" height="104" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.3"/></g>
+  <text x="670" y="520" font-size="12" font-weight="bold" fill="#7a5415">复杂度</text>
+  <text x="670" y="544" font-size="11" fill="#444">时间 / 空间同为 O(m·n·2^k·E)</text>
+  <text x="670" y="566" font-size="10" fill="#888">上界 20·20·1024·51 ≈ 2.1×10⁷</text>
+  <text x="670" y="586" font-size="10" fill="#888">（k 为垃圾个数，k ≤ 10）</text>
+</svg>
