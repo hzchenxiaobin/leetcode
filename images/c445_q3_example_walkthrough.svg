@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="548" viewBox="0 0 660 548" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="660" height="548" fill="#fdfcf7"/>
+  <text x="330" y="28" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例演算：s = "aabbaa"，k = 3</text>
+  <path d="M 200 38 Q 330 46 460 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="52" width="580" height="50" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="62" y="72" font-size="12.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">i = 0，rem = 3，P = 3</text>
+  <text x="62" y="92" font-size="12.5" fill="#444" filter="url(#sk)">试 c = 'a'：f = 3·2/3 = 2 ＜ 3 ⇒ k ← 3 − 2 = 1，整段跳过 a</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="112" width="580" height="50" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="62" y="132" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">试 c = 'b'：f = 3·1/3 = 1 ≥ 1 ⇒ 落位！</text>
+  <text x="62" y="152" font-size="12.5" fill="#444" filter="url(#sk)">half = "b"，cnt = {a:2}，P ← 1，进入下一位</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="172" width="580" height="50" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="62" y="192" font-size="12.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">i = 1，rem = 2，P = 1</text>
+  <text x="62" y="212" font-size="12.5" fill="#444" filter="url(#sk)">试 c = 'a'：f = 1·2/2 = 1 ≥ 1 ⇒ 落位，half = "ba"，P ← 1</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="232" width="580" height="50" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="62" y="252" font-size="12.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">i = 2，rem = 1，P = 1</text>
+  <text x="62" y="272" font-size="12.5" fill="#444" filter="url(#sk)">试 c = 'a'：f = 1·1/1 = 1 ≥ 1 ⇒ 落位，half = "baa"，P ← 1</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="300" width="580" height="64" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <g text-anchor="middle" fill="#7a5415" filter="url(#sk)">
+    <text x="330" y="322" font-size="12.5">拼接：半串 h = "baa"（偶长无中心）＋ 镜像 rev(h) = "aab"</text>
+    <text x="330" y="350" font-size="17" font-weight="bold">答案 = "baa" + "aab" = "baaaab"</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="382" width="580" height="96" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <g text-anchor="middle" fill="#2e6e2e" filter="url(#sk)">
+    <text x="330" y="406" font-size="12.5">验证：全部回文排列按字典序升序</text>
+    <text x="330" y="430" font-size="13.5" font-weight="bold">"aabbaa" ＜ "abaaba" ＜ "baaaab"</text>
+    <text x="330" y="458" font-size="12.5">第 3 小正是 "baaaab"，与逐位演算结果一致 ✓</text>
+  </g>
+
+  <g text-anchor="middle" filter="url(#sk)">
+    <text x="330" y="506" font-size="12" font-weight="bold" fill="#2b6e9e">跳过 a 开头的整段（2 个排列）只花 O(26)，根本没有生成它们</text>
+    <text x="330" y="528" font-size="11.5" fill="#666">这就是「数排名」优于「枚举排名」的关键：用计数代替生成</text>
+  </g>
+</svg>
