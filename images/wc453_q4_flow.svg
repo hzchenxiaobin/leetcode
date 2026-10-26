@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：区间 cost 表 O(n³) + 划分 DP O(n²)</text>
+
+  <!-- 第一层 -->
+  <rect x="24" y="40" width="512" height="222" fill="#f0f4fa" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="62" text-anchor="middle" font-size="12.5" fill="#446688" font-weight="bold" filter="url(#rough2)">第 1 层：对每个区间 [i, j] 求 cost[i][j]</text>
+
+  <!-- 分支 A：正序 -->
+  <rect x="44" y="80" width="128" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="108" y="99" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold" filter="url(#rough2)">正序：a = s[p], b = t[p]</text>
+  <text x="108" y="116" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">p 逐位扫 [i..j]</text>
+
+  <rect x="200" y="80" width="118" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="259" y="99" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold" filter="url(#rough2)">桶计数 cnt[a][b]</text>
+  <text x="259" y="116" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">P 增量 O(1) 维护</text>
+
+  <rect x="346" y="80" width="118" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="405" y="99" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold" filter="url(#rough2)">cost_A = M_A − P_A</text>
+  <text x="405" y="116" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">错配数 − 配对数</text>
+
+  <path d="M 172 103 L 198 103" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 318 103 L 344 103" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 分支 B：镜像 -->
+  <rect x="44" y="146" width="128" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="108" y="165" text-anchor="middle" font-size="10.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">镜像：a = s[i+j−p]</text>
+  <text x="108" y="182" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">区间内反转，别写 n−1−p</text>
+
+  <rect x="200" y="146" width="118" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="259" y="165" text-anchor="middle" font-size="10.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">桶计数 + 反转费 1</text>
+  <text x="259" y="182" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">比较 s[i+j−p] ↔ t[p]</text>
+
+  <rect x="346" y="146" width="118" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="405" y="165" text-anchor="middle" font-size="10.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">cost_B = 1 + M_B − P_B</text>
+  <text x="405" y="182" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">别忘了 +1</text>
+
+  <path d="M 172 169 L 198 169" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 318 169 L 344 169" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 汇合 min -->
+  <polygon points="452,163 496,137 540,163 496,189" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="496" y="168" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">min</text>
+
+  <path d="M 464 103 Q 478 112 486 130" fill="none" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 464 169 Q 472 168 482 166" fill="none" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="280" y="222" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">cost[i][j] = min(cost_A, cost_B) —— 一份循环体用 rev ∈ {0,1} 统一两种情形</text>
+  <text x="280" y="243" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">全部区间合计约 n³/3 ≈ 3×10⁵ 次字符比较（n = 100）</text>
+
+  <!-- 连接箭头 -->
+  <path d="M 280 262 L 280 288" stroke="#666" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="280" font-size="10" fill="#888" filter="url(#rough2)">段间独立，操作不跨段</text>
+
+  <!-- 第二层 -->
+  <rect x="24" y="294" width="512" height="92" fill="#f0f4fa" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="316" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">第 2 层：划分 DP</text>
+
+  <rect x="44" y="330" width="96" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="92" y="355" text-anchor="middle" font-size="11.5" fill="#333" font-weight="bold" filter="url(#rough2)">f[0] = 0</text>
+
+  <rect x="176" y="330" width="220" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="286" y="348" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">f[i] = min&#123; f[j] + cost[j][i−1] : 0≤j&lt;i &#125;</text>
+  <text x="286" y="364" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">最后一段取 [j, i−1]，枚举起点 j</text>
+
+  <rect x="432" y="330" width="88" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="476" y="355" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">答案 f[n]</text>
+
+  <path d="M 140 350 L 174 350" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 396 350 L 430 350" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 底部复杂度 -->
+  <rect x="24" y="396" width="512" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="413" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">时间 O(n³ + n²)，空间 O(n²)（边算边转移可 O(n)）—— n ≤ 100 绰绰有余</text>
+</svg>
