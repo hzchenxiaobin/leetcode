@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="700" viewBox="0 0 940 700" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="940" height="700" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">按位 DP：状态设计与插空式转移</text>
+  <path d="M 300 44 Q 470 52 640 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: state tuple ===== -->
+  <text x="470" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 状态 dp[j][i][carry][bits]：处理完下标 0..j−1 后的「加权和」</text>
+
+  <g font-size="16">
+    <g filter="url(#sk)"><rect x="60" y="96" width="190" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+    <text x="155" y="120" text-anchor="middle" fill="#2b6e9e" font-weight="bold" font-size="15">j</text>
+    <text x="155" y="140" text-anchor="middle" fill="#555" font-size="10">处理到的下标 0..n−1（= 位序）</text>
+
+    <g filter="url(#sk)"><rect x="280" y="96" width="190" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+    <text x="375" y="120" text-anchor="middle" fill="#2b6e9e" font-weight="bold" font-size="15">i</text>
+    <text x="375" y="140" text-anchor="middle" fill="#555" font-size="10">已用元素个数 0..m</text>
+
+    <g filter="url(#sk)"><rect x="500" y="96" width="190" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/></g>
+    <text x="595" y="120" text-anchor="middle" fill="#b03a3a" font-weight="bold" font-size="15">carry</text>
+    <text x="595" y="140" text-anchor="middle" fill="#555" font-size="10">进入第 j 位的进位 ≤ ⌊m/2⌋</text>
+
+    <g filter="url(#sk)"><rect x="720" y="96" width="190" height="56" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="815" y="120" text-anchor="middle" fill="#2e6e2e" font-weight="bold" font-size="15">bits</text>
+    <text x="815" y="140" text-anchor="middle" fill="#555" font-size="10">已累计置位 0..k</text>
+  </g>
+  <text x="470" y="174" text-anchor="middle" font-size="11" fill="#666">dp 值 = 这些部分方案「排列数 × 乘积」之和（mod 10⁹+7）</text>
+
+  <!-- ===== Panel 2: transition ===== -->
+  <text x="470" y="206" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">② 转移：在第 j 位（下标 j）选 c 次，c = 0..m−i</text>
+
+  <!-- left state -->
+  <g filter="url(#sk)">
+    <rect x="70" y="232" width="180" height="80" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="160" y="262" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold">(j, i, carry, bits)</text>
+  <text x="160" y="288" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">dp[j][i][carry][bits]</text>
+
+  <path d="M 256 272 L 324 272" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- middle decision -->
+  <g filter="url(#sk)">
+    <rect x="330" y="226" width="230" height="92" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="445" y="252" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">本位选 c 次，t = c + carry</text>
+  <text x="445" y="278" text-anchor="middle" font-size="12.5" fill="#444" font-family="monospace">进位 ← ⌊t/2⌋，置位 +（t mod 2）</text>
+  <text x="445" y="304" text-anchor="middle" font-size="12" fill="#b03a3a" font-family="monospace" font-weight="bold">权重 ×C(i+c, c)·nums[j]^c</text>
+
+  <path d="M 566 272 L 634 272" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- right state -->
+  <g filter="url(#sk)">
+    <rect x="640" y="226" width="230" height="92" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="755" y="252" text-anchor="middle" font-size="12.5" fill="#2e6e2e" font-weight="bold">(j+1, i+c, ⌊t/2⌋, bits+t mod 2)</text>
+  <text x="755" y="278" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">dp[j+1][i+c][t/2][bits+t%2]</text>
+  <text x="755" y="304" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">+= dp · C(i+c,c) · nums[j]^c</text>
+
+  <!-- pruning branch -->
+  <path d="M 445 322 L 445 346" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="330" y="350" width="230" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="445" y="372" text-anchor="middle" font-size="11.5" fill="#b03a3a" font-weight="bold">bits + t mod 2 &gt; k</text>
+  <text x="445" y="392" text-anchor="middle" font-size="10.5" fill="#b03a3a">→ 剪枝丢弃（bits 单调不减，安全）</text>
+
+  <!-- ===== Panel 3: insertion (gap) counting ===== -->
+  <text x="470" y="432" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">③ 插空系数 C(i+c, c)：把 c 个相同新元素并入已有 i 个元素的序列</text>
+
+  <text x="470" y="456" text-anchor="middle" font-size="11" fill="#666">例：已放好 i = 2 个元素（x、y 保序），插入 c = 2 个 z —— 在 i+c = 4 个最终位置中选 c = 2 个：</text>
+
+  <!-- 4 position boxes -->
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="330" y="470" width="44" height="34" fill="#f8f8f8" stroke="#999" stroke-width="1.2" rx="4" stroke-dasharray="4 3"/></g>
+    <text x="352" y="492" text-anchor="middle" fill="#999">x</text>
+    <g filter="url(#sk)"><rect x="382" y="470" width="44" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" rx="4"/></g>
+    <text x="404" y="492" text-anchor="middle" fill="#2e6e2e" font-weight="bold">z</text>
+    <g filter="url(#sk)"><rect x="434" y="470" width="44" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" rx="4"/></g>
+    <text x="456" y="492" text-anchor="middle" fill="#2e6e2e" font-weight="bold">z</text>
+    <g filter="url(#sk)"><rect x="486" y="470" width="44" height="34" fill="#f8f8f8" stroke="#999" stroke-width="1.2" rx="4" stroke-dasharray="4 3"/></g>
+    <text x="508" y="492" text-anchor="middle" fill="#999">y</text>
+  </g>
+  <g font-size="9" fill="#999" text-anchor="middle">
+    <text x="352" y="516">位 1</text>
+    <text x="404" y="516">位 2</text>
+    <text x="456" y="516">位 3</text>
+    <text x="508" y="516">位 4</text>
+  </g>
+  <text x="574" y="492" font-size="11.5" fill="#444" font-family="monospace">→ 得 x z z y</text>
+
+  <text x="470" y="540" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">全部 6 = C(4,2) 种：z z x y｜z x z y｜z x y z｜x z z y｜x z y z｜x y z z</text>
+  <text x="470" y="566" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">DP 沿途乘 C(i+c, c)，连乘恰为多重集排列数 m!/(c₀!·c₁!·…·cₙ₋₁!)</text>
+
+  <!-- ===== Panel 4: final states ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="592" width="820" height="88" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="618" font-size="13" font-weight="bold" fill="#2b6e9e">④ 终态：剩余进位补 popcount(carry) 个置位</text>
+  <text x="80" y="644" font-size="13" fill="#b03a3a" font-family="monospace" font-weight="bold">答案 = Σ_carry dp[n][m][carry][k − popcount(carry)]</text>
+  <text x="80" y="666" font-size="10.5" fill="#666">（仅当 popcount(carry) ≤ k 的终态才计入；carry = 0 时即普通的 bits = k）</text>
+</svg>

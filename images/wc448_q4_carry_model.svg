@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="780" viewBox="0 0 940 780" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="940" height="780" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：计数向量 + 逐位进位链</text>
+  <path d="M 300 44 Q 470 52 640 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: sequence -> count vector ===== -->
+  <text x="470" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 顺序无关：S 与乘积只由「每个下标被选中的次数 c」决定（示例 m=5, n=4）</text>
+
+  <text x="64" y="121" font-size="12" fill="#555" font-weight="bold">seq =</text>
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="120" y="100" width="46" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" rx="4"/></g>
+    <text x="143" y="121" text-anchor="middle" fill="#2b4a6e" font-weight="bold">3</text>
+    <g filter="url(#sk)"><rect x="172" y="100" width="46" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" rx="4"/></g>
+    <text x="195" y="121" text-anchor="middle" fill="#2b4a6e" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="224" y="100" width="46" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" rx="4"/></g>
+    <text x="247" y="121" text-anchor="middle" fill="#2b4a6e" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="276" y="100" width="46" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" rx="4"/></g>
+    <text x="299" y="121" text-anchor="middle" fill="#2b4a6e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="328" y="100" width="46" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" rx="4"/></g>
+    <text x="351" y="121" text-anchor="middle" fill="#2b4a6e" font-weight="bold">3</text>
+  </g>
+  <text x="404" y="121" font-size="11" fill="#999">长度 m=5，元素是下标</text>
+
+  <path d="M 200 140 Q 214 158 226 172" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="162" font-size="10.5" fill="#666">按出现次数统计</text>
+
+  <text x="64" y="197" font-size="12" fill="#555" font-weight="bold">c =</text>
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="120" y="176" width="54" height="32" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" rx="4"/></g>
+    <text x="147" y="197" text-anchor="middle" fill="#2e6e2e" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="186" y="176" width="54" height="32" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" rx="4"/></g>
+    <text x="213" y="197" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="252" y="176" width="54" height="32" fill="#f0ede4" stroke="#bbb" stroke-width="1.2" rx="4"/></g>
+    <text x="279" y="197" text-anchor="middle" fill="#999" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="318" y="176" width="54" height="32" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" rx="4"/></g>
+    <text x="345" y="197" text-anchor="middle" fill="#2e6e2e" font-weight="bold">2</text>
+  </g>
+  <g font-size="9.5" fill="#888" text-anchor="middle">
+    <text x="147" y="222">下标 0</text>
+    <text x="213" y="222">下标 1</text>
+    <text x="279" y="222">下标 2</text>
+    <text x="345" y="222">下标 3</text>
+  </g>
+  <text x="420" y="190" font-size="12" fill="#444" font-family="monospace">S = 2·2⁰ + 1·2¹ + 0·2² + 2·2³ = 20</text>
+  <text x="420" y="212" font-size="12" fill="#444" font-family="monospace">= 10100₂，置位数 2</text>
+
+  <!-- right note box -->
+  <g filter="url(#sk)">
+    <rect x="640" y="96" width="270" height="118" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="655" y="118" font-size="12" font-weight="bold" fill="#7a5415">顺序无关性</text>
+  <text x="655" y="140" font-size="10.5" fill="#444">重排成 [0,3,1,0,3]：S 与乘积都不变</text>
+  <text x="655" y="160" font-size="10.5" fill="#444">本计数向量的排列数</text>
+  <text x="655" y="180" font-size="12" fill="#b03a3a" font-family="monospace" font-weight="bold">= 5!/(2!·1!·0!·2!) = 30</text>
+  <text x="655" y="202" font-size="10" fill="#666">组贡献 = 30 · nums[0]²·nums[1]·nums[3]²</text>
+
+  <!-- ===== Panel 2: column addition table ===== -->
+  <text x="470" y="254" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">② 竖式加法：进位链决定每一个二进制位</text>
+
+  <!-- header row -->
+  <g font-size="11.5">
+    <text x="140" y="296" text-anchor="end" fill="#555" font-weight="bold">位序 j</text>
+    <g filter="url(#sk)"><rect x="166" y="274" width="88" height="32" fill="#f0ede4" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="210" y="295" text-anchor="middle" fill="#555" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="286" y="274" width="88" height="32" fill="#f0ede4" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="330" y="295" text-anchor="middle" fill="#555" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="406" y="274" width="88" height="32" fill="#f0ede4" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="450" y="295" text-anchor="middle" fill="#555" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="526" y="274" width="88" height="32" fill="#f0ede4" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="570" y="295" text-anchor="middle" fill="#555" font-weight="bold">3</text>
+    <g filter="url(#sk)"><rect x="656" y="274" width="148" height="32" fill="#f0ede4" stroke="#c98a2b" stroke-width="1.4" rx="4"/></g>
+    <text x="730" y="295" text-anchor="middle" fill="#7a5415" font-weight="bold">尾部（第 ≥4 位）</text>
+  </g>
+
+  <!-- row: counts -->
+  <g font-size="12.5">
+    <text x="140" y="330" text-anchor="end" fill="#555" font-weight="bold" font-size="11.5">计数 c</text>
+    <g filter="url(#sk)"><rect x="166" y="308" width="88" height="32" fill="#ffffff" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="210" y="329" text-anchor="middle" fill="#2e6e2e" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="286" y="308" width="88" height="32" fill="#ffffff" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="330" y="329" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="406" y="308" width="88" height="32" fill="#ffffff" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="450" y="329" text-anchor="middle" fill="#999" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="526" y="308" width="88" height="32" fill="#ffffff" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="570" y="329" text-anchor="middle" fill="#2e6e2e" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="656" y="308" width="148" height="32" fill="#ffffff" stroke="#eee" stroke-width="1.2" rx="4"/></g>
+    <text x="730" y="329" text-anchor="middle" fill="#bbb">—</text>
+  </g>
+
+  <!-- row: carry in -->
+  <g font-size="12.5">
+    <text x="140" y="364" text-anchor="end" fill="#b03a3a" font-weight="bold" font-size="11.5">进位输入</text>
+    <g filter="url(#sk)"><rect x="166" y="342" width="88" height="32" fill="#fce4ec" stroke="#e0a0a0" stroke-width="1.2" rx="4"/></g>
+    <text x="210" y="363" text-anchor="middle" fill="#b03a3a" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="286" y="342" width="88" height="32" fill="#fce4ec" stroke="#e0a0a0" stroke-width="1.2" rx="4"/></g>
+    <text x="330" y="363" text-anchor="middle" fill="#b03a3a" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="406" y="342" width="88" height="32" fill="#fce4ec" stroke="#e0a0a0" stroke-width="1.2" rx="4"/></g>
+    <text x="450" y="363" text-anchor="middle" fill="#b03a3a" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="526" y="342" width="88" height="32" fill="#fce4ec" stroke="#e0a0a0" stroke-width="1.2" rx="4"/></g>
+    <text x="570" y="363" text-anchor="middle" fill="#b03a3a" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="656" y="342" width="148" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="4"/></g>
+    <text x="730" y="363" text-anchor="middle" fill="#b03a3a" font-weight="bold">1</text>
+  </g>
+
+  <!-- row: total t -->
+  <g font-size="12.5">
+    <text x="140" y="398" text-anchor="end" fill="#555" font-weight="bold" font-size="11.5">合计 t</text>
+    <g filter="url(#sk)"><rect x="166" y="376" width="88" height="32" fill="#ffffff" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="210" y="397" text-anchor="middle" fill="#444" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="286" y="376" width="88" height="32" fill="#ffffff" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="330" y="397" text-anchor="middle" fill="#444" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="406" y="376" width="88" height="32" fill="#ffffff" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="450" y="397" text-anchor="middle" fill="#444" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="526" y="376" width="88" height="32" fill="#ffffff" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="570" y="397" text-anchor="middle" fill="#444" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="656" y="376" width="148" height="32" fill="#ffffff" stroke="#eee" stroke-width="1.2" rx="4"/></g>
+    <text x="730" y="397" text-anchor="middle" fill="#bbb">(1)</text>
+  </g>
+
+  <!-- row: result bit -->
+  <g font-size="13">
+    <text x="140" y="432" text-anchor="end" fill="#2b6e9e" font-weight="bold" font-size="11.5">结果位</text>
+    <g filter="url(#sk)"><rect x="166" y="410" width="88" height="32" fill="#f8f8f8" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="210" y="431" text-anchor="middle" fill="#888" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="286" y="410" width="88" height="32" fill="#f8f8f8" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="330" y="431" text-anchor="middle" fill="#888" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="406" y="410" width="88" height="32" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2" rx="4"/></g>
+    <text x="450" y="431" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="526" y="410" width="88" height="32" fill="#f8f8f8" stroke="#ccc" stroke-width="1.2" rx="4"/></g>
+    <text x="570" y="431" text-anchor="middle" fill="#888" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="656" y="410" width="148" height="32" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2" rx="4"/></g>
+    <text x="730" y="431" text-anchor="middle" fill="#2e6e2e" font-weight="bold">+1 置位</text>
+  </g>
+
+  <!-- row: carry out -->
+  <g font-size="12.5">
+    <text x="140" y="466" text-anchor="end" fill="#b03a3a" font-weight="bold" font-size="11.5">进位输出</text>
+    <g filter="url(#sk)"><rect x="166" y="444" width="88" height="32" fill="#ffffff" stroke="#e0a0a0" stroke-width="1.2" rx="4"/></g>
+    <text x="210" y="465" text-anchor="middle" fill="#b03a3a" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="286" y="444" width="88" height="32" fill="#ffffff" stroke="#e0a0a0" stroke-width="1.2" rx="4"/></g>
+    <text x="330" y="465" text-anchor="middle" fill="#b03a3a" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="406" y="444" width="88" height="32" fill="#ffffff" stroke="#e0a0a0" stroke-width="1.2" rx="4"/></g>
+    <text x="450" y="465" text-anchor="middle" fill="#b03a3a" font-weight="bold">0</text>
+    <g filter="url(#sk)"><rect x="526" y="444" width="88" height="32" fill="#ffffff" stroke="#e0a0a0" stroke-width="1.2" rx="4"/></g>
+    <text x="570" y="465" text-anchor="middle" fill="#b03a3a" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="656" y="444" width="148" height="32" fill="#ffffff" stroke="#eee" stroke-width="1.2" rx="4"/></g>
+    <text x="730" y="465" text-anchor="middle" fill="#bbb">—</text>
+  </g>
+
+  <!-- carry flow arrows in the gaps -->
+  <path d="M 258 462 Q 272 420 286 378" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <path d="M 378 462 Q 392 420 406 378" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <path d="M 498 462 Q 512 420 526 378" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <path d="M 618 462 Q 640 420 656 378" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="270" y="500" font-size="9.5" fill="#b85450">← 进位自低位流向高位 →</text>
+
+  <!-- assembly lines -->
+  <text x="470" y="510" text-anchor="middle" font-size="12" fill="#444" font-family="monospace">拼接（高位→低位）：尾部 1 ｜ b₃=0 ｜ b₂=1 ｜ b₁=0 ｜ b₀=0 → S = 10100₂ = 20</text>
+  <text x="470" y="532" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace" font-weight="bold">置位总数 = 0+0+1+0（各位）+ 1（尾部）= 2 ✓</text>
+
+  <!-- ===== Panel 3: recurrence formulas ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="552" width="820" height="96" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="578" font-size="13" font-weight="bold" fill="#2b6e9e">③ 进位递推（初始 carry₀ = 0）</text>
+  <text x="80" y="602" font-size="12.5" fill="#444" font-family="monospace">第 j 位：t = c + carry → 结果位 = t mod 2，新进位 = ⌊t / 2⌋</text>
+  <text x="80" y="628" font-size="12.5" fill="#b03a3a" font-family="monospace" font-weight="bold">处理完 n 位后：总置位 = Σ(结果位) + popcount(尾部 carry)</text>
+
+  <!-- key insight -->
+  <g filter="url(#sk)">
+    <rect x="60" y="664" width="820" height="92" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="690" font-size="12" font-weight="bold" fill="#2b2b2b">关键洞察</text>
+  <text x="80" y="712" font-size="11.5" fill="#444">下标顺序 = 二进制位序 → 沿下标 0 → n−1 逐位决策 c，同步维护（已用元素数 i，进位 carry，置位数 bits）</text>
+  <text x="80" y="736" font-size="11.5" fill="#2e6e2e" font-weight="bold">把 50³⁰ 个序列压缩成 O(n·m²·k) 个状态的按位 DP</text>
+</svg>

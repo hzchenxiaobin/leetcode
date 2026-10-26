@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="610" viewBox="0 0 940 610" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="940" height="610" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例 2 演算：m=2, k=2, nums=[5,4,3,2,1] → 170</text>
+  <path d="M 290 44 Q 470 52 650 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: two classes of count vectors ===== -->
+  <text x="470" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 计数向量只有两类（Σc = 2，n = 5）</text>
+
+  <!-- left: same index -->
+  <g filter="url(#sk)">
+    <rect x="70" y="94" width="370" height="180" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="255" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">A. 同下标：c = (…,2,…)，如序列 (0,0)</text>
+  <text x="90" y="148" font-size="11.5" fill="#444" font-family="monospace">第 a 位：t = 2 + 0 = 2 → 该位 0，进位 1</text>
+  <text x="90" y="170" font-size="11.5" fill="#444" font-family="monospace">尾部：进位 1 → 再补 popcount(1) = 1 个置位</text>
+  <text x="90" y="196" font-size="12.5" fill="#b03a3a" font-family="monospace" font-weight="bold">总置位 = 0 + 1 = 1 ≠ 2 ✗</text>
+  <text x="90" y="222" font-size="10.5" fill="#888">即 S = 2·2ᵃ = 2ᵃ⁺¹，popcount 恒为 1</text>
+  <text x="90" y="248" font-size="11" fill="#666">5 个同下标对全部排除（nums[a]² 不计入）</text>
+
+  <!-- right: distinct indices -->
+  <g filter="url(#sk)">
+    <rect x="500" y="94" width="370" height="180" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="685" y="120" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">B. 异下标：c = (…,1,…,1,…)，如 (0,1)</text>
+  <text x="520" y="148" font-size="11.5" fill="#444" font-family="monospace">第 a 位：t = 1 → 该位 1，进位 0</text>
+  <text x="520" y="170" font-size="11.5" fill="#444" font-family="monospace">第 b 位：t = 1 → 该位 1，进位 0（a ≠ b 无重叠）</text>
+  <text x="520" y="196" font-size="12.5" fill="#2e6e2e" font-family="monospace" font-weight="bold">总置位 = 1 + 1 = 2 = k ✓</text>
+  <text x="520" y="222" font-size="11" fill="#444" font-family="monospace">每组 {a,b} 的排列数 = 2!/(1!·1!) = 2</text>
+  <text x="520" y="248" font-size="11" fill="#444" font-family="monospace">组贡献 = 2 · nums[a] · nums[b]</text>
+
+  <!-- ===== Panel 2: summation ===== -->
+  <text x="470" y="306" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">② 对全部 C(5,2) = 10 组异下标对求和（恒等式：2·Σ_{a&lt;b} xy = (Σx)² − Σx²）</text>
+
+  <g filter="url(#sk)">
+    <rect x="140" y="322" width="660" height="96" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="350" text-anchor="middle" font-size="13" fill="#444" font-family="monospace">答案 = 2 · Σ_{a&lt;b} nums[a]·nums[b]</text>
+  <text x="470" y="376" text-anchor="middle" font-size="13" fill="#444" font-family="monospace">　　　= (Σ nums)² − Σ nums² = 15² − (25+16+9+4+1)</text>
+  <text x="470" y="404" text-anchor="middle" font-size="13.5" fill="#2e6e2e" font-family="monospace" font-weight="bold">　　　= 225 − 55 = 170 ✓</text>
+
+  <!-- ===== Panel 3: DP view ===== -->
+  <g filter="url(#sk)">
+    <rect x="70" y="444" width="800" height="86" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="90" y="470" font-size="12.5" font-weight="bold" fill="#2b6e9e">③ DP 视角验证</text>
+  <text x="90" y="492" font-size="11.5" fill="#444" font-family="monospace">j = 0..4 每层枚举 c = 0/1/2；c = 2 的转移「本位 0 + 尾部 1 = 1 ≠ 2」全被剪掉</text>
+  <text x="90" y="514" font-size="11.5" fill="#444" font-family="monospace">c = 0/1 的转移在 i = 2、bits = 2 处汇合，终态 carry = 0、popcount(0) = 0 → 答案 170</text>
+
+  <text x="470" y="566" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold">与示例输出一致：170 ✓</text>
+</svg>
