@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="400" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">拼接不构造大数：整除信息压缩成 (mask, r)</text>
+  <path d="M 170 38 Q 320 46 470 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="320" y="62" text-anchor="middle" font-size="11.5" fill="#555">取示例 1 中的一步：已拼 A = 3（余数 r = 3），接着拼 x = 12（十进制位数 L = 2）</text>
+
+  <g filter="url(#sk)"><rect x="48" y="88" width="136" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="116" y="112" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5b84">已拼 A = 3</text>
+  <text x="116" y="134" text-anchor="middle" font-size="11" fill="#446688">r = A mod 5 = 3</text>
+
+  <g filter="url(#sk)"><path d="M 188 120 L 236 120" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrb)"/></g>
+  <text x="212" y="106" text-anchor="middle" font-size="10.5" fill="#446688">拼上</text>
+
+  <g filter="url(#sk)"><rect x="240" y="88" width="136" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="308" y="112" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e">待拼 x = 12</text>
+  <text x="308" y="134" text-anchor="middle" font-size="11" fill="#4a7a3a">L = 2，x mod 5 = 2</text>
+
+  <g filter="url(#sk)"><path d="M 380 120 L 418 120" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrb)"/></g>
+
+  <g filter="url(#sk)"><rect x="422" y="88" width="170" height="64" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="507" y="108" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">A′ = A·10^L + x = 312</text>
+  <text x="507" y="128" text-anchor="middle" font-size="11" fill="#7a5415">312 mod 5 = 2</text>
+  <text x="507" y="146" text-anchor="middle" font-size="9.5" fill="#8a6a2a">拼接 = 旧数左移 L 位再相加</text>
+
+  <g filter="url(#sk)"><rect x="48" y="192" width="272" height="86" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="184" y="214" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">✗ 真把大数拼出来判整除</text>
+  <text x="184" y="238" text-anchor="middle" font-size="10.5" fill="#444">13 个数全部连接：最长 6 × 13 = 78 位</text>
+  <text x="184" y="258" text-anchor="middle" font-size="10.5" fill="#444">≈ 10^78 —— 任何整型都装不下</text>
+
+  <g filter="url(#sk)"><rect x="336" y="192" width="256" height="86" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="464" y="214" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">✓ mod 转移只碰小数</text>
+  <text x="464" y="238" text-anchor="middle" font-size="10.5" fill="#444">A′ mod k = ( r·(10^L mod k) + x ) mod k</text>
+  <text x="464" y="258" text-anchor="middle" font-size="10.5" fill="#444">= (3·0 + 2) mod 5 = 2，全程只用小于 k 的数</text>
+
+  <g filter="url(#sk)">
+    <rect x="48" y="296" width="544" height="88" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="320" y="322" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">拼接的整除信息 ⇨ 完整压缩为 (已用集合 mask, 当前余数 r)</text>
+  <text x="320" y="344" text-anchor="middle" font-size="10.5" fill="#444">mask：已用数字的下标集合，2^13 = 8192 种；r ∈ [0, k)：至多 100 种</text>
+  <text x="320" y="366" text-anchor="middle" font-size="10.5" fill="#444">最坏 8.2×10^5 个状态，每个至多 13 次转移 —— 排列问题坍缩成规模可控的 DP</text>
+</svg>
