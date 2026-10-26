@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="440" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">三件套：把每轮 O(n) 的动作换成快器件</text>
+  <path d="M 150 36 Q 320 44 490 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Row 1 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="56" width="250" height="54" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="155" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a34">① 选出「和最小、平局最左」的相邻对</text>
+  <text x="155" y="98" text-anchor="middle" font-size="11.5" fill="#8a3a34">暴力：每轮全量扫描 O(n)</text>
+  <path d="M 286 83 L 354 83" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="360" y="56" width="250" height="54" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="485" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#28527c">最小堆：(和, 左端点) 二元组</text>
+  <text x="485" y="98" text-anchor="middle" font-size="11.5" fill="#28527c">弹出即「最小和、并列最左」O(log n)</text>
+
+  <!-- Row 2 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="126" width="250" height="54" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="155" y="148" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a34">② 合并两数，并从数组中间删一格</text>
+  <text x="155" y="168" text-anchor="middle" font-size="11.5" fill="#8a3a34">暴力：erase 后整体搬移 O(n)</text>
+  <path d="M 286 153 L 354 153" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="360" y="126" width="250" height="54" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="485" y="148" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">双向链表 prv / nxt（数组模拟）</text>
+  <text x="485" y="168" text-anchor="middle" font-size="11.5" fill="#2e6e2e">O(1) 摘下一个节点、接回两侧</text>
+
+  <!-- Row 3 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="196" width="250" height="54" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="155" y="218" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a34">③ 判定整个数组是否非递减</text>
+  <text x="155" y="238" text-anchor="middle" font-size="11.5" fill="#8a3a34">暴力：逐对扫描 O(n)</text>
+  <path d="M 286 223 L 354 223" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="360" y="196" width="250" height="54" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="485" y="218" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#28527c">bad = 逆序相邻对个数</text>
+  <text x="485" y="238" text-anchor="middle" font-size="11.5" fill="#28527c">bad == 0 ⇔ 非递减，增删 O(1)</text>
+
+  <!-- Bottom warning box -->
+  <g filter="url(#sk)">
+    <rect x="30" y="266" width="580" height="152" rx="10" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="292" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415">⚠ 隐藏考点：负数让堆条目过期 → 惰性删除</text>
+  <text x="320" y="318" text-anchor="middle" font-size="11.5" fill="#7a5415">元素范围 [−10⁹, 10⁹]：合并「大数 + 负数」后现和可能变小，</text>
+  <text x="320" y="338" text-anchor="middle" font-size="11.5" fill="#7a5415">堆里残留的旧条目可能比一切现和都小——不校验就会取错对！</text>
+  <text x="320" y="366" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a34">旧条目不主动删除；弹出时做三合一校验：</text>
+  <text x="320" y="386" text-anchor="middle" font-size="12" fill="#2b2b2b">alive[i] 且 nxt[i] ≠ −1 且 val[i] + val[nxt[i]] == s</text>
+  <text x="320" y="406" text-anchor="middle" font-size="11.5" fill="#7a5415">不通过 ⇒ 直接丢弃继续弹；通过 ⇒ 恰是「最小和、平局最左」的现行对</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="430" viewBox="0 0 560 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="430" fill="#fdfcf7"/>
+  <text x="280" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：判有序 → 找最小对 → 合并，循环到非递减</text>
+  <path d="M 110 38 Q 280 45 450 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 起点 -->
+  <g filter="url(#sk)">
+    <rect x="175" y="52" width="210" height="36" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="280" y="74" text-anchor="middle" font-size="12.5" fill="#2b2b2b">读入 nums，ops = 0</text>
+  <path d="M 280 88 L 280 100" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 判定：非递减？ -->
+  <g filter="url(#sk)">
+    <path d="M 280 102 L 400 146 L 280 190 L 160 146 Z" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="141" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">非递减？</text>
+  <text x="280" y="159" text-anchor="middle" font-size="10.5" fill="#7a5415">（逐对检查 a ≤ b，相等合法）</text>
+  <text x="410" y="128" font-size="12" font-weight="bold" fill="#2e6e2e">是</text>
+  <path d="M 400 146 L 424 146" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="428" y="126" width="112" height="40" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="484" y="150" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">返回 ops ✓</text>
+  <text x="292" y="204" font-size="12" font-weight="bold" fill="#b85450">否</text>
+  <path d="M 280 190 L 280 204" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 找和最小相邻对 -->
+  <g filter="url(#sk)">
+    <rect x="160" y="208" width="240" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="280" y="226" text-anchor="middle" font-size="12" fill="#2b2b2b">扫一遍找和最小相邻对 best</text>
+  <text x="280" y="243" text-anchor="middle" font-size="10.5" fill="#4a8edb">严格 &lt; 才更新 ⇒ 并列时自动保留最左对</text>
+  <path d="M 280 252 L 280 264" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 合并 -->
+  <g filter="url(#sk)">
+    <rect x="160" y="268" width="240" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="280" y="287" text-anchor="middle" font-size="11.5" font-family="monospace" fill="#2b2b2b">nums[best] += nums[best+1]</text>
+  <text x="280" y="304" text-anchor="middle" font-size="10.5" fill="#4a8edb">删除右格，ops++，长度 −1</text>
+
+  <!-- 回环 -->
+  <path d="M 280 314 L 280 332 L 80 332" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 80 332 L 80 146 L 156 146" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="90" y="204" font-size="10.5" fill="#888">下一轮</text>
+
+  <!-- 底部注记 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="356" width="500" height="58" rx="10" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="280" y="378" text-anchor="middle" font-size="12" fill="#7a5415">每轮长度减 1 ⇒ 至多 n−1 轮；长度 1 的数组必非递减，不会死循环</text>
+  <text x="280" y="398" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">题面问「最小次数」，但过程零决策——模拟即最优，也是唯一解</text>
+</svg>
