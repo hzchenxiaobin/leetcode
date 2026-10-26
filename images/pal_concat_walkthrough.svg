@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 390"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="390" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">示例演算：s = “abcde”，t = “ecdba” → 5</text>
+
+  <!-- s 串格子 -->
+  <g filter="url(#rough2)">
+    <text x="42" y="60" font-size="12" fill="#446688">s =</text>
+    <rect x="66" y="46" width="28" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="94" y="46" width="28" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="122" y="46" width="28" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="150" y="46" width="28" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="178" y="46" width="28" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="80" y="64" text-anchor="middle" font-size="12" fill="#333">a</text>
+    <text x="108" y="64" text-anchor="middle" font-size="12" fill="#333">b</text>
+    <text x="136" y="64" text-anchor="middle" font-size="12" fill="#333">c</text>
+    <text x="164" y="64" text-anchor="middle" font-size="12" fill="#333">d</text>
+    <text x="192" y="64" text-anchor="middle" font-size="12" fill="#333">e</text>
+    <text x="0" y="0"></text>
+  </g>
+  <!-- t 串格子 -->
+  <g filter="url(#rough2)">
+    <text x="252" y="60" font-size="12" fill="#4a7a3a">t =</text>
+    <rect x="276" y="46" width="28" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="304" y="46" width="28" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="332" y="46" width="28" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="360" y="46" width="28" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="388" y="46" width="28" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="290" y="64" text-anchor="middle" font-size="12" fill="#333">e</text>
+    <text x="318" y="64" text-anchor="middle" font-size="12" fill="#333">c</text>
+    <text x="346" y="64" text-anchor="middle" font-size="12" fill="#333">d</text>
+    <text x="374" y="64" text-anchor="middle" font-size="12" fill="#333">b</text>
+    <text x="402" y="64" text-anchor="middle" font-size="12" fill="#333">a</text>
+  </g>
+  <text x="440" y="64" font-size="13" fill="#333" filter="url(#rough2)">p、q 全为 1</text>
+
+  <!-- 递推链（自下而上） -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="94" width="252" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10"/>
+    <text x="166" y="112" text-anchor="middle" font-size="12" fill="#333">dp[0][4]：a = a → 2 + dp[1][3]</text>
+    <text x="166" y="128" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">= 2 + 3 = 5 ★ 答案</text>
+
+    <rect x="40" y="152" width="252" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <text x="166" y="170" text-anchor="middle" font-size="12" fill="#333">dp[1][3]：b = b → 2 + dp[2][2]</text>
+    <text x="166" y="186" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040">= 2 + 1 = 3</text>
+
+    <rect x="40" y="210" width="252" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <text x="166" y="228" text-anchor="middle" font-size="12" fill="#333">dp[2][2]：c ≠ d → 停，核结算</text>
+    <text x="166" y="244" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a">= max(p[2], q[2]) = 1</text>
+
+    <path d="M166,210 L166,196" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+    <path d="M166,152 L166,138" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr2)"/>
+  </g>
+
+  <!-- 右侧边界小例 -->
+  <g filter="url(#rough2)">
+    <rect x="316" y="94" width="226" height="156" fill="#f5f5f5" stroke="#999" stroke-width="1.5" stroke-dasharray="6,4" rx="10"/>
+    <text x="429" y="116" text-anchor="middle" font-size="12" font-weight="bold" fill="#666">边界小例：s = “ab”，t = “ba”</text>
+    <text x="429" y="138" text-anchor="middle" font-size="11" fill="#333">dp[1][0]：b = b</text>
+    <text x="429" y="155" text-anchor="middle" font-size="11" fill="#333">= 2 + dp[2][−1] = 2 + 0 = 2</text>
+    <text x="429" y="172" text-anchor="middle" font-size="10" fill="#999">（i+1 = m 且 j−1 = −1：虚拟角兜底）</text>
+    <text x="429" y="196" text-anchor="middle" font-size="11" fill="#333">dp[0][1]：a = a</text>
+    <text x="429" y="213" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">= 2 + 2 = 4 ★</text>
+    <text x="429" y="236" text-anchor="middle" font-size="11" fill="#333">W = ab + ba = “abba”</text>
+  </g>
+
+  <!-- 底部结果 W -->
+  <g filter="url(#rough2)">
+    <text x="90" y="288" font-size="12" fill="#333">W = “abc” + “ba” =</text>
+    <rect x="230" y="272" width="34" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="4"/>
+    <rect x="264" y="272" width="34" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="298" y="272" width="34" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="332" y="272" width="34" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="366" y="272" width="34" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="4"/>
+    <text x="247" y="292" text-anchor="middle" font-size="13" fill="#333">a</text>
+    <text x="281" y="292" text-anchor="middle" font-size="13" fill="#333">b</text>
+    <text x="315" y="292" text-anchor="middle" font-size="13" fill="#333">c</text>
+    <text x="349" y="292" text-anchor="middle" font-size="13" fill="#333">b</text>
+    <text x="383" y="292" text-anchor="middle" font-size="13" fill="#333">a</text>
+    <text x="418" y="292" font-size="12" fill="#333">（k = 2 对翼 + 核 “c”）</text>
+    <text x="280" y="336" text-anchor="middle" font-size="12" fill="#666">递推链 dp[0][4] = 2 + (2 + 核) 正是把「剥两对皮 + 单字符核」折叠成一条链</text>
+    <text x="280" y="358" text-anchor="middle" font-size="12" fill="#666">每个格子只算一次：O(nm·min(n,m)) 塌缩为 O(nm)</text>
+  </g>
+</svg>
