@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：全积守恒 × 因子过滤 —— 两个 O(n) 的必要条件</text>
+  <path d="M 200 42 Q 470 50 740 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: example partition ===== -->
+  <text x="60" y="68" font-size="13" font-weight="bold" fill="#2b6e9e">① 示例 1：nums = [3, 1, 6, 8, 4]，target = 24 → 划分成两组，各自乘积都等于 24</text>
+
+  <!-- number boxes -->
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="90" y="80" width="46" height="34" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="113" y="102" text-anchor="middle" fill="#333">3</text>
+    <g filter="url(#sk)"><rect x="140" y="80" width="46" height="34" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="163" y="102" text-anchor="middle" fill="#333">1</text>
+    <g filter="url(#sk)"><rect x="190" y="80" width="46" height="34" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="213" y="102" text-anchor="middle" fill="#333">6</text>
+    <g filter="url(#sk)"><rect x="240" y="80" width="46" height="34" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="263" y="102" text-anchor="middle" fill="#333">8</text>
+    <g filter="url(#sk)"><rect x="290" y="80" width="46" height="34" fill="#f7f5ee" stroke="#999" stroke-width="1.1" rx="4"/></g>
+    <text x="313" y="102" text-anchor="middle" fill="#333">4</text>
+  </g>
+  <g filter="url(#sk)"><rect x="380" y="80" width="170" height="34" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" rx="6"/></g>
+  <text x="465" y="102" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">target = 24</text>
+
+  <!-- arrows from elements to groups -->
+  <path d="M 113,116 Q 120,138 152,150" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <path d="M 263,116 Q 232,138 212,150" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <path d="M 163,116 Q 228,140 318,150" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 213,116 Q 282,140 382,150" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 313,116 Q 372,140 442,150" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- group boxes -->
+  <g filter="url(#sk)"><rect x="90" y="152" width="180" height="62" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5" rx="8"/></g>
+  <text x="180" y="176" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">A = {3, 8}</text>
+  <text x="180" y="200" text-anchor="middle" font-size="12" fill="#444">积 = 3 × 8 = 24 ✓</text>
+  <g filter="url(#sk)"><rect x="330" y="152" width="240" height="62" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5" rx="8"/></g>
+  <text x="450" y="176" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">B = {1, 6, 4}</text>
+  <text x="450" y="200" text-anchor="middle" font-size="12" fill="#444">积 = 1 × 6 × 4 = 24 ✓</text>
+
+  <!-- conservation formula box -->
+  <g filter="url(#sk)"><rect x="610" y="70" width="280" height="144" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" rx="8"/></g>
+  <text x="750" y="94" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">守恒检查（O(n)）</text>
+  <text x="750" y="122" text-anchor="middle" font-size="12" fill="#444">∏nums = 3·1·6·8·4 = 576</text>
+  <text x="750" y="148" text-anchor="middle" font-size="12" fill="#444">target² = 24² = 576</text>
+  <text x="750" y="182" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">576 = 576 ✓ 守恒成立</text>
+
+  <!-- ===== Panel 2: observation 1 ===== -->
+  <g filter="url(#sk)"><rect x="60" y="238" width="820" height="118" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" rx="8"/></g>
+  <text x="80" y="262" font-size="13" font-weight="bold" fill="#2b6e9e">② 观察 1（全积守恒）：合法划分 ⟹ ∏nums = target²</text>
+  <text x="80" y="288" font-size="11" fill="#444">A、B 不相交且覆盖全部元素 → 两个子集积相乘 = 全体元素之积</text>
+  <text x="80" y="312" font-size="11" fill="#444">故 ∏nums = target × target 是必要条件；不相等 → 秒判 false（示例 2：210 ≠ 15²）</text>
+  <text x="80" y="338" font-size="11" fill="#b03a3a">⚠ 全积上界 100¹² = 10²⁴ 溢出 64 位 → C++ 用 __int128，Python 大数天然安全</text>
+
+  <!-- ===== Panel 3: observation 2 ===== -->
+  <g filter="url(#sk)"><rect x="60" y="372" width="820" height="118" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="8"/></g>
+  <text x="80" y="396" font-size="13" font-weight="bold" fill="#2e6e2e">③ 观察 2（因子过滤）：每个 x 都必须整除 target</text>
+  <text x="80" y="422" font-size="11" fill="#444">x × (同组其余元素之积) = target，其余积为正整数 → x | target 且 x ≤ target</text>
+  <text x="80" y="446" font-size="11" fill="#444">示例 2：[2, 5, 3, 7]，target = 15 → 2 ∤ 15，不用枚举，秒判 false</text>
+  <text x="80" y="472" font-size="11" fill="#888">比「守恒」更早暴露外来因子；两道关卡都是 O(n)</text>
+
+  <!-- ===== insight ===== -->
+  <g filter="url(#sk)"><rect x="60" y="506" width="820" height="130" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3" rx="8"/></g>
+  <text x="80" y="530" font-size="12" font-weight="bold" fill="#2b2b2b">观察 3：过两关后，只需找一个非空真子集 A 使 ∏A = target</text>
+  <text x="80" y="556" font-size="11" fill="#444">补集积由守恒自动 = target² ÷ target = target；真子集 ⟹ 补集非空 → 2ⁿ 枚举只查一侧</text>
+  <text x="80" y="582" font-size="11" fill="#b03a3a">⚠ 两关只是必要条件：[8,16,32], target = 64 时 8|64、16|64、32|64 且全积 4096 = 64² 全过，</text>
+  <text x="80" y="606" font-size="11" fill="#b03a3a">但 6 个非空真子集的积均 ≠ 64，答案 false —— 最终裁决必须靠枚举</text>
+</svg>
