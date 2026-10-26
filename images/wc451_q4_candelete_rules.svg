@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 640"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="sk" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="640" fill="#fafafa"/>
+  <text x="460" y="34" text-anchor="middle" font-size="19" fill="#2b2b2b" font-weight="bold" filter="url(#sk)">canDel[l][r]：区间能否完全删除 —— 首块规则</text>
+  <path d="M 240 44 Q 460 52 680 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <rect x="36" y="62" width="200" height="28" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="136" y="82" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#sk)">① 递推结构：整段 = 首块 + 余段</text>
+
+  <text x="70" y="126" font-size="13" fill="#666" filter="url(#sk)">区间 [l..r]：</text>
+  <rect x="170" y="102" width="50" height="48" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#sk)"/>
+  <text x="195" y="132" text-anchor="middle" font-size="17" fill="#446688" font-weight="bold" filter="url(#sk)">x</text>
+  <text x="195" y="168" text-anchor="middle" font-size="11" fill="#666" filter="url(#sk)">s[l]</text>
+  <rect x="228" y="102" width="150" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="303" y="122" text-anchor="middle" font-size="12" fill="#3d5a30" filter="url(#sk)">内部 [l+1..t−1]</text>
+  <text x="303" y="141" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#sk)">递归全删</text>
+  <rect x="386" y="102" width="50" height="48" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#sk)"/>
+  <text x="411" y="132" text-anchor="middle" font-size="17" fill="#446688" font-weight="bold" filter="url(#sk)">y</text>
+  <text x="411" y="168" text-anchor="middle" font-size="11" fill="#666" filter="url(#sk)">s[t]</text>
+  <path d="M 195 96 Q 303 62 411 96" stroke="#b85450" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <text x="303" y="66" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#sk)">x 与 y 字母表相邻（含 a↔z 环回）</text>
+  <rect x="444" y="102" width="150" height="48" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="519" y="122" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#sk)">余段 [t+1..r]</text>
+  <text x="519" y="141" text-anchor="middle" font-size="12.5" fill="#d6a040" font-weight="bold" filter="url(#sk)">递归全删</text>
+
+  <text x="70" y="212" font-size="13.5" fill="#3d5a30" filter="url(#sk)">canDel[l][r] = true ⟺ 存在 t ∈ (l, r]：x、y 相邻 且 canDel[l+1][t−1] 且 canDel[t+1][r]（空区间视为 true）</text>
+  <text x="70" y="236" font-size="12" fill="#888" filter="url(#sk)">「首块」= x + 内部 + y；首块本身嵌套消去，余段继续按首块分解，t 从 l+1 枚举到 r</text>
+
+  <rect x="36" y="262" width="200" height="28" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="136" y="282" text-anchor="middle" font-size="13" fill="#8a6a20" font-weight="bold" filter="url(#sk)">② 两个具体例子</text>
+
+  <text x="110" y="322" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#sk)">"bcda"（嵌套）</text>
+  <rect x="90" y="338" width="46" height="44" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="113" y="366" text-anchor="middle" font-size="18" fill="#333" filter="url(#sk)">b</text>
+  <rect x="142" y="338" width="46" height="44" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="165" y="366" text-anchor="middle" font-size="18" fill="#333" filter="url(#sk)">c</text>
+  <rect x="194" y="338" width="46" height="44" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="217" y="366" text-anchor="middle" font-size="18" fill="#333" filter="url(#sk)">d</text>
+  <rect x="246" y="338" width="46" height="44" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="269" y="366" text-anchor="middle" font-size="18" fill="#333" filter="url(#sk)">a</text>
+  <path d="M 113 330 Q 191 296 269 330" stroke="#b85450" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <path d="M 165 332 Q 191 314 217 332" stroke="#4a7a3a" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <text x="191" y="300" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">首块外壳 (b,a)</text>
+  <text x="191" y="412" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#sk)">t = 3：内部 "cd" 全删后，b、a 贴合并删除</text>
+
+  <text x="560" y="322" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#sk)">"abba"（拼接）</text>
+  <rect x="540" y="338" width="46" height="44" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="563" y="366" text-anchor="middle" font-size="18" fill="#333" filter="url(#sk)">a</text>
+  <rect x="592" y="338" width="46" height="44" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="615" y="366" text-anchor="middle" font-size="18" fill="#333" filter="url(#sk)">b</text>
+  <rect x="644" y="338" width="46" height="44" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="667" y="366" text-anchor="middle" font-size="18" fill="#333" filter="url(#sk)">b</text>
+  <rect x="696" y="338" width="46" height="44" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="719" y="366" text-anchor="middle" font-size="18" fill="#333" filter="url(#sk)">a</text>
+  <path d="M 563 332 Q 589 314 615 332" stroke="#4a7a3a" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <path d="M 667 332 Q 693 314 719 332" stroke="#4a7a3a" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <text x="589" y="310" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#sk)">首块</text>
+  <text x="705" y="310" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">余段</text>
+  <text x="641" y="412" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#sk)">t = 1：首块 (a,b) + 余段 "ba" 各自全删</text>
+
+  <rect x="36" y="440" width="848" height="180" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="460" y="468" text-anchor="middle" font-size="13.5" fill="#8a6a20" font-weight="bold" filter="url(#sk)">等价的经典「两条规则」写法（二者可互相推出）</text>
+  <rect x="70" y="486" width="380" height="56" rx="8" fill="#fafafa" stroke="#d6a040" stroke-width="1.2" filter="url(#sk)"/>
+  <text x="260" y="508" text-anchor="middle" font-size="12.5" fill="#8a6a20" filter="url(#sk)">嵌套：s[l] 与 s[r] 相邻 且 canDel[l+1][r−1]</text>
+  <text x="260" y="528" text-anchor="middle" font-size="11.5" fill="#999" filter="url(#sk)">（首块恰为整个区间，即 t = r）</text>
+  <rect x="470" y="486" width="380" height="56" rx="8" fill="#fafafa" stroke="#d6a040" stroke-width="1.2" filter="url(#sk)"/>
+  <text x="660" y="508" text-anchor="middle" font-size="12.5" fill="#8a6a20" filter="url(#sk)">拼接：∃k，canDel[l][k] 且 canDel[k+1][r]</text>
+  <text x="660" y="528" text-anchor="middle" font-size="11.5" fill="#999" filter="url(#sk)">（在首块右边界处切开）</text>
+  <text x="460" y="570" text-anchor="middle" font-size="12.5" fill="#3d5a30" filter="url(#sk)">首块规则把两条合并成一条，证明时只需对「最后被删的一对」讨论（见 §5 引理 3）</text>
+  <text x="460" y="594" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#sk)">⚠ 逐对删除每次恰删 2 个字符 ⇒ 奇数长度的区间 canDel 恒为 false</text>
+</svg>
