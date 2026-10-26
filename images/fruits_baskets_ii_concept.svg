@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="97" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="360" fill="#fdfcf7"/>
+  <text x="320" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心规则：放入最左侧「容量 ≥ 数量」的可用篮子</text>
+  <path d="M 130 42 Q 320 50 510 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- scan arrow above baskets -->
+  <text x="160" y="62" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">从下标 0 开始向右扫描</text>
+  <path d="M 52 78 Q 160 70 268 78" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- basket row -->
+  <g filter="url(#sk)">
+    <rect x="48" y="92" width="76" height="42" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="136" y="92" width="76" height="42" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="224" y="92" width="76" height="42" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="86" y="110" text-anchor="middle" font-size="10.5" fill="#666">篮 0</text>
+  <text x="86" y="127" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">容量 3</text>
+  <text x="174" y="110" text-anchor="middle" font-size="10.5" fill="#666">篮 1</text>
+  <text x="174" y="127" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">容量 5</text>
+  <text x="262" y="110" text-anchor="middle" font-size="10.5" fill="#666">篮 2</text>
+  <text x="262" y="127" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">容量 4</text>
+
+  <!-- badges -->
+  <g filter="url(#sk)">
+    <circle cx="118" cy="96" r="11" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+    <circle cx="206" cy="96" r="11" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="118" y="100.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">✗</text>
+  <text x="206" y="100.5" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a">✓</text>
+
+  <!-- per-basket annotations -->
+  <text x="86" y="156" text-anchor="middle" font-size="11.5" fill="#b85450">3 &lt; 4，不够 ✗</text>
+  <text x="174" y="156" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a">5 ≥ 4，放入 ✓</text>
+  <text x="262" y="156" text-anchor="middle" font-size="11.5" fill="#999">不用再看了</text>
+
+  <!-- current fruit -->
+  <path d="M 164 172 Q 170 155 173 140" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arg)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="138" y="176" width="52" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="164" y="198" text-anchor="middle" font-size="15" font-weight="bold" fill="#7a5415">4</text>
+  <text x="164" y="228" text-anchor="middle" font-size="11" fill="#666">fruits[i]（当前水果）</text>
+  <text x="164" y="248" text-anchor="middle" font-size="11" fill="#999">全都不够 → 计入未放置</text>
+
+  <!-- rules panel -->
+  <g filter="url(#sk)">
+    <rect x="344" y="64" width="256" height="128" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="472" y="88" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b2b2b">规则回顾</text>
+  <text x="360" y="112" font-size="11.5" fill="#444">1. 水果按从左到右顺序处理</text>
+  <text x="360" y="132" font-size="11.5" fill="#444">2. 每篮只装一种水果，占用后不可用</text>
+  <text x="360" y="152" font-size="11.5" fill="#444">3. 放不下的水果计入答案，不阻塞后续</text>
+  <text x="360" y="178" font-size="11" fill="#666">—— 过程完全确定，没有决策自由度 ——</text>
+
+  <!-- easy-error panel -->
+  <g filter="url(#sk)">
+    <rect x="344" y="204" width="256" height="76" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="472" y="226" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">易错点</text>
+  <text x="360" y="248" font-size="11.5" fill="#444">• 每个水果都从下标 0 重新扫</text>
+  <text x="360" y="268" font-size="11.5" fill="#444">• 已占用篮子直接跳过，且永不释放</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="40" y="300" width="560" height="42" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="320" y="318" text-anchor="middle" font-size="11.5" fill="#888">逐字模拟即正解：n ≤ 100，O(n²) 至多 10⁴ 次比较，绰绰有余。</text>
+  <text x="320" y="334" text-anchor="middle" font-size="11.5" fill="#888">比的是谁读题准、写得快、不踩边界坑。</text>
+</svg>
