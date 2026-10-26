@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="430" viewBox="0 0 640 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="430" fill="#fdfcf7"/>
+  <text x="290" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">核心观察：区间 max 线段树上二分，O(log n) 定位最左可用篮子</text>
+  <path d="M 120 42 Q 290 50 460 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="72" y="66" font-size="12.5" fill="#555">场景：baskets = [3, 5, 4]，现在要放入水果 f = 4</text>
+
+  <!-- root [0..2] hit -->
+  <g filter="url(#sk)">
+    <rect x="213" y="80" width="104" height="40" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="265" y="98" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a2b">区间 [0..2]</text>
+  <text x="265" y="113" text-anchor="middle" font-size="12" fill="#2b5a2b">max = 5</text>
+  <text x="278" y="72" font-size="11" font-weight="bold" fill="#2b5a2b">① 5 ≥ 4：有解，进左子树</text>
+
+  <!-- left leaf [0..0] fail -->
+  <path d="M 236 120 Q 180 148 138 172" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="68" y="175" width="104" height="40" rx="7" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="120" y="193" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a34">区间 [0..0]</text>
+  <text x="120" y="208" text-anchor="middle" font-size="12" fill="#8a3a34">max = 3</text>
+  <text x="120" y="232" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">② 3 &lt; 4，走不通 ✗</text>
+
+  <!-- turn right arrow -->
+  <path d="M 176 196 Q 290 240 352 214" stroke="#b85450" stroke-width="1.8" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="268" y="238" font-size="11" font-weight="bold" fill="#b85450">回溯，转右子树</text>
+
+  <!-- right [1..2] hit -->
+  <path d="M 294 120 Q 350 148 386 172" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="338" y="175" width="104" height="40" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="390" y="193" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a2b">区间 [1..2]</text>
+  <text x="390" y="208" text-anchor="middle" font-size="12" fill="#2b5a2b">max = 5</text>
+  <text x="390" y="234" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b5a2b">③ 5 ≥ 4，仍先试左子树</text>
+
+  <!-- [1..1] hit -->
+  <path d="M 368 215 Q 330 240 318 266" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="253" y="270" width="104" height="40" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+  </g>
+  <text x="305" y="288" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a2b">叶子 [1..1]</text>
+  <text x="305" y="303" text-anchor="middle" font-size="12" fill="#2b5a2b">max = 5</text>
+  <text x="305" y="330" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b5a2b">④ 命中！返回 j = 1</text>
+
+  <!-- [2..2] untouched -->
+  <path d="M 412 215 Q 450 240 468 266" stroke="#3a3a3a" stroke-width="1.4" fill="none" stroke-dasharray="4 4" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="423" y="270" width="104" height="40" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="475" y="288" text-anchor="middle" font-size="12" font-weight="bold" fill="#33506e">叶子 [2..2]</text>
+  <text x="475" y="303" text-anchor="middle" font-size="12" fill="#33506e">max = 4</text>
+
+  <!-- dotted mapping to baskets -->
+  <path d="M 120 215 Q 110 300 132 348" stroke="#999" stroke-width="1" fill="none" stroke-dasharray="3 4" filter="url(#sk)"/>
+  <path d="M 305 310 Q 260 340 244 350" stroke="#999" stroke-width="1" fill="none" stroke-dasharray="3 4" filter="url(#sk)"/>
+  <path d="M 475 310 Q 330 350 338 352" stroke="#999" stroke-width="1" fill="none" stroke-dasharray="3 4" filter="url(#sk)"/>
+
+  <!-- baskets row -->
+  <g filter="url(#sk)">
+    <rect x="100" y="356" width="80" height="42" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="140" y="376" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">3</text>
+  <text x="140" y="392" text-anchor="middle" font-size="9.5" fill="#997a3a">j = 0</text>
+  <g filter="url(#sk)">
+    <rect x="204" y="356" width="80" height="42" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="244" y="376" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a2b">5</text>
+  <text x="244" y="392" text-anchor="middle" font-size="9.5" fill="#4a7a3a">j = 1 选中</text>
+  <g filter="url(#sk)">
+    <rect x="308" y="356" width="80" height="42" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="348" y="376" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">4</text>
+  <text x="348" y="392" text-anchor="middle" font-size="9.5" fill="#997a3a">j = 2</text>
+
+  <!-- side note -->
+  <g filter="url(#sk)">
+    <rect x="452" y="60" width="172" height="150" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="538" y="82" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33506e">树上二分三条规则</text>
+  <text x="462" y="104" font-size="10.5" fill="#444">1. 根 max &lt; f：整体无解</text>
+  <text x="462" y="122" font-size="10.5" fill="#444">2. 能左则左：左子 max ≥ f</text>
+  <text x="478" y="138" font-size="10.5" fill="#444">就进左（最左优先）</text>
+  <text x="462" y="156" font-size="10.5" fill="#444">3. 左子走不通才转右</text>
+  <text x="462" y="174" font-size="10.5" fill="#444">每层至多失败一次，</text>
+  <text x="472" y="190" font-size="10.5" font-weight="bold" fill="#33506e">单次查询 O(log n)</text>
+
+  <!-- bottom hint -->
+  <text x="420" y="384" font-size="10.5" fill="#666">占用后：叶子置 0（容量 ≥ 1，0 即永不可用）+ pushup</text>
+</svg>

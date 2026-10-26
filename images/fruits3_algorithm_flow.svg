@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="450" viewBox="0 0 640 450" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="450" fill="#fdfcf7"/>
+  <text x="290" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：一次建树 + 逐个水果「查最左、删篮子」</text>
+  <path d="M 110 44 Q 290 52 470 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1 build -->
+  <g filter="url(#sk)">
+    <rect x="110" y="60" width="310" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="265" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">① 建线段树：叶子 = baskets[i]</text>
+  <text x="265" y="93" text-anchor="middle" font-size="11" fill="#555">内部节点 = 区间内可用篮子的最大容量</text>
+  <path d="M 265 100 L 265 120" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop container -->
+  <g filter="url(#sk)">
+    <rect x="48" y="124" width="448" height="232" rx="10" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="6 5"/>
+  </g>
+  <text x="62" y="142" font-size="12" font-weight="bold" fill="#555">对每个水果 f（从左到右，顺序固定）：</text>
+
+  <!-- decision -->
+  <g filter="url(#sk)">
+    <polygon points="280,152 368,187 280,222 192,187" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="280" y="192" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">根.max ≥ f ?</text>
+
+  <!-- no branch -->
+  <path d="M 368 187 L 404 187" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="378" y="180" font-size="11" font-weight="bold" fill="#b85450">否</text>
+  <g filter="url(#sk)">
+    <rect x="408" y="168" width="84" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="184" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">未放置</text>
+  <text x="450" y="199" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">ans += 1</text>
+
+  <!-- yes branch -->
+  <path d="M 280 222 L 280 242" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="290" y="238" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+
+  <!-- query box -->
+  <g filter="url(#sk)">
+    <rect x="155" y="246" width="250" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a2b">② 树上二分：最左 baskets[pos] ≥ f</text>
+  <text x="280" y="279" text-anchor="middle" font-size="10.5" fill="#555">能左则左，左子 max &lt; f 才转右</text>
+  <path d="M 280 286 L 280 304" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- remove box -->
+  <g filter="url(#sk)">
+    <rect x="155" y="308" width="250" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="326" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">③ 占用篮子 pos</text>
+  <text x="280" y="341" text-anchor="middle" font-size="10.5" fill="#555">叶子置 0 + pushup 祖先 max（永久不可用）</text>
+
+  <!-- loop back -->
+  <path d="M 280 346 L 280 352" stroke="#4a7a3a" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 280 352 L 62 352 Q 54 352 54 344 L 54 195 Q 54 187 62 187 L 188 187" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="80" y="344" font-size="11" font-weight="bold" fill="#4a7a3a">下一个水果</text>
+
+  <!-- return -->
+  <path d="M 496 330 Q 540 330 540 416 L 368 416" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="548" y="330" font-size="10.5" fill="#666">所有水果</text>
+  <text x="548" y="344" font-size="10.5" fill="#666">处理完</text>
+  <g filter="url(#sk)">
+    <rect x="210" y="398" width="150" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="285" y="421" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a2b">返回 ans</text>
+
+  <!-- warning panel -->
+  <g filter="url(#sk)">
+    <rect x="452" y="56" width="168" height="100" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="536" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">⚠ 最大陷阱</text>
+  <text x="462" y="98" font-size="10.5" fill="#444">「最左侧」指下标最小，</text>
+  <text x="462" y="113" font-size="10.5" fill="#444">不是容量最小！</text>
+  <text x="462" y="132" font-size="10.5" font-weight="bold" fill="#b85450">把 baskets 排序贪心 ✗</text>
+  <text x="462" y="148" font-size="10.5" fill="#444">顺序由下标决定。</text>
+</svg>
