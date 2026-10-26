@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="500" viewBox="0 0 680 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="500" fill="#fdfcf7"/>
+  <text x="340" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：区间摘要 (prod, cnt) 左右可合成</text>
+  <path d="M 170 36 Q 340 44 510 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="648" y="48" text-anchor="end" font-size="12" fill="#888">k = 3</text>
+
+  <!-- 顶部：整段数组 -->
+  <text x="340" y="52" text-anchor="middle" font-size="12.5" fill="#444">区间 [l..r] = [1, 2, 2, 3]</text>
+  <g filter="url(#sk)">
+    <rect x="200" y="60" width="64" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="272" y="60" width="64" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="344" y="60" width="64" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="416" y="60" width="64" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="232" y="83" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b">1</text>
+  <text x="304" y="83" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b">2</text>
+  <text x="376" y="83" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b">2</text>
+  <text x="448" y="83" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b">3</text>
+  <path d="M 340 52 L 340 104" stroke="#d6a040" stroke-width="2" stroke-dasharray="6 5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="118" text-anchor="middle" font-size="11" fill="#8a6a1a">在 m 处切开</text>
+
+  <!-- 左右两段摘要 -->
+  <path d="M 236 100 L 214 134" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 444 100 L 466 134" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="104" y="138" width="214" height="80" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/>
+  </g>
+  <text x="211" y="160" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">左段 [1, 2]</text>
+  <text x="211" y="180" text-anchor="middle" font-size="12" fill="#333">p₁ = 1·2 mod 3 = 2</text>
+  <text x="211" y="200" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a8edb">c₁ = [0, 1, 1]</text>
+  <g filter="url(#sk)">
+    <rect x="362" y="138" width="214" height="80" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/>
+  </g>
+  <text x="469" y="160" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">右段 [2, 3]</text>
+  <text x="469" y="180" text-anchor="middle" font-size="12" fill="#333">p₂ = 2·3 mod 3 = 0</text>
+  <text x="469" y="200" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a8edb">c₂ = [1, 0, 1]</text>
+
+  <!-- 合成公式 -->
+  <path d="M 340 222 L 340 240" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="150" y="244" width="380" height="62" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="340" y="266" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">⊗ 合成：prod = p₁·p₂ mod k = 0</text>
+  <text x="340" y="288" text-anchor="middle" font-size="12.5" fill="#2e6e2e">c[x] = c₁[x] + Σ c₂[y]（对所有满足 p₁·y ≡ x 的 y）</text>
+
+  <!-- 迁移说明 -->
+  <path d="M 340 310 L 340 324" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="64" y="328" width="128" height="64" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="128" y="350" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">左段桶直传</text>
+  <text x="128" y="370" text-anchor="middle" font-size="11" fill="#2e6e2e">c[x] 先取 c₁[x]</text>
+  <g filter="url(#sk)">
+    <rect x="208" y="328" width="264" height="64" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="346" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b03a3a">右段桶整体左乘 p₁（正向映射）</text>
+  <text x="340" y="364" text-anchor="middle" font-size="11" fill="#b03a3a">y=0（1 个）→ 2·0 ≡ 0 → c[0] += 1</text>
+  <text x="340" y="382" text-anchor="middle" font-size="11" fill="#b03a3a">y=2（1 个）→ 2·2 = 4 ≡ 1 → c[1] += 1</text>
+
+  <!-- 合成结果 -->
+  <path d="M 340 396 L 340 410" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="190" y="414" width="300" height="50" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="340" y="434" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6a1a">整段 [1, 2, 2, 3]：</text>
+  <text x="340" y="454" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a1a">(prod, c) = (0, [1, 2, 1])</text>
+
+  <text x="340" y="486" text-anchor="middle" font-size="11" fill="#888">对账：前缀积 mod 3 依次 1, 2, 1, 0 → c = [1, 2, 1] ✓　单次合成 O(k)，结合律保证层层向上照样成立</text>
+</svg>
