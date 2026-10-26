@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="57" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：奇偶特判 + 行/列前缀扫描</text>
+  <path d="M 280 40 Q 470 48 660 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 1 -->
+  <g filter="url(#sk)">
+    <rect x="210" y="58" width="440" height="62" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="430" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">Step 1：一次遍历矩阵</text>
+  <text x="430" y="104" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">累加 total、rowSum[0..m-1]、colSum[0..n-1] → O(mn)</text>
+
+  <path d="M 430 120 L 430 142" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Parity diamond -->
+  <g filter="url(#sk)">
+    <polygon points="430,146 556,196 430,246 304,196" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="430" y="192" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">total 是奇数？</text>
+  <text x="430" y="212" text-anchor="middle" font-size="11" fill="#888">两侧相等 ⇒ 各为 S/2</text>
+
+  <!-- yes -> false -->
+  <path d="M 556 196 L 648 196" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)"/>
+  <text x="600" y="186" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="652" y="168" width="170" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="737" y="192" text-anchor="middle" font-size="13" font-weight="bold" fill="#8e3a36">返回 false</text>
+  <text x="737" y="210" text-anchor="middle" font-size="10" fill="#888">S/2 不是整数</text>
+
+  <!-- no -> target -->
+  <path d="M 430 246 L 430 272" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <text x="448" y="264" font-size="12" fill="#4a8e4a" font-weight="bold">否</text>
+  <g filter="url(#sk)">
+    <rect x="290" y="276" width="280" height="48" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/>
+  </g>
+  <text x="430" y="298" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">target = total / 2</text>
+  <text x="430" y="316" text-anchor="middle" font-size="10" fill="#888">用 64 位整数：total 最大约 10^10</text>
+
+  <path d="M 430 324 L 430 350" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 2: row prefix scan -->
+  <g filter="url(#sk)">
+    <rect x="150" y="354" width="560" height="94" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="430" y="378" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">Step 2：行前缀扫描（水平切点）</text>
+  <text x="430" y="400" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">pref = 0; for i = 0 .. m-2: pref += rowSum[i]</text>
+  <text x="430" y="420" text-anchor="middle" font-size="12" fill="#c98a2b" font-weight="bold">pref == target → 返回 true；pref &gt; target → break（正元素保证递增）</text>
+  <text x="430" y="438" text-anchor="middle" font-size="10" fill="#888">切在第 i 行后，上半为前 i+1 行，i+1 ∈ [1, m-1] 保证非空</text>
+
+  <!-- true exit right -->
+  <path d="M 710 401 L 762 401" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)"/>
+  <g filter="url(#sk)">
+    <rect x="766" y="372" width="140" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="836" y="396" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">返回 true</text>
+  <text x="836" y="414" text-anchor="middle" font-size="10" fill="#888">水平切分成功</text>
+
+  <path d="M 430 448 L 430 474" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 3: col prefix scan -->
+  <g filter="url(#sk)">
+    <rect x="150" y="478" width="560" height="94" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="430" y="502" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">Step 3：列前缀扫描（垂直切点）</text>
+  <text x="430" y="524" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">pref = 0; for j = 0 .. n-2: pref += colSum[j]</text>
+  <text x="430" y="544" text-anchor="middle" font-size="12" fill="#c98a2b" font-weight="bold">pref == target → 返回 true；pref &gt; target → break</text>
+  <text x="430" y="562" text-anchor="middle" font-size="10" fill="#888">切在第 j 列后，左半为前 j+1 列，j+1 ∈ [1, n-1] 保证非空</text>
+
+  <!-- true exit right -->
+  <path d="M 710 525 L 762 525" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)"/>
+  <g filter="url(#sk)">
+    <rect x="766" y="496" width="140" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="836" y="520" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">返回 true</text>
+  <text x="836" y="538" text-anchor="middle" font-size="10" fill="#888">垂直切分成功</text>
+
+  <path d="M 430 572 L 430 598" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+
+  <!-- final false -->
+  <g filter="url(#sk)">
+    <rect x="310" y="602" width="240" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="430" y="624" text-anchor="middle" font-size="13" font-weight="bold" fill="#8e3a36">两个方向都没有切点</text>
+  <text x="430" y="642" text-anchor="middle" font-size="12" font-weight="bold" fill="#8e3a36">返回 false</text>
+</svg>

@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="610" viewBox="0 0 940 610" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.4"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="610" fill="#fdfcf7"/>
+  <text x="470" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：每条割线 O(1) 判定（水平方向；垂直方向转置后同构）</text>
+  <path d="M 220 40 Q 470 48 720 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- b1: preprocess -->
+  <g filter="url(#sk)">
+    <rect x="110" y="60" width="380" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="300" y="84" text-anchor="middle" font-size="12.5" fill="#2b4a66">一遍扫描：total、行和 R[]，</text>
+  <text x="300" y="103" text-anchor="middle" font-size="12.5" fill="#2b4a66">并记录每个值 v 的 first[v] / last[v]（首次 / 末次出现的行号）</text>
+  <path d="M 300 116 L 300 136" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+
+  <!-- b2: cut loop -->
+  <g filter="url(#sk)">
+    <rect x="110" y="140" width="380" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="300" y="167" text-anchor="middle" font-size="12.5" fill="#2b4a66">枚举水平割线 i = 0 … m−2：top += R[i]，bot = total − top</text>
+  <path d="M 300 184 L 300 204" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+
+  <!-- d1: equal? -->
+  <g filter="url(#sk)">
+    <polygon points="220,232 300,206 380,232 300,258" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="300" y="237" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">top == bot ?</text>
+  <path d="M 380 232 L 618 232" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+  <text x="495" y="224" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">是（不移除即相等）</text>
+  <g filter="url(#sk)">
+    <rect x="622" y="210" width="150" height="44" rx="8" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="697" y="237" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">return true</text>
+  <path d="M 300 258 L 300 278" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+  <text x="316" y="274" font-size="11.5" fill="#888">否</text>
+
+  <!-- b3: value & side -->
+  <g filter="url(#sk)">
+    <rect x="110" y="282" width="380" height="54" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="300" y="305" text-anchor="middle" font-size="12.5" fill="#2b4a66">v = |top − bot|（移除值唯一，只能从较大侧移除）</text>
+  <text x="300" y="325" text-anchor="middle" font-size="12.5" fill="#2b4a66">较大侧 = top &gt; bot ? 上半（行 0…i）: 下半（行 i+1…m−1）</text>
+  <path d="M 300 336 L 300 356" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+
+  <!-- d2: shape? -->
+  <g filter="url(#sk)">
+    <polygon points="205,392 300,360 395,392 300,424" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="300" y="397" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">较大侧的形状？</text>
+
+  <!-- branch arrows -->
+  <path d="M 395 392 Q 450 380 488 364" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+  <path d="M 395 392 L 488 392" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+  <path d="M 395 392 Q 450 434 488 472" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+
+  <!-- r1: 2D block -->
+  <g filter="url(#sk)">
+    <rect x="492" y="342" width="420" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="508" y="360" font-size="12" font-weight="bold" fill="#2b6e9e">二维块（行 ≥ 2 且列 ≥ 2）</text>
+  <text x="508" y="379" font-size="11.5" fill="#2b4a66">first[v] ≤ i（上半）/ last[v] &gt; i（下半）？命中 ⇒ true</text>
+
+  <!-- r2: single row -->
+  <g filter="url(#sk)">
+    <rect x="492" y="398" width="420" height="40" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="508" y="416" font-size="12" font-weight="bold" fill="#2e6e2e">单行块</text>
+  <text x="580" y="416" font-size="11.5" fill="#2b4a66">g[r][0] == v 或 g[r][n−1] == v ？命中 ⇒ true</text>
+  <text x="508" y="432" font-size="10.5" fill="#888">r 为该行行号（首尾两个端点格）</text>
+
+  <!-- r3: single column -->
+  <g filter="url(#sk)">
+    <rect x="492" y="452" width="420" height="40" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="508" y="470" font-size="12" font-weight="bold" fill="#7a5415">单列块</text>
+  <text x="580" y="470" font-size="11.5" fill="#2b4a66">g[r0][0] == v 或 g[r1][0] == v ？命中 ⇒ true</text>
+  <text x="508" y="486" font-size="10.5" fill="#888">r0 / r1 为条顶端 / 底端行号</text>
+
+  <!-- 1x1 note -->
+  <g filter="url(#sk)">
+    <rect x="492" y="506" width="420" height="32" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" stroke-dasharray="5 4"/>
+  </g>
+  <text x="508" y="527" font-size="11.5" fill="#a04040">1×1 块：直接跳过（移除后该侧为空，和恒不等）</text>
+
+  <!-- loop back -->
+  <path d="M 300 424 L 300 462" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+  <text x="316" y="450" font-size="11.5" fill="#888">未命中</text>
+  <g filter="url(#sk)">
+    <rect x="110" y="466" width="380" height="38" rx="8" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+  </g>
+  <text x="300" y="490" text-anchor="middle" font-size="12" fill="#555">i++，考察下一条割线</text>
+  <path d="M 110 485 Q 60 485 60 162 Q 60 140 108 140" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+  <text x="52" y="320" font-size="11" fill="#999" transform="rotate(-90 52 320)">割线未穷尽</text>
+  <path d="M 300 504 L 300 524" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk2)"/>
+  <text x="316" y="518" font-size="11.5" fill="#888">i 到 m−2</text>
+
+  <!-- b5: transpose + false -->
+  <g filter="url(#sk)">
+    <rect x="110" y="528" width="380" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="300" y="551" text-anchor="middle" font-size="12.5" fill="#2b4a66">割线穷尽 → 转置矩阵，同法再跑一遍（= 垂直割线）</text>
+  <text x="300" y="571" text-anchor="middle" font-size="12.5" fill="#2b4a66">两方向全部穷尽仍无解 → return false</text>
+</svg>
