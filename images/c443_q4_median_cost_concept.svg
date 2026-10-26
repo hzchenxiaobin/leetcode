@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="440" viewBox="0 0 700 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="700" height="440" fill="#fdfcf7"/>
+  <text x="350" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">核心观察：窗口「调平」的最优目标是中位数，代价由两半的和直接算出</text>
+  <path d="M 140 35 Q 350 42 560 35" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 左：窗口与双堆 -->
+  <text x="36" y="62" font-size="12" fill="#666">窗口（x = 3）</text>
+  <g filter="url(#sk)">
+    <rect x="36" y="70" width="52" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="92" y="70" width="52" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="148" y="70" width="52" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="62" y="98" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b">7</text>
+  <text x="118" y="98" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b">3</text>
+  <text x="174" y="98" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b">6</text>
+  <path d="M 118 122 C 118 138, 105 140, 105 152" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="140" y="140" font-size="11" fill="#666">排序 → 两半</text>
+
+  <g filter="url(#sk)">
+    <rect x="36" y="158" width="112" height="78" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="162" y="158" width="66" height="78" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="92" y="174" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">low（较小一半）</text>
+  <text x="195" y="174" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">high</text>
+  <g filter="url(#sk)">
+    <rect x="64" y="182" width="30" height="22" rx="4" fill="#ffffff" stroke="#4a8e4a" stroke-width="1.2"/>
+    <rect x="64" y="208" width="30" height="22" rx="4" fill="#ffffff" stroke="#4a8e4a" stroke-width="1.2"/>
+    <rect x="180" y="190" width="30" height="22" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <text x="79" y="198" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">3</text>
+  <text x="79" y="224" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">6</text>
+  <text x="195" y="206" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">7</text>
+  <text x="92" y="252" text-anchor="middle" font-size="11.5" fill="#b85450">中位数 m = max(low) = 6</text>
+
+  <!-- 右：凸代价曲线 -->
+  <text x="500" y="62" text-anchor="middle" font-size="12" fill="#666">f(t) = Σ|aᵢ − t| 随目标值 t 变化</text>
+  <g filter="url(#sk)">
+    <path d="M 380 60 L 380 230 L 650 230" stroke="#7a7a7a" stroke-width="1.6" fill="none"/>
+  </g>
+  <text x="650" y="246" text-anchor="middle" font-size="11" fill="#666">目标值 t</text>
+  <text x="360" y="66" text-anchor="end" font-size="11" fill="#666">代价</text>
+  <g filter="url(#sk)">
+    <path d="M 415 52 L 560 170 L 605 155 L 650 140" stroke="#4a8edb" stroke-width="2" fill="none"/>
+  </g>
+  <g filter="url(#sk)">
+    <circle cx="425" cy="80" r="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <circle cx="560" cy="170" r="5" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <circle cx="605" cy="155" r="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="425" y="72" text-anchor="middle" font-size="10.5" fill="#666">t=3 → 10</text>
+  <text x="560" y="192" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">t=m=6 → 4（最小）</text>
+  <text x="614" y="148" text-anchor="start" font-size="10.5" fill="#666">t=7 → 5</text>
+  <text x="500" y="268" text-anchor="middle" font-size="11" fill="#666">折线斜率在 t = 6 处由负变正 ⇒ 中位数最小；偶数 x 时两中位数之间处处最小</text>
+
+  <!-- 底部公式 -->
+  <g filter="url(#sk)">
+    <rect x="36" y="296" width="628" height="120" rx="10" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="350" y="322" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415">cost = (sum_high − m · cnt_high) + (m · cnt_low − sum_low)</text>
+  <text x="350" y="346" text-anchor="middle" font-size="12.5" fill="#7a5415">本例 = (7 − 6×1) + (6×2 − 9) = 1 + 3 = 4，即窗口 [7,3,6] 全调成 6 的操作数</text>
+  <text x="350" y="370" text-anchor="middle" font-size="12.5" fill="#7a5415">窗口右滑一步只「一进一出」：双堆（或多重集合）同步维护两半的 sum / cnt</text>
+  <text x="350" y="394" text-anchor="middle" font-size="12.5" fill="#7a5415">⇒ 一趟扫描 O(n log n) 求出全部 n−x+1 个起点的 cost[s]</text>
+</svg>
