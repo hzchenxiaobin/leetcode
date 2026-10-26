@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="440" viewBox="0 0 660 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="43" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="660" height="440" fill="#fdfcf7"/>
+  <text x="330" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：计数 → 定中心 → 桶序半串 → 镜像拼接</text>
+  <path d="M 180 40 Q 330 48 480 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="180" y="56" width="300" height="48" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="330" y="77" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">① 统计计数 cnt[26]</text>
+  <text x="330" y="96" text-anchor="middle" font-size="11" fill="#556" filter="url(#sk)">一趟扫描，O(n)</text>
+
+  <path d="M 330 104 L 330 118" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="180" y="122" width="300" height="48" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="330" y="143" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">② 定中心 m</text>
+  <text x="330" y="162" text-anchor="middle" font-size="11" fill="#865" filter="url(#sk)">cnt[c] 为奇 ⇒ m = c（回文保证至多一个）</text>
+
+  <path d="M 330 170 L 330 184" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="180" y="188" width="300" height="48" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="330" y="209" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">③ 拼半串 h</text>
+  <text x="330" y="228" text-anchor="middle" font-size="11" fill="#556" filter="url(#sk)">按 a→z 输出 cnt[c]/2 个 c，桶序天然升序</text>
+
+  <path d="M 330 236 L 330 250" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="180" y="254" width="300" height="48" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="330" y="275" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">④ 镜像拼接</text>
+  <text x="330" y="294" text-anchor="middle" font-size="11" fill="#467" filter="url(#sk)">ans = h ＋ m ＋ rev(h)，反转 O(n)</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="100" width="135" height="190" rx="10" fill="#f7f9f2" stroke="#4a8edb" stroke-width="1.3" stroke-dasharray="6 4"/>
+  </g>
+  <text x="92" y="126" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">复杂度 O(n+σ)</text>
+  <g font-size="11" fill="#555" text-anchor="middle" filter="url(#sk)">
+    <text x="92" y="152">σ = 26</text>
+    <text x="92" y="180">计数 O(n)</text>
+    <text x="92" y="208">桶遍历 O(σ)</text>
+    <text x="92" y="236">拼接反转 O(n)</text>
+  </g>
+  <text x="92" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#sk)">免比较排序</text>
+
+  <g filter="url(#sk)">
+    <rect x="500" y="100" width="135" height="190" rx="10" fill="#fdf2f4" stroke="#b85450" stroke-width="1.3" stroke-dasharray="6 4"/>
+  </g>
+  <text x="567" y="126" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">三大自由度</text>
+  <g font-size="11" fill="#555" text-anchor="middle" filter="url(#sk)">
+    <text x="567" y="152">半串：排列自由</text>
+    <text x="567" y="180">中心：零自由</text>
+    <text x="567" y="208">镜像：被锁死</text>
+  </g>
+  <text x="567" y="236" text-anchor="middle" font-size="11" fill="#555" filter="url(#sk)">只需最小化半串</text>
+  <text x="567" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#sk)">⇒ 升序即可</text>
+
+  <g filter="url(#sk)">
+    <rect x="170" y="330" width="460" height="56" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="400" y="352" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#sk)">以 "babab" 为例：计数 a:2, b:3</text>
+  <text x="400" y="374" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#sk)">m = b，h = "ab" ⇒ "ab"+"b"+"ba" = "abbba"</text>
+
+  <text x="330" y="420" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">计数桶下标即序——正是 Counting Sort 标签的由来</text>
+</svg>
