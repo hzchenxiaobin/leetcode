@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="680" viewBox="0 0 940 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="680" fill="#fafafa"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">延迟激活：长度下界 + 「pre_b 越过」下界 → ready(l)</text>
+  <path d="M 280 42 Q 470 50 660 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 面板一：陷阱 ===== -->
+  <g filter="url(#sk)">
+    <rect x="50" y="62" width="840" height="170" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="70" y="88" font-size="13.5" font-weight="bold" fill="#a04038">⚠ 陷阱：l 一满足长度就扔进桶，会把 freq_b = 0 的非法子串也计入！</text>
+  <text x="70" y="114" font-size="12" fill="#444">例（s = “1122211”, k = 3, a = ‘2’, b = ‘1’）：r = 5 时 l = 2，长度 5−2 = 3 ≥ k，看似可入桶</text>
+  <g filter="url(#sk)">
+    <rect x="90" y="128" width="40" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="130" y="128" width="40" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="170" y="128" width="40" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="230" y="128" width="40" height="34" rx="4" fill="#f7f7f7" stroke="#999" stroke-width="1.2"/>
+    <rect x="270" y="128" width="40" height="34" rx="4" fill="#f7f7f7" stroke="#999" stroke-width="1.2"/>
+    <rect x="310" y="128" width="40" height="34" rx="4" fill="#f7f7f7" stroke="#999" stroke-width="1.2"/>
+    <rect x="350" y="128" width="40" height="34" rx="4" fill="#f7f7f7" stroke="#999" stroke-width="1.2"/>
+  </g>
+  <text x="110" y="150" text-anchor="middle" font-size="14" fill="#2e6e2e" font-weight="bold">2</text>
+  <text x="150" y="150" text-anchor="middle" font-size="14" fill="#2e6e2e" font-weight="bold">2</text>
+  <text x="190" y="150" text-anchor="middle" font-size="14" fill="#2e6e2e" font-weight="bold">2</text>
+  <text x="250" y="150" text-anchor="middle" font-size="14" fill="#777" font-weight="bold">1</text>
+  <text x="290" y="150" text-anchor="middle" font-size="14" fill="#777" font-weight="bold">1</text>
+  <text x="330" y="150" text-anchor="middle" font-size="14" fill="#777" font-weight="bold">1</text>
+  <text x="370" y="150" text-anchor="middle" font-size="14" fill="#777" font-weight="bold">1</text>
+  <text x="210" y="178" text-anchor="middle" font-size="11" fill="#a04038" font-weight="bold">子串 s[2..4] = “222”</text>
+  <text x="450" y="138" font-size="12" fill="#444">b = ‘1’ 在其中出现 <tspan fill="#a04038" font-weight="bold">0 次</tspan>（pre_b[5] = pre_b[2] = 2）</text>
+  <text x="450" y="160" font-size="12" fill="#444">“非 0 偶数”不满足 —— 然而奇偶相同（0 也是偶数）</text>
+  <text x="450" y="184" font-size="12.5" fill="#a04038" font-weight="bold">提前入桶会算出 1−(−2) = 3 的错误大值！</text>
+  <text x="450" y="210" font-size="11.5" fill="#888">正确答案只有 1 —— 本题最大的坑</text>
+
+  <!-- ===== 面板二：两条下界 ===== -->
+  <g filter="url(#sk)">
+    <rect x="50" y="248" width="840" height="200" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="70" y="272" font-size="13.5" font-weight="bold" fill="#2f4f6f">l 何时才真正合法？两条关于 r 的下界，取 max = 激活时刻 ready(l)</text>
+  <!-- timeline -->
+  <g filter="url(#sk)">
+    <path d="M 130 370 L 850 370" stroke="#446688" stroke-width="1.8" marker-end="url(#arB)"/>
+  </g>
+  <text x="120" y="374" font-size="11" fill="#446688" font-weight="bold">r →</text>
+  <!-- l positions with two flags -->
+  <g filter="url(#sk)">
+    <circle cx="200" cy="370" r="5.5" fill="#446688"/>
+    <path d="M 200 362 L 200 330" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <path d="M 200 378 L 200 410" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <circle cx="330" cy="370" r="5.5" fill="#446688"/>
+    <path d="M 330 362 L 330 336" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <path d="M 330 378 L 330 404" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <circle cx="470" cy="370" r="5.5" fill="#446688"/>
+    <path d="M 470 362 L 470 330" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="4 3"/>
+    <path d="M 470 378 L 470 410" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="4 3"/>
+  </g>
+  <text x="200" y="322" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold">l+k</text>
+  <text x="330" y="328" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold">l+k</text>
+  <text x="470" y="322" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold">l+k</text>
+  <text x="200" y="428" text-anchor="middle" font-size="11" fill="#b8860b" font-weight="bold">pos_b[pre_b[l]+1]</text>
+  <text x="330" y="422" text-anchor="middle" font-size="11" fill="#b8860b" font-weight="bold">pos_b[…]</text>
+  <text x="470" y="428" text-anchor="middle" font-size="11" fill="#b8860b" font-weight="bold">pos_b[…]</text>
+  <g filter="url(#sk)">
+    <path d="M 196 448 Q 200 438 204 448" stroke="#b85450" stroke-width="2.4" fill="none"/>
+    <path d="M 326 442 Q 330 432 334 442" stroke="#b85450" stroke-width="2.4" fill="none"/>
+    <path d="M 466 448 Q 470 438 474 448" stroke="#b85450" stroke-width="2.4" fill="none"/>
+  </g>
+  <text x="200" y="452" text-anchor="middle" font-size="0" fill="#b85450">.</text>
+  <text x="620" y="300" font-size="12" fill="#2e6e2e" font-weight="bold">下界 ①（长度）：r ≥ l + k</text>
+  <text x="620" y="324" font-size="11.5" fill="#444">子串长度 r − l ≥ k</text>
+  <text x="620" y="352" font-size="12" fill="#b8860b" font-weight="bold">下界 ②（b 非零）：r ≥ pos_b[pre_b[l]+1]</text>
+  <text x="620" y="376" font-size="11.5" fill="#444">pos_b[v] = pre_b 首次达到 v 的下标；</text>
+  <text x="620" y="396" font-size="11.5" fill="#444">pre_b 每步 +0/+1，越过 pre_b[l] 必先到 pre_b[l]+1</text>
+  <text x="620" y="420" font-size="11.5" fill="#444">→ pre_b[r] &gt; pre_b[l] ⟺ r ≥ pos_b[pre_b[l]+1]</text>
+  <text x="620" y="444" font-size="12" fill="#a04038" font-weight="bold">ready(l) = max(l+k, pos_b[pre_b[l]+1])</text>
+
+  <!-- ===== 面板三：单调指针 ===== -->
+  <g filter="url(#sk)">
+    <rect x="50" y="462" width="840" height="170" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="70" y="488" font-size="13.5" font-weight="bold" fill="#2e6e2e">ready(l) 单调不减 → 一个只前进的指针搞定「迟到入桶」</text>
+  <g filter="url(#sk)">
+    <rect x="100" y="506" width="120" height="46" rx="8" fill="#f0f8f0" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="260" y="506" width="180" height="46" rx="8" fill="#f0f8f0" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="480" y="506" width="200" height="46" rx="8" fill="#f0f8f0" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="160" y="526" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">扫 r = k … n</text>
+  <text x="160" y="544" text-anchor="middle" font-size="10.5" fill="#555">右端点右移</text>
+  <text x="350" y="526" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">while ready[lp] ≤ r</text>
+  <text x="350" y="544" text-anchor="middle" font-size="10.5" fill="#555">按奇偶状态入桶取 min</text>
+  <text x="580" y="526" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">查 target 桶</text>
+  <text x="580" y="544" text-anchor="middle" font-size="10.5" fill="#555">候选 = D[r] − 桶值</text>
+  <g filter="url(#sk)">
+    <path d="M 222 529 L 254 529" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arG)"/>
+    <path d="M 442 529 L 474 529" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arG)"/>
+    <path d="M 714 680" stroke="#4a7a3a" stroke-width="0" fill="none"/>
+    <path d="M 692 529 Q 712 529 710 480 Q 160 440 108 502" stroke="#8e5db8" stroke-width="1.6" fill="none" marker-end="url(#arG)" stroke-dasharray="6 4"/>
+  </g>
+  <text x="730" y="508" font-size="10.5" fill="#8e5db8">下个 r</text>
+  <text x="70" y="578" font-size="12" fill="#444">✔ ready 单调：l+k 显然递增；pre_b[l] 不减 → pos_b[pre_b[l]+1] 不减 → max 后仍单调</text>
+  <text x="70" y="602" font-size="12" fill="#444">✔ 每个 l 恰好入桶一次，指针只前进不回退，均摊 O(1)</text>
+  <text x="70" y="626" font-size="12" fill="#a04038" font-weight="bold">✔ pre_b[l]+1 超过 b 的总数 → ready = ∞，永不激活（l 右边再无 b）—— 卡住指针正是正确行为</text>
+
+  <!-- ===== 底部结论 ===== -->
+  <g filter="url(#sk)">
+    <rect x="50" y="644" width="840" height="26" rx="10" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.2"/>
+  </g>
+  <text x="470" y="662" text-anchor="middle" font-size="13" fill="#5a3a7a" font-weight="bold">「长度够」∨「b 越过」两个单调下界合一：迟到入桶，同时满足长度与「非 0 偶数」两大约束</text>
+</svg>
