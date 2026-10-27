@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 545"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrGrey" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="545" fill="#fafafa"/>
+
+  <text x="280" y="34" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">区间 DP：dp[i][j][b] 的三个来源</text>
+  <text x="280" y="58" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">dp[i][j][b] = s[i..j] 至多 b 次操作下的最长回文子序列</text>
+
+  <!-- 左侧状态框 -->
+  <rect x="36" y="265" width="140" height="80" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="106" y="297" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#rough2)">dp[i][j][b]</text>
+  <text x="106" y="321" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">s[i..j]，预算 b</text>
+  <text x="106" y="368" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">三者取 max</text>
+
+  <!-- 分支箭头 -->
+  <path d="M 176,287 C 205,270 215,200 242,152" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrGrey)" filter="url(#rough2)"/>
+  <path d="M 176,305 L 242,305" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrGrey)" filter="url(#rough2)"/>
+  <path d="M 176,323 C 205,340 215,410 242,458" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrGrey)" filter="url(#rough2)"/>
+
+  <!-- ① 不用 s[i] -->
+  <rect x="250" y="88" width="278" height="118" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="268" y="112" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">① 不用 s[i]</text>
+  <text x="268" y="134" font-size="12.5" fill="#333" filter="url(#rough2)">dp[i][j][b] ≥ dp[i+1][j][b]</text>
+  <rect x="280" y="150" width="30" height="26" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <rect x="314" y="150" width="30" height="26" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="348" y="150" width="30" height="26" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="382" y="150" width="30" height="26" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="416" y="150" width="30" height="26" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="450" y="150" width="30" height="26" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="295" y="192" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">i（弃）</text>
+  <text x="329" y="192" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">i+1</text>
+  <text x="465" y="192" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">j</text>
+
+  <!-- ② 配对 (i,j) -->
+  <rect x="250" y="226" width="278" height="158" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="268" y="250" font-size="13" font-weight="bold" fill="#d6a040" filter="url(#rough2)">② 配对 (i, j)，花代价 c</text>
+  <text x="268" y="272" font-size="12.5" fill="#333" filter="url(#rough2)">c = d(s[i], s[j]) ≤ b 时：</text>
+  <text x="268" y="292" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">dp[i][j][b] ≥ 2 + dp[i+1][j−1][b−c]</text>
+  <path d="M 295,346 C 295,318 465,318 465,346" fill="none" stroke="#b85450" stroke-width="2" marker-start="url(#arrR)" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <rect x="280" y="348" width="30" height="26" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="314" y="348" width="30" height="26" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="348" y="348" width="30" height="26" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="382" y="348" width="30" height="26" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="416" y="348" width="30" height="26" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="450" y="348" width="30" height="26" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="295" y="366" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">a</text>
+  <text x="329" y="366" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">b</text>
+  <text x="363" y="366" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">e</text>
+  <text x="397" y="366" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">f</text>
+  <text x="431" y="366" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">g</text>
+  <text x="465" y="366" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">d</text>
+  <text x="268" y="382" font-size="10.5" fill="#888" filter="url(#rough2)">j = i+1 时内区间为空，得 2；c = 0 时免费</text>
+
+  <!-- ③ 不用 s[j] -->
+  <rect x="250" y="404" width="278" height="118" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="268" y="428" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">③ 不用 s[j]</text>
+  <text x="268" y="450" font-size="12.5" fill="#333" filter="url(#rough2)">dp[i][j][b] ≥ dp[i][j−1][b]</text>
+  <rect x="280" y="466" width="30" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="314" y="466" width="30" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="348" y="466" width="30" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="382" y="466" width="30" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="416" y="466" width="30" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="450" y="466" width="30" height="26" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="295" y="508" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">i</text>
+  <text x="431" y="508" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">j−1</text>
+  <text x="465" y="508" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">j（弃）</text>
+</svg>
