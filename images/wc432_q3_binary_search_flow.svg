@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 560"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#446688"/></marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/></marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b85450"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker>
+  </defs>
+
+  <rect width="620" height="560" fill="#fafafa"/>
+
+  <text x="310" y="24" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：二分答案 + 反图 BFS 判定</text>
+  <text x="310" y="44" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">check(x)：反图上从 0 只走权 ≤ x 的边，能否访问全部 n 个点</text>
+
+  <!-- A -->
+  <g filter="url(#rough2)"><rect x="165" y="62" width="290" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="310" y="76" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6b" filter="url(#rough2)">① 建反图</text>
+  <text x="310" y="89" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">rg[B] ← (W, A)，顺带求 maxW —— O(n+m)</text>
+
+  <path d="M 310 94 L 310 108" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- B -->
+  <g filter="url(#rough2)"><polygon points="150,140 310,108 470,140 310,172" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="310" y="145" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">② check(maxW) 为真？</text>
+
+  <path d="M 470 140 L 502 140" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="486" y="132" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)"><rect x="505" y="124" width="106" height="32" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="558" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">返回 −1</text>
+
+  <path d="M 310 172 L 310 188" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="324" y="184" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- C -->
+  <g filter="url(#rough2)"><rect x="165" y="190" width="290" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="310" y="204" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6b" filter="url(#rough2)">③ 二分区间 [lo, hi] = [1, maxW]</text>
+  <text x="310" y="217" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">不变式：check(hi) 恒真</text>
+
+  <path d="M 310 222 L 310 252" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="322" y="240" font-size="10" fill="#666" filter="url(#rough2)">mid = (lo + hi) / 2</text>
+
+  <!-- D -->
+  <g filter="url(#rough2)"><polygon points="140,292 310,258 480,292 310,326" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="310" y="297" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">④ check(mid) 为真？</text>
+
+  <path d="M 140 292 L 118 292" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="128" y="284" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)"><rect x="30" y="278" width="86" height="28" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="73" y="296" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">hi = mid</text>
+
+  <path d="M 480 292 L 502 292" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="492" y="284" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)"><rect x="505" y="278" width="106" height="28" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="558" y="296" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">lo = mid + 1</text>
+
+  <!-- loop arrows to E -->
+  <path d="M 73 306 C 73 340 180 336 298 341" stroke="#888" stroke-width="1.3" stroke-dasharray="4 3" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+  <path d="M 558 306 C 558 340 440 336 322 341" stroke="#888" stroke-width="1.3" stroke-dasharray="4 3" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+
+  <!-- E -->
+  <g filter="url(#rough2)"><polygon points="185,372 310,342 435,372 310,402" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="310" y="377" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">⑤ lo &lt; hi？</text>
+
+  <path d="M 435 372 C 540 372 560 315 416 279" stroke="#888" stroke-width="1.3" stroke-dasharray="4 3" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+  <text x="556" y="350" font-size="9.5" fill="#888" filter="url(#rough2)">是：继续二分</text>
+  <text x="452" y="360" font-size="10" fill="#8a6a20" filter="url(#rough2)">是</text>
+
+  <path d="M 310 402 L 310 416" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="322" y="412" font-size="10" fill="#4a7a3a" filter="url(#rough2)">否</text>
+
+  <!-- F -->
+  <g filter="url(#rough2)"><rect x="165" y="418" width="290" height="30" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="310" y="437" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">⑥ 返回 lo：最小可行的最大边权</text>
+
+  <!-- ===== monotonicity panel ===== -->
+  <g filter="url(#rough2)"><rect x="40" y="466" width="540" height="84" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="60" y="486" font-size="12" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">为什么能二分：可行性关于 x 单调</text>
+  <text x="60" y="504" font-size="10" fill="#444" filter="url(#rough2)">x 增大 ⇒ 可用边只增 ⇒ 反图上 0 的可达集只增不减</text>
+
+  <path d="M 100 524 L 530 524" stroke="#b85450" stroke-width="3" fill="none" filter="url(#rough2)"/>
+  <path d="M 312 524 L 530 524" stroke="#4a7a3a" stroke-width="3" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="130" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗</text>
+  <text x="170" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗</text>
+  <text x="210" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗</text>
+  <text x="250" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗</text>
+  <text x="288" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗</text>
+  <text x="340" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <text x="380" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <text x="420" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <text x="460" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <text x="500" y="518" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+
+  <path d="M 310 512 L 310 540" stroke="#d6a040" stroke-width="1.4" stroke-dasharray="4 3" fill="none" filter="url(#rough2)"/>
+  <text x="310" y="545" text-anchor="middle" font-size="10" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">答案 = 最小可行 x</text>
+  <text x="100" y="545" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">1（不可行）</text>
+  <text x="530" y="545" text-anchor="end" font-size="9.5" fill="#2c5f2c" filter="url(#rough2)">maxW（可行）</text>
+</svg>

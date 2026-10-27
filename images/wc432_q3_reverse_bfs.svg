@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#446688"/></marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/></marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d6a040"/></marker>
+  </defs>
+
+  <rect width="760" height="440" fill="#fafafa"/>
+
+  <text x="380" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：反图一把 BFS，threshold 是烟雾弹</text>
+  <text x="380" y="46" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">所有点到 0 ⟺ 反图上 0 到所有点；BFS 树反向 ⇒ 每点恰 1 条出边（示例 1，答案 x = 1）</text>
+
+  <!-- ===== left panel: original graph ===== -->
+  <text x="175" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">原图（示例 1）</text>
+  <text x="175" y="92" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">要求：每个点都能到 0</text>
+
+  <!-- edges -->
+  <path d="M 197 141 L 126 198" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="150" y="163" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">w=1</text>
+  <path d="M 283 210 Q 210 190 131 209" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="212" y="188" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">w=2</text>
+  <path d="M 197 279 L 126 222" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="150" y="258" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">w=1</text>
+  <path d="M 283 290 L 231 290" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="258" y="282" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">w=1</text>
+  <path d="M 287 199 L 225 143" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="262" y="164" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">w=1</text>
+
+  <!-- nodes -->
+  <g filter="url(#rough2)"><ellipse cx="110" cy="210" rx="17" ry="17" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/></g>
+  <text x="110" y="215" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">0</text>
+  <g filter="url(#rough2)"><ellipse cx="210" cy="130" rx="17" ry="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="210" y="135" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6b" filter="url(#rough2)">1</text>
+  <g filter="url(#rough2)"><ellipse cx="300" cy="210" rx="17" ry="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="300" y="215" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6b" filter="url(#rough2)">2</text>
+  <g filter="url(#rough2)"><ellipse cx="210" cy="290" rx="17" ry="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="210" y="295" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6b" filter="url(#rough2)">3</text>
+  <g filter="url(#rough2)"><ellipse cx="300" cy="290" rx="17" ry="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="300" y="295" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6b" filter="url(#rough2)">4</text>
+
+  <text x="175" y="328" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">n 个点各自要到 0：正向要搜 n 次</text>
+
+  <!-- ===== middle arrow ===== -->
+  <path d="M 335 210 L 412 210" stroke="#d6a040" stroke-width="2.6" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="375" y="188" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040" filter="url(#rough2)">全部边反向</text>
+  <text x="375" y="234" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">A→B 变 B→A</text>
+
+  <!-- ===== right panel: reversed graph ===== -->
+  <text x="590" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">反图：从 0 出发一把 BFS</text>
+  <text x="590" y="92" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">绿实线 = BFS 树边（权 ≤ 1），红虚线 = 被 ban 的大权边</text>
+
+  <!-- tree edges -->
+  <path d="M 513 199 L 585 143" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="566" y="162" text-anchor="middle" font-size="10" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">w=1</text>
+  <path d="M 513 221 L 585 277" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="566" y="258" text-anchor="middle" font-size="10" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">w=1</text>
+  <path d="M 613 141 L 675 197" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="650" y="164" text-anchor="middle" font-size="10" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">w=1</text>
+  <path d="M 617 290 L 670 290" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="643" y="282" text-anchor="middle" font-size="10" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">w=1</text>
+  <!-- banned edge -->
+  <path d="M 517 210 Q 595 190 673 210" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="598" y="184" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">w=2 ✗</text>
+
+  <!-- nodes -->
+  <g filter="url(#rough2)"><ellipse cx="500" cy="210" rx="17" ry="17" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/></g>
+  <text x="500" y="215" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">0</text>
+  <g filter="url(#rough2)"><ellipse cx="600" cy="130" rx="17" ry="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="600" y="135" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">1</text>
+  <g filter="url(#rough2)"><ellipse cx="690" cy="210" rx="17" ry="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="690" y="215" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">2</text>
+  <g filter="url(#rough2)"><ellipse cx="600" cy="290" rx="17" ry="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="600" y="295" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">3</text>
+  <g filter="url(#rough2)"><ellipse cx="690" cy="290" rx="17" ry="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="690" y="295" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">4</text>
+
+  <text x="590" y="328" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">反向后 0 一把 BFS 判完：0→1→3，1→2，3→4</text>
+
+  <!-- ===== bottom strip ===== -->
+  <g filter="url(#rough2)"><rect x="60" y="345" width="640" height="84" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="80" y="370" font-size="12.5" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">threshold 是烟雾弹：BFS 树 ⇒ 出度恰为 1</text>
+  <text x="80" y="392" font-size="11" fill="#444" filter="url(#rough2)">反图 BFS 树中，每个非 0 点恰被一条树边发现；把树边整体反向回原图——</text>
+  <text x="80" y="414" font-size="11" fill="#444" filter="url(#rough2)">每个点恰保留 1 条出边（指向树中父节点），节点 0 出度 0：</text>
+  <text x="445" y="414" font-size="11.5" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">1 ≤ threshold，条件③自动满足</text>
+</svg>
