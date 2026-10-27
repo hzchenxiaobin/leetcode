@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="20" text-anchor="middle" font-size="13" fill="#444" font-weight="bold" filter="url(#rough2)">为什么不能直接取全局前 k 大？</text>
+  <text x="260" y="37" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">反例：grid = [[10,9],[1,1]]，limits = [1,2]，k = 2</text>
+
+  <!-- 反例矩阵 -->
+  <text x="44" y="58" font-size="10.5" fill="#55677d" filter="url(#rough2)">矩阵（红框 = 全局 top-2）：</text>
+  <rect x="44" y="64" width="46" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="4" filter="url(#rough2)"/>
+  <text x="67" y="84" text-anchor="middle" font-size="14" fill="#333" font-weight="bold" filter="url(#rough2)">10</text>
+  <rect x="94" y="64" width="46" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="4" filter="url(#rough2)"/>
+  <text x="117" y="84" text-anchor="middle" font-size="14" fill="#333" font-weight="bold" filter="url(#rough2)">9</text>
+  <text x="150" y="84" font-size="10" fill="#b85450" filter="url(#rough2)">← limits[0] = 1</text>
+
+  <rect x="44" y="100" width="46" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="67" y="120" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="94" y="100" width="46" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="117" y="120" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">1</text>
+  <text x="150" y="120" font-size="10" fill="#446688" filter="url(#rough2)">← limits[1] = 2</text>
+
+  <path d="M 42 60 L 142 60" stroke="#b85450" stroke-width="1.6" stroke-dasharray="4 3" fill="none" filter="url(#rough2)"/>
+  <text x="44" y="150" font-size="10.5" fill="#b85450" filter="url(#rough2)">10 和 9 同在第 0 行，配额只有 1 个</text>
+  <text x="44" y="165" font-size="10.5" fill="#b85450" filter="url(#rough2)">→ 两个都取是非法方案！</text>
+
+  <!-- 右侧对比 -->
+  <g filter="url(#rough2)">
+    <rect x="290" y="56" width="200" height="52" fill="#fff8e1" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="390" y="76" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a04540">✗ 全局 top-2：10 + 9 = 19</text>
+    <text x="390" y="96" text-anchor="middle" font-size="10" fill="#a04540">第 0 行取了 2 个，超出 limits[0]</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="290" y="118" width="200" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="390" y="138" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f5d24">✓ 正确答案：10 + 1 = 11</text>
+    <text x="390" y="158" text-anchor="middle" font-size="10" fill="#2f5d24">行 0 取 1 个（10），行 1 取 1 个（1）</text>
+  </g>
+
+  <!-- 分隔箭头 -->
+  <path d="M 260 176 L 260 196" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" fill="none" filter="url(#rough2)"/>
+  <text x="284" y="190" font-size="10.5" fill="#446688" filter="url(#rough2)">修正：两步贪心</text>
+
+  <!-- 两步贪心流程 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="200" width="150" height="88" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10"/>
+    <text x="105" y="220" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d24">① 行内裁剪</text>
+    <text x="105" y="238" text-anchor="middle" font-size="10" fill="#2f5d24">每行降序，只留前</text>
+    <text x="105" y="252" text-anchor="middle" font-size="10" fill="#2f5d24">limits[i] 大的元素</text>
+    <text x="105" y="274" text-anchor="middle" font-size="9.5" fill="#557a4a">交换论证：换大的不亏</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="185" y="200" width="150" height="88" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10"/>
+    <text x="260" y="220" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6d1f">② 汇入候选池</text>
+    <text x="260" y="238" text-anchor="middle" font-size="10" fill="#8a6d1f">共 S = Σ limits[i] 个候选</text>
+    <text x="260" y="252" text-anchor="middle" font-size="10" fill="#8a6d1f">其余元素直接扔掉</text>
+    <text x="260" y="274" text-anchor="middle" font-size="9.5" fill="#9a7d33">反例中：池 = {10, 1, 1}</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="340" y="200" width="150" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10"/>
+    <text x="415" y="220" text-anchor="middle" font-size="11" font-weight="bold" fill="#33506b">③ 取前 k 大求和</text>
+    <text x="415" y="238" text-anchor="middle" font-size="10" fill="#33506b">元素非负：取满 k 个不亏</text>
+    <text x="415" y="252" text-anchor="middle" font-size="10" fill="#33506b">k ≤ S：池子永远够取</text>
+    <text x="415" y="274" text-anchor="middle" font-size="9.5" fill="#51708c">反例中：10 + 1 = 11 ✓</text>
+  </g>
+  <path d="M 180 244 L 183 244" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" fill="none" filter="url(#rough2)"/>
+  <path d="M 180 244 L 185 244" stroke="#446688" stroke-width="2" fill="none" filter="url(#rough2)"/>
+  <path d="M 335 244 L 340 244" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" fill="none" filter="url(#rough2)"/>
+
+  <text x="260" y="318" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">两步都能严格证明：行内取降序前缀只增不减；池内非负元素取满 k 个最优</text>
+  <text x="260" y="340" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">同行的"扎堆大数"被行配额拦腰截断，正是本题与普通 top-k 的本质区别</text>
+</svg>
