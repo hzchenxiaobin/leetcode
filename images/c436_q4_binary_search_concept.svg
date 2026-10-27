@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="470" viewBox="0 0 720 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="720" height="470" fill="#fafafa"/>
+  <text x="360" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">二分答案：能否让 min gameScore ≥ x？</text>
+  <path d="M 150 40 Q 360 48 570 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- ===== 左列：转化链 ===== -->
+  <text x="190" y="68" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e" filter="url(#rough2)">① 把「求最优」降级为「判定」</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="80" width="260" height="50" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="190" y="100" text-anchor="middle" font-size="12" font-weight="bold" fill="#33507a" filter="url(#rough2)">最大化最小值</text>
+  <text x="190" y="118" text-anchor="middle" font-size="11" fill="#556" filter="url(#rough2)">max ( min gameScore[i] )</text>
+
+  <path d="M 190 130 L 190 152" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+  <text x="200" y="146" font-size="9.5" fill="#888" filter="url(#rough2)">x 可行 ⇒ x−1 可行（同一走法）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="156" width="260" height="46" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="190" y="176" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">判定：min ≥ x 是否可行？</text>
+  <text x="190" y="193" text-anchor="middle" font-size="10" fill="#566555" filter="url(#rough2)">可行域是前缀 → 可以二分</text>
+
+  <path d="M 190 202 L 190 224" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="228" width="260" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="190" y="248" text-anchor="middle" font-size="12" font-weight="bold" fill="#a06a1a" filter="url(#rough2)">转化成「访问次数」下界</text>
+  <text x="190" y="266" text-anchor="middle" font-size="11" fill="#7a5a2a" filter="url(#rough2)">need_i = ⌈x / points[i]⌉</text>
+  <text x="190" y="280" text-anchor="middle" font-size="10" fill="#8a6a3a" filter="url(#rough2)">gameScore[i] = v_i · points[i]</text>
+
+  <path d="M 190 284 L 190 306" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="310" width="260" height="50" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="190" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#33507a" filter="url(#rough2)">求最少步数 M(x)</text>
+  <text x="190" y="348" text-anchor="middle" font-size="11" fill="#556" filter="url(#rough2)">M(x) ≤ m ？ → 贪心一次扫描</text>
+
+  <!-- ===== 右侧：二分区间图 ===== -->
+  <text x="545" y="68" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3a7a" filter="url(#rough2)">② 在 [0, min(points)·m] 上二分</text>
+
+  <!-- number line -->
+  <path d="M 400 170 L 690 170" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#rough2)"/>
+  <!-- feasible zone -->
+  <g filter="url(#rough2)">
+    <rect x="400" y="152" width="120" height="18" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="520" y="152" width="170" height="18" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="460" y="140" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">✓ 可行（M(x) ≤ m）</text>
+  <text x="600" y="140" text-anchor="middle" font-size="11" font-weight="bold" fill="#a04040" filter="url(#rough2)">✗ 不可行</text>
+  <text x="400" y="192" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">0</text>
+  <text x="690" y="192" text-anchor="end" font-size="10" fill="#888" filter="url(#rough2)">min(points)·m</text>
+
+  <!-- answer boundary -->
+  <g filter="url(#rough2)">
+    <circle cx="520" cy="161" r="11" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="520" y="165" text-anchor="middle" font-size="9" font-weight="bold" fill="#a06a1a" filter="url(#rough2)">ans</text>
+  <path d="M 520 174 Q 540 210 532 238" stroke="#d6a040" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+  <text x="560" y="232" font-size="10" fill="#8a6a2a" filter="url(#rough2)">最大可行 x</text>
+
+  <!-- probe lines -->
+  <path d="M 625 158 L 625 122" stroke="#b85450" stroke-width="1.2" stroke-dasharray="4 3" fill="none" marker-end="url(#arR)" filter="url(#rough2)"/>
+  <text x="625" y="114" text-anchor="middle" font-size="9.5" fill="#a04040" filter="url(#rough2)">mid ✗ → hi 左移</text>
+  <path d="M 455 158 L 455 122" stroke="#4a7a3a" stroke-width="1.2" stroke-dasharray="4 3" fill="none" marker-end="url(#arG)" filter="url(#rough2)"/>
+  <text x="445" y="114" text-anchor="middle" font-size="9.5" fill="#2e6e2e" filter="url(#rough2)">mid ✓ → lo 右移</text>
+
+  <!-- right caption box -->
+  <g filter="url(#rough2)">
+    <rect x="390" y="258" width="300" height="102" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  </g>
+  <text x="410" y="282" font-size="12" font-weight="bold" fill="#2b6e9e" filter="url(#rough2)">为什么上界够用？</text>
+  <text x="410" y="304" font-size="10.5" fill="#444" filter="url(#rough2)">设 i* = 最小 points 的下标，则</text>
+  <text x="410" y="322" font-size="10.5" fill="#444" filter="url(#rough2)">min ≤ gameScore[i*] ≤ m·points[i*]</text>
+  <text x="410" y="344" font-size="10" fill="#888" filter="url(#rough2)">区间长约 10^15 → 约 50 轮</text>
+
+  <!-- bottom note -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="388" width="640" height="64" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="70" y="412" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">落点模型（三个等式撑起整道题）</text>
+  <text x="70" y="434" font-size="11" fill="#444" filter="url(#rough2)">每步 ±1 落在相邻下标 → 操作数 = 落点总数 = Σ v_i；gameScore[i] = v_i·points[i] 与顺序无关</text>
+</svg>
