@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 595"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="595" fill="#fafafa"/>
+
+  <text x="280" y="32" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">按层扫描：候选池只增不减，滑动最大值均摊 O(1)</text>
+
+  <!-- 初始化 -->
+  <rect x="90" y="56" width="380" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="79" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">预处理前缀和 pre[0..n]；f[·][0] = 0，其余置 −∞</text>
+  <path d="M280,92 L280,114" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- j 层循环（虚线框） -->
+  <rect x="76" y="116" width="408" height="344" rx="10" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="7 5" filter="url(#rough2)"/>
+  <text x="280" y="140" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">for j = 1 … k —— 每层恰好多选一段</text>
+
+  <rect x="170" y="152" width="220" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="173" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">best ← −∞</text>
+  <path d="M280,184 L280,202" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <rect x="170" y="204" width="220" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="225" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">for i = m … n</text>
+  <path d="M280,236 L280,254" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <rect x="90" y="256" width="380" height="44" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="276" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">best ← max(best, f[i−m][j−1] − pre[i−m])</text>
+  <text x="280" y="293" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">划分点 p = i−m 刚刚入池（池范围 [0, i−m]）</text>
+  <path d="M280,300 L280,320" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- 决策菱形 -->
+  <polygon points="280,322 362,352 280,382 198,352" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="357" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">第 j 段以 i 结尾？</text>
+
+  <!-- 左分支：否 -->
+  <path d="M198,352 L160,392" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <rect x="56" y="396" width="200" height="52" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="156" y="418" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">否 → f[i][j] = f[i−1][j]</text>
+  <text x="156" y="437" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">第 j 段不含元素 i</text>
+
+  <!-- 右分支：是 -->
+  <path d="M362,352 L400,392" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <rect x="304" y="396" width="200" height="52" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="404" y="418" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是 → f[i][j] = best + pre[i]</text>
+  <text x="404" y="437" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">恰以元素 i 结尾</text>
+
+  <text x="280" y="454" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">（i 扫完进入下一层 j；k 层全部扫完出循环）</text>
+
+  <!-- 汇合返回 -->
+  <path d="M156,448 L236,480" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <path d="M404,448 L324,480" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <rect x="170" y="484" width="220" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="506" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">return f[n][k]</text>
+
+  <!-- 复杂度注记 -->
+  <rect x="76" y="534" width="408" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="560" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333" filter="url(#rough2)">候选池 [0, i−m] 单调右扩 → best 增量维护，均摊 O(1)</text>
+</svg>
