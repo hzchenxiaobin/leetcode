@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="61" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="400" fill="#fdfcf7"/>
+  <text x="320" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：素因子指数视角</text>
+  <path d="M 180 42 Q 320 50 460 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- formula -->
+  <g filter="url(#sk)">
+    <rect x="55" y="58" width="530" height="42" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="84" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">prod = lcm × gcd ⇔ 每个素数 p：Σeᵢ = max(eᵢ) + min(eᵢ)</text>
+
+  <!-- case 1: length 1 -->
+  <g filter="url(#sk)">
+    <rect x="28" y="120" width="184" height="128" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/>
+  </g>
+  <text x="120" y="142" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">长度 1：[x]</text>
+  <g font-size="11" fill="#444">
+    <text x="120" y="164" text-anchor="middle">prod = lcm = gcd = x</text>
+    <text x="120" y="182" text-anchor="middle">x = x·x ⇔ x = 1</text>
+  </g>
+  <text x="120" y="212" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold">仅 [1] 有效</text>
+  <text x="120" y="234" text-anchor="middle" font-size="10.5" fill="#888">（被下界 2 覆盖，无需特判）</text>
+
+  <!-- case 2: length 2 -->
+  <g filter="url(#sk)">
+    <rect x="228" y="120" width="184" height="128" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="320" y="142" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">长度 2：[a, b]</text>
+  <g font-size="11" fill="#444">
+    <text x="320" y="164" text-anchor="middle">e₁ + e₂ = max + min</text>
+    <text x="320" y="182" text-anchor="middle">对每个素数都成立</text>
+  </g>
+  <text x="320" y="212" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">恒有效！a·b = gcd·lcm</text>
+  <text x="320" y="234" text-anchor="middle" font-size="10.5" fill="#888">（答案 ≥ 2 的来源）</text>
+
+  <!-- case 3: length >= 3 -->
+  <g filter="url(#sk)">
+    <rect x="428" y="120" width="184" height="128" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="520" y="142" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">长度 ≥ 3</text>
+  <g font-size="11" fill="#444">
+    <text x="520" y="164" text-anchor="middle">Σ = max + min</text>
+    <text x="520" y="182" text-anchor="middle">⇔ 每个素数至多除尽 1 个数</text>
+  </g>
+  <text x="520" y="212" text-anchor="middle" font-size="11.5" fill="#7a5415" font-weight="bold">⇔ 两两互素</text>
+  <text x="520" y="234" text-anchor="middle" font-size="10.5" fill="#888">（滑窗要维护的目标）</text>
+
+  <!-- bad example -->
+  <g filter="url(#sk)">
+    <rect x="28" y="264" width="296" height="62" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/>
+  </g>
+  <text x="176" y="286" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a3a">✗ [2, 3, 4]：素数 2 的指数 (1, 0, 2)</text>
+  <text x="176" y="308" text-anchor="middle" font-size="11" fill="#8a3a3a">Σ = 3 ≠ max + min = 2 → prod 24 ≠ 1 × 12</text>
+
+  <!-- good example -->
+  <g filter="url(#sk)">
+    <rect x="316" y="264" width="296" height="62" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="464" y="286" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">✓ [3, 4, 5]：两两互素</text>
+  <text x="464" y="308" text-anchor="middle" font-size="11" fill="#2e6e2e">prod = 60 = gcd × lcm = 1 × 60</text>
+
+  <!-- conclusion -->
+  <g filter="url(#sk)">
+    <rect x="28" y="344" width="584" height="42" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="320" y="370" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">结论：答案 = max(2, 最长「两两互素」子数组长度)</text>
+</svg>
