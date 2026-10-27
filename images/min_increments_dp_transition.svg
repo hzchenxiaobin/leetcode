@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="760" viewBox="0 0 900 760" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arP" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#8e5db8"/>
+    </marker>
+  </defs>
+  <rect width="900" height="760" fill="#fdfcf7"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">掩码 DP：逐个元素做「01 背包」转移，每数至多用一次</text>
+  <path d="M 250 42 Q 450 50 650 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Left: state transition graph (m=2) ===== -->
+  <text x="60" y="76" font-size="13" font-weight="bold" fill="#2b6e9e">以 m = 2 为例：dp[mask] = 已覆盖 mask 中目标的最少代价</text>
+
+  <!-- dp[00] -->
+  <g filter="url(#sk)">
+    <rect x="70" y="230" width="104" height="48" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="122" y="250" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold">dp[00]</text>
+  <text x="122" y="268" text-anchor="middle" font-size="9" fill="#2e6e2e">∅ 未覆盖</text>
+
+  <!-- dp[01] = {t0} -->
+  <g filter="url(#sk)">
+    <rect x="250" y="118" width="112" height="48" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="306" y="138" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">dp[01]</text>
+  <text x="306" y="156" text-anchor="middle" font-size="9" fill="#2b6e9e">已覆盖 {t0}</text>
+
+  <!-- dp[10] = {t1} -->
+  <g filter="url(#sk)">
+    <rect x="250" y="342" width="112" height="48" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="306" y="362" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">dp[10]</text>
+  <text x="306" y="380" text-anchor="middle" font-size="9" fill="#2b6e9e">已覆盖 {t1}</text>
+
+  <!-- dp[11] = full -->
+  <g filter="url(#sk)">
+    <rect x="428" y="230" width="112" height="48" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2"/>
+  </g>
+  <text x="484" y="250" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold">dp[11]</text>
+  <text x="484" y="268" text-anchor="middle" font-size="9" fill="#2e6e2e">全覆盖 = 答案</text>
+
+  <!-- edges -->
+  <path d="M 178 236 Q 214 200 246 164" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="186" y="182" font-size="9" fill="#2b6e9e" font-weight="bold">S = {t0}</text>
+
+  <path d="M 178 272 Q 214 316 246 348" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="186" y="330" font-size="9" fill="#2b6e9e" font-weight="bold">S = {t1}</text>
+
+  <path d="M 182 254 Q 300 254 424 254" stroke="#4a8e4a" stroke-width="1.8" fill="none" stroke-dasharray="6 3" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="300" y="248" text-anchor="middle" font-size="9" fill="#2e6e2e" font-weight="bold">S = {t0,t1}「一顶几」</text>
+
+  <path d="M 362 148 Q 408 184 434 222" stroke="#8e5db8" stroke-width="1.6" fill="none" marker-end="url(#arP)" filter="url(#sk)"/>
+  <text x="416" y="166" font-size="9" fill="#5a3a7a" font-weight="bold">S = {t1}</text>
+
+  <path d="M 362 384 Q 408 332 434 286" stroke="#8e5db8" stroke-width="1.6" fill="none" marker-end="url(#arP)" filter="url(#sk)"/>
+  <text x="416" y="360" font-size="9" fill="#5a3a7a" font-weight="bold">S = {t0}</text>
+
+  <!-- graph caption -->
+  <g filter="url(#sk)">
+    <rect x="56" y="416" width="500" height="76" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2"/>
+  </g>
+  <text x="306" y="440" text-anchor="middle" font-size="11" fill="#444">每条边 = 当前元素 x 升到 lcm(S) 的最近倍数，加上 cost(x, S)</text>
+  <text x="306" y="460" text-anchor="middle" font-size="11" fill="#5a3a7a">S 只从 mask 的<tspan font-weight="bold" fill="#b03a3a">未覆盖位</tspan>（补集）中取：S ⊆ ~mask</text>
+  <text x="306" y="480" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">紫色边 = 用「另一个」元素接着补位</text>
+
+  <!-- ===== Right: two traps ===== -->
+  <g filter="url(#sk)">
+    <rect x="590" y="90" width="280" height="196" rx="10" fill="#f5e0e0" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="730" y="114" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">✗ 陷阱一：逐子集全局最优再相加</text>
+  <text x="604" y="138" font-size="10" fill="#444" font-family="monospace">nums=[1], target=[2,3]</text>
+  <text x="604" y="158" font-size="10" fill="#444" font-family="monospace">best[{2}] = 1   (1→2)</text>
+  <text x="604" y="178" font-size="10" fill="#444" font-family="monospace">best[{3}] = 2   (1→3)</text>
+  <text x="604" y="200" font-size="10" fill="#b03a3a" font-weight="bold">相加 = 3 ✗ 同一个 1 不能</text>
+  <text x="604" y="216" font-size="10" fill="#b03a3a" font-weight="bold">既是 2 又是 3！</text>
+  <text x="604" y="240" font-size="10" fill="#2e6e2e" font-weight="bold">✓ 正确：1→6（lcm=6），答案 5</text>
+  <text x="604" y="266" font-size="9" fill="#888">解法：逐元素转移，约束进入 DP</text>
+
+  <g filter="url(#sk)">
+    <rect x="590" y="304" width="280" height="188" rx="10" fill="#f5e0e0" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="730" y="328" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">✗ 陷阱二：原地更新（一数用两次）</text>
+  <text x="604" y="352" font-size="10" fill="#444">处理 x=1 时直接在 dp 上滚动：</text>
+  <text x="604" y="374" font-size="10" fill="#444" font-family="monospace">dp[00] → dp[01] = 1</text>
+  <text x="604" y="394" font-size="10" fill="#444" font-family="monospace">dp[01] → dp[11] = 1+2 = 3</text>
+  <text x="604" y="418" font-size="10" fill="#b03a3a" font-weight="bold">相当于把 1 用了两遍 ✗</text>
+  <text x="604" y="444" font-size="10" fill="#2e6e2e" font-weight="bold">✓ 必须用旧 dp 算 ndp，再整体替换</text>
+  <text x="604" y="468" font-size="9" fill="#888">（真正的 01 背包写法）</text>
+
+  <line x1="40" y1="516" x2="880" y2="516" stroke="#e0e0e0" stroke-width="1" filter="url(#sk)"/>
+
+  <!-- ===== Bottom: pseudocode ===== -->
+  <text x="450" y="544" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">算法骨架（m = |target|，full = 2^m − 1）</text>
+  <g filter="url(#sk)">
+    <rect x="80" y="558" width="740" height="178" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <g font-family="monospace" font-size="11.5" fill="#333">
+    <text x="104" y="584">初始：dp[0] = 0，其余 = +∞</text>
+    <text x="104" y="608"><tspan fill="#4a8e4a" font-weight="bold">for</tspan> x <tspan fill="#4a8e4a" font-weight="bold">in</tspan> nums:              <tspan fill="#888"># 每个元素一次</tspan></text>
+    <text x="128" y="632">ndp = dp[:]               <tspan fill="#888"># 允许 x 闲置</tspan></text>
+    <text x="128" y="656"><tspan fill="#4a8e4a" font-weight="bold">for</tspan> mask <tspan fill="#4a8e4a" font-weight="bold">in</tspan> 0..full:</text>
+    <text x="152" y="680"><tspan fill="#4a8e4a" font-weight="bold">for</tspan> S ⊆ ~mask, S ≠ ∅:  <tspan fill="#888"># 补集子集</tspan></text>
+    <text x="176" y="704">ndp[mask|S] ← min(ndp[mask|S],</text>
+    <text x="250" y="726">dp[mask] + cost(x, S))</text>
+  </g>
+  <g font-family="monospace" font-size="11.5" fill="#2b6e9e" font-weight="bold">
+    <text x="620" y="660">答案 = dp[full]</text>
+  </g>
+  <text x="620" y="684" font-size="10" fill="#5a3a7a">转移总数 n·(3^m − 2^m)</text>
+  <text x="620" y="702" font-size="10" fill="#5a3a7a">m ≤ 4 ⇒ 每数仅 65 次</text>
+</svg>
