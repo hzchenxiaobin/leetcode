@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="960" height="560" fill="#fdfcf7"/>
+  <text x="480" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">六状态按列 DP：约束、转移与状态图</text>
+  <path d="M 290 40 Q 480 48 670 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 左：列间约束 ===== -->
+  <text x="60" y="66" text-anchor="start" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">列间约束与转移式</text>
+
+  <text x="92" y="116" text-anchor="end" font-size="9" fill="#888" filter="url(#sk)">位置 k</text>
+  <g filter="url(#sk)"><rect x="100" y="92" width="90" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/></g>
+  <text x="145" y="120" text-anchor="middle" font-size="16" font-style="italic" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">a</text>
+  <g filter="url(#sk)"><rect x="100" y="162" width="90" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/></g>
+  <text x="145" y="190" text-anchor="middle" font-size="16" font-style="italic" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">b</text>
+  <text x="92" y="186" text-anchor="end" font-size="9" fill="#888" filter="url(#sk)">位置 n−1−k</text>
+
+  <text x="368" y="116" text-anchor="start" font-size="9" fill="#888" filter="url(#sk)">位置 k+1</text>
+  <g filter="url(#sk)"><rect x="260" y="92" width="90" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/></g>
+  <text x="305" y="120" text-anchor="middle" font-size="16" font-style="italic" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">a′</text>
+  <g filter="url(#sk)"><rect x="260" y="162" width="90" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/></g>
+  <text x="305" y="190" text-anchor="middle" font-size="16" font-style="italic" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">b′</text>
+  <text x="368" y="186" text-anchor="start" font-size="9" fill="#888" filter="url(#sk)">位置 n−2−k</text>
+
+  <!-- 列内约束（竖直） -->
+  <path d="M 145 136 Q 141 149 145 162" stroke="#b85450" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <text x="152" y="153" text-anchor="start" font-size="9" font-weight="bold" fill="#b03a3a" filter="url(#sk)">a≠b</text>
+  <path d="M 305 136 Q 301 149 305 162" stroke="#b85450" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <text x="312" y="153" text-anchor="start" font-size="9" font-weight="bold" fill="#b03a3a" filter="url(#sk)">a′≠b′</text>
+
+  <!-- 行间约束（水平） -->
+  <path d="M 190 114 Q 225 108 260 114" stroke="#b85450" stroke-width="2" stroke-dasharray="3 2" fill="none" filter="url(#sk)"/>
+  <text x="225" y="104" text-anchor="middle" font-size="10" font-weight="bold" fill="#b03a3a" filter="url(#sk)">a′ ≠ a</text>
+  <path d="M 190 184 Q 225 190 260 184" stroke="#b85450" stroke-width="2" stroke-dasharray="3 2" fill="none" filter="url(#sk)"/>
+  <text x="225" y="206" text-anchor="middle" font-size="10" font-weight="bold" fill="#b03a3a" filter="url(#sk)">b′ ≠ b</text>
+
+  <text x="145" y="228" text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">列 k（状态 (a,b)）</text>
+  <text x="305" y="228" text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">列 k+1（状态 (a′,b′)）</text>
+
+  <!-- 转移式 -->
+  <g filter="url(#sk)"><rect x="60" y="248" width="420" height="100" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <text x="80" y="274" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">转移（第 k+1 列）</text>
+  <text x="80" y="296" font-size="11.5" fill="#444" filter="url(#sk)">dp′(a′, b′) = w(a′, b′) + min{ dp(a, b) : a≠a′ 且 b≠b′ }</text>
+  <text x="80" y="318" font-size="11" fill="#666" filter="url(#sk)">其中 w_k(a, b) = cost[k][a] + cost[n−1−k][b]（该列两格成本）</text>
+  <text x="80" y="338" font-size="11" font-weight="bold" fill="#b03a3a" filter="url(#sk)">列内约束 a≠b 已包含在状态定义中</text>
+
+  <!-- 前驱公式 -->
+  <g filter="url(#sk)"><rect x="60" y="364" width="420" height="122" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2"/></g>
+  <text x="80" y="388" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">恰好 3 个兼容前驱</text>
+  <text x="80" y="410" font-size="11" fill="#444" filter="url(#sk)">目标 (p, q)（p≠q），设 r 为第三种颜色，则</text>
+  <text x="80" y="432" font-size="12" font-weight="bold" fill="#2b6e9e" font-family="monospace" filter="url(#sk)">前驱 = { (q,p), (q,r), (r,p) }</text>
+  <text x="80" y="454" font-size="11" fill="#666" filter="url(#sk)">a ∈ {q, r}、b ∈ {p, r}，剔除 a=b 的 (r,r) 后恰剩 3 个</text>
+  <text x="80" y="474" font-size="11" font-weight="bold" fill="#7a5415" filter="url(#sk)">例：目标 (1,2)，r=3 → 前驱 {(2,1), (2,3), (3,1)}</text>
+
+  <!-- ===== 右：三棱柱状态图 ===== -->
+  <text x="520" y="66" text-anchor="start" font-size="13" font-weight="bold" fill="#5a3a7a" filter="url(#sk)">6 状态转移图 = 三棱柱（边为双向转移）</text>
+
+  <!-- 三角形 A（蓝） -->
+  <path d="M 647 150 L 853 150" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <path d="M 853 163 L 767 250" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <path d="M 733 250 L 633 163" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <!-- 三角形 B（橙） -->
+  <path d="M 647 428 L 853 428" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <path d="M 853 415 L 767 330" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <path d="M 733 330 L 633 415" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <!-- 互换棱（绿虚线） -->
+  <g stroke="#4a8e4a" stroke-width="1.8" stroke-dasharray="6 4">
+    <path d="M 620 164 L 620 414" filter="url(#sk)"/>
+    <path d="M 880 164 L 880 414" filter="url(#sk)"/>
+    <path d="M 750 276 L 750 302" filter="url(#sk)"/>
+  </g>
+
+  <!-- 节点 -->
+  <g filter="url(#sk)"><rect x="593" y="136" width="54" height="28" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="620" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">(1,2)</text>
+  <g filter="url(#sk)"><rect x="853" y="136" width="54" height="28" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="880" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">(2,3)</text>
+  <g filter="url(#sk)"><rect x="723" y="248" width="54" height="28" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="750" y="267" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">(3,1)</text>
+  <g filter="url(#sk)"><rect x="593" y="414" width="54" height="28" rx="6" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="620" y="433" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">(2,1)</text>
+  <g filter="url(#sk)"><rect x="853" y="414" width="54" height="28" rx="6" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="880" y="433" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">(3,2)</text>
+  <g filter="url(#sk)"><rect x="723" y="302" width="54" height="28" rx="6" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="750" y="321" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">(1,3)</text>
+
+  <text x="750" y="210" text-anchor="middle" font-size="10" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">轮换圈 1→2→3→1</text>
+  <text x="750" y="388" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a5415" filter="url(#sk)">反轮换圈 1→3→2→1</text>
+  <text x="608" y="292" text-anchor="end" font-size="10" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">互换棱 (p,q)↔(q,p)</text>
+  <text x="750" y="466" text-anchor="middle" font-size="10" fill="#666" filter="url(#sk)">每个状态恰有 3 个前驱（＝3 条邻边），每列转移共 6×3 = 18 次比较</text>
+
+  <!-- ===== 底部流程 ===== -->
+  <g filter="url(#sk)"><rect x="60" y="492" width="186" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="153" y="510" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">① 枚举 6 状态 (a,b)，a≠b</text>
+  <text x="153" y="528" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">初始化 dp₀ = 第 0 列成本</text>
+  <g filter="url(#sk)"><rect x="268" y="492" width="186" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="361" y="510" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">② 逐列 k = 1 … m−1 转移</text>
+  <text x="361" y="528" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">每状态在 3 个前驱中取 min</text>
+  <g filter="url(#sk)"><rect x="476" y="492" width="186" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="569" y="510" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">③ 滚动数组：只保留上一列</text>
+  <text x="569" y="528" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">额外空间 O(1)</text>
+  <g filter="url(#sk)"><rect x="684" y="492" width="186" height="44" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="777" y="510" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">④ 末列 6 状态取 min</text>
+  <text x="777" y="528" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">即为答案</text>
+  <g stroke="#3a3a3a" stroke-width="1.5">
+    <path d="M 246 514 L 266 514" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 454 514 L 474 514" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 662 514 L 682 514" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+</svg>
