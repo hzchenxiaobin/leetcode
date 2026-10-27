@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="700" viewBox="0 0 940 700" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="8" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b03a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="700" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">子集枚举演算：words = ["ab","bc","ca"]</text>
+  <path d="M 270 42 Q 470 50 670 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="470" y="72" text-anchor="middle" font-size="12" fill="#444">约束图：a→b、b→c、c→a（三元环）；R = ∅（无 "xx" 型词）；Σ = {a,b,c}，n = 3</text>
+
+  <!-- ===== row template: T, G-T mini graph, verdict, freq ===== -->
+  <!-- column headers -->
+  <text x="120" y="104" text-anchor="middle" font-size="11" font-weight="bold" fill="#888">T（升 2 次）</text>
+  <text x="300" y="104" text-anchor="middle" font-size="11" font-weight="bold" fill="#888">G − T 剩余图</text>
+  <text x="470" y="104" text-anchor="middle" font-size="11" font-weight="bold" fill="#888">是否 DAG</text>
+  <text x="700" y="104" text-anchor="middle" font-size="11" font-weight="bold" fill="#888">|T| 与频率向量</text>
+
+  <!-- Row 1: T = empty, cycle -->
+  <g filter="url(#sk)"><rect x="60" y="118" width="820" height="120" rx="8" fill="#fdf3f4" stroke="#b03a3a" stroke-width="1.3"/></g>
+  <text x="120" y="184" text-anchor="middle" font-size="13" fill="#7a2828" font-weight="bold">∅</text>
+  <!-- mini triangle cycle a,b,c -->
+  <g font-size="11">
+    <g filter="url(#sk)"><circle cx="252" cy="150" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="252" y="155" text-anchor="middle" fill="#2e6e2e" font-weight="bold">a</text>
+    <g filter="url(#sk)"><circle cx="348" cy="150" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="348" y="155" text-anchor="middle" fill="#2e6e2e" font-weight="bold">b</text>
+    <g filter="url(#sk)"><circle cx="300" cy="212" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="300" y="217" text-anchor="middle" fill="#2e6e2e" font-weight="bold">c</text>
+  </g>
+  <path d="M 268 145 L 332 145" stroke="#b03a3a" stroke-width="1.5" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <path d="M 344 163 Q 330 200 312 208" stroke="#b03a3a" stroke-width="1.5" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <path d="M 288 208 Q 270 200 256 163" stroke="#b03a3a" stroke-width="1.5" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="470" y="180" text-anchor="middle" font-size="14" fill="#b03a3a" font-weight="bold">有环 ✗</text>
+  <text x="700" y="180" text-anchor="middle" font-size="11" fill="#7a2828">不可行（三个位置互相矛盾）</text>
+
+  <!-- Row 2: T = {a} -->
+  <g filter="url(#sk)"><rect x="60" y="250" width="820" height="104" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+  <text x="120" y="308" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">{a}</text>
+  <!-- b->c -->
+  <g font-size="11">
+    <g filter="url(#sk)"><circle cx="266" cy="292" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="266" y="297" text-anchor="middle" fill="#2e6e2e" font-weight="bold">b</text>
+    <g filter="url(#sk)"><circle cx="334" cy="292" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="334" y="297" text-anchor="middle" fill="#2e6e2e" font-weight="bold">c</text>
+    <text x="300" y="332" text-anchor="middle" font-size="10" fill="#888">a 已删去</text>
+  </g>
+  <path d="M 282 292 L 318 292" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="470" y="296" text-anchor="middle" font-size="14" fill="#2e6e2e" font-weight="bold">DAG ✓</text>
+  <text x="470" y="318" text-anchor="middle" font-size="10" fill="#666">topo = b,c</text>
+  <text x="700" y="296" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold" font-family="monospace">|T|=1，f=[2,1,1]</text>
+  <text x="700" y="322" text-anchor="middle" font-size="10" fill="#666">构造串 "abca"（长 4）</text>
+
+  <!-- Row 3: T = {b} -->
+  <g filter="url(#sk)"><rect x="60" y="366" width="820" height="104" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+  <text x="120" y="424" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">{b}</text>
+  <!-- c->a -->
+  <g font-size="11">
+    <g filter="url(#sk)"><circle cx="266" cy="408" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="266" y="413" text-anchor="middle" fill="#2e6e2e" font-weight="bold">c</text>
+    <g filter="url(#sk)"><circle cx="334" cy="408" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="334" y="413" text-anchor="middle" fill="#2e6e2e" font-weight="bold">a</text>
+    <text x="300" y="448" text-anchor="middle" font-size="10" fill="#888">b 已删去</text>
+  </g>
+  <path d="M 282 408 L 318 408" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="470" y="412" text-anchor="middle" font-size="14" fill="#2e6e2e" font-weight="bold">DAG ✓</text>
+  <text x="470" y="434" text-anchor="middle" font-size="10" fill="#666">topo = c,a</text>
+  <text x="700" y="412" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold" font-family="monospace">|T|=1，f=[1,2,1]</text>
+  <text x="700" y="438" text-anchor="middle" font-size="10" fill="#666">构造串 "bcab"（长 4）</text>
+
+  <!-- Row 4: T = {c} -->
+  <g filter="url(#sk)"><rect x="60" y="482" width="820" height="104" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+  <text x="120" y="540" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">{c}</text>
+  <!-- a->b -->
+  <g font-size="11">
+    <g filter="url(#sk)"><circle cx="266" cy="524" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="266" y="529" text-anchor="middle" fill="#2e6e2e" font-weight="bold">a</text>
+    <g filter="url(#sk)"><circle cx="334" cy="524" r="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="334" y="529" text-anchor="middle" fill="#2e6e2e" font-weight="bold">b</text>
+    <text x="300" y="564" text-anchor="middle" font-size="10" fill="#888">c 已删去</text>
+  </g>
+  <path d="M 282 524 L 318 524" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="470" y="528" text-anchor="middle" font-size="14" fill="#2e6e2e" font-weight="bold">DAG ✓</text>
+  <text x="470" y="550" text-anchor="middle" font-size="10" fill="#666">topo = a,b</text>
+  <text x="700" y="528" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold" font-family="monospace">|T|=1，f=[1,1,2]</text>
+  <text x="700" y="554" text-anchor="middle" font-size="10" fill="#666">构造串 "cabc"（长 4）</text>
+
+  <!-- conclusion -->
+  <g filter="url(#sk)">
+    <rect x="60" y="604" width="820" height="72" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="628" font-size="12" font-weight="bold" fill="#2b6e9e">结论：k = min |T| = 1，最短超序列长度 = n + k = 4</text>
+  <text x="80" y="652" font-size="11" fill="#444">答案为三个频率向量 [2,1,1]、[1,2,1]、[1,1,2]（不同 T 必给不同频率，天然互不为排列，无需去重）</text>
+</svg>

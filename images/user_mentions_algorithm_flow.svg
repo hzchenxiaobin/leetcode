@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="860" viewBox="0 0 780 860" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arD" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2b2b2b"/>
+    </marker>
+    <marker id="arP" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#777"/>
+    </marker>
+  </defs>
+  <rect width="780" height="860" fill="#fafafa"/>
+  <text x="390" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：排序 + 单遍扫描模拟</text>
+  <path d="M 250 44 Q 390 52 530 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 开始 -->
+  <g filter="url(#sk)">
+    <rect x="310" y="64" width="160" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="390" y="89" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e5e2e">开始</text>
+  <path d="M 390 104 L 390 126" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+
+  <!-- 排序 -->
+  <g filter="url(#sk)">
+    <rect x="215" y="130" width="350" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="390" y="153" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f4f6f">按（时间戳升序，OFFLINE 优先）排序</text>
+  <text x="390" y="174" text-anchor="middle" font-size="11" fill="#2f4f6f">key = (int(e[1]), e[0]=='MESSAGE')</text>
+  <path d="M 390 184 L 390 206" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+
+  <!-- 初始化 -->
+  <g filter="url(#sk)">
+    <rect x="215" y="210" width="350" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="390" y="232" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f4f6f">mentions[0..U-1] = 0</text>
+  <text x="390" y="252" text-anchor="middle" font-size="11" fill="#2f4f6f">offlineUntil[0..U-1] = 0（初始在线）</text>
+  <path d="M 390 260 L 390 282" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+
+  <!-- 循环判定 -->
+  <g filter="url(#sk)">
+    <polygon points="390,288 505,332 390,376 275,332" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="390" y="328" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6515">还有事件？</text>
+  <text x="390" y="348" text-anchor="middle" font-size="10" fill="#8a6515">（按排序后的顺序）</text>
+  <path d="M 505 332 L 598 332" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="550" y="322" text-anchor="middle" font-size="11" fill="#888">否</text>
+  <g filter="url(#sk)">
+    <rect x="602" y="306" width="152" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="678" y="329" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e">返回 mentions</text>
+  <text x="678" y="349" text-anchor="middle" font-size="10" fill="#2e5e2e">（长度 = U）</text>
+  <path d="M 390 376 L 390 398" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="402" y="392" text-anchor="start" font-size="11" fill="#888">是</text>
+
+  <!-- 取事件 -->
+  <g filter="url(#sk)">
+    <rect x="215" y="402" width="350" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="390" y="422" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f4f6f">取下一条事件 e = (type, t, s)</text>
+  <text x="390" y="440" text-anchor="middle" font-size="10" fill="#666">t = int(e[1])</text>
+  <path d="M 390 448 L 390 470" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+
+  <!-- 类型判定 -->
+  <g filter="url(#sk)">
+    <polygon points="390,476 510,524 390,572 270,524" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="390" y="530" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6515">e 是 OFFLINE？</text>
+  <path d="M 270 524 L 254 524" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="262" y="514" text-anchor="middle" font-size="11" fill="#888">是</text>
+  <g filter="url(#sk)">
+    <rect x="88" y="496" width="162" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="169" y="518" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04038">OFFLINE (t, id)</text>
+  <text x="169" y="540" text-anchor="middle" font-size="10" fill="#a04038">offlineUntil[id] ← t + 60</text>
+  <path d="M 390 572 L 390 596" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="402" y="588" text-anchor="start" font-size="11" fill="#888">否（MESSAGE）</text>
+
+  <!-- 字符串形式判定 -->
+  <g filter="url(#sk)">
+    <polygon points="390,602 510,650 390,698 270,650" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="390" y="646" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6515">s 的形式？</text>
+  <text x="390" y="666" text-anchor="middle" font-size="10" fill="#8a6515">（mentions_string）</text>
+
+  <!-- ALL 分支 -->
+  <path d="M 270 650 L 254 650" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="262" y="640" text-anchor="middle" font-size="11" fill="#888">ALL</text>
+  <g filter="url(#sk)">
+    <rect x="58" y="622" width="192" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="154" y="644" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4f6f">'ALL'：全体 +1</text>
+  <text x="154" y="666" text-anchor="middle" font-size="10" fill="#2f4f6f">所有用户 mentions[u]++</text>
+
+  <!-- HERE 分支 -->
+  <path d="M 510 650 L 526 650" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="518" y="640" text-anchor="middle" font-size="11" fill="#888">HERE</text>
+  <g filter="url(#sk)">
+    <rect x="530" y="618" width="206" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="633" y="640" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e">'HERE'：仅在线用户</text>
+  <text x="633" y="660" text-anchor="middle" font-size="10.5" fill="#2e5e2e">offlineUntil[u] ≤ t</text>
+  <text x="633" y="678" text-anchor="middle" font-size="10.5" fill="#2e5e2e">→ mentions[u]++</text>
+
+  <!-- id 列表分支 -->
+  <path d="M 390 698 L 390 718" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="402" y="712" text-anchor="start" font-size="11" fill="#888">id 列表</text>
+  <g filter="url(#sk)">
+    <rect x="230" y="722" width="320" height="64" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="390" y="744" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6515">空格分隔的 id&lt;number&gt;（可重复）</text>
+  <text x="390" y="766" text-anchor="middle" font-size="10" fill="#8a6515">每个 token：mentions[int(tok[2:])]++</text>
+
+  <!-- 回环 -->
+  <g filter="url(#sk)" stroke="#777" stroke-width="1.3" fill="none">
+    <path d="M 88 524 L 45 524"/>
+    <path d="M 58 650 L 45 650"/>
+    <path d="M 390 786 L 390 802"/>
+    <path d="M 633 682 L 633 802"/>
+    <path d="M 45 802 L 633 802"/>
+    <path d="M 45 802 L 45 332"/>
+    <path d="M 45 332 L 271 332" marker-end="url(#arP)"/>
+  </g>
+  <text x="60" y="795" text-anchor="start" font-size="10" fill="#888">处理完一条，回到循环取下一条</text>
+</svg>

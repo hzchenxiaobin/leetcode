@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="61" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arD" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2b2b2b"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fafafa"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 2 演算：v = 2（k = 10）的一遍 Kadane 走查</text>
+  <path d="M 270 46 Q 470 54 670 46" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 走查表 ===== -->
+  <!-- 表头 i -->
+  <g font-size="12" text-anchor="middle" fill="#888" filter="url(#sk)">
+    <text x="72" y="117" text-anchor="end">i</text>
+    <text x="72" y="159" text-anchor="end">a_i</text>
+    <text x="72" y="201" text-anchor="end">cur</text>
+    <text x="72" y="243" text-anchor="end">best</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="80" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="158" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="236" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="314" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="392" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="470" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="548" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="626" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="704" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="782" y="96" width="66" height="34" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.8"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#666" filter="url(#sk)">
+    <text x="113" y="118">0</text><text x="191" y="118">1</text><text x="269" y="118">2</text>
+    <text x="347" y="118">3</text><text x="425" y="118">4</text><text x="503" y="118">5</text>
+    <text x="581" y="118">6</text><text x="659" y="118">7</text><text x="737" y="118">8</text>
+    <text x="815" y="118">9</text>
+  </g>
+
+  <!-- a_i 行 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="134" width="66" height="38" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <rect x="158" y="134" width="66" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="236" y="134" width="66" height="38" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="314" y="134" width="66" height="38" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="392" y="134" width="66" height="38" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="470" y="134" width="66" height="38" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="548" y="134" width="66" height="38" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="626" y="134" width="66" height="38" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <rect x="704" y="134" width="66" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="782" y="134" width="66" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <g font-size="14" text-anchor="middle" fill="#333" font-weight="bold" filter="url(#sk)">
+    <text x="113" y="159">−1</text><text x="191" y="159">+1</text><text x="269" y="159">0</text>
+    <text x="347" y="159">0</text><text x="425" y="159">0</text><text x="503" y="159">0</text>
+    <text x="581" y="159">0</text><text x="659" y="159">0</text><text x="737" y="159">+1</text>
+    <text x="815" y="159">+1</text>
+  </g>
+
+  <!-- cur 行 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+    <rect x="158" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="236" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+    <rect x="314" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+    <rect x="392" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+    <rect x="470" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+    <rect x="548" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+    <rect x="626" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+    <rect x="704" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="782" y="176" width="66" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <g font-size="13" text-anchor="middle" fill="#8a6515" filter="url(#sk)">
+    <text x="113" y="201">−1</text><text x="191" y="201">1</text><text x="269" y="201">1</text>
+    <text x="347" y="201">1</text><text x="425" y="201">1</text><text x="503" y="201">1</text>
+    <text x="581" y="201">1</text><text x="659" y="201">1</text><text x="737" y="201">2</text>
+    <text x="815" y="201" font-weight="bold">3</text>
+  </g>
+
+  <!-- best 行 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="158" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="236" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="314" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="392" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="470" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="548" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="626" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="704" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="782" y="218" width="66" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.4"/>
+  </g>
+  <g font-size="13" text-anchor="middle" fill="#2f4f6f" filter="url(#sk)">
+    <text x="113" y="243">0</text><text x="191" y="243">1</text><text x="269" y="243">1</text>
+    <text x="347" y="243">1</text><text x="425" y="243">1</text><text x="503" y="243">1</text>
+    <text x="581" y="243">1</text><text x="659" y="243">1</text><text x="737" y="243">2</text>
+    <text x="815" y="243" font-weight="bold" font-size="14">3</text>
+  </g>
+
+  <!-- ===== 步骤解读 ===== -->
+  <g filter="url(#sk)">
+    <rect x="80" y="276" width="790" height="96" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="100" y="300" font-size="12" fill="#8a6515" filter="url(#sk)">· i=0（a=−1）：cur = max(−1, 0−1) = −1，best 维持 0 —— 起手吞 k 亏 1，Kadane 会“另起炉灶”</text>
+  <text x="100" y="324" font-size="12" fill="#8a6515" filter="url(#sk)">· i=1（a=+1）：cur = max(+1, −1+1) = 1 → best = 1；i=2..7（a=0）：cur = max(0, cur) = 1 不变</text>
+  <text x="100" y="348" font-size="12" fill="#8a6515" filter="url(#sk)">· i=8、i=9（a=+1）：cur = 2 → 3，best = 3 —— 最优区间 [1..9]，避开最左的 k（=10）</text>
+
+  <!-- ===== 其他 v 的对比 ===== -->
+  <g filter="url(#sk)">
+    <rect x="80" y="386" width="790" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  </g>
+  <text x="100" y="412" font-size="12" fill="#2f4f6f" filter="url(#sk)">对比：v=3/4/5 的最大增益均只有 2（出现位置被 k=10 隔开，连不成大区间）→ v=2 胜出</text>
+
+  <!-- ===== 操作结果 ===== -->
+  <text x="80" y="460" font-size="13" font-weight="bold" fill="#555" filter="url(#sk)">执行操作：区间 [1..9] 整体加 x = k − v = 8，数组变为</text>
+  <g filter="url(#sk)">
+    <rect x="80" y="472" width="66" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="158" y="472" width="66" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="236" y="472" width="66" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="314" y="472" width="66" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="392" y="472" width="66" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="470" y="472" width="66" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="548" y="472" width="66" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="626" y="472" width="66" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="704" y="472" width="66" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="782" y="472" width="66" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <g font-size="13" text-anchor="middle" fill="#333" filter="url(#sk)">
+    <text x="113" y="500">10</text><text x="191" y="500">10</text><text x="269" y="500">11</text>
+    <text x="347" y="500">12</text><text x="425" y="500">13</text><text x="503" y="500">13</text>
+    <text x="581" y="500">12</text><text x="659" y="500">11</text><text x="737" y="500">10</text>
+    <text x="815" y="500">10</text>
+  </g>
+  <text x="470" y="540" text-anchor="middle" font-size="11" fill="#2e5e2e" filter="url(#sk)">绿色 = 操作后的 k（区间外 1 个 + 点化的 3 个 = 4 个 10）</text>
+
+  <!-- ===== 最终答案 ===== -->
+  <g filter="url(#sk)">
+    <rect x="210" y="560" width="520" height="56" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+  </g>
+  <text x="470" y="582" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">答案 = base + best = 1 + 3 = 4</text>
+  <text x="470" y="604" text-anchor="middle" font-size="11" fill="#2e5e2e" filter="url(#sk)">与官方解释一致：加 8 后 10 出现 4 次</text>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="580" viewBox="0 0 940 580" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arD" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2b2b2b"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2e5e2e"/>
+    </marker>
+  </defs>
+  <rect width="940" height="580" fill="#fafafa"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：枚举 v（1..50，跳过 k）+ 每值一遍 Kadane</text>
+  <path d="M 270 46 Q 470 54 670 46" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 统计基线 -->
+  <g filter="url(#sk)">
+    <rect x="290" y="70" width="360" height="60" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="95" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f4f6f" filter="url(#sk)">统计 base = C_k（数组中 k 的个数）</text>
+  <text x="470" y="117" text-anchor="middle" font-size="12" fill="#2f4f6f" filter="url(#sk)">best = 0 —— 不操作（或取 x = 0）的保底收益</text>
+  <path d="M 470 130 L 470 168" stroke="#2b2b2b" stroke-width="1.8" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+
+  <!-- 判定菱形 -->
+  <path d="M 470 168 L 640 218 L 470 268 L 300 218 Z" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="470" y="212" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3a7a" filter="url(#sk)">还有未枚举的 v？</text>
+  <text x="470" y="234" text-anchor="middle" font-size="11" fill="#5a3a7a" filter="url(#sk)">（v ∈ 1..50，跳过 v = k）</text>
+
+  <!-- 否 → 输出 -->
+  <path d="M 640 218 L 690 218" stroke="#2b2b2b" stroke-width="1.8" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="655" y="208" text-anchor="middle" font-size="12" fill="#666" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="695" y="188" width="190" height="60" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+  </g>
+  <text x="790" y="213" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">输出 base + best</text>
+  <text x="790" y="235" text-anchor="middle" font-size="11" fill="#2e5e2e" filter="url(#sk)">（best ≥ 0，保底不亏）</text>
+
+  <!-- 是 → 构造增益数组 -->
+  <path d="M 470 268 L 470 306" stroke="#2b2b2b" stroke-width="1.8" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="484" y="294" font-size="12" fill="#666" filter="url(#sk)">是</text>
+  <g filter="url(#sk)">
+    <rect x="290" y="310" width="360" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="336" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6515" filter="url(#sk)">构造增益数组（无需显式建数组）</text>
+  <text x="470" y="360" text-anchor="middle" font-size="12" fill="#8a6515" filter="url(#sk)">a_i = +1（nums_i = v）／ −1（nums_i = k）／ 0（其他）</text>
+  <path d="M 470 376 L 470 412" stroke="#2b2b2b" stroke-width="1.8" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+
+  <!-- Kadane -->
+  <g filter="url(#sk)">
+    <rect x="290" y="416" width="360" height="66" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="442" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">单遍 Kadane：cur = max(a_i, cur + a_i)</text>
+  <text x="470" y="466" text-anchor="middle" font-size="12" fill="#2e5e2e" filter="url(#sk)">best = max(best, cur) —— 记录本 v 的最大子数组和</text>
+
+  <!-- 回边 -->
+  <path d="M 290 449 Q 210 449 210 218 Q 210 190 268 204" stroke="#2e5e2e" stroke-width="1.8" fill="none" stroke-dasharray="6 4" filter="url(#sk)" marker-end="url(#arG)"/>
+  <text x="196" y="345" text-anchor="end" font-size="11" fill="#2e5e2e" filter="url(#sk)">换下一个 v</text>
+
+  <!-- 底部提示 -->
+  <g filter="url(#sk)">
+    <rect x="80" y="510" width="790" height="52" rx="8" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+  </g>
+  <text x="100" y="532" font-size="12" fill="#555" filter="url(#sk)">· v 未在数组中出现也无妨：a_i ≤ 0，Kadane 结果 ≤ 0，不会污染 best（可先建值→下标桶做剪枝）</text>
+  <text x="100" y="552" font-size="12" fill="#555" filter="url(#sk)">· 时间 O(50n) ≈ 5×10^6，空间 O(1)：增益数组逐元素现算，不必落地</text>
+</svg>

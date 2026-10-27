@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arD" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2b2b2b"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fafafa"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：离线 = 区间 [s, s+60)，一个数 offlineUntil 判定在线</text>
+  <path d="M 240 46 Q 470 54 700 46" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 时间轴 ===== -->
+  <path d="M 90 340 L 880 340" stroke="#2b2b2b" stroke-width="2" fill="none" filter="url(#sk)" marker-end="url(#arD)"/>
+  <text x="884" y="330" text-anchor="end" font-size="12" fill="#666">t</text>
+
+  <!-- 刻度 -->
+  <g filter="url(#sk)" stroke="#2b2b2b" stroke-width="1.2">
+    <line x1="90" y1="334" x2="90" y2="346"/>
+    <line x1="169" y1="334" x2="169" y2="346"/>
+    <line x1="327" y1="334" x2="327" y2="346"/>
+    <line x1="485" y1="334" x2="485" y2="346"/>
+    <line x1="643" y1="334" x2="643" y2="346"/>
+    <line x1="880" y1="334" x2="880" y2="346"/>
+  </g>
+  <g font-size="11" fill="#666" text-anchor="middle">
+    <text x="90" y="364">t=0</text>
+    <text x="169" y="364">t=10</text>
+    <text x="327" y="364">t=30</text>
+    <text x="485" y="364">t=50</text>
+    <text x="643" y="364">t=70</text>
+    <text x="878" y="364" text-anchor="end">t=100</text>
+  </g>
+
+  <!-- ===== 离线区间带 ===== -->
+  <g filter="url(#sk)">
+    <rect x="169" y="306" width="474" height="64" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="406" y="332" text-anchor="middle" font-size="13" font-weight="bold" fill="#a04038">id0 离线区间 [10, 70)</text>
+  <text x="406" y="356" text-anchor="middle" font-size="11" fill="#a04038">OFFLINE(10, id0)：offlineUntil[0] = 70</text>
+
+  <!-- s=10 离线生效标记 -->
+  <path d="M 169 262 L 169 306" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <text x="169" y="256" text-anchor="middle" font-size="11" fill="#a04038">s=10 离线生效</text>
+
+  <!-- ===== 消息事件标注 ===== -->
+  <g filter="url(#sk)">
+    <rect x="237" y="100" width="180" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="327" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4f6f">MESSAGE t=30 'ALL'</text>
+  <text x="327" y="146" text-anchor="middle" font-size="11" fill="#2f4f6f">离线也提及 → id0 +1</text>
+  <path d="M 327 156 L 327 306" stroke="#446688" stroke-width="1.3" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <circle cx="327" cy="340" r="5" fill="#446688" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="395" y="180" width="180" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="485" y="204" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04038">MESSAGE t=50 'HERE'</text>
+  <text x="485" y="226" text-anchor="middle" font-size="11" fill="#a04038">50 落在 [10,70) 内 → 不提及</text>
+  <path d="M 485 236 L 485 306" stroke="#b85450" stroke-width="1.3" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <circle cx="485" cy="340" r="5" fill="#b85450" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="553" y="100" width="180" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="643" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e">MESSAGE t=70 'HERE'</text>
+  <text x="643" y="146" text-anchor="middle" font-size="11" fill="#2e5e2e">70 ≤ 70 已上线 → 提及！</text>
+  <path d="M 643 156 L 643 306" stroke="#4a7a3a" stroke-width="1.3" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <circle cx="643" cy="340" r="5" fill="#4a7a3a" filter="url(#sk)"/>
+  <text x="652" y="244" text-anchor="start" font-size="11" fill="#2e5e2e">70：自动上线</text>
+
+  <!-- ===== 判定公式 ===== -->
+  <g filter="url(#sk)">
+    <rect x="90" y="410" width="790" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="436" font-size="13" font-weight="bold" fill="#8a6515">在线判定只需一个数：HERE 在 t 提及 u 当且仅当 offlineUntil[u] ≤ t</text>
+  <text x="110" y="462" font-size="12" fill="#8a6515">ALL 与 id&lt;number&gt;：无条件提及（离线用户也算），直接 +1</text>
+
+  <!-- ===== 同刻规则说明 ===== -->
+  <g filter="url(#sk)">
+    <rect x="90" y="496" width="790" height="110" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="522" font-size="13" font-weight="bold" fill="#5a3a7a">同刻规则：状态变更先于 MESSAGE</text>
+  <text x="110" y="548" font-size="12" fill="#444">· OFFLINE(10, id0) 与 MESSAGE(10, 'HERE') 同刻 → id0 已离线，不被提及</text>
+  <text x="110" y="574" font-size="12" fill="#444">· 恰在 t=70 重新上线 → 同刻 HERE 视为在线（区间左闭右开的边界含义）</text>
+</svg>
