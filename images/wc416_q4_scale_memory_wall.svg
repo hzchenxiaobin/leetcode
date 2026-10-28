@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="620" fill="#fafafa"/>
+
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">Q3 → Q4：数据 ×10、内存收紧——先做资源审计</text>
+  <path d="M 250 44 Q 450 52 650 44" stroke="#b85450" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+
+  <!-- ===== Section 1: what changed ===== -->
+  <text x="60" y="84" font-size="15" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">① 与 Q3 相比：n 放大十倍，题面罕见地预警内存</text>
+
+  <g filter="url(#rough2)">
+    <rect x="80" y="102" width="180" height="58" rx="8" fill="#ffffff" stroke="#777" stroke-width="1.5"/>
+    <text x="170" y="126" text-anchor="middle" font-size="13" font-weight="bold" fill="#444">Q3（#3297，中等）</text>
+    <text x="170" y="148" text-anchor="middle" font-size="11.5" fill="#666">n ≤ 10⁵，m ≤ 10⁴</text>
+
+    <path d="M 268 131 L 320 131" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <text x="295" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">×10</text>
+
+    <rect x="330" y="102" width="180" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <text x="420" y="126" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">Q4（#3298，困难）</text>
+    <text x="420" y="148" text-anchor="middle" font-size="11.5" fill="#446688">n ≤ 10⁶，m ≤ 10⁴</text>
+
+    <rect x="545" y="98" width="310" height="66" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="700" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a04a46">题面预警：内存限制比其他题目更小</text>
+    <text x="700" y="146" text-anchor="middle" font-size="12.5" fill="#a04a46">⇒ 必须实现线性复杂度的解法</text>
+  </g>
+
+  <!-- ===== Section 2: budget audit ===== -->
+  <text x="60" y="204" font-size="15" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">② 三种做法的预算审计（n = 10⁶，Σ = 26）</text>
+
+  <!-- Card A -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="224" width="240" height="250" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="170" y="252" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#a04a46">A · 前缀计数 + 二分</text>
+    <text x="170" y="288" text-anchor="middle" font-size="11.5" fill="#554">对每个 r 二分最左合法 l</text>
+    <text x="170" y="314" text-anchor="middle" font-size="11.5" fill="#554">时间 O(Σn log n) ≈ 5×10⁸</text>
+    <text x="170" y="340" text-anchor="middle" font-size="11.5" fill="#554">内存 O(Σn) ≈ 104 MB</text>
+    <rect x="70" y="396" width="200" height="52" rx="8" fill="#ffffff" stroke="#b85450" stroke-width="1.5"/>
+    <text x="170" y="428" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">✗ 超时 + 超内存</text>
+  </g>
+
+  <!-- Card B -->
+  <g filter="url(#rough2)">
+    <rect x="320" y="224" width="240" height="250" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="440" y="252" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#9a7420">B · 双指针 + 每步全扫</text>
+    <text x="440" y="288" text-anchor="middle" font-size="11.5" fill="#665">每次入/出窗比较 26 个计数</text>
+    <text x="440" y="314" text-anchor="middle" font-size="11.5" fill="#665">时间 O(Σn) ≈ 10⁷~10⁸ 步</text>
+    <text x="440" y="340" text-anchor="middle" font-size="11.5" fill="#665">内存 O(Σ) 本身没问题</text>
+    <rect x="340" y="396" width="200" height="52" rx="8" fill="#ffffff" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="440" y="422" text-anchor="middle" font-size="12" font-weight="bold" fill="#9a7420">△ C++ 侥幸</text>
+    <text x="440" y="440" text-anchor="middle" font-size="12" font-weight="bold" fill="#9a7420">Python 必超时</text>
+  </g>
+
+  <!-- Card C -->
+  <g filter="url(#rough2)">
+    <rect x="590" y="224" width="260" height="250" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5"/>
+    <text x="720" y="252" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5a2b">C · 双指针 + less 计数器</text>
+    <text x="720" y="288" text-anchor="middle" font-size="11.5" fill="#3a5a3a">维护「还欠几种字符」</text>
+    <text x="720" y="314" text-anchor="middle" font-size="11.5" fill="#3a5a3a">时间 O(n + m + Σ)</text>
+    <text x="720" y="340" text-anchor="middle" font-size="11.5" fill="#3a5a3a">内存 ≈ 200 B（与 n 无关）</text>
+    <rect x="610" y="396" width="220" height="52" rx="8" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="720" y="428" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a2b">✓ 线性 + 常数内存</text>
+  </g>
+
+  <!-- ===== takeaway ===== -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="500" width="800" height="92" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="450" y="532" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">关键一步：一次只加 / 删一个字符 ⇒ 至多一种计数跨越「够 / 不够」分界</text>
+    <text x="450" y="560" text-anchor="middle" font-size="12" fill="#446688">⇒ 用 less 维护欠账种数，每步判定从 O(Σ) 降到 O(1)——这就是 Q4 的全部新意</text>
+  </g>
+</svg>
