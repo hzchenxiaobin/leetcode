@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arGr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="470" fill="#fafafa"/>
+  <text x="480" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：逐种数字安放的「分组背包」计数 DP</text>
+  <path d="M 250 44 Q 480 52 710 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- stage banner -->
+  <g filter="url(#sk)">
+    <rect x="80" y="62" width="400" height="36" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="280" y="85" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">阶段 d = 0…9：本轮安放数字 d 的 c_d 个副本，k 个进偶位组</text>
+
+  <!-- ===== dp grid (j rows, s cols), cell 58x42, origin (100,118) ===== -->
+  <g font-size="10" fill="#888" filter="url(#sk)">
+    <text x="104" y="110">s→ 偶位和</text>
+    <text x="100" y="128" text-anchor="end">j↓</text>
+    <text x="129" y="136" text-anchor="middle">0</text>
+    <text x="187" y="136" text-anchor="middle">1</text>
+    <text x="245" y="136" text-anchor="middle">2</text>
+    <text x="303" y="136" text-anchor="middle">3</text>
+    <text x="361" y="136" text-anchor="middle">4</text>
+    <text x="96" y="165" text-anchor="end">0</text>
+    <text x="96" y="207" text-anchor="end">1</text>
+    <text x="96" y="249" text-anchor="end">2</text>
+    <text x="96" y="291" text-anchor="end">3</text>
+  </g>
+
+  <!-- grid cells -->
+  <g filter="url(#sk)">
+    <rect x="100" y="142" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="158" y="142" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="216" y="142" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="274" y="142" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="332" y="142" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="100" y="184" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="216" y="184" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="274" y="184" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="332" y="184" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="100" y="226" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="158" y="226" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="216" y="226" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="332" y="226" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="100" y="268" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="158" y="268" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="216" y="268" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+    <rect x="274" y="268" width="58" height="42" rx="4" fill="#f4f4f4" stroke="#bbb" stroke-width="1"/>
+  </g>
+
+  <!-- source cell (j=1, s=1) -->
+  <g filter="url(#sk)"><rect x="158" y="184" width="58" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/></g>
+  <text x="187" y="210" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#sk)">dp[j][s]</text>
+
+  <!-- self loop k=0 -->
+  <path d="M 166 182 Q 152 158 178 180" stroke="#888" stroke-width="1.6" fill="none" filter="url(#sk)" marker-end="url(#arB)"/>
+  <text x="118" y="164" font-size="10" fill="#666" filter="url(#sk)">k=0（自环）</text>
+  <text x="100" y="178" font-size="10" fill="#666" filter="url(#sk)">× 1/(0!·c_d!)</text>
+
+  <!-- k=1 target (j=2, s=3) green -->
+  <g filter="url(#sk)"><rect x="274" y="226" width="58" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/></g>
+  <text x="303" y="252" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">ndp</text>
+  <path d="M 210 214 Q 250 232 272 240" stroke="#4a7a3a" stroke-width="2.2" fill="none" filter="url(#sk)" marker-end="url(#arGr)"/>
+  <text x="196" y="246" font-size="10.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">k=1：× 1/(1!·(c_d−1)!)</text>
+
+  <!-- k=2 out of range: (j=3, s=5) beyond target -->
+  <g filter="url(#sk)"><rect x="390" y="268" width="58" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="419" y="294" text-anchor="middle" font-size="11" font-weight="bold" fill="#b03a3a" filter="url(#sk)">s+k·d</text>
+  <path d="M 334 238 Q 380 258 388 274" stroke="#b85450" stroke-width="1.8" fill="none" filter="url(#sk)" marker-end="url(#arR)"/>
+  <text x="352" y="318" font-size="10" fill="#b03a3a" filter="url(#sk)">ns &gt; target</text>
+  <text x="352" y="332" font-size="10" fill="#b03a3a" filter="url(#sk)">→ break</text>
+
+  <!-- goal cell (j=m, s=S/2) outline -->
+  <g filter="url(#sk)"><rect x="332" y="226" width="58" height="42" rx="4" fill="none" stroke="#d6a040" stroke-width="2" stroke-dasharray="6 3"/></g>
+  <text x="361" y="252" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#a87820" filter="url(#sk)">目标</text>
+
+  <!-- key points box -->
+  <g filter="url(#sk)">
+    <rect x="80" y="330" width="400" height="124" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="96" y="352" font-size="12" font-weight="bold" fill="#a87820" filter="url(#sk)">工程要点</text>
+  <text x="96" y="374" font-size="10.8" fill="#444" filter="url(#sk)">① 初始化 dp[0][0] = 1，其余为 0</text>
+  <text x="96" y="394" font-size="10.8" fill="#444" filter="url(#sk)">② k=0 是自环 → 不能原地滚动，两张表交替</text>
+  <text x="96" y="414" font-size="10.8" fill="#444" filter="url(#sk)">③ 剪枝：k ≤ min(c_d, m−j)；ns = s+k·d &gt; target 即 break</text>
+  <text x="96" y="434" font-size="10.8" fill="#444" filter="url(#sk)">④ 答案 ans = dp[m][S/2] · m! · (n−m)! (mod 1e9+7)</text>
+
+  <!-- ===== right boxes ===== -->
+  <g filter="url(#sk)">
+    <rect x="520" y="62" width="420" height="96" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="538" y="86" font-size="13" font-weight="bold" fill="#446688" filter="url(#sk)">状态定义（阶段 = 数字种类）</text>
+  <text x="538" y="108" font-size="11" fill="#444" filter="url(#sk)">dp[j][s]：已处理完若干种数字，偶位已选 j 个、</text>
+  <text x="538" y="128" font-size="11" fill="#444" filter="url(#sk)">偶位和为 s 时 Σ ∏ 1/(k_d!·(c_d−k_d)!) 的部分和</text>
+  <text x="538" y="148" font-size="11" fill="#666" filter="url(#sk)">j ∈ [0, m]、s ∈ [0, S/2]，把大因子拆进转移权重</text>
+
+  <g filter="url(#sk)">
+    <rect x="520" y="170" width="420" height="96" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="538" y="194" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">转移（处理数字 d，枚举 k 个进偶位）</text>
+  <text x="538" y="216" font-size="11.5" font-family="monospace" fill="#444" filter="url(#sk)">ndp[j+k][s+k·d] += dp[j][s]</text>
+  <text x="538" y="236" font-size="11.5" font-family="monospace" fill="#444" filter="url(#sk)">                × invFact[k]·invFact[c_d−k]</text>
+  <text x="538" y="256" font-size="11" fill="#666" filter="url(#sk)">k 从 0 到 min(c_d, m−j)；每组 (j,s) 展开 c_d+1 条边</text>
+
+  <g filter="url(#sk)">
+    <rect x="520" y="278" width="420" height="96" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="538" y="302" font-size="13" font-weight="bold" fill="#a87820" filter="url(#sk)">收尾：乘回两组的组内排列数</text>
+  <text x="538" y="324" font-size="11.5" font-family="monospace" fill="#444" filter="url(#sk)">ans = dp[m][S/2] × m! × (n−m)!  (mod p)</text>
+  <text x="538" y="344" font-size="11" fill="#444" filter="url(#sk)">奇位和 = S − s 守恒 → 奇位维度直接省掉</text>
+  <text x="538" y="364" font-size="11" fill="#666" filter="url(#sk)">只要求终态 s = S/2，奇位自动也是 S/2</text>
+
+  <g filter="url(#sk)">
+    <rect x="520" y="386" width="420" height="68" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="538" y="408" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">逆元准备：p = 1e9+7 为质数</text>
+  <text x="538" y="428" font-size="10.5" fill="#444" filter="url(#sk)">所有阶乘参数 ≤ 80 &lt; p → 逆元必存在（引理 3）</text>
+  <text x="538" y="446" font-size="10.5" fill="#444" filter="url(#sk)">费马小定理求 fact[n]⁻¹，线性倒推整张 invFact 表</text>
+</svg>
