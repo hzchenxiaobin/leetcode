@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 460"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="460" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：预处理 → 枚举锚点 → 双向扩展逐深度结算</text>
+
+  <!-- Step 1 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="42" width="460" height="62" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <text x="75" y="64" font-size="13" font-weight="bold" fill="#2b5b88">① 预处理：区间 DP 求单侧回文核</text>
+    <text x="75" y="84" font-size="11" fill="#333">midS[i]：s 中以 i 为起点的最长回文；midT[j]：t 中以 j 为终点的最长回文</text>
+    <text x="75" y="100" font-size="10" fill="#888">isPal[i][j] = (a[i] = a[j]) ∧ isPal[i+1][j−1]，按长度递增填表，O(m² + n²)</text>
+  </g>
+  <path d="M 280 106 L 280 118" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="122" width="460" height="70" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="75" y="144" font-size="13" font-weight="bold" fill="#2e6e2e">② 枚举锚点 (i₁, i₂)：i₁ = A 在 s 中的起点，i₂ = B 在 t 中的终点</text>
+    <text x="75" y="164" font-size="11" fill="#333">先做深度 0 结算：ans ← max(ans, midS[i₁], midT[i₂])（纯单侧核，无需配对）</text>
+    <text x="75" y="184" font-size="10" fill="#888">覆盖 A、B 有一侧为空的构造（单串回文子串）</text>
+  </g>
+  <path d="M 280 194 L 280 206" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+
+  <!-- 判定菱形 -->
+  <g filter="url(#rough2)">
+    <polygon points="280,210 425,248 280,286 135,248" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="280" y="242" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">s[i₁+k] = t[i₂−k] 且</text>
+    <text x="280" y="260" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">i₁+k &lt; m、i₂−k ≥ 0 ？</text>
+  </g>
+
+  <!-- 是 → 剥皮结算 -->
+  <path d="M 280 286 L 280 298" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)"/>
+  <text x="292" y="297" font-size="11" fill="#666" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="85" y="302" width="390" height="62" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="280" y="324" text-anchor="middle" font-size="12" font-weight="bold" fill="#a33a34">k ← k + 1；结算 2k + max(midS[i₁+k], midT[i₂−k])（越界取 0）</text>
+    <text x="280" y="348" text-anchor="middle" font-size="10" fill="#666">ans ← max(ans, 结算值)，回到判定继续剥下一对</text>
+  </g>
+  <path d="M 85 333 L 62 333 L 62 248 L 131 248" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5,4" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="98" y="232" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">回到判定</text>
+
+  <!-- 否 → 换锚点 -->
+  <path d="M 425 248 L 448 248" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+  <text x="431" y="240" font-size="11" fill="#666" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="452" y="228" width="96" height="40" rx="8" fill="#f0f0f0" stroke="#999" stroke-width="1.4"/>
+    <text x="500" y="246" text-anchor="middle" font-size="11" fill="#444">换下一个锚点</text>
+    <text x="500" y="262" text-anchor="middle" font-size="9" fill="#888">(i₁, i₂) ← 下一对</text>
+  </g>
+  <path d="M 500 228 L 500 157 L 508 157" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 锚点用尽 → 输出 -->
+  <path d="M 500 268 L 500 400 L 485 400" stroke="#666" stroke-width="1.4" stroke-dasharray="6,4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="492" y="340" text-anchor="end" font-size="10" fill="#888" filter="url(#rough2)">锚点用尽</text>
+  <g filter="url(#rough2)">
+    <rect x="85" y="378" width="398" height="44" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/>
+    <text x="284" y="398" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3a7a">④ 输出 ans（至少为 1：单字符恒回文）</text>
+    <text x="284" y="414" text-anchor="middle" font-size="10" fill="#888">时间 O(m² + n² + mn·min(m,n))　空间 O(m² + n²)</text>
+  </g>
+</svg>
