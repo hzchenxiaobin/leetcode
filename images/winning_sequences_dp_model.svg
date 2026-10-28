@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="500" viewBox="0 0 920 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="500" fill="#fafafa"/>
+  <text x="460" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">线性 DP：状态 (i, 末招 j, 分差 d)，滚动数组压空间</text>
+  <path d="M 260 42 Q 460 50 660 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: state definition ===== -->
+  <g filter="url(#sk)">
+    <rect x="30" y="56" width="410" height="118" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="50" y="80" font-size="13" font-weight="bold" fill="#2b6e9e">① 状态定义</text>
+  <text x="50" y="104" font-size="12" fill="#444" font-family="monospace">dp[i][j][d] = 前 i 轮、第 i 轮末招 j、</text>
+  <text x="50" y="122" font-size="12" fill="#444" font-family="monospace">总分差 d = Bob − Alice 的方案数</text>
+  <g filter="url(#sk)"><rect x="50" y="136" width="118" height="22" rx="6" fill="#fff" stroke="#446688" stroke-width="1"/></g>
+  <text x="109" y="151" text-anchor="middle" font-size="9.5" fill="#2b5a88">i：轮次（滚动掉）</text>
+  <g filter="url(#sk)"><rect x="176" y="136" width="112" height="22" rx="6" fill="#fff" stroke="#446688" stroke-width="1"/></g>
+  <text x="232" y="151" text-anchor="middle" font-size="9.5" fill="#2b5a88">j ∈ {F,W,E}：末招</text>
+  <g filter="url(#sk)"><rect x="296" y="136" width="110" height="22" rx="6" fill="#fff" stroke="#446688" stroke-width="1"/></g>
+  <text x="351" y="151" text-anchor="middle" font-size="9.5" fill="#2b5a88">d ∈ [−i,i]：分差</text>
+
+  <!-- ===== Panel 2: transition ===== -->
+  <g filter="url(#sk)">
+    <rect x="460" y="56" width="430" height="194" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="480" y="80" font-size="13" font-weight="bold" fill="#7a5415">② 转移：枚举新一轮的招 b（b ≠ j）</text>
+
+  <!-- left state node -->
+  <g filter="url(#sk)">
+    <rect x="480" y="110" width="130" height="36" rx="6" fill="#fff" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="545" y="125" text-anchor="middle" font-size="9.5" fill="#888">i−1 轮末</text>
+  <text x="545" y="140" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">招 j，分差 d</text>
+
+  <!-- three transitions -->
+  <path d="M 612 118 Q 690 98 756 106" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 612 128 Q 690 130 756 139" stroke="#999" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 612 138 Q 690 162 756 169" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="762" y="96" width="118" height="26" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/></g>
+  <text x="821" y="113" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">b⁺ · Δ=+1 → d+1</text>
+  <g filter="url(#sk)"><rect x="762" y="126" width="118" height="26" rx="6" fill="#fafafa" stroke="#999" stroke-width="1.3"/></g>
+  <text x="821" y="143" text-anchor="middle" font-size="10" fill="#777" font-weight="bold">b⁰ · Δ=0 → d</text>
+  <g filter="url(#sk)"><rect x="762" y="156" width="118" height="26" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/></g>
+  <text x="821" y="173" text-anchor="middle" font-size="10" fill="#b03a3a" font-weight="bold">b⁻ · Δ=−1 → d−1</text>
+
+  <text x="480" y="200" font-size="9.5" fill="#b03a3a">三种 Δ 各对应唯一招，其中与末招 j 相同的那种被禁止</text>
+  <text x="480" y="213" font-size="9.5" fill="#b03a3a">（相邻不同招 ✗）—— 因此每个状态恰有 2 个后继</text>
+  <text x="480" y="236" font-size="12" fill="#7a5415" font-weight="bold" font-family="monospace">dp[i][b][d+Δ(b,aᵢ)] += dp[i−1][j][d]</text>
+
+  <!-- ===== Panel 3: band |d| <= i ===== -->
+  <g filter="url(#sk)">
+    <rect x="30" y="190" width="410" height="210" rx="8" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+  </g>
+  <text x="50" y="214" font-size="13" font-weight="bold" fill="#555">③ 分差只落在带 |d| ≤ i 内</text>
+
+  <!-- axes -->
+  <path d="M 95 348 L 415 348" stroke="#777" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 95 348 L 95 245" stroke="#777" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="404" y="366" font-size="10" fill="#888">i（轮次）</text>
+  <text x="88" y="252" font-size="10" fill="#888">d</text>
+
+  <!-- cone: upper (d>0) green, lower pink -->
+  <g filter="url(#sk)">
+    <polygon points="95,348 415,306 415,348" fill="#e6f4ea" opacity="0.75"/>
+    <polygon points="95,348 415,348 415,390" fill="#fce4ec" opacity="0.7"/>
+  </g>
+  <path d="M 95 348 L 415 306" stroke="#d6a040" stroke-width="1.5" filter="url(#sk)"/>
+  <path d="M 95 348 L 415 390" stroke="#d6a040" stroke-width="1.5" filter="url(#sk)"/>
+  <path d="M 95 348 L 415 348" stroke="#999" stroke-width="1" stroke-dasharray="4 3" filter="url(#sk)"/>
+
+  <!-- sample path -->
+  <path d="M 95 348 L 130 338 L 160 346 L 195 330 L 225 338 L 260 322 L 290 330 L 325 314 L 355 322 L 390 306 L 415 314" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <text x="290" y="296" font-size="10.5" fill="#2e6e2e" font-weight="bold">d &gt; 0：Bob 领先（终局只数这里）</text>
+  <text x="250" y="368" font-size="9.5" fill="#999">d = 0 平局线</text>
+  <text x="180" y="388" font-size="9.5" fill="#b85450">边界 |d| = i：斜率 ±1（每轮 |Δd| ≤ 1）</text>
+  <text x="180" y="306" font-size="9.5" fill="#446688">一条样本路径</text>
+
+  <!-- ===== Panel 4: init / final / complexity ===== -->
+  <g filter="url(#sk)">
+    <rect x="460" y="266" width="430" height="134" rx="8" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="480" y="290" font-size="13" font-weight="bold" fill="#2e6e2e">④ 初始化、终局与复杂度</text>
+  <text x="480" y="313" font-size="11" fill="#444" font-family="monospace">初始化：dp[1][j][Δ(j, a₁)] = 1（首轮无相邻约束）</text>
+  <text x="480" y="333" font-size="11" fill="#444" font-family="monospace">终局：ans = Σ (j, d≥1) dp[n][j][d]（严格大于 → d ≥ 1）</text>
+  <text x="480" y="356" font-size="11" fill="#2e6e2e" font-weight="bold">时间 O(n²)：n = 1000 约 6×10⁶ 次转移</text>
+  <text x="480" y="376" font-size="11" fill="#2e6e2e">空间 O(n)：滚动只留两层 × 3 招 × (2n+1) 档分差</text>
+
+  <!-- ===== bottom strip ===== -->
+  <g filter="url(#sk)">
+    <rect x="30" y="418" width="860" height="66" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="50" y="440" font-size="12" font-weight="bold" fill="#2b2b2b">为什么这样设计状态？（马尔可夫性）</text>
+  <text x="50" y="458" font-size="11" fill="#444">后续得分只依赖今后每轮双方的招、分差可加；相邻约束只依赖上一招 ——</text>
+  <text x="50" y="475" font-size="11" fill="#444">记下 (i, j, d) 之后，更早的历史不再影响任何未来（题解 §5 引理 1 正式化这一点）</text>
+</svg>
