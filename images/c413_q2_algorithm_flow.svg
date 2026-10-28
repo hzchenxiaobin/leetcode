@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 490" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="113" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="490" fill="#fdfcf7"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：容量 k 的大根堆逐查询维护</text>
+
+  <!-- start -->
+  <rect x="195" y="44" width="250" height="34" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="320" y="66" text-anchor="middle" font-size="12.5" fill="#2b4a6e">开始：空堆（容量上限 k）</text>
+  <path d="M 320 78 L 320 92" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- d box -->
+  <rect x="215" y="94" width="210" height="32" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="320" y="115" text-anchor="middle" font-size="12.5" fill="#2e5e2e">d = |x| + |y|</text>
+  <path d="M 320 126 L 320 148" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="320,150 405,186 320,222 235,186" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="191" text-anchor="middle" font-size="12.5" fill="#7a5415">堆大小 &lt; k ?</text>
+
+  <!-- yes branch: push -->
+  <text x="180" y="176" font-size="12" font-weight="bold" fill="#4a7a3a">是</text>
+  <path d="M 235 186 L 150 186 L 150 238" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <rect x="75" y="240" width="150" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="150" y="259" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e">d 入堆</text>
+  <text x="150" y="278" text-anchor="middle" font-size="10.5" fill="#5a7a5a">堆未满，直接放行</text>
+
+  <!-- no branch: to diamond 2 -->
+  <text x="442" y="176" font-size="12" font-weight="bold" fill="#b85450">否</text>
+  <path d="M 405 186 L 490 186 L 490 222" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2 -->
+  <polygon points="490,226 578,262 490,298 402,262" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="490" y="267" text-anchor="middle" font-size="12.5" fill="#7a5415">d &lt; 堆顶 ?</text>
+
+  <!-- yes: replace -->
+  <text x="500" y="316" font-size="12" font-weight="bold" fill="#4a7a3a">是</text>
+  <path d="M 490 298 L 490 315" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <rect x="405" y="317" width="170" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="490" y="336" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e">弹出堆顶，压入 d</text>
+  <text x="490" y="356" text-anchor="middle" font-size="10.5" fill="#5a7a5a">更近的挤掉当前第 k 近</text>
+
+  <!-- no: skip -->
+  <text x="352" y="252" font-size="12" font-weight="bold" fill="#b85450">否：堆不变</text>
+  <text x="352" y="292" font-size="10.5" fill="#8a4440">d ≥ 堆顶，进不了最小 k 个</text>
+  <path d="M 402 262 L 340 262 L 340 406" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- merge arrows -->
+  <path d="M 150 286 L 150 406" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 490 365 L 490 406" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- final box -->
+  <rect x="130" y="408" width="380" height="46" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="320" y="427" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a4440">results[i] = 堆大小 == k ? 堆顶 : −1</text>
+  <text x="320" y="446" text-anchor="middle" font-size="10.5" fill="#8a4440">（先更新堆，再取答案）</text>
+
+  <!-- loop back -->
+  <path d="M 510 431 L 615 431 L 615 110 L 430 110" stroke="#888" stroke-width="1.4" fill="none"
+        stroke-dasharray="5 4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="615" y="272" font-size="11" fill="#888" transform="rotate(-90 615 272)">下一个查询</text>
+
+  <text x="320" y="478" text-anchor="middle" font-size="11" fill="#666">全部查询处理完 → 返回 results</text>
+</svg>
