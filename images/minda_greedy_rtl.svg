@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="640" fill="#fafafa"/>
+
+  <text x="450" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">从右往左扫描：维护右侧上界 bound，每步取「≤ bound 的最大候选」</text>
+  <path d="M 210 40 Q 450 48 690 40" stroke="#b85450" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+
+  <!-- 循环回边汇聚框 -->
+  <rect x="620" y="56" width="260" height="54" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="750" y="78" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6215" filter="url(#rough2)">i −−，处理下一格</text>
+  <text x="750" y="98" text-anchor="middle" font-size="11.5" fill="#8a6215" filter="url(#rough2)">全部扫完 ⇒ 返回 ops</text>
+
+  <!-- 开始框 -->
+  <rect x="60" y="140" width="200" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="160" y="170" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">i = n−1，bound = +∞</text>
+  <path d="M 260 164 L 304 164" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 1 -->
+  <polygon points="310,164 430,112 550,164 430,216" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="430" y="169" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">x ≤ bound ?</text>
+
+  <path d="M 550 164 L 584 164" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="566" y="150" text-anchor="middle" font-size="11.5" fill="#3a6e3a" filter="url(#rough2)">是</text>
+
+  <!-- 保留框 -->
+  <rect x="590" y="136" width="180" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="680" y="160" text-anchor="middle" font-size="12.5" fill="#2b5a2b" filter="url(#rough2)">保留原值</text>
+  <text x="680" y="180" text-anchor="middle" font-size="11.5" fill="#3a6e3a" filter="url(#rough2)">bound ← x，+0 操作</text>
+
+  <path d="M 430 216 L 430 256" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="445" y="242" font-size="11.5" fill="#a04a46" filter="url(#rough2)">否</text>
+
+  <!-- 菱形 2 -->
+  <polygon points="310,314 430,262 550,314 430,366" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="430" y="319" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">spf(x) ≤ bound ?</text>
+
+  <path d="M 550 314 L 584 314" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="566" y="300" text-anchor="middle" font-size="11.5" fill="#3a6e3a" filter="url(#rough2)">是</text>
+
+  <!-- 替换框 -->
+  <rect x="590" y="286" width="180" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="680" y="310" text-anchor="middle" font-size="12.5" fill="#2b4a6e" filter="url(#rough2)">换成最小素因子</text>
+  <text x="680" y="330" text-anchor="middle" font-size="11.5" fill="#2b4a6e" filter="url(#rough2)">bound ← spf(x)，+1 操作</text>
+
+  <path d="M 310 314 L 276 314" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="300" text-anchor="middle" font-size="11.5" fill="#a04a46" filter="url(#rough2)">否</text>
+
+  <!-- -1 框 -->
+  <rect x="90" y="286" width="186" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="183" y="310" text-anchor="middle" font-size="12" fill="#a04a46" filter="url(#rough2)">x 和 spf(x) 都压不过</text>
+  <text x="183" y="332" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#a04a46" filter="url(#rough2)">返回 −1</text>
+
+  <!-- 循环回边 -->
+  <path d="M 770 164 H 826 V 114" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 770 314 H 866 V 114" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 数组示意 -->
+  <text x="75" y="424" font-size="12.5" fill="#555" filter="url(#rough2)">扫描方向（操作只能变小 ⇒ 右边是左边的上界）：</text>
+  <g filter="url(#rough2)">
+    <rect x="75" y="440" width="46" height="42" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
+    <rect x="131" y="440" width="46" height="42" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
+    <rect x="187" y="440" width="46" height="42" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
+    <rect x="243" y="440" width="46" height="42" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
+    <text x="98" y="467" text-anchor="middle" font-size="15" fill="#333">12</text>
+    <text x="154" y="467" text-anchor="middle" font-size="15" fill="#333">9</text>
+    <text x="210" y="467" text-anchor="middle" font-size="15" fill="#333">6</text>
+    <text x="266" y="467" text-anchor="middle" font-size="15" fill="#333">7</text>
+    <path d="M 298 432 H 66" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrRed)" stroke-dasharray="5 4"/>
+    <text x="182" y="420" text-anchor="middle" font-size="11" fill="#a04a46">i 从右往左</text>
+  </g>
+  <text x="340" y="456" font-size="11.5" fill="#555" filter="url(#rough2)">bound = 右侧已定格子的最终值上限</text>
+  <text x="340" y="478" font-size="11.5" fill="#555" filter="url(#rough2)">位置 i 的最终值只需不超过 bound</text>
+  <text x="75" y="514" font-size="12" fill="#666" filter="url(#rough2)">最后一个元素右侧无约束 ⇒ 永远保留原值（贪心第一步）</text>
+
+  <!-- 底部说明 -->
+  <rect x="60" y="536" width="780" height="88" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="450" y="562" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6215" filter="url(#rough2)">为什么取「≤ bound 的最大候选」？候选恰有两个：x ≥ spf(x)</text>
+  <text x="450" y="586" text-anchor="middle" font-size="12" fill="#8a6215" filter="url(#rough2)">① 取 x 代价更低（0 次 vs 1 次）；② x 更大，留给左侧的 bound 更宽松</text>
+  <text x="450" y="610" text-anchor="middle" font-size="12" fill="#8a6215" filter="url(#rough2)">完整证明见题解 §5：贪心解逐位 ≥ 任意可行解，且逐位代价 ≤ 任意可行解</text>
+</svg>

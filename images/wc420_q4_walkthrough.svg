@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="620" viewBox="0 0 920 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="920" height="620" fill="#fdfcf7"/>
+  <text x="460" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 1 演算：逐节点查表判定</text>
+  <path d="M 250 42 Q 460 50 670 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- T strip -->
+  <text x="100" y="86" font-size="13" font-weight="bold" fill="#2b6e9e">后序串 T =</text>
+  <g font-size="10" fill="#999">
+    <text x="236" y="72" text-anchor="middle">0</text>
+    <text x="288" y="72" text-anchor="middle">1</text>
+    <text x="340" y="72" text-anchor="middle">2</text>
+    <text x="392" y="72" text-anchor="middle">3</text>
+    <text x="444" y="72" text-anchor="middle">4</text>
+    <text x="496" y="72" text-anchor="middle">5</text>
+  </g>
+  <g font-size="14">
+    <g filter="url(#sk)"><rect x="210" y="78" width="52" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3" rx="4"/></g>
+    <text x="236" y="103" text-anchor="middle" fill="#2e6e2e" font-weight="bold">a</text>
+    <g filter="url(#sk)"><rect x="262" y="78" width="52" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3" rx="4"/></g>
+    <text x="288" y="103" text-anchor="middle" fill="#2e6e2e" font-weight="bold">b</text>
+    <g filter="url(#sk)"><rect x="314" y="78" width="52" height="38" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3" rx="4"/></g>
+    <text x="340" y="103" text-anchor="middle" fill="#2e6e2e" font-weight="bold">a</text>
+    <g filter="url(#sk)"><rect x="366" y="78" width="52" height="38" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3" rx="4"/></g>
+    <text x="392" y="103" text-anchor="middle" fill="#7a5415" font-weight="bold">a</text>
+    <g filter="url(#sk)"><rect x="418" y="78" width="52" height="38" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3" rx="4"/></g>
+    <text x="444" y="103" text-anchor="middle" fill="#7a5415" font-weight="bold">b</text>
+    <g filter="url(#sk)"><rect x="470" y="78" width="52" height="38" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" rx="4"/></g>
+    <text x="496" y="103" text-anchor="middle" fill="#2b6e9e" font-weight="bold">a</text>
+  </g>
+  <text x="570" y="103" font-size="11" fill="#888">（后序 3,4,1,5,2,0）</text>
+
+  <!-- table header -->
+  <g font-size="12" font-weight="bold" fill="#444">
+    <text x="150" y="164" text-anchor="middle">节点 x</text>
+    <text x="270" y="164" text-anchor="middle">size[x]</text>
+    <text x="380" y="164" text-anchor="middle">pos[x]</text>
+    <text x="510" y="164" text-anchor="middle">区间 [l, r]</text>
+    <text x="650" y="164" text-anchor="middle">dfsStr(x)</text>
+    <text x="790" y="164" text-anchor="middle">回文？</text>
+  </g>
+  <path d="M 90 174 L 860 174" stroke="#888" stroke-width="1.6" filter="url(#sk)"/>
+
+  <!-- table rows -->
+  <g font-size="12" font-family="monospace">
+    <!-- row 0 (root, blue) -->
+    <g filter="url(#sk)"><rect x="96" y="182" width="760" height="40" fill="#e8f0fa" opacity="0.55" rx="4"/></g>
+    <text x="150" y="207" text-anchor="middle" fill="#2b6e9e" font-weight="bold">0</text>
+    <text x="270" y="207" text-anchor="middle" fill="#444">6</text>
+    <text x="380" y="207" text-anchor="middle" fill="#444">5</text>
+    <text x="510" y="207" text-anchor="middle" fill="#444">[0, 5]</text>
+    <text x="650" y="207" text-anchor="middle" fill="#444">abaaba</text>
+    <text x="790" y="207" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+
+    <!-- row 1 (green) -->
+    <g filter="url(#sk)"><rect x="96" y="226" width="760" height="40" fill="#eaf6ee" opacity="0.55" rx="4"/></g>
+    <text x="150" y="251" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="270" y="251" text-anchor="middle" fill="#444">3</text>
+    <text x="380" y="251" text-anchor="middle" fill="#444">2</text>
+    <text x="510" y="251" text-anchor="middle" fill="#444">[0, 2]</text>
+    <text x="650" y="251" text-anchor="middle" fill="#444">aba</text>
+    <text x="790" y="251" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+
+    <!-- row 2 (orange, not palindrome) -->
+    <g filter="url(#sk)"><rect x="96" y="270" width="760" height="40" fill="#fef6e6" opacity="0.65" rx="4"/></g>
+    <text x="150" y="295" text-anchor="middle" fill="#7a5415" font-weight="bold">2</text>
+    <text x="270" y="295" text-anchor="middle" fill="#444">2</text>
+    <text x="380" y="295" text-anchor="middle" fill="#444">4</text>
+    <text x="510" y="295" text-anchor="middle" fill="#444">[3, 4]</text>
+    <text x="650" y="295" text-anchor="middle" fill="#444">ab</text>
+    <text x="790" y="295" text-anchor="middle" fill="#b03a3a" font-weight="bold">✗</text>
+
+    <!-- row 3 -->
+    <text x="150" y="339" text-anchor="middle" fill="#444" font-weight="bold">3</text>
+    <text x="270" y="339" text-anchor="middle" fill="#444">1</text>
+    <text x="380" y="339" text-anchor="middle" fill="#444">0</text>
+    <text x="510" y="339" text-anchor="middle" fill="#444">[0, 0]</text>
+    <text x="650" y="339" text-anchor="middle" fill="#444">a</text>
+    <text x="790" y="339" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+
+    <!-- row 4 -->
+    <text x="150" y="383" text-anchor="middle" fill="#444" font-weight="bold">4</text>
+    <text x="270" y="383" text-anchor="middle" fill="#444">1</text>
+    <text x="380" y="383" text-anchor="middle" fill="#444">1</text>
+    <text x="510" y="383" text-anchor="middle" fill="#444">[1, 1]</text>
+    <text x="650" y="383" text-anchor="middle" fill="#444">b</text>
+    <text x="790" y="383" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+
+    <!-- row 5 -->
+    <text x="150" y="427" text-anchor="middle" fill="#444" font-weight="bold">5</text>
+    <text x="270" y="427" text-anchor="middle" fill="#444">1</text>
+    <text x="380" y="427" text-anchor="middle" fill="#444">3</text>
+    <text x="510" y="427" text-anchor="middle" fill="#444">[3, 3]</text>
+    <text x="650" y="427" text-anchor="middle" fill="#444">a</text>
+    <text x="790" y="427" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+  </g>
+  <path d="M 90 444 L 860 444" stroke="#888" stroke-width="1.2" filter="url(#sk)"/>
+
+  <!-- l = pos - size + 1 formula note -->
+  <g filter="url(#sk)">
+    <rect x="90" y="466" width="766" height="56" rx="8" fill="#f4f0fa" stroke="#8a6ab5" stroke-width="1.3"/>
+  </g>
+  <text x="110" y="490" font-size="12" font-weight="bold" fill="#5a3a7a">区间公式</text>
+  <text x="190" y="490" font-size="12" fill="#444" font-family="monospace">r = pos[x]（自己追加的位置），l = pos[x] − size[x] + 1（长度恰为 size[x]）</text>
+  <text x="190" y="510" font-size="11" fill="#888" font-family="monospace">size 与 pos 均在后序逆序扫描中一并求出，无需递归</text>
+
+  <!-- answer strip -->
+  <text x="110" y="566" font-size="13" font-weight="bold" fill="#2b2b2b">answer =</text>
+  <g font-size="12" font-family="monospace">
+    <g filter="url(#sk)"><rect x="200" y="548" width="86" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="243" y="570" text-anchor="middle" fill="#2e6e2e" font-weight="bold">true</text>
+    <g filter="url(#sk)"><rect x="292" y="548" width="86" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="335" y="570" text-anchor="middle" fill="#2e6e2e" font-weight="bold">true</text>
+    <g filter="url(#sk)"><rect x="384" y="548" width="86" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="4"/></g>
+    <text x="427" y="570" text-anchor="middle" fill="#b03a3a" font-weight="bold">false</text>
+    <g filter="url(#sk)"><rect x="476" y="548" width="86" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="519" y="570" text-anchor="middle" fill="#2e6e2e" font-weight="bold">true</text>
+    <g filter="url(#sk)"><rect x="568" y="548" width="86" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="611" y="570" text-anchor="middle" fill="#2e6e2e" font-weight="bold">true</text>
+    <g filter="url(#sk)"><rect x="660" y="548" width="86" height="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="703" y="570" text-anchor="middle" fill="#2e6e2e" font-weight="bold">true</text>
+  </g>
+  <text x="780" y="570" font-size="11" fill="#888">唯一 false：节点 2</text>
+</svg>

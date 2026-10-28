@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="640" fill="#fafafa"/>
+
+  <text x="480" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">示例演算：s = "abacb"，k = 2</text>
+  <path d="M 300 42 Q 480 50 660 42" stroke="#4a7a3a" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+
+  <!-- ===== table ===== -->
+  <!-- header -->
+  <g filter="url(#rough2)" font-size="12" font-weight="bold" fill="#2b4a6e" text-anchor="middle">
+    <rect x="50" y="64" width="46" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="96" y="64" width="60" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="156" y="64" width="178" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="334" y="64" width="218" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="552" y="64" width="168" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="720" y="64" width="88" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="808" y="64" width="88" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <text x="73" y="86">r</text>
+    <text x="126" y="86">s[r]</text>
+    <text x="245" y="86">入窗动作</text>
+    <text x="443" y="86">收缩动作</text>
+    <text x="636" y="86">最长坏窗口 [lo,r]</text>
+    <text x="764" y="86">贡献 lo</text>
+    <text x="852" y="86">ans</text>
+  </g>
+
+  <!-- rows -->
+  <g filter="url(#rough2)" font-size="12" fill="#444" text-anchor="middle">
+    <rect x="50" y="100" width="846" height="44" fill="#ffffff" stroke="#bbb" stroke-width="1"/>
+    <text x="73" y="126">0</text><text x="126" y="126">a</text>
+    <text x="245" y="126">a:1，over = 0</text><text x="443" y="126">—（无需收缩）</text>
+    <text x="636" y="126">[0,0]「a」</text><text x="764" y="126">0</text><text x="852" y="126">0</text>
+
+    <rect x="50" y="144" width="846" height="44" fill="#f7f7f2" stroke="#bbb" stroke-width="1"/>
+    <text x="73" y="170">1</text><text x="126" y="170">b</text>
+    <text x="245" y="170">b:1，over = 0</text><text x="443" y="170">—（无需收缩）</text>
+    <text x="636" y="170">[0,1]「ab」</text><text x="764" y="170">0</text><text x="852" y="170">0</text>
+
+    <rect x="50" y="188" width="846" height="44" fill="#ffffff" stroke="#bbb" stroke-width="1"/>
+    <text x="73" y="214">2</text><text x="126" y="214">a</text>
+    <text x="245" y="214" fill="#8e3b37">a:2 ⇒ over = 1</text>
+    <text x="443" y="214" fill="#8e3b37">移出 s[0]「a」⇒ over = 0</text>
+    <text x="636" y="214">[1,2]「ba」</text>
+    <text x="764" y="214" font-weight="bold" fill="#2e6e2e">1</text><text x="852" y="214" font-weight="bold" fill="#2e6e2e">1</text>
+
+    <rect x="50" y="232" width="846" height="44" fill="#f7f7f2" stroke="#bbb" stroke-width="1"/>
+    <text x="73" y="258">3</text><text x="126" y="258">c</text>
+    <text x="245" y="258">c:1，over = 0</text><text x="443" y="258">—（无需收缩）</text>
+    <text x="636" y="258">[1,3]「bac」</text>
+    <text x="764" y="258" font-weight="bold" fill="#2e6e2e">1</text><text x="852" y="258" font-weight="bold" fill="#2e6e2e">2</text>
+
+    <rect x="50" y="276" width="846" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="73" y="302" font-weight="bold">4</text><text x="126" y="302" font-weight="bold">b</text>
+    <text x="245" y="302" fill="#8e3b37" font-weight="bold">b:2 ⇒ over = 1</text>
+    <text x="443" y="302" fill="#8e3b37" font-weight="bold">移出 s[1]「b」⇒ over = 0</text>
+    <text x="636" y="302" font-weight="bold">[2,4]「acb」</text>
+    <text x="764" y="302" font-weight="bold" fill="#2e6e2e">2</text><text x="852" y="302" font-weight="bold" fill="#2e6e2e">4</text>
+  </g>
+
+  <!-- ===== counted pairs ===== -->
+  <g filter="url(#rough2)">
+    <rect x="333" y="440" width="54" height="46" rx="4" fill="#ffffff" stroke="#777" stroke-width="1.5"/>
+    <rect x="393" y="440" width="54" height="46" rx="4" fill="#ffffff" stroke="#777" stroke-width="1.5"/>
+    <rect x="453" y="440" width="54" height="46" rx="4" fill="#ffffff" stroke="#777" stroke-width="1.5"/>
+    <rect x="513" y="440" width="54" height="46" rx="4" fill="#ffffff" stroke="#777" stroke-width="1.5"/>
+    <rect x="573" y="440" width="54" height="46" rx="4" fill="#ffffff" stroke="#777" stroke-width="1.5"/>
+    <text x="360" y="469" text-anchor="middle" font-size="16" fill="#333">a</text>
+    <text x="420" y="469" text-anchor="middle" font-size="16" fill="#333">b</text>
+    <text x="480" y="469" text-anchor="middle" font-size="16" fill="#333">a</text>
+    <text x="540" y="469" text-anchor="middle" font-size="16" fill="#333">c</text>
+    <text x="600" y="469" text-anchor="middle" font-size="16" fill="#333">b</text>
+    <text x="360" y="500" text-anchor="middle" font-size="11" fill="#999">0</text>
+    <text x="420" y="500" text-anchor="middle" font-size="11" fill="#999">1</text>
+    <text x="480" y="500" text-anchor="middle" font-size="11" fill="#999">2</text>
+    <text x="540" y="500" text-anchor="middle" font-size="11" fill="#999">3</text>
+    <text x="600" y="500" text-anchor="middle" font-size="11" fill="#999">4</text>
+  </g>
+
+  <g fill="none" stroke-width="2" filter="url(#rough2)">
+    <path d="M 360 438 Q 420 366 480 438" stroke="#4a7a3a"/>
+    <path d="M 360 438 Q 450 306 540 438" stroke="#446688"/>
+    <path d="M 360 438 Q 480 246 600 438" stroke="#d6a040"/>
+    <path d="M 420 438 Q 510 306 600 438" stroke="#b85450"/>
+  </g>
+  <g text-anchor="middle" font-size="11.5" filter="url(#rough2)">
+    <text x="420" y="390" fill="#3a6e3a">(0,2)</text>
+    <text x="445" y="358" fill="#446688">(0,3)</text>
+    <text x="480" y="330" fill="#b07a20">(0,4)</text>
+    <text x="525" y="358" fill="#a04a46">(1,4)</text>
+  </g>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="480" y="556" font-size="12.5" fill="#555">被计数的 4 个子串：<tspan fill="#3a6e3a" font-weight="bold">(0,2)「aba」</tspan>　<tspan fill="#446688" font-weight="bold">(0,3)「abac」</tspan>　<tspan fill="#b07a20" font-weight="bold">(0,4)「abacb」</tspan>　<tspan fill="#a04a46" font-weight="bold">(1,4)「bacb」</tspan></text>
+    <text x="480" y="596" font-size="14" font-weight="bold" fill="#2e6e2e">每轮 ans += lo：0 + 0 + 1 + 1 + 2 = 4，与示例 1 一致 ✓</text>
+  </g>
+</svg>

@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="660" viewBox="0 0 920 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+  </defs>
+  <rect width="920" height="660" fill="#fdfcf7"/>
+  <text x="460" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">一次后序遍历：子树 = 全局串的连续区间</text>
+  <path d="M 250 42 Q 460 50 670 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel A: tree of example 1 ===== -->
+  <text x="460" y="72" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 示例树：parent=[-1,0,0,1,1,2]，s="aababa"（节点旁标 s[i]）</text>
+
+  <!-- edges -->
+  <g stroke="#888" stroke-width="1.5" fill="none">
+    <path d="M 300 118 L 190 176" filter="url(#sk)"/>
+    <path d="M 300 118 L 430 176" filter="url(#sk)"/>
+    <path d="M 190 204 L 115 262" filter="url(#sk)"/>
+    <path d="M 190 204 L 260 262" filter="url(#sk)"/>
+    <path d="M 430 204 L 430 262" filter="url(#sk)"/>
+  </g>
+
+  <!-- nodes: subtree(1) green = {1,3,4}, subtree(2) orange = {2,5}, root blue -->
+  <g font-size="13">
+    <g filter="url(#sk)"><circle cx="300" cy="98" r="24" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+    <text x="300" y="103" text-anchor="middle" fill="#2b6e9e" font-weight="bold">0</text>
+    <text x="335" y="95" font-size="12" fill="#666">s=a</text>
+
+    <g filter="url(#sk)"><circle cx="190" cy="190" r="24" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="190" y="195" text-anchor="middle" fill="#2e6e2e" font-weight="bold">1</text>
+    <text x="222" y="182" font-size="12" fill="#666">s=a</text>
+
+    <g filter="url(#sk)"><circle cx="430" cy="190" r="24" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+    <text x="430" y="195" text-anchor="middle" fill="#7a5415" font-weight="bold">2</text>
+    <text x="462" y="182" font-size="12" fill="#666">s=b</text>
+
+    <g filter="url(#sk)"><circle cx="115" cy="278" r="24" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="115" y="283" text-anchor="middle" fill="#2e6e2e" font-weight="bold">3</text>
+    <text x="147" y="270" font-size="12" fill="#666">s=a</text>
+
+    <g filter="url(#sk)"><circle cx="260" cy="278" r="24" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="260" y="283" text-anchor="middle" fill="#2e6e2e" font-weight="bold">4</text>
+    <text x="292" y="270" font-size="12" fill="#666">s=b</text>
+
+    <g filter="url(#sk)"><circle cx="430" cy="278" r="24" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+    <text x="430" y="283" text-anchor="middle" fill="#7a5415" font-weight="bold">5</text>
+    <text x="462" y="270" font-size="12" fill="#666">s=a</text>
+  </g>
+
+  <!-- postorder annotation on right -->
+  <g filter="url(#sk)">
+    <rect x="580" y="84" width="300" height="112" rx="8" fill="#f4f0fa" stroke="#8a6ab5" stroke-width="1.3"/>
+  </g>
+  <text x="600" y="108" font-size="12" font-weight="bold" fill="#5a3a7a">dfs(0) 的后序追加顺序</text>
+  <text x="600" y="132" font-size="12" fill="#444" font-family="monospace">3 → 4 → 1 → 5 → 2 → 0</text>
+  <text x="600" y="156" font-size="11" fill="#888">★ 孩子按编号升序递归，自己最后追加</text>
+  <text x="600" y="178" font-size="11" fill="#888">★ 得到全局串 T = "abaaba"</text>
+
+  <!-- ===== Panel B: global string T with intervals ===== -->
+  <text x="460" y="336" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">② 全局后序串 T：每棵子树占据一个连续区间，右端点 = 自己的位置</text>
+
+  <!-- pos index labels -->
+  <g font-size="10" fill="#999">
+    <text x="220" y="366" text-anchor="middle">pos=0</text>
+    <text x="284" y="366" text-anchor="middle">pos=1</text>
+    <text x="348" y="366" text-anchor="middle">pos=2</text>
+    <text x="412" y="366" text-anchor="middle">pos=3</text>
+    <text x="476" y="366" text-anchor="middle">pos=4</text>
+    <text x="540" y="366" text-anchor="middle">pos=5</text>
+  </g>
+
+  <!-- T cells: 0-2 green (subtree 1), 3-4 orange (subtree 2), 5 blue (root) -->
+  <g font-size="15">
+    <g filter="url(#sk)"><rect x="188" y="374" width="64" height="44" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="220" y="403" text-anchor="middle" fill="#2e6e2e" font-weight="bold">a</text>
+    <g filter="url(#sk)"><rect x="252" y="374" width="64" height="44" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="284" y="403" text-anchor="middle" fill="#2e6e2e" font-weight="bold">b</text>
+    <g filter="url(#sk)"><rect x="316" y="374" width="64" height="44" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" rx="4"/></g>
+    <text x="348" y="403" text-anchor="middle" fill="#2e6e2e" font-weight="bold">a</text>
+    <g filter="url(#sk)"><rect x="380" y="374" width="64" height="44" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" rx="4"/></g>
+    <text x="412" y="403" text-anchor="middle" fill="#7a5415" font-weight="bold">a</text>
+    <g filter="url(#sk)"><rect x="444" y="374" width="64" height="44" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" rx="4"/></g>
+    <text x="476" y="403" text-anchor="middle" fill="#7a5415" font-weight="bold">b</text>
+    <g filter="url(#sk)"><rect x="508" y="374" width="64" height="44" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" rx="4"/></g>
+    <text x="540" y="403" text-anchor="middle" fill="#2b6e9e" font-weight="bold">a</text>
+  </g>
+  <text x="172" y="403" text-anchor="end" font-size="13" font-weight="bold" fill="#444">T =</text>
+
+  <!-- brackets under cells -->
+  <path d="M 188 432 L 184 440 L 380 440 L 376 432" stroke="#4a8e4a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="282" y="458" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">subtree(1)：[0, 2]，长度 3 = size(1)</text>
+
+  <path d="M 380 470 L 376 478 L 508 478 L 504 470" stroke="#c98a2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="444" y="496" text-anchor="middle" font-size="11" fill="#7a5415" font-weight="bold">subtree(2)：[3, 4]，长度 2 = size(2)</text>
+
+  <path d="M 188 508 L 182 518 L 572 518 L 566 508" stroke="#4a8edb" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="380" y="536" text-anchor="middle" font-size="11" fill="#2b6e9e" font-weight="bold">subtree(0)：[0, 5]，长度 6 = size(0)</text>
+
+  <!-- key insight box -->
+  <g filter="url(#sk)">
+    <rect x="70" y="556" width="780" height="84" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="90" y="580" font-size="12" font-weight="bold" fill="#2b2b2b">关键洞察</text>
+  <text x="90" y="602" font-size="11" fill="#444" font-family="monospace">子树(x) 的字符构成 T 的连续区间 [pos(x)−size(x)+1, pos(x)]，且 dfsStr(x) = 该区间的子串</text>
+  <text x="90" y="624" font-size="11" fill="#7a2828">于是「n 次建串判回文」化为「对同一个串 T 的 n 次子串回文判定」</text>
+</svg>
