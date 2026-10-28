@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="13"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">示例 1 走查：逐起点沿 Trie 更新 dp</text>
+  <text x="260" y="48" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">words = [abc, aaaaa, bcdef]，target = aabcdabc</text>
+
+  <!-- 表格底色：死点行（i=3,4,7）淡红 -->
+  <g filter="url(#rough2)">
+    <rect x="46" y="78" width="444" height="25" fill="#fafafa"/>
+    <rect x="46" y="103" width="444" height="25" fill="#f4f4f0"/>
+    <rect x="46" y="128" width="444" height="25" fill="#fafafa"/>
+    <rect x="46" y="153" width="444" height="25" fill="#fce4ec"/>
+    <rect x="46" y="178" width="444" height="25" fill="#fce4ec"/>
+    <rect x="46" y="203" width="444" height="25" fill="#fafafa"/>
+    <rect x="46" y="228" width="444" height="25" fill="#f4f4f0"/>
+    <rect x="46" y="253" width="444" height="25" fill="#fce4ec"/>
+  </g>
+
+  <!-- 表头 -->
+  <rect x="46" y="56" width="444" height="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <g font-size="11" fill="#33507a" text-anchor="middle" filter="url(#rough2)">
+    <text x="71" y="71">i</text>
+    <text x="126" y="71">target[i]</text>
+    <text x="186" y="71">mn[i]</text>
+    <text x="353" y="71">更新动作</text>
+  </g>
+
+  <!-- 表格线 -->
+  <g stroke="#888899" stroke-width="1" filter="url(#rough2)">
+    <path d="M96,56 L96,278" fill="none"/>
+    <path d="M156,56 L156,278" fill="none"/>
+    <path d="M216,56 L216,278" fill="none"/>
+    <path d="M46,78 L490,78" fill="none"/>
+    <path d="M46,103 L490,103" fill="none"/>
+    <path d="M46,128 L490,128" fill="none"/>
+    <path d="M46,153 L490,153" fill="none"/>
+    <path d="M46,178 L490,178" fill="none"/>
+    <path d="M46,203 L490,203" fill="none"/>
+    <path d="M46,228 L490,228" fill="none"/>
+    <path d="M46,253 L490,253" fill="none"/>
+    <path d="M46,278 L490,278" fill="none"/>
+  </g>
+  <rect x="46" y="56" width="444" height="222" fill="none" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+
+  <!-- 行内容 -->
+  <g font-size="11" text-anchor="middle" filter="url(#rough2)">
+    <text x="71" y="95" fill="#333">0</text>
+    <text x="126" y="95" fill="#333">a</text>
+    <text x="186" y="95" fill="#b85450">2</text>
+    <text x="245" y="95" fill="#4a7a3a" text-anchor="start">dp[1]=dp[2]=1</text>
+
+    <text x="71" y="120" fill="#333">1</text>
+    <text x="126" y="120" fill="#333">a</text>
+    <text x="186" y="120" fill="#b85450">3</text>
+    <text x="245" y="120" fill="#4a7a3a" text-anchor="start">dp[3]=dp[4]=2</text>
+
+    <text x="71" y="145" fill="#333">2</text>
+    <text x="126" y="145" fill="#333">b</text>
+    <text x="186" y="145" fill="#b85450">3</text>
+    <text x="245" y="145" fill="#4a7a3a" text-anchor="start">dp[5]=2（dp[3]、dp[4] 不变）</text>
+
+    <text x="71" y="170" fill="#333">3</text>
+    <text x="126" y="170" fill="#333">c</text>
+    <text x="186" y="170" fill="#b85450">0</text>
+    <text x="245" y="170" fill="#b85450" text-anchor="start">× 死点：dp[3]=2 可达，却无法延伸</text>
+
+    <text x="71" y="195" fill="#333">4</text>
+    <text x="126" y="195" fill="#333">d</text>
+    <text x="186" y="195" fill="#b85450">0</text>
+    <text x="245" y="195" fill="#b85450" text-anchor="start">× 死点</text>
+
+    <text x="71" y="220" fill="#333">5</text>
+    <text x="126" y="220" fill="#333">a</text>
+    <text x="186" y="220" fill="#b85450">3</text>
+    <text x="245" y="220" fill="#4a7a3a" text-anchor="start">dp[6]=dp[7]=dp[8]=3</text>
+
+    <text x="71" y="245" fill="#333">6</text>
+    <text x="126" y="245" fill="#333">b</text>
+    <text x="186" y="245" fill="#b85450">2</text>
+    <text x="245" y="245" fill="#4a7a3a" text-anchor="start">dp[7]、dp[8] 已是 3，不更新</text>
+
+    <text x="71" y="270" fill="#333">7</text>
+    <text x="126" y="270" fill="#333">c</text>
+    <text x="186" y="270" fill="#b85450">0</text>
+    <text x="245" y="270" fill="#b85450" text-anchor="start">× 死点</text>
+  </g>
+
+  <!-- 结论框 -->
+  <rect x="46" y="292" width="444" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="268" y="312" text-anchor="middle" font-size="12" fill="#2f5d24" filter="url(#rough2)">dp = [0, 1, 1, 2, 2, 2, 3, 3, 3] → dp[8] = 3</text>
+  <text x="268" y="332" text-anchor="middle" font-size="12" fill="#2f5d24" filter="url(#rough2)">最优划分：aa | bcd | abc</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="4"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="22" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">换引擎②：前缀哈希按长度分桶 + 二分最大可行长度</text>
+
+  <!-- 左：分桶 -->
+  <text x="134" y="48" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">word 前缀哈希，按长度分桶</text>
+
+  <g filter="url(#rough2)">
+    <rect x="28" y="56" width="212" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="46" y="84" font-size="12" fill="#33507a" font-weight="bold">S[1]</text>
+    <rect x="82" y="63" width="146" height="16" rx="3" fill="#ffffff" stroke="#446688" stroke-width="1"/>
+    <text x="155" y="75" text-anchor="middle" font-size="9" fill="#333">a → #5f2a</text>
+    <rect x="82" y="83" width="146" height="16" rx="3" fill="#ffffff" stroke="#446688" stroke-width="1"/>
+    <text x="155" y="95" text-anchor="middle" font-size="9" fill="#333">b → #c817</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="28" y="112" width="212" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="46" y="148" font-size="12" fill="#33507a" font-weight="bold">S[2]</text>
+    <rect x="82" y="119" width="146" height="16" rx="3" fill="#ffffff" stroke="#446688" stroke-width="1"/>
+    <text x="155" y="131" text-anchor="middle" font-size="9" fill="#333">ab → #d301</text>
+    <rect x="82" y="137" width="146" height="16" rx="3" fill="#ffffff" stroke="#446688" stroke-width="1"/>
+    <text x="155" y="149" text-anchor="middle" font-size="9" fill="#333">aa → #9fe2</text>
+    <rect x="82" y="155" width="146" height="16" rx="3" fill="#ffffff" stroke="#446688" stroke-width="1"/>
+    <text x="155" y="167" text-anchor="middle" font-size="9" fill="#333">bc → #77b5</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="28" y="184" width="212" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="46" y="220" font-size="12" fill="#33507a" font-weight="bold">S[3]</text>
+    <rect x="82" y="191" width="146" height="16" rx="3" fill="#ffffff" stroke="#446688" stroke-width="1"/>
+    <text x="155" y="203" text-anchor="middle" font-size="9" fill="#333">abc → #0a77</text>
+    <rect x="82" y="209" width="146" height="16" rx="3" fill="#ffffff" stroke="#446688" stroke-width="1"/>
+    <text x="155" y="221" text-anchor="middle" font-size="9" fill="#333">aaa → #e4b2</text>
+    <rect x="82" y="227" width="146" height="16" rx="3" fill="#ffffff" stroke="#446688" stroke-width="1"/>
+    <text x="155" y="239" text-anchor="middle" font-size="9" fill="#333">bcd → #3c9f</text>
+  </g>
+
+  <text x="134" y="266" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">⋮</text>
+  <text x="134" y="282" text-anchor="middle" font-size="9" fill="#666" filter="url(#rough2)">S[4]、S[5]…（每个长度至多 W 条）</text>
+
+  <!-- 右：单起点二分 -->
+  <text x="378" y="48" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">起点 i = 0：target = aabcdabc</text>
+
+  <g filter="url(#rough2)">
+    <rect x="262" y="56" width="232" height="20" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="378" y="70" text-anchor="middle" font-size="10" fill="#2f5524">长度 1：a ∈ S[1] ✓</text>
+    <rect x="262" y="82" width="232" height="20" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="378" y="96" text-anchor="middle" font-size="10" fill="#2f5524">长度 2：aa ∈ S[2] ✓</text>
+    <rect x="262" y="108" width="232" height="20" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <text x="378" y="122" text-anchor="middle" font-size="10" fill="#8a3a34">长度 3：aab ∉ S[3] ✗</text>
+    <rect x="262" y="134" width="232" height="20" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <text x="378" y="148" text-anchor="middle" font-size="10" fill="#8a3a34">长度 4：aabc ∉ S[4] ✗</text>
+    <rect x="262" y="160" width="232" height="20" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <text x="378" y="174" text-anchor="middle" font-size="10" fill="#8a3a34">长度 5：aabcd ∉ S[5] ✗</text>
+  </g>
+
+  <rect x="262" y="190" width="232" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="378" y="212" text-anchor="middle" font-size="12" fill="#7a5410" font-weight="bold" filter="url(#rough2)">二分最后一个 ✓：mn[0] = 2</text>
+
+  <text x="378" y="242" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">子串哈希 O(1)：h(i, l) = th[i+l] − th[i]·Bˡ</text>
+  <text x="378" y="258" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">（target 前缀哈希 + 幂表预处理）</text>
+
+  <!-- 底部说明框 -->
+  <rect x="28" y="292" width="464" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="312" text-anchor="middle" font-size="11" fill="#2f5524" filter="url(#rough2)">单调性 = 前缀封闭性：长度 l 可行 ⇒ 1..l−1 全可行（同一 word 的更短前缀）⟹ 可二分</text>
+  <text x="260" y="332" text-anchor="middle" font-size="11" fill="#2f5524" filter="url(#rough2)">单起点 O(log L_max)，全程 O(Σ|w| + n·log L_max)；随机基底 mod 2⁶¹−1 防碰撞、防卡</text>
+</svg>
