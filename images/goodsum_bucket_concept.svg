@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0.5 1 L 9 5 L 0.5 9" fill="none" stroke="#446688" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0.5 1 L 9 5 L 0.5 9" fill="none" stroke="#d6a040" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="420" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">核心观察：能否拼接只看「值」—— 按值分桶，一桶两数</text>
+  <text x="300" y="48" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">例：已扫过前缀 [1, 2, 4]，当前处理 x = 3（f[v] / g[v] = 以 v 结尾的好子序列条数 / 元素和）</text>
+
+  <!-- nums 数组格子 -->
+  <g filter="url(#rough2)">
+    <rect x="190" y="60" width="42" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+    <rect x="232" y="60" width="42" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+    <rect x="274" y="60" width="42" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+    <rect x="316" y="60" width="42" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="4"/>
+    <rect x="358" y="60" width="42" height="34" fill="#ffffff" stroke="#aaaaaa" stroke-width="1.2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="211" y="82">1</text>
+    <text x="253" y="82">2</text>
+    <text x="295" y="82">4</text>
+    <text x="337" y="82">3</text>
+    <text x="379" y="82" fill="#999">2</text>
+  </g>
+
+  <!-- 当前元素落入桶 3 -->
+  <path d="M 337 100 C 337 114, 300 110, 300 122" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="352" y="112" text-anchor="start" font-size="10.5" font-weight="bold" fill="#8a6a1a" filter="url(#rough2)">落入桶 v = 3</text>
+
+  <!-- 三个值桶 -->
+  <rect x="30" y="130" width="150" height="104" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <rect x="225" y="130" width="150" height="104" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" filter="url(#rough2)"/>
+  <rect x="420" y="130" width="150" height="104" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="105" y="154" font-size="13" font-weight="bold" fill="#2f5a24">桶 v = 2</text>
+    <text x="105" y="176" font-size="11.5" fill="#333">f[2] = 2：[2]、[1,2]</text>
+    <text x="105" y="196" font-size="11.5" fill="#333">g[2] = 5（和 2+3）</text>
+    <text x="105" y="218" font-size="10.5" fill="#777">（桶里只存两个数）</text>
+
+    <text x="300" y="154" font-size="13" font-weight="bold" fill="#446688">桶 v = 3 ← 当前</text>
+    <text x="300" y="176" font-size="11.5" fill="#333">旧 f[3]、g[3] 不动</text>
+    <text x="300" y="196" font-size="11.5" fill="#333">nf、ng 累进此桶</text>
+    <text x="300" y="218" font-size="10.5" fill="#777">（最终答案 = Σ g[v]）</text>
+
+    <text x="495" y="154" font-size="13" font-weight="bold" fill="#2f5a24">桶 v = 4</text>
+    <text x="495" y="176" font-size="11.5" fill="#333">f[4] = 1：[4]</text>
+    <text x="495" y="196" font-size="11.5" fill="#333">g[4] = 4</text>
+    <text x="495" y="218" font-size="10.5" fill="#777">（同样只存两个数）</text>
+  </g>
+
+  <!-- 桶间转移箭头 -->
+  <path d="M 184 182 L 218 182" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="201" y="172" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">差 1 ✓</text>
+  <path d="M 416 182 L 382 182" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="399" y="172" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">差 1 ✓</text>
+
+  <!-- 转移公式 -->
+  <rect x="55" y="252" width="490" height="62" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="300" y="277" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a1a" filter="url(#rough2)">nf = f[2] + f[4] + 1 = 4　　（+1：单元素 [3] 默认是好子序列）</text>
+  <text x="300" y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a1a" filter="url(#rough2)">ng = g[2] + g[4] + x · nf = 5 + 4 + 3 × 4 = 21</text>
+
+  <!-- 验证结果 -->
+  <rect x="55" y="328" width="490" height="66" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="300" y="353" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f5a24" filter="url(#rough2)">新增 4 条以 3 结尾的好子序列：[3]、[2,3]、[1,2,3]、[4,3]</text>
+  <text x="300" y="377" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">逐条求和 3 + 5 + 6 + 7 = 21，与 ng 一致 ✓（下标信息已彻底丢弃）</text>
+</svg>
