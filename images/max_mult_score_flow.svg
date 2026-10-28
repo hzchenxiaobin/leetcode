@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="640" height="470" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：一遍顺扫 + 倒序转移</text>
+  <path d="M 180 38 Q 320 46 460 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)"><ellipse cx="230" cy="68" rx="86" ry="18" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+  <text x="230" y="73" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">f = [0, −∞, −∞, −∞, −∞]</text>
+  <path d="M 230 86 L 230 100" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- take element -->
+  <g filter="url(#sk)"><rect x="140" y="104" width="180" height="30" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="230" y="123" text-anchor="middle" font-size="12" fill="#2b6e9e">取下一个元素 x = b[j]</text>
+  <path d="M 230 134 L 230 148" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- reverse loop -->
+  <g filter="url(#sk)"><rect x="140" y="152" width="180" height="30" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/></g>
+  <text x="230" y="171" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold">倒序 k = 4, 3, 2, 1</text>
+  <path d="M 230 182 L 230 196" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- transition -->
+  <g filter="url(#sk)"><rect x="110" y="200" width="240" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="230" y="219" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-family="monospace">f[k] = max( f[k], f[k−1] + a[k−1]·x )</text>
+  <text x="230" y="236" text-anchor="middle" font-size="10" fill="#888">k−1 越小越先「吃到」x？不——倒序保证它还没吃到</text>
+  <path d="M 230 244 L 230 258" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision -->
+  <g filter="url(#sk)"><path d="M 230 260 L 322 292 L 230 324 L 138 292 Z" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.5"/></g>
+  <text x="230" y="297" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold">b 取尽？</text>
+
+  <text x="244" y="340" font-size="12" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 230 324 L 230 342" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- return -->
+  <g filter="url(#sk)"><ellipse cx="230" cy="372" rx="72" ry="20" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+  <text x="230" y="377" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold">返回 f[4]</text>
+
+  <!-- no -> loop back -->
+  <path d="M 322 292 L 420 292 L 420 119 L 324 119" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="336" y="284" font-size="12" fill="#b03a3a" font-weight="bold">否</text>
+
+  <!-- side note -->
+  <g filter="url(#sk)"><rect x="392" y="150" width="226" height="118" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="406" y="174" font-size="12" font-weight="bold" fill="#5a3a7a">为什么必须倒序？</text>
+  <text x="406" y="196" font-size="11" fill="#444">更新 f[k] 时读到的 f[k−1]</text>
+  <text x="406" y="213" font-size="11" fill="#444">还是「不含 x」的旧值</text>
+  <text x="406" y="232" font-size="11" fill="#444">⇒ 每个 b[j] 至多配一个系数</text>
+  <text x="406" y="249" font-size="11" fill="#444">（与 01 背包一维滚动同构）</text>
+  <text x="406" y="263" font-size="10" fill="#888">若允许下标相等 → 改正序即可</text>
+
+  <text x="320" y="432" text-anchor="middle" font-size="12" fill="#888">n ≥ 4 保证 f[4] 必然可达，哨兵 −∞ 不会混进答案</text>
+</svg>
