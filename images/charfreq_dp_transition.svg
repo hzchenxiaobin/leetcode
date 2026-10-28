@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="480" viewBox="0 0 940 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="93" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arG" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arP" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#9a6ab8"/>
+    </marker>
+  </defs>
+  <rect width="940" height="480" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：外层枚举 c，内层 26 位两状态线性 DP</text>
+  <path d="M 240 44 Q 470 52 700 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Top flow ===== -->
+  <g filter="url(#sk)">
+    <rect x="46" y="62" width="186" height="54" rx="9" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="278" y="62" width="186" height="54" rx="9" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+    <rect x="510" y="62" width="186" height="54" rx="9" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+    <rect x="742" y="62" width="152" height="54" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="139" y="84" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">① 统计频次 occ[26]</text>
+  <text x="139" y="103" text-anchor="middle" font-size="11" fill="#2b6e9e">记 M = max(occ)</text>
+  <text x="371" y="84" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">② 枚举 c = 1 … M</text>
+  <text x="371" y="103" text-anchor="middle" font-size="11" fill="#7a5415">c &gt; M 必不更优（引理 4）</text>
+  <text x="603" y="84" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">③ 沿 a → z 扫描</text>
+  <text x="603" y="103" text-anchor="middle" font-size="11" fill="#2e6e2e">两状态 DP，滚动掉字母维</text>
+  <text x="818" y="84" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a36">④ 汇总答案</text>
+  <text x="818" y="103" text-anchor="middle" font-size="11" fill="#8a3a36">ans = min(ans, dp₀, dp₁)</text>
+  <path d="M 232 89 L 278 89" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 464 89 L 510 89" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 696 89 L 742 89" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== mini chain ===== -->
+  <g filter="url(#sk)">
+    <circle cx="150" cy="148" r="13" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <circle cx="210" cy="148" r="13" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <circle cx="270" cy="148" r="13" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <circle cx="430" cy="148" r="13" fill="#f0ede4" stroke="#aaa" stroke-width="1.2"/>
+    <circle cx="620" cy="148" r="13" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="150" y="152" text-anchor="middle" font-size="11" fill="#2b6e9e">a</text>
+  <text x="210" y="152" text-anchor="middle" font-size="11" fill="#2b6e9e">b</text>
+  <text x="270" y="152" text-anchor="middle" font-size="11" fill="#2b6e9e">c</text>
+  <text x="430" y="152" text-anchor="middle" font-size="11" fill="#999">…</text>
+  <text x="620" y="152" text-anchor="middle" font-size="11" fill="#2b6e9e">z</text>
+  <path d="M 164 148 L 196 148" stroke="#4a8edb" stroke-width="1.3" fill="none" filter="url(#sk)"/>
+  <path d="M 224 148 L 256 148" stroke="#4a8edb" stroke-width="1.3" fill="none" filter="url(#sk)"/>
+  <path d="M 284 148 L 416 148" stroke="#4a8edb" stroke-width="1.3" fill="none" stroke-dasharray="4 3" filter="url(#sk)"/>
+  <path d="M 444 148 L 606 148" stroke="#4a8edb" stroke-width="1.3" fill="none" stroke-dasharray="4 3" filter="url(#sk)"/>
+  <text x="470" y="142" text-anchor="middle" font-size="10.5" fill="#888">DP 沿字母表 a → z 逐位推进，相邻耦合 = 搭桥节省</text>
+
+  <!-- ===== zoom: two columns ===== -->
+  <g filter="url(#sk)">
+    <rect x="96" y="176" width="170" height="180" rx="12" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" opacity="0.55"/>
+    <rect x="396" y="176" width="170" height="180" rx="12" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" opacity="0.55"/>
+  </g>
+  <text x="181" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">字母 i−1</text>
+  <text x="481" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">字母 i</text>
+
+  <g filter="url(#sk)">
+    <circle cx="181" cy="230" r="22" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/>
+    <circle cx="181" cy="304" r="22" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/>
+    <circle cx="481" cy="230" r="22" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+    <circle cx="481" cy="304" r="22" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="181" y="226" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6e9e">j′=0</text>
+  <text x="181" y="240" text-anchor="middle" font-size="9.5" fill="#2b6e9e">目标 0</text>
+  <text x="181" y="300" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6e9e">j′=1</text>
+  <text x="181" y="314" text-anchor="middle" font-size="9.5" fill="#2b6e9e">目标 c</text>
+  <text x="481" y="226" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">j=0</text>
+  <text x="481" y="240" text-anchor="middle" font-size="9.5" fill="#2e6e2e">目标 0</text>
+  <text x="481" y="300" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">j=1</text>
+  <text x="481" y="314" text-anchor="middle" font-size="9.5" fill="#2e6e2e">目标 c</text>
+
+  <path d="M 206 230 L 456 230" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 206 304 L 456 304" stroke="#9a6ab8" stroke-width="1.8" fill="none" marker-end="url(#arP)" filter="url(#sk)"/>
+  <path d="M 206 238 Q 330 262 456 296" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <path d="M 206 296 Q 330 268 456 240" stroke="#b85450" stroke-width="1.4" fill="none" stroke-dasharray="5 3" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="331" y="222" text-anchor="middle" font-size="10" fill="#2e6e2e">0 → 0</text>
+  <text x="331" y="330" text-anchor="middle" font-size="10" fill="#7a5415">0 → 1 / 1 → 0 / 1 → 1</text>
+
+  <text x="331" y="374" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#444">每条转移：dpᵢ(j) ← min over j′ { dpᵢ₋₁(j′) + 本位调整 − 搭桥节省 }</text>
+  <text x="331" y="392" text-anchor="middle" font-size="10.5" fill="#666">本位调整 = |occᵢ − j·c|；搭桥节省 = min(盈余ᵢ₋₁(j′), 缺口ᵢ(j)) —— 处理字母 i 时恰好结算边 (i−1, i) 一次</text>
+
+  <!-- ===== right annotations ===== -->
+  <g filter="url(#sk)">
+    <rect x="600" y="176" width="304" height="180" rx="10" fill="#fffdf3" stroke="#8a8a8a" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="752" y="200" text-anchor="middle" font-size="12" font-weight="bold" fill="#444">两个记忆点</text>
+  <text x="616" y="226" font-size="11" fill="#555">• 盈余ᵢ₋₁(j′) = max(0, occᵢ₋₁ − j′·c)</text>
+  <text x="616" y="248" font-size="11" fill="#555">• 缺口ᵢ(j) = max(0, j·c − occᵢ)</text>
+  <text x="616" y="276" font-size="11" fill="#555">• 状态只需「目标 0 / 目标 c」两档：</text>
+  <text x="616" y="294" font-size="11" fill="#555">　 好串 ⇔ 每个频次 ∈ {0, c}，无第三种取值</text>
+  <text x="616" y="322" font-size="11" fill="#555">• 初始：字母 a 无前驱，dp(j) = |occ₀ − j·c|</text>
+  <text x="616" y="346" font-size="11" fill="#555">• 'z' 无右邻：25 条边，转移循环天然覆盖</text>
+
+  <!-- ===== bottom formula ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="408" width="820" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/>
+  </g>
+  <text x="470" y="432" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">初始：dp₀(j) = |occ₀ − j·c|（字母 a 无前驱）　　固定 c 的答案 = min(dp₂₅(0), dp₂₅(1))</text>
+  <text x="470" y="453" text-anchor="middle" font-size="12" fill="#2b2b2b">总体答案 = min over c ∈ [1, M]，M = max(occ)</text>
+</svg>
