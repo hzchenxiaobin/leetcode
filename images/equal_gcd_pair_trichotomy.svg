@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b85450"/></marker>
+    <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#446688"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/></marker>
+    <marker id="ay" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#999999"/></marker>
+  </defs>
+  <rect width="640" height="440" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#333" filter="url(#r)">三岔路决策：不相交约束被「逐元素三选一」吸收</text>
+  <path d="M 150 42 Q 320 50 490 42" stroke="#2b2b2b" stroke-width="1.2" fill="none" filter="url(#r)"/>
+  <text x="320" y="62" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">子序列对 (seq1, seq2) ⇔ 给每个下标打标签：入 seq1 / 入 seq2 / 都不进</text>
+
+  <!-- left: trichotomy -->
+  <text x="180" y="96" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#34507a" filter="url(#r)">每个下标面前有三条路</text>
+  <rect x="72" y="112" width="46" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#r)"/>
+  <text x="95" y="137" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">x</text>
+
+  <path d="M 118 124 Q 160 102 206 92" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ag)" filter="url(#r)"/>
+  <rect x="210" y="76" width="88" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#r)"/>
+  <text x="254" y="97" text-anchor="middle" font-size="13" fill="#2e6e2e" filter="url(#r)">seq1</text>
+  <text x="152" y="86" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#r)">g₁ ← gcd(g₁,x)</text>
+
+  <path d="M 118 131 L 206 142" stroke="#999999" stroke-width="1.4" fill="none" marker-end="url(#ay)" filter="url(#r)"/>
+  <rect x="210" y="126" width="88" height="32" rx="4" fill="#f0f0f0" stroke="#888888" stroke-width="1.4" filter="url(#r)"/>
+  <text x="254" y="147" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#r)">都不进</text>
+  <text x="254" y="172" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#r)">(g₁, g₂) 不变</text>
+
+  <path d="M 118 138 Q 160 162 206 192" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#r)"/>
+  <rect x="210" y="176" width="88" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#r)"/>
+  <text x="254" y="197" text-anchor="middle" font-size="13" fill="#34507a" filter="url(#r)">seq2</text>
+  <text x="152" y="200" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#r)">g₂ ← gcd(g₂,x)</text>
+
+  <text x="180" y="244" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" filter="url(#r)">一个下标只走一条路</text>
+  <text x="180" y="262" text-anchor="middle" font-size="11" fill="#7a7a7a" filter="url(#r)">⇒ 不相交自动成立，无需任何检查</text>
+  <text x="180" y="288" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#r)">唯一需要记住的历史</text>
+  <text x="180" y="305" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#r)">= 两个序列各自的 gcd</text>
+
+  <!-- right: dp table with diagonal -->
+  <text x="482" y="96" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#34507a" filter="url(#r)">dp[g₁][g₂] 状态表</text>
+  <rect x="422" y="110" width="120" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#r)"/>
+  <text x="482" y="134" text-anchor="middle" font-size="14" font-family="monospace" fill="#34507a" filter="url(#r)">( g₁ , g₂ )</text>
+
+  <text x="482" y="176" text-anchor="middle" font-size="10" fill="#888" filter="url(#r)">列 = g₂ →　行 = g₁ ↓</text>
+  <!-- grid: origin (412, 186), 5x5 cells of 26 -->
+  <g filter="url(#r)">
+    <rect x="438" y="180" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="464" y="180" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="490" y="180" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="516" y="180" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="542" y="180" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="438" y="206" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="464" y="206" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="490" y="206" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="516" y="206" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="542" y="206" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="438" y="232" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="464" y="232" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="490" y="232" width="26" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="516" y="232" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="542" y="232" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="438" y="258" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="464" y="258" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="490" y="258" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="516" y="258" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="542" y="258" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="438" y="284" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="464" y="284" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="490" y="284" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="516" y="284" width="26" height="26" fill="#ffffff" stroke="#cccccc" stroke-width="1"/>
+    <rect x="542" y="284" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="503" y="250" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">★</text>
+    <text x="451" y="176" text-anchor="middle" font-size="9" fill="#888">1</text>
+    <text x="477" y="176" text-anchor="middle" font-size="9" fill="#888">2</text>
+    <text x="503" y="176" text-anchor="middle" font-size="9" fill="#888">3</text>
+    <text x="529" y="176" text-anchor="middle" font-size="9" fill="#888">⋯</text>
+    <text x="555" y="176" text-anchor="middle" font-size="9" fill="#888">V</text>
+    <text x="432" y="198" text-anchor="end" font-size="9" fill="#888">1</text>
+    <text x="432" y="224" text-anchor="end" font-size="9" fill="#888">2</text>
+    <text x="432" y="250" text-anchor="end" font-size="9" fill="#888">3</text>
+    <text x="432" y="276" text-anchor="end" font-size="9" fill="#888">⋯</text>
+    <text x="432" y="302" text-anchor="end" font-size="9" fill="#888">V</text>
+  </g>
+  <text x="482" y="332" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#r)">对角线 g₁ = g₂ ⇔ 两序列 GCD 相等</text>
+  <text x="482" y="352" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#r)">答案 = Σ<tspan font-size="9" dy="3">g ≥ 1</tspan><tspan dy="-3"> dp[g][g]</tspan></text>
+
+  <!-- bottom note -->
+  <rect x="40" y="372" width="560" height="54" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#r)"/>
+  <text x="320" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#a07520" filter="url(#r)">用 0 编码空序列：gcd(0, x) = x，「空 → 装入第一个元素」零特判</text>
+  <text x="320" y="414" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#r)">初始 dp[0][0] = 1（两序列皆空）；收尾 g ≥ 1 一刀切掉空序列</text>
+</svg>

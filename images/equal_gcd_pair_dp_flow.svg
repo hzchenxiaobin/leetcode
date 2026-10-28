@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 392" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+    <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#446688"/></marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/></marker>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b85450"/></marker>
+  </defs>
+  <rect width="680" height="392" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#333" filter="url(#r)">算法流程：整表拷贝吸收「都不进」，两条散射转移补增量</text>
+  <text x="340" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">V = max(nums)；状态表 (V+1)×(V+1)；gcd 用预计算查表 O(1)</text>
+
+  <!-- init box -->
+  <rect x="24" y="88" width="104" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#r)"/>
+  <text x="76" y="112" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">初始化</text>
+  <text x="76" y="132" text-anchor="middle" font-size="12" font-family="monospace" fill="#333" filter="url(#r)">dp[0][0]=1</text>
+  <path d="M 128 117 L 156 117" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#r)"/>
+
+  <!-- big transition box -->
+  <rect x="160" y="80" width="232" height="200" rx="10" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#r)"/>
+  <text x="276" y="104" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#34507a" filter="url(#r)">逐元素转移（对每个 x）</text>
+  <rect x="174" y="116" width="204" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#r)"/>
+  <text x="276" y="138" text-anchor="middle" font-size="11.5" font-family="monospace" fill="#2e6e2e" filter="url(#r)">① ndp ← dp 整表拷贝</text>
+  <rect x="174" y="162" width="204" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#r)"/>
+  <text x="276" y="184" text-anchor="middle" font-size="11.5" font-family="monospace" fill="#a07520" filter="url(#r)">② 枚举非零 dp[g₁][g₂]=v</text>
+  <rect x="174" y="208" width="204" height="56" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#r)"/>
+  <text x="276" y="230" text-anchor="middle" font-size="11" font-family="monospace" fill="#b85450" filter="url(#r)">③ ndp[gcd(g₁,x)][g₂] += v</text>
+  <text x="276" y="250" text-anchor="middle" font-size="11" font-family="monospace" fill="#b85450" filter="url(#r)">ndp[g₁][gcd(g₂,x)] += v</text>
+
+  <path d="M 392 180 L 418 180" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#r)"/>
+
+  <!-- diamond -->
+  <polygon points="450,150 484,180 450,210 416,180" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#r)"/>
+  <text x="450" y="177" text-anchor="middle" font-size="11" fill="#a07520" filter="url(#r)">还有</text>
+  <text x="450" y="192" text-anchor="middle" font-size="11" fill="#a07520" filter="url(#r)">元素？</text>
+
+  <path d="M 484 180 L 512 180" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <text x="498" y="172" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#r)">否</text>
+
+  <!-- yes loop back to top of big box -->
+  <path d="M 450 150 L 450 64 Q 450 58 444 58 L 286 58 Q 280 58 280 64 L 280 76" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ag)" filter="url(#r)"/>
+  <text x="365" y="52" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#r)">是：dp ← ndp，取下一个 x</text>
+
+  <!-- answer box -->
+  <rect x="516" y="152" width="148" height="58" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#r)"/>
+  <text x="590" y="176" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold" fill="#b85450" filter="url(#r)">ans = Σ dp[g][g]</text>
+  <text x="590" y="196" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#r)">g = 1..V，mod 10⁹+7</text>
+
+  <!-- annotations -->
+  <rect x="24" y="312" width="632" height="66" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#r)"/>
+  <text x="340" y="336" text-anchor="middle" font-size="12" font-weight="bold" fill="#a07520" filter="url(#r)">「都不进」是恒等映射 ⇒ 整表拷贝一步吸收；③ 是散射（多对一），必须写 ndp 不能原地</text>
+  <text x="340" y="360" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#r)">跳过零状态 + gcd 查表 ⇒ O(n·V²)：n = V = 200 时约 2.4×10⁷ 次加法，Python 也能过</text>
+</svg>
