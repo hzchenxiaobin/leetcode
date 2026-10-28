@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="680" viewBox="0 0 940 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="940" height="680" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">预处理：马步 BFS 距离矩阵</text>
+  <path d="M 280 42 Q 470 50 660 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: knight moves ===== -->
+  <text x="230" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 马的 8 个 L 形落点</text>
+
+  <!-- grid 5x5, x0=86 y0=100 cell=46 -->
+  <g filter="url(#sk)" stroke="#d8d5c8" stroke-width="1" fill="#fffdf7">
+    <rect x="86" y="100" width="46" height="46"/><rect x="132" y="100" width="46" height="46"/><rect x="178" y="100" width="46" height="46"/><rect x="224" y="100" width="46" height="46"/><rect x="270" y="100" width="46" height="46"/>
+    <rect x="86" y="146" width="46" height="46"/><rect x="132" y="146" width="46" height="46"/><rect x="178" y="146" width="46" height="46"/><rect x="224" y="146" width="46" height="46"/><rect x="270" y="146" width="46" height="46"/>
+    <rect x="86" y="192" width="46" height="46"/><rect x="132" y="192" width="46" height="46"/><rect x="178" y="192" width="46" height="46"/><rect x="224" y="192" width="46" height="46"/><rect x="270" y="192" width="46" height="46"/>
+    <rect x="86" y="238" width="46" height="46"/><rect x="132" y="238" width="46" height="46"/><rect x="178" y="238" width="46" height="46"/><rect x="224" y="238" width="46" height="46"/><rect x="270" y="238" width="46" height="46"/>
+    <rect x="86" y="284" width="46" height="46"/><rect x="132" y="284" width="46" height="46"/><rect x="178" y="284" width="46" height="46"/><rect x="224" y="284" width="46" height="46"/><rect x="270" y="284" width="46" height="46"/>
+  </g>
+
+  <!-- knight center cell (2,2) -->
+  <g filter="url(#sk)"><rect x="178" y="192" width="46" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/></g>
+  <text x="201" y="226" text-anchor="middle" font-size="30" fill="#b03a3a">♞</text>
+  <text x="201" y="256" text-anchor="middle" font-size="10" fill="#b03a3a">(x, y)</text>
+
+  <!-- 8 reachable cells -->
+  <g filter="url(#sk)" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5">
+    <rect x="132" y="100" width="46" height="46" rx="4"/><rect x="86" y="146" width="46" height="46" rx="4"/><rect x="86" y="238" width="46" height="46" rx="4"/><rect x="132" y="284" width="46" height="46" rx="4"/>
+    <rect x="224" y="100" width="46" height="46" rx="4"/><rect x="270" y="146" width="46" height="46" rx="4"/><rect x="270" y="238" width="46" height="46" rx="4"/><rect x="224" y="284" width="46" height="46" rx="4"/>
+  </g>
+  <g fill="#4a8edb">
+    <circle cx="155" cy="123" r="6" filter="url(#sk)"/><circle cx="109" cy="169" r="6" filter="url(#sk)"/><circle cx="109" cy="261" r="6" filter="url(#sk)"/><circle cx="155" cy="307" r="6" filter="url(#sk)"/>
+    <circle cx="247" cy="123" r="6" filter="url(#sk)"/><circle cx="293" cy="169" r="6" filter="url(#sk)"/><circle cx="293" cy="261" r="6" filter="url(#sk)"/><circle cx="247" cy="307" r="6" filter="url(#sk)"/>
+  </g>
+  <!-- dashed rays -->
+  <g stroke="#4a8edb" stroke-width="1" stroke-dasharray="3 3" opacity="0.45" filter="url(#sk)">
+    <path d="M 201 215 L 155 123"/><path d="M 201 215 L 109 169"/><path d="M 201 215 L 109 261"/><path d="M 201 215 L 155 307"/>
+    <path d="M 201 215 L 247 123"/><path d="M 201 215 L 293 169"/><path d="M 201 215 L 293 261"/><path d="M 201 215 L 247 307"/>
+  </g>
+  <text x="201" y="360" text-anchor="middle" font-size="11" fill="#666">(x±1, y±2) 或 (x±2, y±1)，共 8 种</text>
+
+  <!-- ===== Panel 2: distance matrix ===== -->
+  <text x="690" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">② 对 n+1 个关键点各做一次 BFS（示例 2）</text>
+
+  <!-- header row: x 500,630,700,770; w 130,70,70,70 ; rows y 100.. h 42 -->
+  <g filter="url(#sk)"><rect x="500" y="100" width="340" height="42" fill="#f0ede4" stroke="#c9c4b4" stroke-width="1.2"/></g>
+  <text x="575" y="126" text-anchor="middle" font-size="11" fill="#7a7461" font-weight="bold">起点 \ 吃到兵</text>
+  <text x="665" y="126" text-anchor="middle" font-size="11" fill="#7a7461" font-weight="bold">A(1,1)</text>
+  <text x="735" y="126" text-anchor="middle" font-size="11" fill="#7a7461" font-weight="bold">B(2,2)</text>
+  <text x="805" y="126" text-anchor="middle" font-size="11" fill="#7a7461" font-weight="bold">C(3,3)</text>
+
+  <g filter="url(#sk)" fill="#fffdf7" stroke="#d8d5c8" stroke-width="1">
+    <rect x="500" y="142" width="340" height="42"/><rect x="500" y="184" width="340" height="42"/><rect x="500" y="226" width="340" height="42"/><rect x="500" y="268" width="340" height="42"/>
+  </g>
+  <g filter="url(#sk)" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4">
+    <rect x="770" y="142" width="70" height="42"/><rect x="630" y="226" width="70" height="42"/>
+  </g>
+  <g font-size="12" fill="#444">
+    <text x="575" y="168" text-anchor="middle">A = (1,1)</text>
+    <text x="575" y="210" text-anchor="middle">B = (2,2)</text>
+    <text x="575" y="252" text-anchor="middle">C = (3,3)</text>
+    <text x="575" y="294" text-anchor="middle" fill="#b03a3a" font-weight="bold">马起点 (0,2)</text>
+    <text x="665" y="168" text-anchor="middle">0</text><text x="735" y="168" text-anchor="middle">2</text><text x="805" y="168" text-anchor="middle" fill="#b03a3a" font-weight="bold">4</text>
+    <text x="665" y="210" text-anchor="middle">2</text><text x="735" y="210" text-anchor="middle">0</text><text x="805" y="210" text-anchor="middle">2</text>
+    <text x="665" y="252" text-anchor="middle" fill="#b03a3a" font-weight="bold">4</text><text x="735" y="252" text-anchor="middle">2</text><text x="805" y="252" text-anchor="middle">0</text>
+    <text x="665" y="294" text-anchor="middle">2</text><text x="735" y="294" text-anchor="middle">2</text><text x="805" y="294" text-anchor="middle">2</text>
+  </g>
+  <text x="670" y="340" text-anchor="middle" font-size="11" fill="#888">dist 对称；A↔C 的「对角 (2,2) 型」距离是 4，不是 2</text>
+
+  <!-- ===== Panel 3: three fact boxes ===== -->
+  <g filter="url(#sk)"><rect x="60" y="410" width="260" height="140" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+  <text x="80" y="436" font-size="12" font-weight="bold" fill="#2e6e2e">兵 ≠ 障碍</text>
+  <text x="80" y="460" font-size="11" fill="#444">题面规定：马途经其他兵时</text>
+  <text x="80" y="478" font-size="11" fill="#444">不会吃掉它们。</text>
+  <text x="80" y="504" font-size="11" fill="#2e6e2e" font-weight="bold">→ 马步距离 = 纯几何量，</text>
+  <text x="80" y="522" font-size="11" fill="#2e6e2e" font-weight="bold">与吃兵顺序、剩余兵无关</text>
+
+  <g filter="url(#sk)"><rect x="340" y="410" width="260" height="140" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="360" y="436" font-size="12" font-weight="bold" fill="#2b6e9e">全连通，无 −1</text>
+  <text x="360" y="460" font-size="11" fill="#444">50×50 棋盘上任意两点</text>
+  <text x="360" y="478" font-size="11" fill="#444">马步互相可达。</text>
+  <text x="360" y="504" font-size="11" fill="#2b6e9e" font-weight="bold">最远也只有 34 步</text>
+  <text x="360" y="522" font-size="11" fill="#666">（答案上界 15×34 = 510）</text>
+
+  <g filter="url(#sk)"><rect x="620" y="410" width="260" height="140" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/></g>
+  <text x="640" y="436" font-size="12" font-weight="bold" fill="#7a5415">规模可忽略</text>
+  <text x="640" y="460" font-size="11" fill="#444">马只会停在「起点或刚吃的</text>
+  <text x="640" y="478" font-size="11" fill="#444">兵」上 → 距离表只需 n+1 行。</text>
+  <text x="640" y="504" font-size="11" fill="#7a5415" font-weight="bold">16 次 BFS × O(50²·8)</text>
+  <text x="640" y="522" font-size="11" fill="#666">≈ 3×10⁴ 次基本操作</text>
+
+  <!-- bottom summary -->
+  <g filter="url(#sk)"><rect x="60" y="580" width="820" height="70" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="470" y="608" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">★ 整局游戏的代价由这张 (n+1)×n 的小表完全决定</text>
+  <text x="470" y="632" text-anchor="middle" font-size="11" fill="#666">剩下的唯一问题：在 Alice（max）与 Bob（min）的轮流决策下，按什么顺序吃兵</text>
+</svg>
