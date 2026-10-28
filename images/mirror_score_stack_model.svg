@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="57" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="420" fill="#fdfcf7"/>
+  <text x="320" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法模型：26 个按字母索引的栈</text>
+  <path d="M 200 40 Q 320 48 440 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- flow: input box -->
+  <g filter="url(#sk)">
+    <rect x="60" y="64" width="170" height="38" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="145" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">读入 s[i]，记 c = s[i]</text>
+
+  <path d="M 145 102 L 145 116" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="145,118 240,160 145,202 50,160" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="145" y="154" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">mirror 栈</text>
+  <text x="145" y="172" text-anchor="middle" font-size="12" fill="#7a5415">st[25−c] 非空？</text>
+
+  <!-- yes branch -->
+  <path d="M 240 160 L 306 160" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="272" y="150" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <rect x="310" y="130" width="292" height="60" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="456" y="154" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">弹出栈顶 j：ans += i − j</text>
+  <text x="456" y="176" text-anchor="middle" font-size="11" fill="#2e6e2e">i 与 j 同时标记（此后永不再入栈）</text>
+
+  <!-- no branch -->
+  <path d="M 145 202 L 145 228" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="158" y="222" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">否</text>
+  <g filter="url(#sk)">
+    <rect x="60" y="230" width="170" height="38" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="145" y="254" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">把 i 压入 st[c]</text>
+
+  <!-- amortized note -->
+  <g filter="url(#sk)">
+    <rect x="40" y="294" width="252" height="50" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="166" y="314" text-anchor="middle" font-size="11" fill="#7a5415">每个下标至多一次入栈、一次出栈</text>
+  <text x="166" y="334" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415">→ 均摊 O(1)，总计 O(n)</text>
+
+  <!-- right illustration: why top = nearest -->
+  <text x="476" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">为什么「栈顶」=「距离最近」？</text>
+
+  <g filter="url(#sk)">
+    <rect x="400" y="252" width="64" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="400" y="282" width="64" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="400" y="312" width="64" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <g font-size="13" font-weight="bold" fill="#2b2b2b" text-anchor="middle">
+    <text x="432" y="270">9</text>
+    <text x="432" y="300">7</text>
+    <text x="432" y="330">3</text>
+  </g>
+  <g font-size="11" fill="#888" text-anchor="end">
+    <text x="392" y="270">顶</text>
+    <text x="392" y="330">底</text>
+  </g>
+  <text x="432" y="358" text-anchor="middle" font-size="10.5" fill="#666">st[mirror(c)]：底→顶下标递增</text>
+
+  <g filter="url(#sk)">
+    <rect x="486" y="248" width="112" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="542" y="268" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a3a">栈顶 = 9</text>
+  <text x="542" y="288" text-anchor="middle" font-size="10.5" fill="#8a3a3a">= 最大下标</text>
+  <path d="M 484 264 L 468 268" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arR)"/>
+  <text x="542" y="320" text-anchor="middle" font-size="11" fill="#8a3a3a">= 离 i 最近的</text>
+  <text x="542" y="336" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a3a">未标记 j ✓</text>
+
+  <!-- conclusion -->
+  <g filter="url(#sk)">
+    <rect x="40" y="366" width="564" height="38" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="322" y="390" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">「找最近的未标记 j」= 查栈顶；「跳过已标记」= 弹出后即消失</text>
+</svg>
