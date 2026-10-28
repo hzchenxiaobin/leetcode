@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="700" viewBox="0 0 940 700" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="700" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 1 演算：k = 2，最终保留 3 条边，和为 22</text>
+  <path d="M 270 42 Q 470 50 670 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Left: final tree ===== -->
+  <text x="260" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">树（0 为根）：绿色保留，红色虚线移除</text>
+
+  <!-- node 0 root -->
+  <g filter="url(#sk)"><circle cx="260" cy="140" r="24" fill="#fef6e6" stroke="#c98a2b" stroke-width="2"/></g>
+  <text x="260" y="146" text-anchor="middle" font-size="14" fill="#7a5415" font-weight="bold">0</text>
+  <text x="260" y="110" text-anchor="middle" font-size="10" fill="#888">根：无父边，用 dp[0][1]</text>
+
+  <!-- kept edge 0-1 -->
+  <path d="M 238 150 L 148 228" stroke="#4a8e4a" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="176" y="182" font-size="12" fill="#2e6e2e" font-weight="bold">4 ✓</text>
+
+  <!-- removed edge 0-2 -->
+  <path d="M 284 154 L 356 226" stroke="#b85450" stroke-width="1.8" stroke-dasharray="6 4" filter="url(#sk)"/>
+  <text x="330" y="180" font-size="12" fill="#b03a3a" font-weight="bold">2 ✗ 移除</text>
+
+  <!-- kept edge 2-3 -->
+  <path d="M 346 262 L 296 346" stroke="#4a8e4a" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="298" y="300" font-size="12" fill="#2e6e2e" font-weight="bold">12 ✓</text>
+
+  <!-- kept edge 2-4 -->
+  <path d="M 392 262 L 448 346" stroke="#4a8e4a" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="436" y="300" font-size="12" fill="#2e6e2e" font-weight="bold">6 ✓</text>
+
+  <!-- node 1 -->
+  <g filter="url(#sk)"><circle cx="130" cy="250" r="22" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="130" y="256" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">1</text>
+
+  <!-- node 2 -->
+  <g filter="url(#sk)"><circle cx="370" cy="250" r="22" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="370" y="256" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">2</text>
+
+  <!-- node 3 -->
+  <g filter="url(#sk)"><circle cx="284" cy="370" r="22" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="284" y="376" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">3</text>
+
+  <!-- node 4 -->
+  <g filter="url(#sk)"><circle cx="460" cy="370" r="22" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="460" y="376" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">4</text>
+
+  <!-- degree annotations -->
+  <text x="370" y="226" text-anchor="middle" font-size="10" fill="#7a5415" font-weight="bold">deg(2)=2 ≤ k ✓</text>
+  <text x="130" y="296" text-anchor="middle" font-size="10" fill="#7a5415">deg(1)=1 ✓</text>
+  <text x="260" y="424" text-anchor="middle" font-size="11" fill="#2e6e2e" font-family="monospace" font-weight="bold">保留权和 = 4 + 12 + 6 = 22</text>
+
+  <!-- ===== Right: DP steps ===== -->
+  <text x="730" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">自底向上算 dp（k = 2）</text>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="540" y="96" width="360" height="56" rx="8" fill="#f0ede4" stroke="#bbb" stroke-width="1.3"/>
+  </g>
+  <text x="556" y="118" font-size="11" font-weight="bold" fill="#555">① 叶子 1、3、4</text>
+  <text x="556" y="138" font-size="11" fill="#444" font-family="monospace">dp[·][0] = dp[·][1] = 0</text>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="540" y="168" width="360" height="90" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="556" y="190" font-size="11" font-weight="bold" fill="#2b6e9e">② 节点 2（孩子 3、4）</text>
+  <text x="556" y="210" font-size="11" fill="#444" font-family="monospace">gain(3)=12，gain(4)=6，全为正</text>
+  <text x="556" y="230" font-size="11" fill="#b03a3a" font-family="monospace" font-weight="bold">dp[2][1]=0+12+6=18（限 2 条）</text>
+  <text x="556" y="248" font-size="11" fill="#2b6e9e" font-family="monospace" font-weight="bold">dp[2][0]=0+12=12（限 1 条，挤出 6）</text>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="540" y="274" width="360" height="112" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="556" y="296" font-size="11" font-weight="bold" fill="#2e6e2e">③ 节点 0 = 根（孩子 1、2）</text>
+  <text x="556" y="316" font-size="11" fill="#444" font-family="monospace">base = dp[1][1] + dp[2][1] = 18</text>
+  <text x="556" y="336" font-size="11" fill="#444" font-family="monospace">gain(1) = 4 + 0 − 0 = 4</text>
+  <text x="556" y="356" font-size="11" fill="#444" font-family="monospace">gain(2) = 2 + dp[2][0] − dp[2][1] = 2 + 12 − 18 = −4</text>
+  <text x="556" y="376" font-size="11" fill="#b03a3a" font-family="monospace" font-weight="bold">排序 [4, −4]，只取正的 → dp[0][1] = 18 + 4 = 22</text>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)">
+    <rect x="540" y="402" width="360" height="46" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="556" y="422" font-size="11" font-weight="bold" fill="#7a5415">④ 答案</text>
+  <text x="556" y="440" font-size="12" fill="#7a5415" font-family="monospace" font-weight="bold">answer = dp[0][1] = 22</text>
+
+  <!-- takeaway box -->
+  <g filter="url(#sk)">
+    <rect x="60" y="452" width="480" height="90" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="476" font-size="12" font-weight="bold" fill="#2b2b2b">为什么边 (0,2) 被放弃？</text>
+  <text x="80" y="498" font-size="11" fill="#444" font-family="monospace">留下它：+2，但 2 要从「18 条件」降到「12 条件」，净亏</text>
+  <text x="80" y="516" font-size="11" fill="#444" font-family="monospace">−6；gain = 2 + 12 − 18 = −4 &lt; 0 → 不留更优</text>
+  <text x="80" y="534" font-size="10" fill="#888">对比：直接删「全局最小权边」的贪心并不总能得到这个结论</text>
+
+  <!-- verify note -->
+  <g filter="url(#sk)">
+    <rect x="60" y="558" width="840" height="110" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="80" y="582" font-size="12" font-weight="bold" fill="#2e6e2e">合法性核对（每个节点都 ≤ k = 2）</text>
+  <text x="80" y="606" font-size="11" fill="#444" font-family="monospace">deg(0)=1（边 0-1）  deg(1)=1  deg(2)=2（边 2-3、2-4）  deg(3)=1  deg(4)=1   → 全部合法 ✓</text>
+  <text x="80" y="630" font-size="11" fill="#7a2828" font-weight="bold">若不删边 (0,2)：deg(2)=3 &gt; k，必须从 2 的三条边里再砍一条，砍哪条都亏 ≥ 6</text>
+  <text x="80" y="652" font-size="11" fill="#444" font-family="monospace">（候选：删 0-2 亏 2；删 2-4 亏 6；删 2-3 亏 12 → 删 0-2 最优，与 dp 结果一致）</text>
+</svg>

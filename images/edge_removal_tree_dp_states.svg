@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="700" viewBox="0 0 940 700" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="700" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">树形 DP 状态设计：父边去留，决定孩子边的名额</text>
+  <path d="M 270 42 Q 470 50 670 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel A: rooted tree ===== -->
+  <text x="270" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 以 0 为根，只看 u 与父亲、孩子的局部结构</text>
+
+  <!-- parent node p -->
+  <g filter="url(#sk)"><circle cx="270" cy="132" r="22" fill="#f0ede4" stroke="#999" stroke-width="1.5"/></g>
+  <text x="270" y="137" text-anchor="middle" font-size="13" fill="#666" font-weight="bold">p</text>
+  <text x="270" y="104" text-anchor="middle" font-size="10" fill="#888">父节点</text>
+
+  <!-- parent edge (orange, thick) -->
+  <path d="M 270 154 L 270 205" stroke="#c98a2b" stroke-width="2.6" filter="url(#sk)"/>
+  <text x="284" y="184" font-size="11" fill="#7a5415" font-weight="bold">w₀</text>
+  <text x="330" y="160" font-size="10" fill="#7a5415">父边（若保留，</text>
+  <text x="330" y="174" font-size="10" fill="#7a5415">占 u 的 1 个度数名额）</text>
+
+  <!-- node u -->
+  <g filter="url(#sk)"><circle cx="270" cy="232" r="27" fill="#fef6e6" stroke="#c98a2b" stroke-width="2.2"/></g>
+  <text x="270" y="238" text-anchor="middle" font-size="15" fill="#7a5415" font-weight="bold">u</text>
+
+  <!-- child edges -->
+  <path d="M 250 248 L 162 322" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <path d="M 270 259 L 270 318" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <path d="M 290 248 L 378 322" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="192" y="280" font-size="11" fill="#2b6e9e" font-weight="bold">w₁</text>
+  <text x="278" y="294" font-size="11" fill="#2b6e9e" font-weight="bold">w₂</text>
+  <text x="336" y="280" font-size="11" fill="#2b6e9e" font-weight="bold">w₃</text>
+
+  <!-- children v1 v2 v3 -->
+  <g filter="url(#sk)"><circle cx="150" cy="340" r="21" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="150" y="345" text-anchor="middle" font-size="12" fill="#2b6e9e" font-weight="bold">v₁</text>
+  <g filter="url(#sk)"><circle cx="270" cy="340" r="21" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="270" y="345" text-anchor="middle" font-size="12" fill="#2b6e9e" font-weight="bold">v₂</text>
+  <g filter="url(#sk)"><circle cx="390" cy="340" r="21" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="390" y="345" text-anchor="middle" font-size="12" fill="#2b6e9e" font-weight="bold">v₃</text>
+
+  <!-- subtree dashed box -->
+  <path d="M 108 376 Q 270 386 432 376" stroke="#aaa" stroke-width="1.2" stroke-dasharray="5 4" fill="none" filter="url(#sk)"/>
+  <text x="270" y="404" text-anchor="middle" font-size="10" fill="#888">各孩子子树互不相交，只通过边 (u,v) 与外部交互</text>
+
+  <!-- degree formula -->
+  <g filter="url(#sk)">
+    <rect x="70" y="420" width="400" height="34" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+  </g>
+  <text x="270" y="442" text-anchor="middle" font-size="12" fill="#b03a3a" font-family="monospace" font-weight="bold">度数(u) = 留下的孩子边数 + (父边保留 ? 1 : 0) ≤ k</text>
+
+  <!-- ===== Panel B: two states ===== -->
+  <text x="710" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">② 每个节点两个状态（名额 = 可留的孩子边数）</text>
+
+  <!-- dp[u][0] -->
+  <g filter="url(#sk)">
+    <rect x="540" y="96" width="340" height="104" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="560" y="120" font-size="13" font-weight="bold" fill="#2b6e9e" font-family="monospace">dp[u][0]：父边保留时用</text>
+  <text x="560" y="144" font-size="11" fill="#444">父边已占 1 个度数名额</text>
+  <text x="560" y="164" font-size="12" fill="#b03a3a" font-family="monospace" font-weight="bold">→ 孩子边至多留 k − 1 条</text>
+  <text x="560" y="186" font-size="10" fill="#888">被父节点「选中」时，u 以此值参与转移</text>
+
+  <!-- dp[u][1] -->
+  <g filter="url(#sk)">
+    <rect x="540" y="218" width="340" height="104" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="560" y="242" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">dp[u][1]：父边移除 / u 为根时用</text>
+  <text x="560" y="266" font-size="11" fill="#444">父边不占名额，孩子边配额打满</text>
+  <text x="560" y="286" font-size="12" fill="#2e6e2e" font-family="monospace" font-weight="bold">→ 孩子边至多留 k 条</text>
+  <text x="560" y="308" font-size="10" fill="#888">答案 = dp[root][1]（根没有父边）</text>
+
+  <!-- ===== Panel C: recurrence ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="470" width="840" height="112" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="80" y="494" font-size="13" font-weight="bold" fill="#2b2b2b">③ 转移：保底 + 净增益，排序截断</text>
+  <text x="80" y="518" font-size="12" fill="#444" font-family="monospace">base(u) = Σ dp[v][1]  （u 的孩子边全部砍掉的「保底值」）</text>
+  <text x="80" y="540" font-size="12" fill="#b03a3a" font-family="monospace" font-weight="bold">gain(v) = w(u,v) + dp[v][0] − dp[v][1]  （留下边 (u,v) 的净收益）</text>
+  <text x="80" y="564" font-size="12" fill="#2e6e2e" font-family="monospace" font-weight="bold">dp[u] = base + 「gain 降序前 limit 个正数之和」，limit ∈ { k−1, k }</text>
+
+  <!-- key insight -->
+  <g filter="url(#sk)">
+    <rect x="60" y="600" width="840" height="80" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="624" font-size="12" font-weight="bold" fill="#2e6e2e">关键洞察</text>
+  <text x="80" y="646" font-size="11" fill="#444">度数约束逐节点独立，子树间只通过边 (u,v) 交互 → 每个孩子独立决策「留 / 不留」</text>
+  <text x="80" y="666" font-size="11" fill="#7a2828">父边去留这个「二选一」恰好把全局约束拆成了可递归的局部约束 —— 这是树形 DP 的典型切入点</text>
+</svg>

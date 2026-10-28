@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#999" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="540" height="380" fill="#fafafa"/>
+
+  <text x="270" y="32" text-anchor="middle" font-size="16.5" font-weight="bold" fill="#446688" filter="url(#rough2)">二维费用背包：预算 (a, b) 是容量，每个元素强制选一条去路</text>
+
+  <!-- zoomed 2x2 neighborhood of the (a,b) plane -->
+  <!-- source: (a-1, b) -->
+  <rect x="60" y="90" width="105" height="72" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="112" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">dp[a−1][b]</text>
+  <text x="112" y="144" text-anchor="middle" font-size="10" fill="#557" filter="url(#rough2)">仅① ＋⌈x/2⌉</text>
+
+  <!-- target: (a, b) -->
+  <rect x="195" y="90" width="105" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="6" filter="url(#rough2)"/>
+  <text x="247" y="124" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5a10" filter="url(#rough2)">dp[a][b]</text>
+  <text x="247" y="146" text-anchor="middle" font-size="10" fill="#7a5a10" filter="url(#rough2)">← 取 min</text>
+
+  <!-- source: (a-1, b-1) -->
+  <rect x="60" y="182" width="105" height="72" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="112" y="214" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">dp[a−1][b−1]</text>
+  <text x="112" y="236" text-anchor="middle" font-size="10" fill="#8a3a34" filter="url(#rough2)">叠招：两序取小</text>
+
+  <!-- source: (a, b-1) -->
+  <rect x="195" y="182" width="105" height="72" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="247" y="214" text-anchor="middle" font-size="12" font-weight="bold" fill="#2d5a20" filter="url(#rough2)">dp[a][b−1]</text>
+  <text x="247" y="236" text-anchor="middle" font-size="10" fill="#3a6130" filter="url(#rough2)">仅② ＋(x−k)</text>
+
+  <!-- transition arrows -->
+  <path d="M 167 126 L 191 126" stroke="#446688" stroke-width="2" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <path d="M 247 178 L 247 166" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <path d="M 162 186 L 188 166" stroke="#b85450" stroke-width="2" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <path d="M 222 90 C 222 70, 268 70, 268 87" fill="none" stroke="#999" stroke-width="1.8" marker-end="url(#arrk)" filter="url(#rough2)"/>
+  <text x="245" y="64" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">不动 ＋x</text>
+
+  <!-- axes -->
+  <text x="112" y="274" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">a−1</text>
+  <text x="247" y="274" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">a</text>
+  <text x="48" y="130" text-anchor="end" font-size="11" fill="#888" filter="url(#rough2)">b</text>
+  <text x="48" y="222" text-anchor="end" font-size="11" fill="#888" filter="url(#rough2)">b−1</text>
+  <text x="150" y="296" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">a（已用①次数）→</text>
+  <text x="30" y="200" text-anchor="middle" font-size="11" fill="#888" transform="rotate(-90 30 200)" filter="url(#rough2)">b（已用②次数）→</text>
+
+  <!-- formula box -->
+  <rect x="328" y="64" width="204" height="176" fill="#ffffff" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="430" y="84" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">处理元素 x（记 h = ⌈x/2⌉）</text>
+  <text x="342" y="106" font-size="10" font-weight="bold" fill="#333" filter="url(#rough2)">dp[a][b] ← min(</text>
+  <text x="342" y="124" font-size="9" fill="#888" filter="url(#rough2)">不动</text>
+  <text x="396" y="124" font-size="9.5" fill="#333" filter="url(#rough2)">dp[a][b] + x</text>
+  <text x="342" y="141" font-size="9" fill="#888" filter="url(#rough2)">仅①</text>
+  <text x="396" y="141" font-size="9.5" fill="#333" filter="url(#rough2)">dp[a−1][b] + h</text>
+  <text x="342" y="158" font-size="9" fill="#888" filter="url(#rough2)">仅②</text>
+  <text x="396" y="158" font-size="9.5" fill="#333" filter="url(#rough2)">dp[a][b−1] + x−k</text>
+  <text x="342" y="175" font-size="9" fill="#888" filter="url(#rough2)">先①后②</text>
+  <text x="396" y="175" font-size="9.5" fill="#333" filter="url(#rough2)">dp[a−1][b−1] + h−k</text>
+  <text x="342" y="192" font-size="9" fill="#888" filter="url(#rough2)">先②后①</text>
+  <text x="396" y="192" font-size="9.5" fill="#333" filter="url(#rough2)">dp[a−1][b−1] + ⌈(x−k)/2⌉</text>
+  <text x="342" y="210" font-size="8.5" fill="#b85450" filter="url(#rough2)">门槛：仅② / 先②后① 需 x ≥ k</text>
+  <text x="342" y="226" font-size="8.5" fill="#b85450" filter="url(#rough2)">先①后② 需 ⌈x/2⌉ ≥ k</text>
+
+  <!-- bottom notes -->
+  <rect x="30" y="272" width="480" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="270" y="296" text-anchor="middle" font-size="12" fill="#2d5a20" filter="url(#rough2)">「恰好 a 次①、b 次②」语义下，答案 = min 全表（花不完预算的格子是 ∞）</text>
+  <rect x="30" y="320" width="480" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="270" y="338" text-anchor="middle" font-size="12" fill="#7a5a10" filter="url(#rough2)">a、b 双双倒序枚举 ⇒ 四个来源读到的都是「上一层」旧值</text>
+  <text x="270" y="356" text-anchor="middle" font-size="12" fill="#7a5a10" filter="url(#rough2)">—— 0-1 背包一维滚动数组在二维费用下的直接推广</text>
+</svg>
