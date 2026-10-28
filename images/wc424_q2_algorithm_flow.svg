@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="560" viewBox="0 0 680 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#666"/>
+    </marker>
+  </defs>
+  <rect width="680" height="560" fill="#fdfcf7"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：差分打标记 + 前缀和还原，O(n + q)</text>
+  <path d="M 170 38 Q 340 46 510 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="250" y="54" width="180" height="36" rx="16" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="77" text-anchor="middle" font-size="12.5" fill="#2e6e2e" font-weight="bold">输入 nums、queries</text>
+  <path d="M 340 90 L 340 106" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- init diff -->
+  <g filter="url(#sk)">
+    <rect x="230" y="110" width="220" height="36" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="133" text-anchor="middle" font-size="12.5" fill="#2b6e9e">建差分数组 diff[0..n]，全 0</text>
+  <path d="M 340 146 L 340 162" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- loop: mark queries -->
+  <g filter="url(#sk)">
+    <rect x="152" y="166" width="376" height="102" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="7 5"/>
+  </g>
+  <text x="340" y="188" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">循环：逐个处理 query [l, r]（q 次）</text>
+  <g filter="url(#sk)">
+    <rect x="186" y="198" width="308" height="34" rx="8" fill="#fdfcf7" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="220" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">diff[l] += 1 ;  diff[r+1] -= 1</text>
+  <text x="340" y="254" text-anchor="middle" font-size="11" fill="#8a6414">每次 O(1)，与区间长度无关（r+1 ≤ n，开 n+1 位）</text>
+  <path d="M 415 232 Q 470 232 470 208 Q 470 186 434 186" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <path d="M 340 268 L 340 284" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- prefix sum + compare -->
+  <g filter="url(#sk)">
+    <rect x="152" y="288" width="376" height="54" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="310" text-anchor="middle" font-size="12.5" fill="#2b6e9e">循环：j = 0 … n−1，滚动变量 cover += diff[j]</text>
+  <text x="340" y="330" text-anchor="middle" font-size="11" fill="#555">前缀和把标记还原成「下标 j 的覆盖次数」</text>
+  <path d="M 340 342 L 340 358" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="340,362 450,404 340,446 230,404" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="400" text-anchor="middle" font-size="12.5" fill="#b03a3a" font-weight="bold">nums[j] &gt; cover ?</text>
+  <text x="340" y="418" text-anchor="middle" font-size="12.5" fill="#b03a3a" font-weight="bold">（该位清零无望）</text>
+
+  <!-- yes branch -->
+  <path d="M 450 404 L 520 404 L 520 428" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="478" y="396" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="470" y="432" width="160" height="38" rx="16" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="550" y="456" text-anchor="middle" font-size="12.5" fill="#b03a3a" font-weight="bold">return false</text>
+
+  <!-- no branch -->
+  <path d="M 340 446 L 340 462" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="352" y="458" font-size="11.5" fill="#2e6e2e" font-weight="bold">否</text>
+  <path d="M 290 470 Q 250 470 250 448 Q 250 416 232 416" stroke="#4a8e4a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="252" y="486" text-anchor="middle" font-size="10.5" fill="#2e6e2e">看下一个 j</text>
+
+  <path d="M 340 476 L 340 492" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="356" y="488" font-size="10.5" fill="#888">全部通过</text>
+  <g filter="url(#sk)">
+    <rect x="260" y="496" width="160" height="38" rx="16" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="340" y="520" text-anchor="middle" font-size="12.5" fill="#2e6e2e" font-weight="bold">return true</text>
+
+  <!-- complexity note -->
+  <g filter="url(#sk)">
+    <rect x="40" y="362" width="150" height="78" rx="10" fill="#fdfcf7" stroke="#999" stroke-width="1.2"/>
+  </g>
+  <text x="115" y="388" text-anchor="middle" font-size="11.5" fill="#555" font-weight="bold">打标记 O(q)</text>
+  <text x="115" y="410" text-anchor="middle" font-size="11.5" fill="#555" font-weight="bold">还原判定 O(n)</text>
+  <text x="115" y="432" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">总计 O(n + q)</text>
+</svg>

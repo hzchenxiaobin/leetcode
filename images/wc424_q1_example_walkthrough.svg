@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="400" viewBox="0 0 680 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="680" height="400" fill="#fdfcf7"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例演算：nums = [1,0,2,0,3]，total = 6</text>
+  <path d="M 190 38 Q 340 46 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- left column: i=3 valid -->
+  <g filter="url(#sk)">
+    <rect x="30" y="56" width="330" height="196" rx="10" fill="#f4fbf6" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="195" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">起点 i = 3：SL = 3，SR = 3（d = 0）</text>
+  <text x="46" y="104" font-size="11" font-weight="bold" fill="#2b6e9e">向右出发：</text>
+  <text x="46" y="122" font-size="10" fill="#444" font-family="monospace">(3,3) →R→ (2,3) →L→ (2,2) →R→ (1,2) →L→ (1,1)</text>
+  <text x="46" y="140" font-size="10" fill="#444" font-family="monospace">→R→ (0,1) →L→ (0,0) ⇒ 右侧空，向右越界，全零 ✓</text>
+  <text x="46" y="166" font-size="11" font-weight="bold" fill="#2e6e2e">向左出发：</text>
+  <text x="46" y="184" font-size="10" fill="#444" font-family="monospace">(3,3) →L→ (3,2) →R→ (2,2) →L→ (2,1) →R→ (1,1)</text>
+  <text x="46" y="202" font-size="10" fill="#444" font-family="monospace">→L→ (1,0) →R→ (0,0) ⇒ 左侧空，向左越界，全零 ✓</text>
+  <text x="195" y="232" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">两个方向都有效 → 贡献 2</text>
+
+  <!-- right column: i=1 invalid -->
+  <g filter="url(#sk)">
+    <rect x="380" y="56" width="270" height="196" rx="10" fill="#fdf4f4" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="515" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">起点 i = 1：SL = 1，SR = 5（d = 4）</text>
+  <text x="396" y="104" font-size="11" font-weight="bold" fill="#2b6e9e">向右出发：</text>
+  <text x="396" y="122" font-size="10" fill="#444" font-family="monospace">(1,5) →R→ (1,4) →L→ (0,4) →R→ (0,3)</text>
+  <text x="396" y="140" font-size="10" fill="#444" font-family="monospace">⇒ 左侧空，向左越界，右侧还剩 3 ✗</text>
+  <text x="396" y="166" font-size="11" font-weight="bold" fill="#2e6e2e">向左出发：</text>
+  <text x="396" y="184" font-size="10" fill="#444" font-family="monospace">(1,5) →L→ (0,5) →R→ (0,4)</text>
+  <text x="396" y="202" font-size="10" fill="#444" font-family="monospace">⇒ 左侧空，向左越界，右侧还剩 4 ✗</text>
+  <text x="515" y="232" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">两个方向都无效 → 贡献 0</text>
+
+  <!-- legend -->
+  <text x="340" y="272" text-anchor="middle" font-size="10.5" fill="#888">记号：(剩余SR, 剩余SL)；→R→ 表示在右侧碰撞一次（SR 减 1 并反向），→L→ 同理</text>
+
+  <!-- answer box -->
+  <g filter="url(#sk)">
+    <rect x="40" y="288" width="600" height="86" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="340" y="316" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b2b2b">答案 = 2 + 0 = 2 ✓（与示例一致）</text>
+  <text x="340" y="342" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">d = total − 2·prefix[i]：i=1 时 d = 6−2 = 4（无效）；i=3 时 d = 6−6 = 0（两个方向）</text>
+  <text x="340" y="362" text-anchor="middle" font-size="11" fill="#888">核对：SR(1)=5, SL(1)=1，差 4 ∉ {0,±1}；SR(3)=3, SL(3)=3，差 0</text>
+</svg>
