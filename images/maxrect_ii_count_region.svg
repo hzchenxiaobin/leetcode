@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="420" viewBox="0 0 600 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="113" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="600" height="420" fill="#fdfcf7"/>
+  <text x="300" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">数点判定：区域 (x₁,x₂] × (y₁,y₂] 恰好只含右上角</text>
+  <path d="M 140 40 Q 300 48 460 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- counting region (orange) + auto-clean strips (green) -->
+  <g filter="url(#sk)">
+    <rect x="180" y="85" width="280" height="200" fill="#fff3e0" stroke="none"/>
+    <rect x="180" y="271" width="280" height="14" fill="#e6f4ea" stroke="none"/>
+    <rect x="180" y="85" width="14" height="200" fill="#e6f4ea" stroke="none"/>
+    <rect x="180" y="85" width="280" height="200" fill="none" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="335" y="282" text-anchor="middle" font-size="10.5" fill="#2e6e2e">底边 · 左边：最近邻构造已保证干净</text>
+  <text x="189" y="185" text-anchor="middle" font-size="10.5" fill="#2e6e2e" transform="rotate(-90 189 185)">自动干净</text>
+
+  <!-- region label -->
+  <text x="330" y="150" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">数点区域 (x₁,x₂] × (y₁,y₂]</text>
+  <text x="330" y="169" text-anchor="middle" font-size="12" fill="#9a7a3a">除右上角外必须为空（cnt = 1）</text>
+
+  <!-- violators inside region -->
+  <g filter="url(#sk)">
+    <circle cx="350" cy="85" r="6.5" fill="#b85450"/>
+    <circle cx="460" cy="190" r="6.5" fill="#b85450"/>
+    <circle cx="315" cy="198" r="6.5" fill="#b85450"/>
+  </g>
+  <g stroke="#b85450" stroke-width="1.8" filter="url(#sk)">
+    <path d="M 344 79 L 356 91 M 356 79 L 344 91" fill="none"/>
+    <path d="M 454 184 L 466 196 M 466 184 L 454 196" fill="none"/>
+    <path d="M 309 192 L 321 204 M 321 192 L 309 204" fill="none"/>
+  </g>
+  <g font-size="12" fill="#b85450" font-weight="bold">
+    <text x="350" y="72" text-anchor="middle">上边违规</text>
+    <text x="472" y="194">右边违规</text>
+    <text x="315" y="220" text-anchor="middle">内部违规</text>
+  </g>
+
+  <!-- outside point -->
+  <g filter="url(#sk)">
+    <circle cx="520" cy="160" r="6" fill="#bbb"/>
+  </g>
+  <text x="520" y="145" text-anchor="middle" font-size="11" fill="#777">区域外不数</text>
+
+  <!-- four corners -->
+  <g filter="url(#sk)">
+    <circle cx="180" cy="285" r="7" fill="#b85450"/>
+    <circle cx="460" cy="285" r="7" fill="#4a7a3a"/>
+    <circle cx="180" cy="85" r="7" fill="#4a7a3a"/>
+    <circle cx="460" cy="85" r="7" fill="#446688"/>
+  </g>
+  <g font-size="12" font-weight="bold">
+    <text x="170" y="308" text-anchor="end" fill="#b85450">左下角 (x₁,y₁)</text>
+    <text x="168" y="72" text-anchor="end" fill="#2e6e2e">(x₁,y₂)</text>
+    <text x="472" y="68" fill="#446688">(x₂,y₂) ∈ S</text>
+    <text x="472" y="302" fill="#2e6e2e">(x₂,y₁)</text>
+  </g>
+
+  <!-- formula boxes -->
+  <g filter="url(#sk)">
+    <rect x="30" y="335" width="540" height="48" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="30" y="390" width="540" height="24" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="300" y="356" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">cnt = P(x₂,y₂) − P(x₂,y₁) − P(x₁,y₂) + P(x₁,y₁)</text>
+  <text x="300" y="375" text-anchor="middle" font-size="11" fill="#9a7a3a">P(X,Y) = #{ 点：px ≤ X 且 py ≤ Y }，扫描线 + 树状数组离线计算</text>
+  <text x="300" y="406" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">候选合法 ⇔ (x₂,y₂) 是给定点 且 cnt = 1</text>
+</svg>

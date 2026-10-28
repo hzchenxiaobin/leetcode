@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="430" viewBox="0 0 640 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="113" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="ax" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#666"/>
+    </marker>
+  </defs>
+  <rect width="640" height="430" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：O(n log n) 五步走</text>
+  <path d="M 190 40 Q 320 48 450 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="55" width="320" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="190" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 行 / 列分组排序</text>
+  <text x="190" y="93" text-anchor="middle" font-size="11" fill="#2b6e9e">rows[y] 存该行 x 升序，cols[x] 存该列 y 升序</text>
+  <path d="M 190 101 L 190 113" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="117" width="320" height="66" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="190" y="139" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">② 最近邻定候选（≤ n 个）</text>
+  <text x="190" y="157" text-anchor="middle" font-size="11" fill="#2b6e9e">每点 (x₁,y₁)：upper_bound 求行内最近右邻 x₂</text>
+  <text x="190" y="173" text-anchor="middle" font-size="11" fill="#2b6e9e">与列内最近上邻 y₂，且 (x₂,y₂) ∈ S</text>
+  <path d="M 190 183 L 190 195" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="199" width="320" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="190" y="221" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">③ 事件排序（共 ≤ 5n 个）</text>
+  <text x="190" y="239" text-anchor="middle" font-size="11" fill="#7a5415">n 个插入事件 + 每候选 4 个前缀询问事件</text>
+  <text x="190" y="255" text-anchor="middle" font-size="11" fill="#7a5415">按 x 升序；同 x 先插入后询问（P 含 ≤ 等号）</text>
+  <path d="M 190 265 L 190 277" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="281" width="320" height="62" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="190" y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">④ 扫描 + 树状数组（下标为离散 y）</text>
+  <text x="190" y="320" text-anchor="middle" font-size="11" fill="#2e6e2e">插入：add(id(py))；询问：sum(id(Y))</text>
+  <text x="190" y="336" text-anchor="middle" font-size="11" fill="#2e6e2e">四个前缀值容斥累计出每个候选的 cnt</text>
+  <path d="M 190 343 L 190 353" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 5 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="357" width="320" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="190" y="378" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">⑤ cnt = 1 ⇒ 合法，更新答案</text>
+  <text x="190" y="398" text-anchor="middle" font-size="12" font-family="monospace" fill="#2e6e2e">ans = max(ans, (x₂−x₁)×(y₂−y₁))</text>
+
+  <!-- right panel: sweep line sketch -->
+  <text x="495" y="72" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b2b2b">离线扫描线 + BIT(y)</text>
+  <g filter="url(#sk)">
+    <path d="M 385 345 L 385 118" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ax)"/>
+    <path d="M 378 340 L 608 340" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ax)"/>
+    <path d="M 500 332 L 500 124" stroke="#b85450" stroke-width="1.8" stroke-dasharray="6,5" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="375" y="112" text-anchor="middle" font-size="11" fill="#666">y</text>
+  <text x="618" y="345" font-size="11" fill="#666">x</text>
+  <text x="508" y="128" font-size="11" fill="#b85450" font-weight="bold">扫描线（x 递增）</text>
+
+  <!-- points: inserted (green), on-sweep (orange), pending (gray) -->
+  <g filter="url(#sk)">
+    <circle cx="420" cy="300" r="6" fill="#4a7a3a"/>
+    <circle cx="455" cy="245" r="6" fill="#4a7a3a"/>
+    <circle cx="487" cy="195" r="6" fill="#4a7a3a"/>
+    <circle cx="500" cy="285" r="7" fill="#d6a040"/>
+    <circle cx="530" cy="300" r="6" fill="#bbb"/>
+    <circle cx="575" cy="220" r="6" fill="#bbb"/>
+    <circle cx="548" cy="162" r="6" fill="#bbb"/>
+  </g>
+
+  <!-- caption -->
+  <g filter="url(#sk)">
+    <rect x="375" y="355" width="240" height="58" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <g font-size="11" fill="#7a5415">
+    <text x="495" y="375" text-anchor="middle">BIT 里始终是 px ≤ X 的全部点</text>
+    <text x="495" y="392" text-anchor="middle">px = X 的点（橙色）先插入，</text>
+    <text x="495" y="408" text-anchor="middle">再回答挂在 X 上的前缀询问</text>
+  </g>
+</svg>
