@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="29"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+    <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#446688"/></marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/></marker>
+  </defs>
+  <rect width="640" height="460" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#333" filter="url(#r)">算法流程：矩阵快速幂 O(26³ log t)</text>
+  <path d="M 170 40 Q 320 48 470 40" stroke="#2b2b2b" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- step 1 -->
+  <rect x="42" y="62" width="160" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#r)"/>
+  <text x="122" y="86" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#34507a" filter="url(#r)">① 统计频率</text>
+  <text x="122" y="106" text-anchor="middle" font-size="11" fill="#555" font-family="monospace" filter="url(#r)">cnt[ord(c)-97]++，O(n)</text>
+  <path d="M 204 91 Q 216 91 226 91" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#r)"/>
+
+  <!-- step 2 -->
+  <rect x="230" y="56" width="300" height="112" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="380" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">② 构造转移矩阵 M（O(26·25)）</text>
+  <text x="380" y="102" text-anchor="middle" font-size="11" fill="#333" font-family="monospace" filter="url(#r)">for k in 1..nums[i]: M[(i+k)%26][i] = 1</text>
+  <text x="380" y="126" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#r)">每列恰 nums[i] 个 1，与 s、轮次无关</text>
+  <text x="380" y="148" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#r)">非零元共 Σnums[i] ≤ 26×25 = 650 个</text>
+  <path d="M 380 170 Q 380 178 344 184" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#r)"/>
+
+  <!-- step 3: fast power loop -->
+  <rect x="100" y="186" width="440" height="126" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#r)"/>
+  <text x="300" y="208" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a07520" filter="url(#r)">③ 快速幂：e = t，求 cnt ← M^t · cnt</text>
+  <rect x="116" y="216" width="408" height="24" rx="4" fill="#fafafa" stroke="#446688" stroke-width="1.4" filter="url(#r)"/>
+  <text x="320" y="232" text-anchor="middle" font-size="11.5" fill="#34507a" font-family="monospace" filter="url(#r)">if e &amp; 1:  cnt ← M·cnt    ← O(26²) 向量乘</text>
+  <rect x="116" y="244" width="408" height="24" rx="4" fill="#fafafa" stroke="#b85450" stroke-width="1.4" filter="url(#r)"/>
+  <text x="320" y="260" text-anchor="middle" font-size="11.5" fill="#b85450" font-family="monospace" filter="url(#r)">M ← M·M    ← O(26³) 矩阵平方（复杂度大头）</text>
+  <rect x="116" y="272" width="408" height="24" rx="4" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.4" filter="url(#r)"/>
+  <text x="320" y="288" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-family="monospace" filter="url(#r)">e >>= 1</text>
+  <path d="M 540 288 C 572 288 572 226 542 230" stroke="#d6a040" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#ao)" filter="url(#r)"/>
+  <text x="590" y="262" text-anchor="middle" font-size="11" fill="#a07520" filter="url(#r)">× log₂t</text>
+  <text x="590" y="278" text-anchor="middle" font-size="11" fill="#a07520" filter="url(#r)">≤ 30 轮</text>
+  <path d="M 320 312 L 320 326" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#r)"/>
+
+  <!-- step 4 -->
+  <rect x="245" y="328" width="150" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="320" y="350" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">④ 求和取模</text>
+  <text x="320" y="370" text-anchor="middle" font-size="11" fill="#555" font-family="monospace" filter="url(#r)">ans = Σ cnt % MOD</text>
+
+  <!-- comparison -->
+  <rect x="42" y="392" width="556" height="62" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#r)"/>
+  <text x="320" y="414" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#r)">✗ 逐轮模拟：650 × t ≈ 6.5×10¹¹ 次加法（t = 10⁹）→ 超时</text>
+  <text x="320" y="438" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">✓ 矩阵快速幂：26³ × log₂t ≈ 5.3×10⁵ 次乘加 → 快约 6 个数量级</text>
+</svg>
