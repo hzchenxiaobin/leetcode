@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="420" viewBox="0 0 560 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="211" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="560" height="420" fill="#fdfcf7"/>
+  <text x="280" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：长度被 k 整除 ⟺ 两端前缀下标模 k 同余</text>
+  <path d="M 110 44 Q 280 52 450 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- residue class arcs above the axis -->
+  <path d="M 65 150 Q 158 50 251 150" stroke="#446688" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <path d="M 251 150 Q 344 50 437 150" stroke="#446688" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <path d="M 127 150 Q 220 80 313 150" stroke="#4a7a3a" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <path d="M 313 150 Q 406 80 499 150" stroke="#4a7a3a" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <path d="M 189 150 Q 320 110 451 150" stroke="#d6a040" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <text x="158" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">余 0 通道</text>
+  <text x="406" y="100" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a">余 1 通道</text>
+  <text x="320" y="122" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040">余 2 通道</text>
+
+  <!-- prefix index circles (k = 3) -->
+  <g filter="url(#sk)">
+    <circle cx="65" cy="170" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="251" cy="170" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="437" cy="170" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="127" cy="170" r="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <circle cx="313" cy="170" r="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <circle cx="499" cy="170" r="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <circle cx="189" cy="170" r="16" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <circle cx="375" cy="170" r="16" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <g font-size="14" font-weight="bold" fill="#333" text-anchor="middle">
+    <text x="65" y="175">0</text>
+    <text x="127" y="175">1</text>
+    <text x="189" y="175">2</text>
+    <text x="251" y="175">3</text>
+    <text x="313" y="175">4</text>
+    <text x="375" y="175">5</text>
+    <text x="437" y="175">6</text>
+    <text x="499" y="175">7</text>
+  </g>
+  <text x="280" y="207" text-anchor="middle" font-size="12" fill="#666">前缀下标 0..7（P[0] = 0 为空前缀，此处 k = 3）</text>
+
+  <!-- legal subarray bracket: l = 1, r = 7 -->
+  <path d="M 127 228 L 499 228" stroke="#b85450" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <path d="M 127 218 L 127 236" stroke="#b85450" stroke-width="2.2" filter="url(#sk)"/>
+  <path d="M 499 218 L 499 236" stroke="#b85450" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="280" y="254" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">子数组 nums[1..6]：长度 7 − 1 = 6 = 2k ✓，和 = P[7] − P[1]</text>
+  <text x="280" y="276" text-anchor="middle" font-size="12" fill="#c07a76">✗ 跨通道配对永远非法：如 l = 0, r = 1，长度 1 不被 3 整除</text>
+
+  <!-- bottom boxes -->
+  <g filter="url(#sk)">
+    <rect x="30" y="300" width="250" height="52" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="155" y="322" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">合法 ⟺ l ≡ r (mod k)</text>
+  <text x="155" y="340" text-anchor="middle" font-size="11.5" fill="#446688">长度约束塌缩为「同余配对」</text>
+
+  <g filter="url(#sk)">
+    <rect x="300" y="300" width="230" height="52" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="415" y="322" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">候选 = P[r] − minPref[r mod k]</text>
+  <text x="415" y="340" text-anchor="middle" font-size="11.5" fill="#9a7a3a">minPref：本通道历史最小前缀和</text>
+
+  <!-- note -->
+  <g filter="url(#sk)">
+    <rect x="30" y="366" width="500" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+  </g>
+  <text x="280" y="388" text-anchor="middle" font-size="12" fill="#b85450">k 条通道互不相干：各维护一个历史最小值，一趟扫描 O(1) 查询</text>
+</svg>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="505" viewBox="0 0 560 505" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="307" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="560" height="505" fill="#fdfcf7"/>
+  <text x="280" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：单趟扫描，先查后更</text>
+  <path d="M 130 44 Q 280 52 430 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- init -->
+  <g filter="url(#sk)">
+    <rect x="90" y="58" width="220" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="200" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">minPref[0..k−1] ← +∞</text>
+  <text x="200" y="96" text-anchor="middle" font-size="12.5" fill="#2b6e9e">ans ← −∞，P ← 0</text>
+  <path d="M 200 108 L 200 122" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop diamond -->
+  <polygon points="200,126 262,158 200,190 138,158" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="200" y="163" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">j ≤ n ?</text>
+  <text x="214" y="184" font-size="11" fill="#555">是</text>
+  <text x="352" y="142" font-size="11" fill="#555">否</text>
+  <path d="M 262 158 L 448 158" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="452" y="136" width="78" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="491" y="163" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">返回 ans</text>
+  <path d="M 200 190 L 200 202" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- r = j mod k -->
+  <g filter="url(#sk)">
+    <rect x="120" y="206" width="160" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="200" y="228" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">r ← j mod k</text>
+  <path d="M 200 240 L 200 254" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- sentinel diamond -->
+  <polygon points="200,258 282,292 200,326 118,292" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="200" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">minPref[r] &lt; +∞ ?</text>
+  <text x="294" y="284" font-size="11" fill="#555">是</text>
+  <text x="210" y="320" font-size="11" fill="#555">否</text>
+  <path d="M 282 292 L 312 292" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ans update -->
+  <g filter="url(#sk)">
+    <rect x="316" y="266" width="204" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="418" y="288" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">ans ← max(ans, P − minPref[r])</text>
+  <text x="418" y="306" text-anchor="middle" font-size="10.5" fill="#b85450">P 即当前 P[j]，减通道历史最低</text>
+
+  <path d="M 200 326 L 200 340" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 418 318 L 418 336 L 206 336" stroke="#555" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- insert into channel -->
+  <g filter="url(#sk)">
+    <rect x="90" y="344" width="220" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="200" y="366" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">minPref[r] ← min(minPref[r], P)</text>
+  <path d="M 200 378 L 200 392" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- advance -->
+  <g filter="url(#sk)">
+    <rect x="110" y="396" width="180" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="200" y="418" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">j &lt; n：P ← P + nums[j]</text>
+  <text x="200" y="436" text-anchor="middle" font-size="12" fill="#2b6e9e">j ← j + 1</text>
+
+  <!-- loop back -->
+  <path d="M 200 448 L 48 448 L 48 158 L 130 158" stroke="#555" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="38" y="302" font-size="11" fill="#888" transform="rotate(-90 38 302)" text-anchor="middle">回到循环头</text>
+
+  <!-- note -->
+  <g filter="url(#sk)">
+    <rect x="90" y="462" width="440" height="32" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+  </g>
+  <text x="310" y="483" text-anchor="middle" font-size="11.5" fill="#b85450">先查后更：防空段（自己减自己）；j 跑满 0..n：防漏右端 P[n]</text>
+</svg>
