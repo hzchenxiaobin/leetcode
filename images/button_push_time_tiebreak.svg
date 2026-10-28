@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="580" viewBox="0 0 940 580" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="580" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">决策流程：维护最优对 (maxD, idx)</text>
+  <path d="M 260 42 Q 470 50 680 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step box -->
+  <g filter="url(#sk)">
+    <rect x="110" y="62" width="280" height="48" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="250" y="92" text-anchor="middle" font-size="13" fill="#2b6e9e" font-family="monospace">计算耗时 d = tᵢ − tᵢ₋₁</text>
+
+  <path d="M 250 110 L 250 132" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Diamond 1 -->
+  <g filter="url(#sk)">
+    <polygon points="250,132 400,182 250,232 100,182" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="188" text-anchor="middle" font-size="14" fill="#7a5415" font-weight="bold">d &gt; maxD ？</text>
+
+  <!-- Yes elbow to update box -->
+  <path d="M 400 182 L 480 182 L 480 252 L 552 252" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)"/>
+  <text x="428" y="174" font-size="12" fill="#4a8e4a" font-weight="bold">是</text>
+
+  <!-- No arrow down -->
+  <path d="M 250 232 L 250 268" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="262" y="256" font-size="12" fill="#3a3a3a">否</text>
+
+  <!-- Diamond 2 -->
+  <g filter="url(#sk)">
+    <polygon points="250,268 455,330 250,392 45,330" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="326" text-anchor="middle" font-size="13" fill="#5a3a7a" font-weight="bold">d == maxD</text>
+  <text x="250" y="344" text-anchor="middle" font-size="13" fill="#5a3a7a" font-weight="bold">且 index &lt; idx ？</text>
+
+  <!-- Yes elbow to update box -->
+  <path d="M 455 330 L 720 330 L 720 292" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)"/>
+  <text x="484" y="322" font-size="12" fill="#4a8e4a" font-weight="bold">是</text>
+
+  <!-- No arrow down to skip -->
+  <path d="M 250 392 L 250 424" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="262" y="414" font-size="12" fill="#3a3a3a">否</text>
+
+  <!-- Update box -->
+  <g filter="url(#sk)">
+    <rect x="552" y="212" width="330" height="80" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="717" y="242" text-anchor="middle" font-size="14" fill="#2e6e2e" font-weight="bold">更新最优对</text>
+  <text x="717" y="268" text-anchor="middle" font-size="13" fill="#2e6e2e" font-family="monospace">idx = index，maxD = d</text>
+
+  <!-- Skip box -->
+  <g filter="url(#sk)">
+    <rect x="150" y="424" width="200" height="44" rx="8" fill="#f2f2f2" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="250" y="452" text-anchor="middle" font-size="13" fill="#777">跳过，不更新</text>
+
+  <!-- Example strip -->
+  <g filter="url(#sk)">
+    <rect x="60" y="496" width="820" height="66" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="520" font-size="12" font-weight="bold" fill="#2b2b2b">例：events = [[5,1],[3,2]]</text>
+  <text x="80" y="542" font-size="12" fill="#444">两次按下耗时均为 1 → 平局 → 取 index 更小的 <b>3</b>（而不是先出现的 5）✓</text>
+</svg>
