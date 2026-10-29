@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">合并规则：拼接缝两侧「至少一侧不选」</text>
+  <text x="280" y="49" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">缝是一条边（m 与 m+1 相邻），缝外左右内部互不干涉 —— 枚举断开方式，两个候选取 max</text>
+
+  <text x="88" y="84" text-anchor="middle" font-size="12.5" fill="#446688" font-weight="bold" filter="url(#rough2)">左孩子 L = [l..m]</text>
+  <rect x="28" y="94" width="34" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="66" y="94" width="34" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="104" y="94" width="34" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="142" y="94" width="34" height="28" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="159" y="112" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">m</text>
+  <text x="159" y="140" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">c：L 的右端</text>
+
+  <path d="M 190 108 L 200 108" stroke="#b85450" stroke-width="2" stroke-dasharray="4,3" fill="none" filter="url(#rough2)"/>
+  <text x="280" y="90" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">不能同时选</text>
+
+  <rect x="206" y="94" width="34" height="28" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="223" y="112" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">m+1</text>
+  <text x="223" y="140" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">d：R 的左端</text>
+  <rect x="244" y="94" width="34" height="28" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="282" y="94" width="34" height="28" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <rect x="320" y="94" width="34" height="28" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="291" y="84" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">右孩子 R = [m+1..r]</text>
+
+  <rect x="378" y="86" width="152" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="454" y="105" text-anchor="middle" font-size="11" fill="#d6a040" filter="url(#rough2)">父亲 P = [l..r] 要算</text>
+  <text x="454" y="122" text-anchor="middle" font-size="11" fill="#d6a040" font-weight="bold" filter="url(#rough2)">f[a][b]，缝上断开一侧</text>
+
+  <rect x="30" y="166" width="242" height="66" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="151" y="188" text-anchor="middle" font-size="12.5" fill="#446688" font-weight="bold" filter="url(#rough2)">候选①  L.f[i][0] + R.f[1][j]</text>
+  <text x="151" y="208" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">L 的右端强制不选 → 缝安全，</text>
+  <text x="151" y="224" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">R 的左端随便选不选</text>
+
+  <rect x="288" y="166" width="242" height="66" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="409" y="188" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">候选②  L.f[i][1] + R.f[0][j]</text>
+  <text x="409" y="208" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">L 的右端随便选不选，</text>
+  <text x="409" y="224" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">R 的左端强制不选 → 缝安全</text>
+
+  <rect x="30" y="246" width="500" height="38" rx="8" fill="#fafafa" stroke="#666" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="270" text-anchor="middle" font-size="13" fill="#333" font-weight="bold" filter="url(#rough2)">P.f[i][j] = max（ 候选① ， 候选② ）</text>
+
+  <rect x="30" y="298" width="500" height="60" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="318" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">陷阱：别把「两侧都自由」的 L.f[i][1] + R.f[1][j] 也算进去</text>
+  <text x="280" y="338" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">nums = [5, 5]：两侧各选 5 得 10 ✗（缝上撞车）——真实答案 5 ✓</text>
+  <text x="280" y="354" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">「可选」不等于「被选」，两个无约束最优解拼起来未必合法</text>
+
+  <text x="280" y="378" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">组合 L.f[i][0] + R.f[0][j] 也合法，但被候选①覆盖（引理 1：R.f[1][j] ≥ R.f[0][j]）</text>
+</svg>
