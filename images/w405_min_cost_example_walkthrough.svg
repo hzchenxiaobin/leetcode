@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="500" viewBox="0 0 660 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrG" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 1 1.5 L 8.5 5 L 1 8.5" fill="none" stroke="#4a7a3a" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+    <marker id="arrR" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 1 1.5 L 8.5 5 L 1 8.5" fill="none" stroke="#b85450" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+  <rect width="660" height="500" fill="#fdfcf7"/>
+  <text x="330" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例 1 演算：dp 表逐位置填充，最优路径 abc|d|ef</text>
+  <path d="M 130 40 Q 330 48 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- target string with segmentation -->
+  <text x="52" y="80" font-size="12" font-weight="bold" fill="#2b2b2b">target =</text>
+  <g filter="url(#sk)">
+    <rect x="130" y="60" width="34" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="164" y="60" width="34" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="198" y="60" width="34" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="232" y="60" width="34" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="266" y="60" width="34" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="300" y="60" width="34" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <path d="M 126 100 L 234 100" stroke="#4a7a3a" stroke-width="2.2" fill="none"/>
+    <path d="M 228 100 L 268 100" stroke="#d6a040" stroke-width="2.2" fill="none"/>
+    <path d="M 262 100 L 338 100" stroke="#446688" stroke-width="2.2" fill="none"/>
+  </g>
+  <text x="147" y="83" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e6e2e">a</text>
+  <text x="181" y="83" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e6e2e">b</text>
+  <text x="215" y="83" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e6e2e">c</text>
+  <text x="249" y="83" text-anchor="middle" font-size="16" font-weight="bold" fill="#b06a10">d</text>
+  <text x="283" y="83" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b5a88">e</text>
+  <text x="317" y="83" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b5a88">f</text>
+  <text x="180" y="118" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">abc（cost 1）</text>
+  <text x="249" y="118" text-anchor="middle" font-size="11" font-weight="bold" fill="#b06a10">d（1）</text>
+  <text x="300" y="118" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b5a88">ef（5）</text>
+  <text x="400" y="80" font-size="12.5" fill="#333">长度表 = [1, 2, 3, 5]</text>
+  <text x="400" y="98" font-size="11" fill="#999">（ℓ=4 没有单词，不进入枚举）</text>
+
+  <!-- dp table -->
+  <g filter="url(#sk)">
+    <rect x="40" y="140" width="440" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="40" y="168" width="440" height="28" fill="#ffffff" stroke="#d8d3c8" stroke-width="1"/>
+    <rect x="40" y="196" width="440" height="28" fill="#ffffff" stroke="#d8d3c8" stroke-width="1"/>
+    <rect x="40" y="224" width="440" height="28" fill="#eef7ef" stroke="#d8d3c8" stroke-width="1"/>
+    <rect x="40" y="252" width="440" height="28" fill="#eef7ef" stroke="#d8d3c8" stroke-width="1"/>
+    <rect x="40" y="280" width="440" height="28" fill="#ffffff" stroke="#d8d3c8" stroke-width="1"/>
+    <rect x="40" y="308" width="440" height="28" fill="#eef7ef" stroke="#d8d3c8" stroke-width="1"/>
+    <line x1="80" y1="140" x2="80" y2="336" stroke="#d8d3c8" stroke-width="1"/>
+    <line x1="152" y1="140" x2="152" y2="336" stroke="#d8d3c8" stroke-width="1"/>
+    <line x1="224" y1="140" x2="224" y2="336" stroke="#d8d3c8" stroke-width="1"/>
+    <line x1="296" y1="140" x2="296" y2="336" stroke="#d8d3c8" stroke-width="1"/>
+    <line x1="368" y1="140" x2="368" y2="336" stroke="#d8d3c8" stroke-width="1"/>
+  </g>
+  <text x="60" y="159" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a88">i</text>
+  <text x="116" y="159" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a88">ℓ=1</text>
+  <text x="188" y="159" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a88">ℓ=2</text>
+  <text x="260" y="159" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a88">ℓ=3</text>
+  <text x="332" y="159" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a88">ℓ=5</text>
+  <text x="424" y="159" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a88">f[i]</text>
+
+  <text x="60" y="187" text-anchor="middle" font-size="12" fill="#333">1</text>
+  <text x="116" y="187" text-anchor="middle" font-size="11" fill="#999">a ✗</text>
+  <text x="188" y="187" text-anchor="middle" font-size="11" fill="#ccc">—</text>
+  <text x="260" y="187" text-anchor="middle" font-size="11" fill="#ccc">—</text>
+  <text x="332" y="187" text-anchor="middle" font-size="11" fill="#ccc">—</text>
+  <text x="424" y="187" text-anchor="middle" font-size="12" fill="#aaa">∞</text>
+
+  <text x="60" y="215" text-anchor="middle" font-size="12" fill="#333">2</text>
+  <text x="116" y="215" text-anchor="middle" font-size="11" fill="#999">b ✗</text>
+  <text x="188" y="215" text-anchor="middle" font-size="11" fill="#999">ab ✗</text>
+  <text x="260" y="215" text-anchor="middle" font-size="11" fill="#ccc">—</text>
+  <text x="332" y="215" text-anchor="middle" font-size="11" fill="#ccc">—</text>
+  <text x="424" y="215" text-anchor="middle" font-size="12" fill="#aaa">∞</text>
+
+  <text x="60" y="243" text-anchor="middle" font-size="12" fill="#333">3</text>
+  <text x="116" y="243" text-anchor="middle" font-size="11" fill="#999">c ✗</text>
+  <text x="188" y="243" text-anchor="middle" font-size="11" fill="#999">bc ✗</text>
+  <text x="260" y="243" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">abc ✓</text>
+  <text x="332" y="243" text-anchor="middle" font-size="11" fill="#ccc">—</text>
+  <text x="424" y="243" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">1</text>
+
+  <text x="60" y="271" text-anchor="middle" font-size="12" fill="#333">4</text>
+  <text x="116" y="271" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b06a10">d ✓</text>
+  <text x="188" y="271" text-anchor="middle" font-size="11" fill="#999">cd ✗</text>
+  <text x="260" y="271" text-anchor="middle" font-size="11" fill="#999">bcd ✗</text>
+  <text x="332" y="271" text-anchor="middle" font-size="11" fill="#ccc">—</text>
+  <text x="424" y="271" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">2</text>
+
+  <text x="60" y="299" text-anchor="middle" font-size="12" fill="#333">5</text>
+  <text x="116" y="299" text-anchor="middle" font-size="11" fill="#999">e ✗</text>
+  <text x="188" y="299" text-anchor="middle" font-size="11" fill="#999">de ✗</text>
+  <text x="260" y="299" text-anchor="middle" font-size="11" fill="#999">cde ✗</text>
+  <text x="332" y="299" text-anchor="middle" font-size="11" fill="#999">abcde ✗</text>
+  <text x="424" y="299" text-anchor="middle" font-size="12" fill="#aaa">∞</text>
+
+  <text x="60" y="327" text-anchor="middle" font-size="12" fill="#333">6</text>
+  <text x="116" y="327" text-anchor="middle" font-size="11" fill="#999">f ✗</text>
+  <text x="188" y="327" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b5a88">ef ✓</text>
+  <text x="260" y="327" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b5a88">def ✓</text>
+  <text x="332" y="327" text-anchor="middle" font-size="11" fill="#999">bcdef ✗</text>
+  <text x="424" y="327" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">7</text>
+
+  <!-- transition arrows in f column -->
+  <path d="M 424 240 Q 452 254 424 268" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#sk)"/>
+  <text x="462" y="258" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">+d(1)</text>
+  <path d="M 424 272 Q 456 296 426 320" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#sk)"/>
+  <text x="464" y="298" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">+ef(5)</text>
+  <path d="M 428 246 Q 500 290 432 322" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrR)" filter="url(#sk)"/>
+  <text x="508" y="284" text-anchor="middle" font-size="10.5" fill="#a04038">+def(10) 落败</text>
+
+  <!-- notes -->
+  <g filter="url(#sk)">
+    <rect x="520" y="140" width="122" height="96" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="581" y="162" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b06a10">两个课堂点：</text>
+  <text x="581" y="182" text-anchor="middle" font-size="10.5" fill="#8a6d2e">f[5] = ∞ 无妨，</text>
+  <text x="581" y="198" text-anchor="middle" font-size="10.5" fill="#8a6d2e">只有 f[n]=∞ 才 -1</text>
+  <text x="581" y="218" text-anchor="middle" font-size="10.5" fill="#8a6d2e">i=6 命中 ef、def</text>
+  <text x="581" y="230" text-anchor="middle" font-size="10.5" fill="#8a6d2e">两个长度都得试</text>
+
+  <!-- answer -->
+  <g filter="url(#sk)">
+    <rect x="140" y="366" width="380" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="330" y="387" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">f[6] = min( f[4]+5, f[3]+10 ) = min(7, 11) = 7</text>
+  <text x="330" y="405" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">= abc(1) + d(1) + ef(5)，与示例输出一致 ✓</text>
+
+  <text x="330" y="442" text-anchor="middle" font-size="11" fill="#999">— 表示 ℓ &gt; i（升序长度表可直接 break）；✗ 表示子串不在该长度的桶里</text>
+</svg>

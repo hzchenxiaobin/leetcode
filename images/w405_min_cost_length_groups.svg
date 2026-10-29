@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="450" viewBox="0 0 640 450" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 1 1.5 L 7.5 4.5 L 1 7.5" fill="none" stroke="#8a7a4e" stroke-width="1.4" stroke-linecap="round"/>
+    </marker>
+  </defs>
+  <rect width="640" height="450" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：总长 L ≤ 5×10⁴ ⟹ 长度种类 K ≤ 315</text>
+  <path d="M 120 40 Q 320 48 520 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- left: length triangle -->
+  <text x="170" y="72" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5a88">「长度三角形」</text>
+  <text x="170" y="89" text-anchor="middle" font-size="10.5" fill="#999">K 个不同长度至少占总长 1+2+…+K</text>
+  <g filter="url(#sk)">
+    <rect x="72"  y="102" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="72"  y="128" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="96"  y="128" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="72"  y="154" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="96"  y="154" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="120" y="154" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="72"  y="180" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="96"  y="180" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="120" y="180" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="144" y="180" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="72"  y="206" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="96"  y="206" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="120" y="206" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="144" y="206" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="168" y="206" width="21" height="21" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <text x="200" y="222" font-size="14" fill="#8a7a4e">⋯</text>
+  </g>
+  <text x="64" y="117" text-anchor="end" font-size="10.5" fill="#999">ℓ=1</text>
+  <text x="64" y="143" text-anchor="end" font-size="10.5" fill="#999">ℓ=2</text>
+  <text x="64" y="169" text-anchor="end" font-size="10.5" fill="#999">ℓ=3</text>
+  <text x="64" y="195" text-anchor="end" font-size="10.5" fill="#999">ℓ=4</text>
+  <text x="64" y="221" text-anchor="end" font-size="10.5" fill="#999">ℓ=5</text>
+  <g filter="url(#sk)">
+    <rect x="52" y="248" width="236" height="58" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="170" y="270" text-anchor="middle" font-size="12" font-weight="bold" fill="#b06a10">1+2+⋯+K = K(K+1)/2 ≤ L</text>
+  <text x="170" y="290" text-anchor="middle" font-size="12" fill="#8a6d2e">K=315 时 49890 ≤ 5×10⁴（K=316 就超了）</text>
+  <text x="170" y="336" text-anchor="middle" font-size="12.5" fill="#2e6e2e">DP 每个位置只枚举 K 个长度，</text>
+  <text x="170" y="354" text-anchor="middle" font-size="12.5" fill="#2e6e2e">而不是 n 个 j —— 转移量 n·K ≈ 1.6×10⁷</text>
+
+  <!-- right: group by (length, hash) -->
+  <text x="480" y="72" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5a88">按（长度, 哈希）分桶去重</text>
+  <g filter="url(#sk)" fill="#e8f0fe" stroke="#446688" stroke-width="1.3">
+    <rect x="366" y="98" width="76" height="22" rx="8"/>
+    <rect x="450" y="98" width="66" height="22" rx="8"/>
+    <rect x="524" y="98" width="56" height="22" rx="8"/>
+    <rect x="366" y="126" width="76" height="22" rx="8"/>
+    <rect x="450" y="126" width="56" height="22" rx="8"/>
+  </g>
+  <text x="404" y="113" text-anchor="middle" font-size="10.5" fill="#2b5a88">abdef·100</text>
+  <text x="483" y="113" text-anchor="middle" font-size="10.5" fill="#2b5a88">abc·1</text>
+  <text x="552" y="113" text-anchor="middle" font-size="10.5" fill="#2b5a88">d·1</text>
+  <text x="404" y="141" text-anchor="middle" font-size="10.5" fill="#2b5a88">def·10</text>
+  <text x="478" y="141" text-anchor="middle" font-size="10.5" fill="#2b5a88">ef·5</text>
+  <path d="M 480 152 Q 480 162 480 170" stroke="#8a7a4e" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="366" y="176" width="40" height="20" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="414" y="176" width="166" height="20" rx="4" fill="#eef7ef" stroke="#4a7a3a" stroke-width="1"/>
+    <rect x="366" y="202" width="40" height="20" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="414" y="202" width="166" height="20" rx="4" fill="#eef7ef" stroke="#4a7a3a" stroke-width="1"/>
+    <rect x="366" y="228" width="40" height="20" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="414" y="228" width="80" height="20" rx="4" fill="#eef7ef" stroke="#4a7a3a" stroke-width="1"/>
+    <rect x="500" y="228" width="80" height="20" rx="4" fill="#eef7ef" stroke="#4a7a3a" stroke-width="1"/>
+    <rect x="366" y="254" width="40" height="20" rx="4" fill="#f4f2ec" stroke="#c9c4b8" stroke-width="1.4" stroke-dasharray="4 3"/>
+    <rect x="366" y="280" width="40" height="20" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="414" y="280" width="166" height="20" rx="4" fill="#eef7ef" stroke="#4a7a3a" stroke-width="1"/>
+  </g>
+  <text x="386" y="190" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">ℓ=1</text>
+  <text x="497" y="190" text-anchor="middle" font-size="11" fill="#2e6e2e">d : 1</text>
+  <text x="386" y="216" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">ℓ=2</text>
+  <text x="497" y="216" text-anchor="middle" font-size="11" fill="#2e6e2e">ef : 5</text>
+  <text x="386" y="242" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">ℓ=3</text>
+  <text x="454" y="242" text-anchor="middle" font-size="11" fill="#2e6e2e">abc : 1</text>
+  <text x="540" y="242" text-anchor="middle" font-size="11" fill="#2e6e2e">def : 10</text>
+  <text x="386" y="268" text-anchor="middle" font-size="11" font-weight="bold" fill="#aaa">ℓ=4</text>
+  <text x="497" y="268" text-anchor="middle" font-size="10.5" fill="#a04038">没有单词 → 这个长度根本不枚举！</text>
+  <text x="386" y="294" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">ℓ=5</text>
+  <text x="497" y="294" text-anchor="middle" font-size="11" fill="#2e6e2e">abdef : 100</text>
+
+  <g filter="url(#sk)">
+    <rect x="352" y="316" width="256" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="480" y="332" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a04038">重复单词（哈希相同）→ 只留 min cost</text>
+  <text x="480" y="349" text-anchor="middle" font-size="11" fill="#a04038">长度 &gt; n 的单词 → 直接丢弃</text>
+
+  <!-- bottom band -->
+  <g filter="url(#sk)">
+    <rect x="60" y="380" width="520" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="401" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b5a88">长度表 = [1, 2, 3, 5]（示例 1 只有 4 种长度，最坏 315 种）</text>
+  <text x="320" y="420" text-anchor="middle" font-size="12" fill="#446688">每个位置 i 至多查 K 个桶：O(1) 哈希 + 一次字典查询</text>
+</svg>
