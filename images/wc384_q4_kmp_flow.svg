@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 775"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 Z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="775" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：符号化 + KMP 计数，O(n+m)</text>
+
+  <!-- 开始 -->
+  <ellipse cx="300" cy="54" rx="52" ry="19" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="59" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">开始</text>
+  <path d="M300,73 L300,76" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 A -->
+  <rect x="135" y="79" width="330" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="103" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">① 一遍扫描建 cmp：cmp[i] = sign(nums[i+1] − nums[i])</text>
+  <path d="M300,117 L300,138" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 B -->
+  <rect x="135" y="141" width="330" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="165" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">② 对 pattern 求前缀函数 π（失配指针）</text>
+  <path d="M300,179 L300,200" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 C -->
+  <rect x="135" y="203" width="330" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="225" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">③ 初始化 i = 0，j = 0，扫描 cmp</text>
+  <path d="M300,237 L300,255" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 循环大框 -->
+  <rect x="45" y="258" width="500" height="360" rx="14" fill="none" stroke="#b85450" stroke-width="1.5" stroke-dasharray="8 5" filter="url(#rough2)"/>
+  <text x="57" y="280" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">循环：对 i = 0 … n−2 逐字符处理</text>
+
+  <!-- D1 菱形 -->
+  <polygon points="300,290 410,320 300,350 190,320" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="325" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">cmp[i] == pattern[j] ?</text>
+
+  <!-- E 失配回跳 -->
+  <rect x="50" y="288" width="130" height="64" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="115" y="310" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">失配回跳：</text>
+  <text x="115" y="328" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">j = π[j−1]</text>
+  <text x="115" y="344" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">再比一次</text>
+  <text x="185" y="312" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <path d="M190,320 L182,320" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M115,352 L115,375 L245,375 L245,338" stroke="#666" stroke-width="1.3" fill="none" stroke-dasharray="3 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- F j++ -->
+  <text x="310" y="368" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <path d="M300,350 L300,386" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="235" y="386" width="130" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="407" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">j++</text>
+  <path d="M300,418 L300,446" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D2 菱形 -->
+  <polygon points="300,449 385,478 300,507 215,478" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="483" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">j == m ?</text>
+
+  <!-- G 匹配计数 -->
+  <text x="391" y="470" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <path d="M385,478 L399,478" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="400" y="441" width="136" height="74" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="468" y="465" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">ans++</text>
+  <text x="468" y="487" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">j = π[m−1]</text>
+  <text x="468" y="506" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">（保住重叠匹配！）</text>
+  <path d="M468,515 L468,550 L371,550" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- H i++ -->
+  <text x="310" y="526" font-size="11.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <path d="M300,507 L300,534" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="232" y="534" width="136" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="555" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">i++</text>
+  <path d="M300,566 L300,630" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D3 菱形 -->
+  <polygon points="300,633 400,662 300,691 200,662" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="667" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">i &lt; n−1 ?</text>
+
+  <!-- 回环：是 -->
+  <text x="180" y="650" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是（还有字符）</text>
+  <path d="M200,662 L30,662 L30,240 L300,240 L300,288" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 结束分支：否 -->
+  <text x="412" y="650" font-size="11.5" fill="#b85450" filter="url(#rough2)">否（扫完）</text>
+  <path d="M400,662 L490,662 L490,722" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 返回 -->
+  <ellipse cx="490" cy="741" rx="58" ry="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="490" y="746" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">返回 ans</text>
+
+  <text x="62" y="746" font-size="11.5" fill="#666" filter="url(#rough2)">关键：ans++ 后 j 回跳到 π[m−1] 而非 0，</text>
+  <text x="62" y="764" font-size="11.5" fill="#666" filter="url(#rough2)">重叠的下一个匹配才不会漏。</text>
+</svg>

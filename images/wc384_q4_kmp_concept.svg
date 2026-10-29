@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 Z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">KMP 核心观察：失配不回头，用 border 跳过重复比较</text>
+
+  <!-- 文本行 cmp -->
+  <text x="74" y="73" text-anchor="end" font-size="12" fill="#446688" filter="url(#rough2)">cmp =</text>
+  <rect x="80" y="52" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="120" y="52" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="160" y="52" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="200" y="52" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="240" y="52" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="280" y="52" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="320" y="52" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="360" y="52" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="100" y="73" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="140" y="73" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">0</text>
+  <text x="180" y="73" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="220" y="73" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">0</text>
+  <text x="260" y="73" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="300" y="73" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="340" y="73" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">0</text>
+  <text x="380" y="73" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="430" y="66" font-size="11" fill="#446688" filter="url(#rough2)">文本（长 n−1，</text>
+  <text x="430" y="82" font-size="11" fill="#446688" filter="url(#rough2)">即 cmp 数组）</text>
+
+  <!-- 已匹配窗口虚线框 -->
+  <rect x="156" y="46" width="168" height="44" rx="8" fill="none" stroke="#4a7a3a" stroke-width="2" stroke-dasharray="6 4" filter="url(#rough2)"/>
+
+  <!-- 模式行 pattern -->
+  <text x="152" y="139" text-anchor="end" font-size="12" fill="#d6a040" filter="url(#rough2)">pattern =</text>
+  <rect x="160" y="118" width="40" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="200" y="118" width="40" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="240" y="118" width="40" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="280" y="118" width="40" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="320" y="118" width="40" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="180" y="139" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="220" y="139" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">0</text>
+  <text x="260" y="139" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="300" y="139" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">0</text>
+  <text x="340" y="139" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">1</text>
+  <text x="430" y="131" font-size="11" fill="#d6a040" filter="url(#rough2)">模式（当前对齐</text>
+  <text x="430" y="147" font-size="11" fill="#d6a040" filter="url(#rough2)">在起点 i=2）</text>
+
+  <text x="280" y="174" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">前 4 格已逐位相等（绿），第 5 格失配：T[6]=0 ≠ P[4]=1（红）</text>
+
+  <!-- 左框：暴力 -->
+  <rect x="28" y="194" width="248" height="124" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="152" y="216" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">暴力：右移 1 位、从头重比</text>
+  <rect x="48" y="230" width="22" height="18" fill="#e8f0fe" stroke="#999" rx="3" filter="url(#rough2)"/>
+  <rect x="70" y="230" width="22" height="18" fill="#e8f0fe" stroke="#999" rx="3" filter="url(#rough2)"/>
+  <rect x="92" y="230" width="22" height="18" fill="#e8f0fe" stroke="#999" rx="3" filter="url(#rough2)"/>
+  <rect x="114" y="230" width="22" height="18" fill="#e8f0fe" stroke="#999" rx="3" filter="url(#rough2)"/>
+  <rect x="136" y="230" width="22" height="18" fill="#e8f0fe" stroke="#999" rx="3" filter="url(#rough2)"/>
+  <rect x="158" y="230" width="22" height="18" fill="#e8f0fe" stroke="#999" rx="3" filter="url(#rough2)"/>
+  <rect x="70" y="258" width="22" height="18" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="3" filter="url(#rough2)"/>
+  <rect x="92" y="258" width="22" height="18" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="3" filter="url(#rough2)"/>
+  <rect x="114" y="258" width="22" height="18" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="3" filter="url(#rough2)"/>
+  <rect x="136" y="258" width="22" height="18" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="3" filter="url(#rough2)"/>
+  <rect x="158" y="258" width="22" height="18" fill="#fff" stroke="#b85450" stroke-width="1" rx="3" filter="url(#rough2)"/>
+  <text x="205" y="272" font-size="11" fill="#b85450" filter="url(#rough2)">← 新窗口</text>
+  <text x="108" y="253" font-size="10.5" fill="#b85450" filter="url(#rough2)">这 4 格刚比过，又全部重比</text>
+  <text x="152" y="304" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">每个窗口重比 m 位 → O(n·m) ≈ 10¹² 次</text>
+
+  <!-- 右框：KMP -->
+  <rect x="292" y="194" width="240" height="124" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="412" y="216" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">KMP：border 对齐、免检跳过</text>
+  <text x="412" y="240" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">已匹配段 [1,0,1,0] 的最长 border</text>
+  <text x="412" y="260" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">= [1,0]（长 2）→ P 直接右移 2 位</text>
+  <text x="412" y="280" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">前 2 格免检，直接从 P[2] 续比 T[6]</text>
+  <text x="412" y="306" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">文本指针 i 永不回退 → O(n+m)</text>
+
+  <!-- 底部 border 详解 -->
+  <text x="280" y="344" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">border：既是前缀又是后缀的最长相等真子串</text>
+  <rect x="200" y="358" width="40" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="240" y="358" width="40" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="280" y="358" width="40" height="32" fill="#fff" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="5 3" rx="4" filter="url(#rough2)"/>
+  <rect x="320" y="358" width="40" height="32" fill="#fff" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="5 3" rx="4" filter="url(#rough2)"/>
+  <text x="220" y="379" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="260" y="379" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">0</text>
+  <text x="300" y="379" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <text x="340" y="379" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">0</text>
+  <text x="185" y="379" text-anchor="end" font-size="11" fill="#4a7a3a" filter="url(#rough2)">已匹配段</text>
+  <path d="M220,400 L220,412 M340,400 L340,412" stroke="#4a7a3a" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <path d="M224,412 L280,412" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M336,412 L280,412" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="4 3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="280" y="436" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">前缀 [1,0] ＝ 后缀 [1,0]，长度 2 ＝ π[3]</text>
+  <text x="280" y="462" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">失配时 j 从 4 回跳到 π[3]=2，文本指针 i 原地不动</text>
+</svg>
