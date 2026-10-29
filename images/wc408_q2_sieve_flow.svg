@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="430" fill="#fafafa"/>
+
+  <text x="380" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：筛到 √r，数出平方落在 [l, r] 内的质数</text>
+  <path d="M 200 42 Q 380 50 560 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- ===== main flow column, center x = 300 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="170" y="64" width="260" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="300" y="83" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">① 计算 n = ⌊√r⌋</text>
+  <text x="300" y="99" text-anchor="middle" font-size="10.5" fill="#666666" filter="url(#rough2)">r ≤ 10⁹ ⇒ n ≤ 31622</text>
+  <line x1="300" y1="106" x2="300" y2="124" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="170" y="128" width="260" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="300" y="147" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">② 对 [2, n] 做埃氏筛</text>
+  <text x="300" y="163" text-anchor="middle" font-size="10.5" fill="#666666" filter="url(#rough2)">从 i² 起划掉 i 的倍数</text>
+  <line x1="300" y1="170" x2="300" y2="188" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="300,190 410,226 300,262 190,226" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="222" text-anchor="middle" font-size="12" font-weight="bold" fill="#a07820" filter="url(#rough2)">质数 p：</text>
+  <text x="300" y="239" text-anchor="middle" font-size="12" font-weight="bold" fill="#a07820" filter="url(#rough2)">p·p ≥ l ？</text>
+
+  <!-- yes branch -->
+  <line x1="300" y1="262" x2="300" y2="284" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="315" y="279" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="170" y="288" width="260" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="300" y="307" text-anchor="middle" font-size="12" font-weight="bold" fill="#a07820" filter="url(#rough2)">③ special += 1</text>
+  <text x="300" y="323" text-anchor="middle" font-size="10.5" fill="#666666" filter="url(#rough2)">p² 落在 [l, r] 内（上界由 p ≤ n 保证）</text>
+  <line x1="300" y1="330" x2="300" y2="348" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop back note -->
+  <path d="M 432 309 C 474 300, 476 252, 414 232" fill="none" stroke="#999999" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="478" y="274" font-size="10" fill="#999999" filter="url(#rough2)">换下一个 p</text>
+
+  <!-- no branch -->
+  <line x1="190" y1="226" x2="162" y2="226" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="176" y="216" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="36" y="206" width="126" height="40" rx="8" fill="#f5f5f5" stroke="#bbbbbb" stroke-width="1.3"/>
+  </g>
+  <text x="99" y="224" text-anchor="middle" font-size="11" fill="#888888" filter="url(#rough2)">p² &lt; l：出下界</text>
+  <text x="99" y="239" text-anchor="middle" font-size="11" fill="#888888" filter="url(#rough2)">不计，special 不变</text>
+
+  <!-- end box -->
+  <g filter="url(#rough2)">
+    <rect x="170" y="352" width="260" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="300" y="372" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">④ 返回 (r − l + 1) − special</text>
+  <text x="300" y="389" text-anchor="middle" font-size="10.5" fill="#666666" filter="url(#rough2)">区间总数 − 特殊数字个数</text>
+
+  <!-- ===== right info panel ===== -->
+  <g filter="url(#rough2)">
+    <rect x="540" y="64" width="196" height="104" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="638" y="88" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">值域塌缩</text>
+  <text x="638" y="110" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">p² ≤ r ≤ 10⁹</text>
+  <text x="638" y="128" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">⇒ p ≤ ⌊√r⌋ ≤ 31622</text>
+  <text x="638" y="146" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">全值域特殊数字仅</text>
+  <text x="638" y="162" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">π(31622) = 3401 个</text>
+
+  <g filter="url(#rough2)">
+    <rect x="540" y="184" width="196" height="104" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="638" y="208" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">复杂度</text>
+  <text x="638" y="230" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">时间 O(√r·log log √r)</text>
+  <text x="638" y="248" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">空间 O(√r) ≈ 3.2 万</text>
+  <text x="638" y="266" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">与区间长度无关：</text>
+  <text x="638" y="282" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">r − l + 1 可达 10⁹ 也不怕</text>
+
+  <g filter="url(#rough2)">
+    <rect x="540" y="304" width="196" height="104" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="638" y="328" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a07820" filter="url(#rough2)">实现要点</text>
+  <text x="638" y="350" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">Python：math.isqrt 精确</text>
+  <text x="638" y="368" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">C++：sqrt 浮点需双向修正</text>
+  <text x="638" y="386" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">p·p、(n+1)² 记得用</text>
+  <text x="638" y="401" text-anchor="middle" font-size="10.5" fill="#444444" filter="url(#rough2)">long long 兜底</text>
+</svg>
