@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="34" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">核心观察：任意交换 ⇒ 字符全池化，词长是唯一不变量</text>
+  <text x="280" y="58" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">示例：words = ["abbb", "ba", "aa"]（本题示例 1）</text>
+
+  <!-- 左：全局字符池 -->
+  <rect x="28" y="84" width="232" height="186" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="144" y="106" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">全局字符池（可任意流动）</text>
+
+  <rect x="46" y="118" width="26" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="82" y="118" width="26" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="118" y="118" width="26" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="154" y="118" width="26" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="59" y="136" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a</text>
+  <text x="95" y="136" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a</text>
+  <text x="131" y="136" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a</text>
+  <text x="167" y="136" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a</text>
+  <path d="M 46 150 Q 89 159 132 150" fill="none" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <path d="M 118 150 Q 161 159 204 150" fill="none" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="89" y="171" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">对</text>
+  <text x="161" y="171" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">对</text>
+
+  <rect x="46" y="182" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="82" y="182" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="118" y="182" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="154" y="182" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="59" y="200" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b</text>
+  <text x="95" y="200" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b</text>
+  <text x="131" y="200" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b</text>
+  <text x="167" y="200" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b</text>
+  <path d="M 46 214 Q 89 223 132 214" fill="none" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <path d="M 118 214 Q 161 223 204 214" fill="none" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="89" y="235" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">对</text>
+  <text x="161" y="235" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">对</text>
+
+  <text x="144" y="258" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">同字符对预算 Q = 2 + 2 = 4</text>
+
+  <!-- 池 → 词槽 箭头 -->
+  <path d="M 264 172 L 320 172" fill="none" stroke="#333" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="293" y="162" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">自由分配</text>
+  <text x="293" y="192" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">（长度不变）</text>
+
+  <!-- 右：词槽拼回文 -->
+  <text x="445" y="82" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">目标：每个词排成回文</text>
+
+  <text x="332" y="116" text-anchor="end" font-size="11" fill="#446688" filter="url(#rough2)">L=2</text>
+  <rect x="340" y="100" width="26" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="370" y="100" width="26" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="353" y="118" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a</text>
+  <text x="383" y="118" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a</text>
+  <path d="M 340 96 Q 366 86 396 96" fill="none" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="404" y="118" text-anchor="start" font-size="12" fill="#d6a040" filter="url(#rough2)">造价 ⌊2/2⌋=1</text>
+
+  <text x="332" y="186" text-anchor="end" font-size="11" fill="#446688" filter="url(#rough2)">L=2</text>
+  <rect x="340" y="170" width="26" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="370" y="170" width="26" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="353" y="188" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a</text>
+  <text x="383" y="188" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a</text>
+  <path d="M 340 166 Q 366 156 396 166" fill="none" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="404" y="188" text-anchor="start" font-size="12" fill="#d6a040" filter="url(#rough2)">造价 ⌊2/2⌋=1</text>
+
+  <text x="332" y="256" text-anchor="end" font-size="11" fill="#446688" filter="url(#rough2)">L=4</text>
+  <rect x="340" y="240" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="370" y="240" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="400" y="240" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="430" y="240" width="26" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="353" y="258" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b</text>
+  <text x="383" y="258" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b</text>
+  <text x="413" y="258" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b</text>
+  <text x="443" y="258" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b</text>
+  <path d="M 337 236 Q 396 218 459 236" fill="none" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <path d="M 370 232 Q 400 224 430 232" fill="none" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="466" y="258" text-anchor="start" font-size="12" fill="#d6a040" filter="url(#rough2)">造价 2</text>
+
+  <!-- 底部要点 -->
+  <text x="280" y="308" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">词长 L 的回文造价 = ⌊L/2⌋ 对同字符；奇数长度再要 1 个任意字符当中心（免预算）</text>
+  <text x="280" y="334" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">预算 Q 内按造价升序「买词」，买到几件 = 回文个数</text>
+  <text x="280" y="368" text-anchor="middle" font-size="13.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">本例 Q = 4 = 1 + 1 + 2，三个词全部买下 → ans = 3</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：符号化 + 滑动窗口逐位比对，O(n·m)</text>
+
+  <!-- ① 构建 cmp -->
+  <rect x="110" y="50" width="340" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="75" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">① 构建 cmp：cmp[i] = sign(nums[i+1] − nums[i])</text>
+  <path d="M 280 90 L 280 110" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 初始化 -->
+  <rect x="110" y="114" width="340" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="139" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">② ans = 0，窗口起点 i = 0</text>
+  <path d="M 280 154 L 280 174" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ 判定窗口 -->
+  <polygon points="280,180 408,226 280,272 152,226" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="280" y="222" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">③ cmp[i..i+m−1]</text>
+  <text x="280" y="240" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">与 pattern 全等？</text>
+
+  <!-- 是 → ans++ -->
+  <path d="M 408 226 L 448 226" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="426" y="218" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="450" y="208" width="84" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="492" y="231" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">ans += 1</text>
+  <path d="M 492 244 L 492 307 L 376 307" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 否 → i++ -->
+  <path d="M 280 272 L 280 284" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="282" font-size="11.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- ④ i++ -->
+  <rect x="190" y="288" width="180" height="38" fill="#f0f0f0" stroke="#666" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="312" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">④ i++（进入下一窗口）</text>
+  <path d="M 280 326 L 280 344" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 循环判定 -->
+  <polygon points="280,350 390,394 280,438 170,394" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="399" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">i ≤ n−m−1 ？</text>
+
+  <!-- 是：回到 ③ -->
+  <path d="M 170 394 L 84 394 L 84 226 L 144 226" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="98" y="330" text-anchor="middle" font-size="11.5" fill="#4a7a3a" transform="rotate(-90 98 330)" filter="url(#rough2)">是 · 下一窗口</text>
+
+  <!-- 否：返回 -->
+  <path d="M 390 394 L 424 394" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="404" y="386" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="426" y="374" width="116" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="484" y="399" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">⑤ 返回 ans</text>
+
+  <!-- 底部注记 -->
+  <text x="280" y="468" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">Q4（n ≤ 10⁶）：把 ③ 的逐位比对换成 KMP / 滚动哈希，整体降到 O(n+m)</text>
+</svg>
