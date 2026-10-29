@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：枚举两种顶色方案，逐行贪心放置</text>
+  <path d="M 270 42 Q 470 50 670 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start box -->
+  <g filter="url(#sk2)">
+    <rect x="380" y="66" width="180" height="36" rx="18" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="89" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">开始：读入 red, blue</text>
+  <path d="M 470 102 L 470 122" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- enumerate box -->
+  <g filter="url(#sk2)">
+    <rect x="320" y="126" width="300" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="144" text-anchor="middle" font-size="12" fill="#2b6e9e" font-weight="bold">枚举方案（共 2 个）：</text>
+  <text x="470" y="161" text-anchor="middle" font-size="11" fill="#444">① 红顶（cnt = [red, blue]）  ② 蓝顶（cnt = [blue, red]）</text>
+  <path d="M 470 170 L 470 190" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- init box -->
+  <g filter="url(#sk2)">
+    <rect x="350" y="194" width="240" height="38" rx="6" fill="#f0ede4" stroke="#999" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="218" text-anchor="middle" font-size="12" fill="#444">初始化：h = 0（已放行数）</text>
+  <path d="M 470 232 L 470 252" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk2)">
+    <polygon points="470,256 600,304 470,352 340,304" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="298" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold">第 h+1 行需要 h+1 个</text>
+  <text x="470" y="316" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold">cnt[h % 2] 色的球，够吗？</text>
+
+  <!-- yes branch -->
+  <path d="M 600 304 L 680 304" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="632" y="296" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">够 ✓</text>
+  <g filter="url(#sk2)">
+    <rect x="686" y="278" width="220" height="52" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="796" y="299" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">放置第 h+1 行：</text>
+  <text x="796" y="318" text-anchor="middle" font-size="12" fill="#444" font-family="monospace">cnt[h%2] -= h+1;  h += 1</text>
+  <!-- loop back arrow -->
+  <path d="M 796 330 L 796 380 Q 796 400 770 400 L 180 400 Q 150 400 150 370 L 150 304 L 336 304" stroke="#4a8e4a" stroke-width="1.6" fill="none" stroke-dasharray="6 4" filter="url(#sk)"/>
+  <text x="470" y="392" text-anchor="middle" font-size="11" fill="#2e6e2e">回到判断，尝试放下一行（可行性随高度单调，贪心不会错）</text>
+  <path d="M 340 304 L 348 300" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- no branch -->
+  <path d="M 470 352 L 470 376" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="490" y="370" font-size="12" fill="#b03a3a" font-weight="bold">不够 ✗</text>
+  <g filter="url(#sk2)">
+    <rect x="350" y="380" width="240" height="0" fill="none"/>
+  </g>
+  <path d="M 470 382 L 470 428" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)" stroke-dasharray="0"/>
+  <g filter="url(#sk2)">
+    <rect x="360" y="432" width="220" height="38" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="456" text-anchor="middle" font-size="12" fill="#b03a3a" font-weight="bold">本方案最大高度 = h</text>
+
+  <!-- combine -->
+  <path d="M 470 470 L 470 496" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk2)">
+    <rect x="330" y="500" width="280" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="519" text-anchor="middle" font-size="12" fill="#2b6e9e" font-weight="bold">答案 = max(方案① 的 h, 方案② 的 h)</text>
+  <text x="470" y="536" text-anchor="middle" font-size="10" fill="#888">⚠️ 数量悬殊时少的颜色当顶可能更优，两种方案都必须试</text>
+
+  <!-- complexity note -->
+  <g filter="url(#sk)">
+    <rect x="130" y="566" width="680" height="56" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="470" y="588" text-anchor="middle" font-size="12" fill="#2b2b2b" font-weight="bold">复杂度：时间 O(√(red+blue))（高度上限约 19），空间 O(1)</text>
+  <text x="470" y="608" text-anchor="middle" font-size="11" fill="#666">也可用闭式需求 m² 与 n(n+1) 对每个方案二分高度，本题数据范围下无必要</text>
+</svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="560" viewBox="0 0 940 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#8a8578"/>
+    </marker>
+  </defs>
+  <rect width="940" height="560" fill="#fdfcf7"/>
+  <text x="470" y="36" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#sk2)">算法流程：外层枚举 m，内层一趟扫描，一行完成转移</text>
+  <path d="M 210 44 Q 470 52 730 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== left: flowchart ===== -->
+  <text x="235" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a8edb" filter="url(#sk2)">五步流程（k 轮 × 一趟扫描）</text>
+  <g text-anchor="middle">
+    <g filter="url(#sk)"><rect x="110" y="90" width="250" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+    <text x="235" y="115" font-size="12.5" font-weight="bold" fill="#2b4a6e">① 枚举公共余数 m ∈ [0, k)</text>
+    <g filter="url(#sk)"><path d="M 235 130 L 235 148" stroke="#8a8578" stroke-width="1.6" fill="none" marker-end="url(#arr)"/></g>
+    <g filter="url(#sk)"><rect x="110" y="152" width="250" height="36" rx="8" fill="#f5f2ea" stroke="#8a8578" stroke-width="1.4"/></g>
+    <text x="235" y="175" font-size="12" fill="#444">② f[0..k−1] 清零</text>
+    <g filter="url(#sk)"><path d="M 235 188 L 235 206" stroke="#8a8578" stroke-width="1.6" fill="none" marker-end="url(#arr)"/></g>
+    <g filter="url(#sk)"><rect x="110" y="210" width="250" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+    <text x="235" y="235" font-size="12.5" font-weight="bold" fill="#2d5a26">③ 遍历 nums：p = x mod k</text>
+    <g filter="url(#sk)"><path d="M 235 250 L 235 268" stroke="#8a8578" stroke-width="1.6" fill="none" marker-end="url(#arr)"/></g>
+    <g filter="url(#sk)"><rect x="110" y="272" width="250" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+    <text x="235" y="297" font-size="12.5" font-weight="bold" fill="#2d5a26">④ 前驱余数 q = (m − p) mod k</text>
+    <g filter="url(#sk)"><path d="M 235 312 L 235 330" stroke="#8a8578" stroke-width="1.6" fill="none" marker-end="url(#arr)"/></g>
+    <g filter="url(#sk)"><rect x="110" y="334" width="250" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/></g>
+    <text x="235" y="362" font-size="13" font-weight="bold" fill="#7a5415">⑤ f[p] ← f[q] + 1</text>
+    <g filter="url(#sk)"><path d="M 235 378 L 235 396" stroke="#8a8578" stroke-width="1.6" fill="none" marker-end="url(#arr)"/></g>
+    <g filter="url(#sk)"><rect x="110" y="400" width="250" height="36" rx="8" fill="#f5f2ea" stroke="#8a8578" stroke-width="1.4"/></g>
+    <text x="235" y="423" font-size="12" fill="#444">ans = max(ans, f[p])</text>
+    <g filter="url(#sk)"><path d="M 110 418 L 78 418 Q 68 418 68 408 L 68 326 Q 68 316 78 316 L 96 316" stroke="#8a8578" stroke-width="1.4" fill="none" marker-end="url(#arr)"/></g>
+    <text x="58" y="370" font-size="10.5" fill="#8a8578" transform="rotate(-90 58 370)" text-anchor="middle" filter="url(#sk2)">下一个 x</text>
+    <g filter="url(#sk)"><path d="M 360 110 L 396 110 Q 406 110 406 120 L 406 428 Q 406 438 396 438 L 366 438" stroke="#8a8578" stroke-width="1.4" fill="none" marker-end="url(#arr)"/></g>
+    <text x="416" y="274" font-size="10.5" fill="#8a8578" transform="rotate(90 416 274)" text-anchor="middle" filter="url(#sk2)">下一个 m，回到 ②</text>
+  </g>
+
+  <!-- divider -->
+  <path d="M 452 70 L 452 500" stroke="#ddd" stroke-width="1.2" stroke-dasharray="6 4" filter="url(#sk)"/>
+
+  <!-- ===== right top: transfer model ===== -->
+  <text x="700" y="100" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#sk2)">转移图解：读 q 格、写 p 格（k=5，m=4，p=3 为例）</text>
+  <g font-size="11" fill="#888" text-anchor="middle">
+    <text x="532" y="140" filter="url(#sk2)">f[0]</text>
+    <text x="604" y="140" filter="url(#sk2)">f[1]</text>
+    <text x="676" y="140" filter="url(#sk2)">f[2]</text>
+    <text x="748" y="140" filter="url(#sk2)">f[3]</text>
+    <text x="820" y="140" filter="url(#sk2)">f[4]</text>
+  </g>
+  <g font-size="14" font-weight="bold" text-anchor="middle">
+    <g filter="url(#sk2)"><rect x="500" y="148" width="64" height="44" rx="4" fill="#f5f2ea" stroke="#8a8578" stroke-width="1.4"/></g>
+    <text x="532" y="176" fill="#444">2</text>
+    <g filter="url(#sk2)"><rect x="572" y="148" width="64" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/></g>
+    <text x="604" y="176" fill="#2b4a6e">5</text>
+    <g filter="url(#sk2)"><rect x="644" y="148" width="64" height="44" rx="4" fill="#f5f2ea" stroke="#8a8578" stroke-width="1.4"/></g>
+    <text x="676" y="176" fill="#444">1</text>
+    <g filter="url(#sk2)"><rect x="716" y="148" width="64" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/></g>
+    <text x="748" y="176" fill="#2d5a26">3</text>
+    <g filter="url(#sk2)"><rect x="788" y="148" width="64" height="44" rx="4" fill="#f5f2ea" stroke="#8a8578" stroke-width="1.4"/></g>
+    <text x="820" y="176" fill="#444">4</text>
+  </g>
+  <g filter="url(#sk)"><path d="M 604 136 Q 676 92 744 134" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/></g>
+  <text x="676" y="90" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#sk2)">读 f[q] = 5，加 1 后写入</text>
+  <text x="676" y="216" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#sk2)">元素 x ≡ 3 (mod 5) 到来 ⇒ f[3] ← 5 + 1 = 6（q = (4−3) mod 5 = 1，没有第二种选择）</text>
+  <text x="676" y="240" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk2)">一轮扫完，同 m 的全部 5 组形态 (0,4)(1,3)(2,2)(3,1)(4,0) 都已各就各位</text>
+
+  <!-- ===== right middle: self-loop ===== -->
+  <g filter="url(#sk)"><rect x="500" y="262" width="380" height="92" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/></g>
+  <text x="690" y="288" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#sk2)">自环情形：q = p（当 2p ≡ m mod k，即 a = b 同余数链）</text>
+  <text x="690" y="312" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk2)">f[p] ← f[p] + 1：赋值右侧先求值，读到的是旧值</text>
+  <text x="690" y="336" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk2)">例：k = 3 时 [1,4,1,4] 余数全为 1，2×1 ≡ 2 (mod 3)</text>
+
+  <!-- ===== right bottom: complexity ===== -->
+  <g filter="url(#sk)"><rect x="500" y="376" width="380" height="92" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="690" y="402" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2d5a26" filter="url(#sk2)">复杂度与下界</text>
+  <text x="690" y="426" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk2)">时间 O(n·k + k²)，空间 O(k)（n = k = 10³ 时约 2×10⁶）</text>
+  <text x="690" y="450" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk2)">n ≥ 2 时答案 ≥ 2：任取两元素，条件链只有一个等式</text>
+
+  <!-- ===== bottom strip ===== -->
+  <g filter="url(#sk)"><rect x="70" y="484" width="800" height="54" rx="10" fill="#f5f2ea" stroke="#8a8578" stroke-width="1.4"/></g>
+  <text x="470" y="507" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk2)">初值 0 兼职「链首」：f[q] = 0 表示没有可接的前驱，f[p] = 0 + 1 = 1 从单元素起步，无需特判</text>
+  <text x="470" y="528" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b03a3a" filter="url(#sk2)">外层每轮必须把 f 清零 —— 不同 m 的链混用会互相污染</text>
+</svg>
