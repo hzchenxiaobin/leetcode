@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/></marker>
+  </defs>
+  <rect width="600" height="320" fill="#fafafa"/>
+  <text x="300" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：一趟计数 + 套公式（防溢出）</text>
+  <path d="M 150 38 Q 300 46 450 38" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- step 1: scan -->
+  <g filter="url(#r)">
+    <rect x="40" y="72" width="160" height="124" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="120" y="96" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#r)">① 一趟扫描计数</text>
+  <g font-size="11.5" text-anchor="middle" fill="#333" filter="url(#r)">
+    <text x="120" y="120">m = 0</text>
+    <text x="120" y="138">for ch in s:</text>
+    <text x="120" y="156">    if ch == c:</text>
+    <text x="120" y="174">        m += 1</text>
+  </g>
+
+  <!-- step 2: formula -->
+  <g filter="url(#r)">
+    <rect x="220" y="72" width="160" height="124" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="300" y="96" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5a20" filter="url(#r)">② 套公式</text>
+  <g text-anchor="middle" filter="url(#r)">
+    <text x="300" y="124" font-size="12.5" fill="#333">ans = m·(m+1)/2</text>
+    <text x="300" y="148" font-size="11.5" fill="#444">等价于 1+2+⋯+m</text>
+    <text x="300" y="172" font-size="10.5" fill="#666">先乘后除，恒为整数</text>
+  </g>
+
+  <!-- step 3: return -->
+  <g filter="url(#r)">
+    <rect x="400" y="72" width="160" height="124" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="480" y="96" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#r)">③ 返回</text>
+  <g text-anchor="middle" filter="url(#r)">
+    <text x="480" y="126" font-size="12.5" fill="#333">return ans</text>
+    <text x="480" y="152" font-size="10.5" fill="#555">m = 0（c 不出现）时</text>
+    <text x="480" y="170" font-size="10.5" fill="#555">自然返回 0</text>
+  </g>
+
+  <!-- arrows between steps -->
+  <g stroke="#4a7a3a" stroke-width="2.2" filter="url(#r)">
+    <path d="M 202 134 L 216 134" marker-end="url(#arrG)"/>
+    <path d="M 382 134 L 396 134" marker-end="url(#arrG)"/>
+  </g>
+
+  <text x="300" y="222" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#r)">m：字符 c 在 s 中的出现次数（一趟数出来）</text>
+
+  <!-- overflow warning -->
+  <g filter="url(#r)">
+    <rect x="40" y="242" width="520" height="62" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="62" y="264" font-size="12.5" font-weight="bold" fill="#8c3a34" filter="url(#r)">⚠ 溢出陷阱：m ≤ 10⁵ ⇒ ans ≈ 5×10⁹，超出 32 位 int（≈ 2.1×10⁹）</text>
+  <text x="62" y="288" font-size="12" fill="#555" filter="url(#r)">C++ 中 m 必须声明为 long long（乘法发生时就不能是 int）；Python 天然大整数</text>
+</svg>

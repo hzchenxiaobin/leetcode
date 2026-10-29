@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 330" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/></marker>
+  </defs>
+  <rect width="640" height="330" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：计数 → 排序前缀和 → 枚举窗口左端</text>
+  <path d="M 160 38 Q 320 46 480 38" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- step 1: count -->
+  <rect x="40" y="70" width="180" height="140" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#r)"/>
+  <text x="130" y="94" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#r)">① 统计频率</text>
+  <g font-size="11.5" text-anchor="middle" fill="#333" filter="url(#r)">
+    <text x="130" y="120">cnt[26] 桶计数</text>
+    <text x="130" y="140">丢掉 f = 0 的桶</text>
+    <text x="130" y="160">得频率列表 a（m ≤ 26）</text>
+  </g>
+
+  <!-- step 2: sort + prefix sum -->
+  <rect x="240" y="70" width="180" height="140" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#r)"/>
+  <text x="330" y="94" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5a20" filter="url(#r)">② 排序 + 前缀和</text>
+  <g font-size="11.5" text-anchor="middle" fill="#333" filter="url(#r)">
+    <text x="330" y="120">a 升序排序</text>
+    <text x="330" y="140">pre[i+1] = pre[i] + a[i]</text>
+    <text x="330" y="160">区间和 O(1) 查询</text>
+  </g>
+
+  <!-- step 3: enumerate L -->
+  <rect x="440" y="70" width="180" height="140" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#r)"/>
+  <text x="530" y="94" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#r)">③ 枚举 L = a[i]</text>
+  <g font-size="11.5" text-anchor="middle" fill="#333" filter="url(#r)">
+    <text x="530" y="120">二分切三段</text>
+    <text x="530" y="140">cost = 删左 + 削右</text>
+    <text x="530" y="160">ans = min(ans, cost)</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#4a7a3a" stroke-width="2.2" filter="url(#r)">
+    <path d="M 223 140 L 237 140" marker-end="url(#arrG)"/>
+    <path d="M 423 140 L 437 140" marker-end="url(#arrG)"/>
+  </g>
+
+  <!-- bottom note -->
+  <rect x="40" y="238" width="580" height="76" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#r)"/>
+  <g text-anchor="middle" filter="url(#r)">
+    <text x="320" y="262" font-size="12" font-weight="bold" fill="#8c3a34">L 的候选只需「出现过的频率值」</text>
+    <text x="320" y="282" font-size="11.5" fill="#555">由 cost 的分段线性非增性保证：最小值必在某个原始频率处取得（§5 引理 3）</text>
+    <text x="320" y="302" font-size="11.5" fill="#555">总复杂度 O(n + m log m)，m ≤ 26，瓶颈只在读入</text>
+  </g>
+</svg>
