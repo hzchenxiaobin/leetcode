@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="540" height="470" fill="#fafafa"/>
+  <text x="270" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：降序枚举 g 的约数，逐块计数校验</text>
+
+  <!-- step boxes -->
+  <g filter="url(#rough2)">
+    <rect x="130" y="52" width="280" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <rect x="130" y="104" width="280" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <rect x="130" y="156" width="280" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+    <rect x="130" y="208" width="280" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <rect x="130" y="260" width="280" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)">
+    <text x="270" y="74" text-anchor="middle" font-size="12.5" fill="#333">一遍扫描：统计总计数 cnt</text>
+    <text x="270" y="126" text-anchor="middle" font-size="12.5" fill="#333">g = gcd(所有 cnt[c])（自动有 g | n）</text>
+    <text x="270" y="178" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5a2a">枚举 g 的约数 k，从大到小</text>
+    <text x="270" y="230" text-anchor="middle" font-size="12.5" fill="#333">L = n / k；need[c] = cnt[c] / k</text>
+    <text x="270" y="282" text-anchor="middle" font-size="12.5" fill="#333">逐块校验：count(s[jL..(j+1)L)) = need ?</text>
+  </g>
+
+  <!-- arrows down -->
+  <g filter="url(#rough2)">
+    <path d="M270,88 L270,100" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M270,140 L270,152" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M270,192 L270,204" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M270,244 L270,256" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M270,296 L270,308" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- decision diamond -->
+  <polygon points="270,310 392,344 270,378 148,344" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="270" y="340" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">所有块</text>
+  <text x="270" y="358" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">计数都相等？</text>
+
+  <!-- yes branch -->
+  <path d="M270,378 L270,398" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="282" y="394" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="160" y="400" width="220" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="8"/>
+  </g>
+  <text x="270" y="425" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5a2a" filter="url(#rough2)">返回 L = n/k（最小 |t|）✓</text>
+
+  <!-- no branch: loop back -->
+  <path d="M148,344 L58,344 L58,174 L126,174" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrRed)" filter="url(#rough2)"/>
+  <text x="138" y="336" text-anchor="end" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <text x="66" y="264" font-size="11" fill="#b85450" filter="url(#rough2)">换更小的 k</text>
+
+  <!-- bottom note -->
+  <text x="270" y="462" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">k = 1（整串一块）永远合法——循环最迟在 k = 1 处返回，必然终止</text>
+</svg>

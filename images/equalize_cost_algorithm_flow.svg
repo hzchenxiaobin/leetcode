@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 510"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="540" height="510" fill="#fafafa"/>
+  <text x="270" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：两个特判 + 切换点 + 四候选直算</text>
+
+  <!-- start -->
+  <g filter="url(#rough2)">
+    <rect x="85" y="40" width="200" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+    <text x="185" y="65" text-anchor="middle" font-size="13" fill="#333">一次扫描：n, mx, mn, Σ</text>
+  </g>
+  <path d="M185,80 L185,100" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#rough2)">
+    <polygon points="185,104 255,140 185,176 115,140" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="185" y="145" text-anchor="middle" font-size="13" fill="#333">n ≤ 2 ?</text>
+  </g>
+  <path d="M255,140 L310,140" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="282" y="132" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="314" y="116" width="210" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="419" y="136" text-anchor="middle" font-size="11.5" fill="#333">返回 (mx−mn)·c₁ mod p</text>
+    <text x="419" y="153" text-anchor="middle" font-size="10.5" fill="#555">n=2：批发不改变差距</text>
+  </g>
+  <path d="M185,176 L185,198" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="197" y="192" font-size="11" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- diamond 2 -->
+  <g filter="url(#rough2)">
+    <polygon points="185,202 255,238 185,274 115,238" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="185" y="243" text-anchor="middle" font-size="13" fill="#333">c₂ ≥ 2c₁ ?</text>
+  </g>
+  <path d="M255,238 L310,238" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="282" y="230" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="314" y="214" width="210" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="419" y="234" text-anchor="middle" font-size="11.5" fill="#333">返回 (n·mx−Σ)·c₁ mod p</text>
+    <text x="419" y="251" text-anchor="middle" font-size="10.5" fill="#555">批发不划算，全零售（T = mx）</text>
+  </g>
+  <path d="M185,274 L185,296" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="197" y="290" font-size="11" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- Tstar -->
+  <g filter="url(#rough2)">
+    <rect x="62" y="300" width="246" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+    <text x="185" y="325" text-anchor="middle" font-size="12.5" fill="#333">T* ← max(mx, ⌈(Σ−2mn)/(n−2)⌉)</text>
+  </g>
+  <path d="M185,340 L185,360" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- candidates eval -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="364" width="298" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <text x="185" y="384" text-anchor="middle" font-size="11.5" fill="#333">候选 {mx, T*−1, T*, T*+1}（&lt;mx 跳过）逐个算 C(T)：</text>
+    <text x="185" y="402" text-anchor="middle" font-size="11.5" fill="#333">S = nT−Σ，d = T−mn，p = min(⌊S/2⌋, S−d)</text>
+    <text x="185" y="420" text-anchor="middle" font-size="11.5" fill="#333">C = p·c₂ + (S−2p)·c₁</text>
+  </g>
+  <g filter="url(#rough2)">
+    <text x="352" y="390" font-size="11" fill="#888">每点 O(1)</text>
+    <text x="352" y="408" font-size="11" fill="#888">整体 O(n)</text>
+  </g>
+
+  <path d="M185,436 L185,456" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- end -->
+  <g filter="url(#rough2)">
+    <rect x="65" y="460" width="240" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+    <text x="185" y="485" text-anchor="middle" font-size="13" fill="#333">返回 min C mod p（先比较！）</text>
+  </g>
+</svg>
