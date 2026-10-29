@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#666"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="480" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：一维列前缀和滚动 + 行内 break 剪枝</text>
+  <path d="M 150 40 Q 320 48 490 40" stroke="#333" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 返回说明框（右上） -->
+  <g filter="url(#rough2)">
+    <rect x="470" y="56" width="155" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="6 3"/>
+  </g>
+  <text x="547" y="76" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#rough2)">外层循环结束后</text>
+  <text x="547" y="93" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">return ans</text>
+  <path d="M 302 116 C 370 104 420 88 462 80" stroke="#999" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="372" y="98" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">i 用尽</text>
+
+  <!-- 主流程 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="56" width="200" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="200" y="77" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a4a6a" filter="url(#rough2)">col[0..n-1] ← 0，ans ← 0</text>
+  <path d="M 200 90 L 200 102" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="100" y="106" width="200" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="200" y="127" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a4a6a" filter="url(#rough2)">for i = 0 … m-1（逐行）</text>
+  <text x="92" y="127" text-anchor="end" font-size="10.5" fill="#446688" filter="url(#rough2)">外层</text>
+  <path d="M 200 140 L 200 152" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="100" y="156" width="200" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="200" y="177" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a4a6a" filter="url(#rough2)">s ← 0（行内累加器）</text>
+  <path d="M 200 190 L 200 202" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="100" y="206" width="200" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="200" y="227" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a4a6a" filter="url(#rough2)">for j = 0 … n-1</text>
+  <text x="92" y="227" text-anchor="end" font-size="10.5" fill="#446688" filter="url(#rough2)">内层</text>
+  <path d="M 200 240 L 200 252" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="100" y="256" width="200" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="200" y="277" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a4a6a" filter="url(#rough2)">col[j] += grid[i][j]</text>
+  <text x="200" y="296" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a4a6a" filter="url(#rough2)">s += col[j]</text>
+  <text x="200" y="313" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">（此刻 s = P[i][j]）</text>
+  <path d="M 200 320 L 200 328" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断菱形 -->
+  <polygon points="200,328 272,366 200,404 128,366" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="200" y="371" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#rough2)">s ≤ k ?</text>
+
+  <!-- 是：ans++ -->
+  <path d="M 272 366 L 344 366" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrGreen)" filter="url(#rough2)"/>
+  <text x="306" y="357" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="348" y="346" width="112" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="404" y="371" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">ans++</text>
+  <path d="M 404 344 C 404 290 360 232 304 226" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrGreen)" filter="url(#rough2)"/>
+  <text x="414" y="290" text-anchor="start" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">j+1，继续内层</text>
+
+  <!-- 否：break -->
+  <path d="M 200 404 L 200 416" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrRed)" filter="url(#rough2)"/>
+  <text x="212" y="414" text-anchor="start" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="110" y="420" width="180" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="200" y="441" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">break：跳出本行</text>
+  <path d="M 108 437 C 30 434 30 128 96 124" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrRed)" filter="url(#rough2)"/>
+  <text x="44" y="284" text-anchor="start" font-size="10.5" fill="#b85450" filter="url(#rough2)">i+1</text>
+  <text x="44" y="300" text-anchor="start" font-size="10.5" fill="#b85450" filter="url(#rough2)">下一行</text>
+
+  <!-- 注记 A：更新先于判断 -->
+  <g filter="url(#rough2)">
+    <rect x="470" y="180" width="155" height="84" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="547" y="202" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415" filter="url(#rough2)">⚠️ 顺序不可交换</text>
+  <text x="547" y="221" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">col[j] += grid[i][j]</text>
+  <text x="547" y="237" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">必须发生在判断之前</text>
+  <text x="547" y="253" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">（本行贡献不能漏）</text>
+  <path d="M 302 300 C 390 294 440 258 460 240" stroke="#d6a040" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 注记 B：break 只跳本行 -->
+  <g filter="url(#rough2)">
+    <rect x="470" y="396" width="155" height="80" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="547" y="418" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">⚠️ break 只跳出内层</text>
+  <text x="547" y="436" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">下一行的合格前缀</text>
+  <text x="547" y="452" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">可能仍非空，</text>
+  <text x="547" y="468" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">外层循环必须继续</text>
+  <path d="M 292 440 C 350 444 415 446 462 442" stroke="#d6a040" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+</svg>
