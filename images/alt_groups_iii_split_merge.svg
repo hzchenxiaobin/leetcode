@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="500" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#rough2)">单点改色 ⇒ 至多两条相邻边翻转 ⇒ 段的分裂 / 合并</text>
+
+  <!-- top pipeline -->
+  <g filter="url(#rough2)">
+    <rect x="175" y="42" width="170" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="260" y="61" font-size="12" fill="#446688" text-anchor="middle" filter="url(#rough2)">查询 [2, index, color]</text>
+  <path d="M 260 72 L 260 88" fill="none" stroke="#888888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="150" y="92" width="220" height="28" rx="8" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.2"/>
+  </g>
+  <text x="260" y="110" font-size="11.5" fill="#666" text-anchor="middle" filter="url(#rough2)">colors[index] ≠ color 才执行（同色跳过）</text>
+  <path d="M 260 120 L 260 136" fill="none" stroke="#888888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="95" y="140" width="330" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="260" y="157" font-size="11.5" fill="#446688" text-anchor="middle" filter="url(#rough2)">改 colors[index]，影响两条相邻边：</text>
+  <text x="260" y="175" font-size="11.5" fill="#446688" text-anchor="middle" filter="url(#rough2)">e_L = (index−1+n) mod n 与 e_R = index，逐边独立处理</text>
+  <path d="M 260 184 L 137 202" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M 260 184 L 383 202" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- ===== left panel: split ===== -->
+  <g filter="url(#rough2)">
+    <rect x="20" y="206" width="235" height="248" rx="10" fill="#ffffff" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="137.5" y="228" font-size="12.5" font-weight="bold" fill="#b85450" text-anchor="middle" filter="url(#rough2)">好边 → 坏边：分裂 ✂</text>
+
+  <g filter="url(#rough2)">
+    <rect x="45" y="242" width="100" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="165" y="242" width="65" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="95" y="259" font-size="10" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">[prv+1…e]，长 l₁</text>
+  <text x="197.5" y="259" font-size="10" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">[e+1…nxt]，长 l₂</text>
+
+  <path d="M 110 318 L 95 276" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M 165 318 L 192 276" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrR)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="45" y="324" width="185" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="137.5" y="341" font-size="10.5" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">原段 [prv+1 … nxt]，长 l₁ + l₂</text>
+  <text x="155" y="316" font-size="14" font-weight="bold" fill="#b85450" text-anchor="middle" filter="url(#rough2)">✗</text>
+
+  <g font-size="11" fill="#666" text-anchor="middle" filter="url(#rough2)">
+    <text x="38" y="372">prv</text>
+    <text x="155" y="372">e</text>
+    <text x="238" y="372">nxt</text>
+  </g>
+  <g stroke="#888888" stroke-width="1.2" filter="url(#rough2)">
+    <line x1="45" y1="356" x2="45" y2="362"/>
+    <line x1="230" y1="356" x2="230" y2="362"/>
+    <line x1="155" y1="350" x2="155" y2="362"/>
+  </g>
+
+  <text x="137.5" y="396" font-size="11" fill="#b85450" text-anchor="middle" filter="url(#rough2)">有序集合：S.insert(e)</text>
+  <text x="137.5" y="416" font-size="11" fill="#b85450" text-anchor="middle" filter="url(#rough2)">BIT 更新：cnt[l₁+l₂] −= 1</text>
+  <text x="137.5" y="436" font-size="11" fill="#b85450" text-anchor="middle" filter="url(#rough2)">cnt[l₁] += 1，cnt[l₂] += 1</text>
+
+  <!-- ===== right panel: merge ===== -->
+  <g filter="url(#rough2)">
+    <rect x="265" y="206" width="235" height="248" rx="10" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="382.5" y="228" font-size="12.5" font-weight="bold" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">坏边 → 好边：合并 ⇢</text>
+
+  <g filter="url(#rough2)">
+    <rect x="290" y="242" width="100" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="415" y="242" width="60" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="259" font-size="10" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">[prv+1…e]，长 l₁</text>
+  <text x="445" y="259" font-size="10" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">[e+1…nxt]，长 l₂</text>
+  <text x="402.5" y="259" font-size="14" font-weight="bold" fill="#b85450" text-anchor="middle" filter="url(#rough2)">✗</text>
+
+  <path d="M 340 276 L 360 318" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 445 276 L 405 318" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="290" y="324" width="185" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="382.5" y="341" font-size="10.5" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">合并段 [prv+1 … nxt]，长 l₁ + l₂</text>
+
+  <g font-size="11" fill="#666" text-anchor="middle" filter="url(#rough2)">
+    <text x="283" y="372">prv</text>
+    <text x="400" y="372">e</text>
+    <text x="483" y="372">nxt</text>
+  </g>
+  <g stroke="#888888" stroke-width="1.2" filter="url(#rough2)">
+    <line x1="290" y1="356" x2="290" y2="362"/>
+    <line x1="475" y1="356" x2="475" y2="362"/>
+    <line x1="400" y1="362" x2="400" y2="356"/>
+  </g>
+
+  <text x="382.5" y="396" font-size="11" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">有序集合：S.erase(e)</text>
+  <text x="382.5" y="416" font-size="11" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">BIT 更新：cnt[l₁] −= 1，cnt[l₂] −= 1</text>
+  <text x="382.5" y="436" font-size="11" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">cnt[l₁+l₂] += 1</text>
+
+  <!-- bottom note -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="462" width="460" height="32" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="260" y="482" font-size="10.5" fill="#446688" text-anchor="middle" filter="url(#rough2)">环距：l₁ = (e − prv) mod n，l₂ = (nxt − e) mod n —— 旧段长 = l₁ + l₂ 在 k=1（整环段）时同样成立</text>
+</svg>

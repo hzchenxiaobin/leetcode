@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：每条查询 = 登记一条边 + 一趟递推</text>
+
+  <!-- B1: read query -->
+  <rect x="90" y="44" width="200" height="30" rx="15" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="190" y="63" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">读取下一条查询 [u, v]</text>
+  <line x1="190" y1="74" x2="190" y2="90" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- B2: register edge -->
+  <rect x="90" y="94" width="200" height="32" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="190" y="114" text-anchor="middle" font-size="12.5" fill="#a07820" filter="url(#rough2)">把 u 追加进 into[v]</text>
+  <line x1="190" y1="126" x2="190" y2="142" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- B3: one-pass DP -->
+  <rect x="60" y="146" width="260" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="168" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">i = 1 … n−1 从左到右递推</text>
+  <text x="190" y="188" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">dist[i] = min( dist[i−1] + 1 ,</text>
+  <text x="190" y="206" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">min{ dist[u] + 1 : u ∈ into[i] } )</text>
+  <line x1="190" y1="218" x2="190" y2="234" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- B4: record answer -->
+  <rect x="90" y="238" width="200" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="190" y="257" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">answer 追加 dist[n−1]</text>
+  <line x1="190" y1="268" x2="190" y2="284" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="190,286 252,312 190,338 128,312" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="317" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">还有查询？</text>
+
+  <!-- loop back -->
+  <text x="104" y="298" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">是</text>
+  <path d="M 128 312 C 46 312, 46 59, 86 59" fill="none" stroke="#b85450" stroke-width="1.5" marker-end="url(#arrR)" filter="url(#rough2)"/>
+
+  <!-- no -> end -->
+  <text x="258" y="302" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <line x1="252" y1="312" x2="288" y2="312" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="292" y="296" width="110" height="32" rx="8" fill="#f5f5f5" stroke="#bbbbbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="347" y="316" text-anchor="middle" font-size="12" fill="#666666" filter="url(#rough2)">返回 answer</text>
+
+  <!-- note 1 -->
+  <rect x="340" y="44" width="172" height="76" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="426" y="66" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">为什么一趟就够？</text>
+  <text x="426" y="84" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">所有边都指向右侧，</text>
+  <text x="426" y="100" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">dist[i] 的前驱全在左侧，</text>
+  <text x="426" y="114" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">轮到 i 时它们都已定稿</text>
+
+  <!-- note 2 -->
+  <rect x="340" y="136" width="172" height="62" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="426" y="158" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a07820" filter="url(#rough2)">into[v]：按终点分桶</text>
+  <text x="426" y="176" text-anchor="middle" font-size="11" fill="#a07820" filter="url(#rough2)">存所有指向 v 的</text>
+  <text x="426" y="192" text-anchor="middle" font-size="11" fill="#a07820" filter="url(#rough2)">新增边起点 u</text>
+
+  <!-- note 3 -->
+  <rect x="340" y="214" width="172" height="62" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="426" y="236" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">每条查询 O(n + q)</text>
+  <text x="426" y="254" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">总计 O(q·(n+q))</text>
+  <text x="426" y="270" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">约 5×10^5，轻松通过</text>
+</svg>
