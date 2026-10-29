@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="392" viewBox="0 0 640 392" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arg" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="392" fill="#fdfcf7"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">双指针归并：两列各自降序，每次取较大的"头"切</text>
+  <path d="M 130 36 Q 320 46 510 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Two sorted lists -->
+  <text x="60" y="72" font-size="12" font-weight="bold" fill="#2e6e2e">水平线（降序）</text>
+  <g filter="url(#sk)">
+    <rect x="150" y="54" width="42" height="34" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="198" y="54" width="42" height="34" rx="5" fill="#ffffff" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="171" y="77" text-anchor="middle" font-size="15" font-weight="bold" fill="#a06a20">3</text>
+  <text x="219" y="77" text-anchor="middle" font-size="15" fill="#2e6e2e">1</text>
+  <text x="171" y="104" text-anchor="middle" font-size="10" fill="#a06a20">↑ 指针 i（头）</text>
+
+  <text x="420" y="72" font-size="12" font-weight="bold" fill="#2b6e9e">竖直线（降序）</text>
+  <g filter="url(#sk)">
+    <rect x="500" y="54" width="42" height="34" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+  </g>
+  <text x="521" y="77" text-anchor="middle" font-size="15" font-weight="bold" fill="#a06a20">5</text>
+  <text x="521" y="104" text-anchor="middle" font-size="10" fill="#a06a20">↑ 指针 j（头）</text>
+
+  <!-- Decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="320,124 400,162 320,200 240,162" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="158" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">H[i] ≥ V[j] ?</text>
+  <text x="320" y="176" text-anchor="middle" font-size="10.5" fill="#b85450">(一方取尽也算"是")</text>
+
+  <!-- branches -->
+  <g filter="url(#sk)">
+    <path d="M 240 162 Q 170 172 150 208" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arg)"/>
+    <path d="M 400 162 Q 470 172 490 208" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arb)"/>
+  </g>
+  <text x="196" y="152" font-size="11" font-weight="bold" fill="#4a8e4a">是</text>
+  <text x="432" y="152" font-size="11" font-weight="bold" fill="#446688">否</text>
+
+  <g filter="url(#sk)">
+    <rect x="56" y="212" width="250" height="66" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="181" y="234" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">切水平线 H[i]（横穿所有竖条）</text>
+  <text x="181" y="254" text-anchor="middle" font-size="12" fill="#2e6e2e">ans += H[i] × v_cnt</text>
+  <text x="181" y="271" text-anchor="middle" font-size="11" fill="#2e6e2e">然后 h_cnt += 1，i 前进</text>
+
+  <g filter="url(#sk)">
+    <rect x="334" y="212" width="250" height="66" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="459" y="234" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">切竖直线 V[j]（横穿所有横条）</text>
+  <text x="459" y="254" text-anchor="middle" font-size="12" fill="#2b6e9e">ans += V[j] × h_cnt</text>
+  <text x="459" y="271" text-anchor="middle" font-size="11" fill="#2b6e9e">然后 v_cnt += 1，j 前进</text>
+
+  <text x="320" y="298" text-anchor="middle" font-size="11" fill="#7a6a40">乘数 = 另一方向已被切出的块数：水平线横穿 v_cnt 个竖条，竖直线横穿 h_cnt 个横条</text>
+
+  <!-- Walkthrough strip -->
+  <g filter="url(#sk)">
+    <rect x="40" y="312" width="560" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+  </g>
+  <text x="60" y="334" font-size="12" font-weight="bold" fill="#a06a20">示例 1 走查：H=[3,1]，V=[5]</text>
+  <g filter="url(#sk)">
+    <rect x="60" y="342" width="104" height="26" rx="5" fill="#ffffff" stroke="#446688" stroke-width="1.3"/>
+    <rect x="186" y="342" width="104" height="26" rx="5" fill="#ffffff" stroke="#4a8e4a" stroke-width="1.3"/>
+    <rect x="312" y="342" width="104" height="26" rx="5" fill="#ffffff" stroke="#4a8e4a" stroke-width="1.3"/>
+    <rect x="438" y="342" width="86" height="26" rx="5" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="112" y="360" text-anchor="middle" font-size="11.5" fill="#2b6e9e">v=5：5×1 = 5</text>
+  <text x="238" y="360" text-anchor="middle" font-size="11.5" fill="#2e6e2e">h=3：3×2 = 6</text>
+  <text x="364" y="360" text-anchor="middle" font-size="11.5" fill="#2e6e2e">h=1：1×2 = 2</text>
+  <text x="481" y="360" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">合计 13 ✓</text>
+  <g filter="url(#sk)">
+    <path d="M 166 355 L 184 355" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+    <path d="M 292 355 L 310 355" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+    <path d="M 418 355 L 436 355" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="536" y="360" font-size="11" fill="#a06a20">h_cnt 1→3</text>
+</svg>
