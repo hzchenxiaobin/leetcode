@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="600" fill="#fafafa"/>
+  <text x="320" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">主流程：查询与插入合为一次 Trie 遍历</text>
+  <path d="M 150 44 Q 320 52 490 44" stroke="#333" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- start -->
+  <g filter="url(#rough2)">
+    <ellipse cx="320" cy="80" rx="80" ry="21" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="86" text-anchor="middle" font-size="14" fill="#2c4a66" font-weight="bold">开始</text>
+  <path d="M 320 101 L 320 124" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#rough2)">
+    <rect x="190" y="128" width="260" height="42" rx="8" fill="#fffdf6" stroke="#555" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="154" text-anchor="middle" font-size="13" fill="#333">取出下一个 word（按输入顺序）</text>
+  <path d="M 320 170 L 320 193" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#rough2)">
+    <rect x="190" y="197" width="260" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="219" text-anchor="middle" font-size="13" fill="#7a5415">Z 函数求 border 标记</text>
+  <text x="320" y="238" text-anchor="middle" font-size="12" fill="#8a6a2a">is_border[d] ← (z[n−d] ＝ d)，is_border[n] ＝ 1，O(|w|)</text>
+  <path d="M 320 249 L 320 272" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#rough2)">
+    <rect x="190" y="276" width="260" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="298" text-anchor="middle" font-size="13" fill="#2c4a66">node ← 根，沿 word 逐字符下走</text>
+  <text x="320" y="318" text-anchor="middle" font-size="13" fill="#2c4a66">（没有子节点就新建），深度 d ＝ 1, 2, …, n</text>
+  <path d="M 320 332 L 320 356" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond: is border? -->
+  <g filter="url(#rough2)">
+    <polygon points="320,360 430,400 320,440 210,400" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="396" text-anchor="middle" font-size="13" fill="#2e5b22" font-weight="bold">当前深度 d</text>
+  <text x="320" y="414" text-anchor="middle" font-size="13" fill="#2e5b22" font-weight="bold">是 border？</text>
+
+  <!-- yes branch -->
+  <path d="M 430 400 L 470 400" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="443" y="390" font-size="12" fill="#4a7a3a" font-weight="bold">是</text>
+  <g filter="url(#rough2)">
+    <rect x="474" y="372" width="146" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="547" y="395" text-anchor="middle" font-size="13" fill="#8f3a35" font-weight="bold">ans += cnt[node]</text>
+  <text x="547" y="416" text-anchor="middle" font-size="11" fill="#b85450">累加之前等于</text>
+  <path d="M 547 428 L 547 452 L 335 452" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- no branch -->
+  <path d="M 320 440 L 320 470" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="330" y="460" font-size="12" fill="#b85450" font-weight="bold">否</text>
+
+  <!-- step 4: insert -->
+  <g filter="url(#rough2)">
+    <rect x="190" y="474" width="260" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="496" text-anchor="middle" font-size="13" fill="#7a5415">字符走完：cnt[node] += 1</text>
+  <text x="320" y="516" text-anchor="middle" font-size="13" fill="#7a5415">（把 word 自身这条完整路径记入 Trie）</text>
+  <path d="M 320 526 L 320 550" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- end -->
+  <g filter="url(#rough2)">
+    <ellipse cx="320" cy="574" rx="110" ry="21" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="580" text-anchor="middle" font-size="13" fill="#2e5b22" font-weight="bold">对所有 word 重复，返回 ans</text>
+
+  <!-- note 1 (left) -->
+  <g filter="url(#rough2)">
+    <rect x="28" y="280" width="146" height="86" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="101" y="302" text-anchor="middle" font-size="11" fill="#2e5b22" font-weight="bold">查询先于插入：</text>
+  <text x="101" y="320" text-anchor="middle" font-size="11" fill="#2e5b22">边走边建的新节点</text>
+  <text x="101" y="337" text-anchor="middle" font-size="11" fill="#2e5b22">cnt＝0，当次累加</text>
+  <text x="101" y="354" text-anchor="middle" font-size="11" fill="#2e5b22">加 0，不影响结果</text>
+
+  <!-- note 2 (left, lower) -->
+  <g filter="url(#rough2)">
+    <rect x="28" y="440" width="146" height="86" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="101" y="462" text-anchor="middle" font-size="11" fill="#7a5415" font-weight="bold">d＝n（自身）也是 border</text>
+  <text x="101" y="480" text-anchor="middle" font-size="11" fill="#7a5415">→ 重复串被自动统计</text>
+  <text x="101" y="497" text-anchor="middle" font-size="11" fill="#7a5415">如 ["ab","ab"] 答案 1</text>
+</svg>
