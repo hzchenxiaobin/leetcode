@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="440" fill="#fafafa"/>
+
+  <text x="260" y="24" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：两遍扫边 + 查询三分支</text>
+
+  <!-- ============ 顶部流水线 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="22" y="44" width="148" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="96" y="64" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688">① comp_and[i] = -1</text>
+    <text x="96" y="82" text-anchor="middle" font-size="9" fill="#666">全 1 = AND 单位元</text>
+  </g>
+  <path d="M 170,68 L 188,68" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="192" y="44" width="142" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="263" y="64" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688">② 第一遍扫边</text>
+    <text x="263" y="82" text-anchor="middle" font-size="9" fill="#666">只做 union 合并</text>
+  </g>
+  <path d="M 334,68 L 352,68" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="356" y="44" width="142" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="427" y="64" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688">③ 第二遍扫边</text>
+    <text x="427" y="82" text-anchor="middle" font-size="8.5" fill="#666">comp_and[find(u)] &amp;= w</text>
+  </g>
+
+  <!-- ============ 查询判定 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="195" y="108" width="130" height="30" rx="8" fill="#ffffff" stroke="#999" stroke-width="1.4"/>
+    <text x="260" y="127" text-anchor="middle" font-size="11" fill="#333">query [s, t]</text>
+  </g>
+  <path d="M 260,138 L 260,154" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)" filter="url(#rough2)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="260,156 375,194 260,232 145,194" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="190" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#rough2)">find(s) ==</text>
+  <text x="260" y="206" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#rough2)">find(t) ?</text>
+
+  <path d="M 145,194 L 112,194" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="128" y="186" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="12" y="176" width="98" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="61" y="191" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04040">-1</text>
+    <text x="61" y="206" text-anchor="middle" font-size="9.5" fill="#a04040">无旅途</text>
+  </g>
+
+  <path d="M 260,232 L 260,248" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="270" y="245" font-size="9.5" fill="#446688" filter="url(#rough2)">是</text>
+
+  <!-- diamond 2 -->
+  <polygon points="260,250 355,284 260,318 165,284" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="289" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">s == t ?</text>
+
+  <path d="M 165,284 L 132,284" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <text x="148" y="276" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="12" y="266" width="116" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="70" y="281" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5e24">0</text>
+    <text x="70" y="296" text-anchor="middle" font-size="9.5" fill="#2f5e24">不移动</text>
+  </g>
+
+  <path d="M 260,318 L 260,334" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="270" y="331" font-size="9.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="150" y="336" width="220" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="260" y="353" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688">comp_and[find(s)]</text>
+    <text x="260" y="371" text-anchor="middle" font-size="9.5" fill="#446688">分量内全部边权的 AND</text>
+  </g>
+
+  <!-- ============ 底部口径提示 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="22" y="396" width="478" height="36" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="260" y="410" text-anchor="middle" font-size="9" fill="#8a6a1a">s = t 时「不移动、代价 0」为官方题解口径；本题测试数据较弱，</text>
+    <text x="260" y="424" text-anchor="middle" font-size="9" fill="#8a6a1a">漏掉特判也可能 AC，但按题意应返回 0（如 edges=[[0,1,7]]、query=[[0,0]] → 0）</text>
+  </g>
+</svg>

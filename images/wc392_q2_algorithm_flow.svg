@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 505"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="505" fill="#fafafa"/>
+
+  <text x="290" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">逐位贪心：能变 'a' 就变，否则退到预算尽头</text>
+
+  <!-- start -->
+  <g filter="url(#rough2)">
+    <rect x="200" y="48" width="180" height="32" rx="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="290" y="69" text-anchor="middle" font-size="12.5" fill="#333">rem = k；i = 0</text>
+  </g>
+  <path d="M 290 80 L 290 100" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop -->
+  <g filter="url(#rough2)">
+    <rect x="150" y="104" width="280" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="290" y="128" text-anchor="middle" font-size="12.5" fill="#333">循环：i 从 0 到 n−1（rem &gt; 0 时）</text>
+  </g>
+  <path d="M 290 142 L 290 162" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- compute box -->
+  <g filter="url(#rough2)">
+    <rect x="140" y="166" width="300" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="290" y="190" text-anchor="middle" font-size="12.5" fill="#8a6a1a">o = s[i] − 'a'；cost = min(o, 26 − o)</text>
+  </g>
+  <path d="M 290 204 L 290 218" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="290,222 400,272 290,322 180,272" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="290" y="266" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">cost ≤ rem ？</text>
+  <text x="290" y="286" text-anchor="middle" font-size="11" fill="#8a6a1a" filter="url(#rough2)">（买得起 'a' 吗）</text>
+
+  <!-- yes branch -->
+  <path d="M 400 272 L 434 272" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="417" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="438" y="250" width="112" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="494" y="268" text-anchor="middle" font-size="12" fill="#2f5e24">s[i] = 'a'</text>
+    <text x="494" y="286" text-anchor="middle" font-size="12" fill="#2f5e24">rem −= cost</text>
+  </g>
+
+  <!-- no branch -->
+  <path d="M 180 272 L 146 272" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="163" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="24" y="250" width="120" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="84" y="268" text-anchor="middle" font-size="11.5" fill="#446688">s[i] = 'a'+(o−rem)</text>
+    <text x="84" y="286" text-anchor="middle" font-size="12" fill="#446688">rem = 0</text>
+  </g>
+  <text x="84" y="312" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">朝 'a' 退 rem 步 = 预算内最小字母</text>
+
+  <!-- collector -->
+  <path d="M 84 294 L 84 356 L 494 356 L 494 294" stroke="#3a3a3a" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 290 322 L 290 356" stroke="#3a3a3a" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 290 356 L 290 376" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- advance box -->
+  <g filter="url(#rough2)">
+    <rect x="195" y="380" width="190" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <text x="290" y="405" text-anchor="middle" font-size="13" fill="#446688">下一位：i ← i + 1</text>
+  </g>
+
+  <!-- loopback -->
+  <path d="M 385 400 L 564 400 L 564 123 L 436 123" stroke="#888" stroke-width="1.4" stroke-dasharray="5,4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="478" y="392" text-anchor="start" font-size="11" fill="#888" filter="url(#rough2)">rem &gt; 0 才继续</text>
+
+  <!-- return -->
+  <path d="M 290 420 L 290 444" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="302" y="436" text-anchor="start" font-size="11" fill="#888" filter="url(#rough2)">扫完 / 预算空</text>
+  <g filter="url(#rough2)">
+    <rect x="210" y="446" width="160" height="34" rx="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <text x="290" y="468" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2f5e24">返回 s</text>
+  </g>
+
+  <text x="290" y="497" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">时间 O(n) ｜ 空间 O(1) ｜ 每位 O(1) 定位</text>
+</svg>
