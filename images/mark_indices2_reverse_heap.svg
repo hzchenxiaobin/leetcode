@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 390"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="390" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">check(x)：从秒 x 倒着扫，小根堆反悔</text>
+
+  <!-- 开始框 -->
+  <rect x="160" y="42" width="200" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="65" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">s 从 x 倒序扫到 1（v = changeIndices[s]）</text>
+
+  <path d="M260,78 L260,98" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 1 -->
+  <polygon points="260,98 352,132 260,166 168,132" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="127" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">s 是 v 的最早出现秒</text>
+  <text x="260" y="144" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">且 nums[v] &gt; 0 ？</text>
+
+  <!-- 否分支：cnt+1 -->
+  <path d="M352,132 L378,132" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="360" y="124" font-size="11" fill="#446688" filter="url(#rough2)">否</text>
+  <rect x="380" y="116" width="122" height="32" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="441" y="137" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">cnt+1（当标记秒）</text>
+  <text x="441" y="162" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">↻ 进入下一秒</text>
+
+  <!-- 是分支：入堆 -->
+  <path d="M260,166 L260,186" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="180" font-size="11" fill="#446688" filter="url(#rough2)">是</text>
+  <rect x="160" y="188" width="200" height="36" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="203" text-anchor="middle" font-size="11.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">入堆 nums[v]（记账省时）</text>
+  <text x="260" y="219" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">total −= nums[v] − 1</text>
+
+  <path d="M260,224 L260,240" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 2 -->
+  <polygon points="260,240 348,270 260,300 172,270" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="275" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">堆大小 &gt; cnt ？</text>
+
+  <!-- 超员分支：踢最小 -->
+  <path d="M348,270 L376,270" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="352" y="262" font-size="11" fill="#b85450" filter="url(#rough2)">超员</text>
+  <rect x="378" y="248" width="126" height="44" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="441" y="264" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">踢出堆最小 w：</text>
+  <text x="441" y="280" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">total += w−1，cnt+1</text>
+  <text x="441" y="304" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">↻ 清零秒还给名额池</text>
+
+  <!-- 不超员分支 -->
+  <path d="M260,300 L260,324" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="316" font-size="11" fill="#446688" filter="url(#rough2)">不超员</text>
+
+  <!-- 终点框 -->
+  <rect x="140" y="326" width="240" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="348" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">扫完：total ≤ x ？ 可行 ： 不可行</text>
+
+  <!-- 左侧回环 -->
+  <path d="M172,270 C110,270 96,180 96,120 C96,80 130,60 160,60"
+        fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="76" y="196" font-size="10.5" fill="#888" filter="url(#rough2)">s−1</text>
+  <text x="66" y="212" font-size="10.5" fill="#888" filter="url(#rough2)">继续倒扫</text>
+
+  <!-- 底部注解 -->
+  <rect x="36" y="368" width="448" height="18" rx="6" fill="#f0f0f0" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="260" y="381" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">时间倒流视角：入选者 = 截止期 ⌊(x−first[v]+1)/2⌋ 的单位任务，超员踢最小 = 带权 Moore–Hodgson 反悔贪心</text>
+</svg>
