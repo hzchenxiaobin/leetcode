@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：两遍 Dijkstra + O(1) 逐边判定</text>
+  <path d="M 300 44 Q 470 52 640 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 1 -->
+  <g filter="url(#sk)"><rect x="270" y="66" width="400" height="44" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="470" y="86" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e">① 建邻接表</text>
+  <text x="470" y="102" text-anchor="middle" font-size="10" fill="#666">无向边 (a, b, w) 在 a、b 的表里各挂一条</text>
+
+  <g stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 470 110 L 470 128" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+
+  <!-- Step 2: two dijkstra -->
+  <g filter="url(#sk)"><rect x="270" y="132" width="400" height="44" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="470" y="152" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e">② Dijkstra：源点 0</text>
+  <text x="470" y="168" text-anchor="middle" font-size="10" fill="#666">得距离数组 d₀[·]，堆优化 + 懒删除</text>
+
+  <g stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 470 176 L 470 194" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+
+  <g filter="url(#sk)"><rect x="270" y="198" width="400" height="44" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="470" y="218" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e">③ Dijkstra：源点 n−1</text>
+  <text x="470" y="234" text-anchor="middle" font-size="10" fill="#666">得距离数组 d₁[·]（无向图，等价于「到 n−1」）</text>
+
+  <g stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 470 242 L 470 260" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+
+  <!-- Step 4: D -->
+  <g filter="url(#sk)"><rect x="310" y="264" width="320" height="40" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="470" y="289" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">④ D = d₀[n−1]（全程最短距）</text>
+
+  <g stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 470 304 L 470 322" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+
+  <!-- Diamond: connected? -->
+  <g filter="url(#sk)"><polygon points="470,328 610,380 470,432 330,380" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="470" y="374" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">⑤ D == INF ？</text>
+  <text x="470" y="392" text-anchor="middle" font-size="10" fill="#888">（0 到 n−1 是否连通）</text>
+
+  <!-- yes branch -->
+  <g stroke="#b85450" stroke-width="1.8" fill="none">
+    <path d="M 610 380 L 688 380" marker-end="url(#arR)" filter="url(#sk)"/>
+  </g>
+  <text x="648" y="372" text-anchor="middle" font-size="11" font-weight="bold" fill="#b03a3a">是</text>
+  <g filter="url(#sk)"><rect x="694" y="358" width="190" height="44" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="789" y="378" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">返回全 false</text>
+  <text x="789" y="394" text-anchor="middle" font-size="10" fill="#888">不存在任何最短路</text>
+
+  <!-- no branch -->
+  <g stroke="#4a8e4a" stroke-width="1.8" fill="none">
+    <path d="M 470 432 L 470 452" marker-end="url(#arG)" filter="url(#sk)"/>
+  </g>
+  <text x="484" y="448" font-size="11" font-weight="bold" fill="#2e6e2e">否</text>
+
+  <!-- Step 6: per edge -->
+  <g filter="url(#sk)"><rect x="180" y="456" width="580" height="76" rx="10" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="470" y="480" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e">⑥ 逐边判定（i = 0 … m−1），每条 O(1)</text>
+  <text x="470" y="502" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e">answer[i] = ( d₀[a]+w+d₁[b] == D ) ∨ ( d₀[b]+w+d₁[a] == D )</text>
+  <text x="470" y="522" text-anchor="middle" font-size="10" fill="#888">INF 取 LLONG_MAX/4：不可达端点参与相加不溢出，且必 ≠ D，自动判 false</text>
+
+  <g stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 470 532 L 470 550" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+
+  <!-- End -->
+  <g filter="url(#sk)"><rect x="330" y="554" width="280" height="40" rx="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="470" y="579" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e">⑦ 返回 answer</text>
+
+  <!-- cost annotation -->
+  <g filter="url(#sk)"><rect x="660" y="556" width="240" height="70" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="780" y="578" text-anchor="middle" font-size="11" font-weight="bold" fill="#444">复杂度账单</text>
+  <text x="780" y="596" text-anchor="middle" font-size="10" fill="#666">两遍 Dijkstra：O((n+m) log n)</text>
+  <text x="780" y="612" text-anchor="middle" font-size="10" fill="#666">逐边判定：O(m) 次加法比较</text>
+</svg>
