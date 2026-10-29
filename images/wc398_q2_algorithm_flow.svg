@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="37"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/></marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#999"/></marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：一趟 O(n) 预处理 + 逐查询 O(1) 判定</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">nums 全程不变，间隙合法性算一次就够——静态信息只算一次，每个查询 O(1) 读取</text>
+
+  <!-- 阶段一 -->
+  <rect x="55" y="56" width="230" height="28" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#r)"/>
+  <text x="170" y="74" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#r)">阶段一 预处理：扫描 n-1 个间隙</text>
+
+  <rect x="120" y="98" width="100" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="170" y="115" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#r)">i = 1 … n-1</text>
+  <path d="M 170 124 V 134" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <polygon points="170,136 232,166 170,196 108,166" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#r)"/>
+  <text x="170" y="170" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#r)">间隙 i 违规？</text>
+
+  <text x="240" y="158" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#r)">是</text>
+  <path d="M 232 166 L 256 166" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <rect x="260" y="154" width="54" height="24" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#r)"/>
+  <text x="287" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">di = 1</text>
+
+  <text x="100" y="158" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#r)">否</text>
+  <path d="M 108 166 L 84 166" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <rect x="26" y="154" width="54" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="53" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#r)">di = 0</text>
+
+  <path d="M 53 178 C 53 208, 74 222, 104 224" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <path d="M 287 178 C 287 208, 266 222, 236 224" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <rect x="110" y="210" width="120" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="170" y="228" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#r)">pre[i] = pre[i-1] + di</text>
+
+  <path d="M 165 238 C 160 268, 10 268, 10 111 L 114 111" stroke="#999" stroke-width="1.3" fill="none" stroke-dasharray="5 4" marker-end="url(#arrG)" filter="url(#r)"/>
+  <text x="18" y="258" font-size="9.5" fill="#888" filter="url(#r)">i+1（下一个间隙）</text>
+
+  <path d="M 170 238 V 290" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="178" y="268" font-size="9.5" fill="#888" filter="url(#r)">i = n，扫描结束</text>
+
+  <rect x="110" y="294" width="120" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="170" y="311" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#r)">pre[0..n-1] 就绪</text>
+
+  <!-- 阶段二 -->
+  <rect x="345" y="56" width="230" height="28" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#r)"/>
+  <text x="460" y="74" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040" filter="url(#r)">阶段二 逐查询：每问 O(1)</text>
+
+  <rect x="395" y="98" width="130" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="460" y="115" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#r)">取出查询 [l, r]</text>
+
+  <polygon points="460,140 532,172 460,204 388,172" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#r)"/>
+  <text x="460" y="176" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#r)">pre[r] = pre[l] ?</text>
+
+  <text x="542" y="162" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#r)">是</text>
+  <path d="M 532 172 L 556 172" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <rect x="560" y="160" width="56" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="588" y="176" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#r)">true</text>
+
+  <text x="470" y="220" font-size="10" fill="#b85450" filter="url(#r)">否</text>
+  <path d="M 460 204 V 224" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <rect x="410" y="228" width="100" height="24" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#r)"/>
+  <text x="460" y="244" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">false</text>
+
+  <path d="M 588 184 C 588 238, 556 264, 534 272" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <path d="M 460 252 V 266" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <rect x="390" y="270" width="140" height="24" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="460" y="286" text-anchor="middle" font-size="10" fill="#333" filter="url(#r)">写入 answer，取下一查询</text>
+
+  <path d="M 390 282 C 345 282, 345 111, 391 111" stroke="#999" stroke-width="1.3" fill="none" stroke-dasharray="5 4" marker-end="url(#arrG)" filter="url(#r)"/>
+  <text x="352" y="200" font-size="9.5" fill="#888" filter="url(#r)">下一个查询</text>
+
+  <path d="M 460 294 V 316" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="468" y="310" font-size="9.5" fill="#888" filter="url(#r)">q 个全部答完</text>
+
+  <rect x="410" y="320" width="100" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="460" y="337" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#r)">返回 answer</text>
+
+  <!-- 复杂度条 -->
+  <rect x="40" y="360" width="560" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="320" y="379" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#r)">总时间 O(n + q)，额外空间 O(n) —— 对比暴力 O(n·q) = 10^10</text>
+</svg>
