@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a7f6a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="480" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：双计数二维前缀和 + 枚举右下角</text>
+  <path d="M 100 42 Q 320 50 540 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- flow column -->
+  <g filter="url(#sk)">
+    <rect x="70" y="64" width="250" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="195" y="88" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5a88">① 构建前缀和 px / py</text>
+  <text x="195" y="107" text-anchor="middle" font-size="12" fill="#2b5a88">(n+1)×(m+1)，第 0 行/列全 0</text>
+  <path d="M 195 120 L 195 140" stroke="#8a7f6a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="144" width="250" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="195" y="168" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5a88">② 枚举右下角 (i, j)</text>
+  <text x="195" y="187" text-anchor="middle" font-size="12" fill="#2b5a88">i = 0..n−1，j = 0..m−1</text>
+  <path d="M 195 200 L 195 220" stroke="#8a7f6a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="224" width="250" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="195" y="248" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b5a88">③ 取 cx = px[i+1][j+1]</text>
+  <text x="195" y="267" text-anchor="middle" font-size="12" fill="#2b5a88">cy = py[i+1][j+1]</text>
+  <path d="M 195 280 L 195 298" stroke="#8a7f6a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="195,302 305,346 195,390 85,346" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="195" y="342" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b06a10">cx == cy</text>
+  <text x="195" y="360" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b06a10">且 cx ≥ 1 ?</text>
+
+  <path d="M 305 346 L 362 346" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="326" y="338" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <rect x="366" y="326" width="104" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="418" y="351" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">ans += 1</text>
+
+  <text x="195" y="412" text-anchor="middle" font-size="12.5" fill="#a04038">否 · 跳过该候选</text>
+
+  <text x="492" y="340" text-anchor="middle" font-size="11.5" fill="#a04038">若 cx = cy = 0</text>
+  <text x="492" y="356" text-anchor="middle" font-size="11.5" fill="#a04038">(全 '.') → 排除</text>
+
+  <!-- loop back -->
+  <path d="M 85 346 C 34 346 34 172 64 172" stroke="#8a7f6a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="26" y="260" font-size="10.5" fill="#8a7f6a" transform="rotate(-90 26 260)">下一个 (i,j)</text>
+
+  <!-- formula box -->
+  <g filter="url(#sk)">
+    <rect x="356" y="64" width="258" height="118" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="485" y="86" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b06a10">递推（构建，i,j 从 0 起）：</text>
+  <text x="485" y="108" text-anchor="middle" font-size="12" fill="#7a6a3f">px[i+1][j+1] = px[i][j+1]</text>
+  <text x="485" y="124" text-anchor="middle" font-size="12" fill="#7a6a3f">+ px[i+1][j] − px[i][j]</text>
+  <text x="485" y="140" text-anchor="middle" font-size="12" fill="#7a6a3f">+ [ grid[i][j] == 'X' ]</text>
+  <text x="485" y="164" text-anchor="middle" font-size="11.5" fill="#8a7f6a">py 同理，统计 'Y'</text>
+
+  <!-- simplification note -->
+  <g filter="url(#sk)">
+    <rect x="356" y="200" width="258" height="100" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="485" y="222" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">查询 [0..i]×[0..j]：</text>
+  <text x="485" y="242" text-anchor="middle" font-size="12" fill="#2e6e2e">容斥的另外三项全为 0，</text>
+  <text x="485" y="260" text-anchor="middle" font-size="12" fill="#2e6e2e">px[i+1][j+1] 本身就是</text>
+  <text x="485" y="278" text-anchor="middle" font-size="12" fill="#2e6e2e">区域内的 'X' 计数</text>
+
+  <!-- complexity strip -->
+  <g filter="url(#sk)">
+    <rect x="140" y="434" width="360" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="320" y="456" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b5a88">总时间 O(nm) · 空间 O(nm)（可滚动至 O(min(n,m))）</text>
+</svg>

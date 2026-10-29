@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="460" viewBox="0 0 640 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="43" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8a7f6a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="460" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：包含 grid[0][0] ⟺ 只枚举右下角 (i, j)</text>
+  <path d="M 100 42 Q 320 50 540 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="60" y="64" font-size="12.5" font-weight="bold" fill="#b06a10">★ 左上角固定 (0,0)</text>
+
+  <!-- 4x4 grid, origin (86,76), cell 52 -->
+  <g filter="url(#sk)" fill="#ffffff" stroke="#c9c4b8" stroke-width="1.2">
+    <rect x="86"  y="76"  width="52" height="52" rx="3"/>
+    <rect x="138" y="76"  width="52" height="52" rx="3"/>
+    <rect x="190" y="76"  width="52" height="52" rx="3"/>
+    <rect x="242" y="76"  width="52" height="52" rx="3"/>
+    <rect x="86"  y="128" width="52" height="52" rx="3"/>
+    <rect x="138" y="128" width="52" height="52" rx="3"/>
+    <rect x="190" y="128" width="52" height="52" rx="3"/>
+    <rect x="242" y="128" width="52" height="52" rx="3"/>
+    <rect x="86"  y="180" width="52" height="52" rx="3"/>
+    <rect x="138" y="180" width="52" height="52" rx="3"/>
+    <rect x="190" y="180" width="52" height="52" rx="3"/>
+    <rect x="242" y="180" width="52" height="52" rx="3"/>
+    <rect x="86"  y="232" width="52" height="52" rx="3"/>
+    <rect x="138" y="232" width="52" height="52" rx="3"/>
+    <rect x="190" y="232" width="52" height="52" rx="3"/>
+    <rect x="242" y="232" width="52" height="52" rx="3"/>
+  </g>
+
+  <!-- anchored candidate: rows 0..2, cols 0..1 -->
+  <rect x="86" y="76" width="104" height="156" rx="2" fill="#e8f0fe" fill-opacity="0.5"
+        stroke="#446688" stroke-width="2.4" filter="url(#sk)"/>
+  <!-- whole grid as the maximal candidate -->
+  <rect x="86" y="76" width="208" height="208" rx="2" fill="none"
+        stroke="#4a7a3a" stroke-width="2.6" stroke-dasharray="7,5" filter="url(#sk)"/>
+  <!-- origin cell -->
+  <rect x="86" y="76" width="52" height="52" rx="3" fill="#fff8e1"
+        stroke="#d6a040" stroke-width="2.4" filter="url(#sk)"/>
+  <text x="112" y="106" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b06a10">(0,0)</text>
+  <!-- right-bottom corner marker -->
+  <circle cx="190" cy="232" r="5" fill="#b85450" filter="url(#sk)"/>
+  <text x="200" y="228" font-size="12.5" font-weight="bold" fill="#a04038">← 右下角 (i,j) = (2,1)</text>
+
+  <text x="190" y="306" text-anchor="middle" font-size="12" fill="#2e6e2e">虚线框：i = n−1, j = m−1（整个矩阵）</text>
+  <text x="190" y="332" text-anchor="middle" font-size="12.5" fill="#555">每个 (i,j) ⇔ 恰一个候选子矩阵</text>
+
+  <!-- right explanation boxes -->
+  <g filter="url(#sk)">
+    <rect x="344" y="76" width="264" height="78" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="476" y="100" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a88">矩形 [r₁..r₂]×[c₁..c₂] 含 (0,0)</text>
+  <text x="476" y="120" text-anchor="middle" font-size="13" fill="#2b5a88">⟺ r₁ = 0 且 c₁ = 0</text>
+  <text x="476" y="140" text-anchor="middle" font-size="13" fill="#2b5a88">⟺ 候选 = [0..i]×[0..j]</text>
+
+  <g filter="url(#sk)">
+    <rect x="344" y="170" width="264" height="64" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="476" y="194" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#b06a10">候选数 = n·m ≤ 10⁶</text>
+  <text x="476" y="216" text-anchor="middle" font-size="13" fill="#b06a10">枚举量 O(n²m²) → O(nm)</text>
+
+  <g filter="url(#sk)">
+    <rect x="344" y="250" width="264" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="476" y="274" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">每个候选判定：</text>
+  <text x="476" y="296" text-anchor="middle" font-size="13" fill="#2e6e2e">#X == #Y 且 #X ≥ 1（前缀和 O(1)）</text>
+
+  <path d="M 302 140 C 324 140 322 115 344 115" stroke="#8a7f6a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="386" width="500" height="48" rx="8" fill="#f6fbf7" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="415" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e">条件①把四维枚举 (r₁,r₂,c₁,c₂) 压成二维 (i,j) —— 本题唯一的关键一步</text>
+</svg>
