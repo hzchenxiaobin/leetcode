@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="460" viewBox="0 0 640 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="97" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="460" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">C++ 字级实现：v = 64·w + r，跨字拆两段</text>
+  <text x="320" y="48" text-anchor="middle" font-size="11.5" fill="#7a7a7a" font-style="italic" filter="url(#sk)">f 存成 unsigned long long 数组；处理 v 只扫读区覆盖的字（i ≤ w），尾字用 (2^r − 1) 截出低 r 位</text>
+
+  <!-- source word -->
+  <text x="282" y="76" text-anchor="middle" font-size="10.5" fill="#7a7a7a" filter="url(#sk)">源字 i：读区的一个机器字 low（位号 p = 0 … 63）</text>
+  <rect x="90" y="84" width="288" height="44" rx="4" fill="#dbeafc" filter="url(#sk)"/>
+  <rect x="378" y="84" width="96" height="44" rx="4" fill="#fff4e0" filter="url(#sk)"/>
+  <g filter="url(#sk)" stroke="#9ab8d8" stroke-width="1">
+    <line x1="138" y1="84" x2="138" y2="128"/>
+    <line x1="186" y1="84" x2="186" y2="128"/>
+    <line x1="234" y1="84" x2="234" y2="128"/>
+    <line x1="282" y1="84" x2="282" y2="128"/>
+    <line x1="330" y1="84" x2="330" y2="128"/>
+    <line x1="426" y1="84" x2="426" y2="128"/>
+  </g>
+  <rect x="90" y="84" width="384" height="44" rx="4" fill="none" stroke="#446688" stroke-width="1.5" filter="url(#sk)"/>
+  <line x1="378" y1="78" x2="378" y2="134" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 4" filter="url(#sk)"/>
+  <text x="234" y="110" text-anchor="middle" font-size="10.5" fill="#2b4a66" filter="url(#sk)">低 64−r 位（p + r &lt; 64）</text>
+  <text x="426" y="110" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#sk)">高 r 位（溢出）</text>
+
+  <!-- arrows -->
+  <path d="M 230 136 C 216 160 196 184 182 206" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="125" y="166" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">low &lt;&lt; r</text>
+  <text x="125" y="182" text-anchor="middle" font-size="10" fill="#5a7a9e" filter="url(#sk)">低段 → 字 t = i + w</text>
+  <path d="M 434 136 C 448 160 460 184 466 206" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="521" y="166" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#sk)">low &gt;&gt; (64 − r)</text>
+  <text x="521" y="182" text-anchor="middle" font-size="10" fill="#a06058" filter="url(#sk)">高段 → 字 t + 1</text>
+
+  <!-- target words -->
+  <rect x="60" y="210" width="225" height="44" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="172" y="228" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">字 t = i + w</text>
+  <text x="172" y="246" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#sk)">接住低段，新位从字内位 r 开始</text>
+  <rect x="355" y="210" width="225" height="44" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="467" y="228" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">字 t + 1 = i + w + 1</text>
+  <text x="467" y="246" text-anchor="middle" font-size="10" fill="#a06058" filter="url(#sk)">接住高段，新位从字内位 0 开始</text>
+
+  <!-- red card: r == 0 -->
+  <rect x="40" y="282" width="560" height="58" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="320" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">r = 0（v 是 64 的倍数）时：1ull &lt;&lt; 64 与 low &gt;&gt; 64 都是未定义行为</text>
+  <text x="320" y="324" text-anchor="middle" font-size="11" fill="#a06058" filter="url(#sk)">高段写入必须 if (r) 守卫；此时尾字掩码 (2^r − 1) = 0，i = w 的一轮自动空转</text>
+
+  <!-- green card: in-place safety -->
+  <rect x="40" y="352" width="560" height="48" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="320" y="372" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">原地更新安全：本轮写入的全局位都 ≥ v，读取的全局位都 &lt; v</text>
+  <text x="320" y="390" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">——「读写区不相交」的字级版本，无需倒序枚举防重（沿用 Q3 引理）</text>
+
+  <!-- orange strip -->
+  <rect x="40" y="412" width="560" height="40" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="320" y="437" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6a20" filter="url(#sk)">f 多开一个字接收高段；答案 = 最高置位 i·64 + 63 − clz(f[i])</text>
+</svg>
