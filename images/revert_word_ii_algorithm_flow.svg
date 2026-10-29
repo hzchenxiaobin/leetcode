@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 560"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="560" fill="#fafafa"/>
+
+  <text x="330" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：一遍 Z 数组预处理 ＋ 逐格点 O(1) 判定</text>
+  <path d="M 180 36 Q 330 44 480 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- preprocessing -->
+  <rect x="160" y="46" width="340" height="36" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="69" text-anchor="middle" font-size="12.5" fill="#2b4a6e" filter="url(#rough2)">预处理 Z 数组 z[0..n−1]（Z-box 复用，一遍 O(n)）</text>
+  <path d="M 330 82 L 330 100" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- init -->
+  <rect x="255" y="104" width="150" height="32" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="125" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">t ← 1，i ← k</text>
+  <path d="M 330 136 L 330 154" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="330,158 480,200 330,242 180,200" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="197" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#rough2)">i ≥ n ？</text>
+  <text x="330" y="216" text-anchor="middle" font-size="11" fill="#8a6a30" filter="url(#rough2)">原字符已删光？</text>
+
+  <!-- yes branch 1 -->
+  <path d="M 480 200 L 505 200" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="493" y="192" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a06a10" filter="url(#rough2)">是</text>
+  <rect x="509" y="178" width="142" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="580" y="196" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#rough2)">return t</text>
+  <text x="580" y="213" text-anchor="middle" font-size="10.5" fill="#8a6a30" filter="url(#rough2)">删光重建（兜底）</text>
+
+  <!-- no branch 1 -->
+  <path d="M 330 242 L 330 266" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="344" y="260" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">否</text>
+
+  <!-- diamond 2 -->
+  <polygon points="330,270 520,320 330,370 140,320" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="316" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#rough2)">z[i] ≥ n − i ？</text>
+  <text x="330" y="335" text-anchor="middle" font-size="11" fill="#8a6a30" filter="url(#rough2)">后缀 w[i:] 整段是前缀？</text>
+
+  <!-- yes branch 2 -->
+  <path d="M 520 320 L 545 320" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="533" y="312" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="549" y="298" width="100" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="599" y="316" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">return t</text>
+  <text x="599" y="333" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">尾部照抄</text>
+
+  <!-- no branch 2 -->
+  <path d="M 330 370 L 330 394" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="344" y="388" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">否</text>
+
+  <!-- advance -->
+  <rect x="270" y="398" width="120" height="32" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="419" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">t ← t＋1，i ← i＋k</text>
+
+  <!-- loop back -->
+  <path d="M 270 414 L 128 414 Q 110 414 110 396 L 110 218 Q 110 200 128 200 L 176 200" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="228" y="440" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">回到下一格点判定</text>
+
+  <!-- notes -->
+  <rect x="60" y="456" width="540" height="40" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="480" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">判定至多 ⌈n/k⌉ 轮、每轮 O(1)；t ＝ ⌈n/k⌉ 必走删光分支，循环必然终止</text>
+
+  <rect x="60" y="508" width="540" height="36" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="531" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">总复杂度 ＝ Z 预处理 O(n) ＋ 判定 O(n/k) ＝ O(n)</text>
+</svg>

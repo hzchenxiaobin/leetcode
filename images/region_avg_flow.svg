@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 540"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="540" fill="#fafafa"/>
+
+  <text x="330" y="26" text-anchor="middle" font-size="18.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：前缀和预处理 → 逐块 O(1) 判定累加 → 统一取整</text>
+  <path d="M 170 36 Q 330 44 490 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- start -->
+  <rect x="190" y="44" width="280" height="36" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="67" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">读入 image、threshold；m × n</text>
+  <path d="M 330 80 L 330 96" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- prefix build -->
+  <rect x="155" y="100" width="350" height="40" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="125" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">构建 PH / PV / PS 三个 (m+1)×(n+1) 二维前缀和</text>
+  <path d="M 330 140 L 330 156" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- enum loop header -->
+  <rect x="145" y="160" width="370" height="40" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="185" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">枚举块左上角 (r, c)：r ∈ [0, m−3]，c ∈ [0, n−3]</text>
+  <path d="M 330 200 L 330 216" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond: valid region? -->
+  <polygon points="330,220 515,272 330,324 145,272" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="264" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#rough2)">块 (r,c) 是合法区域？</text>
+  <text x="330" y="284" text-anchor="middle" font-size="11" fill="#8a6a30" filter="url(#rough2)">横向 + 纵向矩形坏对和均为 0</text>
+
+  <!-- no branch -->
+  <path d="M 515 272 L 549 272" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="530" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a06a10" filter="url(#rough2)">否</text>
+  <rect x="553" y="250" width="92" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="599" y="268" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#rough2)">跳过该块</text>
+  <text x="599" y="285" text-anchor="middle" font-size="10.5" fill="#8a6a30" filter="url(#rough2)">非区域</text>
+
+  <!-- yes branch -->
+  <path d="M 330 324 L 330 342" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="344" y="338" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- accumulate -->
+  <rect x="170" y="346" width="320" height="54" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="368" text-anchor="middle" font-size="12.5" fill="#2b4a6e" filter="url(#rough2)">avg = ⌊S(r,c) / 9⌋（PS 四角查询）</text>
+  <text x="330" y="388" text-anchor="middle" font-size="12.5" fill="#2b4a6e" filter="url(#rough2)">块内 9 像素：tot += avg，cnt += 1</text>
+  <path d="M 330 400 L 330 416" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- next block -->
+  <rect x="200" y="420" width="260" height="36" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="443" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">移到下一块 (r, c)</text>
+
+  <!-- skip path joins next -->
+  <path d="M 599 294 L 599 438 L 464 438" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop back -->
+  <path d="M 200 438 L 120 438 Q 108 438 108 426 L 108 194 Q 108 180 122 180 L 141 180" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="100" y="305" text-anchor="end" font-size="10.5" fill="#446688" filter="url(#rough2)">继续枚举</text>
+
+  <!-- exit -->
+  <path d="M 330 456 L 330 472" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="344" y="468" font-size="10.5" fill="#446688" filter="url(#rough2)">枚举完毕</text>
+
+  <!-- finalize -->
+  <rect x="110" y="476" width="440" height="54" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="498" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">收尾：cnt[i][j] &gt; 0 → result = ⌊tot / cnt⌋</text>
+  <text x="330" y="518" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">否则 result[i][j] = image[i][j]（保留原值）</text>
+</svg>

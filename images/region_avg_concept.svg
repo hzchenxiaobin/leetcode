@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="420" fill="#fafafa"/>
+
+  <text x="350" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：12 对邻接判定 + 二维前缀和 O(1) 查询</text>
+  <path d="M 190 36 Q 350 44 510 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- ===== 左：3×3 区域内部的 12 对邻接 ===== -->
+  <rect x="55" y="80" width="204" height="138" fill="none" stroke="#446688" stroke-width="2.2" rx="4" filter="url(#rough2)"/>
+
+  <rect x="55" y="80" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="123" y="80" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="191" y="80" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="55" y="126" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="123" y="126" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="191" y="126" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="55" y="172" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="123" y="172" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <rect x="191" y="172" width="68" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+
+  <text x="89" y="108" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">6</text>
+  <text x="157" y="108" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">7</text>
+  <text x="225" y="108" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">10</text>
+  <text x="89" y="154" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">9</text>
+  <text x="157" y="154" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">10</text>
+  <text x="225" y="154" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">10</text>
+  <text x="89" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">12</text>
+  <text x="157" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">13</text>
+  <text x="225" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">10</text>
+
+  <!-- 6 个横向相邻对（绿点） -->
+  <circle cx="123" cy="103" r="4.5" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="123" cy="149" r="4.5" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="123" cy="195" r="4.5" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="191" cy="103" r="4.5" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="191" cy="149" r="4.5" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="191" cy="195" r="4.5" fill="#4a7a3a" filter="url(#rough2)"/>
+
+  <!-- 6 个纵向相邻对（蓝点） -->
+  <circle cx="89" cy="126" r="4.5" fill="#446688" filter="url(#rough2)"/>
+  <circle cx="157" cy="126" r="4.5" fill="#446688" filter="url(#rough2)"/>
+  <circle cx="225" cy="126" r="4.5" fill="#446688" filter="url(#rough2)"/>
+  <circle cx="89" cy="172" r="4.5" fill="#446688" filter="url(#rough2)"/>
+  <circle cx="157" cy="172" r="4.5" fill="#446688" filter="url(#rough2)"/>
+  <circle cx="225" cy="172" r="4.5" fill="#446688" filter="url(#rough2)"/>
+
+  <!-- 对角（不算相邻） -->
+  <path d="M 89 103 L 157 149" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5,4" fill="none" filter="url(#rough2)"/>
+  <text x="123" y="131" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗</text>
+
+  <text x="157" y="244" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">6 横 + 6 纵 = 12 对相邻，</text>
+  <text x="157" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">全部 |差| ≤ threshold ⟺ 合法区域</text>
+
+  <circle cx="62" cy="286" r="4" fill="#4a7a3a" filter="url(#rough2)"/>
+  <text x="73" y="290" font-size="11" fill="#4a7a3a" filter="url(#rough2)">横向相邻对（左右）×6</text>
+  <circle cx="62" cy="304" r="4" fill="#446688" filter="url(#rough2)"/>
+  <text x="73" y="308" font-size="11" fill="#446688" filter="url(#rough2)">纵向相邻对（上下）×6</text>
+  <path d="M 55 322 L 69 322" stroke="#b85450" stroke-width="1.8" stroke-dasharray="4,3" fill="none" filter="url(#rough2)"/>
+  <text x="73" y="326" font-size="11" fill="#b85450" filter="url(#rough2)">对角：|Δ行|+|Δ列| = 2，不算相邻</text>
+
+  <rect x="40" y="344" width="240" height="58" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="160" y="366" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#rough2)">示例 1 的区域②：最大差 3 ≤ 3 ✓</text>
+  <text x="160" y="386" text-anchor="middle" font-size="11.5" fill="#8a6a30" filter="url(#rough2)">S = 87 → avg = ⌊87/9⌋ = 9</text>
+
+  <!-- ===== 右：前缀和 O(1) 查询 ===== -->
+  <rect x="320" y="60" width="350" height="56" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="495" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">坏邻接 0/1 矩阵 HB / VB</text>
+  <text x="495" y="102" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">HB[i][j] = 1 ⟺ 水平对超阈值；VB 同理（垂直）</text>
+  <path d="M 495 116 L 495 130" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="320" y="134" width="350" height="56" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="495" y="156" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">二维前缀和 PH / PV / PS</text>
+  <text x="495" y="176" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">统一 (m+1)×(n+1)；HB/VB 边界补零</text>
+  <path d="M 495 190 L 495 204" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="320" y="208" width="350" height="96" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="495" y="230" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#rough2)">块 (r,c) 合法 ⟺ 两个矩形坏对和均为 0</text>
+  <text x="495" y="251" text-anchor="middle" font-size="11.5" fill="#8a6a30" filter="url(#rough2)">横向：PH 区间 [r, r+3) × [c, c+2)</text>
+  <text x="495" y="269" text-anchor="middle" font-size="11.5" fill="#8a6a30" filter="url(#rough2)">纵向：PV 区间 [r, r+2) × [c, c+3)</text>
+  <text x="495" y="291" text-anchor="middle" font-size="11.5" fill="#8a6a30" filter="url(#rough2)">块和 S：PS 区间 [r, r+3) × [c, c+3) 四角查询</text>
+  <path d="M 495 304 L 495 318" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="320" y="322" width="350" height="80" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="495" y="346" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">非负 0/1 矩形和 = 0 ⟺ 矩形内全零</text>
+  <text x="495" y="366" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">判定与求和均降为 O(1)</text>
+  <text x="495" y="386" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">整题 O(mn)，500×500 轻松通过</text>
+</svg>
