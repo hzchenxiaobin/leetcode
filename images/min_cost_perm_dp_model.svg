@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="700" viewBox="0 0 940 700" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arK" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="700" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">状压 DP：从 0 出发的哈密顿环（TSP 型）</text>
+  <path d="M 250 42 Q 470 50 690 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="470" y="66" text-anchor="middle" font-size="11" fill="#888">状态图以 nums = [0, 2, 1] 为例（n=3），二进制写法 (mask, last)</text>
+
+  <!-- ===== state layer 1: (001, 0) ===== -->
+  <g font-size="12">
+    <text x="150" y="120" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">g = 2（最低分）</text>
+    <g filter="url(#sk)">
+      <rect x="84" y="130" width="132" height="64" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    </g>
+    <text x="150" y="156" text-anchor="middle" fill="#446688" font-weight="bold">( {0}, 0 )</text>
+    <text x="150" y="176" text-anchor="middle" font-size="10" fill="#888">起点：已放 0，末端 0</text>
+
+    <!-- edge to (011,1) -->
+    <path d="M 216 152 Q 320 108 404 128" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+    <text x="312" y="112" text-anchor="middle" font-size="10" fill="#7a2828" font-weight="bold">x=1: |0−nums[1]|=2</text>
+
+    <!-- edge to (101,2) -->
+    <path d="M 216 172 Q 320 236 404 300" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+    <text x="322" y="252" text-anchor="middle" font-size="10" fill="#7a2828" font-weight="bold">x=2: |0−nums[2]|=1</text>
+
+    <!-- layer 2 -->
+    <text x="470" y="102" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">g = 2</text>
+    <g filter="url(#sk)">
+      <rect x="404" y="110" width="132" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    </g>
+    <text x="470" y="132" text-anchor="middle" fill="#446688" font-weight="bold">( {0,1}, 1 )</text>
+    <text x="470" y="150" text-anchor="middle" font-size="10" fill="#888">g = 2 + g(下一层)</text>
+
+    <text x="470" y="292" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">g = 1</text>
+    <g filter="url(#sk)">
+      <rect x="404" y="300" width="132" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    </g>
+    <text x="470" y="322" text-anchor="middle" fill="#446688" font-weight="bold">( {0,2}, 2 )</text>
+    <text x="470" y="340" text-anchor="middle" font-size="10" fill="#888">g = 1 + g(下一层)</text>
+
+    <!-- layer 3: full -->
+    <text x="742" y="102" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">g = 0+1 = 1</text>
+    <g filter="url(#sk)">
+      <rect x="676" y="110" width="132" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    </g>
+    <text x="742" y="132" text-anchor="middle" fill="#7a5415" font-weight="bold">( 全集, 1 )</text>
+
+    <text x="742" y="292" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">g = 0+2 = 2</text>
+    <g filter="url(#sk)">
+      <rect x="676" y="300" width="132" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    </g>
+    <text x="742" y="322" text-anchor="middle" fill="#7a5415" font-weight="bold">( 全集, 2 )</text>
+
+    <!-- inner layer edges -->
+    <path d="M 536 138 Q 610 132 676 134" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+    <text x="606" y="122" text-anchor="middle" font-size="10" fill="#7a2828" font-weight="bold">x=2: |1−nums[2]|=0</text>
+    <path d="M 536 328 Q 610 334 676 332" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+    <text x="606" y="356" text-anchor="middle" font-size="10" fill="#7a2828" font-weight="bold">x=1: |2−nums[1]|=0</text>
+
+    <!-- closing edges -->
+    <path d="M 808 128 Q 878 108 886 152 Q 890 190 830 172" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)" stroke-dasharray="6 3"/>
+    <text x="880" y="98" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold">闭环: |1−nums[0]|=1</text>
+    <path d="M 808 318 Q 878 298 886 342 Q 890 380 830 362" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)" stroke-dasharray="6 3"/>
+    <text x="880" y="288" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold">闭环: |2−nums[0]|=2</text>
+  </g>
+
+  <!-- ===== recurrence box ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="400" width="520" height="130" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="424" font-size="13" font-weight="bold" fill="#2b6e9e">后缀式状态设计（便于贪心重构）</text>
+  <text x="80" y="448" font-size="12" fill="#444">g(mask, last)：已放集合为 mask（含 0 与 last）、末端为 last，</text>
+  <text x="80" y="466" font-size="12" fill="#444">把剩余数放完并闭环的最小代价</text>
+  <text x="80" y="492" font-size="12" fill="#b03a3a" font-family="monospace" font-weight="bold">g = min_{x∉mask} |last − nums[x]| + g(mask∪{x}, x)</text>
+  <text x="80" y="516" font-size="12" fill="#b03a3a" font-family="monospace" font-weight="bold">g(全集, last) = |last − nums[0]|，最低分 = g({0}, 0)</text>
+
+  <!-- ===== greedy reconstruction box ===== -->
+  <g filter="url(#sk)">
+    <rect x="604" y="400" width="296" height="130" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="622" y="424" font-size="13" font-weight="bold" fill="#8e3040">字典序最小：逐位贪心</text>
+  <text x="622" y="448" font-size="11" fill="#444">从 ({0},0)、rem = 最低分出发：</text>
+  <text x="622" y="468" font-size="11" fill="#444">每个位置从小到大试 x，第一个满足</text>
+  <text x="622" y="490" font-size="11" fill="#b03a3a" font-family="monospace" font-weight="bold">|last−nums[x]|+g(新状态,x)=rem</text>
+  <text x="622" y="510" font-size="11" fill="#444">的 x 即入选，rem 随之扣减</text>
+
+  <!-- ===== complexity ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="556" width="500" height="100" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="80" y="580" font-size="13" font-weight="bold" fill="#2e6e2e">复杂度</text>
+  <text x="80" y="602" font-size="11" fill="#444">状态 2ⁿ·n 个 × 转移 n 次：</text>
+  <text x="80" y="626" font-size="12" fill="#2e6e2e" font-family="monospace" font-weight="bold">时间 O(2ⁿ·n²) ≈ 3.2×10⁶（n=14）</text>
+  <text x="80" y="646" font-size="11" fill="#666">空间 O(2ⁿ·n) ≈ 2.3×10⁵ 个整数</text>
+
+  <!-- ===== key insight ===== -->
+  <g filter="url(#sk)">
+    <rect x="584" y="556" width="316" height="100" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="602" y="580" font-size="12" font-weight="bold" fill="#2b2b2b">为什么后缀式？</text>
+  <text x="602" y="602" font-size="11" fill="#444">g 值恰好回答「从当前前缀出发还能</text>
+  <text x="602" y="620" font-size="11" fill="#444">不能凑出总分 = 最低分」—— 正是</text>
+  <text x="602" y="638" font-size="11" fill="#444">贪心重构时逐位判定可行性的依据</text>
+</svg>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="14" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arK" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">贪心重构演算：nums = [0, 2, 1]，最低分 = 2</text>
+  <path d="M 230 42 Q 470 50 710 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="470" y="64" text-anchor="middle" font-size="11" fill="#888">查表：g({0,1},1)=2，g({0,2},2)=1，g(全集,1)=1，g(全集,2)=2，g({0},0)=2</text>
+
+  <!-- ===== initial state ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="88" width="360" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="78" y="110" font-size="12" fill="#446688" font-weight="bold">初始：ans=[0]，mask={0}，last=0</text>
+  <text x="78" y="130" font-size="12" fill="#444">rem（剩余目标）= g({0},0) = 2</text>
+  <path d="M 240 146 Q 240 160 240 172" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arK)" filter="url(#sk)"/>
+
+  <!-- ===== step 1 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="176" width="820" height="128" rx="8" fill="#fdf3f4" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="78" y="200" font-size="13" font-weight="bold" fill="#8e3040">第 1 位（last=0，rem=2）：从小到大尝试</text>
+
+  <g filter="url(#sk)">
+    <rect x="86" y="212" width="360" height="66" rx="6" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/>
+  </g>
+  <text x="102" y="236" font-size="12" fill="#444">试 x=1：边权 |0−nums[1]| = |0−2| = 2</text>
+  <text x="102" y="258" font-size="12" fill="#444">2 + g({0,1},1) = 2+2 = 4 ≠ 2</text>
+  <text x="424" y="250" text-anchor="middle" font-size="16" font-weight="bold" fill="#b85450" filter="url(#sk)">✗</text>
+
+  <g filter="url(#sk)">
+    <rect x="486" y="212" width="366" height="66" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="502" y="236" font-size="12" fill="#2e6e2e" font-weight="bold">试 x=2：边权 |0−nums[2]| = |0−1| = 1</text>
+  <text x="502" y="258" font-size="12" fill="#2e6e2e" font-weight="bold">1 + g({0,2},2) = 1+1 = 2 = rem ✓</text>
+  <text x="822" y="250" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">✓</text>
+
+  <text x="78" y="298" font-size="12" fill="#2e6e2e" font-weight="bold">→ 选 2！ans=[0,2]，mask={0,2}，last=2，rem ← 2−1 = 1</text>
+
+  <!-- ===== step 2 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="324" width="820" height="128" rx="8" fill="#fdf3f4" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="78" y="348" font-size="13" font-weight="bold" fill="#8e3040">第 2 位（last=2，rem=1）：只剩 x=1</text>
+
+  <g filter="url(#sk)">
+    <rect x="86" y="360" width="440" height="66" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="102" y="384" font-size="12" fill="#2e6e2e" font-weight="bold">试 x=1：边权 |2−nums[1]| = |2−2| = 0</text>
+  <text x="102" y="406" font-size="12" fill="#2e6e2e" font-weight="bold">0 + g(全集,1) = 0+1 = 1 = rem ✓</text>
+  <text x="552" y="398" text-anchor="middle" font-size="16" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">✓</text>
+
+  <text x="78" y="442" font-size="12" fill="#2e6e2e" font-weight="bold">→ 选 1！ans=[0,2,1]；末态 rem=1 恰为闭环边 |1−nums[0]|，由 g(全集,1) 自动支付</text>
+
+  <!-- ===== verification ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="474" width="520" height="140" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="500" font-size="13" font-weight="bold" fill="#7a5415">验证答案 [0,2,1]（环形三边求和）</text>
+  <text x="80" y="526" font-size="12" fill="#444" font-family="monospace">|0 − nums[2]| + |2 − nums[1]| + |1 − nums[0]|</text>
+  <text x="80" y="548" font-size="12" fill="#444" font-family="monospace">= |0−1| + |2−2| + |1−0| = 1 + 0 + 1 = 2 ✓</text>
+  <text x="80" y="578" font-size="11" fill="#888">对比 [0,1,2]：|0−2|+|1−1|+|2−0| = 4 &gt; 2，非最低分</text>
+  <text x="80" y="598" font-size="11" fill="#888">故 [0,2,1] 才是「最低分 + 字典序最小」的答案</text>
+
+  <!-- ===== why greedy is lex-min ===== -->
+  <g filter="url(#sk)">
+    <rect x="604" y="474" width="296" height="140" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="622" y="500" font-size="12" font-weight="bold" fill="#2b2b2b">为什么贪心 = 字典序最小？</text>
+  <text x="622" y="522" font-size="11" fill="#444">每一步跳过的 x 都「无法补全到</text>
+  <text x="622" y="540" font-size="11" fill="#444">最低分」，选中的 x 是能保持</text>
+  <text x="622" y="558" font-size="11" fill="#444">最优性的最小数——这正是字典</text>
+  <text x="622" y="576" font-size="11" fill="#444">序最小排列的逐位定义；可行性</text>
+  <text x="622" y="594" font-size="11" fill="#444">由 g 值精确判定，不会误判</text>
+</svg>
