@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="37"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/></marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="#999"/></marker>
+  </defs>
+
+  <rect width="640" height="460" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：一趟扫描，新数到达时逐位现结</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">不用组合数公式、不跑第二趟——查一次桶、做一次减法，每个数对恰好在「后到者」到达时结算</text>
+
+  <!-- 开始 -->
+  <rect x="90" y="56" width="160" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="170" y="73" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#r)">ans = 0；cnt[p][d] ← 0</text>
+
+  <path d="M 170 82 V 94" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- 外层：取数 -->
+  <rect x="90" y="98" width="160" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="170" y="115" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#r)">取第 i 个数：x = nums[i]</text>
+
+  <path d="M 170 124 V 134" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- 判断：还有数位 -->
+  <polygon points="170,138 232,168 170,198 108,168" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#r)"/>
+  <text x="170" y="172" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#r)">x 还有数位？</text>
+
+  <text x="180" y="210" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#r)">是</text>
+  <path d="M 170 198 V 208" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- 取位 -->
+  <rect x="90" y="212" width="160" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="170" y="229" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#r)">d = x % 10（第 p 位）</text>
+
+  <path d="M 170 238 V 250" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- 核心步骤 -->
+  <rect x="58" y="254" width="224" height="46" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#r)"/>
+  <text x="170" y="273" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#r)">ans += i − cnt[p][d]</text>
+  <text x="170" y="291" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">之前 i 个数中，第 p 位与 d 不同的个数</text>
+
+  <path d="M 170 300 V 310" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- 更新 -->
+  <rect x="90" y="314" width="160" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="170" y="331" text-anchor="middle" font-size="11" fill="#333" filter="url(#r)">cnt[p][d]++；x /= 10；p++</text>
+
+  <!-- 内层回边：取下一位 -->
+  <path d="M 86 327 L 30 327 L 30 168 L 104 168" stroke="#999" stroke-width="1.3" fill="none" stroke-dasharray="5 4" marker-end="url(#arrG)" filter="url(#r)"/>
+  <text x="36" y="222" font-size="9.5" fill="#888" filter="url(#r)">取下一位</text>
+
+  <!-- 否：该数处理完 -->
+  <text x="244" y="162" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#r)">否</text>
+  <path d="M 232 168 L 276 168" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <rect x="280" y="154" width="132" height="28" rx="4" fill="#fff" stroke="#999" stroke-width="1.2" filter="url(#r)"/>
+  <text x="346" y="172" text-anchor="middle" font-size="10" fill="#666" filter="url(#r)">i 的所有位已处理完</text>
+
+  <!-- 回边：下一个数 -->
+  <path d="M 346 154 L 346 111 L 254 111" stroke="#999" stroke-width="1.3" fill="none" stroke-dasharray="5 4" marker-end="url(#arrG)" filter="url(#r)"/>
+  <text x="300" y="104" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">i+1：下一个数</text>
+
+  <!-- 回边：结束 -->
+  <path d="M 346 182 V 376" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="354" y="362" font-size="9.5" fill="#888" filter="url(#r)">i = n：全部结算完</text>
+
+  <!-- 返回 -->
+  <rect x="281" y="380" width="130" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#r)"/>
+  <text x="346" y="397" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#r)">返回 ans</text>
+
+  <!-- 侧注 -->
+  <rect x="430" y="200" width="185" height="130" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#r)"/>
+  <text x="522" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#d6a040" filter="url(#r)">为什么不重不漏？</text>
+  <text x="444" y="250" font-size="10" fill="#666" filter="url(#r)">每个数对 {i, j}（i 小于 j）</text>
+  <text x="444" y="270" font-size="10" fill="#666" filter="url(#r)">只在 j 到达时被结算恰好一次：</text>
+  <text x="444" y="290" font-size="10" fill="#666" filter="url(#r)">第 p 位不同 → +1；相同 → +0</text>
+  <text x="444" y="310" font-size="10" fill="#666" filter="url(#r)">i − cnt[p][d] 自动扣除同数字</text>
+
+  <!-- 复杂度条 -->
+  <rect x="40" y="424" width="560" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#r)"/>
+  <text x="320" y="443" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#r)">总时间 O(n·d)（d ≤ 9 位，约 9×10⁵ 次桶操作）；额外空间 O(10d) = O(1)</text>
+</svg>
