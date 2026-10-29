@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/></marker>
+  </defs>
+  <rect width="640" height="500" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">核心观察：子串「非公共」⟺ 去重计数表里 cnt[s] = 1</text>
+  <path d="M 130 36 Q 320 44 510 36" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+  <text x="320" y="58" text-anchor="middle" font-size="12" fill="#666" filter="url(#r)">以 arr = ["cab","ad","bad","c"] 为例：先给每个字符串建「子串集合」，再合并成全局计数</text>
+
+  <!-- Left: four strings with their substring sets -->
+  <text x="115" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#r)">每个字符串的子串集合（内部去重）</text>
+
+  <!-- arr[0] = "cab" -->
+  <g filter="url(#r)"><rect x="28" y="98" width="64" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="60" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e" filter="url(#r)">"cab"</text>
+  <g filter="url(#r)"><rect x="100" y="98" width="132" height="30" rx="6" fill="#fafafa" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <text x="166" y="118" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#r)">c a b ca ab cab</text>
+
+  <!-- arr[1] = "ad" -->
+  <g filter="url(#r)"><rect x="28" y="140" width="64" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="60" y="160" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e" filter="url(#r)">"ad"</text>
+  <g filter="url(#r)"><rect x="100" y="140" width="132" height="30" rx="6" fill="#fafafa" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <text x="166" y="160" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#r)">a d ad</text>
+
+  <!-- arr[2] = "bad" -->
+  <g filter="url(#r)"><rect x="28" y="182" width="64" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="60" y="202" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e" filter="url(#r)">"bad"</text>
+  <g filter="url(#r)"><rect x="100" y="182" width="132" height="30" rx="6" fill="#fafafa" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <text x="166" y="202" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#r)">b a d ba ad bad</text>
+
+  <!-- arr[3] = "c" -->
+  <g filter="url(#r)"><rect x="28" y="224" width="64" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="60" y="244" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e" filter="url(#r)">"c"</text>
+  <g filter="url(#r)"><rect x="100" y="224" width="132" height="30" rx="6" fill="#fafafa" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <text x="166" y="244" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#r)">c</text>
+
+  <!-- arrows into cnt table -->
+  <path d="M 232 129 Q 268 140 300 156" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#r)"/>
+  <path d="M 232 155 Q 268 168 300 180" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#r)"/>
+  <path d="M 232 197 Q 268 200 300 216" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#r)"/>
+  <path d="M 232 239 Q 268 240 300 252" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#r)"/>
+  <text x="268" y="272" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">每个集合整体贡献</text>
+  <text x="268" y="288" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">cnt[t] += 1</text>
+
+  <!-- Middle: hash table -->
+  <text x="408" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#r)">全局计数表 cnt（按「不同字符串」计）</text>
+  <g filter="url(#r)"><rect x="300" y="98" width="216" height="206" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2"/></g>
+
+  <!-- table rows: green cnt==1, gray cnt>=2 -->
+  <g filter="url(#r)"><rect x="312" y="108" width="92" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="358" y="126" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">ca : 1</text>
+  <g filter="url(#r)"><rect x="412" y="108" width="92" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="458" y="126" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">ab : 1</text>
+
+  <g filter="url(#r)"><rect x="312" y="140" width="92" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="358" y="158" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">ba : 1</text>
+  <g filter="url(#r)"><rect x="412" y="140" width="92" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="458" y="158" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">cab : 1</text>
+
+  <g filter="url(#r)"><rect x="312" y="172" width="92" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="358" y="190" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">bad : 1</text>
+  <g filter="url(#r)"><rect x="412" y="172" width="92" height="26" rx="4" fill="#eeeeee" stroke="#aaa" stroke-width="1.2"/></g>
+  <text x="458" y="190" text-anchor="middle" font-size="12" fill="#777" filter="url(#r)">a : 3</text>
+
+  <g filter="url(#r)"><rect x="312" y="204" width="92" height="26" rx="4" fill="#eeeeee" stroke="#aaa" stroke-width="1.2"/></g>
+  <text x="358" y="222" text-anchor="middle" font-size="12" fill="#777" filter="url(#r)">b : 2</text>
+  <g filter="url(#r)"><rect x="412" y="204" width="92" height="26" rx="4" fill="#eeeeee" stroke="#aaa" stroke-width="1.2"/></g>
+  <text x="458" y="222" text-anchor="middle" font-size="12" fill="#777" filter="url(#r)">c : 2</text>
+
+  <g filter="url(#r)"><rect x="312" y="236" width="92" height="26" rx="4" fill="#eeeeee" stroke="#aaa" stroke-width="1.2"/></g>
+  <text x="358" y="254" text-anchor="middle" font-size="12" fill="#777" filter="url(#r)">d : 2</text>
+  <g filter="url(#r)"><rect x="412" y="236" width="92" height="26" rx="4" fill="#eeeeee" stroke="#aaa" stroke-width="1.2"/></g>
+  <text x="458" y="254" text-anchor="middle" font-size="12" fill="#777" filter="url(#r)">ad : 2</text>
+
+  <!-- Right: rule boxes -->
+  <path d="M 522 170 L 548 170" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#r)"/>
+
+  <g filter="url(#r)"><rect x="552" y="104" width="76" height="60" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="590" y="126" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#r)">cnt = 1</text>
+  <text x="590" y="144" text-anchor="middle" font-size="11" fill="#444" filter="url(#r)">只属于我</text>
+  <text x="590" y="158" text-anchor="middle" font-size="11" fill="#444" filter="url(#r)">→ 候选 ✓</text>
+
+  <g filter="url(#r)"><rect x="552" y="180" width="76" height="60" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="590" y="202" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a3230" filter="url(#r)">cnt ≥ 2</text>
+  <text x="590" y="220" text-anchor="middle" font-size="11" fill="#444" filter="url(#r)">别的串也有</text>
+  <text x="590" y="234" text-anchor="middle" font-size="11" fill="#444" filter="url(#r)">→ 淘汰 ✗</text>
+
+  <!-- dedup warning -->
+  <g filter="url(#r)"><rect x="40" y="330" width="560" height="70" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="60" y="354" font-size="12.5" font-weight="bold" fill="#7a5a1e" filter="url(#r)">⚠ 计数前必须按字符串去重！</text>
+  <text x="60" y="374" font-size="12" fill="#444" filter="url(#r)">同一个子串在 arr[i] 内部出现多少次都只贡献 1 —— 我们数的是「出现在几个不同字符串」，不是「出现几次」。</text>
+  <text x="60" y="392" font-size="12" fill="#444" filter="url(#r)">反例：arr = ["aa","bb"]，若不去重则 cnt[a] = 2，会把非公共子串 "a" 误判为公共，答案错成 "aa"。</text>
+
+  <!-- scale note -->
+  <g filter="url(#r)"><rect x="40" y="420" width="560" height="58" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="60" y="443" font-size="12" fill="#444" filter="url(#r)">规模账本：每个串至多 L(L+1)/2 = 210 个子串（L ≤ 20），n ≤ 100 → 全部子串约 2.1 万个，</text>
+  <text x="60" y="463" font-size="12" fill="#444" filter="url(#r)">一张哈希表全部装下，建表 O(n·L³) ≈ 8×10⁵ —— 这就是本题不需要 Trie / 后缀结构的原因。</text>
+</svg>
