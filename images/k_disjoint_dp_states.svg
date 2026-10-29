@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="23"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b0722a"/></marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/></marker>
+  </defs>
+  <rect width="620" height="440" fill="#fafafa"/>
+  <text x="310" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">状态机 DP：f0[j]「间隔中」与 f1[j]「第 j 段进行中」</text>
+  <path d="M 170 36 Q 310 43 450 36" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+  <text x="310" y="62" text-anchor="middle" font-size="11.5" fill="#777" filter="url(#r)">其中 coef(j) = (−1)^(j+1)·(k−j+1)，x 表示当前正在处理的元素</text>
+
+  <!-- left: j-1 layer states (green) -->
+  <g filter="url(#r)">
+    <rect x="55" y="95" width="180" height="54" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="145" y="117" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">f0[j−1]</text>
+  <text x="145" y="138" text-anchor="middle" font-size="11" fill="#333" filter="url(#r)">j−1 段已完成，处于间隔</text>
+  <g filter="url(#r)">
+    <rect x="55" y="225" width="180" height="54" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="145" y="247" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">f1[j−1]</text>
+  <text x="145" y="268" text-anchor="middle" font-size="11" fill="#333" filter="url(#r)">第 j−1 段恰以上个元素结尾</text>
+
+  <!-- right: f1[j] (emphasis, orange) -->
+  <g filter="url(#r)">
+    <rect x="385" y="140" width="185" height="64" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5"/>
+  </g>
+  <text x="477" y="166" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6210" filter="url(#r)">f1[j]</text>
+  <text x="477" y="188" text-anchor="middle" font-size="11" fill="#333" filter="url(#r)">第 j 段进行中，恰以当前元素 x 结尾</text>
+
+  <!-- right: f0[j] (blue) -->
+  <g filter="url(#r)">
+    <rect x="385" y="270" width="185" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="477" y="296" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e" filter="url(#r)">f0[j]</text>
+  <text x="477" y="318" text-anchor="middle" font-size="11" fill="#333" filter="url(#r)">j 段已完成，不在任何段中</text>
+
+  <!-- transitions -->
+  <path d="M 235 122 C 300 122, 320 150, 383 158" stroke="#b0722a" stroke-width="1.8" fill="none" stroke-dasharray="6 4" marker-end="url(#arrO)" filter="url(#r)"/>
+  <text x="309" y="108" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b0722a" filter="url(#r)">新开第 j 段（隔间隙）+ x·coef(j)</text>
+  <path d="M 235 252 C 300 252, 320 205, 383 186" stroke="#b0722a" stroke-width="1.8" fill="none" stroke-dasharray="6 4" marker-end="url(#arrO)" filter="url(#r)"/>
+  <text x="300" y="278" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b0722a" filter="url(#r)">新开第 j 段（紧贴上一段，允许相邻）</text>
+
+  <!-- extend self-loop on f1[j] -->
+  <path d="M 400 142 C 398 108, 465 105, 462 138" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrB)" filter="url(#r)"/>
+  <text x="512" y="112" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">延伸：f1[j] + x·coef(j)</text>
+
+  <!-- end transition f1[j] -> f0[j] -->
+  <path d="M 477 204 L 477 268" stroke="#446688" stroke-width="1.8" fill="none" stroke-dasharray="6 4" marker-end="url(#arrB)" filter="url(#r)"/>
+  <text x="492" y="240" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#r)">结束第 j 段（+0）</text>
+
+  <!-- skip self-loop on f0[j] -->
+  <path d="M 545 272 C 578 260, 592 275, 568 282" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#r)"/>
+  <text x="548" y="252" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#r)">跳过 x（值不变）</text>
+
+  <!-- note box -->
+  <g filter="url(#r)">
+    <rect x="40" y="352" width="540" height="72" rx="10" fill="#fdfcf7" stroke="#999" stroke-width="1.4"/>
+  </g>
+  <text x="62" y="376" font-size="11.5" font-weight="bold" fill="#2b2b2b" filter="url(#r)">每个元素 x，j 从 k 到 1 倒序更新：</text>
+  <text x="62" y="396" font-size="11.5" fill="#333" filter="url(#r)">先 f0[j] ← max(f0[j], f1[j])；再 f1[j] ← max(f1[j], f0[j−1], f1[j−1]) + x·coef(j)</text>
+  <text x="62" y="416" font-size="11.5" fill="#333" filter="url(#r)">初值：f0[0] = 0，其余 −∞；答案 = max(f0[k], f1[k])</text>
+</svg>
