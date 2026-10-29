@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="688" viewBox="0 0 940 688" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="940" height="688" fill="#fafafa"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例演算：排序 + 扫描合并全过程走查</text>
+  <path d="M 280 40 Q 470 48 660 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="70" y="58" font-size="12.5" font-weight="bold" fill="#2b6e9e">示例 1：days = 10，meetings = [[5,7],[1,3],[9,10]] → 排序后 [[1,3],[5,7],[9,10]]</text>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="66" width="796" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="70" y="98" width="796" height="38" fill="#ffffff" stroke="#b8b8b8" stroke-width="1.1"/>
+    <rect x="70" y="136" width="796" height="38" fill="#f7fafe" stroke="#b8b8b8" stroke-width="1.1"/>
+    <rect x="70" y="174" width="796" height="38" fill="#ffffff" stroke="#b8b8b8" stroke-width="1.1"/>
+    <rect x="70" y="212" width="796" height="38" fill="#f7fafe" stroke="#b8b8b8" stroke-width="1.1"/>
+    <path d="M 134 66 L 134 250 M 250 66 L 250 250 M 368 66 L 368 250 M 668 66 L 668 250 M 780 66 L 780 250" stroke="#b8b8b8" stroke-width="1.1" fill="none"/>
+  </g>
+  <text x="102" y="87" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">步骤</text>
+  <text x="192" y="87" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">会议 [s,e]</text>
+  <text x="309" y="87" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">s &gt; curE ?</text>
+  <text x="518" y="87" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">动作</text>
+  <text x="724" y="87" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">(curS, curE)</text>
+  <text x="823" y="87" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">covered</text>
+  <text x="102" y="122" text-anchor="middle" font-size="11.5" fill="#444">①</text>
+  <text x="192" y="122" text-anchor="middle" font-size="11.5" fill="#444">[1,3]</text>
+  <text x="309" y="122" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">1 &gt; −1 ✓</text>
+  <text x="378" y="122" font-size="11" fill="#444">封存空段 +0；开新段 (S,E) = (1,3)</text>
+  <text x="724" y="122" text-anchor="middle" font-size="11.5" fill="#444">(1,3)</text>
+  <text x="823" y="122" text-anchor="middle" font-size="11.5" fill="#444">0</text>
+  <text x="102" y="160" text-anchor="middle" font-size="11.5" fill="#444">②</text>
+  <text x="192" y="160" text-anchor="middle" font-size="11.5" fill="#444">[5,7]</text>
+  <text x="309" y="160" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">5 &gt; 3 ✓</text>
+  <text x="378" y="160" font-size="11" fill="#444">封存 [1,3]：covered += 3；开新段 (5,7)</text>
+  <text x="724" y="160" text-anchor="middle" font-size="11.5" fill="#444">(5,7)</text>
+  <text x="823" y="160" text-anchor="middle" font-size="11.5" fill="#444">3</text>
+  <text x="102" y="198" text-anchor="middle" font-size="11.5" fill="#444">③</text>
+  <text x="192" y="198" text-anchor="middle" font-size="11.5" fill="#444">[9,10]</text>
+  <text x="309" y="198" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">9 &gt; 7 ✓</text>
+  <text x="378" y="198" font-size="11" fill="#444">封存 [5,7]：covered += 3；开新段 (9,10)</text>
+  <text x="724" y="198" text-anchor="middle" font-size="11.5" fill="#444">(9,10)</text>
+  <text x="823" y="198" text-anchor="middle" font-size="11.5" fill="#444">6</text>
+  <text x="102" y="236" text-anchor="middle" font-size="11.5" fill="#444">末</text>
+  <text x="192" y="236" text-anchor="middle" font-size="11.5" fill="#888">—</text>
+  <text x="309" y="236" text-anchor="middle" font-size="11.5" fill="#888">—</text>
+  <text x="378" y="236" font-size="11" fill="#444">封存 [9,10]：covered += 2（循环外补最后一段）</text>
+  <text x="724" y="236" text-anchor="middle" font-size="11.5" fill="#888">—</text>
+  <text x="823" y="236" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a8781e">8</text>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="260" width="796" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="468" y="282" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">答案 = days − covered = 10 − 8 = 2 → 第 4 天、第 8 天空闲 ✓</text>
+
+  <text x="70" y="326" font-size="12.5" font-weight="bold" fill="#a8781e">示例 2：days = 5，meetings = [[2,4],[1,3]] → 排序后 [[1,3],[2,4]]（走「相交」分支）</text>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="334" width="796" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="70" y="366" width="796" height="38" fill="#ffffff" stroke="#b8b8b8" stroke-width="1.1"/>
+    <rect x="70" y="404" width="796" height="38" fill="#fce4ec" stroke="#b8b8b8" stroke-width="1.1"/>
+    <rect x="70" y="442" width="796" height="38" fill="#ffffff" stroke="#b8b8b8" stroke-width="1.1"/>
+    <path d="M 134 334 L 134 480 M 250 334 L 250 480 M 368 334 L 368 480 M 668 334 L 668 480 M 780 334 L 780 480" stroke="#b8b8b8" stroke-width="1.1" fill="none"/>
+  </g>
+  <text x="102" y="355" text-anchor="middle" font-size="12" font-weight="bold" fill="#a8781e">步骤</text>
+  <text x="192" y="355" text-anchor="middle" font-size="12" font-weight="bold" fill="#a8781e">会议 [s,e]</text>
+  <text x="309" y="355" text-anchor="middle" font-size="12" font-weight="bold" fill="#a8781e">s &gt; curE ?</text>
+  <text x="518" y="355" text-anchor="middle" font-size="12" font-weight="bold" fill="#a8781e">动作</text>
+  <text x="724" y="355" text-anchor="middle" font-size="12" font-weight="bold" fill="#a8781e">(curS, curE)</text>
+  <text x="823" y="355" text-anchor="middle" font-size="12" font-weight="bold" fill="#a8781e">covered</text>
+  <text x="102" y="390" text-anchor="middle" font-size="11.5" fill="#444">①</text>
+  <text x="192" y="390" text-anchor="middle" font-size="11.5" fill="#444">[1,3]</text>
+  <text x="309" y="390" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">1 &gt; −1 ✓</text>
+  <text x="378" y="390" font-size="11" fill="#444">封存空段 +0；开新段 (S,E) = (1,3)</text>
+  <text x="724" y="390" text-anchor="middle" font-size="11.5" fill="#444">(1,3)</text>
+  <text x="823" y="390" text-anchor="middle" font-size="11.5" fill="#444">0</text>
+  <text x="102" y="428" text-anchor="middle" font-size="11.5" fill="#444">②</text>
+  <text x="192" y="428" text-anchor="middle" font-size="11.5" fill="#444">[2,4]</text>
+  <text x="309" y="428" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">2 ≤ 3 ✗ 相交</text>
+  <text x="378" y="428" font-size="11" fill="#444">并入当前段：E = max(3, 4) = 4（防回退）</text>
+  <text x="724" y="428" text-anchor="middle" font-size="11.5" fill="#444">(1,4)</text>
+  <text x="823" y="428" text-anchor="middle" font-size="11.5" fill="#444">0</text>
+  <text x="102" y="466" text-anchor="middle" font-size="11.5" fill="#444">末</text>
+  <text x="192" y="466" text-anchor="middle" font-size="11.5" fill="#888">—</text>
+  <text x="309" y="466" text-anchor="middle" font-size="11.5" fill="#888">—</text>
+  <text x="378" y="466" font-size="11" fill="#444">封存 [1,4]：covered += 4</text>
+  <text x="724" y="466" text-anchor="middle" font-size="11.5" fill="#888">—</text>
+  <text x="823" y="466" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a8781e">4</text>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="490" width="796" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="468" y="512" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">答案 = 5 − 4 = 1 → 第 5 天空闲 ✓（重叠的第 2、3 天只算了一次）</text>
+
+  <g filter="url(#sk)">
+    <rect x="60" y="540" width="820" height="128" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="564" font-size="13" font-weight="bold" fill="#b85450">⚠ 两个高频翻车点（比赛中最易 WA 的地方）</text>
+  <text x="80" y="590" font-size="11.5" fill="#444">① 忘写 max：处理 [[1,10],[2,3]] 中的 [2,3] 时若直接 curE = 3，E 从 10 回退到 3，</text>
+  <text x="98" y="608" font-size="11.5" fill="#444">凭空多出第 4~10 天的空隙——排序只保证左端点有序，右端点可能乱序！</text>
+  <text x="80" y="632" font-size="11.5" fill="#444">② 忘补最后一段：循环内只在「开新段」时封存旧段，最后一段必须在循环外补加。</text>
+  <text x="80" y="656" font-size="11" fill="#888">哨兵 curE = −1 与「循环外补最后一段」配对，让所有段共用同一条封存语句，分支最少。</text>
+</svg>

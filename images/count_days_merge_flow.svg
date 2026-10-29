@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fafafa"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：排序 → 线性扫描合并 → 返回 days − covered</text>
+  <path d="M 280 40 Q 470 48 660 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="300" y="56" width="340" height="52" rx="8" fill="#e8f0fa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="78" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e">Step 1：按左端点升序排序 meetings</text>
+  <text x="470" y="98" text-anchor="middle" font-size="11" fill="#666" font-family="monospace">sort(meetings)</text>
+  <path d="M 470 112 L 470 130" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <g filter="url(#sk)">
+    <rect x="300" y="134" width="340" height="52" rx="8" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="156" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">Step 2：初始化 covered = 0，curS = 0，curE = −1</text>
+  <text x="470" y="176" text-anchor="middle" font-size="10.5" fill="#666">curE = −1 是哨兵：保证第一个会议必然开新段</text>
+  <path d="M 470 190 L 470 208" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="470,212 600,268 470,324 340,268" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.7"/>
+  </g>
+  <text x="470" y="262" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415">s &gt; curE ?</text>
+  <text x="470" y="284" text-anchor="middle" font-size="10.5" fill="#888">（与当前段不相交？）</text>
+
+  <text x="612" y="252" font-size="11.5" font-weight="bold" fill="#2e6e2e">是：两段之间有空隙</text>
+  <text x="86" y="252" font-size="11.5" font-weight="bold" fill="#2b6e9e">否：相交 / 被包含</text>
+
+  <path d="M 346 268 L 175 268 L 175 356" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 594 268 L 765 268 L 765 356" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="50" y="360" width="250" height="92" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="175" y="384" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">并入当前段</text>
+  <text x="175" y="406" text-anchor="middle" font-size="12" font-family="monospace" fill="#444">curE = max(curE, e)</text>
+  <text x="175" y="426" text-anchor="middle" font-size="10.5" fill="#888">必须取 max！防止被包含的区间</text>
+  <text x="175" y="442" text-anchor="middle" font-size="10.5" fill="#888">（如 [1,10] 之后的 [2,3]）把 E 拉回</text>
+
+  <g filter="url(#sk)">
+    <rect x="640" y="360" width="250" height="92" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="765" y="384" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a8781e">封存旧段，开新段</text>
+  <text x="765" y="406" text-anchor="middle" font-size="12" font-family="monospace" fill="#444">covered += curE − curS + 1</text>
+  <text x="765" y="426" text-anchor="middle" font-size="12" font-family="monospace" fill="#444">curS = s；curE = e</text>
+  <text x="765" y="443" text-anchor="middle" font-size="10.5" fill="#888">旧段长度累加完成，不再回头</text>
+
+  <path d="M 175 456 L 175 490 L 380 498" stroke="#3a3a3a" stroke-width="1.3" fill="none" filter="url(#sk)"/>
+  <path d="M 765 456 L 765 490 L 560 498" stroke="#3a3a3a" stroke-width="1.3" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <ellipse cx="470" cy="498" rx="92" ry="27" fill="#f4f4f4" stroke="#888" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="494" text-anchor="middle" font-size="12" font-weight="bold" fill="#444">还有会议</text>
+  <text x="470" y="512" text-anchor="middle" font-size="12" font-weight="bold" fill="#444">未处理？</text>
+
+  <path d="M 378 498 L 34 498 L 34 200 L 456 200" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="44" y="360" font-size="11" fill="#4a8e4a">是：处理下一个会议 [s, e]</text>
+  <path d="M 470 527 L 470 546" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="486" y="542" font-size="11.5" fill="#888">否：扫描结束</text>
+
+  <g filter="url(#sk)">
+    <rect x="300" y="550" width="340" height="48" rx="8" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="470" y="570" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">Step 3：补最后一段</text>
+  <text x="470" y="590" text-anchor="middle" font-size="12" font-family="monospace" fill="#444">covered += curE − curS + 1</text>
+  <path d="M 470 598 L 470 614" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <g filter="url(#sk)">
+    <rect x="300" y="618" width="340" height="36" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="470" y="641" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450">返回 days − covered</text>
+</svg>

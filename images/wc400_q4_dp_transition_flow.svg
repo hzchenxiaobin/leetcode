@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="560" viewBox="0 0 940 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="560" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">单步转移：前插 x → 整体 OR → 相邻去重 → 更新答案</text>
+  <path d="M 220 44 Q 470 52 720 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="470" y="72" text-anchor="middle" font-size="12" fill="#666">例：nums = [1, 2, 4, 5]，k = 3 —— 处理 r = 3（x = nums[3] = 5），进入转移前 dp = [4, 6, 7]</text>
+
+  <!-- arrows between boxes -->
+  <path d="M 254 246 L 279 246" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 477 246 L 502 246" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 700 246 L 725 246" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== Box 1: prepend x ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="96" width="190" height="300" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="155" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">① 前插 x 到链头</text>
+  <text x="155" y="146" text-anchor="middle" font-size="10" fill="#888">旧链 dp = [4, 6, 7]</text>
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="80" y="156" width="44" height="30" rx="4" fill="#fffdf3" stroke="#4a8edb" stroke-width="1.4"/></g>
+    <text x="102" y="176" text-anchor="middle" fill="#2b6e9e" font-weight="bold">4</text>
+    <g filter="url(#sk)"><rect x="128" y="156" width="44" height="30" rx="4" fill="#fffdf3" stroke="#4a8edb" stroke-width="1.4"/></g>
+    <text x="150" y="176" text-anchor="middle" fill="#2b6e9e" font-weight="bold">6</text>
+    <g filter="url(#sk)"><rect x="176" y="156" width="44" height="30" rx="4" fill="#fffdf3" stroke="#4a8edb" stroke-width="1.4"/></g>
+    <text x="198" y="176" text-anchor="middle" fill="#2b6e9e" font-weight="bold">7</text>
+  </g>
+  <g filter="url(#sk)"><rect x="74" y="204" width="44" height="28" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+  <text x="96" y="223" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">x = 5</text>
+  <path d="M 96 238 L 96 258" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="78" y="264" width="36" height="28" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/></g>
+    <text x="96" y="283" text-anchor="middle" fill="#2e6e2e" font-weight="bold">5</text>
+    <g filter="url(#sk)"><rect x="118" y="264" width="36" height="28" rx="4" fill="#fffdf3" stroke="#4a8edb" stroke-width="1.4"/></g>
+    <text x="136" y="283" text-anchor="middle" fill="#2b6e9e">4</text>
+    <g filter="url(#sk)"><rect x="158" y="264" width="36" height="28" rx="4" fill="#fffdf3" stroke="#4a8edb" stroke-width="1.4"/></g>
+    <text x="176" y="283" text-anchor="middle" fill="#2b6e9e">6</text>
+    <g filter="url(#sk)"><rect x="198" y="264" width="36" height="28" rx="4" fill="#fffdf3" stroke="#4a8edb" stroke-width="1.4"/></g>
+    <text x="216" y="283" text-anchor="middle" fill="#2b6e9e">7</text>
+  </g>
+  <text x="155" y="318" text-anchor="middle" font-size="10" fill="#444">x 是单元素子数组 [5] 的 OR，</text>
+  <text x="155" y="336" text-anchor="middle" font-size="10" fill="#444">插在链头（值最小端）</text>
+
+  <!-- ===== Box 2: OR everything ===== -->
+  <g filter="url(#sk)">
+    <rect x="283" y="96" width="190" height="300" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="378" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">② 旧链整体 OR x</text>
+  <g font-size="13">
+    <g filter="url(#sk)"><rect x="302" y="156" width="36" height="28" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+    <text x="320" y="175" text-anchor="middle" fill="#2e6e2e" font-weight="bold">5</text>
+    <g filter="url(#sk)"><rect x="342" y="156" width="36" height="28" rx="4" fill="#fce4ec" stroke="#b03a3a" stroke-width="1.8"/></g>
+    <text x="360" y="175" text-anchor="middle" fill="#b03a3a" font-weight="bold">5</text>
+    <g filter="url(#sk)"><rect x="382" y="156" width="36" height="28" rx="4" fill="#fce4ec" stroke="#b03a3a" stroke-width="1.8"/></g>
+    <text x="400" y="175" text-anchor="middle" fill="#b03a3a" font-weight="bold">7</text>
+    <g filter="url(#sk)"><rect x="422" y="156" width="36" height="28" rx="4" fill="#fce4ec" stroke="#b03a3a" stroke-width="1.8"/></g>
+    <text x="440" y="175" text-anchor="middle" fill="#b03a3a" font-weight="bold">7</text>
+  </g>
+  <text x="378" y="204" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">4 | 5 = 5</text>
+  <text x="378" y="222" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">6 | 5 = 7</text>
+  <text x="378" y="240" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">7 | 5 = 7</text>
+  <text x="378" y="276" text-anchor="middle" font-size="10" fill="#444">位集链 + 同一批新位，</text>
+  <text x="378" y="294" text-anchor="middle" font-size="10" fill="#444">升序保持不变</text>
+  <text x="378" y="330" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">长出来的链 ≤ 31，</text>
+  <text x="378" y="348" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">还出现了相邻重复！</text>
+
+  <!-- ===== Box 3: dedup ===== -->
+  <g filter="url(#sk)">
+    <rect x="506" y="96" width="190" height="300" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="601" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">③ 相邻去重</text>
+  <g font-size="11">
+    <g filter="url(#sk)"><rect x="537" y="150" width="30" height="26" rx="4" fill="#fffdf3" stroke="#999" stroke-width="1.2"/></g>
+    <text x="552" y="168" text-anchor="middle" fill="#666">5</text>
+    <g filter="url(#sk)"><rect x="570" y="150" width="30" height="26" rx="4" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="585" y="168" text-anchor="middle" fill="#999">5</text>
+    <g filter="url(#sk)"><rect x="603" y="150" width="30" height="26" rx="4" fill="#fffdf3" stroke="#999" stroke-width="1.2"/></g>
+    <text x="618" y="168" text-anchor="middle" fill="#666">7</text>
+    <g filter="url(#sk)"><rect x="636" y="150" width="30" height="26" rx="4" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="651" y="168" text-anchor="middle" fill="#999">7</text>
+  </g>
+  <path d="M 578 150 L 606 176 M 606 150 L 578 176" stroke="#b03a3a" stroke-width="1.4" filter="url(#sk)"/>
+  <path d="M 644 150 L 672 176 M 672 150 L 644 176" stroke="#b03a3a" stroke-width="1.4" filter="url(#sk)"/>
+  <path d="M 601 190 L 601 212" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <g font-size="14">
+    <g filter="url(#sk)"><rect x="553" y="220" width="44" height="32" rx="4" fill="#fffdf3" stroke="#4a8e4a" stroke-width="2"/></g>
+    <text x="575" y="241" text-anchor="middle" fill="#2e6e2e" font-weight="bold">5</text>
+    <g filter="url(#sk)"><rect x="605" y="220" width="44" height="32" rx="4" fill="#fffdf3" stroke="#4a8e4a" stroke-width="2"/></g>
+    <text x="627" y="241" text-anchor="middle" fill="#2e6e2e" font-weight="bold">7</text>
+  </g>
+  <text x="601" y="280" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b03a3a">升序 ⇒ 相等值必相邻</text>
+  <text x="601" y="300" text-anchor="middle" font-size="10" fill="#444">一遍扫描去掉相邻重复</text>
+  <text x="601" y="330" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">「链长 ≤ 31」得以保持</text>
+
+  <!-- ===== Box 4: update answer ===== -->
+  <g filter="url(#sk)">
+    <rect x="729" y="96" width="190" height="300" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="824" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">④ 逐值更新答案</text>
+  <text x="824" y="152" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">ans = min(ans, |v − k|)</text>
+  <text x="824" y="192" text-anchor="middle" font-size="12" fill="#444" font-family="monospace">|5 − 3| = 2</text>
+  <text x="824" y="214" text-anchor="middle" font-size="12" fill="#444" font-family="monospace">|7 − 3| = 4</text>
+  <text x="824" y="248" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">ans 保持 0</text>
+  <text x="824" y="280" text-anchor="middle" font-size="10" fill="#888">（r = 1 时已出现</text>
+  <text x="824" y="298" text-anchor="middle" font-size="10" fill="#888">1 | 2 = 3 = k，差为 0，</text>
+  <text x="824" y="316" text-anchor="middle" font-size="10" fill="#888">不可能更小）</text>
+
+  <!-- ===== bottom note ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="430" width="840" height="86" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="454" font-size="12" font-weight="bold" fill="#2b2b2b">易错点</text>
+  <text x="80" y="476" font-size="11" fill="#444">新元素 x 必须前插到链头（值最小端）。若接在链尾，升序被破坏，相邻去重失效，链长失控退化到 O(n)。</text>
+  <text x="80" y="498" font-size="11" fill="#444">每步链长 ≤ 31，整体 O(31n)；用 set 亦可实现，但「有序数组 + 相邻去重」常数最小、无需哈希。</text>
+</svg>
