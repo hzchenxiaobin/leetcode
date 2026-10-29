@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#aaa"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">转移设计：最小 + 次小，每列 10 个状态</text>
+  <path d="M 330 42 Q 470 50 610 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: dp definition ===== -->
+  <g filter="url(#sk)"><rect x="60" y="62" width="820" height="92" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="84" y="88" font-size="13" font-weight="bold" fill="#2b6e9e">状态：dp[j][v] = 前 j+1 列全部合法、且第 j 列取值 v 的最少操作数</text>
+  <text x="84" y="114" font-size="12.5" font-weight="bold" fill="#b03a3a" font-family="monospace">转移：dp[j][v] = cost(j,v) + min{ dp[j−1][u] : u ≠ v }</text>
+  <text x="84" y="138" font-size="11" fill="#444">初始化 dp[0][v] = cost(0,v)；最终答案 = min{ dp[n−1][v] : v = 0..9 }</text>
+
+  <!-- ===== Panel 2: transition edges ===== -->
+  <text x="470" y="186" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">② 转移图：10 个前驱状态，9 条可行边取最小，1 条禁忌边</text>
+  <text x="120" y="204" font-size="11" fill="#888">上一列候选值 u（携带 dp[j−1][u]）：</text>
+
+  <!-- top row: 10 boxes for u = 0..9, y=212..252 -->
+  <g filter="url(#sk)"><rect x="120" y="212" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="146" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">0</text>
+  <g filter="url(#sk)"><rect x="192" y="212" width="52" height="40" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2"/></g>
+  <text x="218" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">1</text>
+  <g filter="url(#sk)"><rect x="264" y="212" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="290" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">2</text>
+  <g filter="url(#sk)"><rect x="336" y="212" width="52" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="362" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">3</text>
+  <g filter="url(#sk)"><rect x="408" y="212" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="434" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">4</text>
+  <g filter="url(#sk)"><rect x="480" y="212" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="506" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">5</text>
+  <g filter="url(#sk)"><rect x="552" y="212" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="578" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">6</text>
+  <g filter="url(#sk)"><rect x="624" y="212" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="650" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">7</text>
+  <g filter="url(#sk)"><rect x="696" y="212" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="722" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">8</text>
+  <g filter="url(#sk)"><rect x="768" y="212" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="794" y="238" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">9</text>
+  <text x="218" y="266" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e6e2e">v₁（最小）</text>
+  <text x="362" y="266" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a5415">与 v 同色</text>
+
+  <!-- feasible arrows u != 3 (gray) -->
+  <g stroke="#aaa" stroke-width="1.2" fill="none">
+    <path d="M 146 258 Q 220 306 444 344" marker-end="url(#arB)" filter="url(#sk)"/>
+    <path d="M 218 258 Q 300 310 450 344" marker-end="url(#arB)" filter="url(#sk)"/>
+    <path d="M 290 258 Q 360 310 456 344" marker-end="url(#arB)" filter="url(#sk)"/>
+    <path d="M 434 258 Q 460 300 470 344" marker-end="url(#arB)" filter="url(#sk)"/>
+    <path d="M 506 258 Q 492 300 476 344" marker-end="url(#arB)" filter="url(#sk)"/>
+    <path d="M 578 258 Q 530 306 480 344" marker-end="url(#arB)" filter="url(#sk)"/>
+    <path d="M 650 258 Q 570 310 470 344" marker-end="url(#arB)" filter="url(#sk)"/>
+    <path d="M 722 258 Q 620 306 466 344" marker-end="url(#arB)" filter="url(#sk)"/>
+    <path d="M 794 258 Q 660 312 462 344" marker-end="url(#arB)" filter="url(#sk)"/>
+  </g>
+  <!-- taboo arrow u = 3 (red dashed) -->
+  <path d="M 362 258 Q 400 300 458 342" stroke="#b85450" stroke-width="1.6" fill="none" stroke-dasharray="5 3" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="415" y="295" font-size="11" font-weight="bold" fill="#b85450">✗ 禁止 u = v</text>
+
+  <!-- current candidate chip -->
+  <g filter="url(#sk)"><rect x="420" y="348" width="100" height="52" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2"/></g>
+  <text x="470" y="369" text-anchor="middle" font-size="10" fill="#666">当前列取值</text>
+  <text x="470" y="390" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">v = 3</text>
+
+  <text x="470" y="424" text-anchor="middle" font-size="11" fill="#444">9 条可行边里挑最小 —— 朴素实现每列要扫 10 × 10 = 100 对 (u, v)</text>
+
+  <!-- ===== Panel 3: min + second-min ===== -->
+  <text x="470" y="452" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">③ 最小 + 次小：先记两笔账，每个 v 的最优前驱 O(1) 查出</text>
+  <text x="120" y="472" font-size="11" fill="#888">示例：dp[j−1][·] 的 10 个状态值：</text>
+
+  <!-- dp row: values [4,2,5,3,7,9,6,8,5,9] -->
+  <g font-size="12" font-weight="bold">
+    <g filter="url(#sk)"><rect x="120" y="482" width="52" height="36" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="146" y="505" text-anchor="middle" fill="#999">4</text>
+    <g filter="url(#sk)"><rect x="192" y="482" width="52" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="218" y="505" text-anchor="middle" fill="#2e6e2e">2</text>
+    <g filter="url(#sk)"><rect x="264" y="482" width="52" height="36" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="290" y="505" text-anchor="middle" fill="#999">5</text>
+    <g filter="url(#sk)"><rect x="336" y="482" width="52" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+    <text x="362" y="505" text-anchor="middle" fill="#7a5415">3</text>
+    <g filter="url(#sk)"><rect x="408" y="482" width="52" height="36" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="434" y="505" text-anchor="middle" fill="#999">7</text>
+    <g filter="url(#sk)"><rect x="480" y="482" width="52" height="36" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="506" y="505" text-anchor="middle" fill="#999">9</text>
+    <g filter="url(#sk)"><rect x="552" y="482" width="52" height="36" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="578" y="505" text-anchor="middle" fill="#999">6</text>
+    <g filter="url(#sk)"><rect x="624" y="482" width="52" height="36" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="650" y="505" text-anchor="middle" fill="#999">8</text>
+    <g filter="url(#sk)"><rect x="696" y="482" width="52" height="36" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="722" y="505" text-anchor="middle" fill="#999">5</text>
+    <g filter="url(#sk)"><rect x="768" y="482" width="52" height="36" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1"/></g>
+    <text x="794" y="505" text-anchor="middle" fill="#999">9</text>
+  </g>
+  <text x="218" y="536" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e6e2e">v₁ = 2，位置 b₁ = 1</text>
+  <text x="362" y="536" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a5415">v₂ = 3（次小）</text>
+
+  <!-- formula box -->
+  <g filter="url(#sk)"><rect x="60" y="552" width="820" height="60" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="470" y="574" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" font-family="monospace">dp_new[v] = cost(j, v) + ( v == b₁ ? v₂ : v₁ )</text>
+  <text x="470" y="596" text-anchor="middle" font-size="11" fill="#444">b₁ 是最小值所在的颜色：其余 9 个 v 直接领最小值 v₁，只有撞上 b₁ 才退而用次小 v₂</text>
+
+  <text x="470" y="630" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">每列转移 O(10) + 预处理计数 O(mn) → 总时间 O(mn + 10n)，空间 O(10)（滚动一维）</text>
+</svg>
