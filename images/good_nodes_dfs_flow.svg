@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="22" text-anchor="middle" font-size="13.5" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：一次后序 DFS 同时完成「算 size」与「判好」</text>
+
+  <!-- step A -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="44" width="240" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="190" y="67" text-anchor="middle" font-size="10.5" fill="#333">① 建邻接表：无向边 (a, b) 双向加入</text>
+  </g>
+  <path d="M 190 82 L 190 100" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step B -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="104" width="240" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="190" y="127" text-anchor="middle" font-size="10.5" fill="#333">② 后序 DFS(u, fa)：跳过邻居 fa 防回头</text>
+  </g>
+  <path d="M 190 142 L 190 158" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step C -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="162" width="240" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="190" y="183" text-anchor="middle" font-size="10.5" fill="#333">③ 逐个收集孩子递归返回的 sz</text>
+  </g>
+  <path d="M 190 196 L 190 212" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#rough2)">
+    <polygon points="190,216 300,254 190,292 80,254" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="190" y="251" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">孩子 sz 全等？</text>
+    <text x="190" y="267" text-anchor="middle" font-size="8.5" fill="#888">（含无孩子的空真）</text>
+  </g>
+
+  <!-- yes branch -->
+  <path d="M 300 254 L 322 254" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="309" y="246" text-anchor="middle" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="326" y="236" width="160" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="406" y="258" text-anchor="middle" font-size="10.5" fill="#2f5d24" font-weight="bold">ans++：u 是好节点</text>
+  </g>
+
+  <!-- no branch -->
+  <path d="M 190 292 L 190 310" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="200" y="306" font-size="10" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+
+  <!-- step E -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="314" width="240" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="190" y="332" text-anchor="middle" font-size="10.5" fill="#333">④ size[u] = 1 + Σ sz</text>
+    <text x="190" y="346" text-anchor="middle" font-size="10.5" fill="#333">把 size[u] 返回给父节点</text>
+  </g>
+
+  <!-- yes path joins E -->
+  <path d="M 406 272 L 406 333 L 316 333" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- step F -->
+  <path d="M 190 352 L 190 372" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="70" y="376" width="240" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="190" y="398" text-anchor="middle" font-size="11" fill="#2f5d24" font-weight="bold">⑤ 根 0 处理完 → return ans</text>
+  </g>
+
+  <!-- side panel -->
+  <g filter="url(#rough2)">
+    <rect x="352" y="48" width="190" height="176" rx="8" fill="#ffffff" stroke="#888" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <text x="447" y="70" text-anchor="middle" font-size="10.5" fill="#8a6a1a" font-weight="bold">⚠️ Python 防爆栈（本题）</text>
+    <text x="447" y="90" text-anchor="middle" font-size="9.5" fill="#557">链状树深达 10⁵，递归触发</text>
+    <text x="447" y="104" text-anchor="middle" font-size="9.5" fill="#557">RecursionError，改用两趟迭代：</text>
+    <text x="447" y="126" text-anchor="middle" font-size="9.5" fill="#557">① 栈扫描 → order（父先于子）</text>
+    <text x="447" y="142" text-anchor="middle" font-size="9.5" fill="#557">② 逆序 order：size[p] += size[u]</text>
+    <text x="447" y="158" text-anchor="middle" font-size="9.5" fill="#557">③ first[p] ≠ size[u] ⇒ 坏</text>
+    <text x="447" y="182" text-anchor="middle" font-size="9.5" fill="#b85450" font-weight="bold">逆序 order ≈ 后序递归</text>
+    <text x="447" y="200" text-anchor="middle" font-size="9" fill="#888">（孩子总在父亲之前处理）</text>
+  </g>
+</svg>

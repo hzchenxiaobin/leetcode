@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 450"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="450" fill="#fafafa"/>
+
+  <text x="280" y="22" text-anchor="middle" font-size="13.5" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：值域 DP + 前缀和，滚动数组逐位推进</text>
+
+  <!-- step 1 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="40" width="250" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="185" y="61" text-anchor="middle" font-size="10.5" fill="#333">① 初始化：dp[s] = 1，0 ≤ s ≤ nums[0]（首位任取）</text>
+  </g>
+  <path d="M 185 74 L 185 90" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="94" width="250" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="185" y="115" text-anchor="middle" font-size="10.5" fill="#333">② 逐位推进 i = 1 … n−1：Δ = nums[i] − nums[i−1]</text>
+  </g>
+  <path d="M 185 128 L 185 144" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="148" width="250" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="185" y="169" text-anchor="middle" font-size="10.5" fill="#333">③ 上一层求前缀和：pre[k] = Σ dp[t]（t &lt; k）</text>
+  </g>
+  <path d="M 185 182 L 185 198" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 4 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="202" width="250" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="185" y="223" text-anchor="middle" font-size="10.5" fill="#333">④ 对每个 s ∈ [0, nums[i]]：t_max = min(s, s−Δ)</text>
+  </g>
+  <path d="M 185 236 L 185 252" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#rough2)">
+    <polygon points="185,256 292,292 185,328 78,292" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="185" y="289" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">t_max ≥ 0 ？</text>
+    <text x="185" y="305" text-anchor="middle" font-size="8.5" fill="#888">（前缀非空才有方案）</text>
+  </g>
+
+  <!-- yes branch -->
+  <path d="M 292 292 L 314 292" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="302" y="284" text-anchor="middle" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="318" y="274" width="216" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="426" y="296" text-anchor="middle" font-size="10.5" fill="#2f5d24" font-weight="bold">ndp[s] = pre[t_max+1]（O(1) 查询）</text>
+  </g>
+
+  <!-- no branch -->
+  <path d="M 185 328 L 185 344" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="193" y="341" font-size="10" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="100" y="348" width="170" height="32" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="185" y="368" text-anchor="middle" font-size="10.5" fill="#8a2f2a" font-weight="bold">ndp[s] = 0（死状态）</text>
+  </g>
+
+  <!-- roll -->
+  <g filter="url(#rough2)">
+    <rect x="318" y="330" width="216" height="34" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="426" y="351" text-anchor="middle" font-size="10.5" fill="#2c4258" font-weight="bold">⑤ swap(dp, ndp) 滚动到下一层</text>
+  </g>
+  <path d="M 314 292 L 316 332" stroke="#446688" stroke-width="0" fill="none"/>
+
+  <!-- loop back arrow -->
+  <g filter="url(#rough2)">
+    <path d="M 426 364 L 426 398 L 336 398" stroke="#446688" stroke-width="1.6" stroke-dasharray="6 4" fill="none" marker-end="url(#arr)"/>
+    <path d="M 336 398 L 30 398 L 30 111 L 54 111" stroke="#446688" stroke-width="1.6" stroke-dasharray="6 4" fill="none" marker-end="url(#arr)"/>
+    <text x="180" y="390" text-anchor="middle" font-size="9.5" fill="#446688">重复 ② ~ ⑤ 直到 i 走满 n−1</text>
+  </g>
+
+  <!-- final step -->
+  <g filter="url(#rough2)">
+    <rect x="318" y="410" width="216" height="30" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="426" y="430" text-anchor="middle" font-size="10.5" fill="#2f5d24" font-weight="bold">⑥ ans = Σ dp[s]（s ≤ nums[n−1]）mod 1e9+7</text>
+  </g>
+  <path d="M 426 364 L 426 406" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)" fill="none"/>
+
+  <!-- side panel -->
+  <g filter="url(#rough2)">
+    <rect x="352" y="44" width="182" height="196" rx="8" fill="#ffffff" stroke="#888" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <text x="443" y="66" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">为什么能 O(1) 转移？</text>
+    <text x="443" y="90" text-anchor="middle" font-size="9.5" fill="#557">约束只有单侧上界、没有下界</text>
+    <text x="443" y="104" text-anchor="middle" font-size="9.5" fill="#557">——前值越小越安全</text>
+    <text x="443" y="128" text-anchor="middle" font-size="9.5" fill="#4a7a3a" font-weight="bold">窗口恒为前缀 [0, t_max]</text>
+    <text x="443" y="152" text-anchor="middle" font-size="9.5" fill="#557">且 s → s+1 时 t_max 恰 +1</text>
+    <text x="443" y="166" text-anchor="middle" font-size="9.5" fill="#557">滑窗匀速右移——</text>
+    <text x="443" y="190" text-anchor="middle" font-size="9.5" fill="#4a7a3a" font-weight="bold">前缀和最舒服的形态</text>
+    <text x="443" y="214" text-anchor="middle" font-size="9.5" fill="#557">Δ&gt;0 时上界被压低（挤压）</text>
+    <text x="443" y="228" text-anchor="middle" font-size="9.5" fill="#557">Δ≤0 时退化为纯非减 t ≤ s</text>
+  </g>
+
+  <!-- bottom summary -->
+  <g filter="url(#rough2)">
+    <rect x="24" y="414" width="282" height="30" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="165" y="434" text-anchor="middle" font-size="10.5" fill="#8a6a1a" font-weight="bold">每轮 O(V)，共 n 轮：总时间 O(n·V) ≈ 10⁵</text>
+  </g>
+</svg>

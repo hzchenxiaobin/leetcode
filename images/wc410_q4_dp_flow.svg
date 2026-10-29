@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="470" fill="#fafafa"/>
+
+  <text x="280" y="22" text-anchor="middle" font-size="13.5" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：前缀和 O(1) 转移 + 棘轮区间裁剪，一份代码通吃 Q3/Q4</text>
+
+  <!-- step 1 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="44" width="252" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="182" y="65" text-anchor="middle" font-size="10" fill="#333">① dp[s]=1（0 ≤ s ≤ nums[0]），ℓ=0</text>
+  </g>
+  <path d="M 182 78 L 182 92" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="96" width="252" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="182" y="117" text-anchor="middle" font-size="10" fill="#333">② i=1…n−1：Δ=nums[i]−nums[i−1]，d=max(0,Δ)</text>
+  </g>
+  <path d="M 182 130 L 182 146" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="150" width="252" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="182" y="171" text-anchor="middle" font-size="10" fill="#333">③ ℓ += d（棘轮只升不降）；算 dp 前缀和 pre</text>
+  </g>
+  <path d="M 182 184 L 182 200" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 4 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="204" width="252" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="182" y="224" text-anchor="middle" font-size="10" fill="#333">④ 只扫支撑区间 s ∈ [ℓ, nums[i]]</text>
+    <text x="182" y="240" text-anchor="middle" font-size="10" fill="#333">ndp[s] = pre[s − d + 1]（O(1) 转移）</text>
+  </g>
+  <path d="M 182 250 L 182 266" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 5 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="270" width="252" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="182" y="291" text-anchor="middle" font-size="10" fill="#333">⑤ swap(dp, ndp) 滚动；区间空 ⇒ 答案 0</text>
+  </g>
+  <path d="M 182 304 L 182 328" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop back -->
+  <g filter="url(#rough2)">
+    <path d="M 50 287 L 34 287 L 34 113 L 50 113" fill="none" stroke="#446688" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#arr)"/>
+    <text x="24" y="200" font-size="9" fill="#446688" text-anchor="middle" transform="rotate(-90 24 200)">循环 n−1 轮</text>
+  </g>
+
+  <!-- final step -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="332" width="252" height="30" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="182" y="352" text-anchor="middle" font-size="10" fill="#2f5d24" font-weight="bold">⑥ ans = Σ dp[s]（s ≤ nums[n−1]）mod 1e9+7</text>
+  </g>
+
+  <!-- right panel: complexity budget -->
+  <g filter="url(#rough2)">
+    <rect x="336" y="44" width="192" height="292" rx="8" fill="#ffffff" stroke="#888" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <text x="432" y="66" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">复杂度预算：V 从 50 → 1000</text>
+
+    <text x="346" y="88" font-size="9.5" fill="#555">O(nV²) · Q3（V=50）</text>
+    <rect x="346" y="94" width="80" height="13" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="432" y="104" font-size="9.5" fill="#2f5d24" font-weight="bold">5×10⁶ ✓</text>
+
+    <text x="346" y="126" font-size="9.5" fill="#555">O(nV²) · Q4（V=1000）</text>
+    <rect x="346" y="132" width="140" height="13" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="420" y="142" font-size="9.5" fill="#8a2f2a" font-weight="bold">TLE ✗</text>
+    <text x="490" y="142" font-size="9.5" fill="#8a2f2a" font-weight="bold">2×10⁹</text>
+
+    <text x="346" y="164" font-size="9.5" fill="#555">O(nV) · Q4（V=1000）</text>
+    <rect x="346" y="170" width="56" height="13" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <text x="408" y="180" font-size="9.5" fill="#2c4258" font-weight="bold">2×10⁶ ✓</text>
+
+    <text x="346" y="202" font-size="9.5" fill="#555">O(nV) · Q3（V=50）</text>
+    <rect x="346" y="208" width="14" height="13" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="366" y="218" font-size="9.5" fill="#2f5d24" font-weight="bold">1×10⁵ ✓</text>
+
+    <text x="346" y="240" font-size="8.5" fill="#888">条宽示意，非严格比例</text>
+
+    <rect x="344" y="250" width="176" height="26" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="432" y="267" text-anchor="middle" font-size="10" fill="#2f5d24" font-weight="bold">一份 O(n·V) 代码通吃 I / II</text>
+
+    <text x="346" y="292" font-size="9.5" fill="#557">实测 n=2000、nums 全 1000：</text>
+    <text x="346" y="308" font-size="9.5" fill="#557">Python 0.39s，C++ 9ms</text>
+  </g>
+
+  <!-- bottom summary -->
+  <g filter="url(#rough2)">
+    <rect x="24" y="432" width="512" height="30" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="280" y="452" text-anchor="middle" font-size="10.5" fill="#8a6a1a" font-weight="bold">在 Q3 一步到位写 O(n·V)，Q4 白送一次提交——周赛 I/II 姊妹题的标准打法</text>
+  </g>
+</svg>
