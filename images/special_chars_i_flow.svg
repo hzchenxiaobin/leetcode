@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="470" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="14" fill="#555" font-weight="bold" filter="url(#rough2)">算法流程：一趟扫描置位，收尾 popcount(lower &amp; upper)</text>
+
+  <!-- start -->
+  <rect x="170" y="44" width="180" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="66" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">开始：lower = upper = 0</text>
+
+  <path d="M 260 78 L 260 96" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- loop start -->
+  <rect x="170" y="96" width="180" height="32" fill="#ffffff" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="117" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">取下一个字符 c</text>
+
+  <path d="M 260 128 L 260 156" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="260,158 352,200 260,242 168,200" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="196" text-anchor="middle" font-size="12.5" fill="#8a6d3b" font-weight="bold" filter="url(#rough2)">c 是小写？</text>
+
+  <!-- yes branch (left) -->
+  <path d="M 168 200 L 92 200" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="146" y="190" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <rect x="20" y="182" width="160" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="100" y="205" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">lower |= 1 &lt;&lt; (c − 'a')</text>
+
+  <!-- no branch (right) -->
+  <path d="M 352 200 L 400 200" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="374" y="190" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+
+  <rect x="340" y="182" width="160" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="420" y="205" text-anchor="middle" font-size="11.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">upper |= 1 &lt;&lt; (c − 'A')</text>
+
+  <!-- merge arrows -->
+  <path d="M 100 218 L 100 272 L 250 272" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <path d="M 420 218 L 420 272 L 270 272" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+
+  <!-- done? box -->
+  <rect x="170" y="256" width="180" height="32" fill="#ffffff" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="5 3" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="277" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">word 遍历完了？</text>
+
+  <!-- loop back -->
+  <path d="M 350 272 L 490 272 L 490 112 L 356 112" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="462" y="262" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">否，继续</text>
+
+  <path d="M 260 288 L 260 308" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="278" y="304" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- answer -->
+  <rect x="130" y="310" width="260" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="333" text-anchor="middle" font-size="13" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">ans = popcount(lower &amp; upper)</text>
+
+  <path d="M 260 346 L 260 366" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- return -->
+  <rect x="170" y="368" width="180" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="390" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">返回 ans（0 ~ 26）</text>
+
+  <rect x="48" y="424" width="424" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="443" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">每个字符只做一次 O(1) 置位：总时间 O(n)，额外空间 O(1)</text>
+</svg>
