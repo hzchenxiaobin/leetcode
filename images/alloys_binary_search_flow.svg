@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="13.5" fill="#333" filter="url(#rough2)">逐台机器二分：找最大的 m 使 f_i(m) ≤ budget</text>
+
+  <!-- flow: step 1 -->
+  <rect x="30" y="46" width="240" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="150" y="67" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">① 枚举机器 i = 0 … k−1</text>
+  <path d="M 150 78 L 150 92" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- flow: step 2 -->
+  <rect x="30" y="96" width="240" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="150" y="117" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">② 在 [0, 2×10⁸] 上二分 m</text>
+  <path d="M 150 128 L 150 144" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="155,150 265,190 155,230 45,190" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="155" y="186" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" filter="url(#rough2)">f_i(mid) ≤ budget ?</text>
+  <text x="155" y="204" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">mid = (lo+hi)/2</text>
+
+  <!-- yes branch -->
+  <path d="M 62 202 C 44 226, 56 240, 74 252" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="46" y="232" font-size="11" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="30" y="254" width="110" height="30" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="85" y="274" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">lo = mid + 1</text>
+
+  <!-- no branch -->
+  <path d="M 248 202 C 266 226, 254 240, 236 252" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="256" y="232" font-size="11" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="160" y="254" width="110" height="30" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="215" y="274" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">hi = mid − 1</text>
+
+  <!-- loop back dashed -->
+  <path d="M 155 252 L 155 234" stroke="#999" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="164" y="248" font-size="9.5" fill="#999" filter="url(#rough2)">继续二分</text>
+
+  <!-- converge arrows -->
+  <path d="M 85 284 L 85 298" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 215 284 L 215 298" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 3 -->
+  <rect x="30" y="302" width="240" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="150" y="323" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">③ 循环结束：M_i = hi（最后可行）</text>
+  <path d="M 150 334 L 150 348" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 4 -->
+  <rect x="30" y="352" width="240" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="150" y="374" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">④ ans = max(ans, M_i)，换下一台</text>
+
+  <!-- loop back to machine enumeration -->
+  <path d="M 22 369 C 8 369, 8 62, 22 62" stroke="#446688" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="14" y="216" font-size="9" fill="#446688" text-anchor="middle" transform="rotate(-90 14 216)" filter="url(#rough2)">换机器重复</text>
+
+  <!-- right panel: monotone curve -->
+  <text x="428" y="56" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">单调性 ⟹ 可行域是前缀</text>
+
+  <!-- region shades -->
+  <rect x="331" y="233" width="106" height="117" fill="#e6f4ea" opacity="0.35" filter="url(#rough2)"/>
+  <rect x="438" y="133" width="91" height="217" fill="#fce4ec" opacity="0.3" filter="url(#rough2)"/>
+
+  <!-- axes -->
+  <path d="M 330 350 L 530 350" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 330 350 L 330 128" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="526" y="366" font-size="10.5" fill="#666" filter="url(#rough2)">m（份数）</text>
+  <text x="318" y="122" font-size="10.5" fill="#666" filter="url(#rough2)">花费</text>
+
+  <!-- budget dashed line -->
+  <path d="M 332 232 L 522 232" stroke="#b85450" stroke-width="1.5" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="484" y="224" font-size="10" fill="#b85450" filter="url(#rough2)">budget</text>
+
+  <!-- cost curve -->
+  <path d="M 330 350 C 368 346, 388 318, 402 284 C 414 254, 424 244, 437 232 C 452 218, 472 188, 492 168 C 502 158, 512 150, 520 144" stroke="#446688" stroke-width="2.2" fill="none" filter="url(#rough2)"/>
+  <text x="522" y="138" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">f_i(m)</text>
+
+  <!-- M_i divider -->
+  <path d="M 437 232 L 437 350" stroke="#d6a040" stroke-width="1.5" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="437" y="368" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040" filter="url(#rough2)">M_i</text>
+
+  <text x="378" y="246" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">可行 [0, M_i]</text>
+  <text x="486" y="316" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">超预算</text>
+
+  <circle cx="330" cy="350" r="3" fill="#4a7a3a" filter="url(#rough2)"/>
+  <text x="342" y="342" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">(0,0) 恒可行</text>
+</svg>
