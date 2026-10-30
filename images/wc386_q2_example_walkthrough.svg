@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="13" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例 1 演算：C(3,2) = 3 对逐一求交集</text>
+  <path d="M 250 44 Q 470 52 690 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: coordinate picture ===== -->
+  <text x="270" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">① 画出三个矩形（单位网格）</text>
+
+  <!-- axes -->
+  <path d="M 100 480 L 440 480" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="450" y="484" font-size="12" fill="#666" filter="url(#sk)">x</text>
+  <path d="M 120 500 L 120 200" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="112" y="196" font-size="12" fill="#666" filter="url(#sk)">y</text>
+
+  <!-- ticks -->
+  <g font-size="10.5" fill="#888" filter="url(#sk)">
+    <text x="162" y="496" text-anchor="middle">1</text>
+    <text x="204" y="496" text-anchor="middle">2</text>
+    <text x="246" y="496" text-anchor="middle">3</text>
+    <text x="288" y="496" text-anchor="middle">4</text>
+    <text x="330" y="496" text-anchor="middle">5</text>
+    <text x="372" y="496" text-anchor="middle">6</text>
+    <text x="108" y="442" text-anchor="end">1</text>
+    <text x="108" y="400" text-anchor="end">2</text>
+    <text x="108" y="358" text-anchor="end">3</text>
+    <text x="108" y="316" text-anchor="end">4</text>
+    <text x="108" y="274" text-anchor="end">5</text>
+    <text x="108" y="232" text-anchor="end">6</text>
+    <text x="114" y="496" text-anchor="end">0</text>
+  </g>
+
+  <!-- R0 [1,1]-[3,3] -->
+  <g filter="url(#sk)"><rect x="162" y="354" width="84" height="84" fill="#4a8edb" fill-opacity="0.16" stroke="#446688" stroke-width="2.2" rx="2"/></g>
+  <text x="168" y="372" font-size="12" font-weight="bold" fill="#446688" filter="url(#sk)">R0</text>
+
+  <!-- R1 [2,2]-[4,4] -->
+  <g filter="url(#sk)"><rect x="204" y="312" width="84" height="84" fill="#4a8e4a" fill-opacity="0.18" stroke="#4a7a3a" stroke-width="2.2" rx="2"/></g>
+  <text x="212" y="330" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">R1</text>
+
+  <!-- R2 [3,1]-[6,6] -->
+  <g filter="url(#sk)"><rect x="246" y="228" width="126" height="210" fill="#d6a040" fill-opacity="0.14" stroke="#d6a040" stroke-width="2.2" rx="2"/></g>
+  <text x="352" y="248" text-anchor="middle" font-size="12" font-weight="bold" fill="#b07a15" filter="url(#sk)">R2</text>
+
+  <!-- (0,1) intersection [2,3]x[2,3] -->
+  <g filter="url(#sk)"><rect x="204" y="354" width="42" height="42" fill="#b85450" fill-opacity="0.5" stroke="#b85450" stroke-width="2" rx="2"/></g>
+  <text x="225" y="380" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a2a26" filter="url(#sk)">1×1</text>
+
+  <!-- (1,2) intersection [3,4]x[2,4] -->
+  <g filter="url(#sk)"><rect x="246" y="312" width="42" height="84" fill="#b85450" fill-opacity="0.22" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6 4" rx="2"/></g>
+  <text x="267" y="358" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a2a26" filter="url(#sk)">1×2</text>
+
+  <!-- (0,2) touching annotation -->
+  <text x="296" y="462" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">R0 与 R2 仅在 x=3 相切（w=0）</text>
+  <path d="M 300 452 Q 272 442 250 422" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+
+  <!-- ===== Panel 2: table ===== -->
+  <text x="690" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">② 逐对计算（边长 = min(w, h)）</text>
+
+  <!-- header -->
+  <g filter="url(#sk)"><rect x="470" y="100" width="420" height="30" fill="#e8f0fa" stroke="#446688" stroke-width="1.2"/></g>
+  <g font-size="12" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">
+    <text x="515" y="120" text-anchor="middle">矩形对</text>
+    <text x="635" y="120" text-anchor="middle">交集范围</text>
+    <text x="755" y="120" text-anchor="middle">w × h</text>
+    <text x="845" y="120" text-anchor="middle">面积</text>
+  </g>
+
+  <!-- rows -->
+  <g filter="url(#sk)"><rect x="470" y="130" width="420" height="34" fill="#ffffff" stroke="#999" stroke-width="1"/></g>
+  <g font-size="12" fill="#333" filter="url(#sk)">
+    <text x="515" y="152" text-anchor="middle">(0,1)</text>
+    <text x="635" y="152" text-anchor="middle">[2,3]×[2,3]</text>
+    <text x="755" y="152" text-anchor="middle">1×1</text>
+    <text x="845" y="152" text-anchor="middle" font-weight="bold" fill="#2e6e2e">1 ✓</text>
+  </g>
+
+  <g filter="url(#sk)"><rect x="470" y="164" width="420" height="34" fill="#ffffff" stroke="#999" stroke-width="1"/></g>
+  <g font-size="12" fill="#333" filter="url(#sk)">
+    <text x="515" y="186" text-anchor="middle">(0,2)</text>
+    <text x="635" y="186" text-anchor="middle">[3,3]×[1,3]</text>
+    <text x="755" y="186" text-anchor="middle">0×2</text>
+    <text x="845" y="186" text-anchor="middle" font-weight="bold" fill="#b85450">0</text>
+  </g>
+
+  <g filter="url(#sk)"><rect x="470" y="198" width="420" height="34" fill="#ffffff" stroke="#999" stroke-width="1"/></g>
+  <g font-size="12" fill="#333" filter="url(#sk)">
+    <text x="515" y="220" text-anchor="middle">(1,2)</text>
+    <text x="635" y="220" text-anchor="middle">[3,4]×[2,4]</text>
+    <text x="755" y="220" text-anchor="middle">1×2</text>
+    <text x="845" y="220" text-anchor="middle" font-weight="bold" fill="#2e6e2e">1 ✓</text>
+  </g>
+
+  <!-- answer row -->
+  <g filter="url(#sk)"><rect x="470" y="248" width="420" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="680" y="274" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">答案 = max{1, 0, 1} = 1</text>
+
+  <!-- side note -->
+  <g filter="url(#sk)"><rect x="470" y="308" width="420" height="112" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="490" y="334" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例 2 的印证（多重交集不占便宜）</text>
+  <text x="490" y="358" font-size="11" fill="#444" filter="url(#sk)">三个矩形的公共交集 [2,2]×[3,3] 是 1×1；</text>
+  <text x="490" y="378" font-size="11" fill="#444" filter="url(#sk)">三对两两交集的最好成绩同样是 1×1。</text>
+  <text x="490" y="402" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">→ 多重交集区域没有带来任何额外收益</text>
+
+  <!-- ===== bottom insight ===== -->
+  <g filter="url(#sk)"><rect x="56" y="560" width="828" height="76" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="76" y="584" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">实现清单</text>
+  <text x="76" y="606" font-size="11" fill="#444" filter="url(#sk)">· 双重循环 i &lt; j，每对 O(1)：先判 w &gt; 0 且 h &gt; 0，再取 d = min(w, h)，累加答案取最大</text>
+  <text x="76" y="626" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">· 坐标 ≤ 10⁷，d² 可达 10¹⁴：C++ 平方前先转 long long，返回类型也是 long long</text>
+</svg>
