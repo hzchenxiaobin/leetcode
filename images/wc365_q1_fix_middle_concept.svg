@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="430" viewBox="0 0 640 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="57" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="430" fill="#fafafa"/>
+  <text x="320" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：固定中间的 j，两边各取最大</text>
+  <path d="M 160 42 Q 320 50 480 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="320" y="62" text-anchor="middle" font-size="12" fill="#666">三元组 (i, j, k) 需满足 i &lt; j &lt; k，值 = (nums[i] − nums[j]) × nums[k]</text>
+
+  <!-- array: 7 cells, left prefix / middle j / right suffix -->
+  <g filter="url(#sk)">
+    <rect x="88" y="80" width="56" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="156" y="80" width="56" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="224" y="80" width="56" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+    <rect x="292" y="80" width="56" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="360" y="80" width="56" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="428" y="80" width="56" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.4"/>
+    <rect x="496" y="80" width="56" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <g font-size="15" text-anchor="middle">
+    <text x="116" y="104" fill="#555">7</text>
+    <text x="184" y="104" fill="#555">4</text>
+    <text x="252" y="104" fill="#3a6a2a" font-weight="bold">9</text>
+    <text x="320" y="104" fill="#8a6520" font-weight="bold">3</text>
+    <text x="388" y="104" fill="#555">2</text>
+    <text x="456" y="104" fill="#446688" font-weight="bold">8</text>
+    <text x="524" y="104" fill="#555">5</text>
+  </g>
+  <g font-size="11" text-anchor="middle" font-weight="bold">
+    <text x="252" y="134" fill="#4a7a3a">preMax</text>
+    <text x="320" y="134" fill="#b8862a">j（枚举它）</text>
+    <text x="456" y="134" fill="#446688">sufMax</text>
+  </g>
+  <g font-size="11" text-anchor="middle">
+    <text x="212" y="158" fill="#4a7a3a">i &lt; j：nums[i] 带 + 号，取前缀最大</text>
+    <text x="456" y="158" fill="#446688">k &gt; j：nums[k] ≥ 1 &gt; 0，取后缀最大</text>
+  </g>
+
+  <!-- formula box -->
+  <g filter="url(#sk)">
+    <rect x="90" y="178" width="460" height="58" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="202" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">对固定的 j：最优候选 = (preMax − nums[j]) × sufMax</text>
+  <text x="320" y="224" text-anchor="middle" font-size="12" fill="#8a6520">左图示例：(9 − 3) × 8 = 48</text>
+
+  <!-- why max on both sides -->
+  <g filter="url(#sk)">
+    <rect x="90" y="250" width="460" height="92" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="272" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688">为什么敢两边都取最大？</text>
+  <text x="320" y="294" text-anchor="middle" font-size="12" fill="#446688">+ 号槽位 nums[i]：放大它只会更大 → 取 preMax</text>
+  <text x="320" y="314" text-anchor="middle" font-size="12" fill="#446688">− 号槽位 nums[j]：被枚举，固定不动</text>
+  <text x="320" y="334" text-anchor="middle" font-size="12" fill="#446688">× 号槽位 nums[k] ≥ 1 &gt; 0：差值为正时放大它 → 取 sufMax</text>
+
+  <!-- non-positive diff note -->
+  <g filter="url(#sk)">
+    <rect x="90" y="356" width="460" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="378" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04a48">若 preMax − nums[j] ≤ 0：该 j 的所有三元组值 ≤ 0</text>
+  <text x="320" y="398" text-anchor="middle" font-size="12" fill="#a04a48">不可能超过兜底的 0 → 直接跳过，ans 初值取 0 即可</text>
+</svg>
