@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 545" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="545" fill="#fdfcf7"/>
+
+  <text x="480" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：补零定长 → 枚举交换生成变体 → 先查 → 后插</text>
+  <path d="M 210 42 Q 480 50 750 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 主纵列 -->
+  <!-- 开始 -->
+  <rect x="370" y="60" width="220" height="34" rx="17" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="480" y="82" text-anchor="middle" font-size="12.5" fill="#2b4a6e" font-weight="bold">开始：从左到右扫描 nums</text>
+  <path d="M 480 94 L 480 114" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 取元素 -->
+  <rect x="360" y="118" width="240" height="34" rx="6" fill="#f0f0f0" stroke="#3a3a3a" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="480" y="140" text-anchor="middle" font-size="12.5" fill="#333">取当前元素 x = nums[j]</text>
+  <path d="M 480 152 L 480 172" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ① 补零 -->
+  <rect x="330" y="176" width="300" height="46" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="480" y="196" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">① 补零：t = x 的 7 位定长串（f"{x:07d}"）</text>
+  <text x="480" y="213" text-anchor="middle" font-size="10.5" fill="#666">位数 ≤ 7 统一对齐，抹平前导 0 陷阱</text>
+  <path d="M 480 222 L 480 242" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ② 生成变体 -->
+  <rect x="330" y="246" width="300" height="62" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="480" y="266" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">② 生成变体集 S(x)：S ← {x}（零次操作）</text>
+  <text x="480" y="283" text-anchor="middle" font-size="10.5" fill="#444">枚举 0 ≤ i &lt; j &lt; 7 共 C(7,2)=21 种：</text>
+  <text x="480" y="299" text-anchor="middle" font-size="10.5" fill="#7a5415" font-weight="bold">换 (i,j) → int 入 S → 换回（对合，集合去重）</text>
+  <path d="M 480 308 L 480 328" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ③ 查（橙色强调） -->
+  <rect x="310" y="332" width="340" height="50" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="2.4" filter="url(#sk)"/>
+  <text x="480" y="352" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">③ 先查：ans += Σ seen[v]，v ∈ S(x)</text>
+  <text x="480" y="370" text-anchor="middle" font-size="10.5" fill="#666">seen 里只有「之前的原值」→ 天然满足 i &lt; j</text>
+  <path d="M 480 382 L 480 402" stroke="#c98a2b" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <!-- ④ 插 -->
+  <rect x="330" y="406" width="300" height="42" rx="6" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="480" y="424" text-anchor="middle" font-size="12.5" fill="#5a3a7a" font-weight="bold">④ 后插：seen[x] += 1</text>
+  <text x="480" y="440" text-anchor="middle" font-size="10.5" fill="#888">S ∋ x，先插会让 x 命中自己，多算 (x,x) 对</text>
+
+  <!-- 判定 + 回环 -->
+  <path d="M 480 448 L 480 468" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <polygon points="480,470 556,502 480,534 404,502" fill="#f0f0f0" stroke="#3a3a3a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="480" y="507" text-anchor="middle" font-size="11.5" fill="#333" font-weight="bold">还有元素？</text>
+  <path d="M 556 502 C 700 502, 710 140, 604 135" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="712" y="330" font-size="11" fill="#2b6e9e" font-weight="bold">是 → 下一个 x</text>
+  <path d="M 404 502 L 236 502" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <rect x="120" y="486" width="114" height="32" rx="16" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="177" y="507" text-anchor="middle" font-size="12" fill="#2b4a6e" font-weight="bold">返回 ans</text>
+
+  <!-- 左侧注释框：键空间 -->
+  <rect x="60" y="118" width="230" height="92" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3" filter="url(#sk)"/>
+  <text x="175" y="140" text-anchor="middle" font-size="11" fill="#666" font-weight="bold">键空间一致性（隐蔽坑）</text>
+  <g font-size="10" fill="#666">
+    <text x="74" y="160">变体侧："0000003" 转 int → 3</text>
+    <text x="74" y="176">seen 侧：存原值数值 3</text>
+    <text x="74" y="192">两侧都用数值 ⇒ 同键空间，</text>
+    <text x="74" y="204" fill="#b03a3a" font-weight="bold">裸串 vs 补零串永远查不中</text>
+  </g>
+
+  <!-- 右侧注释框：复杂度 -->
+  <rect x="668" y="176" width="232" height="108" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="784" y="198" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold">复杂度对照</text>
+  <g font-size="10.5" fill="#444">
+    <text x="682" y="220">本流程：O(n·D²)，n=100 ≈ 2200 次查插</text>
+    <text x="682" y="238">平方暴力：O(n²·D²)，n=100 也能过</text>
+    <text x="682" y="256">Q4（n=5000、两步交换）：</text>
+    <text x="682" y="274" fill="#2b6e9e" font-weight="bold">哈希版扩闭包即正解，暴力版死路</text>
+  </g>
+
+  <!-- 右侧注释框：值域 -->
+  <rect x="668" y="332" width="232" height="60" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="784" y="352" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">值域核查</text>
+  <text x="784" y="370" text-anchor="middle" font-size="10.5" fill="#444">7 位串交换后 ≤ 9,999,999 &lt; 2³¹−1</text>
+  <text x="784" y="385" text-anchor="middle" font-size="10.5" fill="#2e6e2e" font-weight="bold">int 安全，无需 long long</text>
+</svg>

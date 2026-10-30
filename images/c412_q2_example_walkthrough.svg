@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 545" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="545" fill="#fdfcf7"/>
+
+  <text x="480" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例 1 演算：nums = [3, 12, 30, 17, 21]，一趟「先查后插」</text>
+  <path d="M 200 42 Q 480 50 760 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 表头 -->
+  <g font-size="12" font-weight="bold">
+    <rect x="60" y="64" width="56" height="30" rx="4" fill="#f0f0f0" stroke="#3a3a3a" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="88" y="84" text-anchor="middle" fill="#333">j</text>
+    <rect x="116" y="64" width="76" height="30" rx="4" fill="#f0f0f0" stroke="#3a3a3a" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="154" y="84" text-anchor="middle" fill="#333">x</text>
+    <rect x="192" y="64" width="330" height="30" rx="4" fill="#f0f0f0" stroke="#3a3a3a" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="357" y="84" text-anchor="middle" fill="#333">S(x) 关键变体（数值化后）</text>
+    <rect x="522" y="64" width="210" height="30" rx="4" fill="#f0f0f0" stroke="#3a3a3a" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="627" y="84" text-anchor="middle" fill="#333">命中 seen？</text>
+    <rect x="732" y="64" width="168" height="30" rx="4" fill="#f0f0f0" stroke="#3a3a3a" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="816" y="84" text-anchor="middle" fill="#333">ans 累计</text>
+  </g>
+
+  <!-- 行 j=0 -->
+  <g font-size="12">
+    <rect x="60" y="102" width="56" height="32" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2" filter="url(#sk)"/>
+    <text x="88" y="124" text-anchor="middle" fill="#2b4a6e">0</text>
+    <rect x="116" y="102" width="76" height="32" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2" filter="url(#sk)"/>
+    <text x="154" y="124" text-anchor="middle" fill="#2b4a6e" font-weight="bold">3</text>
+    <rect x="192" y="102" width="330" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="200" y="124" fill="#444">{3, 30, 300, 3000, …}</text>
+    <rect x="522" y="102" width="210" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="627" y="124" text-anchor="middle" fill="#999">—（表空）</text>
+    <rect x="732" y="102" width="168" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="816" y="124" text-anchor="middle" fill="#444">0</text>
+  </g>
+  <text x="836" y="124" font-size="9.5" fill="#888">插 seen[3]=1</text>
+
+  <!-- 行 j=1 -->
+  <g font-size="12">
+    <rect x="60" y="142" width="56" height="32" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2" filter="url(#sk)"/>
+    <text x="88" y="164" text-anchor="middle" fill="#2b4a6e">1</text>
+    <rect x="116" y="142" width="76" height="32" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2" filter="url(#sk)"/>
+    <text x="154" y="164" text-anchor="middle" fill="#2b4a6e" font-weight="bold">12</text>
+    <rect x="192" y="142" width="330" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="200" y="164" fill="#444">{12, 21, 102, 120, 1002, …}</text>
+    <rect x="522" y="142" width="210" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="627" y="164" text-anchor="middle" fill="#999">—</text>
+    <rect x="732" y="142" width="168" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="816" y="164" text-anchor="middle" fill="#444">0</text>
+  </g>
+  <text x="836" y="164" font-size="9.5" fill="#888">插 seen[12]=1</text>
+
+  <!-- 行 j=2 命中（前导 0 型） -->
+  <g font-size="12">
+    <rect x="60" y="182" width="56" height="32" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+    <text x="88" y="204" text-anchor="middle" fill="#7a5415">2</text>
+    <rect x="116" y="182" width="76" height="32" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+    <text x="154" y="204" text-anchor="middle" fill="#7a5415" font-weight="bold">30</text>
+    <rect x="192" y="182" width="330" height="32" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+    <text x="200" y="204" fill="#444">{30, <tspan fill="#b03a3a" font-weight="bold">3</tspan>, 300, 3000, …}</text>
+    <rect x="522" y="182" width="210" height="32" rx="4" fill="#f5e0e0" stroke="#b85450" stroke-width="2" filter="url(#sk)"/>
+    <text x="627" y="204" text-anchor="middle" fill="#b03a3a" font-weight="bold">✓ seen[3] = 1</text>
+    <rect x="732" y="182" width="168" height="32" rx="4" fill="#f5e0e0" stroke="#b85450" stroke-width="2" filter="url(#sk)"/>
+    <text x="816" y="204" text-anchor="middle" fill="#b03a3a" font-weight="bold">+1 → 1</text>
+  </g>
+  <text x="836" y="204" font-size="9.5" fill="#888">插 seen[30]=1</text>
+
+  <!-- 行 j=3 -->
+  <g font-size="12">
+    <rect x="60" y="222" width="56" height="32" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2" filter="url(#sk)"/>
+    <text x="88" y="244" text-anchor="middle" fill="#2b4a6e">3</text>
+    <rect x="116" y="222" width="76" height="32" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2" filter="url(#sk)"/>
+    <text x="154" y="244" text-anchor="middle" fill="#2b4a6e" font-weight="bold">17</text>
+    <rect x="192" y="222" width="330" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="200" y="244" fill="#444">{17, 71, 107, 170, …}</text>
+    <rect x="522" y="222" width="210" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="627" y="244" text-anchor="middle" fill="#999">—</text>
+    <rect x="732" y="222" width="168" height="32" rx="4" fill="#fdfcf7" stroke="#9e9e9e" stroke-width="1" filter="url(#sk)"/>
+    <text x="816" y="244" text-anchor="middle" fill="#444">1</text>
+  </g>
+  <text x="836" y="244" font-size="9.5" fill="#888">插 seen[17]=1</text>
+
+  <!-- 行 j=4 命中（纯换位型） -->
+  <g font-size="12">
+    <rect x="60" y="262" width="56" height="32" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+    <text x="88" y="284" text-anchor="middle" fill="#7a5415">4</text>
+    <rect x="116" y="262" width="76" height="32" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+    <text x="154" y="284" text-anchor="middle" fill="#7a5415" font-weight="bold">21</text>
+    <rect x="192" y="262" width="330" height="32" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+    <text x="200" y="284" fill="#444">{21, <tspan fill="#b03a3a" font-weight="bold">12</tspan>, 120, 210, …}</text>
+    <rect x="522" y="262" width="210" height="32" rx="4" fill="#f5e0e0" stroke="#b85450" stroke-width="2" filter="url(#sk)"/>
+    <text x="627" y="284" text-anchor="middle" fill="#b03a3a" font-weight="bold">✓ seen[12] = 1</text>
+    <rect x="732" y="262" width="168" height="32" rx="4" fill="#f5e0e0" stroke="#b85450" stroke-width="2" filter="url(#sk)"/>
+    <text x="816" y="284" text-anchor="middle" fill="#b03a3a" font-weight="bold">+1 → 2</text>
+  </g>
+  <text x="836" y="284" font-size="9.5" fill="#888">插 seen[21]=1</text>
+
+  <!-- 两次命中的机理框 -->
+  <rect x="60" y="318" width="414" height="118" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="76" y="342" font-size="12.5" fill="#2e6e2e" font-weight="bold">命中 ① 前导 0 型（j = 2，x = 30）</text>
+  <g font-size="11.5" font-family="'Comic Sans MS','Courier New',monospace">
+    <rect x="86" y="356" width="120" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="146" y="374" text-anchor="middle" fill="#2b4a6e" font-weight="bold">0000030</text>
+    <path d="M 210 369 L 258 369" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+    <text x="234" y="360" text-anchor="middle" font-size="9" fill="#2e6e2e">换 5,6 位</text>
+    <rect x="264" y="356" width="120" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="324" y="374" text-anchor="middle" fill="#2b4a6e" font-weight="bold">0000003</text>
+  </g>
+  <g font-size="10.5" fill="#444">
+    <text x="76" y="402">数值化 = 3，命中 seen[3]——位数不同的数对</text>
+    <text x="76" y="420" fill="#b03a3a" font-weight="bold">全靠补零串交换 + int 键才查得中</text>
+  </g>
+
+  <rect x="486" y="318" width="414" height="118" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="502" y="342" font-size="12.5" fill="#5a3a7a" font-weight="bold">命中 ② 纯换位型（j = 4，x = 21）</text>
+  <g font-size="11.5" font-family="'Comic Sans MS','Courier New',monospace">
+    <rect x="512" y="356" width="120" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="572" y="374" text-anchor="middle" fill="#2b4a6e" font-weight="bold">0000021</text>
+    <path d="M 636 369 L 684 369" stroke="#8e5db8" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+    <text x="660" y="360" text-anchor="middle" font-size="9" fill="#5a3a7a">换 5,6 位</text>
+    <rect x="690" y="356" width="120" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="750" y="374" text-anchor="middle" fill="#2b4a6e" font-weight="bold">0000012</text>
+  </g>
+  <g font-size="10.5" fill="#444">
+    <text x="502" y="402">数值化 = 12，命中 seen[12]——"21" 与 "12"</text>
+    <text x="502" y="420" fill="#5a3a7a" font-weight="bold">同长直接换位，最朴素的命中形态</text>
+  </g>
+
+  <!-- 底部结论条 -->
+  <rect x="60" y="452" width="840" height="72" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3" filter="url(#sk)"/>
+  <text x="480" y="476" text-anchor="middle" font-size="12" fill="#444">每行「先查后插」：查询时表里只有之前的元素 ⇒ 天然 i &lt; j、每对恰计一次</text>
+  <text x="480" y="496" text-anchor="middle" font-size="12" fill="#444">对照自查：示例 2 [1,1,1,1,1] 中 S(1) 虽含 10,100,…，seen 里只有原值 1 命中 → 0+1+2+3+4 = 10 ✓</text>
+  <text x="480" y="516" text-anchor="middle" font-size="13" fill="#b03a3a" font-weight="bold">扫描结束，ans = 2，与示例输出一致 ✓</text>
+</svg>
