@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#446688" filter="url(#rough2)">算法流程：一趟扫描 + 常数次判定</text>
+
+  <!-- step 1: scan -->
+  <rect x="170" y="48" width="220" height="38" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="72" text-anchor="middle" font-size="12.5" fill="#33507a" filter="url(#rough2)">一趟扫描：统计 s₁, z₁, s₂, z₂</text>
+  <path d="M 280 86 L 280 104" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2: lo -->
+  <rect x="170" y="108" width="220" height="38" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="132" text-anchor="middle" font-size="12.5" fill="#33507a" filter="url(#rough2)">lo = max(s₁+z₁, s₂+z₂)</text>
+  <path d="M 280 146 L 280 164" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 1 -->
+  <polygon points="175,214 280,168 385,214 280,260" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="206" text-anchor="middle" font-size="12" fill="#7a5a10" filter="url(#rough2)">z₁ = 0 且 s₁ &lt; lo ？</text>
+  <text x="280" y="226" text-anchor="middle" font-size="10" fill="#99741c" filter="url(#rough2)">（nums₁ 被钉死？）</text>
+  <text x="406" y="206" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M 385 214 L 441 214" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="445" y="196" width="92" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="491" y="219" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">return -1</text>
+  <text x="292" y="276" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">否</text>
+  <path d="M 280 260 L 280 278" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 2 -->
+  <polygon points="175,326 280,280 385,326 280,372" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="318" text-anchor="middle" font-size="12" fill="#7a5a10" filter="url(#rough2)">z₂ = 0 且 s₂ &lt; lo ？</text>
+  <text x="280" y="338" text-anchor="middle" font-size="10" fill="#99741c" filter="url(#rough2)">（nums₂ 被钉死？）</text>
+  <text x="406" y="318" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M 385 326 L 441 326" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="445" y="308" width="92" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="491" y="331" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">return -1</text>
+  <text x="292" y="388" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">否</text>
+  <path d="M 280 372 L 280 390" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- final -->
+  <rect x="170" y="394" width="220" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="280" y="420" text-anchor="middle" font-size="13.5" fill="#2d5a20" font-weight="bold" filter="url(#rough2)">return lo（最小相等和）</text>
+
+  <!-- note -->
+  <rect x="30" y="444" width="500" height="28" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="463" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">「z = 0 且 s &lt; lo」⟺ 下界小的一侧没有 0——定值永远够不到对方的下界</text>
+</svg>
