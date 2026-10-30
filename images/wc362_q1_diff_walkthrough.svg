@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 316"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="316" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">示例 1 演算：三辆车各打一对桩，前缀和还原覆盖层数</text>
+
+  <!-- 图例 -->
+  <rect x="140" y="42" width="16" height="16" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="164" y="55" font-size="11" fill="#333" filter="url(#rough2)">[1,5]</text>
+  <rect x="215" y="42" width="16" height="16" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="239" y="55" font-size="11" fill="#333" filter="url(#rough2)">[3,6]</text>
+  <rect x="290" y="42" width="16" height="16" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="314" y="55" font-size="11" fill="#333" filter="url(#rough2)">[4,7]</text>
+  <text x="452" y="55" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">格子颜色 = 桩属于哪辆车</text>
+
+  <!-- 表头 -->
+  <text x="57" y="93" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">位置 p</text>
+  <rect x="100" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="124" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">0</text>
+  <rect x="148" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="172" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">1</text>
+  <rect x="196" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="220" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">2</text>
+  <rect x="244" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="268" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">3</text>
+  <rect x="292" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="316" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">4</text>
+  <rect x="340" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="364" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">5</text>
+  <rect x="388" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="412" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">6</text>
+  <rect x="436" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="460" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">7</text>
+  <rect x="484" y="70" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="508" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">8</text>
+
+  <!-- 行 1：diff[p] -->
+  <text x="57" y="136" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">diff[p]</text>
+  <rect x="100" y="112" width="48" height="38" rx="4" fill="#f5f5f5" stroke="#bbb" stroke-width="1" filter="url(#rough2)"/>
+  <text x="124" y="136" text-anchor="middle" font-size="13" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="148" y="112" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="172" y="136" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">+1</text>
+  <rect x="196" y="112" width="48" height="38" rx="4" fill="#f5f5f5" stroke="#bbb" stroke-width="1" filter="url(#rough2)"/>
+  <text x="220" y="136" text-anchor="middle" font-size="13" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="244" y="112" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="268" y="136" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">+1</text>
+  <rect x="292" y="112" width="48" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="316" y="136" text-anchor="middle" font-size="13" font-weight="bold" fill="#b27a10" filter="url(#rough2)">+1</text>
+  <rect x="340" y="112" width="48" height="38" rx="4" fill="#f5f5f5" stroke="#bbb" stroke-width="1" filter="url(#rough2)"/>
+  <text x="364" y="136" text-anchor="middle" font-size="13" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="388" y="112" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="412" y="136" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">−1</text>
+  <rect x="436" y="112" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="460" y="136" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">−1</text>
+  <rect x="484" y="112" width="48" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="508" y="136" text-anchor="middle" font-size="13" font-weight="bold" fill="#b27a10" filter="url(#rough2)">−1</text>
+
+  <!-- 行 2：cover 前缀和 -->
+  <text x="57" y="172" text-anchor="middle" font-size="12" font-weight="bold" fill="#555" filter="url(#rough2)">cover</text>
+  <text x="57" y="187" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">（层数）</text>
+  <rect x="100" y="154" width="48" height="38" rx="4" fill="#f5f5f5" stroke="#bbb" stroke-width="1" filter="url(#rough2)"/>
+  <text x="124" y="178" text-anchor="middle" font-size="13" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="148" y="154" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="172" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">1</text>
+  <rect x="196" y="154" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="220" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">1</text>
+  <rect x="244" y="154" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="268" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">2</text>
+  <rect x="292" y="154" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="316" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough2)">3</text>
+  <rect x="340" y="154" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="364" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">3</text>
+  <rect x="388" y="154" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="412" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">2</text>
+  <rect x="436" y="154" width="48" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="460" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">1</text>
+  <rect x="484" y="154" width="48" height="38" rx="4" fill="#f5f5f5" stroke="#bbb" stroke-width="1" filter="url(#rough2)"/>
+  <text x="508" y="178" text-anchor="middle" font-size="13" fill="#999" filter="url(#rough2)">0</text>
+
+  <!-- 行 3：被覆盖？ -->
+  <text x="57" y="220" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">被覆盖？</text>
+  <rect x="100" y="196" width="48" height="38" rx="4" fill="#f5f5f5" stroke="#bbb" stroke-width="1" filter="url(#rough2)"/>
+  <text x="124" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗</text>
+  <rect x="148" y="196" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="172" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <rect x="196" y="196" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="220" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <rect x="244" y="196" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="268" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <rect x="292" y="196" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="316" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <rect x="340" y="196" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="364" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <rect x="388" y="196" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="412" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <rect x="436" y="196" width="48" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="460" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓</text>
+  <rect x="484" y="196" width="48" height="38" rx="4" fill="#f5f5f5" stroke="#bbb" stroke-width="1" filter="url(#rough2)"/>
+  <text x="508" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗</text>
+
+  <!-- 覆盖区虚线框 -->
+  <rect x="146" y="108" width="340" height="130" rx="6" fill="none" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="6 4" filter="url(#rough2)"/>
+
+  <!-- 结论 -->
+  <path d="M 280 240 L 280 254" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="110" y="258" width="340" height="46" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="280" y="287" text-anchor="middle" font-size="15" font-weight="bold" fill="#b85450" filter="url(#rough2)">cover &gt; 0 的位置恰为 1..7 ⇒ 答案 = 7</text>
+</svg>
