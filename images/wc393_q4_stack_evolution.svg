@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="440" fill="#fafafa"/>
+  <text x="320" y="22" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">分组栈的增量维护：右端点每右移一格，三步更新</text>
+  <text x="320" y="42" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">示例 2 第 j = 3 层（目标 andValues[2] = 5）：r = 5 → r = 6，扫入 nums[6] = 5</text>
+
+  <!-- 三步 -->
+  <rect x="44" y="54" width="176" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="132" y="73" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">① 新组压栈顶</text>
+  <text x="132" y="90" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">( nums[r], dp[j-1][r] )</text>
+  <path d="M223,77 H231" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="234" y="54" width="176" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="322" y="73" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">② 旧组全体缩水</text>
+  <text x="322" y="90" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">and &amp;= nums[r]（位只减不增）</text>
+  <path d="M413,77 H421" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="424" y="54" width="176" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="512" y="73" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#d6a040" filter="url(#rough2)">③ 相邻同值合并</text>
+  <text x="512" y="90" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">best 取 min，保持 and 严格递减</text>
+
+  <!-- 行 A：r=5 时的分组栈 -->
+  <text x="44" y="122" font-size="11" fill="#666" filter="url(#rough2)">r = 5 时的分组栈（左端为栈顶，and 自左向右严格递减）：</text>
+  <rect x="310" y="130" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="339" y="149" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(7, 12)</text>
+  <rect x="374" y="130" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="403" y="149" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(5, ∞)</text>
+  <rect x="438" y="130" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="467" y="149" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(1, ∞)</text>
+  <rect x="502" y="130" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="531" y="149" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(0, ∞)</text>
+
+  <path d="M320,166 V190" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="334" y="183" font-size="11.5" fill="#666" filter="url(#rough2)">扫入 nums[6] = 5</text>
+
+  <!-- 行 B：①+② 后 -->
+  <text x="44" y="214" font-size="11" fill="#666" filter="url(#rough2)">① + ②：新组 (5, dp[2][6]) = (5, 12) 压顶，旧组全体 and &amp;= 5：</text>
+  <rect x="302" y="215" width="202" height="42" rx="8" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6,5" filter="url(#rough2)"/>
+  <rect x="310" y="222" width="58" height="28" rx="14" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="339" y="241" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(5, 12)</text>
+  <rect x="374" y="222" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="403" y="241" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(5, 12)</text>
+  <rect x="438" y="222" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="467" y="241" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(5, ∞)</text>
+  <rect x="502" y="222" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="531" y="241" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(1, ∞)</text>
+  <rect x="566" y="222" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="595" y="241" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(0, ∞)</text>
+  <text x="403" y="272" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">前三个组 and 同为 5 → 相邻合并</text>
+
+  <path d="M320,282 V306" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="334" y="299" font-size="11.5" fill="#666" filter="url(#rough2)">③ 相邻同值合并，best 取 min</text>
+
+  <!-- 行 C：合并后 -->
+  <text x="44" y="330" font-size="11" fill="#666" filter="url(#rough2)">合并后（and 严格递减，栈长 ≤ 18）：</text>
+  <rect x="310" y="338" width="58" height="28" rx="14" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="339" y="357" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">(5, 12)</text>
+  <rect x="374" y="338" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="403" y="357" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(1, ∞)</text>
+  <rect x="438" y="338" width="58" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="467" y="357" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">(0, ∞)</text>
+
+  <!-- 结论框 -->
+  <rect x="44" y="380" width="580" height="48" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="334" y="399" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">查询目标 5：栈自顶向下 and 严格递减，至多一个组命中；若栈顶已小于目标可直接 break</text>
+  <text x="334" y="419" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">栈顶 (5, 12) 命中 ⟹ dp[3][7] = 12 + nums[6] = 17 ✓ —— 正是示例 2 的答案</text>
+</svg>

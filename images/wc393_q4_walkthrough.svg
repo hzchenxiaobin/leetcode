@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 450"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="450" fill="#fafafa"/>
+  <text x="320" y="22" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">示例演算：分层 DP 逐层填表，最终 dp[3][7] = 17</text>
+  <text x="320" y="42" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">nums = [2,3,5,7,7,7,5]，andValues = [0,7,5]，∞ 表示不可行</text>
+
+  <!-- 数组条 -->
+  <text x="48" y="73" font-size="11" fill="#666" filter="url(#rough2)">nums =</text>
+  <rect x="132" y="54" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="176" y="54" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="220" y="54" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="264" y="54" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="308" y="54" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="352" y="54" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="396" y="54" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="154" y="74" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">2</text>
+  <text x="198" y="74" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">3</text>
+  <text x="242" y="74" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">5</text>
+  <text x="286" y="74" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">7</text>
+  <text x="330" y="74" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">7</text>
+  <text x="374" y="74" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">7</text>
+  <text x="418" y="74" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">5</text>
+  <text x="154" y="96" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">0</text>
+  <text x="198" y="96" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">1</text>
+  <text x="242" y="96" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">2</text>
+  <text x="286" y="96" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">3</text>
+  <text x="330" y="96" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">4</text>
+  <text x="374" y="96" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">5</text>
+  <text x="418" y="96" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">6</text>
+
+  <!-- 表头 i -->
+  <text x="170" y="112" text-anchor="end" font-size="9.5" fill="#999" filter="url(#rough2)">i =</text>
+  <text x="204" y="112" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">0</text>
+  <text x="252" y="112" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">1</text>
+  <text x="300" y="112" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">2</text>
+  <text x="348" y="112" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">3</text>
+  <text x="396" y="112" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">4</text>
+  <text x="444" y="112" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">5</text>
+  <text x="492" y="112" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">6</text>
+  <text x="540" y="112" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">7</text>
+
+  <!-- 行 0：dp[0] -->
+  <text x="48" y="129" font-size="10.5" fill="#666" filter="url(#rough2)">dp[0]（0 组）</text>
+  <rect x="180" y="112" width="48" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="204" y="130" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">0</text>
+  <rect x="228" y="112" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="252" y="130" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="276" y="112" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="300" y="130" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="324" y="112" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="348" y="130" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="372" y="112" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="396" y="130" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="420" y="112" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="444" y="130" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="468" y="112" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="492" y="130" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="516" y="112" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="540" y="130" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+
+  <!-- 行 1：dp[1] -->
+  <text x="48" y="157" font-size="10.5" fill="#666" filter="url(#rough2)">dp[1]（目标 0）</text>
+  <rect x="180" y="140" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="204" y="158" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="228" y="140" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="252" y="158" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="276" y="140" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="300" y="158" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="324" y="140" width="48" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="348" y="158" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">5</text>
+  <rect x="372" y="140" width="48" height="26" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="396" y="158" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">7</text>
+  <rect x="420" y="140" width="48" height="26" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="444" y="158" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">7</text>
+  <rect x="468" y="140" width="48" height="26" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="492" y="158" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">7</text>
+  <rect x="516" y="140" width="48" height="26" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="540" y="158" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">5</text>
+
+  <!-- 行 2：dp[2] -->
+  <text x="48" y="185" font-size="10.5" fill="#666" filter="url(#rough2)">dp[2]（目标 7）</text>
+  <rect x="180" y="168" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="204" y="186" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="228" y="168" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="252" y="186" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="276" y="168" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="300" y="186" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="324" y="168" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="348" y="186" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="372" y="168" width="48" height="26" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="396" y="186" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">12</text>
+  <rect x="420" y="168" width="48" height="26" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="444" y="186" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">12</text>
+  <rect x="468" y="168" width="48" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="492" y="186" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">12</text>
+  <rect x="516" y="168" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="540" y="186" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+
+  <!-- 行 3：dp[3] -->
+  <text x="48" y="213" font-size="10.5" fill="#666" filter="url(#rough2)">dp[3]（目标 5）</text>
+  <rect x="180" y="196" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="204" y="214" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="228" y="196" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="252" y="214" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="276" y="196" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="300" y="214" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="324" y="196" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="348" y="214" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="372" y="196" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="396" y="214" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="420" y="196" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="444" y="214" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="468" y="196" width="48" height="26" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="492" y="214" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∞</text>
+  <rect x="516" y="196" width="48" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="540" y="214" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">17</text>
+
+  <!-- 链条 -->
+  <rect x="48" y="236" width="172" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="134" y="254" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#333" filter="url(#rough2)">dp[1][3] = 0 + 5 = 5</text>
+  <text x="134" y="271" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">第 1 组 [2,3,5]：AND = 0 ✓</text>
+  <path d="M224,258 H246" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="250" y="236" width="172" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="336" y="254" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#333" filter="url(#rough2)">dp[2][6] = 5 + 7 = 12</text>
+  <text x="336" y="271" text-anchor="middle" font-size="9.5" fill="#446688" filter="url(#rough2)">第 2 组 [7,7,7]：AND = 7 ✓</text>
+  <path d="M426,258 H448" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="452" y="236" width="172" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="538" y="254" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#333" filter="url(#rough2)">dp[3][7] = 12 + 5 = 17</text>
+  <text x="538" y="271" text-anchor="middle" font-size="9.5" fill="#d6a040" filter="url(#rough2)">第 3 组 [5]：AND = 5 ✓</text>
+
+  <!-- 最优划分条 -->
+  <text x="48" y="316" font-size="11" fill="#666" filter="url(#rough2)">最优划分：</text>
+  <rect x="132" y="296" width="44" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="176" y="296" width="44" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="220" y="296" width="44" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" filter="url(#rough2)"/>
+  <rect x="264" y="296" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="308" y="296" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="352" y="296" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" filter="url(#rough2)"/>
+  <rect x="396" y="296" width="44" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="154" y="317" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">2</text>
+  <text x="198" y="317" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">3</text>
+  <text x="242" y="317" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">5</text>
+  <text x="286" y="317" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">7</text>
+  <text x="330" y="317" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">7</text>
+  <text x="374" y="317" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">7</text>
+  <text x="418" y="317" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">5</text>
+  <text x="242" y="346" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">值 = 5（组尾）</text>
+  <text x="374" y="346" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#rough2)">值 = 7（组尾）</text>
+  <text x="418" y="362" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#d6a040" filter="url(#rough2)">值 = 5</text>
+  <text x="320" y="366" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">总和 = 5 + 7 + 5 = 17</text>
+
+  <!-- 洞察框 -->
+  <rect x="48" y="384" width="560" height="48" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="328" y="403" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">若第一组在 7 上闭合（如 [2,3,5,7]…），值和都是 19；把 7 藏进组内、在 5 上闭合 → 17</text>
+  <text x="328" y="423" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">「最小化」的本质：为每一次闭合挑最便宜的组尾（组内其余元素全部免费）</text>
+</svg>
