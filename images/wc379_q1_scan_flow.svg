@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="500" fill="#fafafa"/>
+  <text x="330" y="28" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：单趟扫描维护字典序最大的 (d², area)</text>
+
+  <!-- 开始 -->
+  <g filter="url(#rough2)">
+    <rect x="150" y="48" width="220" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="260" y="73" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">开始：bestD² = −1，bestArea = 0</text>
+
+  <path d="M 260 88 L 260 108" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 取矩形 -->
+  <g filter="url(#rough2)">
+    <rect x="150" y="112" width="220" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="260" y="137" text-anchor="middle" font-size="12.5" fill="#2b5a88" filter="url(#rough2)">取下一个矩形 [l, w]</text>
+
+  <path d="M 260 152 L 260 172" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 计算二元组 -->
+  <g filter="url(#rough2)">
+    <rect x="150" y="176" width="220" height="48" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="260" y="196" text-anchor="middle" font-size="12.5" fill="#2b5a88" filter="url(#rough2)">d² ← l² + w²（免开方）</text>
+  <text x="260" y="214" text-anchor="middle" font-size="12.5" fill="#2b5a88" filter="url(#rough2)">area ← l × w</text>
+
+  <path d="M 260 224 L 260 240" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定菱形：字典序更大？ -->
+  <polygon points="260,240 430,288 260,336 90,288" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="282" text-anchor="middle" font-size="12" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">d² &gt; bestD² 或</text>
+  <text x="260" y="301" text-anchor="middle" font-size="12" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">d² = bestD² 且 area &gt; bestArea？</text>
+
+  <!-- 是 → 更新 -->
+  <path d="M 430 288 L 451 288" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="436" y="278" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <g filter="url(#rough2)">
+    <rect x="455" y="260" width="160" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="535" y="282" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">更新：bestD² ← d²</text>
+  <text x="535" y="302" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">bestArea ← area</text>
+
+  <!-- 更新后回到主流程 -->
+  <path d="M 535 316 L 535 390 L 376 390" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 否 → 还有矩形？ -->
+  <path d="M 260 336 L 260 352" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="272" y="349" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+
+  <polygon points="260,354 370,390 260,426 150,390" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="395" text-anchor="middle" font-size="12" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">还有矩形？</text>
+
+  <!-- 是 → 循环 -->
+  <path d="M 150 390 L 100 390 L 100 132 L 146 132" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="122" y="382" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- 否 → 结束 -->
+  <path d="M 260 426 L 260 444" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="272" y="441" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="448" width="220" height="40" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="260" y="473" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">返回 bestArea</text>
+
+  <!-- 易错提示 -->
+  <g filter="url(#rough2)">
+    <rect x="455" y="60" width="195" height="112" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="552" y="82" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">✗ 易错条件：</text>
+  <text x="552" y="101" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">d² ≥ bestD² 且</text>
+  <text x="552" y="118" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">area &gt; bestArea</text>
+  <text x="552" y="138" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">对角线更长、面积更小</text>
+  <text x="552" y="155" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">（[9,9]→[13,2]）漏更新</text>
+</svg>
