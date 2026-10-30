@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">状压 DP：mask = 已填好的空格集合，popcount 对齐「第几块石头」</text>
+
+  <!-- ① 收集 -->
+  <rect x="50" y="52" width="460" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="74" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">① 收集：src ← 每个 cnt&gt;1 的格子重复 cnt−1 份</text>
+  <text x="280" y="92" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">dst ← 所有 cnt=0 的格子；两列等长，记为 m ≤ 8</text>
+
+  <path d="M 280 104 L 280 118" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 状态 -->
+  <rect x="50" y="122" width="460" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="144" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② 状态：dp[mask] = 已填好 mask 内的空格、</text>
+  <text x="280" y="162" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">用掉前 popcount(mask) 份 src 的最少步数，dp[0] = 0</text>
+
+  <text x="280" y="200" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">例：mask = 1011₂ 表示 t₀、t₁、t₃ 已填，接下来安置第 3 份 src</text>
+
+  <path d="M 280 210 L 280 224" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ 转移 -->
+  <rect x="50" y="228" width="460" height="70" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="280" y="250" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ 转移：j 取遍 mask 之外的空格</text>
+  <text x="280" y="270" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">dp[mask | 1&lt;&lt;j] ← min(dp[mask | 1&lt;&lt;j],</text>
+  <text x="280" y="288" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">dp[mask] + dist(src[popcount(mask)], dst[j]))</text>
+
+  <path d="M 280 298 L 280 312" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ 答案 -->
+  <rect x="50" y="316" width="460" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="338" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333" filter="url(#rough2)">④ 答案 = dp[(1&lt;&lt;m) − 1]</text>
+  <text x="280" y="356" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">转移总量 ≤ 2⁸ × 8 ≈ 2×10³，毫秒级</text>
+
+  <text x="280" y="400" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">回溯版本质相同：按序给第 k 份 src 挑一个未用空格，全排列 ≤ 8! = 40320</text>
+</svg>
