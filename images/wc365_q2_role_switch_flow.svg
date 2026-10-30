@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="57" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#888"/>
+    </marker>
+  </defs>
+  <rect width="680" height="470" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">一遍扫描：每个元素 x 依次扮演 k → j → i</text>
+  <text x="340" y="52" text-anchor="middle" font-size="12" fill="#666" filter="url(#sk)">三步全部消费「上一轮」的聚合值——先结算、再入池，聚合层层复用</text>
+
+  <!-- three step boxes -->
+  <g filter="url(#sk)">
+    <rect x="30" y="74" width="196" height="112" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="242" y="74" width="196" height="112" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="454" y="74" width="196" height="112" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <g text-anchor="middle" filter="url(#sk)">
+    <text x="128" y="98" font-size="13" font-weight="bold" fill="#446688">① 结算：x 当 k</text>
+    <text x="128" y="122" font-size="10" fill="#446688">ans ← max(ans, maxDiff × x)</text>
+    <text x="128" y="142" font-size="10.5" fill="#446688">历史最大差 × 当前元素</text>
+    <text x="128" y="162" font-size="9.5" fill="#6a88a8">ans：三层聚合 (i&lt;j&lt;k)</text>
+    <text x="340" y="98" font-size="13" font-weight="bold" fill="#8a6520">② 配对：x 当 j</text>
+    <text x="340" y="122" font-size="10" fill="#8a6520">maxDiff ← max(maxDiff, preMax − x)</text>
+    <text x="340" y="142" font-size="10.5" fill="#8a6520">与历史最大值配成新对 (i, j)</text>
+    <text x="340" y="162" font-size="9.5" fill="#a88440">maxDiff：两层聚合 (i&lt;j)</text>
+    <text x="552" y="98" font-size="13" font-weight="bold" fill="#3a6a2a">③ 入池：x 当 i</text>
+    <text x="552" y="122" font-size="10" fill="#4a7a3a">preMax ← max(preMax, x)</text>
+    <text x="552" y="142" font-size="10.5" fill="#4a7a3a">x 挂起，等未来的 j 来配对</text>
+    <text x="552" y="162" font-size="9.5" fill="#6a8a5a">preMax：一层聚合 (i)</text>
+  </g>
+  <g fill="none" stroke="#888" stroke-width="1.6" filter="url(#sk)">
+    <path d="M 228 130 L 240 130" marker-end="url(#arr)"/>
+    <path d="M 440 130 L 452 130" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- aggregation stack -->
+  <text x="340" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#555" filter="url(#sk)">聚合金字塔：一个变量攒一层信息</text>
+  <g filter="url(#sk)">
+    <rect x="250" y="232" width="180" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="215" y="292" width="250" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="180" y="352" width="320" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g text-anchor="middle" filter="url(#sk)">
+    <text x="340" y="254" font-size="11.5" font-weight="bold" fill="#446688">ans：三层聚合 (i&lt;j&lt;k)</text>
+    <text x="340" y="314" font-size="11.5" font-weight="bold" fill="#8a6520">maxDiff：两层聚合 (i&lt;j)</text>
+    <text x="340" y="374" font-size="11.5" font-weight="bold" fill="#3a6a2a">preMax：一层聚合 (i) = max(nums[0..k−1])</text>
+  </g>
+  <g fill="none" stroke="#888" stroke-width="1.6" filter="url(#sk)">
+    <path d="M 340 288 L 340 272" marker-end="url(#arr)"/>
+    <path d="M 340 348 L 340 332" marker-end="url(#arr)"/>
+  </g>
+  <text x="352" y="284" font-size="10.5" fill="#446688" filter="url(#sk)">× nums[k]：把 x 接进来当 k</text>
+  <text x="352" y="344" font-size="10.5" fill="#8a6520" filter="url(#sk)">− nums[j]：把 x 接进来当 j</text>
+
+  <!-- order warning -->
+  <g filter="url(#sk)">
+    <rect x="40" y="402" width="600" height="58" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <g text-anchor="middle" filter="url(#sk)">
+    <text x="340" y="424" font-size="12" font-weight="bold" fill="#8a3a3a">⚠ 顺序铁律：先结算、再入池，三步消费的都是「上一轮」的状态值</text>
+    <text x="340" y="444" font-size="11" fill="#a04a48">② 提前 → x 用包含自己的 preMax 减自己（i = j）；③ 提前 → x 自己和自己配对（j = k）</text>
+  </g>
+</svg>
