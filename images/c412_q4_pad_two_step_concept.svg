@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 545" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="545" fill="#fdfcf7"/>
+
+  <text x="480" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：补零串上两步闭包对称——「操作分摊两侧」自动被覆盖</text>
+  <path d="M 170 42 Q 480 52 790 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ============ 左上：坑 ============ -->
+  <rect x="60" y="62" width="400" height="140" rx="8" fill="#f5e0e0" stroke="#b85450" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="260" y="86" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">坑：每次操作任选 x 或 y，分配组合看着就头疼</text>
+
+  <g font-size="12">
+    <rect x="92" y="100" width="56" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="120" y="118" text-anchor="middle" fill="#2b4a6e" font-weight="bold">1023</text>
+    <path d="M 152 113 L 198 113" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+    <text x="175" y="105" text-anchor="middle" font-size="9" fill="#2b6e9e">换 0,1 位</text>
+    <rect x="202" y="100" width="50" height="26" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="227" y="118" text-anchor="middle" fill="#2e6e2e" font-weight="bold">123</text>
+    <path d="M 330 113 L 258 113" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+    <text x="294" y="105" text-anchor="middle" font-size="9" fill="#2b6e9e">换 0,1 位</text>
+    <rect x="334" y="100" width="50" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="359" y="118" text-anchor="middle" fill="#2b4a6e" font-weight="bold">213</text>
+  </g>
+  <text x="76" y="148" font-size="10.5" fill="#444">「1+1 分摊」：两边各走一步，在 123 会合——六种分配之一</text>
+  <text x="76" y="168" font-size="10.5" fill="#444">更糟：213 的裸串两步变体 {123,132,213,231,312,321}，</text>
+  <text x="76" y="184" font-size="10.5" fill="#b03a3a" font-weight="bold">永远出不了 3 位数——到不了 1023，单向裸闭包必漏</text>
+
+  <!-- ============ 右上：修法 ============ -->
+  <rect x="500" y="62" width="400" height="140" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="700" y="86" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">修法：仍在补零 7 位定长串上做，两步 = 对换的复合</text>
+
+  <g font-size="12" font-family="'Comic Sans MS','Courier New',monospace">
+    <rect x="528" y="102" width="104" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="580" y="120" text-anchor="middle" fill="#2b4a6e" font-weight="bold">0000213</text>
+    <path d="M 640 112 L 684 112" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+    <path d="M 684 126 L 640 126" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+    <text x="662" y="102" text-anchor="middle" font-size="9" fill="#2e6e2e" font-weight="bold">≤2 个对换</text>
+    <rect x="688" y="102" width="104" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" filter="url(#sk)"/>
+    <text x="740" y="120" text-anchor="middle" fill="#2b4a6e" font-weight="bold">0001023</text>
+  </g>
+  <text x="812" y="120" font-size="10.5" fill="#2e6e2e" font-weight="bold">双向同款！</text>
+  <text x="516" y="148" font-size="10.5" fill="#444">(σ₂∘σ₁)⁻¹ = σ₁∘σ₂：复合之逆仍是复合 ⇒ 可达对称，</text>
+  <text x="516" y="164" font-size="11" fill="#2e6e2e" font-weight="bold">y ∈ S(x) ⟺ x ∈ S(y)，只需查一个方向</text>
+  <text x="516" y="182" font-size="10.5" fill="#444">分摊情形由三角不等式吸收（见观察 1），无需枚举分配</text>
+
+  <!-- ============ 中部：S(x) 定义 ============ -->
+  <rect x="60" y="222" width="840" height="100" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="76" y="246" font-size="12.5" fill="#7a5415" font-weight="bold">定义：S(x) = x 的 7 位补零串经 ≤2 次对换得到的全部数值（含自身、去重）</text>
+  <text x="76" y="268" font-size="11.5" fill="#444">|S| ≤ 1 + C(7,2) + C(7,2)² = 1 + 21 + 441 = 463 —— 每个数的「两步可达宇宙」是常数</text>
+  <text x="76" y="290" font-size="11.5" fill="#7a5415" font-weight="bold">判定塌缩：近似相等 ⟺ y ∈ S(x)；先查后插骨架与 Q2 零差别，只把闭包扩成两层循环</text>
+  <text x="76" y="308" font-size="10.5" fill="#888">变体统一数值化（"0001023" → 1023），前导 0 自动消，键空间一致</text>
+
+  <!-- ============ 下部：三个观察框 ============ -->
+  <rect x="60" y="338" width="262" height="128" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="76" y="360" font-size="12" fill="#2b6e9e" font-weight="bold">观察 1：分摊被三角吸收</text>
+  <g font-size="10.5" fill="#444">
+    <text x="76" y="382">x 一步到 v、y 一步到 v 时，</text>
+    <text x="76" y="400">x̄、ȳ 都与 v̄ 至多差 1 个对换，</text>
+    <text x="76" y="418">三角不等式合出 d(x̄,ȳ) ≤ 2。</text>
+    <text x="76" y="442" fill="#2b6e9e" font-weight="bold">1+1 分摊无需单独枚举！</text>
+    <text x="76" y="458" fill="#888">「一边一次」⊂「一边两步」</text>
+  </g>
+
+  <rect x="349" y="338" width="262" height="128" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="365" y="360" font-size="12" fill="#2e6e2e" font-weight="bold">观察 2：对称恢复</text>
+  <g font-size="10.5" fill="#444">
+    <text x="365" y="382">对换是自身的逆，两个对换</text>
+    <text x="365" y="400">复合之逆仍是两个的复合</text>
+    <text x="365" y="418">⇒ d(x̄,ȳ) ≤ 2 是对称关系，</text>
+    <text x="365" y="442" fill="#2e6e2e" font-weight="bold">单向判定 + 先查后插照搬 Q2</text>
+    <text x="365" y="458" fill="#888">无需「双向都查再容斥去重」</text>
+  </g>
+
+  <rect x="638" y="338" width="262" height="128" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="654" y="360" font-size="12" fill="#5a3a7a" font-weight="bold">观察 3：坏情形一步化</text>
+  <g font-size="10.5" fill="#444">
+    <text x="654" y="382">仅有的隐患：两条一步路都</text>
+    <text x="654" y="400">只能放在中间值 m 上</text>
+    <text x="654" y="418">（m 比 x、y 都长）——</text>
+    <text x="654" y="442" fill="#5a3a7a" font-weight="bold">该情形反而能构造出 x、y</text>
+    <text x="654" y="458" fill="#5a3a7a" font-weight="bold">一步互换（§5 引理 3）</text>
+  </g>
+
+  <!-- 底部反例条 -->
+  <rect x="60" y="482" width="840" height="48" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3" filter="url(#sk)"/>
+  <text x="480" y="501" text-anchor="middle" font-size="11" fill="#666">反例警戒：[123456, 654321] → 0 —— 双方 ≤2 步闭包交 ∋ 653421，但单向互变需 3 个对换（6 位逆序）</text>
+  <text x="480" y="519" text-anchor="middle" font-size="11" fill="#b03a3a" font-weight="bold">判据是 y ∈ S(x)，不是 S(x) ∩ S(y) ≠ ∅ —— Q2 [213,132] 同款陷阱的加强版</text>
+</svg>
