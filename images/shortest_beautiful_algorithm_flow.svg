@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="680" fill="#fdfcf7"/>
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：pos 数组枚举 + 双关键字择优</text>
+  <path d="M 180 40 Q 360 48 540 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 1 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="58" width="460" height="78" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="90" y="82" font-size="13" font-weight="bold" fill="#2b6e9e">Step 1：收集 1 的位置</text>
+  <text x="90" y="104" font-size="11" fill="#444">扫描 s，把所有 s[i] = '1' 的下标存入 pos[0..m−1]</text>
+  <text x="90" y="124" font-size="10" fill="#888">m 即 s 中 1 的总个数</text>
+
+  <path d="M 300 138 L 300 150" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- diamond m < k ? -->
+  <g filter="url(#sk)">
+    <polygon points="300,152 396,192 300,232 204,192" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.6"/>
+  </g>
+  <text x="300" y="197" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">m &lt; k ?</text>
+  <text x="408" y="186" font-size="12" font-weight="bold" fill="#b85450">是</text>
+  <path d="M 396 192 L 448 192" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <g filter="url(#sk)">
+    <rect x="452" y="164" width="200" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="552" y="186" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">返回 ""</text>
+  <text x="552" y="206" text-anchor="middle" font-size="10" fill="#888">（1 的总数不足 k）</text>
+  <text x="312" y="250" font-size="12" font-weight="bold" fill="#4a8e4a">否</text>
+  <path d="M 300 232 L 300 252" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 2 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="256" width="460" height="92" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="90" y="280" font-size="13" font-weight="bold" fill="#2e6e2e">Step 2：枚举候选</text>
+  <text x="90" y="302" font-size="11" fill="#444">for i = 0 .. m−k：</text>
+  <text x="90" y="322" font-size="11" fill="#444">候选 t = s[pos[i] .. pos[i+k−1]]，恰好含 k 个 1</text>
+  <text x="90" y="340" font-size="10" fill="#888">左端是第 i 个 1，右端是第 i+k−1 个 1，两端都贴着 1</text>
+
+  <path d="M 300 348 L 300 362" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 3 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="366" width="460" height="92" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="90" y="390" font-size="13" font-weight="bold" fill="#7a5415">Step 3：双关键字择优</text>
+  <text x="90" y="412" font-size="11" fill="#444">若 |t| &lt; |ans|，或 |t| = |ans| 且 t &lt; ans（字典序）→ ans = t</text>
+  <text x="90" y="432" font-size="11" fill="#444">先比长度，同长再逐字符比字典序</text>
+  <text x="90" y="450" font-size="10" fill="#888">同长时不能用起点下标代替字典序比较！</text>
+
+  <path d="M 300 458 L 300 472" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 4 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="476" width="460" height="54" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/>
+  </g>
+  <text x="300" y="508" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">Step 4：返回 ans（无候选时保持空串 ""）</text>
+
+  <!-- example box -->
+  <g filter="url(#sk)">
+    <rect x="70" y="556" width="580" height="104" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="90" y="580" font-size="12" font-weight="bold" fill="#2b2b2b">示例：s = "100011001"，k = 3</text>
+  <text x="90" y="602" font-size="11" fill="#444">pos = [0, 4, 5, 8] → 候选 "100011"（长 6）与 "11001"（长 5）</text>
+  <text x="90" y="622" font-size="11" fill="#2e6e2e" font-weight="bold">长度 5 胜出 → ans = "11001" ✓</text>
+  <text x="90" y="646" font-size="10" fill="#888">复杂度：时间 O(n²)（含同长候选逐字符比较）· 空间 O(n)</text>
+</svg>
