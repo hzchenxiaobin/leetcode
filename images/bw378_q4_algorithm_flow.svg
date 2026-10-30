@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fafafa"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：预处理前缀和，逐查询「门外检查 → 双池配平」</text>
+  <path d="M 250 40 Q 470 50 690 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- preprocess -->
+  <g filter="url(#sk)">
+    <rect x="180" y="60" width="320" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="84" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a8e">预处理 O(26n)</text>
+  <text x="340" y="104" text-anchor="middle" font-size="11" fill="#444">preBad（失配前缀）· preX / preY（每字母前缀计数）</text>
+
+  <path d="M 340 118 L 340 134" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop -->
+  <g filter="url(#sk)">
+    <rect x="180" y="136" width="320" height="44" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="163" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">对每个查询 [a, b, c, d]</text>
+
+  <path d="M 340 180 L 340 196" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- mirror step -->
+  <g filter="url(#sk)">
+    <rect x="180" y="198" width="320" height="62" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="222" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a8e">① 镜像统一坐标系</text>
+  <text x="340" y="242" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">A=n−1−d, B=n−1−c；I=[max(a,A), min(b,B)]</text>
+
+  <path d="M 340 260 L 340 276" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond A -->
+  <polygon points="340,278 505,326 340,374 175,326" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="340" y="320" text-anchor="middle" font-size="12" font-weight="bold" fill="#b8862a">② 条件 A：门外失配数 = 0？</text>
+  <text x="340" y="338" text-anchor="middle" font-size="10" fill="#888">容斥：总失配 − U1 − U2 + 交集</text>
+
+  <path d="M 340 374 L 340 392" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="352" y="388" font-size="11" fill="#2e6e2e">是</text>
+  <path d="M 505 326 L 640 326" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="548" y="316" font-size="11" fill="#8e3a34">否</text>
+
+  <!-- letter loop -->
+  <g filter="url(#sk)">
+    <rect x="180" y="394" width="320" height="62" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="418" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b5a8e">③ 逐字母 v ∈ [0, 26)</text>
+  <text x="340" y="438" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">前缀和 O(1) 读出 Xv, Yv, Dxv, Dyv</text>
+
+  <path d="M 340 456 L 340 472" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond BC -->
+  <polygon points="340,474 505,522 340,570 175,522" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="340" y="516" text-anchor="middle" font-size="12" font-weight="bold" fill="#b8862a">④ Xv ≥ Dxv 且 Xv−Dxv = Yv−Dyv</text>
+  <text x="340" y="534" text-anchor="middle" font-size="10" fill="#888">对所有 26 个字母都成立？</text>
+
+  <path d="M 340 570 L 340 588" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="352" y="584" font-size="11" fill="#2e6e2e">全过</text>
+  <path d="M 505 522 L 640 522 L 640 352" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="548" y="512" font-size="11" fill="#8e3a34">任一失败</text>
+
+  <!-- true box -->
+  <g filter="url(#sk)">
+    <rect x="230" y="590" width="220" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="340" y="615" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">answer ← true</text>
+
+  <!-- false box -->
+  <g filter="url(#sk)">
+    <rect x="642" y="304" width="200" height="44" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="742" y="331" text-anchor="middle" font-size="13" font-weight="bold" fill="#8e3a34">answer ← false</text>
+
+  <!-- side notes -->
+  <g filter="url(#sk)">
+    <rect x="620" y="394" width="290" height="120" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="6 3"/>
+  </g>
+  <text x="640" y="420" font-size="12" font-weight="bold" fill="#2b2b2b">实现要点</text>
+  <text x="640" y="442" font-size="11" fill="#444">· 三处容斥共用同一个交集 I（A / Dx / Dy）</text>
+  <text x="640" y="462" font-size="11" fill="#444">· 交集为空 → 三处一律不减（hasI 开关）</text>
+  <text x="640" y="482" font-size="11" fill="#444">· 先 O(1) 查 A 再进 26 循环，省时间</text>
+  <text x="640" y="502" font-size="11" font-weight="bold" fill="#8e3a34">· 非负检查 Xv ≥ Dxv 绝不能省！</text>
+
+  <text x="620" y="580" font-size="12" fill="#888">单查询：O(1) 条件 A + 至多 26 次</text>
+  <text x="620" y="600" font-size="12" fill="#888">区间计数 → 总复杂度 O(26(n+q))</text>
+</svg>

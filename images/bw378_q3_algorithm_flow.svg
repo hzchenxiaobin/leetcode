@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="720" viewBox="0 0 940 720" font-family="'Comic Sans MS','Marker Felt','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="940" height="720" fill="#fafafa"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：一次扫描维护 26×3 前三大表，收尾套三候选公式</text>
+  <path d="M 260 42 Q 470 52 680 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 1: init -->
+  <g filter="url(#sk)">
+    <rect x="130" y="66" width="680" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="155" y="88" font-size="13" font-weight="bold" fill="#7a5415">Step 1 · 准备</text>
+  <text x="155" y="108" font-size="12" fill="#444" font-family="monospace">top[26][3] ← 0（0 兼任「游程不足」哨兵），i = 0，ans = −1</text>
+
+  <path d="M 470 118 L 470 140" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Step 2: run decomposition -->
+  <g filter="url(#sk)">
+    <rect x="130" y="144" width="680" height="60" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="155" y="168" font-size="14" font-weight="bold" fill="#2b5a8e">Step 2 · 游程分解（与 Q2 相同的双指针）</text>
+  <text x="155" y="190" font-size="12" fill="#444" font-family="monospace">j 从 i 起推进到 s[j] ≠ s[i]，段长 L = j − i；不存 runs 列表，段长即时插入</text>
+
+  <path d="M 470 204 L 470 226" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Step 3: insert into top3 -->
+  <g filter="url(#sk)">
+    <rect x="130" y="230" width="680" height="96" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="155" y="254" font-size="14" font-weight="bold" fill="#2b5a8e">Step 3 · 把 L 插入 top3[c]（降序 3 槽，3 次比较）</text>
+  <text x="155" y="276" font-size="12" fill="#444" font-family="monospace">L &gt; t[0] → [L, t0, t1]（整体右移）；L &gt; t[1] → [t0, L, t1]；L &gt; t[2] → t[2] = L；否则丢弃</text>
+  <text x="155" y="298" font-size="12" fill="#444" font-family="monospace">等值用严格 &gt;：第二个同长游程落入 t[1]，重复长度保留（[3,3,…] 而非丢 3）</text>
+  <text x="155" y="318" font-size="10" fill="#888">然后 i = j 处理下一段</text>
+
+  <!-- loop back to step 2 -->
+  <path d="M 130 288 C 50 288, 50 174, 130 174" stroke="#3a3a3a" stroke-width="1.5" fill="none" stroke-dasharray="6 3" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="34" y="236" font-size="11" fill="#666">下一游程</text>
+
+  <path d="M 470 326 L 470 348" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="478" y="344" font-size="11" fill="#666">扫描结束</text>
+
+  <!-- Step 4: formula over 26 chars -->
+  <g filter="url(#sk)">
+    <rect x="130" y="352" width="680" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="155" y="376" font-size="14" font-weight="bold" fill="#2e6e2e">Step 4 · 遍历 26 个字符，套三候选公式</text>
+  <text x="155" y="398" font-size="12" fill="#444" font-family="monospace">r1, r2, r3 = top[c]；cand = max(r1 − 2, min(r1 − 1, r2), r3)</text>
+  <text x="155" y="416" font-size="10" fill="#888">r2 / r3 为 0 表示该凑法的段不存在</text>
+
+  <path d="M 470 424 L 470 446" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="470,450 610,506 470,562 330,506" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="470" y="500" text-anchor="middle" font-size="13" font-weight="bold" fill="#8e3a34">cand ≥ 1？</text>
+  <text x="470" y="520" text-anchor="middle" font-size="11" fill="#8e3a34">（合法长度）</text>
+
+  <!-- yes branch -->
+  <path d="M 330 506 L 240 506 L 240 580" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="262" y="498" font-size="13" font-weight="bold" fill="#2e6e2e">是 ✓</text>
+  <g filter="url(#sk)">
+    <rect x="120" y="584" width="240" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="240" y="608" text-anchor="middle" font-size="13" fill="#2e6e2e" font-family="monospace">ans = max(ans, cand)</text>
+  <text x="240" y="628" text-anchor="middle" font-size="11" fill="#666">更新全局最大</text>
+
+  <!-- no branch -->
+  <path d="M 610 506 L 700 506 L 700 580" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="640" y="498" font-size="13" font-weight="bold" fill="#b85450">否 ✗</text>
+  <g filter="url(#sk)">
+    <rect x="580" y="584" width="240" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="700" y="608" text-anchor="middle" font-size="13" fill="#8e3a34" font-family="monospace">跳过该字符</text>
+  <text x="700" y="628" text-anchor="middle" font-size="11" fill="#666">候选 ≤ 0 = 凑法不可行</text>
+
+  <!-- loop back for next char -->
+  <path d="M 240 640 L 240 684 L 860 684 L 860 388 L 816 388" stroke="#3a3a3a" stroke-width="1.5" fill="none" stroke-dasharray="6 3" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 700 640 L 700 684" stroke="#3a3a3a" stroke-width="1.5" fill="none" stroke-dasharray="6 3" filter="url(#sk)"/>
+  <text x="470" y="678" font-size="11" fill="#666">下一字符（26 个都处理完则走中间出口）</text>
+
+  <!-- exit -->
+  <path d="M 470 562 L 470 596" stroke="#3a3a3a" stroke-width="1.5" fill="none" stroke-dasharray="2 3" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="370" y="600" width="200" height="52" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.4"/>
+  </g>
+  <text x="470" y="622" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">全部处理完</text>
+  <text x="470" y="642" text-anchor="middle" font-size="11" fill="#888">→ 返回 ans（初值 −1）</text>
+</svg>
