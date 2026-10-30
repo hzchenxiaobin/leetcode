@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#888"/>
+    </marker>
+  </defs>
+  <rect width="640" height="520" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：两遍单调栈 + 一次合并，总 O(n)</text>
+
+  <!-- start -->
+  <rect x="150" y="52" width="340" height="32" rx="9" fill="#f0f0f0" stroke="#888" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="320" y="73" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">开始：h = maxHeights；left / right 数组；空栈 stk（存下标）</text>
+  <path d="M 320 84 L 320 104" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- phase 1 -->
+  <rect x="70" y="106" width="400" height="96" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#sk)"/>
+  <g font-size="12" fill="#2b3a52" filter="url(#sk)">
+    <text x="86" y="130" font-weight="bold">① 正向扫描 i = 0 → n−1，求 left[i]（以 i 为峰的前缀最优和）</text>
+    <text x="86" y="152">while 栈非空 且 h[栈顶] &gt; h[i]：弹栈（弹掉所有更高的旧子峰）</text>
+    <text x="86" y="170">j = 栈顶（空则 −1）；left[i] = left[j] + h[i] × (i − j)</text>
+    <text x="86" y="188">i 入栈 —— 栈内 h 值保持非递减</text>
+  </g>
+
+  <!-- callout 1 -->
+  <g transform="rotate(-2 545 152)" filter="url(#sk)">
+    <rect x="480" y="116" width="148" height="74" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="554" y="138" text-anchor="middle" font-size="10.5" fill="#8a6520" font-weight="bold">⚠ 弹栈用严格大于 &gt;</text>
+    <text x="554" y="156" text-anchor="middle" font-size="10.5" fill="#8a6520">相等保留 → j 为左侧</text>
+    <text x="554" y="172" text-anchor="middle" font-size="10.5" fill="#8a6520">第一个 h[j] ≤ h[i]</text>
+  </g>
+
+  <path d="M 320 202 L 320 222" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- phase 2 -->
+  <rect x="70" y="224" width="400" height="96" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <g font-size="12" fill="#2f4a22" filter="url(#sk)">
+    <text x="86" y="248" font-weight="bold">② 反向扫描 i = n−1 → 0，对称求 right[i]（后缀最优和）</text>
+    <text x="86" y="270">弹栈条件同上；j = 栈顶（空则 n）= 右侧第一个 h[j] ≤ h[i]</text>
+    <text x="86" y="288">right[i] = right[j] + h[i] × (j − i)（注意段长方向相反）</text>
+    <text x="86" y="306">i 入栈</text>
+  </g>
+
+  <path d="M 320 320 L 320 340" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- phase 3 -->
+  <rect x="70" y="342" width="400" height="68" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#sk)"/>
+  <g font-size="12" fill="#7a3a34" filter="url(#sk)">
+    <text x="86" y="366" font-weight="bold">③ 合并：ans = max( left[i] + right[i] − h[i] )</text>
+    <text x="86" y="388">峰 h[i] 被 left 与 right 各计一次，须减去一份</text>
+  </g>
+
+  <!-- callout 2 -->
+  <g transform="rotate(2 548 376)" filter="url(#sk)">
+    <rect x="476" y="342" width="148" height="68" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="550" y="364" text-anchor="middle" font-size="10.5" fill="#8a6520" font-weight="bold">⚠ 别忘减 h[i]</text>
+    <text x="550" y="382" text-anchor="middle" font-size="10.5" fill="#8a6520">不减会把每个候选</text>
+    <text x="550" y="398" text-anchor="middle" font-size="10.5" fill="#8a6520">答案抬高 h[i]</text>
+  </g>
+
+  <path d="M 320 410 L 320 430" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- end / complexity card -->
+  <rect x="70" y="432" width="500" height="64" rx="10" fill="#f0f0f0" stroke="#888" stroke-width="1.4" filter="url(#sk)"/>
+  <g text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">
+    <text x="320" y="456">每个下标至多入栈、出栈各一次（摊还分析）</text>
+    <text x="320" y="478">→ 三趟线性扫描：时间 O(n)，空间 O(n)（left / right / 栈）</text>
+  </g>
+</svg>
