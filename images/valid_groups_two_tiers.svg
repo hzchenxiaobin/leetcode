@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="410" viewBox="0 0 640 410" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="131" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="410" fill="#fdfcf7"/>
+  <text x="320" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">两条规则 → 一个可枚举的结构</text>
+  <path d="M 170 42 Q 320 52 470 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- rule 1 box -->
+  <g filter="url(#sk)">
+    <rect x="40" y="58" width="278" height="104" rx="10" fill="#e8f0fe" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <g font-size="12.5" fill="#2b6e9e">
+    <text x="179" y="82" text-anchor="middle" font-weight="bold" font-size="14" filter="url(#sk)">规则 1：同盒必须同编号</text>
+    <text x="179" y="104" text-anchor="middle" filter="url(#sk)">各编号的球只进自家的盒子</text>
+    <text x="179" y="124" text-anchor="middle" filter="url(#sk)">⟹ 各编号的拆分互相独立</text>
+    <text x="179" y="146" text-anchor="middle" font-weight="bold" filter="url(#sk)">总盒数 = Σ 各编号盒数</text>
+  </g>
+
+  <!-- rule 2 box -->
+  <g filter="url(#sk)">
+    <rect x="322" y="58" width="278" height="104" rx="10" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <g font-size="12.5" fill="#2e6e2e">
+    <text x="461" y="82" text-anchor="middle" font-weight="bold" font-size="14" filter="url(#sk)">规则 2：最大盒 − 最小盒 ≤ 1</text>
+    <text x="461" y="104" text-anchor="middle" filter="url(#sk)">设最小盒大小为 x</text>
+    <text x="461" y="124" text-anchor="middle" filter="url(#sk)">⟹ 所有盒大小 ∈ {x, x+1}</text>
+    <text x="461" y="146" text-anchor="middle" font-weight="bold" filter="url(#sk)">唯一的决策变量：小档 x</text>
+  </g>
+
+  <!-- example grouping -->
+  <text x="320" y="188" text-anchor="middle" font-size="12.5" fill="#555" filter="url(#sk)">示例 balls = [3,2,3,2,3]，取 x = 2 ⇒ 盒大小只能取 {2, 3} 两档：</text>
+  <g filter="url(#sk)">
+    <rect x="150" y="202" width="150" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="342" y="202" width="112" height="46" rx="8" fill="#e8f0fe" stroke="#4a8edb" stroke-width="2"/>
+  </g>
+  <text x="225" y="231" text-anchor="middle" font-size="15" font-weight="bold" fill="#a06a10" filter="url(#sk)">3 | 3 | 3</text>
+  <text x="398" y="231" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">2 | 2</text>
+  <text x="225" y="266" text-anchor="middle" font-size="11.5" fill="#a06a10" filter="url(#sk)">3 号球：1 盒 · 大小 3（= x+1）</text>
+  <text x="398" y="266" text-anchor="middle" font-size="11.5" fill="#2b6e9e" filter="url(#sk)">2 号球：1 盒 · 大小 2（= x）</text>
+
+  <!-- enumerate strip -->
+  <g filter="url(#sk)">
+    <rect x="48" y="282" width="544" height="60" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <g font-size="12.5" fill="#7a5415">
+    <text x="320" y="306" text-anchor="middle" font-weight="bold" filter="url(#sk)">枚举小档 x ∈ [1, minFreq]，对每个频率 f 一次算术判定</text>
+    <text x="320" y="328" text-anchor="middle" filter="url(#sk)">「能否全拆成 x / x+1 的盒子？最少几盒？」，可行则累加求和、取最小</text>
+  </g>
+
+  <!-- flow -->
+  <g font-size="12" text-anchor="middle">
+    <g filter="url(#sk)">
+      <rect x="60" y="360" width="164" height="32" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.2"/>
+      <rect x="248" y="360" width="176" height="32" rx="8" fill="#e8f0fe" stroke="#4a8edb" stroke-width="1.2"/>
+      <rect x="448" y="360" width="140" height="32" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.2"/>
+    </g>
+    <text x="142" y="381" fill="#2e6e2e" filter="url(#sk)">① 哈希数频率，求 minFreq</text>
+    <text x="336" y="381" fill="#2b6e9e" filter="url(#sk)">② 枚举 x，逐频率判定累加</text>
+    <text x="518" y="381" fill="#7a5415" filter="url(#sk)">③ 可行的 x 取 total 最小</text>
+    <path d="M 228 376 L 244 376" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 428 376 L 444 376" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+</svg>
