@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="420" viewBox="0 0 680 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="420" fill="#fdfcf7"/>
+  <text x="340" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">冠军 = 全 0 列：没人打赢它的队伍</text>
+  <path d="M 210 42 Q 340 50 470 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Matrix with row/col labels -->
+  <text x="120" y="96" font-size="13" fill="#666">grid[i][j]=1 ⇒ i 强于 j（行打赢列）</text>
+
+  <!-- column headers j=0,1,2 -->
+  <g filter="url(#sk)" font-size="13" fill="#666" text-anchor="middle">
+    <text x="190" y="125">j=0</text>
+    <text x="240" y="125">j=1</text>
+    <text x="290" y="125">j=2</text>
+  </g>
+  <!-- row labels -->
+  <g filter="url(#sk)" font-size="13" fill="#666" text-anchor="end">
+    <text x="168" y="157">i=0</text>
+    <text x="168" y="197">i=1</text>
+    <text x="168" y="237">i=2</text>
+  </g>
+
+  <!-- champion column highlight (j=1) -->
+  <g filter="url(#sk)">
+    <rect x="215" y="132" width="50" height="120" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2" stroke-dasharray="6 4"/>
+  </g>
+
+  <!-- cells: row 0: 0,0,1 -->
+  <g filter="url(#sk)">
+    <rect x="165" y="132" width="50" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="215" y="132" width="50" height="40" rx="4" fill="#ffffff" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="265" y="132" width="50" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="165" y="172" width="50" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="215" y="172" width="50" height="40" rx="4" fill="#ffffff" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="265" y="172" width="50" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="165" y="212" width="50" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="215" y="212" width="50" height="40" rx="4" fill="#ffffff" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="265" y="212" width="50" height="40" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <g filter="url(#sk)" font-size="15" fill="#333" text-anchor="middle" font-family="monospace">
+    <text x="190" y="157">0</text>
+    <text x="240" y="157" fill="#2e6e2e" font-weight="bold">0</text>
+    <text x="290" y="157">1</text>
+    <text x="190" y="197">1</text>
+    <text x="240" y="197" fill="#2e6e2e" font-weight="bold">0</text>
+    <text x="290" y="197">1</text>
+    <text x="190" y="237">0</text>
+    <text x="240" y="237" fill="#2e6e2e" font-weight="bold">0</text>
+    <text x="290" y="237">0</text>
+  </g>
+
+  <!-- arrows to column insight -->
+  <g filter="url(#sk)">
+    <path d="M 300 250 Q 330 285 355 292" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- right panel: two viewpoints -->
+  <g filter="url(#sk)">
+    <rect x="360" y="80" width="290" height="86" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="505" y="106" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">列视角（判定冠军）</text>
+  <text x="378" y="130" font-size="12" fill="#444">列 j 全 0 ⇒ 没有队伍强于 j</text>
+  <text x="378" y="152" font-size="12" fill="#444">⇒ j 就是冠军（扫描 O(n²)）</text>
+
+  <g filter="url(#sk)">
+    <rect x="360" y="180" width="290" height="86" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="505" y="206" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">行视角（等价转置）</text>
+  <text x="378" y="230" font-size="12" fill="#444">冠军行除对角线外全 1</text>
+  <text x="378" y="252" font-size="12" fill="#444">= 直接击败其他所有队伍</text>
+
+  <!-- transitivity note -->
+  <g filter="url(#sk)">
+    <rect x="360" y="280" width="290" height="86" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="505" y="306" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6a1a">结构保证：胜负关系是全序</text>
+  <text x="378" y="330" font-size="12" fill="#444">完全性：任两队恰有一个 1</text>
+  <text x="378" y="352" font-size="12" fill="#444">传递性：a&gt;b 且 b&gt;c ⇒ a&gt;c ⇒ 冠军唯一</text>
+
+  <!-- bottom key insight -->
+  <g filter="url(#sk)">
+    <rect x="40" y="330" width="300" height="70" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="58" y="356" font-size="13" font-weight="bold" fill="#2b2b2b">从题面到代码的最短路径：</text>
+  <text x="58" y="378" font-size="12" fill="#444">全 0 列直觉 → 全序保证冠军唯一</text>
+  <text x="58" y="394" font-size="12" fill="#444">→ 打擂台一趟扫描 O(n)（见下图）</text>
+</svg>
