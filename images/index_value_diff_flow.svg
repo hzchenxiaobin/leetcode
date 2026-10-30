@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 700" font-family="'Comic Sans MS','Marker Felt','Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="700" fill="#fdfcf7"/>
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：单趟扫描，先纳入、后检查两个极端代表</text>
+  <path d="M 150 42 Q 360 50 570 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 1: init -->
+  <g filter="url(#sk)">
+    <rect x="90" y="58" width="470" height="52" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="325" y="80" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">初始化：minIdx = maxIdx = 0</text>
+  <text x="325" y="99" text-anchor="middle" font-size="10" fill="#888">两个变量即前缀 [0, r] 的最值下标，无需任何数据结构</text>
+
+  <path d="M 325 110 L 325 124" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Loop box -->
+  <g filter="url(#sk)">
+    <rect x="90" y="128" width="470" height="76" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="150" font-size="13" font-weight="bold" fill="#2e6e2e">for j = D … n−1：</text>
+  <text x="110" y="171" font-size="11" fill="#444">① 纳入新候选 r = j−D（先纳入！）</text>
+  <text x="110" y="190" font-size="11" fill="#444">② nums[r] &lt; nums[minIdx] → minIdx = r；nums[r] &gt; nums[maxIdx] → maxIdx = r</text>
+
+  <path d="M 325 204 L 325 218" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Diamond 1: check min -->
+  <g filter="url(#sk)">
+    <polygon points="325,220 435,268 325,316 215,268" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.6"/>
+  </g>
+  <text x="325" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3a7a">检查 min 代表</text>
+  <text x="325" y="282" text-anchor="middle" font-size="11" fill="#5a3a7a">|nums[j] − nums[minIdx]| ≥ V ?</text>
+  <text x="447" y="262" font-size="12" font-weight="bold" fill="#b85450">是</text>
+  <path d="M 435 268 L 484 268" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <g filter="url(#sk)">
+    <rect x="488" y="244" width="166" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="571" y="273" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">返回 [minIdx, j]</text>
+  <text x="337" y="330" font-size="12" font-weight="bold" fill="#4a8e4a">否</text>
+  <path d="M 325 316 L 325 330" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Diamond 2: check max -->
+  <g filter="url(#sk)">
+    <polygon points="325,334 435,382 325,430 215,382" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.6"/>
+  </g>
+  <text x="325" y="376" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3a7a">检查 max 代表</text>
+  <text x="325" y="396" text-anchor="middle" font-size="11" fill="#5a3a7a">|nums[j] − nums[maxIdx]| ≥ V ?</text>
+  <text x="447" y="376" font-size="12" font-weight="bold" fill="#b85450">是</text>
+  <path d="M 435 382 L 484 382" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <g filter="url(#sk)">
+    <rect x="488" y="358" width="166" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="571" y="387" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">返回 [maxIdx, j]</text>
+  <text x="337" y="444" font-size="12" font-weight="bold" fill="#4a8e4a">否</text>
+  <path d="M 325 430 L 325 444" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- j+1 box -->
+  <g filter="url(#sk)">
+    <rect x="235" y="448" width="180" height="46" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="325" y="476" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">j = j + 1（下一轮）</text>
+
+  <!-- loop back arrow -->
+  <path d="M 233 471 L 62 471 L 62 166 L 84 166" stroke="#3a3a3a" stroke-width="1.4" fill="none" stroke-dasharray="6 4" marker-end="url(#ar)"/>
+
+  <!-- exit to final -->
+  <path d="M 325 494 L 325 512" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="335" y="508" font-size="10" fill="#888">j 走完 [D, n−1]</text>
+
+  <!-- final return -->
+  <g filter="url(#sk)">
+    <rect x="170" y="516" width="310" height="50" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="325" y="546" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">返回 [−1, −1]（无解，含 D ≥ n）</text>
+
+  <!-- example box -->
+  <g filter="url(#sk)">
+    <rect x="70" y="590" width="580" height="86" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="90" y="614" font-size="12" font-weight="bold" fill="#2b2b2b">示例：nums = [5, 1, 4, 1]，D = 2，V = 4</text>
+  <text x="90" y="636" font-size="11" fill="#444">j = 3 轮：先纳入 r = 1 → minIdx = 1（值 1）、maxIdx = 0（值 5）</text>
+  <text x="90" y="656" font-size="11" fill="#444">|nums[3] − nums[0]| = |1 − 5| = 4 ≥ V ✓ → 返回 [0, 3]</text>
+  <text x="90" y="672" font-size="10" fill="#888">复杂度：时间 O(n)（单趟，每轮 O(1)）· 空间 O(1)（两个下标变量）</text>
+</svg>

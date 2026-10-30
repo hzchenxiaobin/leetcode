@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 580" font-family="'Comic Sans MS','Marker Felt','Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="580" fill="#fdfcf7"/>
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：候选集单调扩张 + 数轴夹逼判定</text>
+  <path d="M 150 42 Q 360 50 570 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Part 1: array with expanding candidate prefix -->
+  <text x="70" y="74" font-size="13" font-weight="bold" fill="#2b2b2b">① 枚举 j：合法的 i 组成前缀 [0, j−D]，随 j 右移只增不减</text>
+
+  <!-- cells: values 3 8 2 5 1 7 4, D=2, j=5 -> r=3 -->
+  <g filter="url(#sk)">
+    <rect x="118" y="98" width="58" height="46" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="176" y="98" width="58" height="46" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="234" y="98" width="58" height="46" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="292" y="98" width="58" height="46" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.4"/>
+    <rect x="350" y="98" width="58" height="46" rx="4" fill="#f5f5f5" stroke="#bbbbbb" stroke-width="1.2"/>
+    <rect x="408" y="98" width="58" height="46" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="2.4"/>
+    <rect x="466" y="98" width="58" height="46" rx="4" fill="#f5f5f5" stroke="#bbbbbb" stroke-width="1.2"/>
+  </g>
+  <text x="147" y="127" text-anchor="middle" font-size="15" fill="#333">3</text>
+  <text x="205" y="127" text-anchor="middle" font-size="15" fill="#333">8</text>
+  <text x="263" y="127" text-anchor="middle" font-size="15" fill="#333">2</text>
+  <text x="321" y="127" text-anchor="middle" font-size="15" fill="#333">5</text>
+  <text x="379" y="127" text-anchor="middle" font-size="15" fill="#333">1</text>
+  <text x="437" y="127" text-anchor="middle" font-size="15" fill="#333">7</text>
+  <text x="495" y="127" text-anchor="middle" font-size="15" fill="#333">4</text>
+  <text x="147" y="162" text-anchor="middle" font-size="11" fill="#888">0</text>
+  <text x="205" y="162" text-anchor="middle" font-size="11" fill="#888">1</text>
+  <text x="263" y="162" text-anchor="middle" font-size="11" fill="#888">2</text>
+  <text x="321" y="162" text-anchor="middle" font-size="11" fill="#888">3</text>
+  <text x="379" y="162" text-anchor="middle" font-size="11" fill="#888">4</text>
+  <text x="437" y="162" text-anchor="middle" font-size="11" fill="#888">5</text>
+  <text x="495" y="162" text-anchor="middle" font-size="11" fill="#888">6</text>
+
+  <!-- distance annotation between r and j -->
+  <path d="M 321 92 L 437 92" stroke="#8e5db8" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-start="url(#ar)" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="379" y="84" text-anchor="middle" font-size="11" font-weight="bold" fill="#8e5db8">下标距离 ≥ D</text>
+
+  <text x="147" y="182" text-anchor="middle" font-size="11" fill="#4a8edb">已在 S 中</text>
+  <text x="321" y="182" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">r = j−D（新解锁）</text>
+  <text x="437" y="182" text-anchor="middle" font-size="11" font-weight="bold" fill="#c98a2b">当前 j</text>
+
+  <!-- bracket under candidate cells 0..3 -->
+  <path d="M 120 200 L 120 208 L 235 214 L 350 208 L 350 200" stroke="#4a8edb" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <text x="235" y="232" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">候选集 S（只增不减）</text>
+
+  <!-- expansion arrow to cell 4 -->
+  <path d="M 366 226 Q 400 240 424 216" stroke="#2e6e2e" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="432" y="236" font-size="11" fill="#2e6e2e">j 右移一格，S 吸收 nums[4]</text>
+
+  <!-- Part 2: number line -->
+  <text x="70" y="286" font-size="13" font-weight="bold" fill="#2b2b2b">② 数轴夹逼：达标的候选只能落在 nums[j] 的两侧</text>
+  <text x="360" y="312" text-anchor="middle" font-size="12" fill="#444">|nums[j] − x| ≥ V ⟺ x ≤ nums[j]−V 或 x ≥ nums[j]+V</text>
+
+  <g filter="url(#sk)">
+    <rect x="100" y="386" width="130" height="34" rx="4" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.2"/>
+    <rect x="230" y="386" width="260" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <rect x="490" y="386" width="130" height="34" rx="4" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.2"/>
+  </g>
+  <path d="M 100 403 L 620 403" stroke="#2b2b2b" stroke-width="1.8" filter="url(#sk)"/>
+  <path d="M 230 395 L 230 411" stroke="#2b2b2b" stroke-width="1.6" filter="url(#sk)"/>
+  <path d="M 360 395 L 360 411" stroke="#2b2b2b" stroke-width="1.6" filter="url(#sk)"/>
+  <path d="M 490 395 L 490 411" stroke="#2b2b2b" stroke-width="1.6" filter="url(#sk)"/>
+
+  <text x="165" y="378" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">达标 ✓</text>
+  <text x="555" y="378" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">达标 ✓</text>
+  <text x="230" y="428" text-anchor="middle" font-size="11" fill="#555">nums[j]−V</text>
+  <text x="360" y="428" text-anchor="middle" font-size="11" font-weight="bold" fill="#555">nums[j]</text>
+  <text x="490" y="428" text-anchor="middle" font-size="11" fill="#555">nums[j]+V</text>
+  <text x="360" y="380" text-anchor="middle" font-size="10.5" fill="#b85450">粉区内的候选全不达标</text>
+
+  <!-- mn / mx markers -->
+  <ellipse cx="140" cy="403" rx="7" ry="7" fill="#eaf6ee" stroke="#2e6e2e" stroke-width="2" filter="url(#sk)"/>
+  <text x="140" y="374" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">mn</text>
+  <text x="140" y="446" text-anchor="middle" font-size="10" fill="#2e6e2e">探左侧最远</text>
+  <ellipse cx="580" cy="403" rx="7" ry="7" fill="#eaf6ee" stroke="#2e6e2e" stroke-width="2" filter="url(#sk)"/>
+  <text x="580" y="374" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">mx</text>
+  <text x="580" y="446" text-anchor="middle" font-size="10" fill="#2e6e2e">探右侧最远</text>
+
+  <!-- takeaway box -->
+  <g filter="url(#sk)">
+    <rect x="70" y="482" width="580" height="80" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="90" y="506" font-size="12" font-weight="bold" fill="#2b2b2b">mn / mx 是候选集中探向两侧最远的真实元素：</text>
+  <text x="90" y="528" font-size="11" fill="#444">存在达标候选 ⇒ 更极端的 mn 或 mx 必然达标（它们自己就是证人）；</text>
+  <text x="90" y="548" font-size="11" fill="#444">mn、mx 都不达标 ⇒ 所有候选被夹在粉区内，无一达标。</text>
+</svg>
