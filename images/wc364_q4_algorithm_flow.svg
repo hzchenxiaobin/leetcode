@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="59" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#888"/>
+    </marker>
+  </defs>
+  <rect width="640" height="520" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：筛 → 建图 → 染孤岛 → 逐质数累加</text>
+
+  <!-- start -->
+  <rect x="150" y="52" width="340" height="32" rx="9" fill="#f0f0f0" stroke="#888" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="320" y="73" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">开始：n、edges；ans = 0</text>
+  <path d="M 320 84 L 320 104" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- step 1: sieve -->
+  <rect x="70" y="106" width="400" height="74" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#sk)"/>
+  <g font-size="12" fill="#2b3a52" filter="url(#sk)">
+    <text x="86" y="130" font-weight="bold">① 埃氏筛出 is_prime[1..n]，O(n log log n)</text>
+    <text x="86" y="150">节点编号恰是 1..n，一次筛全表；判定 O(1)</text>
+    <text x="86" y="168">注意 is_prime[1] = false —— 1 不是质数</text>
+  </g>
+  <path d="M 320 180 L 320 202" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- step 2: coloring -->
+  <rect x="70" y="204" width="400" height="58" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <g font-size="12" fill="#2f4a22" filter="url(#sk)">
+    <text x="86" y="228" font-weight="bold">② 建邻接表；BFS 给非质数节点染孤岛编号</text>
+    <text x="86" y="248">comp[u] = 孤岛 id，sz[id] = 块大小（显式栈迭代）</text>
+  </g>
+  <path d="M 320 262 L 320 286" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- callout A -->
+  <g transform="rotate(-2 552 230)" filter="url(#sk)">
+    <rect x="480" y="206" width="148" height="60" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="554" y="228" text-anchor="middle" font-size="10.5" fill="#8a6520" font-weight="bold">⚠ 染色必须迭代</text>
+    <text x="554" y="244" text-anchor="middle" font-size="10.5" fill="#8a6520">链深 1e5：Python 递归</text>
+    <text x="554" y="258" text-anchor="middle" font-size="10.5" fill="#8a6520">直接 RecursionError</text>
+  </g>
+
+  <!-- step 3: accumulate -->
+  <rect x="70" y="288" width="400" height="96" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#sk)"/>
+  <g font-size="12" fill="#7a3a34" filter="url(#sk)">
+    <text x="86" y="312" font-weight="bold">③ 枚举每个质数 p，扫描邻居 w：</text>
+    <text x="86" y="334">w 是质数 → 跳过；w 非质数 →</text>
+    <text x="86" y="352">S += sz[comp[w]]，sq += sz[comp[w]]²</text>
+    <text x="86" y="372">ans += S + (S² − sq) / 2</text>
+  </g>
+
+  <!-- callout B -->
+  <g transform="rotate(2 552 336)" filter="url(#sk)">
+    <rect x="476" y="298" width="154" height="86" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="553" y="320" text-anchor="middle" font-size="10.5" fill="#8a6520" font-weight="bold">⚠ 全程 long long</text>
+    <text x="553" y="336" text-anchor="middle" font-size="10.5" fill="#8a6520">S² ≤ 1e10、答案约 4.1e9</text>
+    <text x="553" y="352" text-anchor="middle" font-size="10.5" fill="#8a6520">int32 会溢出</text>
+    <text x="553" y="370" text-anchor="middle" font-size="10.5" fill="#8a6520">树无环：一岛对 p 至多</text>
+    <text x="553" y="384" text-anchor="middle" font-size="10.5" fill="#8a6520">一条边，无需去重</text>
+  </g>
+
+  <path d="M 320 384 L 320 412" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- end / complexity card -->
+  <rect x="70" y="414" width="500" height="64" rx="10" fill="#f0f0f0" stroke="#888" stroke-width="1.4" filter="url(#sk)"/>
+  <g text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">
+    <text x="320" y="438">每个节点、每条边至多常数次访问；筛法主导</text>
+    <text x="320" y="460">→ 时间 O(n log log n)，空间 O(n)（is_prime / comp / sz / 邻接表）</text>
+  </g>
+</svg>
