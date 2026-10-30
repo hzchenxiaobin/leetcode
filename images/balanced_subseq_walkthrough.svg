@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="470" viewBox="0 0 700 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="700" height="470" fill="#fdfcf7"/>
+  <text x="350" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例演算：nums = [3, 3, 5, 6]，b = [3, 2, 3, 3]</text>
+  <path d="M 150 42 Q 350 50 550 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ====== 左：DP 表 ====== -->
+  <g filter="url(#sk)">
+    <rect x="37" y="197" width="330" height="30" fill="#eaf6ee"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="36" y="72" width="332" height="156" fill="none" stroke="#bbb" stroke-width="1.3"/>
+    <path d="M 36 100 L 368 100 M 36 132 L 368 132 M 36 164 L 368 164 M 36 196 L 368 196" stroke="#ddd" stroke-width="1"/>
+    <path d="M 80 72 L 80 228 M 128 72 L 128 228 M 176 72 L 176 228 M 236 72 L 236 228 M 290 72 L 290 228" stroke="#ddd" stroke-width="1"/>
+  </g>
+  <g font-size="12" font-weight="bold" fill="#555" text-anchor="middle" filter="url(#sk)">
+    <text x="58" y="90">i</text>
+    <text x="104" y="90">nums[i]</text>
+    <text x="152" y="90">b[i]</text>
+    <text x="206" y="90">槽位</text>
+    <text x="263" y="90">query</text>
+    <text x="329" y="90">f[i]</text>
+  </g>
+  <g font-size="12.5" fill="#333" text-anchor="middle" filter="url(#sk)">
+    <text x="58" y="119">0</text>
+    <text x="104" y="119">3</text>
+    <text x="152" y="119">3</text>
+    <text x="206" y="119">1</text>
+    <text x="263" y="119">−∞</text>
+    <text x="329" y="119">3</text>
+
+    <text x="58" y="151">1</text>
+    <text x="104" y="151">3</text>
+    <text x="152" y="151">2</text>
+    <text x="206" y="151">0</text>
+    <text x="263" y="151">−∞</text>
+    <text x="329" y="151">3</text>
+
+    <text x="58" y="183">2</text>
+    <text x="104" y="183">5</text>
+    <text x="152" y="183">3</text>
+    <text x="206" y="183">1</text>
+    <text x="263" y="183">3</text>
+    <text x="329" y="183">8</text>
+
+    <text x="58" y="216">3</text>
+    <text x="104" y="216">6</text>
+    <text x="152" y="216">3</text>
+    <text x="206" y="216">1</text>
+    <text x="263" y="216">8</text>
+  </g>
+  <text x="329" y="216" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#sk)">14</text>
+
+  <g font-size="11.5" fill="#666" filter="url(#sk)">
+    <text x="36" y="252">槽位 = rank(b[i])：b 值 {2, 3} → 槽 0、槽 1</text>
+    <text x="36" y="274">query 只统计「b ≤ b[i]」的槽：</text>
+    <text x="36" y="296">i = 1 时仅覆盖槽 0（b = 2），槽 1 里的 3 不算</text>
+    <text x="36" y="318">→ 查到 −∞，等价于「没有可用前驱」</text>
+  </g>
+
+  <text x="170" y="352" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#sk)">最优下标链 0 → 2 → 3：</text>
+  <g filter="url(#sk)">
+    <rect x="48" y="362" width="58" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="118" y="362" width="58" height="36" rx="4" fill="#ffffff" stroke="#bbb" stroke-width="1.2"/>
+    <rect x="188" y="362" width="58" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="258" y="362" width="58" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <g font-size="14" font-weight="bold" fill="#333" text-anchor="middle" filter="url(#sk)">
+    <text x="77" y="385">3</text>
+    <text x="147" y="385">3</text>
+    <text x="217" y="385">5</text>
+    <text x="287" y="385">6</text>
+  </g>
+  <g filter="url(#sk)">
+    <path d="M 77 406 Q 147 424 211 406" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#ag)"/>
+    <path d="M 223 406 Q 255 424 283 406" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#ag)"/>
+  </g>
+  <text x="170" y="440" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">和 = 3 + 5 + 6 = 14 ✓</text>
+
+  <!-- ====== 右：槽演化 + 答案 ====== -->
+  <text x="540" y="76" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#sk)">槽 0（b=2）与槽 1（b=3）内的 f 值演化：</text>
+  <g filter="url(#sk)">
+    <rect x="411" y="219" width="258" height="30" fill="#eaf6ee"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="410" y="92" width="260" height="158" fill="none" stroke="#bbb" stroke-width="1.3"/>
+    <path d="M 410 122 L 670 122 M 410 154 L 670 154 M 410 186 L 670 186 M 410 218 L 670 218" stroke="#ddd" stroke-width="1"/>
+    <path d="M 510 92 L 510 250 M 590 92 L 590 250" stroke="#ddd" stroke-width="1"/>
+  </g>
+  <g font-size="11.5" font-weight="bold" fill="#555" text-anchor="middle" filter="url(#sk)">
+    <text x="460" y="111">时刻</text>
+    <text x="550" y="111">槽 0</text>
+    <text x="630" y="111">槽 1</text>
+  </g>
+  <g font-size="12" fill="#333" text-anchor="middle" filter="url(#sk)">
+    <text x="460" y="142">i = 0 后</text>
+    <text x="550" y="142">∅</text>
+    <text x="630" y="142">3</text>
+
+    <text x="460" y="174">i = 1 后</text>
+    <text x="550" y="174">3</text>
+    <text x="630" y="174">3</text>
+
+    <text x="460" y="206">i = 2 后</text>
+    <text x="550" y="206">3</text>
+    <text x="630" y="206">8</text>
+
+    <text x="460" y="238">i = 3 后</text>
+    <text x="550" y="238">3</text>
+  </g>
+  <text x="630" y="238" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#b85450" filter="url(#sk)">14</text>
+
+  <g filter="url(#sk)">
+    <rect x="400" y="274" width="280" height="72" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="540" y="298" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6a1a" filter="url(#sk)">答案 = max f[i] = 14</text>
+  <text x="540" y="322" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">选 {0,2,3}：3+5+6；选 {1,2,3} 同为 14</text>
+
+  <g filter="url(#sk)">
+    <rect x="400" y="362" width="280" height="94" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="540" y="386" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">f 列 3 → 3 → 8 → 14，</text>
+  <text x="540" y="408" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">前驱链 0 → 2 → 3 就是子序列本身</text>
+  <text x="540" y="430" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">（要输出方案：槽里再记一个前驱下标）</text>
+</svg>

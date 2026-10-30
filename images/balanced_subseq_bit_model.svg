@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="470" viewBox="0 0 700 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="700" height="470" fill="#fdfcf7"/>
+  <text x="350" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">树状数组：把「前驱 max」压成两次 O(log n)</text>
+  <path d="M 170 42 Q 350 50 530 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ====== DP 定义 ====== -->
+  <g filter="url(#sk)">
+    <rect x="100" y="56" width="500" height="86" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="350" y="80" text-anchor="middle" font-size="12.5" fill="#444" filter="url(#sk)">转移瓶颈：max{ f[j] : j &lt; i 且 b[j] ≤ b[i] }，朴素扫描 O(n) → 整体 O(n²) 超时</text>
+  <text x="350" y="106" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e5e8a" filter="url(#sk)">f[i] = nums[i] + max(0, query(rank(b[i])))</text>
+  <text x="350" y="130" text-anchor="middle" font-size="12.5" fill="#444" filter="url(#sk)">「j &lt; i」交给处理顺序（先查后插），「b[j] ≤ b[i]」交给值域前缀查询</text>
+
+  <!-- ====== 三步流程 ====== -->
+  <g filter="url(#sk)">
+    <rect x="36" y="166" width="186" height="96" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="129" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">① 预处理：离散化</text>
+  <text x="129" y="214" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">b 排序去重得 m 个槽位</text>
+  <text x="129" y="234" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">rank 保序：小值 → 小槽</text>
+  <text x="129" y="254" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">重复的 b 共用一个槽</text>
+
+  <g filter="url(#sk)">
+    <rect x="257" y="166" width="186" height="96" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="350" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a1a" filter="url(#sk)">② 对每个 i：先查</text>
+  <text x="350" y="214" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">query(rank(b[i]))：</text>
+  <text x="350" y="234" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">槽位 ≤ r 的前缀最大 f，</text>
+  <text x="350" y="254" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">= 所有 b[j] ≤ b[i] 的最优前驱</text>
+
+  <g filter="url(#sk)">
+    <rect x="478" y="166" width="186" height="96" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="571" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a36" filter="url(#sk)">③ 算好 f[i]：后插</text>
+  <text x="571" y="214" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">f[i] = nums[i] + max(0, 查询值)</text>
+  <text x="571" y="234" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">update(r, f[i])：单点取 max</text>
+  <text x="571" y="254" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">负的 f 也照插不误</text>
+
+  <g filter="url(#sk)">
+    <path d="M 226 214 L 253 214" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+    <path d="M 447 214 L 474 214" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- ====== 槽位实例（示例 2，处理 i=3） ====== -->
+  <text x="350" y="296" text-anchor="middle" font-size="13" fill="#666" filter="url(#sk)">处理 i = 3（示例 2：b[3] = 5，r = 2）瞬间的三个槽：</text>
+
+  <g filter="url(#sk)">
+    <rect x="195" y="308" width="90" height="58" rx="4" fill="#ffffff" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="305" y="308" width="90" height="58" rx="4" fill="#ffffff" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="415" y="308" width="90" height="58" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <g font-size="12" fill="#888" text-anchor="middle" filter="url(#sk)">
+    <text x="240" y="328">b = −5</text>
+    <text x="350" y="328">b = −2</text>
+    <text x="460" y="328">b = 5</text>
+  </g>
+  <g font-size="14" font-weight="bold" fill="#333" text-anchor="middle" filter="url(#sk)">
+    <text x="240" y="352">f = −3</text>
+    <text x="350" y="352">f = −1</text>
+    <text x="460" y="352">f = 5</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <path d="M 195 378 L 195 390 L 505 390 L 505 378" stroke="#4a8e4a" stroke-width="2.2" fill="none"/>
+  </g>
+  <text x="350" y="412" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">query 覆盖 b ≤ 5 的全部槽：max(−3, −1, 5) = 5</text>
+
+  <g filter="url(#sk)">
+    <path d="M 583 338 L 512 336" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#ao)"/>
+  </g>
+  <text x="590" y="322" font-size="12" font-weight="bold" fill="#8a6a1a" filter="url(#sk)">update</text>
+  <text x="590" y="340" font-size="11.5" fill="#8a6a1a" filter="url(#sk)">槽 2 ← f[3]</text>
+  <text x="590" y="358" font-size="11.5" fill="#8a6a1a" filter="url(#sk)">= 8 + 5 = 13</text>
+
+  <g filter="url(#sk)">
+    <rect x="100" y="424" width="500" height="38" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+  </g>
+  <text x="350" y="448" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a36" filter="url(#sk)">先查后插 ⇒ 查询时 i 自己还没进槽，「j &lt; i」自动成立</text>
+</svg>
