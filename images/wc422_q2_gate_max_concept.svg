@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7"/>
+    </filter>
+    <marker id="arD" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#888"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="460" fill="#fafafa"/>
+  <text x="450" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：一步移动 = 等门到 max(d, c)，再走 1 秒</text>
+  <path d="M 200 44 Q 450 52 700 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== rooms diagram ===== -->
+  <g filter="url(#sk)"><rect x="70" y="70" width="165" height="92" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="152" y="98" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">当前房 (x,y)</text>
+  <text x="152" y="120" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">时刻 d 到达</text>
+  <text x="152" y="146" text-anchor="middle" font-size="9.5" font-family="monospace" fill="#666" filter="url(#sk)">d = dist[x][y]</text>
+
+  <path d="M 240 116 L 330 116" stroke="#b85450" stroke-width="2.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="286" y="102" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b03a3a" filter="url(#sk)">走 1 秒</text>
+
+  <g filter="url(#sk)"><rect x="340" y="70" width="165" height="92" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="422" y="98" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a87820" filter="url(#sk)">邻房 (nx,ny)</text>
+  <text x="422" y="120" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">开门时刻 c</text>
+  <text x="422" y="146" text-anchor="middle" font-size="9.5" font-family="monospace" fill="#666" filter="url(#sk)">c = moveTime[nx][ny]</text>
+
+  <text x="70" y="186" font-size="9.5" fill="#888" filter="url(#sk)">门没开就在当前房原地等：等待任意久都合法，不花任何代价</text>
+
+  <!-- ===== formula box ===== -->
+  <g filter="url(#sk)">
+    <rect x="70" y="200" width="435" height="78" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="287" y="224" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#sk)">到达邻房的最早时刻</text>
+  <text x="287" y="250" text-anchor="middle" font-size="15" font-weight="bold" font-family="monospace" fill="#2b2b2b" filter="url(#sk)">nd = max(d, c) + 1</text>
+  <text x="287" y="270" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#sk)">取等即可出发：t = c 时门已开</text>
+
+  <!-- ===== FIFO box ===== -->
+  <g filter="url(#sk)">
+    <rect x="540" y="70" width="300" height="208" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="560" y="96" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">FIFO 单调性（Dijkstra 的根基）</text>
+  <text x="560" y="122" font-size="11" font-family="monospace" fill="#444" filter="url(#sk)">f(t) = max(t, c) + 1</text>
+  <text x="560" y="146" font-size="10.5" fill="#444" filter="url(#sk)">关于 t 单调不减，且 f(t) ≥ t + 1</text>
+  <text x="560" y="170" font-size="10.5" fill="#444" filter="url(#sk)">晚出发 ⇒ 不可能更早到达</text>
+  <text x="560" y="194" font-size="10.5" fill="#444" filter="url(#sk)">⇒ 堆顶（时刻最小）一旦弹出，</text>
+  <text x="560" y="218" font-size="10.5" fill="#444" filter="url(#sk)">其 dist 即为最终答案（定案）</text>
+  <text x="560" y="250" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#sk)">等待只会亏、不会赚</text>
+  <text x="560" y="272" font-size="10" fill="#888" filter="url(#sk)">——贪心「弹出即定案」的全部前提</text>
+
+  <!-- ===== case A timeline ===== -->
+  <text x="70" y="296" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#sk)">情形一：d ≥ c —— 门已开，直接走</text>
+  <text x="100" y="316" font-size="9" fill="#2e6e2e" filter="url(#sk)">c ≤ d（门早已开）</text>
+  <path d="M 160 330 L 286 330" stroke="#446688" stroke-width="6" fill="none" filter="url(#sk)"/>
+  <text x="223" y="316" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688" filter="url(#sk)">移动 1 秒</text>
+  <g filter="url(#sk)"><circle cx="290" cy="330" r="7" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="306" y="334" font-size="10.5" font-weight="bold" fill="#b03a3a" filter="url(#sk)">到达 d+1</text>
+  <path d="M 90 352 L 410 352" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arD)" filter="url(#sk)"/>
+  <g stroke="#999" stroke-width="1.2" filter="url(#sk)">
+    <path d="M 100 346 L 100 358"/><path d="M 160 346 L 160 358"/><path d="M 290 346 L 290 358"/>
+  </g>
+  <g font-size="10" text-anchor="middle" fill="#888" filter="url(#sk)">
+    <text x="100" y="374">c</text><text x="160" y="374">d</text><text x="290" y="374">d+1</text>
+  </g>
+
+  <!-- ===== case B timeline ===== -->
+  <text x="470" y="296" font-size="11.5" font-weight="bold" fill="#a87820" filter="url(#sk)">情形二：d &lt; c —— 原地等门，等到 c 再走</text>
+  <path d="M 490 330 L 654 330" stroke="#d6a040" stroke-width="2.5" stroke-dasharray="6 4" fill="none" filter="url(#sk)"/>
+  <text x="572" y="316" text-anchor="middle" font-size="10" fill="#a87820" filter="url(#sk)">原地等待</text>
+  <g filter="url(#sk)"><circle cx="660" cy="330" r="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <path d="M 660 330 L 786 330" stroke="#446688" stroke-width="6" fill="none" filter="url(#sk)"/>
+  <text x="723" y="316" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688" filter="url(#sk)">移动 1 秒</text>
+  <g filter="url(#sk)"><circle cx="790" cy="330" r="7" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="806" y="334" font-size="10.5" font-weight="bold" fill="#b03a3a" filter="url(#sk)">到达 c+1</text>
+  <path d="M 490 352 L 850 352" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arD)" filter="url(#sk)"/>
+  <g stroke="#999" stroke-width="1.2" filter="url(#sk)">
+    <path d="M 490 346 L 490 358"/><path d="M 660 346 L 660 358"/><path d="M 790 346 L 790 358"/>
+  </g>
+  <g font-size="10" text-anchor="middle" fill="#888" filter="url(#sk)">
+    <text x="490" y="374">d</text><text x="660" y="374" font-weight="bold" fill="#b03a3a">c（门开）</text><text x="790" y="374">c+1</text>
+  </g>
+
+  <!-- ===== unify note ===== -->
+  <g filter="url(#sk)">
+    <rect x="140" y="396" width="620" height="46" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="450" y="424" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">两种情形统一为 nd = max(d, c) + 1 —— 等待被 max 吸收，无需逐秒模拟时间</text>
+</svg>

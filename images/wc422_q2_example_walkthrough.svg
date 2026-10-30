@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 650" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="43" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7"/>
+    </filter>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arD" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="650" fill="#fafafa"/>
+  <text x="480" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例演算：等门时间线与 Dijkstra 弹堆过程</text>
+  <path d="M 330 44 Q 480 52 630 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: example 1 ===== -->
+  <text x="80" y="76" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">示例 1：moveTime = [[0,4],[4,4]]，答案 6</text>
+
+  <!-- 2x2 grid, cell 96x64, origin (80,92) -->
+  <g filter="url(#sk)"><rect x="80" y="92" width="96" height="64" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/></g>
+  <text x="86" y="106" font-size="8.5" fill="#666" filter="url(#sk)">(0,0)</text>
+  <text x="128" y="128" text-anchor="middle" font-size="20" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">0</text>
+  <text x="128" y="148" text-anchor="middle" font-size="9" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">起点</text>
+  <g filter="url(#sk)"><rect x="176" y="92" width="96" height="64" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="182" y="106" font-size="8.5" fill="#666" filter="url(#sk)">(0,1)</text>
+  <text x="224" y="128" text-anchor="middle" font-size="20" font-weight="bold" fill="#a87820" filter="url(#sk)">4</text>
+  <g filter="url(#sk)"><rect x="80" y="156" width="96" height="64" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="86" y="170" font-size="8.5" fill="#666" filter="url(#sk)">(1,0)</text>
+  <text x="128" y="192" text-anchor="middle" font-size="20" font-weight="bold" fill="#a87820" filter="url(#sk)">4</text>
+  <g filter="url(#sk)"><rect x="176" y="156" width="96" height="64" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/></g>
+  <text x="182" y="170" font-size="8.5" fill="#666" filter="url(#sk)">(1,1)</text>
+  <text x="224" y="192" text-anchor="middle" font-size="20" font-weight="bold" fill="#446688" filter="url(#sk)">4</text>
+  <text x="224" y="212" text-anchor="middle" font-size="9" font-weight="bold" fill="#b03a3a" filter="url(#sk)">终点</text>
+  <text x="80" y="236" font-size="9.5" fill="#888" filter="url(#sk)">格中数字 = moveTime（门开时刻）</text>
+
+  <!-- path arrows -->
+  <path d="M 128 132 Q 133 158 128 179" stroke="#b85450" stroke-width="2.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <path d="M 136 188 Q 176 193 214 188" stroke="#b85450" stroke-width="2.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><circle cx="153" cy="156" r="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/></g>
+  <text x="153" y="160" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#446688" filter="url(#sk)">1s</text>
+  <g filter="url(#sk)"><circle cx="176" cy="216" r="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/></g>
+  <text x="176" y="220" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#446688" filter="url(#sk)">1s</text>
+
+  <!-- timeline: 1s = 64px -->
+  <path d="M 80 290 L 508 290" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arD)" filter="url(#sk)"/>
+  <g stroke="#999" stroke-width="1.2" filter="url(#sk)">
+    <path d="M 80 284 L 80 296"/><path d="M 144 284 L 144 296"/><path d="M 208 284 L 208 296"/>
+    <path d="M 272 284 L 272 296"/><path d="M 336 284 L 336 296"/><path d="M 400 284 L 400 296"/>
+    <path d="M 464 284 L 464 296"/>
+  </g>
+  <g font-size="10" fill="#888" text-anchor="middle" filter="url(#sk)">
+    <text x="80" y="310">0</text><text x="144" y="310">1</text><text x="208" y="310">2</text>
+    <text x="272" y="310">3</text><text x="336" y="310">4</text><text x="400" y="310">5</text>
+    <text x="464" y="310">6</text>
+  </g>
+  <text x="280" y="332" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#sk)">时刻 t（秒）</text>
+
+  <text x="206" y="252" text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">原地等门（不花代价）</text>
+  <path d="M 80 268 L 334 268" stroke="#999" stroke-width="2" stroke-dasharray="5 4" fill="none" filter="url(#sk)"/>
+  <text x="367" y="252" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#sk)">第1步·1s</text>
+  <path d="M 336 268 L 398 268" stroke="#446688" stroke-width="6" fill="none" filter="url(#sk)"/>
+  <text x="431" y="252" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#sk)">第2步·1s</text>
+  <path d="M 400 268 L 462 268" stroke="#446688" stroke-width="6" fill="none" filter="url(#sk)"/>
+  <g filter="url(#sk)"><circle cx="464" cy="268" r="7" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="478" y="272" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">t=6 到达</text>
+
+  <!-- dijkstra pop table -->
+  <g filter="url(#sk)">
+    <rect x="620" y="92" width="290" height="216" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="640" y="116" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">Dijkstra 弹堆过程</text>
+  <text x="640" y="140" font-size="10" font-weight="bold" fill="#446688" filter="url(#sk)">① 弹 (0, (0,0))</text>
+  <text x="640" y="156" font-size="10" fill="#444" filter="url(#sk)">两邻居门均为 4</text>
+  <text x="640" y="170" font-size="10" font-family="monospace" fill="#444" filter="url(#sk)">nd = max(0,4)+1 = 5 → 入堆×2</text>
+  <text x="640" y="192" font-size="10" font-weight="bold" fill="#446688" filter="url(#sk)">② 弹 (5, (0,1))</text>
+  <text x="640" y="208" font-size="10" font-family="monospace" fill="#444" filter="url(#sk)">nd = max(5,4)+1 = 6</text>
+  <text x="640" y="222" font-size="10" font-family="monospace" fill="#444" filter="url(#sk)">→ dist[1][1] = 6</text>
+  <text x="640" y="244" font-size="10" font-weight="bold" fill="#446688" filter="url(#sk)">③ 弹 (5, (1,0))</text>
+  <text x="640" y="260" font-size="10" fill="#444" filter="url(#sk)">同样得 6，不更优 → 跳过</text>
+  <text x="640" y="282" font-size="10" font-weight="bold" fill="#446688" filter="url(#sk)">④ 弹 (6, (1,1))</text>
+  <text x="640" y="298" font-size="10" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">是终点 → 返回 6 ✓</text>
+
+  <path d="M 60 348 L 900 348" stroke="#e0e0e0" stroke-width="1.2" filter="url(#sk)"/>
+
+  <!-- ===== Panel 2: example 3 ===== -->
+  <text x="80" y="380" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">示例 3：moveTime = [[0,1],[1,2]]，答案 3 —— 两步都「卡点」出发</text>
+
+  <!-- 2x2 grid, cell 96x64, origin (80,400) -->
+  <g filter="url(#sk)"><rect x="80" y="400" width="96" height="64" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/></g>
+  <text x="86" y="414" font-size="8.5" fill="#666" filter="url(#sk)">(0,0)</text>
+  <text x="128" y="436" text-anchor="middle" font-size="20" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">0</text>
+  <text x="128" y="456" text-anchor="middle" font-size="9" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">起点</text>
+  <g filter="url(#sk)"><rect x="176" y="400" width="96" height="64" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="182" y="414" font-size="8.5" fill="#666" filter="url(#sk)">(0,1)</text>
+  <text x="224" y="436" text-anchor="middle" font-size="20" font-weight="bold" fill="#a87820" filter="url(#sk)">1</text>
+  <g filter="url(#sk)"><rect x="80" y="464" width="96" height="64" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="86" y="478" font-size="8.5" fill="#666" filter="url(#sk)">(1,0)</text>
+  <text x="128" y="500" text-anchor="middle" font-size="20" font-weight="bold" fill="#a87820" filter="url(#sk)">1</text>
+  <g filter="url(#sk)"><rect x="176" y="464" width="96" height="64" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/></g>
+  <text x="182" y="478" font-size="8.5" fill="#666" filter="url(#sk)">(1,1)</text>
+  <text x="224" y="500" text-anchor="middle" font-size="20" font-weight="bold" fill="#446688" filter="url(#sk)">2</text>
+  <text x="224" y="520" text-anchor="middle" font-size="9" font-weight="bold" fill="#b03a3a" filter="url(#sk)">终点</text>
+
+  <!-- path arrows -->
+  <path d="M 136 428 Q 175 436 214 428" stroke="#b85450" stroke-width="2.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <path d="M 224 460 Q 229 486 224 507" stroke="#b85450" stroke-width="2.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><circle cx="176" cy="452" r="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/></g>
+  <text x="176" y="456" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#446688" filter="url(#sk)">1s</text>
+  <g filter="url(#sk)"><circle cx="249" cy="486" r="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/></g>
+  <text x="249" y="490" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#446688" filter="url(#sk)">1s</text>
+
+  <!-- per-step formulas -->
+  <text x="282" y="424" font-size="10" font-family="monospace" fill="#444" filter="url(#sk)">到 (0,1)：max(0,1)+1 = 2</text>
+  <text x="282" y="440" font-size="9" fill="#888" filter="url(#sk)">(门 1 未开，等到 1 出发)</text>
+  <text x="282" y="490" font-size="10" font-family="monospace" fill="#444" filter="url(#sk)">到 (1,1)：max(2,2)+1 = 3</text>
+  <text x="282" y="506" font-size="9" fill="#888" filter="url(#sk)">(取等：到达时刻 2 ≥ 门 2)</text>
+
+  <!-- timeline: 1s = 64px -->
+  <path d="M 80 576 L 310 576" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arD)" filter="url(#sk)"/>
+  <g stroke="#999" stroke-width="1.2" filter="url(#sk)">
+    <path d="M 80 570 L 80 582"/><path d="M 144 570 L 144 582"/><path d="M 208 570 L 208 582"/>
+    <path d="M 272 570 L 272 582"/>
+  </g>
+  <g font-size="10" fill="#888" text-anchor="middle" filter="url(#sk)">
+    <text x="80" y="596">0</text><text x="144" y="596">1</text><text x="208" y="596">2</text><text x="272" y="596">3</text>
+  </g>
+  <text x="195" y="616" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#sk)">时刻 t（秒）</text>
+
+  <text x="111" y="538" text-anchor="middle" font-size="10" fill="#a87820" filter="url(#sk)">等门</text>
+  <path d="M 80 554 L 142 554" stroke="#d6a040" stroke-width="2.5" stroke-dasharray="6 4" fill="none" filter="url(#sk)"/>
+  <text x="175" y="538" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#sk)">第1步·1s</text>
+  <path d="M 144 554 L 206 554" stroke="#446688" stroke-width="6" fill="none" filter="url(#sk)"/>
+  <text x="239" y="538" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#sk)">第2步·1s</text>
+  <path d="M 208 554 L 270 554" stroke="#446688" stroke-width="6" fill="none" filter="url(#sk)"/>
+  <g filter="url(#sk)"><circle cx="272" cy="554" r="7" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="272" y="532" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">t=3 到达</text>
+  <text x="260" y="638" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#sk)">每一步都「卡点出发」：门开即走，全程零浪费</text>
+
+  <!-- right note box -->
+  <g filter="url(#sk)">
+    <rect x="560" y="400" width="360" height="180" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="578" y="424" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">对照要点</text>
+  <text x="578" y="448" font-size="10.5" font-family="monospace" fill="#444" filter="url(#sk)">时间线：0 →(等1s)→ 2 → 3</text>
+  <text x="578" y="472" font-size="10.5" fill="#444" filter="url(#sk)">两次移动都「卡点出发」：</text>
+  <text x="578" y="494" font-size="10.5" font-family="monospace" fill="#444" filter="url(#sk)">max(0,1)+1 = 2；max(2,2)+1 = 3</text>
+  <text x="578" y="516" font-size="10.5" fill="#444" filter="url(#sk)">门开即走（取等可出发），</text>
+  <text x="578" y="538" font-size="10.5" fill="#444" filter="url(#sk)">等待全部被 max 吸收，</text>
+  <text x="578" y="560" font-size="10.5" fill="#444" filter="url(#sk)">无需逐秒模拟时间。</text>
+</svg>
