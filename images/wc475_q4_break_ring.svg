@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="480" viewBox="0 0 560 480" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">断环成链：在全局最大值 M 旁边剪开</text>
+  <path d="M 130 42 Q 280 50 430 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- ring: nums = [1,2,3,3], M at index 2 -->
+  <g filter="url(#rough2)"><rect x="144" y="72" width="42" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="165" y="92" text-anchor="middle" font-size="13" fill="#33526e" filter="url(#rough2)">1</text>
+  <text x="165" y="116" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">下标 0</text>
+  <g filter="url(#rough2)"><rect x="224" y="180" width="42" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="245" y="200" text-anchor="middle" font-size="13" fill="#33526e" filter="url(#rough2)">2</text>
+  <text x="245" y="226" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">下标 1</text>
+  <g filter="url(#rough2)"><rect x="144" y="290" width="42" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5"/></g>
+  <text x="165" y="310" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6510" filter="url(#rough2)">3</text>
+  <text x="165" y="340" text-anchor="middle" font-size="11" fill="#8a6510" filter="url(#rough2)">M = 3（下标 2）</text>
+  <g filter="url(#rough2)"><rect x="64" y="180" width="42" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="85" y="200" text-anchor="middle" font-size="13" fill="#33526e" filter="url(#rough2)">3</text>
+  <text x="92" y="234" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">下标 3</text>
+
+  <!-- clockwise ring arrows, avoid the two cut gaps -->
+  <path d="M 196 86 Q 242 106 250 172" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 88 172 Q 94 108 138 86" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- cut A: left of M (gap between idx1 and idx2) blue -->
+  <g filter="url(#rough2)">
+    <line x1="226" y1="252" x2="252" y2="262" stroke="#446688" stroke-width="2" stroke-dasharray="4,3"/>
+    <line x1="226" y1="262" x2="252" y2="252" stroke="#446688" stroke-width="2" stroke-dasharray="4,3"/>
+  </g>
+  <text x="262" y="262" font-size="11" fill="#446688" filter="url(#rough2)">剪口 A（M 左侧）</text>
+  <!-- cut B: right of M (gap between idx2 and idx3) red -->
+  <g filter="url(#rough2)">
+    <line x1="140" y1="252" x2="114" y2="262" stroke="#b85450" stroke-width="2" stroke-dasharray="4,3"/>
+    <line x1="140" y1="262" x2="114" y2="252" stroke="#b85450" stroke-width="2" stroke-dasharray="4,3"/>
+  </g>
+  <text x="106" y="282" text-anchor="end" font-size="11" fill="#b85450" filter="url(#rough2)">剪口 B（M 右侧）</text>
+
+  <!-- shrink lemma box -->
+  <g filter="url(#rough2)"><rect x="312" y="66" width="234" height="122" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="330" y="90" font-size="13" font-weight="bold" fill="#2e5e2e" filter="url(#rough2)">收缩论证（关键）</text>
+  <text x="330" y="112" font-size="11" fill="#2e5e2e" filter="url(#rough2)">含 M 的段总可收缩成「以 M 为</text>
+  <text x="330" y="130" font-size="11" fill="#2e5e2e" filter="url(#rough2)">端点」，多余元素并入邻段：接收段</text>
+  <text x="330" y="148" font-size="11" fill="#2e5e2e" filter="url(#rough2)">max 只增、min 只减，极差不变小，</text>
+  <text x="330" y="166" font-size="11" fill="#2e5e2e" filter="url(#rough2)">总分不降 → 最优切割点必紧贴 M，</text>
+  <text x="330" y="180" font-size="11" fill="#2e5e2e" filter="url(#rough2)">只需试 M 左、M 右两种剪法</text>
+
+  <!-- bottom: two chains -->
+  <text x="60" y="382" font-size="14" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">断开后的两条链，各跑一遍 DP，取较大者：</text>
+
+  <text x="60" y="412" font-size="12" fill="#446688" filter="url(#rough2)">断法 A：M 是链首</text>
+  <g filter="url(#rough2)"><rect x="60" y="422" width="38" height="28" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="79" y="441" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6510" filter="url(#rough2)">3</text>
+  <g filter="url(#rough2)"><rect x="104" y="422" width="38" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="123" y="441" text-anchor="middle" font-size="12" fill="#33526e" filter="url(#rough2)">3</text>
+  <g filter="url(#rough2)"><rect x="148" y="422" width="38" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="167" y="441" text-anchor="middle" font-size="12" fill="#33526e" filter="url(#rough2)">1</text>
+  <g filter="url(#rough2)"><rect x="192" y="422" width="38" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="211" y="441" text-anchor="middle" font-size="12" fill="#33526e" filter="url(#rough2)">2</text>
+  <text x="244" y="441" font-size="12" fill="#446688" filter="url(#rough2)">→ DP = 2</text>
+
+  <text x="60" y="466" font-size="12" fill="#b85450" filter="url(#rough2)">断法 B：M 是链尾</text>
+  <g filter="url(#rough2)"><rect x="160" y="450" width="38" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="179" y="469" text-anchor="middle" font-size="12" fill="#33526e" filter="url(#rough2)">3</text>
+  <g filter="url(#rough2)"><rect x="204" y="450" width="38" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="223" y="469" text-anchor="middle" font-size="12" fill="#33526e" filter="url(#rough2)">1</text>
+  <g filter="url(#rough2)"><rect x="248" y="450" width="38" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="267" y="469" text-anchor="middle" font-size="12" fill="#33526e" filter="url(#rough2)">2</text>
+  <g filter="url(#rough2)"><rect x="292" y="450" width="38" height="28" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="311" y="469" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6510" filter="url(#rough2)">3</text>
+
+  <g filter="url(#rough2)"><rect x="356" y="408" width="178" height="60" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="445" y="433" text-anchor="middle" font-size="13" fill="#8a3540" filter="url(#rough2)">断法 B 的 DP = 3 更大</text>
+  <text x="445" y="456" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a3540" filter="url(#rough2)">答案 = max(2, 3) = 3</text>
+</svg>

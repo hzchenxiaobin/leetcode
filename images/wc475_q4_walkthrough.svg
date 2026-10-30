@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="470" viewBox="0 0 560 470" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="470" fill="#fafafa"/>
+
+  <text x="280" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">示例演算：nums = [1,2,3,3]，k = 2</text>
+  <path d="M 120 42 Q 280 50 440 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <text x="70" y="66" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">链 B = [3,1,2,3]（M 是链尾）的 DP 走查：</text>
+
+  <!-- axes -->
+  <path d="M 78 236 L 78 100" stroke="#888" stroke-width="1.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 78 236 L 300 236" stroke="#888" stroke-width="1.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="52" y="115" text-anchor="end" font-size="10" fill="#888" filter="url(#rough2)">3</text>
+  <text x="52" y="170" text-anchor="end" font-size="10" fill="#888" filter="url(#rough2)">2</text>
+  <text x="52" y="225" text-anchor="end" font-size="10" fill="#888" filter="url(#rough2)">1</text>
+  <text x="90" y="252" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">0</text>
+  <text x="150" y="252" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">1</text>
+  <text x="210" y="252" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">2</text>
+  <text x="270" y="252" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">3</text>
+
+  <!-- short trade: 0 sell 3 -> 1 buy back 1 -->
+  <path d="M 90 110 L 150 224" stroke="#b85450" stroke-width="2.6" stroke-dasharray="7,4" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <!-- long trade: 2 buy 2 -> 3 sell 3 -->
+  <path d="M 210 170 L 270 116" stroke="#4a7a3a" stroke-width="2.6" stroke-dasharray="7,4" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- price polyline -->
+  <path d="M 90 110 L 150 224 L 210 170 L 270 116" stroke="#446688" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+  <g filter="url(#rough2)"><circle cx="90" cy="110" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#rough2)"><circle cx="150" cy="224" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#rough2)"><circle cx="210" cy="170" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#rough2)"><circle cx="270" cy="116" r="4.5" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+
+  <text x="100" y="92" font-size="10.5" fill="#b85450" filter="url(#rough2)">做空：卖 3 → 买回 1，+2</text>
+  <text x="168" y="158" font-size="10.5" fill="#2e5e2e" filter="url(#rough2)">做多：买 2 → 卖 3，+1</text>
+  <text x="282" y="106" font-size="10" fill="#8a6510" filter="url(#rough2)">M</text>
+
+  <text x="70" y="278" font-size="11" fill="#555" filter="url(#rough2)">对应划分：[3,1]（极差 2）与 [2,3]（极差 1），正是官方解释中的环绕划分</text>
+
+  <!-- DP table -->
+  <text x="330" y="66" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">f[k+1][0]（至多 2 笔）逐步更新：</text>
+  <g filter="url(#rough2)"><rect x="330" y="78" width="72" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <g filter="url(#rough2)"><rect x="402" y="78" width="56" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <g filter="url(#rough2)"><rect x="458" y="78" width="66" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="366" y="95" text-anchor="middle" font-size="10.5" fill="#33526e" filter="url(#rough2)">处理价格</text>
+  <text x="430" y="95" text-anchor="middle" font-size="10.5" fill="#33526e" filter="url(#rough2)">f[3][0]</text>
+  <text x="491" y="95" text-anchor="middle" font-size="10.5" fill="#33526e" filter="url(#rough2)">备注</text>
+  <g filter="url(#rough2)"><rect x="330" y="104" width="72" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <g filter="url(#rough2)"><rect x="402" y="104" width="56" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <g filter="url(#rough2)"><rect x="458" y="104" width="66" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <text x="366" y="120" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">p = 3</text>
+  <text x="430" y="120" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">0</text>
+  <text x="491" y="120" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">尚无交易</text>
+  <g filter="url(#rough2)"><rect x="330" y="128" width="72" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <g filter="url(#rough2)"><rect x="402" y="128" width="56" height="24" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/></g>
+  <g filter="url(#rough2)"><rect x="458" y="128" width="66" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <text x="366" y="144" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">p = 1</text>
+  <text x="430" y="144" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8a3540" filter="url(#rough2)">2</text>
+  <text x="491" y="144" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">空单平仓</text>
+  <g filter="url(#rough2)"><rect x="330" y="152" width="72" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <g filter="url(#rough2)"><rect x="402" y="152" width="56" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <g filter="url(#rough2)"><rect x="458" y="152" width="66" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <text x="366" y="168" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">p = 2</text>
+  <text x="430" y="168" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">2</text>
+  <text x="491" y="168" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">多单挂起</text>
+  <g filter="url(#rough2)"><rect x="330" y="176" width="72" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <g filter="url(#rough2)"><rect x="402" y="176" width="56" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <g filter="url(#rough2)"><rect x="458" y="176" width="66" height="24" rx="4" fill="#fafafa" stroke="#b9c6d8" stroke-width="1"/></g>
+  <text x="366" y="192" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">p = 3</text>
+  <text x="430" y="192" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e5e2e" filter="url(#rough2)">3</text>
+  <text x="491" y="192" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">多单卖出</text>
+
+  <g filter="url(#rough2)"><rect x="330" y="212" width="194" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="427" y="228" text-anchor="middle" font-size="11" fill="#2e5e2e" filter="url(#rough2)">链 B 得分 3：两笔交易时段不共用</text>
+  <text x="427" y="245" text-anchor="middle" font-size="11" fill="#2e5e2e" filter="url(#rough2)">任何下标（倒序 j 的功劳）</text>
+
+  <!-- chain A note -->
+  <text x="70" y="316" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">链 A = [3,3,1,2]（M 是链首）：</text>
+  <text x="70" y="338" font-size="11" fill="#555" filter="url(#rough2)">最佳是单笔做空「卖 3 → 买回 1」得 2。</text>
+  <text x="70" y="356" font-size="11" fill="#555" filter="url(#rough2)">想把「买 1 再卖 2」叠上去，需与空单共用</text>
+  <text x="70" y="374" font-size="11" fill="#555" filter="url(#rough2)">下标 2——非法，故链 A 只能到 2。</text>
+
+  <!-- answer box -->
+  <g filter="url(#rough2)"><rect x="150" y="400" width="260" height="50" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="280" y="431" text-anchor="middle" font-size="15" font-weight="bold" fill="#8a3540" filter="url(#rough2)">答案 = max(2, 3) = 3 ✓</text>
+</svg>
