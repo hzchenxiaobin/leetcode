@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="470" viewBox="0 0 560 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="59" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="470" fill="#fdfcf7"/>
+  <text x="280" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：按 end 排序，逐 offer 决策「不选 / 选」</text>
+  <path d="M 90 40 Q 280 48 470 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- sort -->
+  <g filter="url(#sk)">
+    <rect x="152" y="54" width="156" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  </g>
+  <text x="230" y="75" text-anchor="middle" font-size="12" fill="#2b2b2b">offers 按 end 升序排序</text>
+  <path d="M 230 88 L 230 102" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)"/>
+
+  <!-- i = 1 -->
+  <g filter="url(#sk)">
+    <rect x="190" y="106" width="80" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  </g>
+  <text x="230" y="125" text-anchor="middle" font-size="12.5" fill="#2b2b2b">i ← 1</text>
+  <path d="M 230 136 L 230 150" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)"/>
+
+  <!-- diamond: i > m ? -->
+  <g filter="url(#sk)">
+    <polygon points="135,192 230,154 325,192 230,230" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="230" y="189" text-anchor="middle" font-size="12" fill="#2b2b2b">i &gt; m ?</text>
+  <text x="230" y="206" text-anchor="middle" font-size="10" fill="#7a5415">（所有 offer 决策完毕？）</text>
+  <path d="M 325 192 L 396 192" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)"/>
+  <text x="352" y="184" text-anchor="middle" font-size="11" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <rect x="398" y="174" width="122" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="459" y="196" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">返回 dp[m]</text>
+  <path d="M 230 230 L 230 248" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)"/>
+  <text x="240" y="244" font-size="11" fill="#b85450">否</text>
+
+  <!-- binary search -->
+  <g filter="url(#sk)">
+    <rect x="128" y="250" width="204" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+  </g>
+  <text x="230" y="269" text-anchor="middle" font-size="12.5" fill="#2b2b2b">p ← lower_bound(ends, s)</text>
+  <text x="230" y="286" text-anchor="middle" font-size="10" fill="#4a6a3a">首个 e_j ≥ s 的下标 = 兼容前缀长度</text>
+  <path d="M 230 294 L 230 310" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)"/>
+
+  <!-- transition -->
+  <g filter="url(#sk)">
+    <rect x="105" y="312" width="250" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="230" y="336" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">dp[i] ← max( dp[i−1] , dp[p] + g )</text>
+
+  <!-- side annotations -->
+  <g filter="url(#sk)">
+    <rect x="10" y="314" width="88" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1"/>
+  </g>
+  <text x="54" y="328" text-anchor="middle" font-size="10.5" fill="#2b2b2b">不选 offer i</text>
+  <text x="54" y="344" text-anchor="middle" font-size="10.5" fill="#2b2b2b">dp[i−1]</text>
+  <path d="M 98 332 L 103 332" stroke="#3a3a3a" stroke-width="1" fill="none" stroke-dasharray="4,3" marker-end="url(#ar)"/>
+  <g filter="url(#sk)">
+    <rect x="362" y="314" width="96" height="36" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1"/>
+  </g>
+  <text x="410" y="328" text-anchor="middle" font-size="10.5" fill="#2b2b2b">选 offer i</text>
+  <text x="410" y="344" text-anchor="middle" font-size="10.5" fill="#2b2b2b">dp[p] + g</text>
+  <path d="M 362 332 L 357 332" stroke="#3a3a3a" stroke-width="1" fill="none" stroke-dasharray="4,3" marker-end="url(#ar)"/>
+
+  <path d="M 230 352 L 230 368" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)"/>
+
+  <!-- i++ -->
+  <g filter="url(#sk)">
+    <rect x="182" y="370" width="96" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  </g>
+  <text x="230" y="389" text-anchor="middle" font-size="12.5" fill="#2b2b2b">i ← i + 1</text>
+  <path d="M 182 385 L 80 385 L 80 192 L 128 192" stroke="#3a3a3a" stroke-width="1.2" fill="none" stroke-dasharray="5,4" marker-end="url(#ar)"/>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="40" y="420" width="480" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1"/>
+  </g>
+  <text x="280" y="437" text-anchor="middle" font-size="11" fill="#7a5415">p ≤ i−1 恒成立（e_i ≥ s_i 兜底），dp[p] 必已算出、无自引用；</text>
+  <text x="280" y="453" text-anchor="middle" font-size="11" fill="#7a5415">p 恰为「e_j &lt; s 的 offer 个数」，可直接作 dp 下标，无需 ±1</text>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="320" viewBox="0 0 560 320" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="560" height="320" fill="#fdfcf7"/>
+  <text x="280" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b">示例演算：n=5, offers=[[0,0,1],[0,2,2],[1,3,2]]（按 end 排序后）</text>
+  <path d="M 90 34 Q 280 42 470 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- table header bg -->
+  <g filter="url(#sk)">
+    <rect x="16" y="53" width="528" height="32" fill="#e8f0fe"/>
+    <rect x="16" y="159" width="528" height="34" fill="#e6f4ea"/>
+    <rect x="15" y="52" width="530" height="142" fill="none" stroke="#446688" stroke-width="1.5"/>
+    <path d="M 59 52 L 59 194" stroke="#446688" stroke-width="1" fill="none"/>
+    <path d="M 163 52 L 163 194" stroke="#446688" stroke-width="1" fill="none"/>
+    <path d="M 299 52 L 299 194" stroke="#446688" stroke-width="1" fill="none"/>
+    <path d="M 475 52 L 475 194" stroke="#446688" stroke-width="1" fill="none"/>
+    <path d="M 15 85 Q 280 87 545 85" stroke="#446688" stroke-width="1" fill="none"/>
+    <path d="M 15 121 Q 280 123 545 121" stroke="#446688" stroke-width="1" fill="none"/>
+    <path d="M 15 157 Q 280 159 545 157" stroke="#446688" stroke-width="1" fill="none"/>
+  </g>
+
+  <!-- header text -->
+  <text x="37" y="73" text-anchor="middle" font-size="11.5" fill="#2b2b2b">i</text>
+  <text x="111" y="73" text-anchor="middle" font-size="11.5" fill="#2b2b2b">offer (s, e, g)</text>
+  <text x="231" y="73" text-anchor="middle" font-size="11.5" fill="#2b2b2b">p(i)</text>
+  <text x="387" y="73" text-anchor="middle" font-size="11.5" fill="#2b2b2b">max( dp[i−1], dp[p]+g )</text>
+  <text x="510" y="73" text-anchor="middle" font-size="11.5" fill="#2b2b2b">dp[i]</text>
+
+  <!-- row 1 -->
+  <text x="37" y="108" text-anchor="middle" font-size="11.5" fill="#2b2b2b">1</text>
+  <text x="111" y="108" text-anchor="middle" font-size="11.5" fill="#2b2b2b">(0, 0, 1)</text>
+  <text x="231" y="108" text-anchor="middle" font-size="11" fill="#2b2b2b">0（无 e &lt; 0）</text>
+  <text x="387" y="108" text-anchor="middle" font-size="11.5" fill="#2b2b2b">max(0, 0+1) = 1</text>
+  <text x="510" y="108" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">1</text>
+
+  <!-- row 2 -->
+  <text x="37" y="144" text-anchor="middle" font-size="11.5" fill="#2b2b2b">2</text>
+  <text x="111" y="144" text-anchor="middle" font-size="11.5" fill="#2b2b2b">(0, 2, 2)</text>
+  <text x="231" y="144" text-anchor="middle" font-size="11" fill="#b85450">0（e₁ = s₂ ✗）</text>
+  <text x="387" y="144" text-anchor="middle" font-size="11.5" fill="#2b2b2b">max(1, 0+2) = 2</text>
+  <text x="510" y="144" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">2</text>
+
+  <!-- row 3 (optimal) -->
+  <text x="37" y="180" text-anchor="middle" font-size="11.5" fill="#2b2b2b">3</text>
+  <text x="111" y="180" text-anchor="middle" font-size="11.5" fill="#2b2b2b">(1, 3, 2)</text>
+  <text x="231" y="180" text-anchor="middle" font-size="11" fill="#2e6e2e">1（e₁ = 0 &lt; 1）</text>
+  <text x="387" y="180" text-anchor="middle" font-size="11.5" fill="#2b2b2b">max(2, 1+2) = 3</text>
+  <text x="510" y="180" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">3</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="40" y="210" width="480" height="88" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1"/>
+  </g>
+  <text x="280" y="232" text-anchor="middle" font-size="11" fill="#7a5415">排序后顺序：[0,0,1] → [0,2,2] → [1,3,2]</text>
+  <text x="280" y="252" text-anchor="middle" font-size="11" fill="#7a5415">第 2 行关键：e₁ = 0 = s₂，两个 offer 共享房屋 0，等号不算兼容 → p(2) = 0</text>
+  <text x="280" y="272" text-anchor="middle" font-size="11" fill="#7a5415">这正是二分必须用 lower_bound（而非 upper_bound）的原因</text>
+  <text x="280" y="290" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">答案 dp[3] = 3：选 A [0,0] 金 1 + C [1,3] 金 2</text>
+</svg>
