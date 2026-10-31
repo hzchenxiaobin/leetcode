@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 700"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="700" fill="#fafafa"/>
+  <text x="360" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#333">算法流程：射线枚举 → 增量构数 → 判素计数 → 双关键字收尾</text>
+  <path d="M 200 42 Q 360 50 520 42" stroke="#333" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- ===== main chain ===== -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="56" width="230" height="32" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="185" y="77" text-anchor="middle" font-size="13" fill="#333">枚举起点 (i, j)</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 185 88 L 185 100" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="100" width="230" height="32" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="185" y="121" text-anchor="middle" font-size="13" fill="#333">枚举方向 (dx, dy) ∈ 8 方向</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 185 132 L 185 144" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="144" width="230" height="50" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="185" y="166" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">num ← num×10 + mat[x][y]</text>
+  <text x="185" y="184" text-anchor="middle" font-size="11" fill="#555">起点格本身 = 第 1 步</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 185 194 L 185 206" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <polygon points="185,206 257,240 185,274 113,240" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="185" y="245" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">num &gt; 10 ?</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 185 274 L 185 290" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)"/>
+  </g>
+  <text x="196" y="286" font-size="11" fill="#4a7a3a" font-weight="bold">是 ✓</text>
+
+  <g filter="url(#rough2)">
+    <polygon points="185,290 257,324 185,358 113,324" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="185" y="320" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">是质数？</text>
+  <text x="185" y="338" text-anchor="middle" font-size="10" fill="#a05a20">试除 √v / 筛表 O(1)</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 185 358 L 185 372" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)"/>
+  </g>
+  <text x="196" y="368" font-size="11" fill="#4a7a3a" font-weight="bold">是 ✓</text>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="372" width="230" height="42" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="185" y="390" text-anchor="middle" font-size="14" fill="#2e5b22" font-weight="bold">cnt[num] += 1</text>
+  <text x="185" y="408" text-anchor="middle" font-size="11" fill="#2e5b22">哈希表只记质数频次</text>
+
+  <!-- loop back: F -> C -->
+  <g filter="url(#rough2)">
+    <path d="M 70 393 C 38 393, 38 172, 62 169" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="28" y="282" text-anchor="middle" font-size="11" fill="#446688" transform="rotate(-90 28 282)">步进后仍界内 ⇒ 下一轮构数</text>
+
+  <!-- loop exit: F -> scan -->
+  <g filter="url(#rough2)">
+    <path d="M 185 414 L 185 428" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="196" y="424" font-size="11" fill="#446688">全部射线枚举完</text>
+
+  <!-- ===== discard box ===== -->
+  <g filter="url(#rough2)">
+    <rect x="340" y="262" width="180" height="48" rx="6" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4 3"/>
+  </g>
+  <text x="430" y="282" text-anchor="middle" font-size="13" fill="#666" font-weight="bold">丢弃</text>
+  <text x="430" y="302" text-anchor="middle" font-size="11" fill="#888">≤ 10 或合数</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 257 240 C 300 240, 320 252, 334 266" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)"/>
+  </g>
+  <text x="284" y="232" font-size="11" fill="#a05a20">否</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 257 324 C 300 324, 320 312, 334 300" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)"/>
+  </g>
+  <text x="284" y="342" font-size="11" fill="#a05a20">否</text>
+
+  <!-- discard trunk rejoins the walk loop -->
+  <g filter="url(#rough2)">
+    <path d="M 430 310 L 430 396 C 430 418, 200 420, 72 402" stroke="#bbb" stroke-width="1.6" fill="none" marker-end="url(#arrO)"/>
+  </g>
+  <text x="436" y="360" font-size="10.5" fill="#888">继续步进</text>
+
+  <!-- ===== final scan ===== -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="428" width="230" height="48" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="185" y="448" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">扫描 cnt：按 (频次, 数值)</text>
+  <text x="185" y="467" text-anchor="middle" font-size="13" fill="#7a5415">字典序取最大</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 185 476 L 185 490" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <polygon points="185,490 252,522 185,554 118,522" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="185" y="527" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">cnt 空？</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 252 522 L 296 522" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)"/>
+  </g>
+  <text x="262" y="512" font-size="11" fill="#a05a20">否</text>
+  <g filter="url(#rough2)">
+    <rect x="300" y="504" width="120" height="36" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="360" y="527" text-anchor="middle" font-size="14" fill="#8a3a36" font-weight="bold">返回 -1</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 185 554 L 185 572" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)"/>
+  </g>
+  <text x="196" y="566" font-size="11" fill="#4a7a3a" font-weight="bold">是 ✓</text>
+  <g filter="url(#rough2)">
+    <rect x="115" y="572" width="140" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="185" y="595" text-anchor="middle" font-size="14" fill="#2e5b22" font-weight="bold">返回该质数</text>
+
+  <!-- ===== bottom tip ===== -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="640" width="600" height="48" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="360" y="662" text-anchor="middle" font-size="12" fill="#7a5415">💡 收尾比较 (频次 c, 数值 v) 的字典序：频次高者胜，并列时数值大者胜</text>
+  <text x="360" y="680" text-anchor="middle" font-size="12" fill="#7a5415">示例 3 中 97、79、47、67 频次并列，正是靠这一步返回最大的 97</text>
+</svg>
