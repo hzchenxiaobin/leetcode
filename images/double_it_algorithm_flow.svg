@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="510" viewBox="0 0 640 510" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="113" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="510" fill="#fdfcf7"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：反转 → 逐位翻倍 → 反转回来 → 处理进位</text>
+  <path d="M 130 38 Q 320 46 510 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- note box -->
+  <g filter="url(#sk)">
+    <rect x="350" y="58" width="252" height="82" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <text x="476" y="82" text-anchor="middle" font-size="11.5" fill="#7a5415">进位界：val×2 + carry ≤ 19</text>
+  <text x="476" y="102" text-anchor="middle" font-size="11.5" fill="#7a5415">⇒ carry ∈ {0, 1}，前插值恒为 1</text>
+  <text x="476" y="124" text-anchor="middle" font-size="11.5" fill="#7a5415">3 趟扫描：O(n) 时间 / O(1) 空间</text>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="85" y="52" width="160" height="32" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="165" y="73" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">输入 head（正序）</text>
+  <path d="M 165 84 L 165 100" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="75" y="102" width="180" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="165" y="123" text-anchor="middle" font-size="12.5" fill="#2b2b2b">① rev = reverse(head)</text>
+  <path d="M 165 134 L 165 150" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <!-- step 2 init -->
+  <g filter="url(#sk)">
+    <rect x="75" y="152" width="180" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="165" y="173" text-anchor="middle" font-size="12.5" fill="#2b2b2b">② cur = rev；carry = 0</text>
+  <path d="M 165 184 L 165 202" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="165,208 252,242 165,276 78,242" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="165" y="247" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">cur ≠ null ?</text>
+
+  <!-- yes branch -->
+  <text x="270" y="234" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">是</text>
+  <path d="M 252 242 L 292 242" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <!-- loop body -->
+  <g filter="url(#sk)">
+    <rect x="296" y="206" width="224" height="94" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="408" y="230" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">v = cur.val × 2 + carry</text>
+  <text x="408" y="252" text-anchor="middle" font-size="11.5" fill="#7a5415">cur.val = v % 10（写值）</text>
+  <text x="408" y="271" text-anchor="middle" font-size="11.5" fill="#7a5415">carry = v / 10（进位）</text>
+  <text x="408" y="290" text-anchor="middle" font-size="11.5" fill="#7a5415">cur = cur.next</text>
+  <text x="408" y="318" text-anchor="middle" font-size="10.5" fill="#7a5415">一趟翻倍所有位</text>
+
+  <!-- loop back -->
+  <path d="M 408 204 L 408 194 L 135 194 L 135 217" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)"/>
+
+  <!-- no branch -->
+  <text x="178" y="294" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a">否</text>
+  <path d="M 165 276 L 165 298" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="75" y="302" width="180" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="165" y="323" text-anchor="middle" font-size="12.5" fill="#2b2b2b">③ head = reverse(rev)</text>
+  <path d="M 165 334 L 165 350" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <!-- diamond 2 -->
+  <polygon points="165,354 248,388 165,422 82,388" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="165" y="393" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">carry == 1 ?</text>
+
+  <!-- yes 2 -->
+  <text x="266" y="380" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">是</text>
+  <path d="M 248 388 L 288 388" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <g filter="url(#sk)">
+    <rect x="292" y="356" width="220" height="68" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="402" y="381" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">④ 前插新最高位</text>
+  <text x="402" y="405" text-anchor="middle" font-size="12" fill="#333">return ListNode(1, head)</text>
+
+  <!-- no 2 -->
+  <text x="178" y="440" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a">否</text>
+  <path d="M 165 422 L 165 446" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <!-- return -->
+  <g filter="url(#sk)">
+    <rect x="95" y="450" width="140" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="165" y="473" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">return head</text>
+
+  <!-- converge -->
+  <path d="M 402 424 L 402 468 L 241 468" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+</svg>
