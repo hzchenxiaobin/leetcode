@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="520" viewBox="0 0 640 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="520" fill="#fdfcf7"/>
+  <text x="320" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">修掉一对差异（a → b）：两种净效果相同的做法，取便宜者</text>
+  <path d="M 130 38 Q 320 48 510 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- string cells: a ... b -->
+  <g filter="url(#sk)">
+    <rect x="120" y="104" width="48" height="36" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="180" y="104" width="48" height="36" rx="5" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="240" y="104" width="48" height="36" rx="5" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="300" y="104" width="48" height="36" rx="5" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="360" y="104" width="48" height="36" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <g text-anchor="middle" font-size="14" fill="#333" filter="url(#sk)">
+    <text x="144" y="127">a</text>
+    <text x="204" y="127" font-size="11" fill="#8899aa">·</text>
+    <text x="264" y="127" font-size="11" fill="#8899aa">·</text>
+    <text x="324" y="127" font-size="11" fill="#8899aa">·</text>
+    <text x="384" y="127">b</text>
+  </g>
+  <text x="265" y="90" text-anchor="middle" font-size="11.5" fill="#889" filter="url(#sk)">两端是要修的差异位</text>
+
+  <!-- remote flip arc -->
+  <path d="M 146 100 Q 265 56 382 100" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="265" y="72" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#sk)">远程翻转（操作①）：一次翻 a、b → 代价 x，与距离无关</text>
+
+  <!-- chain arrows -->
+  <g stroke="#4a7a3a" stroke-width="1.8" fill="none" filter="url(#sk)">
+    <path d="M 170 156 L 178 156" marker-end="url(#ar)"/>
+    <path d="M 230 156 L 238 156" marker-end="url(#ar)"/>
+    <path d="M 290 156 L 298 156" marker-end="url(#ar)"/>
+    <path d="M 350 156 L 358 156" marker-end="url(#ar)"/>
+  </g>
+  <text x="265" y="182" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">链式传播（操作②）：相邻翻转一路传递 a → b → 代价 b − a</text>
+  <text x="265" y="202" text-anchor="middle" font-size="11.5" fill="#667" filter="url(#sk)">中间每个位置各被翻 2 次，恰好自我抵消 —— 净效果同样只有 a、b 各翻一次</text>
+
+  <!-- formula box -->
+  <g filter="url(#sk)">
+    <rect x="100" y="218" width="440" height="44" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="246" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#2e5e22" filter="url(#sk)">w(a, b) = min(x, b − a) —— 消除一对差异的最低代价</text>
+
+  <!-- concavity trap -->
+  <text x="320" y="294" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#sk)">凹性陷阱：w 先线性增长、到 x 后封顶 —— 是凹函数</text>
+  <text x="320" y="314" text-anchor="middle" font-size="12.5" fill="#7a3a3a" filter="url(#sk)">凹 ⇒ 按顺序两两配对未必最优，嵌套配对可能更便宜（差异位 [0, 2, 3, 100]，x = 50）</text>
+
+  <!-- Row A: nested pairing -->
+  <text x="320" y="342" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#sk)">嵌套：远程 (0, 100) ＋ 链式 (2, 3) = 50 ＋ 1 = 51 ✓ 更优</text>
+  <g filter="url(#sk)">
+    <circle cx="150" cy="384" r="6" fill="#b85450"/>
+    <circle cx="235" cy="384" r="6" fill="#b85450"/>
+    <circle cx="275" cy="384" r="6" fill="#b85450"/>
+    <circle cx="445" cy="384" r="6" fill="#b85450"/>
+  </g>
+  <g text-anchor="middle" font-size="12" fill="#556" filter="url(#sk)">
+    <text x="150" y="406">0</text>
+    <text x="235" y="406">2</text>
+    <text x="275" y="406">3</text>
+    <text x="445" y="406">100</text>
+  </g>
+  <path d="M 150 376 Q 297 338 445 376" stroke="#b85450" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <path d="M 235 376 Q 255 362 275 376" stroke="#b85450" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+
+  <!-- Row B: sequential pairing -->
+  <text x="320" y="430" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#sk)">顺序：链式 (0, 2) ＋ 链式 (3, 100) = 2 ＋ 50 = 52</text>
+  <g filter="url(#sk)">
+    <circle cx="150" cy="472" r="6" fill="#446688"/>
+    <circle cx="235" cy="472" r="6" fill="#446688"/>
+    <circle cx="275" cy="472" r="6" fill="#446688"/>
+    <circle cx="445" cy="472" r="6" fill="#446688"/>
+  </g>
+  <g text-anchor="middle" font-size="12" fill="#556" filter="url(#sk)">
+    <text x="150" y="494">0</text>
+    <text x="235" y="494">2</text>
+    <text x="275" y="494">3</text>
+    <text x="445" y="494">100</text>
+  </g>
+  <path d="M 150 464 Q 192 436 235 464" stroke="#446688" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <path d="M 275 464 Q 360 434 445 464" stroke="#446688" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+</svg>

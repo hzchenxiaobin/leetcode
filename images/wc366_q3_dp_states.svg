@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="440" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">悬置 DP：状态只需一个比特 ——「有没有半个 x 操作悬着」</text>
+  <path d="M 150 38 Q 320 48 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- column headers -->
+  <g text-anchor="middle" font-size="11.5" fill="#889" filter="url(#sk)">
+    <text x="170" y="74">已处理前 i−2 个差异位</text>
+    <text x="350" y="74">已处理前 i−1 个</text>
+    <text x="530" y="74">已处理前 i 个</text>
+  </g>
+
+  <!-- adjacent-pair arc over row 0 -->
+  <path d="M 172 92 Q 350 48 528 92" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="350" y="60" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#sk)">相邻配对 +d：p_{i−1} 与 p_i 结伴</text>
+
+  <!-- row 0: no suspension -->
+  <g filter="url(#sk)">
+    <rect x="100" y="96" width="140" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="280" y="96" width="140" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="460" y="96" width="140" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold" fill="#446688" filter="url(#sk)">
+    <text x="170" y="118">f[i−2][0]</text>
+    <text x="350" y="118">f[i−1][0]</text>
+    <text x="530" y="118">f[i][0]</text>
+  </g>
+  <g text-anchor="middle" font-size="10.5" fill="#667" filter="url(#sk)">
+    <text x="170" y="133">全部配对完</text>
+    <text x="350" y="133">无悬置</text>
+    <text x="530" y="133">无悬置</text>
+  </g>
+
+  <!-- row 1: one suspension -->
+  <g filter="url(#sk)">
+    <rect x="100" y="216" width="140" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="280" y="216" width="140" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="460" y="216" width="140" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6512" filter="url(#sk)">
+    <text x="170" y="238">f[i−2][1]</text>
+    <text x="350" y="238">f[i−1][1]</text>
+    <text x="530" y="238">f[i][1]</text>
+  </g>
+  <g text-anchor="middle" font-size="10.5" fill="#667" filter="url(#sk)">
+    <text x="170" y="253">悬置半个 x（x 已付）</text>
+    <text x="350" y="253">悬置中</text>
+    <text x="530" y="253">悬置中</text>
+  </g>
+
+  <!-- adjacent-pair arc under row 1 -->
+  <path d="M 172 266 Q 350 310 528 266" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="350" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#sk)">相邻配对 +d（悬置保留，配对嵌在里面）</text>
+
+  <!-- open: f[i-1][0] -> f[i][1] -->
+  <path d="M 355 144 Q 415 172 456 222" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="348" y="164" text-anchor="end" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#sk)">开启：+x（付 x，悬置）</text>
+
+  <!-- close: f[i-1][1] -> f[i][0] -->
+  <path d="M 355 212 Q 415 184 456 136" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="348" y="202" text-anchor="end" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">关闭：+0（免费）</text>
+
+  <!-- notes -->
+  <g filter="url(#sk)">
+    <rect x="50" y="330" width="540" height="96" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <g font-size="12" fill="#2f5a24" filter="url(#sk)">
+    <text x="72" y="354">d = min(x, p_i − p_{i−1})：相邻两个差异位（p_{i−1}, p_i）配成一对的代价</text>
+    <text x="72" y="378">悬置不记位置：x 与距离无关，另一半落在未来哪个差异位上都免费</text>
+    <text x="72" y="402">至多一个悬置：两个嵌套的 x 对（2x）可重配为局部对，代价不增</text>
+    <text x="72" y="420" font-weight="bold" fill="#2e5e22">答案 = f[m][0]；差异位个数为奇数 → 直接返回 −1</text>
+  </g>
+</svg>
