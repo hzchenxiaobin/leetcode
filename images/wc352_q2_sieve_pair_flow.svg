@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="660" viewBox="0 0 880 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="660" fill="#fdfcf7"/>
+  <text x="440" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">先筛后配：算法流程</text>
+  <path d="M 350 34 Q 440 42 530 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="440" y="54" text-anchor="middle" font-size="11" fill="#888">埃氏筛 O(n log log n) 预处理，配对阶段每次判定只做两次数组访问</text>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="300" y="64" width="200" height="36" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="400" y="87" text-anchor="middle" font-size="12" fill="#2b6e9e">开始：输入 n</text>
+  <path d="M 400 100 L 400 118" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1: n < 4 ? -->
+  <g filter="url(#sk)">
+    <polygon points="400,122 516,164 400,206 284,164" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="169" text-anchor="middle" font-size="12" fill="#7a5415">n &lt; 4 ?</text>
+  <text x="524" y="156" font-size="11" fill="#b03a3a" font-weight="bold">是</text>
+  <path d="M 512 164 L 556 164" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="560" y="142" width="200" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="660" y="160" text-anchor="middle" font-size="11.5" fill="#7a2828" font-weight="bold">直接返回 []</text>
+  <text x="660" y="177" text-anchor="middle" font-size="10" fill="#888">最小质数对是 2 + 2 = 4</text>
+  <text x="412" y="202" font-size="11" fill="#2e6e2e" font-weight="bold">否</text>
+  <path d="M 400 206 L 400 228" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- sieve box -->
+  <g filter="url(#sk)">
+    <rect x="270" y="230" width="260" height="58" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="400" y="254" text-anchor="middle" font-size="12" fill="#2b6e9e" font-weight="bold">① 埃氏筛：标记 isPrime[0..n]</text>
+  <text x="400" y="274" text-anchor="middle" font-size="10.5" fill="#666">for i = 2 … ⌊√n⌋：从 i·i 起划掉 i 的倍数</text>
+  <path d="M 400 288 L 400 310" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- hub: next x -->
+  <g filter="url(#sk)">
+    <rect x="280" y="312" width="240" height="40" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="400" y="337" text-anchor="middle" font-size="12" fill="#2b6e9e">② 取下一个 x（x = 2 … ⌊n/2⌋）</text>
+  <path d="M 400 352 L 400 376" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2: double lookup -->
+  <g filter="url(#sk)">
+    <polygon points="400,378 556,438 400,498 244,438" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="433" text-anchor="middle" font-size="11.5" fill="#2e6e2e">isPrime[x] 且</text>
+  <text x="400" y="451" text-anchor="middle" font-size="11.5" fill="#2e6e2e">isPrime[n − x] ?</text>
+
+  <!-- yes: down to append -->
+  <text x="412" y="494" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 400 498 L 400 522" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- append box -->
+  <g filter="url(#sk)">
+    <rect x="290" y="524" width="220" height="46" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="400" y="545" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">ans.append([x, n − x])</text>
+  <text x="400" y="563" text-anchor="middle" font-size="10" fill="#888">x 递增 ⇒ 输出天然非递减</text>
+
+  <!-- no: left rail back to hub -->
+  <text x="228" y="430" font-size="11" fill="#b03a3a" font-weight="bold">否</text>
+  <path d="M 244 438 L 150 438 L 150 332 L 274 332" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="142" y="390" font-size="10" fill="#888" text-anchor="end">跳过</text>
+
+  <!-- right rail: next x -->
+  <path d="M 510 547 L 700 547 L 700 332 L 526 332" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="710" y="445" font-size="10" fill="#888">取下一个 x</text>
+
+  <!-- end -->
+  <path d="M 400 570 L 400 594" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="416" y="590" font-size="10" fill="#888">x 超过 n/2，遍历完</text>
+  <g filter="url(#sk)">
+    <rect x="300" y="596" width="200" height="36" rx="8" fill="#f0ede4" stroke="#9e9e9e" stroke-width="1.3"/>
+  </g>
+  <text x="400" y="619" text-anchor="middle" font-size="12" fill="#555">返回 ans</text>
+</svg>

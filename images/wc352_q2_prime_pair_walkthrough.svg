@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="590" viewBox="0 0 900 590" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="900" height="590" fill="#fdfcf7"/>
+  <text x="450" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例演算：n = 10（先筛后配）</text>
+  <path d="M 330 40 Q 450 48 570 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Step A: sieve ===== -->
+  <text x="70" y="76" font-size="13" font-weight="bold" fill="#2b2b2b">第一步：埃氏筛 —— 划掉合数，留下质数</text>
+  <g font-size="14" text-anchor="middle">
+    <g filter="url(#sk)"><rect x="90" y="92" width="54" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="117" y="119" fill="#2e6e2e" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="144" y="92" width="54" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="171" y="119" fill="#2e6e2e" font-weight="bold">3</text>
+    <g filter="url(#sk)"><rect x="198" y="92" width="54" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/></g>
+    <text x="225" y="119" fill="#9a5b5b">4</text>
+    <g filter="url(#sk)"><rect x="252" y="92" width="54" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="279" y="119" fill="#2e6e2e" font-weight="bold">5</text>
+    <g filter="url(#sk)"><rect x="306" y="92" width="54" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/></g>
+    <text x="333" y="119" fill="#9a5b5b">6</text>
+    <g filter="url(#sk)"><rect x="360" y="92" width="54" height="42" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="387" y="119" fill="#2e6e2e" font-weight="bold">7</text>
+    <g filter="url(#sk)"><rect x="414" y="92" width="54" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/></g>
+    <text x="441" y="119" fill="#9a5b5b">8</text>
+    <g filter="url(#sk)"><rect x="468" y="92" width="54" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/></g>
+    <text x="495" y="119" fill="#9a5b5b">9</text>
+    <g filter="url(#sk)"><rect x="522" y="92" width="54" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/></g>
+    <text x="549" y="119" fill="#9a5b5b">10</text>
+  </g>
+  <!-- strike lines on composites -->
+  <g stroke="#b85450" stroke-width="1.4" filter="url(#sk)">
+    <path d="M 205 128 L 245 98"/>
+    <path d="M 313 128 L 353 98"/>
+    <path d="M 421 128 L 461 98"/>
+    <path d="M 475 128 L 515 98"/>
+    <path d="M 529 128 L 569 98"/>
+  </g>
+
+  <!-- sieve note -->
+  <g filter="url(#sk)">
+    <rect x="620" y="84" width="248" height="60" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+  </g>
+  <text x="634" y="104" font-size="10.5" fill="#7a5415">i = 2：划掉 4、6、8、10</text>
+  <text x="634" y="121" font-size="10.5" fill="#7a5415">i = 3：从 3² = 9 起划掉 9</text>
+  <text x="634" y="138" font-size="10.5" fill="#7a5415">i = 4：4² = 16 &gt; 10，外层停止</text>
+  <text x="70" y="168" font-size="12.5" font-weight="bold" fill="#2e6e2e">筛得质数集 {2, 3, 5, 7}，isPrime 查表就绪</text>
+
+  <!-- ===== Step B: pair scan ===== -->
+  <text x="70" y="204" font-size="13" font-weight="bold" fill="#2b2b2b">第二步：枚举 x ∈ [2, 5]，双查表配对</text>
+
+  <!-- header -->
+  <g filter="url(#sk)">
+    <rect x="70" y="216" width="760" height="32" fill="#f0ede4" stroke="#d8d5cc" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" font-weight="bold" fill="#555">
+    <text x="115" y="237" text-anchor="middle">x</text>
+    <text x="200" y="237" text-anchor="middle">y = n − x</text>
+    <text x="340" y="237" text-anchor="middle">x 是质数？</text>
+    <text x="480" y="237" text-anchor="middle">y 是质数？</text>
+    <text x="600" y="237">判定与动作</text>
+  </g>
+
+  <!-- row 1: x=2 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="248" width="760" height="44" fill="#fbfaf6" stroke="#d8d5cc" stroke-width="1"/>
+  </g>
+  <g font-size="12">
+    <text x="115" y="275" text-anchor="middle" fill="#555">2</text>
+    <text x="200" y="275" text-anchor="middle" fill="#555">8</text>
+    <text x="340" y="275" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+    <text x="480" y="275" text-anchor="middle" fill="#b03a3a" font-weight="bold">✗</text>
+    <text x="600" y="275" fill="#777">8 是合数 → 跳过</text>
+  </g>
+
+  <!-- row 2: x=3 (hit) -->
+  <g filter="url(#sk)">
+    <rect x="70" y="292" width="760" height="44" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <g font-size="12">
+    <text x="115" y="319" text-anchor="middle" fill="#2e6e2e" font-weight="bold">3</text>
+    <text x="200" y="319" text-anchor="middle" fill="#2e6e2e" font-weight="bold">7</text>
+    <text x="340" y="319" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+    <text x="480" y="319" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+    <text x="600" y="319" fill="#2e6e2e" font-weight="bold">双质数 → 收入 [3, 7]</text>
+  </g>
+
+  <!-- row 3: x=4 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="336" width="760" height="44" fill="#fbfaf6" stroke="#d8d5cc" stroke-width="1"/>
+  </g>
+  <g font-size="12">
+    <text x="115" y="363" text-anchor="middle" fill="#555">4</text>
+    <text x="200" y="363" text-anchor="middle" fill="#555">6</text>
+    <text x="340" y="363" text-anchor="middle" fill="#b03a3a" font-weight="bold">✗</text>
+    <text x="480" y="363" text-anchor="middle" fill="#b03a3a" font-weight="bold">✗</text>
+    <text x="600" y="363" fill="#777">4 是合数 → 跳过</text>
+  </g>
+
+  <!-- row 4: x=5 (hit, x=y) -->
+  <g filter="url(#sk)">
+    <rect x="70" y="380" width="760" height="44" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <g font-size="12">
+    <text x="115" y="407" text-anchor="middle" fill="#2e6e2e" font-weight="bold">5</text>
+    <text x="200" y="407" text-anchor="middle" fill="#2e6e2e" font-weight="bold">5</text>
+    <text x="340" y="407" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+    <text x="480" y="407" text-anchor="middle" fill="#2e6e2e" font-weight="bold">✓</text>
+    <text x="600" y="407" fill="#2e6e2e" font-weight="bold">x = y = 5 → 收入 [5, 5]</text>
+  </g>
+
+  <!-- column separators -->
+  <g stroke="#e5e2d8" stroke-width="1" filter="url(#sk)">
+    <path d="M 155 248 L 155 424"/>
+    <path d="M 260 248 L 260 424"/>
+    <path d="M 420 248 L 420 424"/>
+    <path d="M 570 248 L 570 424"/>
+  </g>
+
+  <!-- conclusion -->
+  <g filter="url(#sk)">
+    <rect x="70" y="448" width="760" height="112" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="90" y="474" font-size="12.5" font-weight="bold" fill="#2b2b2b">结论</text>
+  <text x="90" y="498" font-size="11.5" fill="#444">输出 [[3,7],[5,5]]：x 非递减，天然有序，无需排序 ⭐</text>
+  <text x="90" y="520" font-size="11" fill="#444">n = 10 是偶数：3 + 7、5 + 5 都是「奇质数 + 奇质数」的哥德巴赫拆分</text>
+  <text x="90" y="542" font-size="11" fill="#b03a3a">★ 对照奇数：n = 11 时唯一候选是 [2, 9]，9 = 3×3 是合数 → 返回 []</text>
+</svg>
