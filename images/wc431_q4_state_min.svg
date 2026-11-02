@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#446688"/></marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/></marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#b85450"/></marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d6a040"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#888"/></marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="24" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">转移：一个 min 同时完成两级比较</text>
+  <text x="320" y="44" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">f[i][j] = (负得分, 字典序最小的原下标序列)，方案按“是否包含 a[i]”一分为二</text>
+
+  <!-- 候选一：不选 -->
+  <g filter="url(#rough2)"><rect x="48" y="72" width="220" height="76" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="158" y="94" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6b" filter="url(#rough2)">候选一：不选 a[i]</text>
+  <text x="158" y="114" text-anchor="middle" font-size="10.5" fill="#2b4a6b" filter="url(#rough2)">直接继承 f[i][j]</text>
+  <text x="158" y="132" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">（前 i 个区间上的同类子问题）</text>
+
+  <!-- 候选二：选 -->
+  <g filter="url(#rough2)"><rect x="48" y="176" width="220" height="96" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="158" y="198" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">候选二：选 a[i]</text>
+  <text x="158" y="218" text-anchor="middle" font-size="10.5" fill="#2c5f2c" filter="url(#rough2)">取 f[k][j−1]，负得分再减 wᵢ</text>
+  <text x="158" y="236" text-anchor="middle" font-size="10.5" fill="#2c5f2c" filter="url(#rough2)">下标序列插入 idxᵢ 后升序重排</text>
+  <text x="158" y="256" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">（k = 相容前缀长度，引理 1）</text>
+
+  <!-- 两条边汇入 min -->
+  <path d="M 268 110 C 300 110 310 150 330 158" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <path d="M 268 224 C 300 224 310 184 330 176" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- min 节点 -->
+  <g filter="url(#rough2)"><ellipse cx="362" cy="166" rx="34" ry="26" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="362" y="172" text-anchor="middle" font-size="15" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">min</text>
+
+  <path d="M 398 166 L 452 166" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+
+  <!-- 结果框 -->
+  <g filter="url(#rough2)"><rect x="458" y="128" width="146" height="76" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2"/></g>
+  <text x="531" y="152" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6b" filter="url(#rough2)">f[i+1][j]</text>
+  <text x="531" y="172" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">pair 的字典序比较</text>
+  <text x="531" y="188" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">恰好编码双优先级</text>
+
+  <!-- 比较规则两层 -->
+  <g filter="url(#rough2)"><rect x="48" y="296" width="264" height="84" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="180" y="316" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">第一维：负得分（第一优先级）</text>
+  <text x="180" y="334" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">越小 ⇒ 得分越大，min 越优先</text>
+  <text x="180" y="354" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">得分不同时第二维根本不出场</text>
+  <text x="180" y="372" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">（存“负”得分正是为了让 min 可用）</text>
+
+  <g filter="url(#rough2)"><rect x="328" y="296" width="264" height="84" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="460" y="316" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2c5f2c" filter="url(#rough2)">第二维：下标序列（第二优先级）</text>
+  <text x="460" y="334" text-anchor="middle" font-size="10.5" fill="#2c5f2c" filter="url(#rough2)">得分并列时，字典序小者胜</text>
+  <text x="460" y="354" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">正是题目要求的第二目标</text>
+  <text x="460" y="372" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">（保序性见 §5 引理 2、引理 3）</text>
+</svg>
