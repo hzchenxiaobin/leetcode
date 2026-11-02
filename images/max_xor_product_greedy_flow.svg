@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：从高位到低位一趟扫描（全程真值，不取模）</text>
+  <path d="M 270 40 Q 470 48 670 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)"><rect x="80" y="58" width="300" height="42" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="230" y="78" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold" filter="url(#sk)">A = a，B = b（真值，含 ≥ n 固定高位）</text>
+  <text x="230" y="94" text-anchor="middle" font-size="10" fill="#666" filter="url(#sk)">比较需要真值，循环内绝不取模</text>
+  <path d="M 230 100 L 230 118" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop init -->
+  <g filter="url(#sk)"><rect x="150" y="122" width="160" height="36" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.4"/></g>
+  <text x="230" y="145" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">i = n − 1</text>
+  <path d="M 230 158 L 230 180" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#sk)"><polygon points="140,222 230,184 320,222 230,260" fill="#fffdf3" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="230" y="218" text-anchor="middle" font-size="12" fill="#2b6e9e" font-weight="bold" filter="url(#sk)">a_i = b_i ?</text>
+  <text x="230" y="236" text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">(bit = 2^i)</text>
+
+  <path d="M 320 222 L 404 222" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="356" y="212" text-anchor="middle" font-size="10.5" fill="#4a8e4a" font-weight="bold" filter="url(#sk)">是（同位）</text>
+
+  <!-- green action box -->
+  <g filter="url(#sk)"><rect x="408" y="198" width="280" height="48" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+  <text x="548" y="218" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold" filter="url(#sk)">A |= bit，B |= bit</text>
+  <text x="548" y="236" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#sk)">双双置 1（增量恒正，严格不亏）</text>
+
+  <!-- diamond 1 no -->
+  <path d="M 230 260 L 230 288" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="280" font-size="10.5" fill="#a3541c" font-weight="bold" filter="url(#sk)">否（异位）</text>
+
+  <!-- diamond 2 -->
+  <g filter="url(#sk)"><polygon points="140,330 230,292 320,330 230,368" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.6"/></g>
+  <text x="230" y="326" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold" filter="url(#sk)">A &lt; B ?</text>
+  <text x="230" y="344" text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">比较完整当前值</text>
+
+  <path d="M 320 330 L 404 330" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="356" y="320" text-anchor="middle" font-size="10.5" fill="#a3541c" font-weight="bold" filter="url(#sk)">是</text>
+
+  <!-- orange action box A -->
+  <g filter="url(#sk)"><rect x="408" y="306" width="280" height="48" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="548" y="326" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold" filter="url(#sk)">A |= bit，B &amp;= ~bit</text>
+  <text x="548" y="344" text-anchor="middle" font-size="10" fill="#a3541c" filter="url(#sk)">把 2^i 挪到较小的 A 头上</text>
+
+  <!-- diamond 2 no -->
+  <path d="M 230 368 L 230 392" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="386" font-size="10.5" fill="#a3541c" font-weight="bold" filter="url(#sk)">否</text>
+
+  <!-- orange action box B -->
+  <g filter="url(#sk)"><rect x="110" y="396" width="240" height="48" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="230" y="416" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold" filter="url(#sk)">B |= bit，A &amp;= ~bit</text>
+  <text x="230" y="434" text-anchor="middle" font-size="10" fill="#a3541c" filter="url(#sk)">把 2^i 挪到 B（含 A ≥ B 的平局）</text>
+
+  <!-- merge paths -->
+  <path d="M 230 444 L 230 484" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 440 246 L 440 264 L 372 264 L 372 466 L 246 466" stroke="#8a8a8a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 548 354 L 548 478 L 246 478" stroke="#8a8a8a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- continue box -->
+  <g filter="url(#sk)"><rect x="140" y="488" width="180" height="40" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.4"/></g>
+  <text x="230" y="513" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">i − 1，回到循环</text>
+
+  <!-- loop back -->
+  <path d="M 140 508 L 52 508 L 52 222 L 134 222" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="64" y="420" font-size="10.5" fill="#4a8edb" font-weight="bold" filter="url(#sk)">下</text>
+  <text x="64" y="438" font-size="10.5" fill="#4a8edb" font-weight="bold" filter="url(#sk)">一</text>
+  <text x="64" y="456" font-size="10.5" fill="#4a8edb" font-weight="bold" filter="url(#sk)">位</text>
+
+  <!-- exit -->
+  <path d="M 230 528 L 230 552" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="242" y="546" font-size="10" fill="#888" filter="url(#sk)">i &lt; 0 出循环</text>
+  <g filter="url(#sk)"><rect x="80" y="556" width="300" height="44" rx="8" fill="#f3eefa" stroke="#8a6eb8" stroke-width="1.6"/></g>
+  <text x="230" y="576" text-anchor="middle" font-size="12" fill="#5a3a7a" font-weight="bold" filter="url(#sk)">返回 (A % MOD) · (B % MOD) % MOD</text>
+  <text x="230" y="593" text-anchor="middle" font-size="10" fill="#666" filter="url(#sk)">最后一步才取模；A、B &lt; 2^50，long long 安全</text>
+
+  <!-- side note 1 -->
+  <g filter="url(#sk)"><rect x="698" y="122" width="204" height="130" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="800" y="144" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">两个易错点</text>
+  <text x="710" y="166" font-size="10" fill="#444" filter="url(#sk)">① 比较必须用完整当前值</text>
+  <text x="710" y="182" font-size="10" fill="#444" filter="url(#sk)">   （含 ≥ n 的固定高位）</text>
+  <text x="710" y="204" font-size="10" fill="#444" filter="url(#sk)">② 过程中绝不取模</text>
+  <text x="710" y="220" font-size="10" fill="#444" filter="url(#sk)">   A、B &lt; 2^50 不溢出</text>
+  <text x="710" y="242" font-size="10" fill="#888" filter="url(#sk)">   最后一步再 (A%p)(B%p)%p</text>
+
+  <!-- side note 2 -->
+  <g filter="url(#sk)"><rect x="698" y="280" width="204" height="96" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="800" y="302" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">为什么从高位到低位？</text>
+  <text x="710" y="324" font-size="10" fill="#444" filter="url(#sk)">2^i 一枚压过剩余低位之和</text>
+  <text x="710" y="340" font-size="10" fill="#444" filter="url(#sk)">（≤ 2^i − 1，超递增）</text>
+  <text x="710" y="362" font-size="10" fill="#888" filter="url(#sk)">低位后补，翻不了高位的案</text>
+</svg>
