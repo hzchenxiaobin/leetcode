@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 410"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="410" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：投票找 x → 数频次 → 前缀扫描逐点判定</text>
+
+  <!-- 步骤 1 -->
+  <rect x="60" y="48" width="200" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="160" y="68" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">① Boyer-Moore 投票</text>
+  <text x="160" y="87" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">一次遍历锁定全局支配 x（O(1) 空间）</text>
+
+  <!-- 步骤 2 -->
+  <rect x="300" y="48" width="200" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="68" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② 再扫一遍统计总频次 f</text>
+  <text x="400" y="87" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">f = x 在 nums 中的总出现次数</text>
+
+  <path d="M260,74 L296,74" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="60" y="140" width="440" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="160" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ i 从 0 到 n−2 从左扫描，维护 cnt += (nums[i] == x)</text>
+  <text x="280" y="179" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">cnt 即 x 在左半 nums[0..i] 的出现次数</text>
+
+  <path d="M400,100 L400,120 L280,120 L280,136" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定菱形 -->
+  <polygon points="280,210 396,252 280,294 164,252" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="244" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">2·cnt &gt; i+1 且</text>
+  <text x="280" y="262" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">2·(f−cnt) &gt; n−1−i ？</text>
+
+  <path d="M280,192 L280,206" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 是 -->
+  <rect x="76" y="226" width="76" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="114" y="248" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">返回 i</text>
+  <path d="M164,252 L156,252" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="152" y="240" text-anchor="end" font-size="11" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 否 -->
+  <rect x="408" y="226" width="92" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="454" y="248" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">i+1 继续</text>
+  <path d="M396,252 L404,252" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="408" y="240" text-anchor="start" font-size="11" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- 回环箭头 -->
+  <path d="M454,226 L454,180 L508,180 L508,166 L284,166" stroke="#999" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 扫完 -->
+  <rect x="200" y="322" width="160" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="345" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">扫完无命中 → 返回 −1</text>
+  <path d="M280,294 L280,318" stroke="#999" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 侧注 -->
+  <rect x="52" y="372" width="456" height="28" rx="10" fill="#fafafa" stroke="#888" stroke-width="1" stroke-dasharray="4 4" filter="url(#rough2)"/>
+  <text x="280" y="391" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">判定即「x 在左右两半都严格过半」；首个命中即最小下标（从左往右扫）</text>
+</svg>
