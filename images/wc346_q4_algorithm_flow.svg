@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="768" viewBox="0 0 640 768" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="311" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrF" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#665544"/>
+    </marker>
+  </defs>
+  <rect width="640" height="768" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：上界试探 → 逐条下压 → 跌破即回调</text>
+  <path d="M 150 38 Q 320 46 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <rect x="270" y="48" width="100" height="28" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="320" y="67" text-anchor="middle" font-size="12" font-weight="bold" fill="#33517a" filter="url(#sk)">开始</text>
+  <path d="M 320 76 L 320 92" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+
+  <!-- box1 -->
+  <rect x="175" y="94" width="290" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="320" y="113" text-anchor="middle" font-size="11" fill="#33517a" filter="url(#sk)">可改边（w = −1）全部置 W = 2×10⁹</text>
+  <text x="320" y="130" text-anchor="middle" font-size="11" fill="#33517a" filter="url(#sk)">邻接表存「边下标」，权重原地可变</text>
+  <path d="M 320 140 L 320 154" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+
+  <!-- box2 -->
+  <rect x="215" y="156" width="210" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="320" y="176" text-anchor="middle" font-size="11.5" fill="#33517a" filter="url(#sk)">d ← Dijkstra(source → dest)</text>
+  <path d="M 320 188 L 320 202" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+
+  <!-- D1: d < target ? -->
+  <polygon points="320,204 415,238 320,272 225,238" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="243" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6520" filter="url(#sk)">d &lt; target ?</text>
+  <path d="M 415 238 L 458 238" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="437" y="230" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8a3a3a" filter="url(#sk)">是</text>
+  <rect x="462" y="220" width="158" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="541" y="242" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8a3a3a" filter="url(#sk)">返回 []：固定边已太短，无解</text>
+  <path d="M 320 272 L 320 288" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="335" y="284" font-size="10.5" fill="#8a6520" filter="url(#sk)">否</text>
+
+  <!-- D2: d == target ? -->
+  <polygon points="320,290 415,324 320,358 225,324" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="329" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6520" filter="url(#sk)">d == target ?</text>
+  <path d="M 415 324 L 458 324" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="437" y="316" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">是</text>
+  <rect x="462" y="306" width="158" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="541" y="328" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">返回 edges：-1 全为 2×10⁹ ✓</text>
+  <path d="M 320 358 L 320 374" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="335" y="370" font-size="10.5" fill="#8a6520" filter="url(#sk)">否（d &gt; target）</text>
+
+  <!-- box3: next modifiable edge -->
+  <rect x="190" y="376" width="260" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="320" y="397" text-anchor="middle" font-size="11.5" fill="#33517a" filter="url(#sk)">按下标顺序取下一条可改边 e</text>
+  <path d="M 190 393 L 146 393" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="168" y="385" text-anchor="middle" font-size="10" fill="#8a3a3a" filter="url(#sk)">取尽？</text>
+  <rect x="22" y="376" width="122" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="83" y="390" text-anchor="middle" font-size="10" font-weight="bold" fill="#8a3a3a" filter="url(#sk)">返回 []：全压到 1</text>
+  <text x="83" y="403" text-anchor="middle" font-size="10" font-weight="bold" fill="#8a3a3a" filter="url(#sk)">仍 &gt; target，无解</text>
+  <path d="M 320 410 L 320 424" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+
+  <!-- box4 -->
+  <rect x="195" y="426" width="250" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="320" y="444" text-anchor="middle" font-size="11.5" fill="#33517a" filter="url(#sk)">e ← 1（试探下压）</text>
+  <text x="320" y="461" text-anchor="middle" font-size="11.5" fill="#33517a" filter="url(#sk)">d ← Dijkstra</text>
+  <path d="M 320 470 L 320 484" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+
+  <!-- D3: d > target ? -->
+  <polygon points="320,486 417,522 320,558 223,522" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="527" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6520" filter="url(#sk)">d &gt; target ?</text>
+  <path d="M 417 522 L 560 522 Q 572 522 572 510 L 572 401 L 456 401" stroke="#8a6520" stroke-width="2" fill="none" marker-end="url(#arrF)" filter="url(#sk)" stroke-dasharray="none"/>
+  <text x="505" y="514" font-size="10.5" font-weight="bold" fill="#8a6520" filter="url(#sk)">是：保持 1，压下一条 ↻</text>
+  <path d="M 320 558 L 320 574" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="335" y="570" font-size="10.5" fill="#8a6520" filter="url(#sk)">否</text>
+
+  <!-- D4: d == target ? -->
+  <polygon points="320,576 417,612 320,648 223,612" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="617" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6520" filter="url(#sk)">d == target ?</text>
+  <path d="M 417 612 L 458 612" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="437" y="604" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">是</text>
+  <rect x="462" y="594" width="158" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="541" y="609" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">返回 edges ✓</text>
+  <text x="541" y="623" text-anchor="middle" font-size="10" fill="#3a6a2a" filter="url(#sk)">（未压的边保持 2×10⁹）</text>
+  <path d="M 320 648 L 320 662" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="335" y="658" font-size="10.5" fill="#33517a" filter="url(#sk)">否（d &lt; target，压过头）</text>
+
+  <!-- box5: callback -->
+  <rect x="185" y="664" width="270" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="320" y="682" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#33517a" filter="url(#sk)">e ← target − d + 1</text>
+  <text x="320" y="699" text-anchor="middle" font-size="11" fill="#33517a" filter="url(#sk)">（精确回调：把跌幅补回来）</text>
+  <path d="M 320 708 L 320 722" stroke="#665544" stroke-width="1.8" fill="none" marker-end="url(#arrF)" filter="url(#sk)"/>
+
+  <rect x="175" y="724" width="290" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="745" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">返回 edges：最短路恰为 target ✓</text>
+</svg>

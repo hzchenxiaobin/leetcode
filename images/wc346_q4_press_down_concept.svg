@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="211" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrD" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="470" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="16.5" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">核心观察：上界试探三分支 + 逐条下压、跌破即精确回调</text>
+  <path d="M 130 40 Q 320 48 510 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ① 上界试探 -->
+  <rect x="36" y="52" width="568" height="146" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="320" y="74" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33517a" filter="url(#sk)">① 上界试探：-1 边全部置 W = 2×10⁹，跑一次 Dijkstra 得 d</text>
+  <text x="320" y="92" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">W &gt; 10⁹ ≥ target ⇒ 含 -1 边的路径全被「冻结」在 target 之上</text>
+
+  <rect x="56" y="102" width="166" height="72" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="139" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a3a" filter="url(#sk)">d &lt; target</text>
+  <text x="139" y="142" text-anchor="middle" font-size="10" fill="#8a3a3a" filter="url(#sk)">固定边路径已太短且动不了</text>
+  <text x="139" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">无解 → 返回 []</text>
+
+  <rect x="237" y="102" width="166" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">d == target</text>
+  <text x="320" y="142" text-anchor="middle" font-size="10" fill="#3a6a2a" filter="url(#sk)">2×10⁹ 也在允许区间内</text>
+  <text x="320" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">直接返回 ✓</text>
+
+  <rect x="418" y="102" width="166" height="72" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="501" y="124" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6520" filter="url(#sk)">d &gt; target</text>
+  <text x="501" y="142" text-anchor="middle" font-size="10" fill="#8a6520" filter="url(#sk)">缺口只能落在可改边上</text>
+  <text x="501" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#d6a040" filter="url(#sk)">转入逐条下压 ↓</text>
+
+  <!-- ② 逐条下压 -->
+  <rect x="36" y="212" width="568" height="146" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="320" y="234" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6520" filter="url(#sk)">② 逐条下压：按固定顺序把每条 -1 边压到 1，每压一条重跑 Dijkstra</text>
+  <text x="320" y="252" text-anchor="middle" font-size="10.5" fill="#8a6520" filter="url(#sk)">最短路只降不升：还没跌破 target 就继续压，一旦跌破即终局</text>
+
+  <rect x="56" y="262" width="166" height="72" rx="8" fill="#fff" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="139" y="284" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6520" filter="url(#sk)">d &gt; target</text>
+  <text x="139" y="302" text-anchor="middle" font-size="10" fill="#8a6520" filter="url(#sk)">压了还不够短</text>
+  <text x="139" y="320" text-anchor="middle" font-size="11" font-weight="bold" fill="#d6a040" filter="url(#sk)">保持 1，压下一条 ↻</text>
+
+  <rect x="237" y="262" width="166" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="284" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">d == target</text>
+  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#3a6a2a" filter="url(#sk)">其余未压的边保持 2×10⁹</text>
+  <text x="320" y="320" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">收工，返回 ✓</text>
+
+  <rect x="418" y="262" width="166" height="72" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="501" y="284" text-anchor="middle" font-size="12" font-weight="bold" fill="#33517a" filter="url(#sk)">d &lt; target</text>
+  <text x="501" y="302" text-anchor="middle" font-size="10" fill="#33517a" filter="url(#sk)">压过头了！跌幅全归这条边</text>
+  <text x="501" y="320" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#sk)">回调 w ← target − d + 1</text>
+
+  <!-- ③ 关键洞察 -->
+  <rect x="36" y="372" width="568" height="84" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="320" y="393" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">③ 关键洞察：为什么「回调」必然恰好命中 target？</text>
+  <text x="320" y="412" text-anchor="middle" font-size="10.5" fill="#3a6a2a" filter="url(#sk)">不变式：压 e 之前 d_prev &gt; target ⇒ 不含 e 的路径全都 &gt; target（e 动不到它们）</text>
+  <text x="320" y="430" text-anchor="middle" font-size="10.5" fill="#3a6a2a" filter="url(#sk)">⇒ 跌破后的最短路 d &lt; target 必含刚压的 e（简单路径恰含一次）</text>
+  <text x="320" y="448" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">⇒ 回调后：该路恰为 target，其余路径仍 ≥ target —— 精确命中！</text>
+</svg>
