@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="660" viewBox="0 0 920 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="89" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="920" height="660" fill="#fdfcf7"/>
+  <text x="460" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">nums = [2,3,6] 的状压 DP 演算</text>
+  <text x="460" y="56" text-anchor="middle" font-size="12" fill="#666">mask 低位对应下标 0（如 101 = 已用 {2,6}）；每框 = dp[mask][last] 及其对应的合法前缀</text>
+  <path d="M 300 42 Q 460 50 620 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- column headers -->
+  <text x="155" y="96" text-anchor="middle" font-size="14" font-weight="bold" fill="#33507a">长度 1（起点）</text>
+  <text x="445" y="96" text-anchor="middle" font-size="14" font-weight="bold" fill="#33507a">长度 2</text>
+  <text x="765" y="96" text-anchor="middle" font-size="14" font-weight="bold" fill="#33507a">长度 3 = full（111）</text>
+
+  <!-- ============ column 1: length-1 states ============ -->
+  <g filter="url(#rough)">
+    <rect x="70" y="110" width="170" height="54" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="70" y="270" width="170" height="54" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="70" y="430" width="170" height="54" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="155" y="132" text-anchor="middle" font-size="13" font-weight="bold" fill="#33507a">dp[001][0] = 1</text>
+  <text x="155" y="152" text-anchor="middle" font-size="12" fill="#444">前缀 [2]</text>
+  <text x="155" y="292" text-anchor="middle" font-size="13" font-weight="bold" fill="#33507a">dp[010][1] = 1</text>
+  <text x="155" y="312" text-anchor="middle" font-size="12" fill="#444">前缀 [3]</text>
+  <text x="155" y="452" text-anchor="middle" font-size="13" font-weight="bold" fill="#33507a">dp[100][2] = 1</text>
+  <text x="155" y="472" text-anchor="middle" font-size="12" fill="#444">前缀 [6]</text>
+
+  <!-- ============ column 2: length-2 states ============ -->
+  <g filter="url(#rough)">
+    <rect x="350" y="110" width="190" height="54" rx="6" fill="#f5f0fa" stroke="#7a5a9a" stroke-width="1.6"/>
+    <rect x="350" y="230" width="190" height="54" rx="6" fill="#f5f0fa" stroke="#7a5a9a" stroke-width="1.6"/>
+    <rect x="350" y="350" width="190" height="54" rx="6" fill="#f5f0fa" stroke="#7a5a9a" stroke-width="1.6"/>
+    <rect x="350" y="470" width="190" height="54" rx="6" fill="#f5f0fa" stroke="#7a5a9a" stroke-width="1.6"/>
+  </g>
+  <text x="445" y="132" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3f7a">dp[101][2] = 1</text>
+  <text x="445" y="152" text-anchor="middle" font-size="12" fill="#444">[2,6]（末位 6）</text>
+  <text x="445" y="252" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3f7a">dp[101][0] = 1</text>
+  <text x="445" y="272" text-anchor="middle" font-size="12" fill="#444">[6,2]（末位 2）</text>
+  <text x="445" y="372" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3f7a">dp[110][2] = 1</text>
+  <text x="445" y="392" text-anchor="middle" font-size="12" fill="#444">[3,6]（末位 6）</text>
+  <text x="445" y="492" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3f7a">dp[110][1] = 1</text>
+  <text x="445" y="512" text-anchor="middle" font-size="12" fill="#444">[6,3]（末位 3）</text>
+
+  <!-- ============ column 3: length-3 states ============ -->
+  <g filter="url(#rough)">
+    <rect x="650" y="130" width="230" height="54" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="650" y="270" width="230" height="54" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="650" y="410" width="230" height="54" rx="6" fill="#f8f8f8" stroke="#999" stroke-width="1.4" stroke-dasharray="5 4"/>
+  </g>
+  <text x="765" y="152" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">dp[111][0] = 1</text>
+  <text x="765" y="172" text-anchor="middle" font-size="12" fill="#444">[3,6,2] ⭐</text>
+  <text x="765" y="292" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">dp[111][1] = 1</text>
+  <text x="765" y="312" text-anchor="middle" font-size="12" fill="#444">[2,6,3] ⭐</text>
+  <text x="765" y="432" text-anchor="middle" font-size="13" font-weight="bold" fill="#888">dp[111][2] = 0</text>
+  <text x="765" y="452" text-anchor="middle" font-size="11" fill="#888">以 6 结尾需 2、3 相邻，但 2 ∤ 3</text>
+
+  <!-- ============ arrows col1 -> col2 ============ -->
+  <path d="M 240 137 Q 300 118 345 132" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <text x="298" y="112" text-anchor="middle" font-size="11" fill="#555">6%2=0</text>
+  <path d="M 240 297 Q 300 330 345 370" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <text x="292" y="348" text-anchor="middle" font-size="11" fill="#555">6%3=0</text>
+  <path d="M 240 457 Q 300 400 345 258" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <text x="296" y="402" text-anchor="middle" font-size="11" fill="#555">6%2=0</text>
+  <path d="M 240 457 Q 300 500 345 492" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <text x="298" y="512" text-anchor="middle" font-size="11" fill="#555">6%3=0</text>
+
+  <!-- ============ arrows col2 -> col3 (alive) ============ -->
+  <path d="M 540 137 Q 600 220 645 288" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arG)"/>
+  <text x="600" y="216" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">6%3=0 ✓</text>
+  <path d="M 540 377 Q 600 260 645 168" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arG)"/>
+  <text x="600" y="266" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">6%2=0 ✓</text>
+
+  <!-- ============ dead ends ============ -->
+  <path d="M 540 257 Q 575 292 585 318" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arR)" stroke-dasharray="5 4"/>
+  <text x="612" y="330" font-size="11" fill="#b85450" font-weight="bold">✗ 2%3≠0 且 3%2≠0（末位 2 接不上 3）</text>
+  <path d="M 540 497 Q 575 540 585 560" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arR)" stroke-dasharray="5 4"/>
+  <text x="612" y="572" font-size="11" fill="#b85450" font-weight="bold">✗ 2%3≠0 且 3%2≠0（末位 3 接不上 2）</text>
+
+  <!-- bottom banner -->
+  <g filter="url(#rough)">
+    <rect x="110" y="600" width="700" height="44" rx="10" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="460" y="628" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">答案 = dp[111][0] + dp[111][1] + dp[111][2] = 1 + 1 + 0 = 2 ⭐</text>
+</svg>

@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="640" viewBox="0 0 860 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="860" height="640" fill="#fdfcf7"/>
+  <text x="430" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">刷表法递推：把贡献推给后继状态</text>
+  <path d="M 270 42 Q 430 50 590 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- init box -->
+  <g filter="url(#rough)">
+    <rect x="290" y="62" width="280" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="430" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#33507a">初始化：dp[1&lt;&lt;i][i] = 1（n 个单元素起点）</text>
+
+  <path d="M 430 106 L 430 130" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+
+  <!-- loop header -->
+  <g filter="url(#rough)">
+    <rect x="250" y="134" width="360" height="44" rx="14" fill="#f5f0fa" stroke="#7a5a9a" stroke-width="1.8" stroke-dasharray="7 4"/>
+  </g>
+  <text x="430" y="162" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3f7a">for mask = 1 … full（按二进制值升序）</text>
+
+  <path d="M 430 178 L 430 202" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+
+  <g filter="url(#rough)">
+    <rect x="266" y="206" width="328" height="44" rx="14" fill="#f5f0fa" stroke="#7a5a9a" stroke-width="1.6" stroke-dasharray="7 4"/>
+  </g>
+  <text x="430" y="234" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3f7a">for last：mask 含 last 且 dp[mask][last] &gt; 0</text>
+
+  <path d="M 430 250 L 430 274" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+
+  <g filter="url(#rough)">
+    <rect x="288" y="278" width="284" height="44" rx="14" fill="#f5f0fa" stroke="#7a5a9a" stroke-width="1.6" stroke-dasharray="7 4"/>
+  </g>
+  <text x="430" y="306" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3f7a">for j：j 不在 mask 中（j ∉ mask）</text>
+
+  <path d="M 430 322 L 430 348" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#rough)">
+    <polygon points="430,352 620,404 430,456 240,404" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="430" y="398" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a5a10">nums[last] % nums[j] == 0</text>
+  <text x="430" y="418" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a5a10">或 nums[j] % nums[last] == 0 ？</text>
+
+  <!-- no branch -->
+  <path d="M 620 404 Q 680 404 680 368 Q 680 348 660 341" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#ar)" stroke-dasharray="5 4"/>
+  <text x="700" y="388" font-size="12" fill="#888">否：跳过 j</text>
+  <text x="700" y="406" font-size="11" fill="#aaa">（回 j 循环）</text>
+
+  <!-- yes branch -->
+  <path d="M 430 456 L 430 486" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arB)"/>
+  <text x="448" y="476" font-size="12" font-weight="bold" fill="#2e6e2e">是</text>
+
+  <!-- update box -->
+  <g filter="url(#rough)">
+    <rect x="200" y="490" width="460" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="430" y="513" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">dp[mask | 1&lt;&lt;j][j] += dp[mask][last]</text>
+  <text x="430" y="534" text-anchor="middle" font-size="12" fill="#2e6e2e">随即对 10⁹+7 取模</text>
+
+  <path d="M 430 546 L 430 572" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+
+  <!-- answer box -->
+  <g filter="url(#rough)">
+    <rect x="240" y="576" width="380" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="430" y="597" text-anchor="middle" font-size="13" font-weight="bold" fill="#33507a">答案 = Σ dp[full][j]  (mod 10⁹+7)</text>
+  <text x="430" y="616" text-anchor="middle" font-size="11" fill="#557">full = (1&lt;&lt;n) − 1，末位不同的排列互斥求和</text>
+
+  <!-- side note -->
+  <g filter="url(#rough)">
+    <rect x="20" y="60" width="200" height="118" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" stroke-dasharray="5 3"/>
+  </g>
+  <text x="34" y="84" font-size="12" font-weight="bold" fill="#7a5415">为什么升序就对？</text>
+  <text x="34" y="104" font-size="11" fill="#555">转移目标 mask′ = mask|1&lt;&lt;j</text>
+  <text x="34" y="121" font-size="11" fill="#555">因 j ∉ mask，必有 mask′ &gt; mask</text>
+  <text x="34" y="138" font-size="11" fill="#555">→ 被更新者一定晚于更新者</text>
+  <text x="34" y="155" font-size="11" font-weight="bold" fill="#7a5415">天然拓扑序，无需显式排序</text>
+
+  <g filter="url(#rough)">
+    <rect x="648" y="490" width="196" height="120" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" stroke-dasharray="5 3"/>
+  </g>
+  <text x="662" y="514" font-size="12" font-weight="bold" fill="#7a5415">复杂度</text>
+  <text x="662" y="534" font-size="11" fill="#555">状态 n·2ⁿ 个，</text>
+  <text x="662" y="551" font-size="11" fill="#555">每个枚举 n 个候选 j</text>
+  <text x="662" y="572" font-size="12" font-weight="bold" fill="#7a5415">时间 O(n²·2ⁿ)</text>
+  <text x="662" y="592" font-size="12" font-weight="bold" fill="#7a5415">空间 O(n·2ⁿ)</text>
+</svg>
