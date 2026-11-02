@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="33" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrF" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 1 1 L 8 4.5 L 1 8" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="800" height="500" fill="#fdfcf7"/>
+  <text x="400" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：单趟扫描——一次比较、至多一次自增</text>
+  <path d="M 230 42 Q 400 50 570 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)"><rect x="335" y="50" width="150" height="42" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="410" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">cnt = 0</text>
+  <line x1="410" y1="92" x2="410" y2="108" stroke="#666" stroke-width="1.4" marker-end="url(#arrF)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#sk)"><polygon points="410,114 560,164 410,214 260,164" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="410" y="169" text-anchor="middle" font-size="13" fill="#7a5415" filter="url(#sk)">还有未读元素？</text>
+
+  <!-- no -> end -->
+  <line x1="560" y1="164" x2="616" y2="164" stroke="#666" stroke-width="1.4" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="582" y="155" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">否</text>
+  <g filter="url(#sk)"><rect x="620" y="142" width="158" height="44" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="699" y="168" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">返回 cnt ✓</text>
+
+  <!-- yes -> read h -->
+  <line x1="410" y1="214" x2="410" y2="240" stroke="#666" stroke-width="1.4" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="424" y="232" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">是</text>
+  <g filter="url(#sk)"><rect x="330" y="246" width="160" height="46" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="410" y="274" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#sk)">读取 h = hours[i]</text>
+  <line x1="410" y1="292" x2="410" y2="318" stroke="#666" stroke-width="1.4" marker-end="url(#arrF)" filter="url(#sk)"/>
+
+  <!-- diamond 2 -->
+  <g filter="url(#sk)"><polygon points="410,324 580,374 410,424 240,374" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="410" y="379" text-anchor="middle" font-size="13" fill="#7a5415" filter="url(#sk)">h ≥ target ？</text>
+
+  <!-- yes -> cnt += 1 -->
+  <line x1="580" y1="374" x2="642" y2="374" stroke="#666" stroke-width="1.4" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="604" y="365" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">是</text>
+  <g filter="url(#sk)"><rect x="646" y="352" width="142" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="717" y="378" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">cnt += 1</text>
+
+  <!-- no -> rail (junction) -->
+  <line x1="240" y1="374" x2="188" y2="374" stroke="#666" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="214" y="364" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">否</text>
+  <circle cx="180" cy="374" r="3" fill="#666" filter="url(#sk)"/>
+
+  <!-- loop rail -->
+  <path d="M 717 396 L 717 452 L 180 452 L 180 164 L 252 164" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arrF)" filter="url(#sk)"/>
+  <text x="560" y="444" text-anchor="middle" font-size="11" fill="#777" filter="url(#sk)">取下一个元素，重复判定</text>
+
+  <!-- notes -->
+  <g filter="url(#sk)"><rect x="36" y="90" width="132" height="66" rx="9" fill="#fdfcf7" stroke="#999" stroke-width="1.2" stroke-dasharray="5 3"/></g>
+  <text x="102" y="112" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#555" filter="url(#sk)">target = 0 特例：</text>
+  <text x="102" y="130" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#sk)">hours[i] ≥ 0 恒成立</text>
+  <text x="102" y="147" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#sk)">答案恒为 n（可 O(1)）</text>
+
+  <g filter="url(#sk)"><rect x="40" y="244" width="132" height="70" rx="9" fill="#fdfcf7" stroke="#999" stroke-width="1.2" stroke-dasharray="5 3"/></g>
+  <text x="106" y="268" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#555" filter="url(#sk)">≥ 含等号：</text>
+  <text x="106" y="287" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#sk)">h = target 也达标</text>
+  <text x="106" y="305" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#sk)">别误写成 &gt;</text>
+</svg>

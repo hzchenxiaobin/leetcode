@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="470" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#446688" font-weight="bold" filter="url(#rough2)">核心观察：前缀相减 + 逐位填数，约束只需「上一位」</text>
+
+  <!-- ① 数轴：差分 -->
+  <path d="M 60,84 L 500,84" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 70,84 L 228,84" stroke="#b85450" stroke-width="5" fill="none" filter="url(#rough2)"/>
+  <path d="M 232,84 L 464,84" stroke="#4a7a3a" stroke-width="5" fill="none" filter="url(#rough2)"/>
+  <line x1="70" y1="77" x2="70" y2="91" stroke="#333" stroke-width="1.5" filter="url(#rough2)"/>
+  <line x1="230" y1="77" x2="230" y2="91" stroke="#333" stroke-width="1.5" filter="url(#rough2)"/>
+  <line x1="464" y1="77" x2="464" y2="91" stroke="#333" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="70" y="106" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="230" y="106" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">low</text>
+  <text x="464" y="106" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">high</text>
+  <text x="150" y="70" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">[1, low−1]（扣除）</text>
+  <text x="348" y="70" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">[low, high]（所求）</text>
+
+  <rect x="105" y="118" width="350" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="140" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">ans = count(≤ high) − count(≤ low−1)（low−1 用字符串减 1）</text>
+
+  <path d="M 280,152 L 280,172" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 三类分支 -->
+  <text x="280" y="192" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">count(≤ s)：从最高位到最低位逐位填数，每个位置三类分支</text>
+
+  <rect x="18" y="202" width="166" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="101" y="222" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">① 跳过（num=false）</text>
+  <text x="101" y="240" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">此位空着 → 位数更短的数</text>
+  <text x="101" y="256" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">更短必 &lt; s ⇒ limit 放开</text>
+
+  <rect x="196" y="202" width="168" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="222" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">② 自由（d &lt; s[i]）</text>
+  <text x="280" y="240" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">前缀相同、此位更小</text>
+  <text x="280" y="256" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">已严格小于 s，剩余位随便填</text>
+
+  <rect x="376" y="202" width="166" height="64" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="459" y="222" text-anchor="middle" font-size="12" fill="#d6a040" font-weight="bold" filter="url(#rough2)">③ 收紧（d = s[i]）</text>
+  <text x="459" y="240" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">贴住上界继续</text>
+  <text x="459" y="256" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">limit 向下一位传递</text>
+
+  <path d="M 280,270 L 280,292" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ 状态四元组 -->
+  <text x="280" y="312" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">状态四元组 dfs(i, prev, limit, num)</text>
+
+  <rect x="58" y="324" width="100" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="108" y="344" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">位置 i</text>
+  <text x="108" y="374" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">填到第几位</text>
+
+  <rect x="174" y="324" width="122" height="30" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="235" y="344" text-anchor="middle" font-size="12" fill="#d6a040" font-weight="bold" filter="url(#rough2)">上一位 prev</text>
+  <text x="235" y="374" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">「差 1」约束的全部记忆</text>
+
+  <rect x="310" y="324" width="100" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="360" y="344" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">贴界 limit</text>
+  <text x="360" y="374" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">是否仍贴着 s</text>
+
+  <rect x="424" y="324" width="100" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="474" y="344" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">已填 num</text>
+  <text x="474" y="374" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">无前导零、可跳过</text>
+
+  <text x="280" y="412" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">「相邻差恰为 1」只涉及相邻两位 ⇒ 状态仅 100 × 11 × 2 × 2 ≈ 4400 个</text>
+  <text x="280" y="440" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">每个 ≤ high 的步进数，凡 ≤ low−1 者恰好被减一次 —— 不重不漏</text>
+</svg>

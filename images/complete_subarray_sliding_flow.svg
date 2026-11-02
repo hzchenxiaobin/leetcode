@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="620" fill="#fdfcf7"/>
+  <text x="450" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：以右端为锚的单趟滑窗</text>
+  <path d="M 260 44 Q 450 52 640 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="325" y="56" width="250" height="32" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="77" text-anchor="middle" font-size="11" fill="#8a6212" font-weight="bold" filter="url(#sk)">开始：left = distinct = ans = 0</text>
+  <path d="M 450 88 L 450 104" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond A: right < n ? -->
+  <g filter="url(#sk)">
+    <polygon points="450,116 540,145 450,174 360,145" fill="#fef9ef" stroke="#b98f2e" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="150" text-anchor="middle" font-size="11" fill="#7a5c18" font-weight="bold" filter="url(#sk)">right &lt; n ?</text>
+  <!-- no -> return -->
+  <path d="M 540 145 L 606 145" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="573" y="137" text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="610" y="125" width="170" height="40" rx="10" fill="#f0ede4" stroke="#999" stroke-width="1.4"/>
+  </g>
+  <text x="695" y="150" text-anchor="middle" font-size="12" fill="#666" font-weight="bold" filter="url(#sk)">返回 ans</text>
+  <!-- yes -->
+  <path d="M 450 174 L 450 200" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="466" y="192" font-size="10" fill="#888" filter="url(#sk)">是</text>
+
+  <!-- process B -->
+  <g filter="url(#sk)">
+    <rect x="270" y="204" width="360" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="227" text-anchor="middle" font-size="11.5" fill="#2b4a6e" font-weight="bold" filter="url(#sk)">入窗：cnt[nums[right]]++</text>
+  <text x="450" y="248" text-anchor="middle" font-size="10.5" fill="#2b4a6e" filter="url(#sk)">频次 0→1 时 distinct++（right 随循环前进）</text>
+  <g filter="url(#sk)"><circle cx="246" cy="232" r="11" fill="#4a7a3a"/></g>
+  <text x="246" y="236" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" filter="url(#sk)">1</text>
+  <path d="M 450 260 L 450 286" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond C: distinct == k ? -->
+  <g filter="url(#sk)">
+    <polygon points="450,292 550,322 450,352 350,322" fill="#fef9ef" stroke="#b98f2e" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="327" text-anchor="middle" font-size="11" fill="#7a5c18" font-weight="bold" filter="url(#sk)">distinct == k ?</text>
+  <g filter="url(#sk)"><circle cx="330" cy="296" r="11" fill="#4a7a3a"/></g>
+  <text x="330" y="300" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" filter="url(#sk)">2</text>
+  <!-- no -> loop back to A (left) -->
+  <path d="M 350 322 L 170 322 L 170 145 L 352 145" stroke="#999" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="252" y="314" text-anchor="middle" font-size="10" fill="#999" filter="url(#sk)">否：未凑齐，ans += 0</text>
+  <!-- yes -->
+  <path d="M 450 352 L 450 380" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="468" y="371" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#sk)">是：凑齐 k 种</text>
+
+  <!-- diamond D: cnt[nums[left]] > 1 ? -->
+  <g filter="url(#sk)">
+    <polygon points="450,386 565,415 450,444 335,415" fill="#fef9ef" stroke="#b98f2e" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="420" text-anchor="middle" font-size="11" fill="#7a5c18" font-weight="bold" filter="url(#sk)">cnt[nums[left]] &gt; 1 ?</text>
+  <g filter="url(#sk)"><circle cx="315" cy="389" r="11" fill="#4a7a3a"/></g>
+  <text x="315" y="393" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" filter="url(#sk)">3</text>
+  <!-- yes -> remove left, loop back to D (right) -->
+  <path d="M 565 415 L 620 415" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="592" y="406" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#sk)">是：左端冗余</text>
+  <g filter="url(#sk)">
+    <rect x="624" y="390" width="230" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="739" y="412" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#sk)">移出：cnt[nums[left]]&#8722;&#8722;</text>
+  <text x="739" y="431" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#sk)">left++</text>
+  <path d="M 739 390 L 739 348 L 470 348 L 470 382" stroke="#b85450" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arR)" filter="url(#sk)"/>
+  <!-- no -->
+  <path d="M 450 444 L 450 472" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="466" y="463" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#sk)">否：恰好完全，再移即破坏</text>
+
+  <!-- process F -->
+  <g filter="url(#sk)">
+    <rect x="290" y="476" width="320" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="498" text-anchor="middle" font-size="11.5" fill="#3a5e30" font-weight="bold" filter="url(#sk)">ans += left + 1</text>
+  <text x="450" y="518" text-anchor="middle" font-size="10.5" fill="#3a5e30" filter="url(#sk)">（合法左端 0..left 共 left+1 个）</text>
+  <g filter="url(#sk)"><circle cx="266" cy="502" r="11" fill="#4a7a3a"/></g>
+  <text x="266" y="506" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold" filter="url(#sk)">4</text>
+  <!-- loop back to A (left, outer) -->
+  <path d="M 290 502 L 110 502 L 110 145 L 352 145" stroke="#4a7a3a" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="118" y="330" font-size="10" fill="#4a7a3a" filter="url(#sk)" transform="rotate(-90 118 330)">right 前进，回到循环头</text>
+
+  <!-- legend -->
+  <g filter="url(#sk)">
+    <rect x="70" y="552" width="760" height="50" rx="8" fill="#fffdf3" stroke="#999" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="450" y="572" text-anchor="middle" font-size="11" fill="#444" filter="url(#sk)">① 右端前进入窗 → ② 凑齐判断 → ③ 只移出冗余左端（cnt &gt; 1，先判后移，绝不破坏完全性）→ ④ 按前缀长度计数</text>
+  <text x="450" y="591" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#sk)">left 与 right 均单调不减：每个元素至多入窗、出窗各一次，整体均摊 O(n)</text>
+</svg>
