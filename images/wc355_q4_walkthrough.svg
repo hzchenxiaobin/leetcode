@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="43" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrC" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 1 1 L 8 4.5 L 1 8" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="800" height="560" fill="#fdfcf7"/>
+  <text x="400" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例 1 走查：每个节点挂一个 26 位 mask，差 ≤ 1 位即配对</text>
+  <path d="M 110 42 Q 400 50 690 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="400" y="66" text-anchor="middle" font-size="12" fill="#555" filter="url(#sk)">parent = [-1,0,0,1,1,2]，s = "acaabc"（s[i] 是 i 与 parent[i] 间边上的字符），答案 8</text>
+
+  <!-- 树 -->
+  <g filter="url(#sk)" stroke="#446688" stroke-width="1.6">
+    <line x1="205" y1="143" x2="138" y2="228"/>
+    <line x1="235" y1="143" x2="317" y2="228"/>
+    <line x1="112" y1="253" x2="82" y2="350"/>
+    <line x1="138" y1="253" x2="188" y2="350"/>
+    <line x1="342" y1="253" x2="352" y2="350"/>
+  </g>
+  <!-- (3,5) 同 mask 的路径 -->
+  <path d="M 70 365 L 125 240 L 220 130 L 330 240 L 355 365" stroke="#b85450" stroke-width="2.2" fill="none" stroke-dasharray="7 5" opacity="0.75" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <ellipse cx="220" cy="130" rx="24" ry="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="125" cy="240" rx="24" ry="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="330" cy="240" rx="24" ry="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="70" cy="365" rx="24" ry="18" fill="#fce4ec" stroke="#b85450" stroke-width="2.4"/>
+    <ellipse cx="200" cy="365" rx="24" ry="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="355" cy="365" rx="24" ry="18" fill="#fce4ec" stroke="#b85450" stroke-width="2.4"/>
+  </g>
+  <g text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">
+    <text x="220" y="135">0</text>
+    <text x="125" y="245">1</text>
+    <text x="330" y="245">2</text>
+    <text x="70" y="370" fill="#8f3a36">3</text>
+    <text x="200" y="370">4</text>
+    <text x="355" y="370" fill="#8f3a36">5</text>
+  </g>
+  <g font-size="10.5" fill="#777" filter="url(#sk)">
+    <text x="152" y="180">c</text>
+    <text x="290" y="180">a</text>
+    <text x="82" y="300">a</text>
+    <text x="170" y="300">b</text>
+    <text x="362" y="300">c</text>
+  </g>
+  <g text-anchor="middle" font-size="11" fill="#446688" filter="url(#sk)">
+    <text x="220" y="164">m(0)=∅</text>
+    <text x="125" y="274">m(1)={c}</text>
+    <text x="330" y="274">m(2)={a}</text>
+    <text x="70" y="399" font-weight="bold" fill="#b85450">m(3)={a,c}</text>
+    <text x="200" y="399">m(4)={b,c}</text>
+    <text x="355" y="399" font-weight="bold" fill="#b85450">m(5)={a,c}</text>
+  </g>
+  <text x="218" y="430" text-anchor="middle" font-size="11" fill="#8f3a36" filter="url(#sk)">节点 3→5 路径 "acac"，重排得 "acca" ✓（两者 mask 同为 {a,c}，差 0 位）</text>
+  <text x="218" y="452" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#sk)">根到 3 = "ca"、根到 5 = "ac"：两段拼起来奇偶性全消</text>
+
+  <!-- 右侧计数表 -->
+  <text x="445" y="86" font-size="11.5" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">按编号 0→5 依次处理（任何顺序皆可）：</text>
+  <g filter="url(#sk)">
+    <rect x="445" y="92" width="330" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="445" y="118" width="330" height="26" fill="#fdfcf7" stroke="#446688" stroke-width="1"/>
+    <rect x="445" y="144" width="330" height="26" fill="#fdfcf7" stroke="#446688" stroke-width="1"/>
+    <rect x="445" y="170" width="330" height="26" fill="#fdfcf7" stroke="#446688" stroke-width="1"/>
+    <rect x="445" y="196" width="330" height="26" fill="#fdfcf7" stroke="#446688" stroke-width="1"/>
+    <rect x="445" y="222" width="330" height="26" fill="#fdfcf7" stroke="#446688" stroke-width="1"/>
+    <rect x="445" y="248" width="330" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <line x1="485" y1="92" x2="485" y2="274" stroke="#446688" stroke-width="1"/>
+    <line x1="555" y1="92" x2="555" y2="274" stroke="#446688" stroke-width="1"/>
+    <line x1="712" y1="92" x2="712" y2="274" stroke="#446688" stroke-width="1"/>
+  </g>
+  <g text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">
+    <text x="465" y="109">x</text>
+    <text x="520" y="109">m(x)</text>
+    <text x="633" y="109">本步配对</text>
+    <text x="743" y="109">ans</text>
+  </g>
+  <g text-anchor="middle" font-size="11" fill="#444" filter="url(#sk)">
+    <text x="465" y="135">0</text><text x="520" y="135">∅</text><text x="633" y="135">—</text><text x="743" y="135">0</text>
+    <text x="465" y="161">1</text><text x="520" y="161">{c}</text><text x="633" y="161">(0,1)</text><text x="743" y="161">1</text>
+    <text x="465" y="187">2</text><text x="520" y="187">{a}</text><text x="633" y="187">(0,2)</text><text x="743" y="187">2</text>
+    <text x="465" y="213">3</text><text x="520" y="213">{a,c}</text><text x="633" y="213">(1,3)(2,3)</text><text x="743" y="213">4</text>
+    <text x="465" y="239">4</text><text x="520" y="239">{b,c}</text><text x="633" y="239">(1,4)</text><text x="743" y="239">5</text>
+    <text x="465" y="265">5</text><text x="520" y="265">{a,c}</text><text x="633" y="265">(1,5)(2,5)<tspan font-weight="bold" fill="#b85450">(3,5)</tspan></text><text x="743" y="265" font-weight="bold" fill="#2e6e2e">8</text>
+  </g>
+
+  <!-- 节点 5 到达时的细节 -->
+  <g filter="url(#sk)"><rect x="445" y="300" width="330" height="152" rx="8" fill="#fdfcf7" stroke="#999" stroke-width="1.2" stroke-dasharray="5 3"/></g>
+  <text x="460" y="322" font-size="11" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">节点 5 到达时 cnt：</text>
+  <text x="460" y="340" font-size="10.5" fill="#444" filter="url(#sk)">∅:1，{c}:1，{a}:1，{a,c}:1，{b,c}:1</text>
+  <text x="460" y="362" font-size="10.5" fill="#444" filter="url(#sk)">查 cnt[{a,c}] = 1 → 配 (3,5)（差 0 位）</text>
+  <text x="460" y="384" font-size="10.5" fill="#444" filter="url(#sk)">翻转 a：{a,c}⊕a = {c} 命中 1 → (1,5)</text>
+  <text x="460" y="406" font-size="10.5" fill="#444" filter="url(#sk)">翻转 c：{a,c}⊕c = {a} 命中 1 → (2,5)</text>
+  <text x="460" y="428" font-size="10.5" fill="#444" filter="url(#sk)">其余 24 个翻转目标未命中 → 本步贡献 3</text>
+  <text x="460" y="446" font-size="10.5" fill="#777" filter="url(#sk)">（m(1)={c}，m(5)={a,c}，差 {a} → 路径 "cac"）</text>
+
+  <!-- 底部汇总 -->
+  <g filter="url(#sk)"><rect x="55" y="472" width="690" height="68" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="75" y="496" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">8 对 = 7 对「差 1 位」+ 1 对「差 0 位」(3,5)，与官方输出一致 ✓</text>
+  <text x="75" y="518" font-size="11" fill="#444" filter="url(#sk)">差 1 位例：(1,5) 路径 "cac"，唯一奇数字符 a 作中心；差 0 位例：(3,5) 路径 "acac" → 重排 "acca"</text>
+  <text x="75" y="534" font-size="10.5" fill="#777" filter="url(#sk)">树形态与 mask 求法见左图；计数表自上而下累积，处理顺序改变只会打乱行序，总数不变</text>
+</svg>
