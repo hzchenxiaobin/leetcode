@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="690" viewBox="0 0 900 690" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="690" fill="#fdfcf7"/>
+  <text x="450" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">「以 i 结尾」的接龙 DP：一次遍历，三个分支</text>
+  <path d="M 260 40 Q 450 48 640 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: 三个条件 ===== -->
+  <g filter="url(#sk)">
+    <rect x="50" y="56" width="800" height="98" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="70" y="80" font-size="13" font-weight="bold" fill="#7a5415">合法子数组 [l, r] 的三个条件（全是「局部」条件）</text>
+  <text x="70" y="104" font-size="12" fill="#444">① 开头 nums[l] 是偶数　　② 相邻元素奇偶交替：nums[i] 与 nums[i+1] 一奇一偶</text>
+  <text x="70" y="128" font-size="12" fill="#444">③ 子数组内所有元素 ≤ threshold（一票否决门槛）</text>
+  <text x="70" y="148" font-size="11" fill="#b03a3a">★ 三个条件都只涉及「开头 + 相邻对 + 逐元素」→ 合法子数组去掉末尾，剩余部分依然合法！</text>
+
+  <!-- ===== Panel 2: 示例数组 + f(i) 定义 ===== -->
+  <text x="50" y="188" font-size="13" font-weight="bold" fill="#2b6e9e">示例：nums = [3, 2, 5, 4]，threshold = 5</text>
+
+  <!-- array boxes -->
+  <g font-size="14">
+    <g filter="url(#sk)"><rect x="60" y="200" width="66" height="44" fill="#f0ede4" stroke="#ccc" stroke-width="1" opacity="0.6"/></g>
+    <text x="93" y="229" text-anchor="middle" fill="#aaa">3</text>
+    <g filter="url(#sk)"><rect x="150" y="200" width="66" height="44" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="183" y="229" text-anchor="middle" fill="#2e6e2e" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="240" y="200" width="66" height="44" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="273" y="229" text-anchor="middle" fill="#2e6e2e" font-weight="bold">5</text>
+    <g filter="url(#sk)"><rect x="330" y="200" width="66" height="44" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+    <text x="363" y="229" text-anchor="middle" fill="#2e6e2e" font-weight="bold">4</text>
+  </g>
+  <!-- parity labels -->
+  <g font-size="11">
+    <text x="93" y="262" text-anchor="middle" fill="#aaa">奇</text>
+    <text x="183" y="262" text-anchor="middle" fill="#2e6e2e">偶</text>
+    <text x="273" y="262" text-anchor="middle" fill="#2e6e2e">奇</text>
+    <text x="363" y="262" text-anchor="middle" fill="#2e6e2e">偶</text>
+  </g>
+  <!-- bracket -->
+  <path d="M 150 268 L 146 276 L 398 276 L 394 268" stroke="#4a8e4a" stroke-width="1.4" fill="none" filter="url(#sk)"/>
+  <text x="272" y="296" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">合法子数组 [2, 5, 4]：偶数开头 · 交替 · 全 ≤ 5</text>
+
+  <!-- f(i) definition box -->
+  <g filter="url(#sk)">
+    <rect x="470" y="176" width="380" height="148" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="490" y="200" font-size="12.5" font-weight="bold" fill="#2b6e9e">定义 f(i)：以 i 结尾的最长合法子数组长度</text>
+  <g font-size="11.5" fill="#444" font-family="monospace">
+    <text x="490" y="224">f(0) = 0　（3 是奇数，不能开头）</text>
+    <text x="490" y="246">f(1) = 1　（[2]，偶数重开新链）</text>
+    <text x="490" y="268">f(2) = 2　（[2, 5]，奇偶交替，接龙）</text>
+    <text x="490" y="290">f(3) = 3　（[2, 5, 4]，继续接龙）</text>
+  </g>
+  <text x="490" y="312" font-size="12" font-weight="bold" fill="#b03a3a">答案 = max f(i) = 3</text>
+
+  <!-- ===== Panel 3: 三分支转移 ===== -->
+  <text x="50" y="352" font-size="13" font-weight="bold" fill="#5a3a7a">f(i) 的三分支转移（设 x = nums[i]，cnt = f(i−1)）</text>
+
+  <!-- Branch A -->
+  <g filter="url(#sk)">
+    <rect x="50" y="366" width="250" height="118" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="65" y="390" font-size="12.5" font-weight="bold" fill="#7a2828">分支① x &gt; threshold</text>
+  <text x="65" y="414" font-size="11.5" fill="#444">超过阈值，一票否决</text>
+  <text x="65" y="438" font-size="12" font-family="monospace" fill="#b03a3a" font-weight="bold">f(i) = 0（链条断裂）</text>
+  <text x="65" y="464" font-size="10.5" fill="#888">即使 x 是偶数也不能当开头</text>
+
+  <!-- Branch B -->
+  <g filter="url(#sk)">
+    <rect x="325" y="366" width="250" height="118" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="390" font-size="12.5" font-weight="bold" fill="#2e6e2e">分支② 前面有链且能接上</text>
+  <text x="340" y="414" font-size="11.5" fill="#444">cnt &gt; 0 且 x 与 nums[i−1] 奇偶不同</text>
+  <text x="340" y="438" font-size="12" font-family="monospace" fill="#2e6e2e" font-weight="bold">f(i) = f(i−1) + 1（接龙延伸）</text>
+  <text x="340" y="464" font-size="10.5" fill="#888">「与前一元素奇偶不同」是唯一接龙条件</text>
+
+  <!-- Branch C -->
+  <g filter="url(#sk)">
+    <rect x="600" y="366" width="250" height="118" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="615" y="390" font-size="12.5" font-weight="bold" fill="#7a5415">分支③ 其它情况（重开）</text>
+  <text x="615" y="414" font-size="11.5" fill="#444">接不上龙 → 只能自身另起炉灶</text>
+  <text x="615" y="438" font-size="12" font-family="monospace" fill="#7a5415" font-weight="bold">f(i) = x 为偶数 ? 1 : 0</text>
+  <text x="615" y="464" font-size="10.5" fill="#888">奇数不能当开头！</text>
+
+  <text x="450" y="516" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">遍历中随时更新：ans = max(ans, f(i))；cnt 滚动即 f(i)，无需 DP 数组</text>
+
+  <!-- ===== Key insight ===== -->
+  <g filter="url(#sk)">
+    <rect x="50" y="536" width="800" height="118" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="70" y="562" font-size="12.5" font-weight="bold" fill="#2b2b2b">关键洞察</text>
+  <text x="70" y="586" font-size="11.5" fill="#444">合法子数组去掉末尾仍然合法（三个条件全是「前缀 / 相邻」型）→ 最优子结构成立</text>
+  <text x="70" y="610" font-size="11.5" fill="#444">f(i) 只依赖 f(i−1)、x、nums[i−1] 的奇偶 → 单变量 cnt 滚动即可，O(n) 一遍扫完</text>
+  <text x="70" y="634" font-size="11" fill="#888">与 978「最长湍流子数组」同款接龙模板：交替型局部条件 → 线性 DP</text>
+</svg>
