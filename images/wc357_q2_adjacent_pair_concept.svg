@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="400" viewBox="0 0 560 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="400" fill="#fdfcf7"/>
+  <text x="280" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">核心观察：锚定一对「和 ≥ m」的相邻元素，其余逐个剥离</text>
+  <path d="M 110 38 Q 280 46 450 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- peel labels & arrows above cells -->
+  <text x="112" y="50" text-anchor="middle" font-size="10.5" fill="#4a7a3a">逐个剥出端点元素</text>
+  <path d="M 132 80 Q 112 66 96 56" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="448" y="50" text-anchor="middle" font-size="10.5" fill="#4a7a3a">逐个剥出端点元素</text>
+  <path d="M 428 80 Q 448 66 464 56" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- cells: 1 2 [5 5] 2 1 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="88" width="60" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="150" y="88" width="60" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="210" y="88" width="60" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="270" y="88" width="60" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="330" y="88" width="60" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="390" y="88" width="60" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="120" y="111" text-anchor="middle" font-size="12" fill="#2b2b2b">1</text>
+  <text x="180" y="111" text-anchor="middle" font-size="12" fill="#2b2b2b">2</text>
+  <text x="240" y="111" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">5</text>
+  <text x="300" y="111" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">5</text>
+  <text x="360" y="111" text-anchor="middle" font-size="12" fill="#2b2b2b">2</text>
+  <text x="420" y="111" text-anchor="middle" font-size="12" fill="#2b2b2b">1</text>
+
+  <!-- dashed ellipse on the anchor pair -->
+  <ellipse cx="270" cy="106" rx="74" ry="35" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="7,5" filter="url(#sk)"/>
+  <text x="270" y="156" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">锚点对：5 + 5 = 10 ≥ m（图中 m = 10）—— 全程不分开</text>
+
+  <!-- invariant box -->
+  <g filter="url(#sk)">
+    <rect x="46" y="170" width="468" height="78" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+  </g>
+  <text x="280" y="192" text-anchor="middle" font-size="11" fill="#2b5a1e">每一刀切出的两段：单元素段 → 长度 1，天然是「好」；</text>
+  <text x="280" y="212" text-anchor="middle" font-size="11" fill="#2b5a1e">剩余段 ⊇ 锚点对 → 其和 ≥ 5 + 5 = 10 ≥ m → 也是「好」（贯穿始终的不变量）；</text>
+  <text x="280" y="232" text-anchor="middle" font-size="11" fill="#2b5a1e">剥到最后只剩 [5, 5]，一刀切成两个单元 → 全程合法，答案 true。</text>
+
+  <!-- necessity intuition box -->
+  <g filter="url(#sk)">
+    <rect x="46" y="266" width="468" height="78" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1"/>
+  </g>
+  <text x="280" y="288" text-anchor="middle" font-size="11" fill="#7a5415">必要性直觉：n ≥ 3 时第一刀必切出一段长 ≥ 2 的「好」段（其和 ≥ m），</text>
+  <text x="280" y="308" text-anchor="middle" font-size="11" fill="#7a5415">对它再看它的第一刀……段长严格递减，最终必停在一条「长度 2 的好段」上，</text>
+  <text x="280" y="328" text-anchor="middle" font-size="11" fill="#7a5415">而长度 2 的段恰是一对和 ≥ m 的相邻元素。严格证明（归纳）见正文 §5。</text>
+
+  <text x="280" y="374" text-anchor="middle" font-size="10.5" fill="#7a7a7a">判定式：n ≤ 2 → true；n ≥ 3 → true ⟺ 存在相邻两数之和 ≥ m —— 一趟扫描，O(n)。</text>
+</svg>
