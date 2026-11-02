@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="620" viewBox="0 0 560 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="560" height="620" fill="#fdfcf7"/>
+  <text x="280" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：多源 BFS 预处理 + 二分阈值 + 连通性 check</text>
+  <path d="M 110 38 Q 280 46 450 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="140" y="48" width="290" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="285" y="71" text-anchor="middle" font-size="11.5" fill="#2b3a52">① 多源 BFS：所有小偷同时入队（dist = 0）</text>
+  <text x="285" y="91" text-anchor="middle" font-size="11.5" fill="#2b3a52">求 dist[r][c] = 到最近小偷的曼哈顿距离 —— O(n²)</text>
+  <path d="M 285 104 L 285 118" stroke="#3a3a3a" stroke-width="2" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="140" y="120" width="290" height="46" rx="8" fill="#fafafa" stroke="#999" stroke-width="1.2"/>
+  </g>
+  <text x="285" y="139" text-anchor="middle" font-size="11.5" fill="#3a3a3a">② 二分初始化：lo = 0（恒可行，全格连通）</text>
+  <text x="285" y="158" text-anchor="middle" font-size="11.5" fill="#3a3a3a">hi = 2n − 2（任何两格曼哈顿距离的上界）</text>
+  <path d="M 285 166 L 285 180" stroke="#3a3a3a" stroke-width="2" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="140" y="182" width="290" height="40" rx="8" fill="#fafafa" stroke="#999" stroke-width="1.2"/>
+  </g>
+  <text x="285" y="207" text-anchor="middle" font-size="11.5" fill="#3a3a3a">③ mid = (lo + hi + 1) / 2（上中位，防死循环）</text>
+  <path d="M 285 222 L 285 236" stroke="#3a3a3a" stroke-width="2" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)">
+    <rect x="140" y="238" width="290" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="285" y="261" text-anchor="middle" font-size="11.5" fill="#2b3a52">④ check(mid)：只在 dist ≥ mid 的格子上 BFS</text>
+  <text x="285" y="281" text-anchor="middle" font-size="11.5" fill="#2b3a52">判断 (0,0) 与 (n−1, n−1) 是否连通 —— O(n²)</text>
+  <path d="M 285 294 L 285 308" stroke="#3a3a3a" stroke-width="2" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <polygon points="285,310 375,344 285,378 195,344" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#sk)"/>
+  <text x="285" y="340" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">check(mid)</text>
+  <text x="285" y="358" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">可行？</text>
+
+  <!-- branches -->
+  <path d="M 195 344 Q 150 352 124 396" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="148" y="334" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+  <path d="M 375 344 Q 420 352 446 396" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="414" y="334" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">否</text>
+
+  <!-- branch boxes -->
+  <g filter="url(#sk)">
+    <rect x="24" y="400" width="196" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="122" y="421" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b5a1e">可行 → lo = mid</text>
+  <text x="122" y="441" text-anchor="middle" font-size="10.5" fill="#4a7a3a">（该 s 能达到）</text>
+  <g filter="url(#sk)">
+    <rect x="340" y="400" width="196" height="50" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="438" y="421" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a3a36">不可行 → hi = mid − 1</text>
+  <text x="438" y="441" text-anchor="middle" font-size="10.5" fill="#b85450">（更大的 s 更不可行）</text>
+
+  <!-- loop back arrows -->
+  <path d="M 26 425 C 4 425 4 202 134 202" stroke="#b85450" stroke-width="1.8" fill="none" stroke-dasharray="7,5" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="60" y="298" text-anchor="middle" font-size="10" font-weight="bold" fill="#b85450">lo &lt; hi</text>
+  <text x="60" y="314" text-anchor="middle" font-size="10" fill="#b85450">回 ③</text>
+  <path d="M 534 425 C 556 425 556 202 436 202" stroke="#b85450" stroke-width="1.8" fill="none" stroke-dasharray="7,5" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="498" y="298" text-anchor="middle" font-size="10" font-weight="bold" fill="#b85450">lo &lt; hi</text>
+  <text x="498" y="314" text-anchor="middle" font-size="10" fill="#b85450">回 ③</text>
+
+  <!-- converge arrows to final box -->
+  <path d="M 122 450 C 122 470 152 476 188 482" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 438 450 C 438 470 408 476 372 482" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- final box -->
+  <g filter="url(#sk)">
+    <rect x="150" y="484" width="270" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="285" y="505" text-anchor="middle" font-size="11.5" fill="#2b5a1e">lo == hi 时收敛</text>
+  <text x="285" y="524" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b5a1e">返回 lo = 最大安全系数</text>
+
+  <!-- monotonicity note -->
+  <g filter="url(#sk)">
+    <rect x="30" y="548" width="500" height="56" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <text x="280" y="570" text-anchor="middle" font-size="11" fill="#7a5415">单调性（二分正确性）：若存在安全系数 ≥ s 的路径，同一条路径对一切 s′ ≤ s 也满足，</text>
+  <text x="280" y="590" text-anchor="middle" font-size="11" fill="#7a5415">故「可行」关于 s 单调不升 → 在 [0, 2n−2] 上二分最大可行 s。</text>
+</svg>
