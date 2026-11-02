@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="32" text-anchor="middle" font-size="17" font-weight="bold" fill="#446688" filter="url(#rough2)">状态机 DP：只需记住「末尾连续 low 的个数」</text>
+  <text x="280" y="54" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">j = 0 / 1 / 2；不存在 j = 3 —— 那是非法状态（3 连续 low），被状态集合自动排除</text>
+
+  <!-- sentinel -->
+  <ellipse cx="32" cy="124" rx="13" ry="13" fill="#fafafa" stroke="#888" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="32" y="155" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">哨兵</text>
+  <text x="32" y="169" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">(0, ∞, ∞)</text>
+  <path d="M 46 124 L 62 124" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- state boxes -->
+  <rect x="64" y="96" width="128" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="128" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#446688" filter="url(#rough2)">j = 0</text>
+  <text x="128" y="136" text-anchor="middle" font-size="10.5" fill="#557" filter="url(#rough2)">末尾 0 个 low</text>
+  <text x="128" y="150" text-anchor="middle" font-size="10.5" fill="#557" filter="url(#rough2)">（i 是 high）</text>
+
+  <rect x="236" y="96" width="128" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="300" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#2d5a20" filter="url(#rough2)">j = 1</text>
+  <text x="300" y="136" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">末尾 1 个 low</text>
+  <text x="300" y="150" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">（i−1 是 high）</text>
+
+  <rect x="408" y="96" width="128" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="472" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5a10" filter="url(#rough2)">j = 2</text>
+  <text x="472" y="136" text-anchor="middle" font-size="10.5" fill="#99741c" filter="url(#rough2)">末尾 2 个 low</text>
+  <text x="472" y="150" text-anchor="middle" font-size="10.5" fill="#99741c" filter="url(#rough2)">（i−2 是 high）</text>
+
+  <!-- keep-low transitions -->
+  <path d="M 192 124 L 234 124" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <text x="214" y="172" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">位置 i 保持 low：+0</text>
+
+  <path d="M 364 124 L 406 124" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <text x="386" y="172" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">位置 i 保持 low：+0</text>
+
+  <!-- raise-to-high transitions back to j=0 -->
+  <path d="M 112 152 C 98 180, 150 180, 130 156" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 300 152 C 300 202, 162 210, 141 158" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 472 152 C 472 224, 162 228, 137 160" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="240" y="246" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">任意状态 → j = 0：位置 i 抬到 k，+max(0, k − nums[i])</text>
+
+  <!-- forbidden -->
+  <path d="M 520 152 C 534 176, 528 190, 512 204" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <circle cx="500" cy="216" r="17" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="500" y="222" text-anchor="middle" font-size="15" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">✗</text>
+  <text x="500" y="248" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">非法：3 连续 low</text>
+
+  <!-- transition equations -->
+  <rect x="40" y="272" width="158" height="64" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="119" y="296" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">f0' = cost + min(f0,f1,f2)</text>
+  <text x="119" y="316" text-anchor="middle" font-size="10.5" fill="#557" filter="url(#rough2)">位置 i 抬到 k（high）</text>
+
+  <rect x="210" y="272" width="158" height="64" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="289" y="296" text-anchor="middle" font-size="12" font-weight="bold" fill="#2d5a20" filter="url(#rough2)">f1' = low + f0</text>
+  <text x="289" y="316" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">i low，i−1 high</text>
+
+  <rect x="380" y="272" width="158" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="459" y="296" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5a10" filter="url(#rough2)">f2' = low + f1</text>
+  <text x="459" y="316" text-anchor="middle" font-size="10.5" fill="#99741c" filter="url(#rough2)">i, i−1 low，i−2 high</text>
+
+  <!-- bottom strip -->
+  <rect x="40" y="348" width="498" height="66" fill="#fafafa" stroke="#888" stroke-width="1.5" stroke-dasharray="6 4" rx="10" filter="url(#rough2)"/>
+  <text x="289" y="370" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">low = 0 若 nums[i] &lt; k，否则 +∞（已 ≥ k，被迫 high）</text>
+  <text x="289" y="390" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">哨兵 (f0, f1, f2) = (0, +∞, +∞)；滚动三变量，O(1) 空间</text>
+  <text x="289" y="408" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">答案 = min(f0, f1, f2)</text>
+</svg>
