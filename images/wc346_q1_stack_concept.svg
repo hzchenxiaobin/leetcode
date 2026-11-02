@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="430" viewBox="0 0 640 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="137" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="430" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">核心观察：删掉一对后，新对只出现在「左侧末位 × 后续字符」</text>
+  <path d="M 140 42 Q 320 50 500 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1: before deletion -->
+  <text x="56" y="68" font-size="11" font-weight="bold" fill="#777" filter="url(#sk)">① 删除前</text>
+  <rect x="100" y="74" width="110" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="155" y="99" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6520" filter="url(#sk)">……X</text>
+  <rect x="228" y="74" width="38" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="247" y="99" text-anchor="middle" font-size="14" font-weight="bold" fill="#33517a" filter="url(#sk)">A</text>
+  <rect x="270" y="74" width="38" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="289" y="99" text-anchor="middle" font-size="14" font-weight="bold" fill="#33517a" filter="url(#sk)">B</text>
+  <rect x="332" y="74" width="110" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="387" y="99" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6520" filter="url(#sk)">Y……</text>
+  <rect x="222" y="66" width="92" height="56" rx="6" fill="none" stroke="#b85450" stroke-width="2" stroke-dasharray="7,5" filter="url(#sk)"/>
+  <text x="268" y="60" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">删掉这对「AB」</text>
+  <text x="155" y="126" text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">X：左侧剩下部分的末位</text>
+  <text x="387" y="126" text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">Y：后面才来的字符</text>
+
+  <path d="M 268 132 V 152" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- step 2: after deletion -->
+  <text x="56" y="162" font-size="11" font-weight="bold" fill="#777" filter="url(#sk)">② 删除后</text>
+  <rect x="100" y="168" width="110" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="155" y="193" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6520" filter="url(#sk)">……X</text>
+  <rect x="218" y="168" width="224" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="334" y="193" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6520" filter="url(#sk)">Y……</text>
+  <ellipse cx="214" cy="188" rx="12" ry="18" fill="none" stroke="#b85450" stroke-width="2" filter="url(#sk)"/>
+  <text x="452" y="186" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#sk)">X、Y 相邻了！</text>
+  <text x="320" y="230" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">接缝处可能长出新对（X=A、Y=B 或 X=C、Y=D，就又消掉一对）</text>
+
+  <!-- insight -->
+  <text x="320" y="256" text-anchor="middle" font-size="12" fill="#8a3a3a" filter="url(#sk)">X 的去留，要由「后面才来」的 Y 拍板 —— 左侧字符在等右侧，后进先配</text>
+  <text x="320" y="278" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#sk)">⇒ 用栈：没配上右半的左半都压在栈里，新字符只和栈顶比</text>
+
+  <!-- bottom left panel: bracket isomorphism -->
+  <rect x="56" y="292" width="268" height="122" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="190" y="314" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33517a" filter="url(#sk)">同构视角：A/B、C/D 就是括号</text>
+  <text x="190" y="338" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#sk)">A → (　B → )　　C → [　D → ]</text>
+  <text x="190" y="360" text-anchor="middle" font-size="11" fill="#446688" filter="url(#sk)">后进的左括号最先被匹配 —— LIFO</text>
+  <text x="190" y="380" text-anchor="middle" font-size="11" fill="#446688" filter="url(#sk)">与「有效的括号」同构，只是不判合法性</text>
+  <text x="190" y="402" text-anchor="middle" font-size="11" font-weight="bold" fill="#33517a" filter="url(#sk)">本题数栈里剩几个，不关心剩的是啥</text>
+
+  <!-- bottom right panel: disjoint alphabets -->
+  <rect x="348" y="292" width="236" height="122" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="466" y="314" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a6a2a" filter="url(#sk)">为什么删除顺序无关（§5）</text>
+  <text x="466" y="338" text-anchor="middle" font-size="11" fill="#4a6a3a" filter="url(#sk)">{A,B} 与 {C,D} 完全不相交</text>
+  <text x="466" y="360" text-anchor="middle" font-size="11" fill="#4a6a3a" filter="url(#sk)">⇒ 任意两个可删对不共享位置</text>
+  <text x="466" y="380" text-anchor="middle" font-size="11" fill="#4a6a3a" filter="url(#sk)">⇒ 先删谁都不挡对方的路</text>
+  <text x="466" y="402" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a04a48" filter="url(#sk)">终态唯一：贪心一趟 = 最优</text>
+</svg>
