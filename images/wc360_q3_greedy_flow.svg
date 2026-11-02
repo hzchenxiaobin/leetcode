@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="640" fill="#fafafa"/>
+  <text x="450" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：对 b = 0 … 31 逐位扫描（白嫖 → 借位 → 配对进位）</text>
+  <path d="M 230 44 Q 450 52 670 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start box -->
+  <g filter="url(#sk)">
+    <rect x="60" y="66" width="780" height="52" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="450" y="88" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">初始化：统计 cnt[b]；若 Σnums &lt; target 直接返回 −1（操作不改变总和）</text>
+  <text x="450" y="107" text-anchor="middle" font-size="11" fill="#666">从 b = 0 开始逐位处理 target 的二进制位</text>
+
+  <path d="M 450 118 L 450 142" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision 1: target bit -->
+  <g filter="url(#sk)">
+    <path d="M 450 148 L 580 190 L 450 232 L 320 190 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="186" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6a1a">target 的第 b 位是 1？</text>
+  <text x="450" y="204" text-anchor="middle" font-size="10.5" fill="#8a6a1a">（该位需要凑一片 2^b）</text>
+
+  <!-- D1 NO -> carry box -->
+  <path d="M 580 190 Q 700 210 700 300 L 700 510" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="640" y="220" font-size="11" fill="#888">否（无需凑）</text>
+
+  <!-- D1 YES -> decision 2 -->
+  <path d="M 450 232 L 450 262" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="462" y="252" font-size="11" fill="#888">是</text>
+
+  <g filter="url(#sk)">
+    <path d="M 450 268 L 570 308 L 450 348 L 330 308 Z" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="304" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a03a3a">cnt[b] &gt; 0？</text>
+  <text x="450" y="322" text-anchor="middle" font-size="10.5" fill="#a03a3a">（含配对出的「虚拟片」）</text>
+
+  <!-- D2 YES -> free use -->
+  <path d="M 330 308 Q 250 316 200 356 L 200 384" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="238" y="322" font-size="11" fill="#888">是</text>
+  <g filter="url(#sk)">
+    <rect x="110" y="388" width="196" height="64" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="208" y="412" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">白嫖：cnt[b] −= 1</text>
+  <text x="208" y="432" text-anchor="middle" font-size="10.5" fill="#4a7a3a">现成片 / 两片小的拼上，0 次操作</text>
+  <path d="M 208 452 Q 208 492 350 510" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D2 NO -> borrow -->
+  <path d="M 570 308 Q 650 320 660 356 L 660 384" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="606" y="322" font-size="11" fill="#888">否（必须借位）</text>
+  <g filter="url(#sk)">
+    <rect x="500" y="388" width="330" height="96" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="665" y="410" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">借位：找最小 j &gt; b 使 cnt[j] &gt; 0</text>
+  <text x="665" y="430" text-anchor="middle" font-size="11.5" fill="#2b4a6e" font-family="monospace">ans += j − b（链式拆分）</text>
+  <text x="665" y="450" text-anchor="middle" font-size="11.5" fill="#2b4a6e" font-family="monospace">cnt[j] −= 1；cnt[b … j−1] 各 += 1</text>
+  <text x="665" y="472" text-anchor="middle" font-size="10.5" fill="#b85450">（副产物每层一片入账，之后还能用）</text>
+  <path d="M 665 484 Q 665 502 600 512" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- carry box -->
+  <g filter="url(#sk)">
+    <rect x="250" y="514" width="420" height="52" rx="10" fill="#f3ecf7" stroke="#7a5a9a" stroke-width="1.6"/>
+  </g>
+  <text x="460" y="536" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#5a3a7a" font-family="monospace">配对进位：cnt[b+1] += ⌊cnt[b] / 2⌋</text>
+  <text x="460" y="556" text-anchor="middle" font-size="10.5" fill="#7a5a9a">两片剩余 2^b = 一片「虚拟 2^(b+1)」；奇数片多余的无用，直接弃账</text>
+
+  <!-- loop back -->
+  <path d="M 250 540 Q 130 540 130 190 L 312 190" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="120" y="562" font-size="11" fill="#888">b = b + 1</text>
+
+  <!-- end -->
+  <path d="M 670 540 L 720 540" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="724" y="514" width="130" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="789" y="536" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">32 位处理完</text>
+  <text x="789" y="556" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">输出 ans</text>
+</svg>
