@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7a7a7a"/>
+    </marker>
+    <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="440" fill="#fafafa"/>
+  <text x="320" y="24" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：计数只看数值 → 排序；区间计数 = 前缀之差</text>
+  <path d="M 140 34 Q 320 42 500 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- row 1: original array -->
+  <text x="62" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#555">原数组</text>
+  <g filter="url(#sk)">
+    <rect x="130" y="68" width="52" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="188" y="68" width="52" height="34" rx="4" fill="#fdfcfc" stroke="#b0b0b0" stroke-width="1.2"/>
+    <rect x="246" y="68" width="52" height="34" rx="4" fill="#fdfcfc" stroke="#b0b0b0" stroke-width="1.2"/>
+    <rect x="304" y="68" width="52" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="362" y="68" width="52" height="34" rx="4" fill="#fdfcfc" stroke="#b0b0b0" stroke-width="1.2"/>
+    <rect x="420" y="68" width="52" height="34" rx="4" fill="#fdfcfc" stroke="#b0b0b0" stroke-width="1.2"/>
+  </g>
+  <g text-anchor="middle" font-size="13" font-weight="bold">
+    <text x="156" y="90" fill="#2b4a6b">0</text>
+    <text x="214" y="90" fill="#666">1</text>
+    <text x="272" y="90" fill="#666">7</text>
+    <text x="330" y="90" fill="#8a6415">4</text>
+    <text x="388" y="90" fill="#666">4</text>
+    <text x="446" y="90" fill="#666">5</text>
+  </g>
+  <path d="M 156 62 Q 243 40 330 62" stroke="#446688" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <text x="243" y="58" text-anchor="middle" font-size="10" fill="#2b4a6b" font-weight="bold">(0,3)：0+4=4 ∈ [3,6] ✓</text>
+
+  <!-- sort arrow -->
+  <path d="M 330 108 L 330 138" stroke="#7a7a7a" stroke-width="1.6" marker-end="url(#ag)" filter="url(#sk)"/>
+  <text x="344" y="130" font-size="11" fill="#555" font-weight="bold">排序：下标双射重排，数值配对不变</text>
+
+  <!-- row 2: sorted array -->
+  <text x="62" y="168" text-anchor="middle" font-size="12" font-weight="bold" fill="#555">有序数组</text>
+  <g filter="url(#sk)">
+    <rect x="130" y="146" width="52" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="188" y="146" width="52" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="246" y="146" width="52" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="304" y="146" width="52" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="362" y="146" width="52" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="420" y="146" width="52" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <g text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6b">
+    <text x="156" y="168">0</text>
+    <text x="214" y="168">1</text>
+    <text x="272" y="168">4</text>
+    <text x="330" y="168">4</text>
+    <text x="388" y="168">5</text>
+    <text x="446" y="168">7</text>
+  </g>
+
+  <!-- F(U) prefix-difference -->
+  <text x="320" y="212" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b2b2b">定义 F(U) =「和 ≤ U 的对数」，则：答案 = F(upper) − F(lower−1)</text>
+  <g filter="url(#sk)">
+    <rect x="62" y="232" width="210" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="167" y="252" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5a22">F(6)：和 ≤ 6 的对</text>
+  <text x="167" y="272" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5a22">共 7 对</text>
+  <text x="297" y="266" text-anchor="middle" font-size="22" font-weight="bold" fill="#b85450">−</text>
+  <g filter="url(#sk)">
+    <rect x="322" y="232" width="210" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="427" y="252" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3430">F(2)：和 ≤ 2 的对</text>
+  <text x="427" y="272" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3430">共 1 对</text>
+  <path d="M 320 288 L 320 308" stroke="#7a7a7a" stroke-width="1.6" marker-end="url(#ag)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="140" y="312" width="340" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="310" y="337" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#8a6415">答案 = 7 − 1 = 6</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="52" y="376" width="536" height="44" rx="8" fill="#fdfcfc" stroke="#b0b0b0" stroke-width="1"/>
+  </g>
+  <text x="320" y="394" text-anchor="middle" font-size="11" fill="#666">双端条件 lower ≤ 和 ≤ upper 拆成两个单端条件相减（和为整数，无缝覆盖）；</text>
+  <text x="320" y="411" text-anchor="middle" font-size="11" fill="#666">排序后 F(U) 可用双指针一次线性扫描求出 → 整体 O(n log n)</text>
+</svg>
