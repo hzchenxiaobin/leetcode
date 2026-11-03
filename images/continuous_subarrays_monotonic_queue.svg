@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">单调队列：O(1) 均摊维护窗口 max / min</text>
+  <path d="M 170 40 Q 340 48 510 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="120" y="70" font-size="12" fill="#555">窗口 nums = [5, 4, 2, 4]（加入末尾的 4 时）：两个 deque 都存「下标」。</text>
+
+  <!-- maxD -->
+  <text x="120" y="106" font-size="13" font-weight="bold" fill="#b85450">maxD（值递减 → 队首即最大）</text>
+  <g filter="url(#sk)">
+    <rect x="120" y="118" width="56" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <rect x="182" y="118" width="56" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <rect x="244" y="118" width="56" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+  </g>
+  <text x="148" y="139" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a36">5</text>
+  <text x="210" y="139" text-anchor="middle" font-size="13" fill="#333">4</text>
+  <text x="272" y="139" text-anchor="middle" font-size="13" fill="#333">2</text>
+  <text x="148" y="166" text-anchor="middle" font-size="11" fill="#8a3a36">队首 = max</text>
+  <text x="330" y="139" font-size="11.5" fill="#7a4a48">← 尾部弹出值 ≤ 4 的（4 也弹，留下标更</text>
+  <text x="330" y="156" font-size="11.5" fill="#7a4a48">新的 4，过期更晚）→ push 4</text>
+  <path d="M 300 135 Q 314 135 326 135" stroke="#7a4a48" stroke-width="1.3" fill="none" marker-end="url(#ar2)" filter="url(#sk)"/>
+
+  <!-- minD -->
+  <text x="120" y="200" font-size="13" font-weight="bold" fill="#2e6e2e">minD（值递增 → 队首即最小）</text>
+  <g filter="url(#sk)">
+    <rect x="120" y="212" width="56" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="182" y="212" width="56" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+  </g>
+  <text x="148" y="233" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">2</text>
+  <text x="210" y="233" text-anchor="middle" font-size="13" fill="#333">4</text>
+  <text x="148" y="260" text-anchor="middle" font-size="11" fill="#2e6e2e">队首 = min</text>
+  <text x="330" y="228" font-size="11.5" fill="#3a5a34">← 尾部弹出值 ≥ 4 的（旧 4 被新 4 替换）</text>
+  <text x="330" y="245" font-size="11.5" fill="#3a5a34">→ 4 入队后队列仍递增</text>
+
+  <!-- shrink step -->
+  <g filter="url(#sk)">
+    <rect x="70" y="292" width="560" height="118" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="350" y="318" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">收缩循环：while maxD 队首值 − minD 队首值 &gt; 2</text>
+  <text x="110" y="348" font-size="12" fill="#7a5415">① 若 maxD 队首下标 == l（即将滑出窗口）→ 弹队首</text>
+  <text x="110" y="372" font-size="12" fill="#7a5415">② 若 minD 队首下标 == l → 弹队首</text>
+  <text x="110" y="396" font-size="12" fill="#7a5415">③ l 右移一格；单元素窗口差为 0，循环必然安全终止</text>
+  <text x="560" y="372" font-size="12.5" font-weight="bold" fill="#8a3a36">均摊 O(1)</text>
+  <text x="560" y="390" font-size="11" fill="#8a3a36">每个下标进出各一次</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="420" viewBox="0 0 680 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="420" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察一：任意两元素之差 ⟺ max − min</text>
+  <path d="M 180 40 Q 340 48 500 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="340" y="66" text-anchor="middle" font-size="12" fill="#555">定义要求所有下标对 |nums[i1] − nums[i2]| ≤ 2 —— 检查所有对是 O(k²)，但其实只看两个数：</text>
+
+  <!-- Part 1: array with max / min -->
+  <g filter="url(#sk)">
+    <rect x="120" y="96" width="56" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="182" y="96" width="56" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="244" y="96" width="56" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="306" y="96" width="56" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="368" y="96" width="56" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="148" y="118" text-anchor="middle" font-size="13" fill="#333">3</text>
+  <text x="210" y="118" text-anchor="middle" font-size="13" fill="#333">5</text>
+  <text x="272" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">6</text>
+  <text x="334" y="118" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">4</text>
+  <text x="396" y="118" text-anchor="middle" font-size="13" fill="#333">5</text>
+
+  <text x="272" y="88" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">max = 6</text>
+  <text x="334" y="152" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">min = 4</text>
+  <path d="M 272 136 Q 303 160 334 136" stroke="#7a4a48" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="303" y="178" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a4a48">max − min = 2 ≤ 2 ✓</text>
+  <text x="303" y="200" text-anchor="middle" font-size="11.5" fill="#33507a">任意元素都落在 [min, max] 内，两端都不超界 ⟹ 所有两两之差 ≤ 2</text>
+
+  <!-- Part 2: closure under shrinking -->
+  <text x="80" y="236" font-size="13" font-weight="bold" fill="#2b2b2b">观察二：合法性对「取子区间」封闭</text>
+  <g filter="url(#sk)">
+    <rect x="80" y="252" width="300" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="230" y="272" text-anchor="middle" font-size="12" fill="#2e6e2e">大窗口 [l, r] 合法（max − min ≤ 2）</text>
+  <g filter="url(#sk)">
+    <rect x="150" y="300" width="180" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="240" y="320" text-anchor="middle" font-size="12" fill="#33507a">任意子窗口 [l', r'] ⊆ [l, r] 也合法</text>
+  <path d="M 230 284 Q 240 292 240 298" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="352" text-anchor="middle" font-size="11.5" fill="#7a5415">子窗口的 max 只会变小、min 只会变大，差值单调收缩</text>
+
+  <!-- Part 3: count by right endpoint -->
+  <g filter="url(#sk)">
+    <rect x="430" y="252" width="200" height="100" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="530" y="280" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">于是：以 r 为右端点</text>
+  <text x="530" y="304" text-anchor="middle" font-size="12.5" fill="#7a5415">合法的左端点 l 连成一段</text>
+  <text x="530" y="328" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#8a3a36">ans += r − l + 1</text>
+  <path d="M 340 302 Q 385 302 426 302" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="80" y="376" width="520" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  </g>
+  <text x="340" y="397" text-anchor="middle" font-size="12.5" fill="#33507a">模板套路：r 从左到右，l 只增不减 —— 每个右端点独立计数，不重不漏</text>
+</svg>
