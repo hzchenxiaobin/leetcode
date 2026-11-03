@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：哈希集合 + 双指针，每步只查 ≤ 10 个后缀</text>
+
+  <!-- 步骤 1 -->
+  <rect x="40" y="48" width="232" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="156" y="68" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">① forbidden 建哈希集合 bad</text>
+  <text x="156" y="87" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">一趟建表 O(总字符数)，自动去重</text>
+
+  <path d="M276,74 L306,74" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="310" y="48" width="210" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="415" y="68" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② 右端 r：0 → n−1</text>
+  <text x="415" y="87" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">不变式：窗口 [left, r] 合法</text>
+
+  <path d="M415,100 L415,114 L280,114 L280,126" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="40" y="130" width="480" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="150" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ L = 1 .. min(10, r−left+1)，取后缀 word[r−L+1..r]</text>
+  <text x="280" y="169" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">起点 &lt; left 的后缀：约束已满足，跳过</text>
+
+  <path d="M280,182 L280,196" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定菱形 -->
+  <polygon points="280,202 400,242 280,282 160,242" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="234" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">word[r−L+1..r]</text>
+  <text x="280" y="252" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">∈ bad ？</text>
+
+  <!-- 是 -->
+  <rect x="56" y="224" width="126" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="119" y="239" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">left = r−L+2</text>
+  <text x="119" y="255" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">并 break</text>
+  <path d="M160,242 L184,242" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="170" y="233" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <!-- 否 -->
+  <rect x="414" y="226" width="92" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="460" y="247" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">L+1 继续</text>
+  <path d="M400,242 L410,242" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="410" y="233" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">否</text>
+
+  <!-- L+1 回环 -->
+  <path d="M460,226 L460,178 L532,178 L532,156 L292,156" stroke="#999" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- L 用尽 → ans -->
+  <path d="M280,282 L280,302 L161,302 L161,312" stroke="#999" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="290" y="298" text-anchor="start" font-size="10" fill="#666" filter="url(#rough2)">L 用尽</text>
+
+  <!-- ans 更新 -->
+  <rect x="76" y="316" width="170" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="161" y="338" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">ans = max(ans, r−left+1)</text>
+
+  <!-- r+1 回环 -->
+  <path d="M161,352 L161,372 L544,372 L544,73 L524,73" stroke="#999" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="360" y="368" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">r+1 → 回到 ②</text>
+
+  <!-- 扫完返回 -->
+  <rect x="330" y="316" width="160" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="410" y="338" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">r 扫完 → 返回 ans</text>
+  <path d="M246,334 L326,334" stroke="#999" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 侧注 -->
+  <rect x="52" y="386" width="456" height="30" rx="10" fill="#fafafa" stroke="#888" stroke-width="1" stroke-dasharray="4 4" filter="url(#rough2)"/>
+  <text x="280" y="405" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">left 单调不减（合法串的子串必合法）⇒ 双指针成立；每步查询 ≤ min(10, 窗口长) 次</text>
+</svg>
