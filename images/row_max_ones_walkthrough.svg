@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="460" viewBox="0 0 940 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="940" height="460" fill="#fdfcf7"/>
+  <text x="470" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例演算：扫描中 [ans, best] 的变化</text>
+  <path d="M 260 40 Q 470 48 680 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="470" y="62" text-anchor="middle" font-size="11" fill="#666">初始 best = −1，ans = 0（−1 保证首行必然上擂台）</text>
+
+  <!-- ===== 表头 ===== -->
+  <g font-size="11" font-weight="bold" fill="#2b6e9e">
+    <g filter="url(#sk)"><rect x="70" y="76" width="46" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="93" y="97" text-anchor="middle">i</text>
+    <g filter="url(#sk)"><rect x="116" y="76" width="166" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="199" y="97" text-anchor="middle">mat[i]</text>
+    <g filter="url(#sk)"><rect x="282" y="76" width="70" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="317" y="97" text-anchor="middle">cnt</text>
+    <g filter="url(#sk)"><rect x="352" y="76" width="120" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="412" y="97" text-anchor="middle">cnt &gt; best ?</text>
+    <g filter="url(#sk)"><rect x="472" y="76" width="70" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="507" y="97" text-anchor="middle">best</text>
+    <g filter="url(#sk)"><rect x="542" y="76" width="70" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="577" y="97" text-anchor="middle">ans</text>
+    <g filter="url(#sk)"><rect x="612" y="76" width="268" height="32" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="746" y="97" text-anchor="middle">动作</text>
+  </g>
+
+  <!-- ===== 行 0 : [0,1,0,1] cnt=2 ===== -->
+  <g font-size="12">
+    <g filter="url(#sk)"><rect x="70" y="108" width="46" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="93" y="135" text-anchor="middle" font-weight="bold" fill="#444">0</text>
+    <g filter="url(#sk)"><rect x="116" y="108" width="166" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <g filter="url(#sk)"><rect x="128" y="117" width="28" height="26" fill="#f0ede4" stroke="#ccc" stroke-width="1.1"/></g>
+    <text x="142" y="135" text-anchor="middle" font-size="11" fill="#aaa">0</text>
+    <g filter="url(#sk)"><rect x="160" y="117" width="28" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="174" y="135" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="192" y="117" width="28" height="26" fill="#f0ede4" stroke="#ccc" stroke-width="1.1"/></g>
+    <text x="206" y="135" text-anchor="middle" font-size="11" fill="#aaa">0</text>
+    <g filter="url(#sk)"><rect x="224" y="117" width="28" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="238" y="135" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="282" y="108" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="317" y="135" text-anchor="middle" font-weight="bold" fill="#444">2</text>
+    <g filter="url(#sk)"><rect x="352" y="108" width="120" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="412" y="135" text-anchor="middle" font-family="monospace" font-weight="bold" fill="#2e6e2e">2 &gt; −1 ✓</text>
+    <g filter="url(#sk)"><rect x="472" y="108" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="507" y="135" text-anchor="middle" font-family="monospace" font-size="11" fill="#444">−1 → 2</text>
+    <g filter="url(#sk)"><rect x="542" y="108" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="577" y="135" text-anchor="middle" font-family="monospace" fill="#444">0</text>
+    <g filter="url(#sk)"><rect x="620" y="115" width="252" height="30" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="746" y="135" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">更新擂主（首行必上）</text>
+  </g>
+
+  <!-- ===== 行 1 : [1,1,0,0] cnt=2 ===== -->
+  <g font-size="12">
+    <g filter="url(#sk)"><rect x="70" y="152" width="46" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="93" y="179" text-anchor="middle" font-weight="bold" fill="#444">1</text>
+    <g filter="url(#sk)"><rect x="116" y="152" width="166" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <g filter="url(#sk)"><rect x="128" y="161" width="28" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="142" y="179" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="160" y="161" width="28" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="174" y="179" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="192" y="161" width="28" height="26" fill="#f0ede4" stroke="#ccc" stroke-width="1.1"/></g>
+    <text x="206" y="179" text-anchor="middle" font-size="11" fill="#aaa">0</text>
+    <g filter="url(#sk)"><rect x="224" y="161" width="28" height="26" fill="#f0ede4" stroke="#ccc" stroke-width="1.1"/></g>
+    <text x="238" y="179" text-anchor="middle" font-size="11" fill="#aaa">0</text>
+    <g filter="url(#sk)"><rect x="282" y="152" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="317" y="179" text-anchor="middle" font-weight="bold" fill="#444">2</text>
+    <g filter="url(#sk)"><rect x="352" y="152" width="120" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="412" y="179" text-anchor="middle" font-family="monospace" font-weight="bold" fill="#b03a3a">2 &gt; 2 ✗</text>
+    <g filter="url(#sk)"><rect x="472" y="152" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="507" y="179" text-anchor="middle" font-family="monospace" font-size="11" fill="#888">2（不变）</text>
+    <g filter="url(#sk)"><rect x="542" y="152" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="577" y="179" text-anchor="middle" font-family="monospace" font-size="11" fill="#888">0（不变）</text>
+    <g filter="url(#sk)"><rect x="620" y="159" width="252" height="30" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/></g>
+    <text x="746" y="179" text-anchor="middle" font-size="11" fill="#7a5415" font-weight="bold">不更新：并列保留行 0</text>
+  </g>
+
+  <!-- ===== 行 2 : [0,1,1,1] cnt=3 ===== -->
+  <g font-size="12">
+    <g filter="url(#sk)"><rect x="70" y="196" width="46" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="93" y="223" text-anchor="middle" font-weight="bold" fill="#444">2</text>
+    <g filter="url(#sk)"><rect x="116" y="196" width="166" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <g filter="url(#sk)"><rect x="128" y="205" width="28" height="26" fill="#f0ede4" stroke="#ccc" stroke-width="1.1"/></g>
+    <text x="142" y="223" text-anchor="middle" font-size="11" fill="#aaa">0</text>
+    <g filter="url(#sk)"><rect x="160" y="205" width="28" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="174" y="223" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="192" y="205" width="28" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="206" y="223" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="224" y="205" width="28" height="26" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="238" y="223" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">1</text>
+    <g filter="url(#sk)"><rect x="282" y="196" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="317" y="223" text-anchor="middle" font-weight="bold" fill="#444">3</text>
+    <g filter="url(#sk)"><rect x="352" y="196" width="120" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="412" y="223" text-anchor="middle" font-family="monospace" font-weight="bold" fill="#2e6e2e">3 &gt; 2 ✓</text>
+    <g filter="url(#sk)"><rect x="472" y="196" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="507" y="223" text-anchor="middle" font-family="monospace" font-size="11" fill="#444">2 → 3</text>
+    <g filter="url(#sk)"><rect x="542" y="196" width="70" height="44" fill="#ffffff" stroke="#ddd" stroke-width="1.2"/></g>
+    <text x="577" y="223" text-anchor="middle" font-family="monospace" font-size="11" fill="#444">0 → 2</text>
+    <g filter="url(#sk)"><rect x="620" y="203" width="252" height="30" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+    <text x="746" y="223" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">更新擂主 ★</text>
+  </g>
+
+  <!-- ===== 结果 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="262" width="820" height="60" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="84" y="286" font-size="12" fill="#2e6e2e" font-weight="bold">扫描结束：返回 [ans, best] = [2, 3] —— 行 2 有 3 个 1</text>
+  <text x="84" y="308" font-size="11" fill="#555">行 1 与行 0 并列（各 2 个 1），被「严格 &gt;」挡下，ans 停留在 0。</text>
+
+  <!-- ===== 易错 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="340" width="820" height="84" rx="8" fill="#fdf2f3" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5 3"/>
+  </g>
+  <text x="84" y="366" font-size="12" font-weight="bold" fill="#7a2828">易错：cnt &gt;= best 会毁掉「并列取最小下标」</text>
+  <text x="84" y="390" font-size="11" fill="#444">官方示例 1（两行各 1 个 1）：正确返回 [0,1]，误用 &gt;= 则错成 [1,1]。</text>
+  <text x="84" y="412" font-size="11" fill="#444">上例中行 1 也会顶掉行 0（同为 2 个 1），只因行 2 更强才掩盖了 bug。</text>
+</svg>

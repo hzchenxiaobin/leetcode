@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="430" viewBox="0 0 660 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="660" height="430" fill="#fdfcf7"/>
+  <text x="330" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例 1 演算：频次 → 权值 → 自底向上 DP</text>
+  <path d="M 160 42 Q 330 50 500 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 左：最终方案树 -->
+  <g filter="url(#sk)">
+    <path d="M 85 120 L 170 195" stroke="#888" stroke-width="1.8" fill="none"/>
+    <path d="M 170 195 L 255 105" stroke="#888" stroke-width="1.8" fill="none"/>
+    <path d="M 170 195 L 255 285" stroke="#888" stroke-width="1.8" fill="none"/>
+  </g>
+
+  <g filter="url(#sk)"><circle cx="85" cy="120" r="22" fill="#ffe8bf" stroke="#d6a040" stroke-width="2.2"/></g>
+  <text x="85" y="126" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">0</text>
+  <text x="85" y="90" text-anchor="middle" font-size="11" fill="#7a5415">价 2→1</text>
+
+  <g filter="url(#sk)"><circle cx="170" cy="195" r="22" fill="#ffffff" stroke="#4a8edb" stroke-width="2"/></g>
+  <text x="170" y="201" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">1</text>
+  <text x="170" y="232" text-anchor="middle" font-size="11" fill="#666">价 2</text>
+
+  <g filter="url(#sk)"><circle cx="255" cy="105" r="22" fill="#ffe8bf" stroke="#d6a040" stroke-width="2.2"/></g>
+  <text x="255" y="111" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">2</text>
+  <text x="255" y="74" text-anchor="middle" font-size="11" fill="#7a5415">价 10→5</text>
+
+  <g filter="url(#sk)"><circle cx="255" cy="285" r="22" fill="#ffe8bf" stroke="#d6a040" stroke-width="2.2"/></g>
+  <text x="255" y="291" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">3</text>
+  <text x="255" y="322" text-anchor="middle" font-size="11" fill="#7a5415">价 6→3</text>
+
+  <g filter="url(#sk)"><rect x="40" y="340" width="265" height="56" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <text x="172" y="362" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">减半集 S = {0, 2, 3}（两两不相邻）</text>
+  <text x="172" y="382" text-anchor="middle" font-size="10.5" fill="#4a6e4a">节点旁：原价 → 减半后价格</text>
+
+  <!-- 右：DP 表 -->
+  <text x="492" y="62" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">后序计算（先叶后根）</text>
+
+  <g filter="url(#sk)">
+    <rect x="330" y="72" width="325" height="166" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.5"/>
+    <path d="M 330 102 L 655 102" stroke="#bbb" stroke-width="1" fill="none"/>
+    <path d="M 330 136 L 655 136" stroke="#bbb" stroke-width="1" fill="none"/>
+    <path d="M 330 170 L 655 170" stroke="#bbb" stroke-width="1" fill="none"/>
+    <path d="M 330 204 L 655 204" stroke="#bbb" stroke-width="1" fill="none"/>
+    <path d="M 375 72 L 375 238" stroke="#bbb" stroke-width="1" fill="none"/>
+    <path d="M 470 72 L 470 238" stroke="#bbb" stroke-width="1" fill="none"/>
+    <path d="M 515 72 L 515 238" stroke="#bbb" stroke-width="1" fill="none"/>
+    <path d="M 560 72 L 560 238" stroke="#bbb" stroke-width="1" fill="none"/>
+    <path d="M 605 72 L 605 238" stroke="#bbb" stroke-width="1" fill="none"/>
+  </g>
+
+  <text x="352" y="91" text-anchor="middle" font-size="11" font-weight="bold" fill="#444">节点</text>
+  <text x="422" y="91" text-anchor="middle" font-size="11" font-weight="bold" fill="#444">price·freq</text>
+  <text x="492" y="91" text-anchor="middle" font-size="11" font-weight="bold" fill="#444">w</text>
+  <text x="537" y="91" text-anchor="middle" font-size="11" font-weight="bold" fill="#444">dp0</text>
+  <text x="582" y="91" text-anchor="middle" font-size="11" font-weight="bold" fill="#444">dp1</text>
+  <text x="630" y="91" text-anchor="middle" font-size="11" font-weight="bold" fill="#444">取舍</text>
+
+  <text x="352" y="123" text-anchor="middle" font-size="11.5" fill="#333">2</text>
+  <text x="422" y="123" text-anchor="middle" font-size="11.5" fill="#333">10×2=20</text>
+  <text x="492" y="123" text-anchor="middle" font-size="11.5" fill="#333">10</text>
+  <text x="537" y="123" text-anchor="middle" font-size="11.5" fill="#333">0</text>
+  <text x="582" y="123" text-anchor="middle" font-size="11.5" fill="#333">10</text>
+  <text x="630" y="123" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">选</text>
+
+  <text x="352" y="157" text-anchor="middle" font-size="11.5" fill="#333">3</text>
+  <text x="422" y="157" text-anchor="middle" font-size="11.5" fill="#333">6×2=12</text>
+  <text x="492" y="157" text-anchor="middle" font-size="11.5" fill="#333">6</text>
+  <text x="537" y="157" text-anchor="middle" font-size="11.5" fill="#333">0</text>
+  <text x="582" y="157" text-anchor="middle" font-size="11.5" fill="#333">6</text>
+  <text x="630" y="157" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">选</text>
+
+  <text x="352" y="191" text-anchor="middle" font-size="11.5" fill="#333">1</text>
+  <text x="422" y="191" text-anchor="middle" font-size="11.5" fill="#333">2×3=6</text>
+  <text x="492" y="191" text-anchor="middle" font-size="11.5" fill="#333">3</text>
+  <text x="537" y="191" text-anchor="middle" font-size="11.5" fill="#333">16</text>
+  <text x="582" y="191" text-anchor="middle" font-size="11.5" fill="#333">3</text>
+  <text x="630" y="191" text-anchor="middle" font-size="11.5" fill="#b03a3a">不选</text>
+
+  <text x="352" y="225" text-anchor="middle" font-size="11.5" fill="#333">0</text>
+  <text x="422" y="225" text-anchor="middle" font-size="11.5" fill="#333">2×1=2</text>
+  <text x="492" y="225" text-anchor="middle" font-size="11.5" fill="#333">1</text>
+  <text x="537" y="225" text-anchor="middle" font-size="11.5" fill="#333">16</text>
+
+  <g filter="url(#sk)"><rect x="560" y="204" width="45" height="34" rx="3" fill="#fce4ec" stroke="#b03a3a" stroke-width="1.8"/></g>
+  <text x="582" y="225" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b03a3a">17</text>
+  <text x="630" y="225" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">选</text>
+
+  <text x="492" y="258" text-anchor="middle" font-size="10.5" fill="#888">计算顺序：2 → 3 → 1 → 0（后序）</text>
+
+  <g filter="url(#sk)"><rect x="350" y="272" width="290" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="495" y="294" text-anchor="middle" font-size="11.5" fill="#7a3a44">total = 40，max(16, 17) = 17</text>
+  <text x="495" y="316" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">答案 = 40 − 17 = 23 ✓</text>
+</svg>

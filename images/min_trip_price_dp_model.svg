@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="400" fill="#fdfcf7"/>
+  <text x="320" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">树形 DP 状态转移：u 减半 ⇒ 孩子必不减半</text>
+  <path d="M 150 42 Q 320 50 490 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 左面板：状态 0 -->
+  <g filter="url(#sk)"><rect x="30" y="56" width="295" height="252" rx="10" fill="#e8f0fe" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="177" y="80" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">状态 dp[u][0]：u 不减半</text>
+
+  <g filter="url(#sk)">
+    <path d="M 160 148 L 114 220" stroke="#888" stroke-width="1.8" fill="none"/>
+    <path d="M 194 148 L 240 220" stroke="#888" stroke-width="1.8" fill="none"/>
+  </g>
+  <g filter="url(#sk)"><circle cx="177" cy="132" r="24" fill="#ffffff" stroke="#4a8edb" stroke-width="2"/></g>
+  <text x="177" y="138" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">u</text>
+  <g filter="url(#sk)"><circle cx="106" cy="244" r="22" fill="#ffffff" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="106" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6e9e">0 / 1</text>
+  <g filter="url(#sk)"><circle cx="248" cy="244" r="22" fill="#ffffff" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="248" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6e9e">0 / 1</text>
+  <text x="112" y="182" font-size="10.5" font-weight="bold" fill="#2e6e2e">随意</text>
+  <text x="226" y="182" font-size="10.5" font-weight="bold" fill="#2e6e2e">随意</text>
+  <text x="177" y="294" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b6e9e">dp[u][0] = Σ max(dp[c][0], dp[c][1])</text>
+
+  <!-- 右面板：状态 1 -->
+  <g filter="url(#sk)"><rect x="330" y="56" width="295" height="252" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="477" y="80" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">状态 dp[u][1]：u 减半</text>
+
+  <g filter="url(#sk)">
+    <path d="M 460 148 L 414 220" stroke="#888" stroke-width="1.8" fill="none"/>
+    <path d="M 494 148 L 540 220" stroke="#888" stroke-width="1.8" fill="none"/>
+  </g>
+  <g filter="url(#sk)"><circle cx="477" cy="132" r="24" fill="#ffe8bf" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="477" y="138" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">u</text>
+  <text x="516" y="128" font-size="11" font-weight="bold" fill="#b07515">价 × ½</text>
+  <g filter="url(#sk)">
+    <path d="M 431 178 L 443 190" stroke="#b03a3a" stroke-width="2.2" fill="none"/>
+    <path d="M 443 178 L 431 190" stroke="#b03a3a" stroke-width="2.2" fill="none"/>
+    <path d="M 511 178 L 523 190" stroke="#b03a3a" stroke-width="2.2" fill="none"/>
+    <path d="M 523 178 L 511 190" stroke="#b03a3a" stroke-width="2.2" fill="none"/>
+  </g>
+  <g filter="url(#sk)"><circle cx="406" cy="244" r="22" fill="#ffffff" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="406" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6e9e">0</text>
+  <g filter="url(#sk)"><circle cx="548" cy="244" r="22" fill="#ffffff" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="548" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6e9e">0</text>
+  <text x="477" y="208" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b03a3a">孩子必为状态 0</text>
+  <text x="477" y="288" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">dp[u][1] = w(u) + Σ dp[c][0]</text>
+  <text x="477" y="304" text-anchor="middle" font-size="11" fill="#7a5415">w(u) = price[u]·freq[u] / 2</text>
+
+  <!-- 底部结论 -->
+  <g filter="url(#sk)"><rect x="105" y="326" width="430" height="52" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="320" y="346" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">根任取（如 0）：答案 = total − max(dp[r][0], dp[r][1])</text>
+  <text x="320" y="366" text-anchor="middle" font-size="11" fill="#4a6e4a">u 减半 ⇒ 孩子全部不减半；u 不减半 ⇒ 孩子随意</text>
+</svg>
