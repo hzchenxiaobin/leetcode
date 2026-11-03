@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b">核心观察：一条线的「完成时刻」= 线内各格涂色时刻的最大值</text>
+  <path d="M 80 34 Q 280 42 480 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- Panel A: reverse index -->
+  <text x="70" y="58" font-size="12.5" font-weight="bold" fill="#4a7a3a">① 反向索引：arr 的下标 i = 值 arr[i] 的涂色时刻</text>
+
+  <g filter="url(#rough2)">
+    <rect x="90" y="68" width="52" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="150" y="68" width="52" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="210" y="68" width="52" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="270" y="68" width="52" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="116" y="92" text-anchor="middle" font-size="15" fill="#333">2</text>
+  <text x="176" y="92" text-anchor="middle" font-size="15" fill="#333">8</text>
+  <text x="236" y="92" text-anchor="middle" font-size="15" fill="#333">7</text>
+  <text x="296" y="92" text-anchor="middle" font-size="15" font-weight="bold" fill="#b85450">4</text>
+  <text x="336" y="92" font-size="14" fill="#999">…</text>
+
+  <text x="116" y="122" text-anchor="middle" font-size="10.5" fill="#999">时刻 0</text>
+  <text x="176" y="122" text-anchor="middle" font-size="10.5" fill="#999">时刻 1</text>
+  <text x="236" y="122" text-anchor="middle" font-size="10.5" fill="#999">时刻 2</text>
+  <text x="296" y="122" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#d6a040">时刻 3</text>
+
+  <rect x="370" y="62" width="160" height="64" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="450" y="84" text-anchor="middle" font-size="11.5" fill="#2b2b2b">一遍扫 arr 建表 idx[v]，</text>
+  <text x="450" y="104" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">O(1) 查到任何值的涂色时刻</text>
+
+  <path d="M 280 136 L 280 156" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Panel B: completion time of one line -->
+  <text x="70" y="182" font-size="12.5" font-weight="bold" fill="#446688">② 一条线（示例 2 的第二列）的完成时刻：线内取最大（瓶颈）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="90" y="194" width="58" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="90" y="234" width="58" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="90" y="274" width="58" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="119" y="216" text-anchor="middle" font-size="14" fill="#333">2</text>
+  <text x="119" y="256" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450">4</text>
+  <text x="119" y="296" text-anchor="middle" font-size="14" fill="#333">7</text>
+  <text x="158" y="216" font-size="10.5" fill="#999">t = 0</text>
+  <text x="158" y="256" font-size="10.5" font-weight="bold" fill="#d6a040">t = 3（瓶颈）</text>
+  <text x="158" y="296" font-size="10.5" fill="#999">t = 2</text>
+  <text x="119" y="324" text-anchor="middle" font-size="10.5" fill="#999">每格：值 / 涂色时刻 t</text>
+
+  <path d="M 248 248 L 272 248" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <rect x="280" y="230" width="100" height="36" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="253" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">max = 3</text>
+
+  <rect x="396" y="206" width="134" height="84" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="463" y="230" text-anchor="middle" font-size="10.5" fill="#2b2b2b">这条列涂满 ⇔</text>
+  <text x="463" y="248" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2b2b2b">最后一格（时刻 3 的 4）</text>
+  <text x="463" y="266" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2b2b2b">被涂上</text>
+  <text x="463" y="284" text-anchor="middle" font-size="10.5" fill="#2b2b2b">⇒ 完成时刻 T = 3</text>
+
+  <path d="M 280 336 L 280 356" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Panel C: answer formula -->
+  <text x="70" y="382" font-size="12.5" font-weight="bold" fill="#b85450">③ 答案：所有 m+n 条线里「最早涂满」的那条 —— 再取最小值</text>
+
+  <rect x="48" y="394" width="238" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="167" y="416" text-anchor="middle" font-size="11.5" fill="#2b2b2b">行 r：T(r) = max{ idx[mat[r][c]] : c }</text>
+  <text x="167" y="438" text-anchor="middle" font-size="11.5" fill="#2b2b2b">列 c：T(c) = max{ idx[mat[r][c]] : r }</text>
+
+  <path d="M 294 423 L 314 423" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <rect x="322" y="394" width="208" height="58" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="426" y="416" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333">答案 = min(所有线的 T)</text>
+  <text x="426" y="438" text-anchor="middle" font-size="11" fill="#2b2b2b">max 刻画线内瓶颈，min 选最早完成</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 412" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="412" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b">核心概念：第 i 轮是否翻倍 = 回看 [i−2, i−1] 的原始瓶数</text>
+  <path d="M 100 34 Q 280 40 460 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- window label -->
+  <text x="252" y="54" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a">回看窗口：长度恰为 2</text>
+
+  <!-- window dashed rect -->
+  <rect x="188" y="60" width="128" height="58" rx="8" fill="none" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="6,4" filter="url(#rough2)"/>
+
+  <!-- round cells -->
+  <g filter="url(#rough2)">
+    <rect x="130" y="70" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="194" y="70" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="258" y="70" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="322" y="70" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="156" y="96" text-anchor="middle" font-size="16" font-weight="bold" fill="#b85450">10</text>
+  <text x="220" y="96" text-anchor="middle" font-size="16" fill="#333">3</text>
+  <text x="284" y="96" text-anchor="middle" font-size="16" font-weight="bold" fill="#b85450">10</text>
+  <text x="348" y="96" text-anchor="middle" font-size="16" fill="#333">5</text>
+  <text x="156" y="126" text-anchor="middle" font-size="10.5" fill="#999">i−3</text>
+  <text x="220" y="126" text-anchor="middle" font-size="10.5" fill="#999">i−2</text>
+  <text x="284" y="126" text-anchor="middle" font-size="10.5" fill="#999">i−1</text>
+  <text x="348" y="126" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#d6a040">i</text>
+
+  <!-- out-of-window annotation for i-3 -->
+  <path d="M 156 132 L 156 148" stroke="#b85450" stroke-width="1.3" fill="none" stroke-dasharray="4,3" filter="url(#rough2)"/>
+  <text x="156" y="162" text-anchor="middle" font-size="10.5" fill="#b85450">10 已出窗：只奖励</text>
+  <text x="156" y="176" text-anchor="middle" font-size="10.5" fill="#b85450">其后的 i−2、i−1 两轮</text>
+
+  <!-- arrow from window to cell i -->
+  <path d="M 240 122 Q 292 146 336 118" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  <text x="296" y="150" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">窗口内有 10 ⇒ 第 i 轮 ×2</text>
+
+  <!-- formula box -->
+  <rect x="80" y="200" width="400" height="40" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="225" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">第 i 轮价值 = 2 × 5 = 10（原始 10 在窗口内 ⇒ 翻倍一次）</text>
+
+  <path d="M 280 240 L 280 258" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- general formula -->
+  <rect x="55" y="262" width="450" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="286" text-anchor="middle" font-size="12" fill="#2b2b2b">val(i) = 2·x[i] ⇔ ( i≥1 且 x[i−1]=10 ) ∨ ( i≥2 且 x[i−2]=10 )</text>
+  <text x="280" y="308" text-anchor="middle" font-size="11.5" fill="#2b2b2b">布尔「或」：两轮都是 10 也只翻倍一次（2·x[i]，不是 4·x[i]）</text>
+
+  <path d="M 280 326 L 280 344" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- raw value note -->
+  <rect x="50" y="348" width="460" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="368" text-anchor="middle" font-size="11.5" fill="#2b2b2b">触发看「原始击瓶数」：价值 2×5=10 的轮次不是 strike；</text>
+  <text x="280" y="388" text-anchor="middle" font-size="11.5" fill="#2b2b2b">原始 10 翻倍成价值 20 的轮次仍是 strike（判定不受翻倍影响）</text>
+</svg>

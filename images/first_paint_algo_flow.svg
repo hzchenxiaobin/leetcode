@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="470" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b">算法流程：反向索引三步走，min 套 max</text>
+  <path d="M 110 34 Q 280 42 450 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- Step 1 -->
+  <rect x="60" y="50" width="440" height="54" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="72" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">① 扫 arr 一遍：idx[arr[i]] = i（值 → 涂色时刻）</text>
+  <text x="280" y="92" text-anchor="middle" font-size="11" fill="#2b2b2b">长度 mn+1 的数组直接寻址，无需哈希表</text>
+
+  <path d="M 280 104 L 280 120" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Step 2 -->
+  <rect x="60" y="124" width="440" height="100" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="146" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">② 逐行扫：cur = max{ idx[mat[r][c]] : c }</text>
+  <text x="280" y="166" text-anchor="middle" font-size="11.5" fill="#2b2b2b">ans = min(ans, cur)</text>
+  <text x="92" y="204" font-size="10.5" fill="#999">行 r 的三个时刻：</text>
+  <g filter="url(#rough2)">
+    <rect x="230" y="186" width="30" height="26" rx="4" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="264" y="186" width="30" height="26" rx="4" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="298" y="186" width="30" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="245" y="204" text-anchor="middle" font-size="11" fill="#333">5</text>
+  <text x="279" y="204" text-anchor="middle" font-size="11" fill="#333">0</text>
+  <text x="313" y="204" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">6</text>
+  <text x="340" y="204" font-size="11" fill="#2b2b2b">→ max = 6</text>
+
+  <path d="M 280 224 L 280 240" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Step 3 -->
+  <rect x="60" y="244" width="440" height="100" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="266" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">③ 逐列扫：cur = max{ idx[mat[r][c]] : r }</text>
+  <text x="280" y="286" text-anchor="middle" font-size="11.5" fill="#2b2b2b">ans = min(ans, cur)　（Python 可 zip(*mat) 转置）</text>
+  <text x="92" y="324" font-size="10.5" fill="#999">列 c 的三个时刻：</text>
+  <g filter="url(#rough2)">
+    <rect x="230" y="306" width="30" height="26" rx="4" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="264" y="306" width="30" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="298" y="306" width="30" height="26" rx="4" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="245" y="324" text-anchor="middle" font-size="11" fill="#333">0</text>
+  <text x="279" y="324" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">3</text>
+  <text x="313" y="324" text-anchor="middle" font-size="11" fill="#333">2</text>
+  <text x="340" y="324" font-size="11" fill="#2b2b2b">→ max = 3</text>
+
+  <path d="M 280 344 L 280 360" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- Step 4 -->
+  <rect x="60" y="364" width="440" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="386" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">④ 返回 ans</text>
+  <text x="280" y="408" text-anchor="middle" font-size="11" fill="#2b2b2b">= m+n 条线完成时刻的最小值；无需哨兵返回值（答案必存在）</text>
+
+  <!-- pitfall note -->
+  <rect x="52" y="430" width="456" height="32" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="450" text-anchor="middle" font-size="11" fill="#2b2b2b">赛时易错：② ③ 两段复制粘贴后，循环变量 r / c 忘了对调会静默出错</text>
+</svg>

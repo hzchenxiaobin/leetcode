@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 496" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="496" fill="#fafafa"/>
+
+  <!-- ============ Part 1: score(a) ============ -->
+  <text x="330" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">① score(a)：单玩家逐轮计分</text>
+  <path d="M 150 32 Q 330 38 510 32" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <rect x="200" y="44" width="160" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="280" y="63" text-anchor="middle" font-size="12" fill="#2b2b2b">s = 0，i = 0</text>
+
+  <path d="M 280 74 L 280 86" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <polygon points="280,90 370,128 280,166 190,128" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="122" text-anchor="middle" font-size="10.5" fill="#2b2b2b">i≥1 且 a[i−1]=10</text>
+  <text x="280" y="138" text-anchor="middle" font-size="10.5" fill="#2b2b2b">或 i≥2 且 a[i−2]=10 ？</text>
+
+  <!-- yes branch -->
+  <text x="384" y="122" text-anchor="middle" font-size="11" fill="#4a7a3a">是</text>
+  <path d="M 370 128 L 402 128" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <rect x="406" y="114" width="130" height="28" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="471" y="132" text-anchor="middle" font-size="11.5" fill="#2b2b2b">s += 2·a[i]</text>
+
+  <!-- no branch -->
+  <text x="294" y="182" text-anchor="middle" font-size="11" fill="#d6a040">否</text>
+  <path d="M 280 166 L 280 186 L 310 186" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <rect x="314" y="172" width="130" height="28" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="379" y="190" text-anchor="middle" font-size="11.5" fill="#2b2b2b">s += a[i]</text>
+
+  <!-- converge into loop box -->
+  <path d="M 471 142 L 471 226" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <path d="M 379 200 L 379 210 L 430 210 L 430 226" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <rect x="400" y="228" width="140" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="470" y="242" text-anchor="middle" font-size="11" fill="#2b2b2b">i++（i &lt; n</text>
+  <text x="470" y="256" text-anchor="middle" font-size="11" fill="#2b2b2b">⇒ 回到上方判定）</text>
+
+  <!-- loop back to diamond -->
+  <path d="M 400 245 L 190 245 L 190 134" stroke="#3a3a3a" stroke-width="1.2" fill="none" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+  <text x="295" y="239" text-anchor="middle" font-size="10.5" fill="#888">i &lt; n ⇒ 重复判定</text>
+
+  <!-- exit -->
+  <path d="M 470 262 L 470 296" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <text x="482" y="284" font-size="10.5" fill="#666">i = n，计分结束</text>
+
+  <rect x="400" y="298" width="140" height="28" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="470" y="316" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">返回 s</text>
+
+  <!-- ============ Part 2: isWinner ============ -->
+  <text x="330" y="348" text-anchor="middle" font-size="15" font-weight="bold" fill="#446688">② isWinner：两玩家各自计分后比较</text>
+  <path d="M 150 356 Q 330 362 510 356" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <rect x="50" y="370" width="150" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="125" y="389" text-anchor="middle" font-size="11" fill="#2b2b2b">s1 = score(player1)</text>
+
+  <rect x="50" y="408" width="150" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="125" y="427" text-anchor="middle" font-size="11" fill="#2b2b2b">s2 = score(player2)</text>
+
+  <path d="M 200 385 Q 228 385 253 392" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <path d="M 200 423 Q 228 423 253 406" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <polygon points="300,374 348,398 300,422 252,398" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="402" text-anchor="middle" font-size="11.5" fill="#2b2b2b">s1 ? s2</text>
+
+  <path d="M 348 398 L 374 380" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <path d="M 348 398 L 374 400" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <path d="M 348 398 L 374 422" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <rect x="378" y="368" width="200" height="24" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="478" y="384" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">s1 &gt; s2 ⇒ 返回 1</text>
+
+  <rect x="378" y="396" width="200" height="24" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="478" y="412" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">s2 &gt; s1 ⇒ 返回 2</text>
+
+  <rect x="378" y="424" width="200" height="24" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="478" y="440" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">s1 = s2 ⇒ 返回 0</text>
+
+  <!-- bottom note -->
+  <rect x="40" y="460" width="580" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1" filter="url(#rough2)"/>
+  <text x="330" y="477" text-anchor="middle" font-size="11.5" fill="#2b2b2b">score() 复用：两名玩家规则一致、互不耦合，一份循环服务两人，防复制粘贴改漏</text>
+</svg>
