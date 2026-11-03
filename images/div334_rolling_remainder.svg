@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="470" fill="#fafafa"/>
+
+  <text x="340" y="36" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">滚动余数：追加一位 = 旧数 ×10 + d</text>
+  <path d="M 170 46 Q 340 54 510 46" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="340" y="66" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">10^5 位的大数存不下？只需维护它 mod m 的「摘要」，随位数滚动更新</text>
+
+  <!-- 数字格子：word = 9 9 8 2 4 4 | 3 | 5 3 -->
+  <text x="46" y="108" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">word =</text>
+
+  <g filter="url(#rough2)">
+    <rect x="106" y="88" width="44" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="150" y="88" width="44" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="194" y="88" width="44" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="238" y="88" width="44" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="282" y="88" width="44" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="326" y="88" width="44" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="378" y="88" width="44" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5"/>
+    <rect x="430" y="88" width="44" height="34" rx="4" fill="#f0f0f0" stroke="#aaaaaa" stroke-width="1.2"/>
+    <rect x="474" y="88" width="44" height="34" rx="4" fill="#f0f0f0" stroke="#aaaaaa" stroke-width="1.2"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" text-anchor="middle" fill="#333">
+    <text x="128" y="110">9</text>
+    <text x="172" y="110">9</text>
+    <text x="216" y="110">8</text>
+    <text x="260" y="110">2</text>
+    <text x="304" y="110">4</text>
+    <text x="348" y="110">4</text>
+    <text x="400" y="110" font-weight="bold" fill="#b07310">3</text>
+    <text x="452" y="110" fill="#999">5</text>
+    <text x="496" y="110" fill="#999">3</text>
+  </g>
+
+  <!-- 括注：前缀 V_old / 新位 d / 未处理 -->
+  <path d="M 110 132 Q 174 144 370 132" stroke="#446688" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+  <text x="240" y="154" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">已处理前缀 V_old（只需它的余数 r）</text>
+  <path d="M 400 130 L 400 140" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="400" y="154" text-anchor="middle" font-size="12" fill="#b07310" filter="url(#rough2)">新位 d</text>
+  <text x="474" y="154" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">还没轮到</text>
+
+  <!-- 公式区：绿框 拼接 -->
+  <g filter="url(#rough2)">
+    <rect x="46" y="176" width="290" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="191" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5a24" filter="url(#rough2)">追加一位后的新前缀数值</text>
+  <text x="191" y="224" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">V_new = V_old × 10 + d</text>
+
+  <!-- 公式区：蓝框 模分配律 -->
+  <g filter="url(#rough2)">
+    <rect x="356" y="176" width="286" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="499" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4d70" filter="url(#rough2)">模对乘加可分配</text>
+  <text x="499" y="224" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">(a×b+c) mod m = ((a mod m)×b+c) mod m</text>
+
+  <!-- 箭头连接到核心递推 -->
+  <path d="M 191 244 L 191 262" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 499 244 L 499 262" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 核心递推框 -->
+  <g filter="url(#rough)">
+    <rect x="106" y="268" width="468" height="58" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5"/>
+  </g>
+  <text x="340" y="292" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6210" filter="url(#rough2)">核心递推：只维护 r &lt; m，不存大数</text>
+  <text x="340" y="315" text-anchor="middle" font-size="17" font-weight="bold" fill="#333" filter="url(#rough2)">r ← (r × 10 + d) mod m</text>
+
+  <!-- 数值范围说明 -->
+  <g filter="url(#rough2)">
+    <rect x="46" y="348" width="290" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+  </g>
+  <text x="191" y="369" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5a24" filter="url(#rough2)">r 始终 &lt; m ≤ 10^9</text>
+  <text x="191" y="389" text-anchor="middle" font-size="12" fill="#444" filter="url(#rough2)">一个机器字就装下，滚动 O(1)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="356" y="348" width="286" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="499" y="369" text-anchor="middle" font-size="12" font-weight="bold" fill="#8f3a36" filter="url(#rough2)">⚠ 中间量 r×10+d ≤ 10^10+9</text>
+  <text x="499" y="389" text-anchor="middle" font-size="12" fill="#8f3a36" filter="url(#rough2)">超出 int（约 2.1×10^9）→ 必须 long long</text>
+
+  <!-- 底部一句话 -->
+  <g filter="url(#rough2)">
+    <rect x="46" y="416" width="596" height="40" rx="8" fill="#fdfdfd" stroke="#999999" stroke-width="1.2"/>
+  </g>
+  <text x="340" y="441" text-anchor="middle" font-size="12.5" fill="#444" filter="url(#rough2)">div[i] = 1 当且仅当滚动到第 i 位时 r 恰好为 0 —— 整除判定被压成「余数是否归零」</text>
+</svg>
