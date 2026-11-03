@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="540" viewBox="0 0 860 540" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b8862b"/>
+    </marker>
+  </defs>
+  <rect width="860" height="540" fill="#fdfcf7"/>
+  <text x="430" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">转化：两名油漆匠的调度 → 至少装满的 0-1 背包</text>
+  <path d="M 250 44 Q 430 52 610 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- left panel: original problem -->
+  <g filter="url(#rough)">
+    <rect x="40" y="74" width="360" height="258" rx="10" fill="#f5f7fb" stroke="#8ea3c4" stroke-width="1.6"/>
+  </g>
+  <text x="220" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#33507a">原问题：两名工匠并行刷墙</text>
+  <g filter="url(#rough)">
+    <rect x="60" y="116" width="120" height="40" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="120" y="141" text-anchor="middle" font-size="12.5" fill="#33507a">付费工匠</text>
+  <text x="196" y="132" font-size="12" fill="#444">耗时 time[i]，开销 cost[i]</text>
+  <text x="196" y="149" font-size="12" fill="#444">（决定墙由谁刷）</text>
+  <g filter="url(#rough)">
+    <rect x="60" y="166" width="120" height="40" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="120" y="191" text-anchor="middle" font-size="12.5" fill="#2e6e2e">免费工匠</text>
+  <text x="196" y="182" font-size="12" fill="#444">任意墙 1 单位，开销 0</text>
+  <text x="196" y="199" font-size="12" fill="#b85450">⚠ 须与付费工匠同时工作</text>
+  <g filter="url(#rough)">
+    <rect x="60" y="222" width="320" height="44" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.5" stroke-dasharray="5 3"/>
+  </g>
+  <text x="220" y="240" text-anchor="middle" font-size="12.5" fill="#333">决策 = 选付费集合 S，其余墙交给免费工匠</text>
+  <text x="220" y="258" text-anchor="middle" font-size="12" fill="#666">可行 ⇔ |S| + Σ time[i] ≥ n（引理 1）</text>
+  <text x="220" y="296" text-anchor="middle" font-size="13" font-weight="bold" fill="#a04a44">Σ (time[i] + 1) ≥ n 时</text>
+  <text x="220" y="315" text-anchor="middle" font-size="13" font-weight="bold" fill="#a04a44">开销 Σ cost[i] 可行</text>
+
+  <!-- middle arrow -->
+  <path d="M 405 195 Q 428 195 448 195" stroke="#b8862b" stroke-width="2.4" fill="none" marker-end="url(#ar)" filter="url(#rough)"/>
+  <text x="430" y="178" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a5a10">等价</text>
+  <text x="430" y="222" text-anchor="middle" font-size="11" fill="#8a5a10">w = time+1</text>
+
+  <!-- right panel: knapsack -->
+  <g filter="url(#rough)">
+    <rect x="460" y="74" width="360" height="258" rx="10" fill="#f2f9f4" stroke="#8db894" stroke-width="1.6"/>
+  </g>
+  <text x="640" y="100" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">0-1 背包：至少装满，最小价值</text>
+  <g filter="url(#rough)">
+    <rect x="480" y="116" width="320" height="64" rx="8" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="496" y="138" font-size="12.5" font-weight="bold" fill="#2e6e2e">物品 i（= 墙 i）：</text>
+  <text x="496" y="158" font-size="12" fill="#444">重量 w = time[i] + 1（自身 + 白嫖额度）</text>
+  <text x="496" y="174" font-size="12" fill="#444">价值 c = cost[i]（付费开销）</text>
+  <g filter="url(#rough)">
+    <rect x="480" y="190" width="320" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="640" y="208" text-anchor="middle" font-size="12.5" fill="#8a5a10">背包容量 n：允许过剩（免费工匠可闲置）</text>
+  <text x="640" y="226" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a5a10">要求 Σ w ≥ n，最小化 Σ c</text>
+  <g filter="url(#rough)">
+    <rect x="480" y="246" width="146" height="40" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="640" y="246" width="146" height="40" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="553" y="265" text-anchor="middle" font-size="12" fill="#33507a">选：付费刷</text>
+  <text x="553" y="281" text-anchor="middle" font-size="11" fill="#33507a">c 计入，w 计入</text>
+  <text x="713" y="265" text-anchor="middle" font-size="12" fill="#33507a">不选：免费刷</text>
+  <text x="713" y="281" text-anchor="middle" font-size="11" fill="#33507a">0 计入，占 1 覆盖</text>
+  <text x="640" y="315" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">每堵墙恰选一次 → 0-1（非完全背包）</text>
+
+  <!-- bottom: DP recipe -->
+  <g filter="url(#rough)">
+    <rect x="40" y="356" width="780" height="156" rx="10" fill="#ffffff" stroke="#8ea3c4" stroke-width="1.6"/>
+  </g>
+  <text x="430" y="382" text-anchor="middle" font-size="14" font-weight="bold" fill="#33507a">一维滚动 0-1 背包（j 倒序，需求封顶到 n）</text>
+  <g filter="url(#rough)">
+    <rect x="64" y="398" width="76" height="30" rx="15" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="102" y="418" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">初始化</text>
+  <text x="156" y="418" font-size="13" fill="#333">dp[0] = 0（空集覆盖 ≥ 0），dp[1..n] = +∞</text>
+  <g filter="url(#rough)">
+    <rect x="64" y="438" width="76" height="30" rx="15" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="102" y="458" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a5a10">转移</text>
+  <text x="156" y="458" font-size="13" fill="#333">dp[j] = min( dp[j], dp[ max(0, j − w) ] + c )，j = n … 1</text>
+  <g filter="url(#rough)">
+    <rect x="64" y="478" width="76" height="26" rx="13" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="102" y="496" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04a44">答案</text>
+  <text x="156" y="496" font-size="13" fill="#333">dp[n]，其中 max(0, ·) 把"过剩覆盖"折算到 0</text>
+</svg>
