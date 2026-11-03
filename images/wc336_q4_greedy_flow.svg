@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="440" fill="#fafafa"/>
+  <text x="320" y="24" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：按 end 升序 → 先复用已开机点 → 缺口从右端补</text>
+
+  <!-- ① sort -->
+  <rect x="200" y="40" width="240" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="58" text-anchor="middle" font-size="12" font-weight="bold" fill="#33506b" filter="url(#rough2)">① 任务按 end 升序排序</text>
+  <text x="320" y="72" text-anchor="middle" font-size="9" fill="#33506b" filter="url(#rough2)">结束早的先固定开机点</text>
+  <path d="M320,78 L320,96" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② next task + count -->
+  <rect x="170" y="100" width="300" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="120" text-anchor="middle" font-size="12" font-weight="bold" fill="#33506b" filter="url(#rough2)">② 取下一任务 [s, e, d]</text>
+  <text x="320" y="138" text-anchor="middle" font-size="10" fill="#33506b" filter="url(#rough2)">统计窗口 [s, e] 内已开机点数 cnt</text>
+  <path d="M320,148 L320,166" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond -->
+  <polygon points="320,170 415,204 320,238 225,204" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="209" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold" filter="url(#rough2)">cnt ≥ d ?</text>
+
+  <!-- yes branch down -->
+  <path d="M320,238 L320,266" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="328" y="258" font-size="10" fill="#2e5b2e" filter="url(#rough2)">是</text>
+
+  <!-- ④ skip -->
+  <rect x="230" y="270" width="180" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="291" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e5b2e" filter="url(#rough2)">④ 全部复用，跳过</text>
+  <text x="320" y="309" text-anchor="middle" font-size="9" fill="#2e5b2e" filter="url(#rough2)">前序任务的开机点已满足需求</text>
+
+  <!-- no branch right -->
+  <path d="M415,204 L443,204" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="422" y="196" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- ③ fill from right -->
+  <rect x="447" y="160" width="185" height="88" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="539" y="180" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a30" filter="url(#rough2)">③ 从右端补缺口</text>
+  <text x="539" y="198" text-anchor="middle" font-size="9" fill="#8a3a30" filter="url(#rough2)">从 e 向左扫描，</text>
+  <text x="539" y="212" text-anchor="middle" font-size="9" fill="#8a3a30" filter="url(#rough2)">遇到未开机的点就开机，</text>
+  <text x="539" y="226" text-anchor="middle" font-size="9" fill="#8a3a30" filter="url(#rough2)">直到补满 d − cnt 个</text>
+  <text x="539" y="242" text-anchor="middle" font-size="8" fill="#a88" filter="url(#rough2)">（d ≤ e−s+1 保证补得满）</text>
+
+  <!-- loop back: from ③ top up to ② right side -->
+  <path d="M 632 160 L 632 124 L 474 124" stroke="#666" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="600" y="116" font-size="9" fill="#666" filter="url(#rough2)">补满后取下一任务</text>
+
+  <!-- loop back: from ④ left up to ② left side -->
+  <path d="M 230 298 L 150 298 L 150 124 L 166 124" stroke="#666" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="140" y="200" font-size="9" fill="#666" filter="url(#rough2)">取</text>
+  <text x="140" y="212" font-size="9" fill="#666" filter="url(#rough2)">下</text>
+  <text x="140" y="224" font-size="9" fill="#666" filter="url(#rough2)">一</text>
+  <text x="140" y="236" font-size="9" fill="#666" filter="url(#rough2)">任</text>
+  <text x="140" y="248" font-size="9" fill="#666" filter="url(#rough2)">务</text>
+
+  <!-- to ⑤ -->
+  <path d="M320,326 L320,360" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="328" y="350" font-size="9" fill="#666" filter="url(#rough2)">全部任务处理完</text>
+
+  <!-- ⑤ answer -->
+  <rect x="185" y="364" width="270" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="320" y="386" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5b2e" filter="url(#rough2)">⑤ 答案 = on[] 中 true 的总数</text>
+  <text x="320" y="404" text-anchor="middle" font-size="9" fill="#2e5b2e" filter="url(#rough2)">开机只增不减，无需关机操作</text>
+</svg>
