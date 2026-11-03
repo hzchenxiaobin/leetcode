@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 625"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="625" fill="#fafafa"/>
+  <text x="260" y="22" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">算法流程：前缀异或 + 哈希计数（一趟扫描）</text>
+
+  <!-- 开始 -->
+  <rect x="210" y="38" width="100" height="34" rx="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="59" text-anchor="middle" font-size="12" font-weight="bold" fill="#33506b" filter="url(#rough2)">开始</text>
+  <path d="M260,72 L260,88" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- 初始化 -->
+  <rect x="150" y="90" width="220" height="52" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="111" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">s = 0，ans = 0</text>
+  <text x="260" y="130" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">cnt = {0 : 1}（预置空前缀 P₀）</text>
+  <path d="M260,142 L260,155" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- 菱形：还有元素？ -->
+  <polygon points="260,157 350,197 260,237 170,197" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="202" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">还有元素 x ?</text>
+
+  <text x="268" y="252" text-anchor="start" font-size="10.5" font-weight="bold" fill="#2f5d24" filter="url(#rough2)">是</text>
+  <path d="M260,237 L260,253" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- s ^= x -->
+  <rect x="165" y="255" width="190" height="34" rx="6" fill="#f0f0f0" stroke="#999" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="276" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">s ^= x（滚动前缀异或）</text>
+  <path d="M260,289 L260,303" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- 先查 -->
+  <rect x="150" y="305" width="220" height="40" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="323" text-anchor="middle" font-size="11.5" fill="#2f5d24" filter="url(#rough2)">ans += cnt[s]</text>
+  <text x="260" y="339" text-anchor="middle" font-size="10" font-weight="bold" fill="#2f5d24" filter="url(#rough2)">先查：与更早的相同前缀配对</text>
+  <path d="M260,345 L260,359" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- 后插 -->
+  <rect x="150" y="361" width="220" height="40" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="379" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">cnt[s] += 1</text>
+  <text x="260" y="395" text-anchor="middle" font-size="10" font-weight="bold" fill="#33506b" filter="url(#rough2)">后插：当前前缀入表，供之后配对</text>
+
+  <!-- 回环：右侧绕回菱形 -->
+  <path d="M370,381 L452,381 L452,197 L354,197" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="452" y="300" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">继续</text>
+
+  <!-- 否：左侧绕到返回 -->
+  <text x="160" y="188" text-anchor="end" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <path d="M170,197 L72,197 L72,459 L183,459" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 返回 -->
+  <rect x="185" y="437" width="150" height="44" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="456" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24" filter="url(#rough2)">返回 ans</text>
+  <text x="260" y="473" text-anchor="middle" font-size="9.5" fill="#2f5d24" filter="url(#rough2)">（C++ 用 long long）</text>
+
+  <!-- 底部注解 1 -->
+  <rect x="32" y="505" width="225" height="104" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="48" y="527" text-anchor="start" font-size="11" font-weight="bold" fill="#33506b" filter="url(#rough2)">关键预置：cnt[0] = 1</text>
+  <text x="48" y="547" text-anchor="start" font-size="9.5" fill="#33506b" filter="url(#rough2)">空前缀 P₀ 先入表；</text>
+  <text x="48" y="563" text-anchor="start" font-size="9.5" fill="#33506b" filter="url(#rough2)">否则从下标 0 开始的美丽子数组</text>
+  <text x="48" y="579" text-anchor="start" font-size="9.5" fill="#33506b" filter="url(#rough2)">（如 [4,3,1,2,4] 整段）全部漏计，</text>
+  <text x="48" y="595" text-anchor="start" font-size="9.5" fill="#33506b" filter="url(#rough2)">本题最高频 WA 点</text>
+
+  <!-- 底部注解 2 -->
+  <rect x="272" y="505" width="225" height="104" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="288" y="527" text-anchor="start" font-size="11" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">先查后插铁律</text>
+  <text x="288" y="547" text-anchor="start" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">查 cnt[s] 在前，++cnt[s] 在后，</text>
+  <text x="288" y="563" text-anchor="start" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">只与更早的前缀配对（l &lt; j），</text>
+  <text x="288" y="579" text-anchor="start" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">区间非空、不重不漏；</text>
+  <text x="288" y="595" text-anchor="start" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">先插后查会错配出空区间</text>
+</svg>
