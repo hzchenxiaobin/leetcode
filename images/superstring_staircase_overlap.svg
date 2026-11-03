@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="486" viewBox="0 0 900 486" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arR2" markerWidth="8" markerHeight="8" refX="2" refY="4" orient="auto">
+      <path d="M8,0 L0,4 L8,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="900" height="486" fill="#fdfcf7"/>
+  <text x="450" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">核心：先删被包含者，剩下的串按「阶梯」相邻重叠拼接</text>
+  <path d="M 230 40 Q 450 48 670 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="450" y="62" text-anchor="middle" font-size="12" fill="#d6a040" font-weight="bold" filter="url(#sk)">一般的最短公共超串（SCS）是 NP-hard，但只有 3 个串：3! = 6 种排列直接枚举</text>
+
+  <!-- row 1: two boxes -->
+  <g filter="url(#sk)">
+    <rect x="70" y="80" width="372" height="100" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="88" y="103" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">第一步：去重（被包含者白拿）</text>
+  <text x="88" y="126" font-size="10.8" fill="#444" filter="url(#sk)">x ⊆ y ⇒ 含 y 的串自动含 x ⇒ x 不用单独安放</text>
+  <text x="88" y="145" font-size="10.8" fill="#444" filter="url(#sk)">超串集合完全不变（长度、字典序都不受影响）</text>
+  <text x="88" y="167" font-size="10.8" fill="#b85450" font-weight="bold" filter="url(#sk)">注意：相等的串只留一份（否则互相判子串、全删光）</text>
+
+  <g filter="url(#sk)">
+    <rect x="462" y="80" width="372" height="100" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="480" y="103" font-size="12.5" font-weight="bold" fill="#8a3a36" filter="url(#sk)">关键排除：最优解里出现区间不嵌套</text>
+  <text x="480" y="126" font-size="10.8" fill="#444" filter="url(#sk)">y 的出现区间 ⊆ x 的出现区间 ⟺ y 是 x 的子串</text>
+  <text x="480" y="145" font-size="10.8" fill="#444" filter="url(#sk)">而子串关系已被去重删光 ⟹ 剩下的串只能「错开」</text>
+  <text x="480" y="167" font-size="10.8" fill="#8a3a36" font-weight="bold" filter="url(#sk)">→ 按起点排序，终点也必然递增：一个「阶梯」</text>
+
+  <!-- row 2 label -->
+  <text x="110" y="204" font-size="13" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">第二步：出现区间按起点排序，终点也必然递增 ——「阶梯」</text>
+
+  <!-- staircase bars -->
+  <g filter="url(#sk)">
+    <rect x="110" y="212" width="200" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+  </g>
+  <rect x="250" y="212" width="60" height="32" fill="#fce4ec" fill-opacity="0.45" rx="4" filter="url(#sk)"/>
+  <text x="180" y="232" text-anchor="middle" font-size="12" fill="#2b4a6e" font-weight="bold" filter="url(#sk)">t₁</text>
+
+  <g filter="url(#sk)">
+    <rect x="250" y="256" width="200" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+  </g>
+  <rect x="250" y="256" width="60" height="32" fill="#fce4ec" fill-opacity="0.45" rx="4" filter="url(#sk)"/>
+  <rect x="390" y="256" width="60" height="32" fill="#fce4ec" fill-opacity="0.45" rx="4" filter="url(#sk)"/>
+  <text x="350" y="276" text-anchor="middle" font-size="12" fill="#3a5e30" font-weight="bold" filter="url(#sk)">t₂</text>
+
+  <g filter="url(#sk)">
+    <rect x="390" y="300" width="200" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="4"/>
+  </g>
+  <rect x="390" y="300" width="60" height="32" fill="#fce4ec" fill-opacity="0.45" rx="4" filter="url(#sk)"/>
+  <text x="490" y="320" text-anchor="middle" font-size="12" fill="#8a6212" font-weight="bold" filter="url(#sk)">t₃</text>
+
+  <!-- overlap arrows -->
+  <path d="M 252 250 L 308 250" stroke="#b85450" stroke-width="1.6" fill="none" marker-start="url(#arR2)" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="318" y="254" font-size="11" fill="#b85450" font-weight="bold" filter="url(#sk)">k₁₂（重叠，只保留一份）</text>
+  <path d="M 392 294 L 448 294" stroke="#b85450" stroke-width="1.6" fill="none" marker-start="url(#arR2)" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="458" y="298" font-size="11" fill="#b85450" font-weight="bold" filter="url(#sk)">k₂₃</text>
+
+  <!-- axis -->
+  <path d="M 100 344 L 610 344" stroke="#999" stroke-width="1.4" fill="none" filter="url(#sk)"/>
+  <g stroke="#999" stroke-width="1.2">
+    <path d="M 110 340 L 110 348" filter="url(#sk)"/>
+    <path d="M 250 340 L 250 348" filter="url(#sk)"/>
+    <path d="M 310 340 L 310 348" filter="url(#sk)"/>
+    <path d="M 390 340 L 390 348" filter="url(#sk)"/>
+    <path d="M 450 340 L 450 348" filter="url(#sk)"/>
+    <path d="M 590 340 L 590 348" filter="url(#sk)"/>
+  </g>
+  <g font-size="9.5" fill="#888" text-anchor="middle">
+    <text x="110" y="360" filter="url(#sk)">s₁</text>
+    <text x="250" y="360" filter="url(#sk)">s₂</text>
+    <text x="310" y="360" filter="url(#sk)">e₁</text>
+    <text x="390" y="360" filter="url(#sk)">s₃</text>
+    <text x="450" y="360" filter="url(#sk)">e₂</text>
+    <text x="590" y="360" filter="url(#sk)">e₃</text>
+  </g>
+
+  <!-- dashed guides -->
+  <path d="M 310 244 L 310 368" stroke="#aaa" stroke-width="1" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <path d="M 450 288 L 450 368" stroke="#aaa" stroke-width="1" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+
+  <!-- merged bar -->
+  <g filter="url(#sk)">
+    <rect x="110" y="370" width="200" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="3"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="310" y="370" width="140" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="3"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="450" y="370" width="140" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+  </g>
+  <text x="612" y="388" font-size="11.5" fill="#2b2b2b" font-weight="bold" filter="url(#sk)">M = t₁ ⊕ t₂ ⊕ t₃</text>
+  <text x="350" y="414" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#sk)">阶梯拉平成一条：重叠只保留一份，|M| = |t₁|+|t₂|+|t₃| − k₁₂ − k₂₃</text>
+
+  <!-- right formula box -->
+  <g filter="url(#sk)">
+    <rect x="620" y="204" width="252" height="128" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="638" y="228" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">每个排列怎么拼最短？</text>
+  <text x="638" y="252" font-size="11.5" fill="#444" filter="url(#sk)">M = t₁ + t₂[k₁₂:] + t₃[k₂₃:]</text>
+  <text x="638" y="274" font-size="10.8" fill="#444" filter="url(#sk)">相邻重叠独立取最大：k₁₂ 只看 t₁、t₂，</text>
+  <text x="638" y="292" font-size="10.8" fill="#444" filter="url(#sk)">k₂₃ 只看 t₂、t₃ —— 互不干扰，一起最优</text>
+  <text x="638" y="316" font-size="10.8" fill="#2b4a6e" font-weight="bold" filter="url(#sk)">→ 一步拼出该顺序的最短候选</text>
+
+  <!-- bottom conclusion -->
+  <g filter="url(#sk)">
+    <rect x="70" y="430" width="760" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="450" y="448" text-anchor="middle" font-size="12" fill="#8a6212" font-weight="bold" filter="url(#sk)">定理：每个最短超串都恰是某个排列的「相邻最大重叠拼接」</text>
+  <text x="450" y="466" text-anchor="middle" font-size="10.5" fill="#8a6212" filter="url(#sk)">→ 只需枚举 3! = 6 种排列，按（长度, 字典序）取最小（证明见题解 §5）</text>
+</svg>

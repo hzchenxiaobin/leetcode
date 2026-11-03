@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="520" viewBox="0 0 880 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="520" fill="#fdfcf7"/>
+  <text x="440" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：去重 → 枚举排列 → 相邻最大重叠拼接 → 双关键字取最小</text>
+  <path d="M 240 42 Q 440 50 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- input -->
+  <g filter="url(#sk)">
+    <rect x="350" y="54" width="180" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="440" y="79" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">输入 a, b, c</text>
+  <path d="M 440 94 L 440 108" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- dedup -->
+  <g filter="url(#sk)">
+    <rect x="300" y="112" width="280" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="440" y="133" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">去重：被包含者删除</text>
+  <text x="440" y="153" text-anchor="middle" font-size="10.8" fill="#444" filter="url(#sk)">x ⊆ y ⇒ 删 x；相等的串只留一份</text>
+  <path d="M 440 166 L 440 180" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- diamond -->
+  <g filter="url(#sk)">
+    <polygon points="440,184 590,226 440,268 290,226" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="440" y="230" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6212" filter="url(#sk)">剩下几个串？</text>
+
+  <!-- branch right: 1 string -->
+  <text x="600" y="216" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#sk)">1 个</text>
+  <path d="M 590 226 L 620 226" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="622" y="202" width="208" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="726" y="222" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5e30" filter="url(#sk)">直接返回它</text>
+  <text x="726" y="240" text-anchor="middle" font-size="10.5" fill="#3a5e30" filter="url(#sk)">（唯一的最短超串）</text>
+  <path d="M 726 250 L 726 452 L 586 452" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- branch down: 2 or 3 -->
+  <path d="M 440 268 L 440 282" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="454" y="280" font-size="11" fill="#d6a040" font-weight="bold" filter="url(#sk)">2 或 3 个</text>
+
+  <!-- enumerate permutations -->
+  <g filter="url(#sk)">
+    <rect x="300" y="284" width="280" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="440" y="305" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">枚举全部排列</text>
+  <text x="440" y="323" text-anchor="middle" font-size="11" fill="#444" filter="url(#sk)">2! = 2 种 / 3! = 6 种</text>
+  <path d="M 440 334 L 440 350" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- merge with consecutive max overlap -->
+  <g filter="url(#sk)">
+    <rect x="290" y="352" width="300" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="440" y="373" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">相邻两个【原串】求最大重叠 k</text>
+  <text x="440" y="396" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">M = t₁ + t₂[k₁₂:] + t₃[k₂₃:]</text>
+  <path d="M 440 410 L 440 426" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- final select -->
+  <g filter="url(#sk)">
+    <rect x="300" y="428" width="280" height="54" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="440" y="449" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5e30" filter="url(#sk)">按（长度, 字典序）取最小</text>
+  <text x="440" y="470" text-anchor="middle" font-size="10.5" fill="#3a5e30" filter="url(#sk)">→ 字典序最小的最短串</text>
+
+  <!-- pitfalls box -->
+  <g filter="url(#sk)">
+    <rect x="60" y="300" width="212" height="124" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="166" y="322" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a3a36" filter="url(#sk)">两个经典坑</text>
+  <text x="76" y="343" font-size="10.3" fill="#8a3a36" filter="url(#sk)">① 忘去重：</text>
+  <text x="76" y="359" font-size="10.3" fill="#444" filter="url(#sk)">  (b, aa, aba) 不去重</text>
+  <text x="76" y="374" font-size="10.3" fill="#444" filter="url(#sk)">  得 aabab，正解 aaba</text>
+  <text x="76" y="393" font-size="10.3" fill="#8a3a36" filter="url(#sk)">② 相等串互判子串：</text>
+  <text x="76" y="409" font-size="10.3" fill="#444" filter="url(#sk)">  (x, x, y) 若全删就剩 y，错</text>
+</svg>
