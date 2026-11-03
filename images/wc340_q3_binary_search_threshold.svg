@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#555" font-weight="bold" filter="url(#rough2)">最小化最大值 → 二分答案：找最小可行阈值 t</text>
+
+  <!-- infeasible / feasible zones -->
+  <rect x="64" y="112" width="66" height="52" fill="#fce4ec" opacity="0.6" rx="8" filter="url(#rough2)"/>
+  <rect x="130" y="112" width="366" height="52" fill="#e6f4ea" opacity="0.6" rx="8" filter="url(#rough2)"/>
+
+  <!-- axis -->
+  <path d="M 58 138 L 506 138" fill="none" stroke="#888" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="498" y="124" font-size="11" fill="#888" filter="url(#rough2)">t</text>
+
+  <!-- ticks -->
+  <path d="M 90 132 L 90 144" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="90" y="160" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">0</text>
+  <path d="M 170 132 L 170 144" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="170" y="160" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">2</text>
+  <path d="M 250 132 L 250 144" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="250" y="160" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">4</text>
+  <path d="M 330 132 L 330 144" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="330" y="160" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">6</text>
+  <path d="M 410 132 L 410 144" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="410" y="160" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">8</text>
+  <path d="M 490 132 L 490 144" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="490" y="160" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">10</text>
+
+  <!-- zone captions -->
+  <text x="97" y="106" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">✗ 对数不足</text>
+  <text x="310" y="106" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">✓ 能配出 ≥ p 对</text>
+
+  <!-- boundary point -->
+  <path d="M 130 112 L 130 166" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <circle cx="130" cy="138" r="7" fill="#b85450" filter="url(#rough2)"/>
+  <text x="130" y="78" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">t* = 1：最小可行 t = 答案</text>
+  <path d="M 130 84 L 130 106" fill="none" stroke="#b85450" stroke-width="1.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- check box -->
+  <rect x="36" y="210" width="508" height="92" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="290" y="234" text-anchor="middle" font-size="13" fill="#333" font-weight="bold" filter="url(#rough2)">判定函数 check(t)：能否选出 ≥ p 个不相交对，每对差 ≤ t？</text>
+  <text x="290" y="258" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">本题的判定：排序后贪心扫描，数出最多能配几对 cnt</text>
+  <text x="290" y="282" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">cnt ≥ p ⇒ 可行；cnt &lt; p ⇒ 不可行</text>
+
+  <!-- monotonicity box -->
+  <rect x="36" y="318" width="508" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="290" y="342" text-anchor="middle" font-size="13" fill="#333" font-weight="bold" filter="url(#rough2)">单调性：t 变大只会放松约束 ⇒ check 至多翻转一次 ✗→✓</text>
+  <text x="290" y="366" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">闭区间二分：可行缩 hi，不可行进 lo，O(log V) 轮收敛到最小真值</text>
+</svg>

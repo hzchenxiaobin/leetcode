@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 768" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="768" fill="#fafafa"/>
+
+  <text x="350" y="26" text-anchor="middle" font-size="15" fill="#555" font-weight="bold" filter="url(#rough2)">算法流程：倒序行优先扫描 + 行/列线段树</text>
+
+  <!-- step 1 -->
+  <rect x="60" y="46" width="320" height="64" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="220" y="68" text-anchor="middle" font-size="13" fill="#333" font-weight="bold" filter="url(#rough2)">① 初始化两套线段树</text>
+  <text x="220" y="87" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">rows[i]（行 i，n 个叶子）、cols[j]（列 j，m 个叶子）</text>
+  <text x="220" y="104" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">全部置 ∞；m = n = 1 直接返回 1</text>
+
+  <path d="M 220 110 L 220 128" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <rect x="60" y="132" width="320" height="62" rx="10" fill="#ffffff" stroke="#888" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="220" y="154" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">② 倒序行优先扫描</text>
+  <text x="220" y="174" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">i = m−1 … 0，j = n−1 … 0</text>
+  <text x="220" y="190" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">算 (i,j) 时，它右边、下面的格都已入树</text>
+
+  <path d="M 220 194 L 220 212" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 1: terminal? -->
+  <polygon points="220,214 316,252 220,290 124,252" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="220" y="257" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">(i,j) 是终点?</text>
+
+  <path d="M 316 252 L 420 252" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="338" y="244" font-size="11" fill="#888" filter="url(#rough2)">是</text>
+  <rect x="424" y="228" width="250" height="48" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="549" y="250" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">rows[i]、cols[j] 各插入 f = 1</text>
+  <text x="549" y="268" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">continue（下一格）</text>
+
+  <path d="M 220 290 L 220 308" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="230" y="306" font-size="11" fill="#888" filter="url(#rough2)">否</text>
+
+  <!-- step 3: query both trees -->
+  <rect x="60" y="312" width="320" height="86" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="220" y="334" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">③ 查询两段后继区间</text>
+  <text x="220" y="354" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">g = grid[i][j]</text>
+  <text x="220" y="372" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">best = min( rows[i].查 min( j+1, min(j+g, n−1) ),</text>
+  <text x="220" y="388" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">　　　　　 cols[j].查 min( i+1, min(i+g, m−1) ) )</text>
+
+  <path d="M 220 398 L 220 416" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 2: INF? -->
+  <polygon points="220,418 316,456 220,494 124,456" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="220" y="461" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">best = ∞ ?</text>
+
+  <path d="M 316 456 L 420 456" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="338" y="448" font-size="11" fill="#888" filter="url(#rough2)">是</text>
+  <rect x="424" y="432" width="250" height="48" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="549" y="454" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">此格到不了终点：不插入</text>
+  <text x="549" y="472" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">continue（∞ 不入树）</text>
+
+  <path d="M 220 494 L 220 512" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="230" y="510" font-size="11" fill="#888" filter="url(#rough2)">否</text>
+
+  <!-- step 4: insert both trees -->
+  <rect x="60" y="516" width="320" height="62" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="220" y="538" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">④ v = best + 1，两树同插</text>
+  <text x="220" y="558" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">rows[i] 在位置 j 插入 v；cols[j] 在位置 i 插入 v</text>
+  <text x="220" y="574" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">只插一棵 → 另一方向永远查不到它 ✗</text>
+
+  <path d="M 220 578 L 220 596" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 3: origin? -->
+  <polygon points="220,598 316,636 220,674 124,636" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="220" y="641" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">(i,j) = (0,0) ?</text>
+
+  <path d="M 316 636 L 420 636" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="338" y="628" font-size="11" fill="#888" filter="url(#rough2)">是</text>
+  <rect x="424" y="612" width="250" height="48" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="549" y="634" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">最后处理的格子，算完即答案</text>
+  <text x="549" y="652" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">返回 v</text>
+
+  <!-- loop back to next cell -->
+  <path d="M 124 636 L 34 636 L 34 163 L 58 163" fill="none" stroke="#4a7a3a" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arrGreen)" filter="url(#rough2)"/>
+  <text x="46" y="240" font-size="11" fill="#4a7a3a" filter="url(#rough2)" transform="rotate(-90 46 240)">下一格</text>
+  <text x="230" y="628" font-size="11" fill="#888" filter="url(#rough2)">否</text>
+
+  <!-- scan exhausted -->
+  <path d="M 220 674 L 220 700" fill="none" stroke="#888" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="232" y="694" font-size="10.5" fill="#888" filter="url(#rough2)">扫描结束</text>
+  <rect x="100" y="704" width="240" height="44" rx="10" fill="#ffffff" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="220" y="730" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">返回 −1（不可达）</text>
+</svg>
