@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 640" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="640" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b">算法流程：堆优化 Dijkstra + 两类松弛</text>
+  <path d="M 120 36 Q 280 42 440 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- A: init -->
+  <rect x="100" y="52" width="300" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="250" y="79" text-anchor="middle" font-size="12.5" fill="#2b2b2b">初始化：dist[S] = 0，其余 ∞；堆 ← (0, S)</text>
+  <path d="M 250 96 L 250 118" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+
+  <!-- B: heap empty? -->
+  <polygon points="250,124 330,158 250,192 170,158" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="250" y="163" text-anchor="middle" font-size="12.5" fill="#2b2b2b">堆空？</text>
+  <!-- yes -> return dist[T] -->
+  <path d="M 330 158 L 400 158" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+  <text x="362" y="150" text-anchor="middle" font-size="11" fill="#666">是</text>
+  <rect x="404" y="136" width="130" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="469" y="163" text-anchor="middle" font-size="12" fill="#2b2b2b">返回 dist[T]</text>
+  <path d="M 250 192 L 250 212" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+  <text x="266" y="206" font-size="11" fill="#666">否</text>
+
+  <!-- C: pop -->
+  <rect x="145" y="216" width="210" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="250" y="241" text-anchor="middle" font-size="12.5" fill="#2b2b2b">弹出堆顶 (d, u)</text>
+  <path d="M 250 256 L 250 278" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+
+  <!-- D: stale? -->
+  <polygon points="250,284 344,318 250,352 156,318" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="250" y="316" text-anchor="middle" font-size="12" fill="#2b2b2b">d &gt; dist[u] ？</text>
+  <text x="250" y="334" text-anchor="middle" font-size="10.5" fill="#888">（过期记录？）</text>
+  <!-- yes -> skip, loop back -->
+  <path d="M 344 318 L 410 318" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+  <text x="376" y="310" text-anchor="middle" font-size="11" fill="#666">是</text>
+  <rect x="414" y="296" width="126" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="477" y="316" text-anchor="middle" font-size="11.5" fill="#8c3834">懒删除：跳过，</text>
+  <text x="477" y="332" text-anchor="middle" font-size="11.5" fill="#8c3834">回到「堆空？」</text>
+  <path d="M 250 352 L 250 372" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+  <text x="266" y="366" font-size="11" fill="#666">否</text>
+
+  <!-- E: u == T? -->
+  <polygon points="250,378 330,410 250,442 170,410" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="250" y="415" text-anchor="middle" font-size="12.5" fill="#2b2b2b">u == T ？</text>
+  <!-- yes -> return d -->
+  <path d="M 330 410 L 400 410" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <text x="362" y="402" text-anchor="middle" font-size="11" fill="#4a7a3a">是</text>
+  <rect x="404" y="386" width="140" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="474" y="407" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d24">返回 d ✓</text>
+  <text x="474" y="425" text-anchor="middle" font-size="10.5" fill="#4a7a3a">（提前返回：边权非负）</text>
+  <path d="M 250 442 L 250 462" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+  <text x="266" y="456" font-size="11" fill="#666">否</text>
+
+  <!-- F: relax -->
+  <rect x="76" y="466" width="348" height="94" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="250" y="489" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a5a10">从 u 出发松弛两类出边：</text>
+  <text x="250" y="510" text-anchor="middle" font-size="11.5" fill="#2b2b2b">① 步行直达终点：v = T，nd = d + d(u, T)</text>
+  <text x="250" y="529" text-anchor="middle" font-size="11.5" fill="#2b2b2b">② 每条道路 i：v = reᵢ，nd = d + d(u, rsᵢ) + cᵢ</text>
+  <text x="250" y="550" text-anchor="middle" font-size="10.5" fill="#a06a10">（道路起点 rsᵢ 只是途中经过，不入堆）</text>
+  <path d="M 250 560 L 250 582" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+
+  <!-- G: update & push -->
+  <rect x="108" y="586" width="284" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="250" y="612" text-anchor="middle" font-size="12" fill="#2b2b2b">nd &lt; dist[v] ⇒ dist[v] = nd，压入堆</text>
+
+  <!-- loop back G -> B -->
+  <path d="M 108 607 L 60 607 Q 44 607 44 590 L 44 160 Q 44 143 62 143 L 166 150" stroke="#3a3a3a" stroke-width="1.4" fill="none" stroke-dasharray="7,5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="38" y="380" text-anchor="middle" font-size="10.5" fill="#999" transform="rotate(-90 38 380)">循环</text>
+</svg>

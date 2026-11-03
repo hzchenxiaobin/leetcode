@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 415" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="415" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b">核心观察：网格巨大，但「有决策意义」的位置只有 O(n) 个</text>
+  <path d="M 110 36 Q 280 42 450 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- left: huge grid -->
+  <text x="175" y="58" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">真实平面：坐标 ≤ 10⁵</text>
+  <rect x="52" y="68" width="246" height="196" rx="4" fill="#fdfeff" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <g stroke="#dde6f2" stroke-width="1" filter="url(#rough2)">
+    <path d="M 52 108 H 298"/><path d="M 52 148 H 298"/><path d="M 52 188 H 298"/><path d="M 52 228 H 298"/>
+    <path d="M 101 68 V 264"/><path d="M 150 68 V 264"/><path d="M 199 68 V 264"/><path d="M 248 68 V 264"/>
+  </g>
+
+  <!-- unused road (faded) -->
+  <path d="M 148 96 Q 128 82 112 76" stroke="#c9a227" stroke-width="1.4" fill="none" stroke-dasharray="5,4" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <circle cx="150" cy="97" r="5" fill="#fff" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="158" y="84" font-size="10" fill="#aaa">cost ≥ 步行：永远不会用</text>
+
+  <!-- road 0 -->
+  <circle cx="100" cy="222" r="6" fill="#fff" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <path d="M 104 216 Q 150 196 176 174" stroke="#d6a040" stroke-width="2.2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <rect x="168" y="160" width="17" height="17" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="140" y="188" font-size="11" font-weight="bold" fill="#d6a040">道路₀ · c=2</text>
+
+  <!-- road 1 -->
+  <circle cx="204" cy="148" r="6" fill="#fff" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <path d="M 208 142 Q 240 124 258 104" stroke="#d6a040" stroke-width="2.2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="238" y="152" font-size="11" font-weight="bold" fill="#d6a040">道路₁ · c=1</text>
+
+  <!-- S and T -->
+  <circle cx="78" cy="246" r="11" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="78" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d24">S</text>
+  <circle cx="272" cy="92" r="11" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="272" y="96" text-anchor="middle" font-size="11" font-weight="bold" fill="#8c3834">T</text>
+
+  <!-- direct dashed walk S->T -->
+  <path d="M 88 238 Q 190 160 264 100" stroke="#4a7a3a" stroke-width="1.5" fill="none" stroke-dasharray="6,5" filter="url(#rough2)"/>
+  <text x="196" y="240" font-size="10.5" fill="#4a7a3a">纯步行直达：d(S,T) 也总是一个候选</text>
+
+  <text x="175" y="282" text-anchor="middle" font-size="10.5" fill="#999">10⁵ × 10⁵ ≈ 10¹⁰ 个格子 —— 逐格 BFS / Dijkstra 不可行</text>
+
+  <!-- right: abstract sparse graph -->
+  <text x="430" y="58" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">抽象出的稀疏图（示意）</text>
+
+  <!-- walk edge S->T -->
+  <path d="M 372 236 Q 430 150 476 106" stroke="#4a7a3a" stroke-width="1.6" fill="none" stroke-dasharray="6,5" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <!-- road-edge S->B -->
+  <path d="M 382 240 Q 420 222 442 206" stroke="#d6a040" stroke-width="2.2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <!-- road-edge B->T -->
+  <path d="M 462 192 Q 480 160 486 120" stroke="#d6a040" stroke-width="2.2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+
+  <!-- nodes -->
+  <circle cx="366" cy="246" r="11" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="366" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d24">S</text>
+  <rect x="436" y="188" width="22" height="22" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="447" y="204" text-anchor="middle" font-size="11" font-weight="bold" fill="#33507a">B</text>
+  <circle cx="484" cy="96" r="11" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="484" y="100" text-anchor="middle" font-size="11" font-weight="bold" fill="#8c3834">T</text>
+
+  <text x="392" y="272" font-size="10.5" fill="#666">dist[u] = 到达 u 的最小代价</text>
+
+  <!-- edge labels -->
+  <text x="386" y="212" font-size="10.5" fill="#a06a10">d(u,rs₁)+c₁</text>
+  <text x="466" y="158" font-size="10.5" fill="#a06a10">d(u,rs₂)+c₂</text>
+  <text x="398" y="146" font-size="10.5" fill="#4a7a3a">步行边：d(u,T)</text>
+
+  <!-- bottom note boxes -->
+  <rect x="42" y="302" width="478" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="281" y="322" text-anchor="middle" font-size="11.5" fill="#2b2b2b">两类出边：① 步行直达终点 T（权 = 曼哈顿距离）；② 每条道路 i（权 = d(u, rsᵢ) + cᵢ，</text>
+  <text x="281" y="340" text-anchor="middle" font-size="11.5" fill="#2b2b2b">即「先步行到道路起点，再走道路」的复合转移，方向单向：rsᵢ → reᵢ）</text>
+
+  <rect x="42" y="360" width="478" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="281" y="379" text-anchor="middle" font-size="11.5" fill="#2b2b2b">节点集 = {S, T} ∪ {每条道路的终点 reᵢ}，仅 n+2 ≤ 202 个；</text>
+  <text x="281" y="397" text-anchor="middle" font-size="11.5" fill="#2b2b2b">道路起点 rsᵢ 不必入堆——只在松弛②中被「途经」，不需要独立的最短距离</text>
+</svg>
