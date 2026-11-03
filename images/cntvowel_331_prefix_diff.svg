@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="440" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">「多次区间计数」→ 0/1 标记 + 前缀和差分</text>
+  <text x="320" y="46" text-anchor="middle" font-size="11" fill="#666666">信号：queries + 闭区间 [l, r] + 计数（属性可加）→ 前缀和；判定做一次，每查两端点相减</text>
+
+  <!-- ① verdict label -->
+  <text x="36" y="98" font-size="12" font-weight="bold" fill="#2e6e2e">① 判定</text>
+  <text x="36" y="114" font-size="10.5" fill="#555555">首尾皆元音</text>
+
+  <!-- words row -->
+  <g filter="url(#sk)">
+    <rect x="132" y="84" width="64" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="210" y="84" width="64" height="36" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+    <rect x="288" y="84" width="64" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="366" y="84" width="64" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="444" y="84" width="64" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="164" y="107" text-anchor="middle" font-size="13"><tspan font-weight="bold" fill="#2e6e2e">a</tspan><tspan fill="#2b2b2b">b</tspan><tspan font-weight="bold" fill="#2e6e2e">a</tspan></text>
+  <text x="242" y="107" text-anchor="middle" font-size="13"><tspan font-weight="bold" fill="#b85450">b</tspan><tspan fill="#2b2b2b">c</tspan><tspan font-weight="bold" fill="#b85450">b</tspan></text>
+  <text x="320" y="107" text-anchor="middle" font-size="13"><tspan font-weight="bold" fill="#2e6e2e">e</tspan><tspan fill="#2b2b2b">c</tspan><tspan font-weight="bold" fill="#2e6e2e">e</tspan></text>
+  <text x="398" y="107" text-anchor="middle" font-size="13"><tspan font-weight="bold" fill="#2e6e2e">a</tspan><tspan font-weight="bold" fill="#2e6e2e">a</tspan></text>
+  <text x="476" y="107" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">e</text>
+  <text x="516" y="98" font-size="10" fill="#888888">单字符：</text>
+  <text x="516" y="112" font-size="10" fill="#888888">首末同一字符</text>
+
+  <!-- indices under words -->
+  <text x="164" y="136" text-anchor="middle" font-size="10" fill="#999999">0</text>
+  <text x="242" y="136" text-anchor="middle" font-size="10" fill="#999999">1</text>
+  <text x="320" y="136" text-anchor="middle" font-size="10" fill="#999999">2</text>
+  <text x="398" y="136" text-anchor="middle" font-size="10" fill="#999999">3</text>
+  <text x="476" y="136" text-anchor="middle" font-size="10" fill="#999999">4</text>
+
+  <!-- arrow 1 -->
+  <path d="M 320 144 L 320 166" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="330" y="160" font-size="11" fill="#555555">首尾皆元音 → 1，否则 → 0</text>
+
+  <!-- b row -->
+  <text x="124" y="194" text-anchor="end" font-size="12.5" font-weight="bold" fill="#2b2b2b">b =</text>
+  <g filter="url(#sk)">
+    <rect x="144" y="174" width="40" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="222" y="174" width="40" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+    <rect x="300" y="174" width="40" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="378" y="174" width="40" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="456" y="174" width="40" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="164" y="194" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">1</text>
+  <text x="242" y="194" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">0</text>
+  <text x="320" y="194" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">1</text>
+  <text x="398" y="194" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">1</text>
+  <text x="476" y="194" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">1</text>
+
+  <!-- arrow 2 -->
+  <path d="M 320 212 L 320 234" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="330" y="228" font-size="11" fill="#555555">② 累加成前缀和：pre[i+1] = pre[i] + b[i]，pre[0] = 0 哨兵</text>
+
+  <!-- pre row -->
+  <text x="109" y="262" text-anchor="end" font-size="12.5" font-weight="bold" fill="#2b2b2b">pre =</text>
+  <g filter="url(#sk)">
+    <rect x="129" y="242" width="52" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="195" y="242" width="52" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="261" y="242" width="52" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="327" y="242" width="52" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="393" y="242" width="52" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="459" y="242" width="52" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="155" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">0</text>
+  <text x="221" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">1</text>
+  <text x="287" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">1</text>
+  <text x="353" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">2</text>
+  <text x="419" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">3</text>
+  <text x="485" y="262" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">4</text>
+  <text x="155" y="288" text-anchor="middle" font-size="10" fill="#999999">0</text>
+  <text x="221" y="288" text-anchor="middle" font-size="10" fill="#999999">1</text>
+  <text x="287" y="288" text-anchor="middle" font-size="10" fill="#999999">2</text>
+  <text x="353" y="288" text-anchor="middle" font-size="10" fill="#999999">3</text>
+  <text x="419" y="288" text-anchor="middle" font-size="10" fill="#999999">4</text>
+  <text x="485" y="288" text-anchor="middle" font-size="10" fill="#999999">5</text>
+
+  <!-- ③ label -->
+  <text x="36" y="320" font-size="12" font-weight="bold" fill="#555555">③ 查询差分</text>
+  <text x="36" y="336" font-size="10.5" fill="#555555">两端点相减</text>
+
+  <!-- brackets -->
+  <path d="M 221 296 L 221 302 L 287 302 L 287 296" stroke="#b85450" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <text x="254" y="315" text-anchor="middle" font-size="11" fill="#b85450">[1,1]：pre[2] − pre[1] = 1 − 1 = 0</text>
+
+  <path d="M 155 324 L 155 330 L 353 330 L 353 324" stroke="#2b6e9e" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <text x="254" y="343" text-anchor="middle" font-size="11" fill="#2b6e9e">[0,2]：pre[3] − pre[0] = 2 − 0 = 2</text>
+
+  <path d="M 221 352 L 221 358 L 485 358 L 485 352" stroke="#d6a040" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <text x="353" y="371" text-anchor="middle" font-size="11" fill="#8a6415">[1,4]：pre[5] − pre[1] = 4 − 1 = 3</text>
+
+  <!-- tip box -->
+  <g filter="url(#sk)">
+    <rect x="40" y="384" width="560" height="44" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="404" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">判定与查询彻底解耦：q 个查询共享同一个 pre，每查 O(1)</text>
+  <text x="320" y="421" text-anchor="middle" font-size="11" fill="#555555">暴力逐查询重扫 O(n·q) ≈ 10¹⁰ 必超时　→　前缀和 O(n + q) 稳过</text>
+</svg>

@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="500" viewBox="0 0 640 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="500" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">示例 1 演算：nums = [2, 3, 5, 9]，k = 2</text>
+  <text x="320" y="46" text-anchor="middle" font-size="11" fill="#666666">值域二分 [1, 9]，每轮 check 贪心走查；最优方案 = 抢下标 0、2，能力 max(2, 5) = 5</text>
+
+  <!-- houses row -->
+  <text x="36" y="80" font-size="12" font-weight="bold" fill="#2b2b2b">街道：</text>
+  <g filter="url(#sk)">
+    <rect x="96" y="64" width="72" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2"/>
+    <rect x="184" y="64" width="72" height="34" rx="4" fill="#fdfcf7" stroke="#9a9a9a" stroke-width="1.2"/>
+    <rect x="272" y="64" width="72" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2"/>
+    <rect x="360" y="64" width="72" height="34" rx="4" fill="#fdfcf7" stroke="#9a9a9a" stroke-width="1.2"/>
+  </g>
+  <text x="132" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">2</text>
+  <text x="220" y="85" text-anchor="middle" font-size="13" fill="#777777">3</text>
+  <text x="308" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">5</text>
+  <text x="396" y="85" text-anchor="middle" font-size="13" fill="#777777">9</text>
+  <text x="132" y="114" text-anchor="middle" font-size="10" fill="#999999">0</text>
+  <text x="220" y="114" text-anchor="middle" font-size="10" fill="#999999">1</text>
+  <text x="308" y="114" text-anchor="middle" font-size="10" fill="#999999">2</text>
+  <text x="396" y="114" text-anchor="middle" font-size="10" fill="#999999">3</text>
+  <text x="456" y="80" font-size="10.5" fill="#2e6e2e">绿 = 最优方案抢的两间</text>
+  <text x="456" y="94" font-size="10.5" fill="#777777">不相邻，能力 = 5</text>
+
+  <!-- binary search table -->
+  <text x="36" y="146" font-size="12.5" font-weight="bold" fill="#2b2b2b">二分轮次（ans 初值 = 9）：</text>
+
+  <!-- header row -->
+  <g filter="url(#sk)">
+    <rect x="36" y="158" width="568" height="28" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/>
+  </g>
+  <g font-size="11.5" font-weight="bold" fill="#2b6e9e" text-anchor="middle">
+    <text x="72" y="177">轮</text>
+    <text x="118" y="177">lo</text>
+    <text x="162" y="177">hi</text>
+    <text x="212" y="177">mid</text>
+    <text x="376" y="177">check(mid) 贪心走查</text>
+    <text x="548" y="177">判定 / 收缩</text>
+  </g>
+
+  <!-- row 1 -->
+  <g filter="url(#sk)">
+    <rect x="36" y="186" width="568" height="32" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" text-anchor="middle">
+    <text x="72" y="207" fill="#2b2b2b">1</text>
+    <text x="118" y="207" fill="#2b2b2b">1</text>
+    <text x="162" y="207" fill="#2b2b2b">9</text>
+    <text x="212" y="207" font-weight="bold" fill="#8a6415">5</text>
+  </g>
+  <text x="248" y="207" font-size="11" fill="#555555">i=0：2≤5 抢，cnt=1，i=2；i=2：5≤5 抢，cnt=2</text>
+  <text x="548" y="207" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">✓ ans=5，hi=4</text>
+
+  <!-- row 2 -->
+  <g filter="url(#sk)">
+    <rect x="36" y="218" width="568" height="32" rx="4" fill="#fdfcf7" stroke="#9a9a9a" stroke-width="1"/>
+  </g>
+  <g font-size="12" text-anchor="middle">
+    <text x="72" y="239" fill="#2b2b2b">2</text>
+    <text x="118" y="239" fill="#2b2b2b">1</text>
+    <text x="162" y="239" fill="#2b2b2b">4</text>
+    <text x="212" y="239" font-weight="bold" fill="#8a6415">2</text>
+  </g>
+  <text x="248" y="239" font-size="11" fill="#555555">i=0：2≤2 抢，cnt=1，i=2；i=2：5&gt;2，i=3；i=3：9&gt;2</text>
+  <text x="548" y="239" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">✗ cnt=1&lt;2，lo=3</text>
+
+  <!-- row 3 -->
+  <g filter="url(#sk)">
+    <rect x="36" y="250" width="568" height="32" rx="4" fill="#fdfcf7" stroke="#9a9a9a" stroke-width="1"/>
+  </g>
+  <g font-size="12" text-anchor="middle">
+    <text x="72" y="271" fill="#2b2b2b">3</text>
+    <text x="118" y="271" fill="#2b2b2b">3</text>
+    <text x="162" y="271" fill="#2b2b2b">4</text>
+    <text x="212" y="271" font-weight="bold" fill="#8a6415">3</text>
+  </g>
+  <text x="248" y="271" font-size="11" fill="#555555">i=0：2≤3 抢，cnt=1，i=2；i=2：5&gt;3，i=3；i=3：9&gt;3</text>
+  <text x="548" y="271" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">✗ cnt=1&lt;2，lo=4</text>
+
+  <!-- row 4 -->
+  <g filter="url(#sk)">
+    <rect x="36" y="282" width="568" height="32" rx="4" fill="#fdfcf7" stroke="#9a9a9a" stroke-width="1"/>
+  </g>
+  <g font-size="12" text-anchor="middle">
+    <text x="72" y="303" fill="#2b2b2b">4</text>
+    <text x="118" y="303" fill="#2b2b2b">4</text>
+    <text x="162" y="303" fill="#2b2b2b">4</text>
+    <text x="212" y="303" font-weight="bold" fill="#8a6415">4</text>
+  </g>
+  <text x="248" y="303" font-size="11" fill="#555555">i=0：2≤4 抢，cnt=1，i=2；i=2：5&gt;4，i=3；i=3：9&gt;4</text>
+  <text x="548" y="303" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">✗ cnt=1&lt;2，lo=5</text>
+
+  <!-- terminate row -->
+  <g filter="url(#sk)">
+    <rect x="36" y="318" width="568" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="338" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6415">lo=5 &gt; hi=4：区间缩空，二分结束 → 返回 ans = 5</text>
+
+  <!-- why answer is 5 annotation -->
+  <text x="36" y="376" font-size="12.5" font-weight="bold" fill="#2b2b2b">为什么 c=5 是最小可行？看两个方向的邻居：</text>
+  <g filter="url(#sk)">
+    <rect x="36" y="388" width="276" height="52" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="174" y="408" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">c = 5：抢下标 0、2，cnt = 2 = k ✓</text>
+  <text x="174" y="426" text-anchor="middle" font-size="10.5" fill="#555555">能力 5 的房 = {2, 5}，不相邻地选 2 间</text>
+  <g filter="url(#sk)">
+    <rect x="328" y="388" width="276" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="466" y="408" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a13d3a">c = 4：能力 4 的房 = {2}，只有 1 间 ✗</text>
+  <text x="466" y="426" text-anchor="middle" font-size="10.5" fill="#555555">f(4) = 1 &lt; k = 2，任何能力 &lt; 5 的方案都不够</text>
+
+  <!-- tip box -->
+  <g filter="url(#sk)">
+    <rect x="36" y="452" width="568" height="34" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="474" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">每轮 check O(n)、共 O(log max(nums)) ≈ 30 轮 → 总 O(n log M)，n=10⁵、M=10⁹ 也稳过</text>
+</svg>

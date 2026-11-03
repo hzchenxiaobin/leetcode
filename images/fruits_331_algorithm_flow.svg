@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="430" viewBox="0 0 640 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="430" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">重排水果：算法流程（计数 → 奇偶检查 → 盈余 → 排序取小 → 封顶求和）</text>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="56" width="160" height="64" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="120" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">① 频差统计</text>
+  <text x="120" y="98" text-anchor="middle" font-size="10.5" fill="#555555">diff[v] = c1[v] − c2[v]</text>
+  <text x="120" y="112" text-anchor="middle" font-size="10.5" fill="#555555">哈希表 O(n)</text>
+
+  <g filter="url(#sk)">
+    <path d="M 200 88 L 232 88" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- step 2 diamond -->
+  <g filter="url(#sk)">
+    <rect x="236" y="52" width="140" height="72" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" transform="rotate(0 306 88)"/>
+  </g>
+  <text x="306" y="78" text-anchor="middle" font-size="12" font-weight="bold" fill="#a13d3a">② 每个 diff[v]</text>
+  <text x="306" y="96" text-anchor="middle" font-size="12" font-weight="bold" fill="#a13d3a">都是偶数吗？</text>
+  <text x="306" y="114" text-anchor="middle" font-size="10" fill="#999999">（含只在 b2 出现的值）</text>
+
+  <g filter="url(#sk)">
+    <path d="M 376 80 L 410 64" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+    <path d="M 376 96 L 410 112" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="384" y="58" font-size="10.5" fill="#b85450" font-weight="bold">否</text>
+  <text x="384" y="128" font-size="10.5" fill="#4a8e4a" font-weight="bold">是</text>
+
+  <!-- return -1 -->
+  <g filter="url(#sk)">
+    <rect x="414" y="46" width="86" height="34" rx="8" fill="#fdeef0" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="457" y="68" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a13d3a">return -1</text>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="414" y="96" width="196" height="60" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="512" y="116" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">③ 收集盈余水果</text>
+  <text x="512" y="132" text-anchor="middle" font-size="10.5" fill="#555555">每个 v 放 |diff[v]|/2 份进列表</text>
+  <text x="512" y="148" text-anchor="middle" font-size="10.5" fill="#555555">合并后共 2m 个，排序</text>
+
+  <g filter="url(#sk)">
+    <path d="M 610 126 C 628 130, 628 150, 600 156 L 372 168" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)">
+    <rect x="130" y="176" width="244" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="252" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6415">④ 取最小的 m 个，逐个封顶</text>
+  <text x="252" y="214" text-anchor="middle" font-size="11.5" fill="#555555">mn = 两篮全局最小值</text>
+  <text x="252" y="232" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6415">ans = Σ min(x, 2·mn)</text>
+
+  <g filter="url(#sk)">
+    <path d="M 252 242 L 252 272" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- step 5 -->
+  <g filter="url(#sk)">
+    <rect x="130" y="276" width="244" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="252" y="296" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">⑤ 返回 ans</text>
+  <text x="252" y="314" text-anchor="middle" font-size="10.5" fill="#555555">（2m=0 时列表为空，天然返回 0）</text>
+
+  <!-- equivalence note -->
+  <g filter="url(#sk)">
+    <rect x="414" y="176" width="196" height="146" rx="8" fill="#f4f0fa" stroke="#7a6aa8" stroke-width="1.5"/>
+  </g>
+  <text x="512" y="198" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a4a88">两种等价写法</text>
+  <text x="512" y="220" text-anchor="middle" font-size="10.5" fill="#555555">A. 合并 d1+d2 排序，</text>
+  <text x="512" y="236" text-anchor="middle" font-size="10.5" fill="#555555">  取前 m 个各封顶求和</text>
+  <text x="512" y="258" text-anchor="middle" font-size="10.5" fill="#555555">B. d1、d2 分别排序，</text>
+  <text x="512" y="274" text-anchor="middle" font-size="10.5" fill="#555555">  反向配对 d1[i] ↔ d2[m−1−i]，</text>
+  <text x="512" y="290" text-anchor="middle" font-size="10.5" fill="#555555">  每对付 min( min(a,b), 2mn )</text>
+  <text x="512" y="312" text-anchor="middle" font-size="10" fill="#999999">被付集合都是「最小 m 个盈余」</text>
+
+  <!-- complexity bar -->
+  <g filter="url(#sk)">
+    <rect x="40" y="352" width="570" height="56" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="325" y="374" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">时间 O(n log n)：计数 O(n) + 排序 O(m log m)；空间 O(n)</text>
+  <text x="325" y="394" text-anchor="middle" font-size="11" fill="#555555">n = 10⁵ 时毫秒级；注意累加用 64 位（总成本最高约 2×10¹⁴）</text>
+</svg>
