@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 390" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="390" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16.5" font-weight="bold" fill="#2b2b2b">核心概念：diff[i] = 前缀不同元素数 − 后缀不同元素数</text>
+  <path d="M 100 34 Q 280 40 460 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- nums cells -->
+  <g filter="url(#rough2)">
+    <rect x="130" y="64" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="192" y="64" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="254" y="64" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="316" y="64" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="378" y="64" width="52" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="156" y="90" text-anchor="middle" font-size="16" fill="#333">3</text>
+  <text x="218" y="90" text-anchor="middle" font-size="16" fill="#333">2</text>
+  <text x="280" y="90" text-anchor="middle" font-size="16" fill="#d6a040" font-weight="bold">3</text>
+  <text x="342" y="90" text-anchor="middle" font-size="16" fill="#333">4</text>
+  <text x="404" y="90" text-anchor="middle" font-size="16" fill="#333">2</text>
+  <text x="156" y="118" text-anchor="middle" font-size="10.5" fill="#999">i=0</text>
+  <text x="218" y="118" text-anchor="middle" font-size="10.5" fill="#999">i=1</text>
+  <text x="280" y="118" text-anchor="middle" font-size="10.5" fill="#999">i=2</text>
+  <text x="342" y="118" text-anchor="middle" font-size="10.5" fill="#999">i=3</text>
+  <text x="404" y="118" text-anchor="middle" font-size="10.5" fill="#999">i=4</text>
+
+  <!-- split at i=2 -->
+  <path d="M 311 54 L 311 128" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6,4" fill="none" filter="url(#rough2)"/>
+  <text x="311" y="50" text-anchor="middle" font-size="11.5" fill="#b85450">切割位置 i = 2</text>
+
+  <!-- prefix brace -->
+  <path d="M 130 134 L 130 140 L 306 140 L 306 134" stroke="#446688" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="218" y="158" text-anchor="middle" font-size="12" fill="#446688">前缀 nums[0..2]</text>
+  <text x="218" y="174" text-anchor="middle" font-size="12" fill="#446688">{3, 2} → 2 个不同元素</text>
+
+  <!-- suffix brace -->
+  <path d="M 316 134 L 316 140 L 430 140 L 430 134" stroke="#4a7a3a" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="373" y="158" text-anchor="middle" font-size="12" fill="#4a7a3a">后缀 nums[3..4]</text>
+  <text x="373" y="174" text-anchor="middle" font-size="12" fill="#4a7a3a">{4, 2} → 2 个不同</text>
+
+  <!-- arrows into formula -->
+  <path d="M 218 184 Q 235 202 248 210" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+  <path d="M 373 184 Q 325 202 312 210" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- formula box -->
+  <rect x="160" y="210" width="240" height="42" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="237" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">diff[2] = 2 − 2 = 0</text>
+
+  <path d="M 280 252 L 280 274" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- general formula -->
+  <rect x="80" y="278" width="400" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="302" text-anchor="middle" font-size="12.5" fill="#2b2b2b">一般地：diff[i] = pre(i) − suf(i+1)，两项都可增量维护</text>
+
+  <path d="M 280 316 L 280 338" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#arr)"/>
+
+  <!-- domain hint -->
+  <rect x="60" y="342" width="440" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="364" text-anchor="middle" font-size="11.5" fill="#2b2b2b">值域 nums[i] ≤ 50 ⇒ 定长数组当集合，O(1) 查改</text>
+</svg>
