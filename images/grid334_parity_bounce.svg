@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="380" fill="#fafafa"/>
+
+  <text x="340" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：时刻奇偶被格子锁死，折返 = 每次 +2 的等待</text>
+
+  <!-- ===== 左：奇偶不变量 ===== -->
+  <text x="150" y="64" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c4d70" filter="url(#rough2)">① 奇偶不变量（棋盘染色）</text>
+
+  <!-- 4x3 checkerboard, cell 50x42, origin (40,84) -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="84" width="50" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="90" y="84" width="50" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="140" y="84" width="50" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="190" y="84" width="50" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="40" y="126" width="50" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="90" y="126" width="50" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="140" y="126" width="50" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="190" y="126" width="50" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="40" y="168" width="50" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="90" y="168" width="50" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="140" y="168" width="50" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="190" y="168" width="50" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <g font-size="13" text-anchor="middle" filter="url(#rough2)">
+    <text x="65" y="110" fill="#446688">0</text>
+    <text x="115" y="110" fill="#4a7a3a">1</text>
+    <text x="165" y="110" fill="#446688">0</text>
+    <text x="215" y="110" fill="#4a7a3a">1</text>
+    <text x="65" y="152" fill="#4a7a3a">1</text>
+    <text x="115" y="152" fill="#446688">0</text>
+    <text x="165" y="152" fill="#4a7a3a">1</text>
+    <text x="215" y="152" fill="#446688">0</text>
+    <text x="65" y="194" fill="#446688">0</text>
+    <text x="115" y="194" fill="#4a7a3a">1</text>
+    <text x="165" y="194" fill="#446688">0</text>
+    <text x="215" y="194" fill="#4a7a3a">1</text>
+  </g>
+  <!-- demo path (0,0)->(0,1)->(1,1) -->
+  <path d="M 70 105 L 106 105" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 115 112 L 115 146" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="88" y="97" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">t=1</text>
+  <text x="130" y="133" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">t=2</text>
+  <text x="65" y="79" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">t=0</text>
+
+  <text x="150" y="232" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">每走一步：t ← t+1，(r+c) 奇偶翻转</text>
+  <text x="150" y="252" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4d70" filter="url(#rough2)">⇒ t ≡ r+c (mod 2)，永不改变</text>
+  <text x="150" y="272" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">例：蓝格只能偶数时刻到达，绿格只能奇数</text>
+
+  <!-- ===== 右：折返弹跳 ===== -->
+  <text x="505" y="64" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6210" filter="url(#rough2)">② 折返弹跳 = 每次 +2</text>
+
+  <g filter="url(#rough2)">
+    <rect x="348" y="90" width="64" height="42" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="424" y="90" width="64" height="42" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="500" y="90" width="64" height="42" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="576" y="90" width="64" height="42" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <g text-anchor="middle" filter="url(#rough2)">
+    <text x="380" y="106" font-size="12.5" fill="#2c4d70">u</text>
+    <text x="380" y="124" font-size="10.5" fill="#446688">t = d</text>
+    <text x="456" y="106" font-size="12.5" fill="#8a6210">p</text>
+    <text x="456" y="124" font-size="10.5" fill="#d6a040">t = d+1</text>
+    <text x="532" y="106" font-size="12.5" fill="#2c4d70">u</text>
+    <text x="532" y="124" font-size="10.5" fill="#446688">t = d+2</text>
+    <text x="608" y="106" font-size="12.5" fill="#8a6210">p</text>
+    <text x="608" y="124" font-size="10.5" fill="#d6a040">t = d+3</text>
+  </g>
+  <path d="M 414 111 L 422 111" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 490 111 L 498 111" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 566 111 L 574 111" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="656" y="116" text-anchor="middle" font-size="16" fill="#666" filter="url(#rough2)">⋯</text>
+
+  <path d="M 352 146 C 390 162 590 162 634 146" stroke="#d6a040" stroke-width="1.6" fill="none" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="493" y="176" text-anchor="middle" font-size="11" fill="#8a6210" filter="url(#rough2)">每折返一个往返，多耗 2 单位时间（等待以 2 为单位）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="548" y="192" width="100" height="46" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="598" y="210" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5a24" filter="url(#rough2)">v</text>
+  <text x="598" y="228" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">t = T（选定）</text>
+  <path d="M 658 126 C 664 156 646 184 622 194" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="598" y="254" text-anchor="middle" font-size="10.5" fill="#2e5a24" filter="url(#rough2)">T ≥ grid[v] 且 T ≡ d+1 (mod 2)</text>
+
+  <text x="505" y="281" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">※ 起点 (0,0) 无前驱可弹跳 ⇒ 第一步必须进入</text>
+  <text x="505" y="296" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">grid ≤ 1 的邻居，否则无解（返回 −1）</text>
+
+  <!-- ===== 底部结论 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="308" width="600" height="58" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="330" text-anchor="middle" font-size="12.5" fill="#2e5a24" filter="url(#rough2)">结论：从 dist[u] = d 出发进入邻居 v 的可达时刻集合为</text>
+  <text x="340" y="352" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5a24" filter="url(#rough2)">{ t : t ≥ max(d+1, grid[v])，t ≡ d+1 (mod 2) }</text>
+</svg>
