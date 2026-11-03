@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 368"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L6,4 L0,8 Z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L6,4 L0,8 Z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L6,4 L0,8 Z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="368" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="14" fill="#555" font-weight="bold">核心观察：枚举中间对 (j,k)，左右两侧独立选择（乘法原理）</text>
+
+  <!-- ====== role labels ====== -->
+  <text x="172" y="44" text-anchor="middle" font-size="10" fill="#446688" font-weight="bold">i（最小）</text>
+  <text x="226" y="44" text-anchor="middle" font-size="10" fill="#d6a040" font-weight="bold">j（峰值）</text>
+  <text x="280" y="44" text-anchor="middle" font-size="10" fill="#4a7a3a" font-weight="bold">k（中值）</text>
+  <text x="334" y="44" text-anchor="middle" font-size="10" fill="#446688" font-weight="bold">l₁</text>
+  <text x="388" y="44" text-anchor="middle" font-size="10" fill="#446688" font-weight="bold">l₂</text>
+
+  <!-- ====== array cells ====== -->
+  <rect x="148" y="50" width="48" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" rx="4" filter="url(#rough2)"/>
+  <text x="172" y="72" text-anchor="middle" font-size="13" fill="#333">1</text>
+  <rect x="202" y="50" width="48" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4" rx="4" filter="url(#rough2)"/>
+  <text x="226" y="72" text-anchor="middle" font-size="13" fill="#333">3</text>
+  <rect x="256" y="50" width="48" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4" rx="4" filter="url(#rough2)"/>
+  <text x="280" y="72" text-anchor="middle" font-size="13" fill="#333">2</text>
+  <rect x="310" y="50" width="48" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" rx="4" filter="url(#rough2)"/>
+  <text x="334" y="72" text-anchor="middle" font-size="13" fill="#333">4</text>
+  <rect x="364" y="50" width="48" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" stroke-dasharray="4,3" rx="4" filter="url(#rough2)"/>
+  <text x="388" y="72" text-anchor="middle" font-size="13" fill="#333">5</text>
+
+  <!-- ====== indices ====== -->
+  <text x="172" y="96" text-anchor="middle" font-size="9" fill="#999">0</text>
+  <text x="226" y="96" text-anchor="middle" font-size="9" fill="#999">1</text>
+  <text x="280" y="96" text-anchor="middle" font-size="9" fill="#999">2</text>
+  <text x="334" y="96" text-anchor="middle" font-size="9" fill="#999">3</text>
+  <text x="388" y="96" text-anchor="middle" font-size="9" fill="#999">4</text>
+
+  <!-- ====== hinge annotation between j and k ====== -->
+  <path d="M 226 106 L 226 128 L 280 128 L 280 106" stroke="#b85450" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arrR)"/>
+  <text x="253" y="140" text-anchor="middle" font-size="9" fill="#b85450" font-weight="bold">铰链：nums[j] &gt; nums[k]（逆序对）</text>
+
+  <!-- ====== chain box ====== -->
+  <rect x="30" y="150" width="500" height="34" fill="#ffffff" stroke="#999" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="171" text-anchor="middle" font-size="11" fill="#333">值的大小链：
+    <tspan fill="#446688" font-weight="bold">nums[i] &lt; nums[k]</tspan>
+    <tspan fill="#4a7a3a" font-weight="bold"> &lt; nums[j]</tspan>
+    <tspan fill="#d6a040" font-weight="bold"> &lt; nums[l]</tspan>　（例：1 &lt; 2 &lt; 3 &lt; 4）</text>
+
+  <!-- ====== left A box ====== -->
+  <rect x="30" y="200" width="240" height="64" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="150" y="220" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold">左侧：i 的选择</text>
+  <text x="150" y="238" text-anchor="middle" font-size="10" fill="#333">A(j,k) = #{ i &lt; j : nums[i] &lt; nums[k] }</text>
+  <text x="150" y="254" text-anchor="middle" font-size="9.5" fill="#555">阈值是 k 的值；例：i ∈ {0} → A = 1</text>
+
+  <!-- ====== multiply sign ====== -->
+  <text x="280" y="238" text-anchor="middle" font-size="20" fill="#b85450" font-weight="bold">×</text>
+
+  <!-- ====== right B box ====== -->
+  <rect x="290" y="200" width="240" height="64" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="410" y="220" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold">右侧：l 的选择</text>
+  <text x="410" y="238" text-anchor="middle" font-size="10" fill="#333">B(j,k) = #{ l &gt; k : nums[l] &gt; nums[j] }</text>
+  <text x="410" y="254" text-anchor="middle" font-size="9.5" fill="#555">阈值是 j 的值；例：l ∈ {3,4} → B = 2</text>
+
+  <!-- ====== conclusion box ====== -->
+  <rect x="30" y="280" width="500" height="72" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="300" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold">固定 (j,k) 后，i 与 l 的选取互不影响 ⇒ 乘法原理，贡献 = A(j,k) × B(j,k)</text>
+  <text x="280" y="318" text-anchor="middle" font-size="10.5" fill="#333">答案 = Σ A(j,k) × B(j,k)，求和 over 所有 j &lt; k 且 nums[j] &gt; nums[k] 的中间对</text>
+  <text x="280" y="336" text-anchor="middle" font-size="9.5" fill="#555">(j,k) 共 O(n²) 对，每对 O(1) 取得 A、B ⇒ 总计 O(n²)</text>
+</svg>
