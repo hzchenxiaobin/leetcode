@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 640"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="640" fill="#fafafa"/>
+
+  <text x="330" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：逐元素状压 DP（副本法）</text>
+  <path d="M 170 40 Q 330 48 490 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 开始 -->
+  <g filter="url(#rough2)">
+    <rect x="90" y="64" width="180" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="180" y="86" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4d70" filter="url(#rough2)">dp[0] = 1（空集），其余 0</text>
+  <path d="M 180 98 L 180 114" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断 1：还有元素？ -->
+  <g filter="url(#rough2)">
+    <polygon points="180,120 262,158 180,196 98,158" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="180" y="163" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4d70" filter="url(#rough2)">还有元素？</text>
+  <path d="M 262 158 L 300 158" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="280" y="148" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="306" y="140" width="210" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="411" y="163" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5a24" filter="url(#rough2)">返回 (Σ dp − 1) mod 1e9+7</text>
+  <path d="M 180 196 L 180 218" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="192" y="212" font-size="11" fill="#555" filter="url(#rough2)">是</text>
+
+  <!-- 判断 2：v 平方自由？ -->
+  <g filter="url(#rough)">
+    <polygon points="180,222 265,258 180,294 95,258" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="180" y="254" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6210" filter="url(#rough2)">v 平方自由？</text>
+  <text x="180" y="272" text-anchor="middle" font-size="10" fill="#8a6210" filter="url(#rough2)">（查 4 / 9 / 25）</text>
+  <path d="M 180 294 L 180 320" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="192" y="312" font-size="11" fill="#555" filter="url(#rough2)">是</text>
+
+  <!-- 否：跳过 v（回到还有元素？） -->
+  <path d="M 95 258 L 40 258 L 40 158 L 90 158" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="64" y="248" text-anchor="middle" font-size="9.5" fill="#8a6210" filter="url(#rough2)">否·跳过</text>
+
+  <!-- 取掩码 + 副本 -->
+  <g filter="url(#rough2)">
+    <rect x="75" y="324" width="210" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="180" y="344" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4d70" filter="url(#rough2)">m = mask[v]</text>
+  <text x="180" y="362" text-anchor="middle" font-size="11.5" fill="#2c4d70" filter="url(#rough2)">ndp = dp（不选 v 分支）</text>
+  <path d="M 180 372 L 180 416" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 内层循环容器 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="392" width="400" height="170" rx="10" fill="#fdfdfd" stroke="#999999" stroke-width="1.2" stroke-dasharray="6,4"/>
+  </g>
+  <text x="75" y="554" font-size="11" fill="#666" filter="url(#rough2)">内层循环：s = 0 … 1023</text>
+
+  <!-- 判断 3：s & m == 0？ -->
+  <g filter="url(#rough)">
+    <polygon points="180,422 255,458 180,494 105,458" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="180" y="455" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c4d70" filter="url(#rough2)">s &amp; m == 0？</text>
+  <text x="180" y="473" text-anchor="middle" font-size="9.5" fill="#446688" filter="url(#rough2)">（不相交才可并入）</text>
+
+  <!-- 否：跳过该状态（收集线） -->
+  <path d="M 255 458 L 430 458" stroke="#3a3a3a" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <text x="340" y="450" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">否：跳过</text>
+
+  <!-- 是：并入 -->
+  <g filter="url(#rough2)">
+    <rect x="95" y="498" width="170" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="180" y="514" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6210" filter="url(#rough2)">ndp[s|m] += dp[s]</text>
+  <text x="180" y="531" text-anchor="middle" font-size="10.5" fill="#8a6210" filter="url(#rough2)">（选 v：读旧 dp，写新 ndp）</text>
+  <path d="M 180 494 L 180 494" stroke="#3a3a3a" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+
+  <!-- 内层回环：s+1 -->
+  <path d="M 265 518 L 430 518 L 430 400 L 180 400" stroke="#3a3a3a" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <circle cx="180" cy="400" r="3.2" fill="#3a3a3a" filter="url(#rough2)"/>
+  <text x="438" y="472" font-size="10.5" fill="#555" filter="url(#rough2)">s+1</text>
+
+  <!-- 容器出口 -->
+  <path d="M 180 538 L 180 558" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="110" y="562" width="210" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="215" y="585" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5a24" filter="url(#rough2)">dp = ndp（下一元素）</text>
+
+  <!-- 外层回环 -->
+  <path d="M 320 580 L 610 580 L 610 110 L 180 110" stroke="#3a3a3a" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <circle cx="180" cy="110" r="3.2" fill="#3a3a3a" filter="url(#rough2)"/>
+  <text x="450" y="100" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">回到「还有元素？」</text>
+
+  <!-- 备注 -->
+  <g filter="url(#rough2)">
+    <rect x="340" y="204" width="260" height="84" rx="8" fill="#fdfdfd" stroke="#999999" stroke-width="1.2"/>
+  </g>
+  <text x="354" y="230" font-size="10.5" fill="#444" filter="url(#rough2)">注 1：值 1 的 m = 0 → s &amp; 0 = 0 恒</text>
+  <text x="354" y="250" font-size="10.5" fill="#444" filter="url(#rough2)">成立且 s | 0 = s，ndp[s] 全体翻倍</text>
+  <text x="354" y="270" font-size="10.5" fill="#444" filter="url(#rough2)">注 2：同值元素第二个被 s &amp; m ≠ 0 挡下</text>
+</svg>
