@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 412"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="412" fill="#fafafa"/>
+  <text x="280" y="24" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">链式重建演算：从 o0 = 0 出发</text>
+
+  <!-- 案例 1：成功 -->
+  <text x="280" y="54" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">案例 1 derived = [1, 1, 0]，1⊕1⊕0 = 0 → true</text>
+  <rect x="100" y="74" width="72" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="136" y="94" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">o0 = 0</text>
+  <rect x="244" y="74" width="72" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="94" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">o1 = 1</text>
+  <rect x="388" y="74" width="72" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="424" y="94" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">o2 = 0</text>
+  <path d="M176,89 L240,89" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="208" y="81" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">d0 = 1</text>
+  <path d="M320,89 L384,89" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="352" y="81" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">d1 = 1</text>
+  <path d="M424,106 C424,150 136,150 136,106" stroke="#d6a040" stroke-width="2" fill="none" filter="url(#rough2)"/>
+  <text x="280" y="150" text-anchor="middle" font-size="12" fill="#8a6d1f" filter="url(#rough2)">d2：o2 ⊕ o0 = 0 ⊕ 0 = 0 ✓</text>
+  <text x="280" y="174" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">得 original = [0,1,0]；整体取反 [1,0,1] 同样合法</text>
+
+  <!-- 案例 2：失败 -->
+  <text x="280" y="212" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">案例 2 derived = [1, 0]，1⊕0 = 1 ≠ 0 → false</text>
+  <rect x="160" y="230" width="72" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="196" y="250" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">o0 = 0</text>
+  <rect x="328" y="230" width="72" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="364" y="250" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">o1 = 1</text>
+  <path d="M236,245 L324,245" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="280" y="237" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">d0 = 1</text>
+  <path d="M364,262 C364,304 196,304 196,262" stroke="#d6a040" stroke-width="2" fill="none" filter="url(#rough2)"/>
+  <text x="280" y="306" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">d1：需要 o1 ⊕ o0 = 0，实际 = 1 ✗</text>
+  <text x="280" y="330" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">n = 2 时两条边连同一对节点：d0 与 d1 必须相等</text>
+
+  <!-- 结论 -->
+  <rect x="50" y="348" width="460" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="370" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">判定：全体异或一遍，结果为 0 ⟺ true</text>
+  <text x="280" y="390" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">（等价于心算：derived 中 1 的个数为偶数）</text>
+</svg>
