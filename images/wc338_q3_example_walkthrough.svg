@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="470" viewBox="0 0 680 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="83" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="470" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例演算：nums = [3,1,6,8]，queries = [1,5]</text>
+  <path d="M 150 42 Q 340 50 530 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="36" y="56" width="608" height="44" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/></g>
+  <text x="54" y="76" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">预处理：排序 a = [1, 3, 6, 8]，前缀和 pre = [0, 1, 4, 10, 18]（pre[k] = 前 k 小元素之和）</text>
+  <text x="54" y="93" font-size="11" fill="#777" filter="url(#sk)">n = 4，a 已升序，接下来每个查询独立二分</text>
+
+  <g filter="url(#sk)"><rect x="36" y="116" width="300" height="204" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="186" y="140" text-anchor="middle" font-size="14" font-weight="bold" fill="#33506e" filter="url(#sk)">查询 q = 1</text>
+  <text x="54" y="164" font-size="12" fill="#33506e" filter="url(#sk)">pos = lower_bound(a, 1) = 0</text>
+  <text x="54" y="182" font-size="11" fill="#666" filter="url(#sk)">（没有元素严格小于 1）</text>
+  <text x="54" y="208" font-size="12" fill="#33506e" filter="url(#sk)">left = 1×0 − pre[0] = 0</text>
+  <text x="54" y="228" font-size="12" fill="#33506e" filter="url(#sk)">right = (18−0) − 1×(4−0) = 14</text>
+  <text x="54" y="252" font-size="13" font-weight="bold" fill="#33506e" filter="url(#sk)">cost = 0 + 14 = 14 ✓</text>
+  <text x="54" y="276" font-size="11" fill="#777" filter="url(#sk)">逐元素核对 |aᵢ−1|：</text>
+  <text x="54" y="294" font-size="11" fill="#777" filter="url(#sk)">0 + 2 + 5 + 7 = 14</text>
+  <g filter="url(#sk)"><rect x="54" y="258" width="264" height="52" rx="6" fill="#f4f8ff" stroke="#9bb4d4" stroke-width="1"/></g>
+  <text x="186" y="308" text-anchor="middle" font-size="10.5" fill="#8899aa" filter="url(#sk)">全数组都在 q 右侧 → 全部减小</text>
+
+  <g filter="url(#sk)"><rect x="344" y="116" width="300" height="204" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="494" y="140" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">查询 q = 5</text>
+  <text x="362" y="164" font-size="12" fill="#2e6e2e" filter="url(#sk)">pos = lower_bound(a, 5) = 2</text>
+  <text x="362" y="182" font-size="11" fill="#666" filter="url(#sk)">（1、3 严格小于 5）</text>
+  <text x="362" y="208" font-size="12" fill="#2e6e2e" filter="url(#sk)">left = 5×2 − pre[2] = 10−4 = 6</text>
+  <text x="362" y="228" font-size="12" fill="#2e6e2e" filter="url(#sk)">right = (18−4) − 5×2 = 4</text>
+  <text x="362" y="252" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">cost = 6 + 4 = 10 ✓</text>
+  <text x="362" y="276" font-size="11" fill="#777" filter="url(#sk)">逐元素核对 |aᵢ−5|：</text>
+  <text x="362" y="294" font-size="11" fill="#777" filter="url(#sk)">4 + 2 + 1 + 3 = 10</text>
+  <g filter="url(#sk)"><rect x="362" y="258" width="264" height="52" rx="6" fill="#f2f9f3" stroke="#a8cf9e" stroke-width="1"/></g>
+  <text x="494" y="308" text-anchor="middle" font-size="10.5" fill="#7fa87a" filter="url(#sk)">切点两侧各算各的，绝对值已脱壳</text>
+
+  <g filter="url(#sk)"><rect x="36" y="336" width="608" height="110" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/></g>
+  <text x="54" y="360" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">对照表：距离和 Σ|aᵢ − q|（q 在元素左侧记「补」，在右侧记「退」）</text>
+  <g filter="url(#sk)"><rect x="72" y="374" width="90" height="30" rx="4" fill="#fdfcf7" stroke="#9a8a6a" stroke-width="1.2"/></g>
+  <text x="117" y="394" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">aᵢ</text>
+  <g filter="url(#sk)"><rect x="162" y="374" width="90" height="30" rx="4" fill="#fdfcf7" stroke="#9a8a6a" stroke-width="1.2"/></g>
+  <text x="207" y="394" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">1</text>
+  <g filter="url(#sk)"><rect x="252" y="374" width="90" height="30" rx="4" fill="#fdfcf7" stroke="#9a8a6a" stroke-width="1.2"/></g>
+  <text x="297" y="394" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">3</text>
+  <g filter="url(#sk)"><rect x="342" y="374" width="90" height="30" rx="4" fill="#fdfcf7" stroke="#9a8a6a" stroke-width="1.2"/></g>
+  <text x="387" y="394" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">6</text>
+  <g filter="url(#sk)"><rect x="432" y="374" width="90" height="30" rx="4" fill="#fdfcf7" stroke="#9a8a6a" stroke-width="1.2"/></g>
+  <text x="477" y="394" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">8</text>
+  <g filter="url(#sk)"><rect x="522" y="374" width="100" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="572" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#sk)">合计</text>
+
+  <g filter="url(#sk)"><rect x="72" y="406" width="90" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/></g>
+  <text x="117" y="426" text-anchor="middle" font-size="12" fill="#33506e" filter="url(#sk)">|aᵢ−1|</text>
+  <g filter="url(#sk)"><rect x="162" y="406" width="90" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/></g>
+  <text x="207" y="426" text-anchor="middle" font-size="12" fill="#33506e" filter="url(#sk)">0</text>
+  <g filter="url(#sk)"><rect x="252" y="406" width="90" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/></g>
+  <text x="297" y="426" text-anchor="middle" font-size="12" fill="#33506e" filter="url(#sk)">2</text>
+  <g filter="url(#sk)"><rect x="342" y="406" width="90" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/></g>
+  <text x="387" y="426" text-anchor="middle" font-size="12" fill="#33506e" filter="url(#sk)">5</text>
+  <g filter="url(#sk)"><rect x="432" y="406" width="90" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/></g>
+  <text x="477" y="426" text-anchor="middle" font-size="12" fill="#33506e" filter="url(#sk)">7</text>
+  <g filter="url(#sk)"><rect x="522" y="406" width="100" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="572" y="426" text-anchor="middle" font-size="12" font-weight="bold" fill="#33506e" filter="url(#sk)">14</text>
+
+  <g filter="url(#sk)"><rect x="72" y="438" width="90" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/></g>
+  <text x="117" y="456" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">|aᵢ−5|</text>
+  <g filter="url(#sk)"><rect x="162" y="438" width="90" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/></g>
+  <text x="207" y="456" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">4</text>
+  <g filter="url(#sk)"><rect x="252" y="438" width="90" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/></g>
+  <text x="297" y="456" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">2</text>
+  <g filter="url(#sk)"><rect x="342" y="438" width="90" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/></g>
+  <text x="387" y="456" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">1</text>
+  <g filter="url(#sk)"><rect x="432" y="438" width="90" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/></g>
+  <text x="477" y="456" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">3</text>
+  <g filter="url(#sk)"><rect x="522" y="438" width="100" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="572" y="456" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">10</text>
+</svg>

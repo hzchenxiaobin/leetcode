@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="500" viewBox="0 0 680 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="500" fill="#fdfcf7"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：度数剥叶，一遍 O(n)</text>
+  <text x="340" y="50" text-anchor="middle" font-size="12" fill="#666" filter="url(#sk)">阶段① 级联删无币叶（拓扑排序）→ 阶段② 快照剥两层 → 统计存活度数和</text>
+  <path d="M 150 60 Q 340 68 530 60" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="42" y="76" width="356" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="62" y="98" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">① 建图：邻接表 g + 度数组 deg</text>
+  <text x="62" y="116" font-size="11" fill="#555" filter="url(#sk)">每条无向边给两端度数各 +1</text>
+  <g filter="url(#sk)"><path d="M 220 134 L 220 148" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/></g>
+
+  <g filter="url(#sk)"><rect x="42" y="150" width="356" height="108" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="62" y="172" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">② 阶段一：反复删「无币叶」（级联）</text>
+  <text x="62" y="192" font-size="11" fill="#333" filter="url(#sk)">初始队列 ← { v : deg[v]=1 且 coins[v]=0 }</text>
+  <text x="62" y="210" font-size="11" fill="#333" filter="url(#sk)">弹出 u：deleted[u]=1，给存活邻居 deg−1</text>
+  <text x="62" y="228" font-size="11" fill="#333" filter="url(#sk)">邻居变成新的无币叶 → 入队（级联）</text>
+  <text x="62" y="246" font-size="11" fill="#333" filter="url(#sk)">删到队列空：剩余叶子全部带币</text>
+  <g filter="url(#sk)"><path d="M 402 240 Q 436 204 402 170" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arG)"/></g>
+  <text x="436" y="250" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#sk)">队列非空</text>
+  <g filter="url(#sk)"><path d="M 220 262 L 220 272" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/></g>
+
+  <g filter="url(#sk)"><rect x="42" y="274" width="356" height="108" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="62" y="296" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">③ 阶段二：快照剥两层叶（恰好 2 轮）</text>
+  <text x="62" y="316" font-size="11" fill="#333" filter="url(#sk)">for _ in range(2):</text>
+  <text x="62" y="334" font-size="11" fill="#333" filter="url(#sk)">　leaf ← 快照 { 存活 且 deg=1 }（先拍后删）</text>
+  <text x="62" y="352" font-size="11" fill="#333" filter="url(#sk)">　统一删除 leaf，给存活邻居 deg−1（不级联）</text>
+  <text x="62" y="370" font-size="11" fill="#333" filter="url(#sk)">新暴露的叶子留给下一轮</text>
+  <g filter="url(#sk)"><path d="M 402 368 Q 436 330 402 292" stroke="#d6a040" stroke-width="1.5" fill="none" marker-end="url(#arG)"/></g>
+  <text x="444" y="334" font-size="11" font-weight="bold" fill="#7a5415" filter="url(#sk)">×2 轮</text>
+  <g filter="url(#sk)"><path d="M 220 386 L 220 408" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/></g>
+
+  <g filter="url(#sk)"><rect x="42" y="410" width="356" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="62" y="432" font-size="12.5" font-weight="bold" fill="#8a3a36" filter="url(#sk)">④ 答案 = Σ 存活节点 deg = 2 × 剩余边数</text>
+  <text x="62" y="450" font-size="11" fill="#555" filter="url(#sk)">度数和统计天然规避「剩余 0/1 个点」的特判</text>
+
+  <g filter="url(#sk)"><rect x="492" y="150" width="178" height="108" rx="8" fill="#f2f8f0" stroke="#4a7a3a" stroke-width="1.3" stroke-dasharray="6,4"/></g>
+  <text x="504" y="172" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">为什么②要级联？</text>
+  <text x="504" y="190" font-size="10.5" fill="#333" filter="url(#sk)">删掉无币叶后暴露</text>
+  <text x="504" y="206" font-size="10.5" fill="#333" filter="url(#sk)">的新无币叶同样</text>
+  <text x="504" y="222" font-size="10.5" fill="#333" filter="url(#sk)">无用，要删到叶子</text>
+  <text x="504" y="238" font-size="10.5" fill="#333" filter="url(#sk)">全部带币为止</text>
+
+  <g filter="url(#sk)"><rect x="492" y="274" width="178" height="108" rx="8" fill="#fdf1f1" stroke="#b85450" stroke-width="1.3" stroke-dasharray="6,4"/></g>
+  <text x="504" y="296" font-size="11" font-weight="bold" fill="#8a3a36" filter="url(#sk)">头号坑：③要「先快照」</text>
+  <text x="504" y="314" font-size="10.5" fill="#333" filter="url(#sk)">若删一个立刻把新叶</text>
+  <text x="504" y="330" font-size="10.5" fill="#333" filter="url(#sk)">并入本轮，两层并成</text>
+  <text x="504" y="346" font-size="10.5" fill="#333" filter="url(#sk)">一层 → 多删叶 →</text>
+  <text x="504" y="362" font-size="10.5" fill="#333" filter="url(#sk)">答案偏小（WA）</text>
+
+  <g filter="url(#sk)"><rect x="492" y="410" width="178" height="52" rx="8" fill="#f7f7f2" stroke="#8a8a7a" stroke-width="1.2"/></g>
+  <text x="581" y="432" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">时间 O(n)　空间 O(n)</text>
+  <text x="581" y="450" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#sk)">每个节点至多被删除一次</text>
+</svg>
