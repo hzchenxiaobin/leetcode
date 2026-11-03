@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="545" viewBox="0 0 700 545" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="83" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b85450"/></marker>
+    <marker id="ad" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#2b2b2b"/></marker>
+  </defs>
+  <rect width="700" height="545" fill="#fdfcf7"/>
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">复盘升级：按 v mod k 分组 → 组内成链 → 打家劫舍计数 → 相乘</text>
+  <path d="M 160 42 Q 350 50 540 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- example caption -->
+  <text x="42" y="98" font-size="12" fill="#666" filter="url(#sk)">例：nums = [2,4,5,6]，k = 2（数轴）</text>
+
+  <!-- conflict arcs -->
+  <path d="M 150 103 Q 215 70 280 103" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="212" y="80" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#sk)">差=k 冲突</text>
+  <path d="M 280 103 Q 385 46 490 103" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="383" y="52" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#sk)">差=k 冲突（跳过中间的 5）</text>
+
+  <!-- number line -->
+  <path d="M 70 122 Q 300 116 552 122" stroke="#2b2b2b" stroke-width="1.8" fill="none" marker-end="url(#ad)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <circle cx="150" cy="122" r="14" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="280" cy="122" r="14" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="490" cy="122" r="14" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="360" cy="122" r="14" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="150" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">2</text>
+  <text x="280" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">4</text>
+  <text x="490" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">6</text>
+  <text x="360" y="155" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">5</text>
+
+  <!-- legend -->
+  <g filter="url(#sk)">
+    <rect x="574" y="92" width="13" height="13" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="638" y="103" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">余 0 类</text>
+  <g filter="url(#sk)">
+    <rect x="574" y="114" width="13" height="13" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="638" y="125" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#sk)">余 1 类</text>
+
+  <!-- row 2: info + warning -->
+  <g filter="url(#sk)">
+    <rect x="40" y="176" width="300" height="64" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="190" y="202" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4a6e">|a−b| = k ⟹ a ≡ b (mod k)</text>
+  <text x="190" y="224" text-anchor="middle" font-size="11" fill="#446688">冲突边只存在于同一余类之内</text>
+
+  <g filter="url(#sk)">
+    <rect x="360" y="176" width="300" height="64" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="510" y="198" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">⚠ 全局排序中 4 与 6 被 5 隔开</text>
+  <text x="510" y="218" text-anchor="middle" font-size="10.5" fill="#b85450">只看相邻前驱会漏检 → 必须先按</text>
+  <text x="510" y="233" text-anchor="middle" font-size="10.5" fill="#b85450">v mod k 分组，组内再看前驱</text>
+
+  <!-- left group: chain DP -->
+  <text x="215" y="272" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">余 0 类：链 2 — 4 — 6（w = 1）</text>
+  <g filter="url(#sk)">
+    <rect x="94" y="286" width="52" height="36" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="189" y="286" width="52" height="36" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="284" y="286" width="52" height="36" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="120" y="309" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">2</text>
+  <text x="215" y="309" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">4</text>
+  <text x="310" y="309" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">6</text>
+  <path d="M 146 300 L 187 300" stroke="#b85450" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <path d="M 241 300 L 282 300" stroke="#b85450" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <text x="166" y="290" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#sk)">互斥</text>
+  <text x="261" y="290" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#sk)">互斥</text>
+
+  <text x="215" y="348" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">跳过：f0′ = f0 + f1</text>
+  <text x="215" y="368" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">取（gap=k，上一值须未选）：f1′ = w·f0</text>
+  <text x="215" y="388" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">断链（gap≠k，两段独立）：f1′ = w·(f0+f1)</text>
+  <g filter="url(#sk)">
+    <rect x="70" y="402" width="290" height="28" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="215" y="421" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e5e2e">组方案 = 5：∅, {2}, {4}, {6}, {2,6}</text>
+
+  <!-- multiply sign -->
+  <text x="450" y="316" text-anchor="middle" font-size="24" font-weight="bold" fill="#7a5415" filter="url(#sk)">⊗</text>
+  <text x="450" y="338" text-anchor="middle" font-size="10" fill="#a07818" filter="url(#sk)">各组独立</text>
+
+  <!-- right group: isolated value -->
+  <text x="575" y="272" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">余 1 类：孤立点 5</text>
+  <g filter="url(#sk)">
+    <rect x="549" y="286" width="52" height="36" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="575" y="309" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">5</text>
+  <text x="575" y="348" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">无任何冲突边</text>
+  <text x="575" y="368" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">取 / 不取自由</text>
+  <g filter="url(#sk)">
+    <rect x="470" y="402" width="210" height="28" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="575" y="421" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e5e2e">组方案 = 2：∅, {5}</text>
+
+  <!-- bottom banner -->
+  <g filter="url(#sk)">
+    <rect x="140" y="456" width="420" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="350" y="480" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">ans = 5 × 2 − 1 = 9 ✓</text>
+  <text x="350" y="500" text-anchor="middle" font-size="10.5" fill="#a07818">先按乘法原理把各组方案数相乘，最后扣全局空集</text>
+</svg>

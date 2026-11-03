@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="420" viewBox="0 0 660 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="71" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#446688"/></marker>
+  </defs>
+  <rect width="660" height="420" fill="#fdfcf7"/>
+  <text x="330" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：升序处理后，冲突只可能来自左边的 v−k</text>
+  <path d="M 160 44 Q 330 52 500 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- top info boxes -->
+  <g filter="url(#sk)">
+    <rect x="40" y="58" width="285" height="76" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="182" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a6e">冲突 |a−b| = k 只与「值」有关</text>
+  <text x="182" y="112" text-anchor="middle" font-size="11.5" fill="#446688">维护 chosen[值] 计数表，增量判冲突 O(1)</text>
+
+  <g filter="url(#sk)">
+    <rect x="345" y="58" width="285" height="76" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="487" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e">排序 ⟹ 已选值全部 ≤ v</text>
+  <text x="487" y="112" text-anchor="middle" font-size="11.5" fill="#4a7a3a">冲突方只可能是 v−k → 单侧一次查询</text>
+
+  <!-- number line -->
+  <path d="M 60 244 Q 340 238 604 246" stroke="#2b2b2b" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- conflict arc v-k to v -->
+  <path d="M 214 214 Q 300 176 384 214" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="298" y="188" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">差恰为 k → 唯一可能的冲突方向</text>
+
+  <!-- no-need-check arc v to v+k -->
+  <path d="M 400 214 Q 478 184 550 214" stroke="#c9c9c2" stroke-width="1.6" stroke-dasharray="5 4" fill="none" filter="url(#sk)"/>
+  <text x="477" y="196" text-anchor="middle" font-size="10.5" fill="#8a8a84" filter="url(#sk)">差也是 k，但在未来</text>
+
+  <!-- circles on axis -->
+  <g filter="url(#sk)">
+    <circle cx="210" cy="244" r="14" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="210" y="198" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">v − k</text>
+  <text x="210" y="276" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">可能已选 → 查 chosen[v−k]</text>
+
+  <g filter="url(#sk)">
+    <circle cx="390" cy="244" r="17" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+  </g>
+  <text x="390" y="196" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">v（当前）</text>
+  <text x="390" y="276" text-anchor="middle" font-size="10.5" fill="#a07818" filter="url(#sk)">正在决定选 / 不选</text>
+
+  <g filter="url(#sk)">
+    <circle cx="560" cy="244" r="14" fill="#f1f1ef" stroke="#c9c9c2" stroke-width="1.6"/>
+  </g>
+  <text x="560" y="198" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#8a8a84" filter="url(#sk)">v + k</text>
+  <text x="560" y="276" text-anchor="middle" font-size="10.5" fill="#8a8a84" filter="url(#sk)">未来才处理 → 必未选，无需查</text>
+
+  <!-- processed / future zones -->
+  <g filter="url(#sk)">
+    <rect x="64" y="296" width="272" height="32" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="200" y="317" text-anchor="middle" font-size="11" fill="#2c4a6e">已处理区域：已选值全部 ≤ v</text>
+
+  <g filter="url(#sk)">
+    <rect x="352" y="296" width="264" height="32" rx="7" fill="#f1f1ef" stroke="#c9c9c2" stroke-width="1.2"/>
+  </g>
+  <text x="484" y="317" text-anchor="middle" font-size="11" fill="#8a8a84">未处理区域（值 > v）</text>
+
+  <!-- bottom example strip -->
+  <g filter="url(#sk)">
+    <rect x="40" y="346" width="580" height="58" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="330" y="370" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">实例：nums = [2,4,6]，k = 2，升序处理到 4 时</text>
+  <text x="330" y="391" text-anchor="middle" font-size="11" fill="#a07818">只查 chosen[4−2] = chosen[2]；6 在未来不查；轮到 6 时才查 chosen[6−2] = chosen[4]</text>
+</svg>

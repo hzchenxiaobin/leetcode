@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="580" viewBox="0 0 660 580" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="660" height="580" fill="#fdfcf7"/>
+  <text x="330" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：每层决定一个下标的去留，选前单侧查 chosen[v−k]</text>
+  <path d="M 150 44 Q 330 52 510 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- sort box -->
+  <g filter="url(#sk)">
+    <rect x="240" y="58" width="180" height="34" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="330" y="80" text-anchor="middle" font-size="13" fill="#2c4a6e">sort(nums)，升序</text>
+  <path d="M 330 92 L 330 112" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1: base case -->
+  <g filter="url(#sk)">
+    <polygon points="185,146 330,114 475,146 330,178" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="330" y="142" text-anchor="middle" font-size="12.5" fill="#7a5415">i == n ?</text>
+  <text x="330" y="160" text-anchor="middle" font-size="9.5" fill="#a07818">（全部下标已决定？）</text>
+  <text x="497" y="138" font-size="11" fill="#4a7a3a" filter="url(#sk)">是</text>
+  <path d="M 475 146 L 500 146" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="504" y="128" width="142" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="575" y="151" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e2e">return 1</text>
+  <text x="575" y="182" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#sk)">当前已选集合本身（含空集）</text>
+  <text x="340" y="196" font-size="11" fill="#4a7a3a" filter="url(#sk)">否</text>
+  <path d="M 330 178 L 330 206" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- skip branch -->
+  <g filter="url(#sk)">
+    <rect x="205" y="210" width="250" height="36" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="330" y="233" text-anchor="middle" font-size="12.5" fill="#2c4a6e">res = dfs(i+1)　# 不选 nums[i]</text>
+  <path d="M 330 246 L 330 266" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2: conflict check -->
+  <g filter="url(#sk)">
+    <polygon points="175,302 330,270 485,302 330,334" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="330" y="298" text-anchor="middle" font-size="12" fill="#7a5415">v−k ≥ 1 且 chosen[v−k] &gt; 0 ?</text>
+  <text x="330" y="316" text-anchor="middle" font-size="9.5" fill="#a07818">（与已选值 v−k 冲突？）</text>
+  <text x="497" y="294" font-size="11" fill="#b85450" filter="url(#sk)">是</text>
+  <path d="M 485 302 L 502 302" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="506" y="280" width="148" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="580" y="299" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">剪枝，不递归</text>
+  <text x="580" y="317" text-anchor="middle" font-size="10" fill="#b85450">v 与已选值 v−k 冲突</text>
+  <text x="340" y="352" font-size="11" fill="#4a7a3a" filter="url(#sk)">否</text>
+  <path d="M 330 334 L 330 356" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- take branch -->
+  <g filter="url(#sk)">
+    <rect x="205" y="360" width="250" height="58" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="330" y="381" text-anchor="middle" font-size="12.5" fill="#2e5e2e">chosen[v] += 1　选中 nums[i]</text>
+  <text x="330" y="399" text-anchor="middle" font-size="12.5" fill="#2e5e2e">res += dfs(i+1)</text>
+  <text x="330" y="413" text-anchor="middle" font-size="10.5" fill="#4a7a3a">（返回后）chosen[v] −= 1　回溯还原</text>
+  <path d="M 330 418 L 330 436" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- return res -->
+  <g filter="url(#sk)">
+    <rect x="240" y="440" width="180" height="34" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="330" y="462" text-anchor="middle" font-size="12.5" fill="#2c4a6e">return res</text>
+
+  <!-- recursion back edge -->
+  <path d="M 205 228 L 120 228 L 120 146 L 181 146" stroke="#7a94b8" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 205 389 L 120 389" stroke="#7a94b8" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="120" y="132" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">递归 dfs(i+1)</text>
+
+  <!-- answer banner -->
+  <path d="M 330 474 L 330 500" stroke="#a07818" stroke-width="1.5" stroke-dasharray="4 4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="170" y="506" width="320" height="52" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="330" y="528" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">答案 = dfs(0) − 1</text>
+  <text x="330" y="548" text-anchor="middle" font-size="10.5" fill="#a07818">dfs 统计含空集，末尾扣除</text>
+</svg>
