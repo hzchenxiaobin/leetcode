@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="470" fill="#fafafa"/>
+  <text x="430" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：先定位 1 的连通块，再取块内最小边</text>
+  <path d="M 240 40 Q 430 48 620 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 左泳道：BFS 一遍流 -->
+  <rect x="56" y="60" width="400" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="256" y="80" text-anchor="middle" font-size="12.5" fill="#2b4a6e" filter="url(#rough2)">① 建邻接表：g[a] += (b, w)，g[b] += (a, w)</text>
+  <text x="256" y="98" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">节点从 1 编号，数组开 n+1 个桶</text>
+
+  <path d="M 256,106 L 256,120" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="124" width="400" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="256" y="144" text-anchor="middle" font-size="12.5" fill="#2b4a6e" filter="url(#rough2)">② 初始化：vis[1] = 1，队列 q = [1]，ans = +∞</text>
+  <text x="256" y="162" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">INT_MAX 即可：块内至少一条边，保证被更新</text>
+
+  <path d="M 256,170 L 256,184" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="190" width="400" height="82" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="256" y="212" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6a1c" filter="url(#rough2)">③ BFS 主循环：出队 u，扫描 g[u] 的每条边 (v, w)</text>
+  <text x="256" y="232" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">ans = min(ans, w) —— 扫到就更新，不管 v 访问与否</text>
+  <text x="256" y="251" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">若 !vis[v]：vis[v] = 1，v 入队</text>
+
+  <path d="M 256,272 L 256,290" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="256,294 352,332 256,370 160,332" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="256" y="337" text-anchor="middle" font-size="12" font-weight="bold" fill="#8e3030" filter="url(#rough2)">队列空？</text>
+
+  <path d="M 352,332 L 486,332 L 486,231 L 460,231" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="368" y="324" font-size="11" fill="#555" filter="url(#rough2)">否</text>
+
+  <path d="M 256,370 L 256,388" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="386" font-size="11" fill="#555" filter="url(#rough2)">是</text>
+
+  <rect x="146" y="394" width="220" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="256" y="416" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">④ 返回 ans</text>
+  <text x="256" y="435" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">即块内最小边权 w*</text>
+
+  <!-- 右泳道：并查集 -->
+  <rect x="520" y="60" width="296" height="340" rx="10" fill="none" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="7 4" filter="url(#rough2)"/>
+  <text x="668" y="86" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#8a6a1c" filter="url(#rough2)">并查集等价写法（免建邻接表）</text>
+
+  <rect x="536" y="98" width="264" height="52" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="668" y="120" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">① fa[i] = i，每条边做 union(a, b)</text>
+  <text x="668" y="138" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">同块点并成一棵树</text>
+
+  <path d="M 668,150 L 668,162" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="536" y="168" width="264" height="52" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="668" y="190" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② 全部并完后，root = find(1)</text>
+  <text x="668" y="208" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">中途取基准是错的 —— 根还在变</text>
+
+  <path d="M 668,220 L 668,232" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="536" y="238" width="264" height="52" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="668" y="260" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ ans = min{ w ：find(a) == root }</text>
+  <text x="668" y="278" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">同根 ⇔ 边在 1 的连通块内</text>
+
+  <path d="M 668,290 L 668,302" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="536" y="308" width="264" height="66" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="668" y="332" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">两版殊途同归：都返回 w*</text>
+  <text x="668" y="352" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">BFS：O(n+m)｜并查集：O((n+m)·α(n))、空间 O(n)</text>
+</svg>
