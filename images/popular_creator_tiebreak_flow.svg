@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 410"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="410" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：单表双聚合 + 末尾等于过滤</text>
+  <text x="260" y="48" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">右侧红色标注为赛场两处 WA 高发点</text>
+
+  <!-- start -->
+  <ellipse cx="200" cy="80" rx="34" ry="13" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="200" y="85" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">开始</text>
+
+  <path d="M200,93 L200,103" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- init -->
+  <rect x="60" y="103" width="280" height="26" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="120" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">map: c → {tot=0, mx=−1, id=""}；maxPop = 0</text>
+
+  <!-- warning callout 1 -->
+  <rect x="352" y="94" width="158" height="44" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5,3" filter="url(#rough2)"/>
+  <text x="431" y="111" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">⚠ 哨兵取 −1</text>
+  <text x="431" y="128" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">views 可为 0，取 0 会漏更新</text>
+
+  <path d="M200,129 L200,139" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- for -->
+  <rect x="60" y="139" width="280" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="156" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">for i in [0, n)：读入三元组 (c, id, v)</text>
+
+  <path d="M200,165 L200,175" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- tot update -->
+  <rect x="60" y="175" width="280" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="192" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">tot[c] += v；maxPop = max(maxPop, tot[c])</text>
+
+  <!-- warning callout 2 -->
+  <rect x="352" y="166" width="158" height="44" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5,3" filter="url(#rough2)"/>
+  <text x="431" y="183" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">⚠ tot / maxPop 开 64 位</text>
+  <text x="431" y="200" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">流行度可达 10^10，int 必溢出</text>
+
+  <path d="M200,201 L200,211" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- tie-break update -->
+  <rect x="50" y="211" width="300" height="36" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="200" y="226" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">若 v &gt; mx 或 (v == mx 且 id &lt; mi)：</text>
+  <text x="200" y="241" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">best[c] ← (mx = v, mi = id)</text>
+
+  <path d="M200,247 L200,257" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop diamond -->
+  <polygon points="200,257 288,283 200,309 112,283" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="200" y="288" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">i + 1 &lt; n ?</text>
+
+  <!-- Y loop back -->
+  <path d="M112,283 L32,283 L32,152 L60,152" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="106" y="277" text-anchor="end" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">Y</text>
+  <text x="42" y="145" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">i++ 继续 ↻</text>
+
+  <!-- N branch down -->
+  <path d="M200,309 L200,323" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="210" y="321" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">N</text>
+
+  <!-- collect -->
+  <rect x="50" y="323" width="300" height="26" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="340" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">收集 { [c, id] : tot[c] == maxPop }</text>
+
+  <path d="M200,349 L200,361" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- end -->
+  <ellipse cx="200" cy="378" rx="46" ry="13" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="200" y="383" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" filter="url(#rough2)">返回 ans</text>
+</svg>

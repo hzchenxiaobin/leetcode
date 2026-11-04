@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 385"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="385" fill="#fafafa"/>
+
+  <text x="260" y="22" text-anchor="middle" font-size="16.5" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：判自身 → 低位到高找首个可行候选</text>
+  <text x="260" y="40" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">红色为两处 WA 高发点；绿色为终止性保证</text>
+
+  <!-- start -->
+  <ellipse cx="200" cy="66" rx="32" ry="13" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="200" y="71" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">开始</text>
+
+  <path d="M200,79 L200,89" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- compute ds(n) -->
+  <rect x="60" y="89" width="280" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="106" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">ds ← digitSum(n)</text>
+
+  <!-- warning 1 -->
+  <rect x="352" y="84" width="158" height="46" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5,3" filter="url(#rough2)"/>
+  <text x="431" y="102" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">⚠ 必须先判 n 自身</text>
+  <text x="431" y="119" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">n 已美丽时会被顶到下一候选</text>
+
+  <path d="M200,115 L200,125" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="200,127 294,157 200,187 106,157" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="200" y="161" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">ds ≤ target ?</text>
+
+  <path d="M294,157 L332,157" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="305" y="150" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">Y</text>
+  <ellipse cx="384" cy="157" rx="48" ry="13" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="384" y="162" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" filter="url(#rough2)">返回 0 ✓</text>
+
+  <path d="M200,187 L200,199" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="207" y="198" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">N</text>
+
+  <!-- candidate box -->
+  <rect x="60" y="199" width="280" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="216" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">base ← 1；m ← (⌊n/base⌋ + 1) × base</text>
+
+  <!-- warning 2 -->
+  <rect x="352" y="194" width="158" height="46" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5,3" filter="url(#rough2)"/>
+  <text x="431" y="212" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">⚠ 全程 long long</text>
+  <text x="431" y="229" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">值达 10^12，int 必溢出</text>
+
+  <path d="M200,225 L200,235" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond 2 -->
+  <polygon points="200,237 300,267 200,297 100,267" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="200" y="262" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">digitSum(⌊n/base⌋+1)</text>
+  <text x="200" y="278" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">≤ target ?</text>
+
+  <path d="M300,267 L338,267" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="311" y="260" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">Y</text>
+  <ellipse cx="394" cy="267" rx="52" ry="13" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="394" y="272" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333" filter="url(#rough2)">返回 m − n ✓</text>
+
+  <path d="M200,297 L200,309" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="207" y="308" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">N</text>
+
+  <!-- loop -->
+  <rect x="60" y="309" width="280" height="24" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="200" y="325" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">base ← base × 10（进一位再试）</text>
+
+  <path d="M60,321 L34,321 L34,212 L56,212" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="46" y="204" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">继续 ↻</text>
+
+  <!-- termination note -->
+  <rect x="352" y="304" width="158" height="58" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="431" y="322" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">终止性：base &gt; n 时</text>
+  <text x="431" y="338" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">⌊n/base⌋ = 0，m = base</text>
+  <text x="431" y="354" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">位和 = 1，≤ 13 轮必停</text>
+</svg>

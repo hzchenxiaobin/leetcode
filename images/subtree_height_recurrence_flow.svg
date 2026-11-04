@@ -1,0 +1,153 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="620" viewBox="0 0 940 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="940" height="620" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">自顶向下累积：答案沿脊柱一趟传到底</text>
+  <path d="M 250 42 Q 470 50 690 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel A: local recurrence ===== -->
+  <text x="250" y="74" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 局部递推：查询点 c 的答案从父节点 a 处累积而来</text>
+
+  <!-- from above: ans[a] -->
+  <g filter="url(#sk2)">
+    <rect x="185" y="92" width="130" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="250" y="114" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold">ans[a]（继承）</text>
+  <path d="M 250 126 L 250 158" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="262" y="146" font-size="9.5" fill="#446688">① 更高层全部候选的 max</text>
+
+  <!-- parent a -->
+  <g filter="url(#sk2)"><circle cx="250" cy="180" r="21" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="250" y="185" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold">a</text>
+  <text x="292" y="176" font-size="10" fill="#888">父节点（脊柱上一节）</text>
+
+  <!-- edges to children -->
+  <path d="M 232 192 L 150 240" stroke="#b85450" stroke-width="2.2" stroke-dasharray="5 3" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <path d="M 268 192 L 350 240" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- child c (query) -->
+  <g filter="url(#sk2)">
+    <ellipse cx="140" cy="262" rx="27" ry="24" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 3"/>
+  </g>
+  <g filter="url(#sk2)"><circle cx="140" cy="262" r="20" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="140" y="267" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold">c</text>
+  <text x="140" y="304" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold">查询目标（子树被移除）</text>
+
+  <!-- sibling s -->
+  <g filter="url(#sk2)"><circle cx="360" cy="262" r="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="360" y="267" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold">s</text>
+  <text x="360" y="304" text-anchor="middle" font-size="10.5" fill="#2e6e2e" font-weight="bold">姐妹（至多一个）</text>
+  <!-- subtree under s -->
+  <path d="M 360 282 L 330 322 M 360 282 L 390 322" stroke="#8a8a8a" stroke-width="1.2" fill="none" filter="url(#sk)"/>
+  <g filter="url(#sk2)"><circle cx="330" cy="334" r="12" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/></g>
+  <g filter="url(#sk2)"><circle cx="390" cy="334" r="12" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/></g>
+
+  <!-- three contributions -->
+  <g font-size="11">
+    <!-- ② depth[a] -->
+    <g filter="url(#sk2)">
+      <rect x="60" y="360" width="170" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    </g>
+    <text x="145" y="379" text-anchor="middle" font-size="11" fill="#a0752a" font-weight="bold">② depth[a]（仅无姐妹时）</text>
+    <text x="145" y="397" text-anchor="middle" font-size="10" fill="#a0752a">a 失去唯一孩子，自身变叶</text>
+
+    <!-- ③ f(s) -->
+    <g filter="url(#sk2)">
+      <rect x="270" y="360" width="190" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    </g>
+    <text x="365" y="379" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">③ f(s) = depth[s]+height[s]</text>
+    <text x="365" y="397" text-anchor="middle" font-size="10" fill="#2e6e2e">姐妹子树的最深叶（有姐妹时）</text>
+  </g>
+  <path d="M 145 356 Q 145 340 148 320" stroke="#d6a040" stroke-width="1.4" fill="none" stroke-dasharray="4 3" marker-end="url(#arO)" filter="url(#sk)"/>
+  <path d="M 365 356 Q 365 348 362 340" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- max box -->
+  <g filter="url(#sk2)">
+    <rect x="120" y="432" width="290" height="52" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="265" y="453" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" font-family="monospace">ans[c] = max( ans[a], ② 或 ③ )</text>
+  <text x="265" y="472" text-anchor="middle" font-size="10" fill="#888">有姐妹 → ③（f(s) ≥ depth[a]+1 &gt; ②，②被支配）</text>
+  <path d="M 145 406 Q 190 420 210 430" stroke="#d6a040" stroke-width="1.4" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <path d="M 365 406 Q 320 420 300 430" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- note -->
+  <g filter="url(#sk)">
+    <rect x="50" y="510" width="430" height="86" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="66" y="534" font-size="11.5" fill="#444" font-weight="bold">为什么无姐妹时用 depth[a]、有姐妹时不需要？</text>
+  <text x="66" y="556" font-size="11" fill="#666">无姐妹：a 变叶，深度 depth[a] 是新候选；</text>
+  <text x="66" y="576" font-size="11" fill="#666">有姐妹：f(s) ≥ depth[s] = depth[a]+1 &gt; depth[a]，被支配。</text>
+  <text x="66" y="592" font-size="10.5" fill="#999">根哨兵 ans[root] = −1（根外无幸存者，根也不被查询）</text>
+
+  <!-- ===== Panel B: pipeline ===== -->
+  <text x="720" y="74" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">② 全局流程：三趟迭代遍历，全程无递归</text>
+
+  <g font-size="11.5">
+    <g filter="url(#sk2)">
+      <rect x="560" y="96" width="320" height="70" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    </g>
+    <text x="720" y="120" text-anchor="middle" font-weight="bold" fill="#446688">Pass 0：BFS 建序</text>
+    <text x="720" y="140" text-anchor="middle" fill="#555">得访问序（父先于子）+ depth + parent</text>
+    <text x="720" y="157" text-anchor="middle" fill="#999" font-size="10">O(n)</text>
+
+    <path d="M 720 166 L 720 192" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+    <g filter="url(#sk2)">
+      <rect x="560" y="194" width="320" height="70" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+    </g>
+    <text x="720" y="218" text-anchor="middle" font-weight="bold" fill="#2e6e2e">Pass 1：逆 BFS 序求 height</text>
+    <text x="720" y="238" text-anchor="middle" fill="#555">孩子必排在父之后 → 逆序即合法后序</text>
+    <text x="720" y="255" text-anchor="middle" fill="#999" font-size="10">hgt[par] = max(hgt[par], hgt[x]+1)</text>
+
+    <path d="M 720 264 L 720 290" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+    <g filter="url(#sk2)">
+      <rect x="560" y="292" width="320" height="70" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    </g>
+    <text x="720" y="316" text-anchor="middle" font-weight="bold" fill="#a0752a">Pass 2：正 BFS 序下传 ans</text>
+    <text x="720" y="336" text-anchor="middle" fill="#555">到 x 时 ans[x] 已由父算好 → 算孩子的 ans</text>
+    <text x="720" y="353" text-anchor="middle" fill="#999" font-size="10">ans[root] = −1 作哨兵</text>
+
+    <path d="M 720 362 L 720 388" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+    <g filter="url(#sk2)">
+      <rect x="560" y="390" width="320" height="70" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    </g>
+    <text x="720" y="414" text-anchor="middle" font-weight="bold" fill="#b85450">查询：O(1) 查表</text>
+    <text x="720" y="434" text-anchor="middle" fill="#555">answer(queries[i]) = ans[queries[i]]</text>
+    <text x="720" y="451" text-anchor="middle" fill="#999" font-size="10">m 次，共 O(m)</text>
+  </g>
+
+  <!-- complexity -->
+  <g filter="url(#sk)">
+    <rect x="560" y="486" width="320" height="60" rx="8" fill="#f3eef8" stroke="#7a5a9e" stroke-width="1.4"/>
+  </g>
+  <text x="720" y="510" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3a7a">总复杂度 O(n + m)</text>
+  <text x="720" y="532" text-anchor="middle" font-size="10.5" fill="#777">数组三张 + 显式队列，空间 O(n)，无爆栈风险</text>
+
+  <text x="720" y="576" text-anchor="middle" font-size="10.5" fill="#999">⚠ 树退化成链时递归深度 = n = 10⁵</text>
+  <text x="720" y="594" text-anchor="middle" font-size="10.5" fill="#999">（Python 默认递归上限 1000，必炸）</text>
+</svg>

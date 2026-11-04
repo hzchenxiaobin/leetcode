@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#333" filter="url(#rough2)">核心观察：哈希分组 + 组内「双聚合」</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">两个聚合量都支持 O(1) 增量更新 → 单趟遍历建表，末尾一次扫描取最大</text>
+
+  <!-- left panel: input triples -->
+  <rect x="28" y="66" width="196" height="212" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="126" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">输入三元组 (c, id, v)</text>
+
+  <rect x="40" y="98" width="172" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="126" y="115" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(alice, one, 5)</text>
+  <rect x="40" y="130" width="172" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="126" y="147" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(bob, two, 10)</text>
+  <rect x="40" y="162" width="172" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="126" y="179" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(alice, three, 5)</text>
+  <rect x="40" y="194" width="172" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="126" y="211" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(chris, four, 4)</text>
+  <text x="126" y="244" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">n 条，同一创作者可出现多次</text>
+  <text x="126" y="260" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">（alice 出现 2 次）</text>
+
+  <!-- middle arrow -->
+  <path d="M228,172 C256,172 262,150 292,150" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="260" y="132" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">hash(c)</text>
+  <text x="260" y="196" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">按创作者</text>
+  <text x="260" y="210" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">分组聚合</text>
+
+  <!-- right panel: aggregate table -->
+  <rect x="296" y="66" width="238" height="146" rx="8" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="415" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">聚合表（每个创作者一行）</text>
+
+  <!-- header row -->
+  <rect x="308" y="98" width="60" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="338" y="114" text-anchor="middle" font-size="11" font-weight="bold" fill="#333" filter="url(#rough2)">creator</text>
+  <rect x="368" y="98" width="62" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="399" y="114" text-anchor="middle" font-size="11" font-weight="bold" fill="#333" filter="url(#rough2)">tot 流行度</text>
+  <rect x="430" y="98" width="92" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="476" y="114" text-anchor="middle" font-size="11" font-weight="bold" fill="#333" filter="url(#rough2)">best (mx, id)</text>
+
+  <!-- data rows -->
+  <rect x="308" y="122" width="60" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="338" y="139" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">alice</text>
+  <rect x="368" y="122" width="62" height="26" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="399" y="139" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">10</text>
+  <rect x="430" y="122" width="92" height="26" rx="4" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="476" y="139" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(5, "one")</text>
+
+  <rect x="308" y="148" width="60" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="338" y="165" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">bob</text>
+  <rect x="368" y="148" width="62" height="26" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="399" y="165" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">10</text>
+  <rect x="430" y="148" width="92" height="26" rx="4" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="476" y="165" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(10, "two")</text>
+
+  <rect x="308" y="174" width="60" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="338" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">chris</text>
+  <rect x="368" y="174" width="62" height="26" rx="4" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="399" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">4</text>
+  <rect x="430" y="174" width="92" height="26" rx="4" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="476" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(4, "four")</text>
+
+  <!-- note: tot marked max -->
+  <text x="415" y="226" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">红框：tot = maxPop = 10 并列最高，末尾「等于」过滤全收</text>
+
+  <!-- bottom callout -->
+  <rect x="48" y="262" width="464" height="94" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="286" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333" filter="url(#rough2)">组内只需两个标量，都能 O(1) 增量更新</text>
+  <text x="280" y="308" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">tot[c] += v（求和天然可增量）</text>
+  <text x="280" y="328" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">best 按「播放量取大、平票 id 取字典序小」双关键字单调更新</text>
+  <text x="280" y="348" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">⇒ 无需保存视频列表，无需排序 / 堆</text>
+</svg>

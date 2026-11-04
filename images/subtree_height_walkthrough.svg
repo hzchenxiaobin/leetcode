@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 2 全表：一趟 BFS 拿齐 depth / height / ans</text>
+  <path d="M 230 42 Q 470 50 710 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Left: table ===== -->
+  <!-- header -->
+  <g font-size="11.5">
+    <g filter="url(#sk2)"><rect x="60" y="70" width="44" height="30" fill="#446688"/></g>
+    <text x="82" y="90" text-anchor="middle" fill="#fff" font-weight="bold">序</text>
+    <g filter="url(#sk2)"><rect x="104" y="70" width="56" height="30" fill="#446688"/></g>
+    <text x="132" y="90" text-anchor="middle" fill="#fff" font-weight="bold">val</text>
+    <g filter="url(#sk2)"><rect x="160" y="70" width="70" height="30" fill="#446688"/></g>
+    <text x="195" y="90" text-anchor="middle" fill="#fff" font-weight="bold">depth</text>
+    <g filter="url(#sk2)"><rect x="230" y="70" width="70" height="30" fill="#446688"/></g>
+    <text x="265" y="90" text-anchor="middle" fill="#fff" font-weight="bold">height</text>
+    <g filter="url(#sk2)"><rect x="300" y="70" width="100" height="30" fill="#446688"/></g>
+    <text x="350" y="90" text-anchor="middle" fill="#fff" font-weight="bold">ans</text>
+    <g filter="url(#sk2)"><rect x="400" y="70" width="110" height="30" fill="#446688"/></g>
+    <text x="455" y="90" text-anchor="middle" fill="#fff" font-weight="bold">备注</text>
+  </g>
+
+  <!-- rows: (i, val, depth, height, ans, note, highlight) -->
+  <g font-size="11.5">
+    <!-- row template y = 100 + 40*i -->
+    <g filter="url(#sk2)"><rect x="60" y="100" width="44" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="82" y="124" text-anchor="middle" fill="#888">1</text>
+    <g filter="url(#sk2)"><rect x="104" y="100" width="56" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="132" y="124" text-anchor="middle" fill="#333" font-weight="bold">5</text>
+    <g filter="url(#sk2)"><rect x="160" y="100" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="195" y="124" text-anchor="middle" fill="#555">0</text>
+    <g filter="url(#sk2)"><rect x="230" y="100" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="265" y="124" text-anchor="middle" fill="#555">3</text>
+    <g filter="url(#sk2)"><rect x="300" y="100" width="100" height="38" fill="#f0ede4" stroke="#d8d4c8"/></g>
+    <text x="350" y="124" text-anchor="middle" fill="#aaa">−1</text>
+    <text x="410" y="124" font-size="10" fill="#999">根，哨兵</text>
+
+    <g filter="url(#sk2)"><rect x="60" y="138" width="44" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="82" y="162" text-anchor="middle" fill="#a0752a">2</text>
+    <g filter="url(#sk2)"><rect x="104" y="138" width="56" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="132" y="162" text-anchor="middle" fill="#a0752a" font-weight="bold">8</text>
+    <g filter="url(#sk2)"><rect x="160" y="138" width="70" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="195" y="162" text-anchor="middle" fill="#555">1</text>
+    <g filter="url(#sk2)"><rect x="230" y="138" width="70" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="265" y="162" text-anchor="middle" fill="#555">2</text>
+    <g filter="url(#sk2)"><rect x="300" y="138" width="100" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="350" y="162" text-anchor="middle" fill="#a0752a" font-weight="bold">2</text>
+    <text x="410" y="162" font-size="10" fill="#a0752a" font-weight="bold">查询 ✓</text>
+
+    <g filter="url(#sk2)"><rect x="60" y="176" width="44" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="82" y="200" text-anchor="middle" fill="#888">3</text>
+    <g filter="url(#sk2)"><rect x="104" y="176" width="56" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="132" y="200" text-anchor="middle" fill="#333" font-weight="bold">9</text>
+    <g filter="url(#sk2)"><rect x="160" y="176" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="195" y="200" text-anchor="middle" fill="#555">1</text>
+    <g filter="url(#sk2)"><rect x="230" y="176" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="265" y="200" text-anchor="middle" fill="#555">1</text>
+    <g filter="url(#sk2)"><rect x="300" y="176" width="100" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="350" y="200" text-anchor="middle" fill="#555">3</text>
+    <text x="410" y="200" font-size="10" fill="#999">姐妹 8：f=3</text>
+
+    <g filter="url(#sk2)"><rect x="60" y="214" width="44" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="82" y="238" text-anchor="middle" fill="#a0752a">4</text>
+    <g filter="url(#sk2)"><rect x="104" y="214" width="56" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="132" y="238" text-anchor="middle" fill="#a0752a" font-weight="bold">2</text>
+    <g filter="url(#sk2)"><rect x="160" y="214" width="70" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="195" y="238" text-anchor="middle" fill="#555">2</text>
+    <g filter="url(#sk2)"><rect x="230" y="214" width="70" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="265" y="238" text-anchor="middle" fill="#555">1</text>
+    <g filter="url(#sk2)"><rect x="300" y="214" width="100" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="350" y="238" text-anchor="middle" fill="#a0752a" font-weight="bold">2</text>
+    <text x="410" y="238" font-size="10" fill="#a0752a" font-weight="bold">查询 ✓</text>
+
+    <g filter="url(#sk2)"><rect x="60" y="252" width="44" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="82" y="276" text-anchor="middle" fill="#888">5</text>
+    <g filter="url(#sk2)"><rect x="104" y="252" width="56" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="132" y="276" text-anchor="middle" fill="#333" font-weight="bold">1</text>
+    <g filter="url(#sk2)"><rect x="160" y="252" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="195" y="276" text-anchor="middle" fill="#555">2</text>
+    <g filter="url(#sk2)"><rect x="230" y="252" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="265" y="276" text-anchor="middle" fill="#555">0</text>
+    <g filter="url(#sk2)"><rect x="300" y="252" width="100" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="350" y="276" text-anchor="middle" fill="#555">3</text>
+    <text x="410" y="276" font-size="10" fill="#999">姐妹 2：f=3</text>
+
+    <g filter="url(#sk2)"><rect x="60" y="290" width="44" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="82" y="314" text-anchor="middle" fill="#a0752a">6</text>
+    <g filter="url(#sk2)"><rect x="104" y="290" width="56" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="132" y="314" text-anchor="middle" fill="#a0752a" font-weight="bold">3</text>
+    <g filter="url(#sk2)"><rect x="160" y="290" width="70" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="195" y="314" text-anchor="middle" fill="#555">2</text>
+    <g filter="url(#sk2)"><rect x="230" y="290" width="70" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="265" y="314" text-anchor="middle" fill="#555">0</text>
+    <g filter="url(#sk2)"><rect x="300" y="290" width="100" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="350" y="314" text-anchor="middle" fill="#a0752a" font-weight="bold">3</text>
+    <text x="410" y="314" font-size="10" fill="#a0752a" font-weight="bold">查询 ✓</text>
+
+    <g filter="url(#sk2)"><rect x="60" y="328" width="44" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="82" y="352" text-anchor="middle" fill="#888">7</text>
+    <g filter="url(#sk2)"><rect x="104" y="328" width="56" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="132" y="352" text-anchor="middle" fill="#333" font-weight="bold">7</text>
+    <g filter="url(#sk2)"><rect x="160" y="328" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="195" y="352" text-anchor="middle" fill="#555">2</text>
+    <g filter="url(#sk2)"><rect x="230" y="328" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="265" y="352" text-anchor="middle" fill="#555">0</text>
+    <g filter="url(#sk2)"><rect x="300" y="328" width="100" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="350" y="352" text-anchor="middle" fill="#555">3</text>
+    <text x="410" y="352" font-size="10" fill="#999">姐妹 3：f=2</text>
+
+    <g filter="url(#sk2)"><rect x="60" y="366" width="44" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="82" y="390" text-anchor="middle" fill="#a0752a">8</text>
+    <g filter="url(#sk2)"><rect x="104" y="366" width="56" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="132" y="390" text-anchor="middle" fill="#a0752a" font-weight="bold">4</text>
+    <g filter="url(#sk2)"><rect x="160" y="366" width="70" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="195" y="390" text-anchor="middle" fill="#555">3</text>
+    <g filter="url(#sk2)"><rect x="230" y="366" width="70" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="265" y="390" text-anchor="middle" fill="#555">0</text>
+    <g filter="url(#sk2)"><rect x="300" y="366" width="100" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+    <text x="350" y="390" text-anchor="middle" fill="#a0752a" font-weight="bold">3</text>
+    <text x="410" y="390" font-size="10" fill="#a0752a" font-weight="bold">查询 ✓</text>
+
+    <g filter="url(#sk2)"><rect x="60" y="404" width="44" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="82" y="428" text-anchor="middle" fill="#888">9</text>
+    <g filter="url(#sk2)"><rect x="104" y="404" width="56" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="132" y="428" text-anchor="middle" fill="#333" font-weight="bold">6</text>
+    <g filter="url(#sk2)"><rect x="160" y="404" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="195" y="428" text-anchor="middle" fill="#555">3</text>
+    <g filter="url(#sk2)"><rect x="230" y="404" width="70" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="265" y="428" text-anchor="middle" fill="#555">0</text>
+    <g filter="url(#sk2)"><rect x="300" y="404" width="100" height="38" fill="#fdfcf7" stroke="#d8d4c8"/></g>
+    <text x="350" y="428" text-anchor="middle" fill="#555">3</text>
+    <text x="410" y="428" font-size="10" fill="#999">姐妹 4：f=3</text>
+  </g>
+
+  <!-- table caption -->
+  <text x="285" y="470" text-anchor="middle" font-size="11" fill="#888">ans = 移除该点子树后的剩余高度（全表 O(n) 预处理，查询 O(1)）</text>
+  <g filter="url(#sk)">
+    <rect x="60" y="488" width="450" height="42" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="285" y="508" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold" font-family="monospace">queries = [3, 2, 4, 8] → [3, 2, 3, 2]</text>
+  <text x="285" y="524" text-anchor="middle" font-size="10" fill="#666">与官方示例输出完全一致 ✓（含 height 全 0 的叶节点查询）</text>
+
+  <!-- ===== Right: recurrence chain ===== -->
+  <text x="720" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">递推链走查（沿脊柱 5 → 8 → 2 → 4）</text>
+
+  <g filter="url(#sk2)">
+    <rect x="545" y="108" width="350" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="720" y="132" text-anchor="middle" font-size="11.5" fill="#446688" font-family="monospace" font-weight="bold">ans[8] = max(−1, 0, f(9)=1+1)</text>
+  <text x="720" y="152" text-anchor="middle" font-size="11.5" fill="#446688" font-family="monospace" font-weight="bold">= 2   ← 姐妹 9，f=2</text>
+
+  <path d="M 720 172 L 720 194" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk2)">
+    <rect x="545" y="196" width="350" height="64" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="720" y="220" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-family="monospace" font-weight="bold">ans[2] = max(ans[8]=2, f(1)=2+0)</text>
+  <text x="720" y="240" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-family="monospace" font-weight="bold">= 2   ← 继承 2，姐妹 1 的 f=2</text>
+
+  <path d="M 720 260 L 720 282" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk2)">
+    <rect x="545" y="284" width="350" height="64" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="720" y="308" text-anchor="middle" font-size="11.5" fill="#b85450" font-family="monospace" font-weight="bold">ans[4] = max(ans[2]=2, f(6)=3+0)</text>
+  <text x="720" y="328" text-anchor="middle" font-size="11.5" fill="#b85450" font-family="monospace" font-weight="bold">= 3   ← 查询 4 的答案</text>
+
+  <!-- insight box -->
+  <g filter="url(#sk)">
+    <rect x="545" y="372" width="350" height="96" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="720" y="396" text-anchor="middle" font-size="11.5" fill="#2b2b2b" font-weight="bold">累积的意义</text>
+  <text x="562" y="418" font-size="10.5" fill="#666">ans[2] 已经把「姐妹 9 的 f=2」吸收进来；</text>
+  <text x="562" y="436" font-size="10.5" fill="#666">ans[4] 只需再比较本层姐妹 6 的 f=3。</text>
+  <text x="562" y="454" font-size="10.5" fill="#666">每节点 O(1) → 一趟 BFS 代替逐查询沿链重算。</text>
+
+  <!-- naive vs optimized -->
+  <g filter="url(#sk)">
+    <rect x="545" y="488" width="350" height="96" rx="8" fill="#f3eef8" stroke="#7a5a9e" stroke-width="1.4"/>
+  </g>
+  <text x="720" y="512" text-anchor="middle" font-size="11.5" fill="#5a3a7a" font-weight="bold">复杂度阶梯（赛场三级跳）</text>
+  <text x="562" y="534" font-size="10.5" fill="#777" font-family="monospace">O(n·m) ≈ 10⁹  逐查询重算整树 ✗</text>
+  <text x="562" y="552" font-size="10.5" fill="#777" font-family="monospace">O(m·depth) ≤ 10⁹  逐查询沿链聚合 ✗</text>
+  <text x="562" y="570" font-size="10.5" fill="#5a3a7a" font-weight="bold" font-family="monospace">O(n + m)  全表预处理 + O(1) 查表 ✓</text>
+</svg>
