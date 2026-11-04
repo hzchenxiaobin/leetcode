@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="500" viewBox="0 0 680 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="500" fill="#fdfcf7"/>
+  <text x="340" y="24" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：单趟扫描——能吸则吸，吸不下就封段</text>
+
+  <!-- 开始 -->
+  <g filter="url(#sk)">
+    <ellipse cx="89" cy="78" rx="62" ry="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="89" y="73" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">开始</text>
+  <text x="89" y="91" text-anchor="middle" font-size="11" fill="#2e6e2e">cur = 0, ans = 0</text>
+
+  <g filter="url(#sk)">
+    <path d="M 151 78 H 194" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- 菱形1: d > k? -->
+  <g filter="url(#sk)">
+    <path d="M 268 38 L 340 78 L 268 118 L 196 78 Z" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="268" y="83" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">d &gt; k ?</text>
+
+  <text x="368" y="68" font-size="11.5" font-weight="bold" fill="#b03a3a">是</text>
+  <g filter="url(#sk)">
+    <path d="M 340 78 H 396" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="396" y="55" width="236" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="514" y="74" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">返回 -1</text>
+  <text x="514" y="92" text-anchor="middle" font-size="10" fill="#777">该位塞进任何段都超限（无解）</text>
+
+  <text x="278" y="136" font-size="11.5" font-weight="bold" fill="#3a3a3a">否</text>
+  <g filter="url(#sk)">
+    <path d="M 268 118 V 145" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- 菱形2: cur*10+d <= k? -->
+  <g filter="url(#sk)">
+    <path d="M 268 149 L 363 195 L 268 241 L 173 195 Z" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="268" y="200" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">cur·10 + d ≤ k ?</text>
+
+  <text x="278" y="254" font-size="11.5" font-weight="bold" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <path d="M 268 241 V 254" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="196" y="258" width="144" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="268" y="275" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">吸入</text>
+  <text x="268" y="292" text-anchor="middle" font-size="11" fill="#2e6e2e">cur ← cur·10 + d</text>
+
+  <text x="404" y="185" font-size="11.5" font-weight="bold" fill="#a06a1a">否</text>
+  <g filter="url(#sk)">
+    <path d="M 363 195 H 466" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="466" y="174" width="186" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="559" y="191" text-anchor="middle" font-size="12" font-weight="bold" fill="#a06a1a">封段</text>
+  <text x="559" y="208" text-anchor="middle" font-size="11" fill="#a06a1a">ans++，cur ← d</text>
+
+  <!-- 橙框汇入菱形3 -->
+  <g filter="url(#sk)">
+    <path d="M 559 216 V 352 H 358" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- 绿框汇入菱形3 -->
+  <g filter="url(#sk)">
+    <path d="M 268 300 V 316" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- 菱形3: 还有字符? -->
+  <g filter="url(#sk)">
+    <path d="M 268 320 L 352 352 L 268 384 L 184 352 Z" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="268" y="357" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">还有字符？</text>
+
+  <!-- 回边 -->
+  <text x="196" y="342" font-size="11.5" font-weight="bold" fill="#3a3a3a">是</text>
+  <g filter="url(#sk)">
+    <path d="M 184 352 H 18 V 38 H 260" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <text x="280" y="398" font-size="11.5" font-weight="bold" fill="#3a3a3a">否</text>
+  <g filter="url(#sk)">
+    <path d="M 268 384 V 404" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="198" y="406" width="140" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="268" y="431" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">返回 ans + 1</text>
+
+  <!-- 不变式注释框 -->
+  <g filter="url(#sk)">
+    <rect x="398" y="400" width="262" height="88" rx="10" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="529" y="422" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">循环不变式</text>
+  <text x="529" y="443" text-anchor="middle" font-size="10.5" fill="#555">① cur ≤ k 恒成立</text>
+  <text x="529" y="461" text-anchor="middle" font-size="10.5" fill="#555">② 封段时 d ≤ k 已判过 → 新段合法</text>
+  <text x="529" y="479" text-anchor="middle" font-size="10.5" fill="#555">③ cur·10+d ≤ 10¹⁰+9 → C++ 用 long long</text>
+</svg>

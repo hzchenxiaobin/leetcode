@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">每位 ≥ 1 ⇒ 段值随长度严格递增 ⇒ 每段尽量长</text>
+  <path d="M 170 42 Q 340 50 510 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 左上：单调性演示 -->
+  <text x="215" y="70" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">从段首起逐位吸收，值只增不减（无 0 是关键）</text>
+  <g filter="url(#sk)">
+    <rect x="64" y="82" width="46" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="120" y="82" width="46" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="176" y="82" width="46" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="87" y="103" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e">1</text>
+  <text x="143" y="103" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e">6</text>
+  <text x="199" y="103" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e">5</text>
+
+  <g filter="url(#sk)">
+    <path d="M 87 116 Q 87 132 87 140" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+    <path d="M 143 116 Q 143 132 143 140" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+    <path d="M 199 116 Q 199 132 199 140" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <g filter="url(#sk)">
+    <ellipse cx="87" cy="164" rx="24" ry="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <ellipse cx="143" cy="164" rx="30" ry="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <ellipse cx="199" cy="164" rx="36" ry="17" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="87" y="169" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">1</text>
+  <text x="143" y="169" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">16</text>
+  <text x="199" y="169" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">165</text>
+
+  <text x="150" y="205" text-anchor="middle" font-size="11" fill="#555">值 1 → 16 → 165，165 已超 k = 60</text>
+  <text x="150" y="222" text-anchor="middle" font-size="11" font-weight="bold" fill="#b03a3a">再吸收只会更大 ⇒ '5' 必须开新段，切点被 k 唯一钉死</text>
+
+  <!-- 右上：无解判定 -->
+  <g filter="url(#sk)">
+    <rect x="450" y="58" width="200" height="150" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="550" y="82" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">⚠ 无解判定：d &gt; k</text>
+  <text x="550" y="106" text-anchor="middle" font-size="10.5" fill="#555">k = 5 时某位 d = 8：</text>
+  <text x="550" y="124" text-anchor="middle" font-size="10.5" fill="#555">单字符段值 8 &gt; 5；</text>
+  <text x="550" y="142" text-anchor="middle" font-size="10.5" fill="#555">含 8 的任何段值 ≥ 8·10ʳ</text>
+  <text x="550" y="160" text-anchor="middle" font-size="10.5" fill="#555">（r 为 8 右侧剩余位数）</text>
+  <text x="550" y="188" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b03a3a">→ 返回 -1</text>
+
+  <!-- 中部：切法对比 -->
+  <text x="340" y="238" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">s = "165462"，k = 60 的两种切法</text>
+
+  <text x="210" y="244" font-size="11.5" font-weight="bold" fill="#2e6e2e">贪心：每段尽量长</text>
+  <g filter="url(#sk)">
+    <rect x="210" y="250" width="40" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="252" y="250" width="40" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="308" y="250" width="40" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="350" y="250" width="40" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="406" y="250" width="40" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="462" y="250" width="40" height="36" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <path d="M 300 244 L 300 292" stroke="#b85450" stroke-width="2.5"/>
+    <path d="M 398 244 L 398 292" stroke="#b85450" stroke-width="2.5"/>
+    <path d="M 454 244 L 454 292" stroke="#b85450" stroke-width="2.5"/>
+  </g>
+  <text x="230" y="273" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b4a6e">1</text>
+  <text x="272" y="273" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b4a6e">6</text>
+  <text x="328" y="273" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b4a6e">5</text>
+  <text x="370" y="273" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b4a6e">4</text>
+  <text x="426" y="273" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b4a6e">6</text>
+  <text x="482" y="273" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b4a6e">2</text>
+  <text x="515" y="273" font-size="12.5" font-weight="bold" fill="#2e6e2e">4 段 ✓ 最少</text>
+
+  <text x="210" y="290" font-size="11.5" font-weight="bold" fill="#a06a1a">保守：切得太碎</text>
+  <g filter="url(#sk)">
+    <rect x="210" y="296" width="40" height="36" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+    <rect x="258" y="296" width="40" height="36" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+    <rect x="306" y="296" width="40" height="36" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+    <rect x="354" y="296" width="40" height="36" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+    <rect x="402" y="296" width="40" height="36" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+    <rect x="450" y="296" width="40" height="36" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+    <path d="M 254 290 L 254 338" stroke="#b85450" stroke-width="2"/>
+    <path d="M 302 290 L 302 338" stroke="#b85450" stroke-width="2"/>
+    <path d="M 350 290 L 350 338" stroke="#b85450" stroke-width="2"/>
+    <path d="M 398 290 L 398 338" stroke="#b85450" stroke-width="2"/>
+    <path d="M 446 290 L 446 338" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="230" y="319" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#666">1</text>
+  <text x="278" y="319" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#666">6</text>
+  <text x="326" y="319" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#666">5</text>
+  <text x="374" y="319" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#666">4</text>
+  <text x="422" y="319" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#666">6</text>
+  <text x="470" y="319" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#666">2</text>
+  <text x="505" y="319" font-size="12.5" font-weight="bold" fill="#a06a1a">6 段 ✗</text>
+
+  <!-- 底部 insight -->
+  <g filter="url(#sk)">
+    <rect x="40" y="352" width="600" height="62" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="58" y="376" font-size="12" font-weight="bold" fill="#2b2b2b">关键观察：s 无 '0'（每位 1~9）⇒ 从任一起点开始「值 ≤ k 的最长子串」唯一，每段都取到这个最长，</text>
+  <text x="58" y="398" font-size="11.5" fill="#444">总段数最少（延长论证见正文 §5）；k ≤ 10⁹ ⇒ 合法段长 ≤ 10，单趟扫描 O(n) 完成。</text>
+</svg>
