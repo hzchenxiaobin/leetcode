@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="560" fill="#fafafa"/>
+  <text x="440" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：中序摊平 + 每查询两次二分</text>
+  <path d="M 240 40 Q 440 48 640 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- step 1 -->
+  <rect x="60" y="55" width="380" height="52" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="250" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">① 迭代中序遍历（栈模拟，防链状树爆栈）</text>
+  <text x="250" y="96" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">左 → 根 → 右，一次 O(n) 收集全部节点值</text>
+
+  <path d="M 450 81 L 510 81" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <rect x="520" y="55" width="300" height="52" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="670" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">② 得到严格递增数组 a</text>
+  <text x="670" y="96" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">BST 保证有序，无需再 sort</text>
+
+  <path d="M 670 107 L 670 140" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 3 loop -->
+  <rect x="440" y="142" width="460" height="44" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="670" y="169" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a5f14" filter="url(#rough2)">③ 对每个查询 q 依次处理（左右两支各一次二分）</text>
+
+  <path d="M 560 186 Q 400 205 240 222" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 780 186 Q 800 205 650 222" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- left branch: lower_bound -->
+  <rect x="90" y="226" width="280" height="54" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="230" y="248" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" font-family="monospace" filter="url(#rough2)">lo = lower_bound(a, q)</text>
+  <text x="230" y="268" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">首个 ≥ q 的下标（无则 = n）</text>
+
+  <path d="M 230 280 L 230 310" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="150,350 230,310 310,350 230,390" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="230" y="356" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a5f14" filter="url(#rough2)">lo &lt; n ?</text>
+
+  <path d="M 230 390 L 230 421" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="243" y="411" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">是</text>
+
+  <rect x="90" y="425" width="200" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="453" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e28" font-family="monospace" filter="url(#rough2)">maxi = a[lo]</text>
+
+  <path d="M 310 350 L 348 350" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="320" y="340" font-size="11.5" font-weight="bold" fill="#b03a3a" filter="url(#rough2)">否</text>
+
+  <rect x="352" y="328" width="130" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="417" y="347" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8e3030" font-family="monospace" filter="url(#rough2)">maxi = −1</text>
+  <text x="417" y="364" text-anchor="middle" font-size="10.5" fill="#996666" filter="url(#rough2)">q 大于全体</text>
+
+  <!-- right branch: upper_bound -->
+  <rect x="510" y="226" width="280" height="54" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="650" y="248" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" font-family="monospace" filter="url(#rough2)">hi = upper_bound(a, q)</text>
+  <text x="650" y="268" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">首个 &gt; q 的下标（无则 = n）</text>
+
+  <path d="M 650 280 L 650 310" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="570,350 650,310 730,350 650,390" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="650" y="356" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a5f14" filter="url(#rough2)">hi &gt; 0 ?</text>
+
+  <path d="M 650 390 L 650 421" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="663" y="411" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">是</text>
+
+  <rect x="510" y="425" width="210" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="615" y="453" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e28" font-family="monospace" filter="url(#rough2)">mini = a[hi−1]</text>
+
+  <path d="M 730 350 L 768 350" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="740" y="340" font-size="11.5" font-weight="bold" fill="#b03a3a" filter="url(#rough2)">否</text>
+
+  <rect x="772" y="328" width="100" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="822" y="347" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8e3030" font-family="monospace" filter="url(#rough2)">mini = −1</text>
+  <text x="822" y="364" text-anchor="middle" font-size="10.5" fill="#996666" filter="url(#rough2)">q 小于全体</text>
+
+  <!-- merge -->
+  <path d="M 190 471 Q 240 490 320 498" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 615 471 Q 560 490 500 498" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="200" y="502" width="480" height="46" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="440" y="530" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">answer[i] = [mini, maxi]（先 mini 后 maxi）→ 下一个 q</text>
+
+  <text x="240" y="300" font-size="11" fill="#888" filter="url(#rough2)">→ ceiling（≥）</text>
+  <text x="655" y="300" font-size="11" fill="#888" filter="url(#rough2)">→ floor（≤）</text>
+</svg>
