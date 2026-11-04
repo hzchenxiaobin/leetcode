@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arro" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例演算：nums=[4,5,2,1] → 排序 [1,2,4,5] → pre = [0,1,3,7,12]</text>
+
+  <!-- ===== prefix row ===== -->
+  <text x="40" y="56" font-size="12" fill="#446688" font-weight="bold">pre[k]（一次预处理，所有 query 共用）：</text>
+
+  <g filter="url(#rough2)">
+    <rect x="80" y="66" width="56" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="5"/>
+    <text x="108" y="88" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">0</text>
+    <text x="108" y="104" text-anchor="middle" font-size="10" fill="#4a7a3a">k=0</text>
+
+    <rect x="142" y="66" width="56" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+    <text x="170" y="88" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">1</text>
+    <text x="170" y="104" text-anchor="middle" font-size="10" fill="#446688">k=1</text>
+
+    <rect x="204" y="66" width="56" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+    <text x="232" y="88" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">3</text>
+    <text x="232" y="104" text-anchor="middle" font-size="10" fill="#446688">k=2</text>
+
+    <rect x="266" y="66" width="56" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+    <text x="294" y="88" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">7</text>
+    <text x="294" y="104" text-anchor="middle" font-size="10" fill="#446688">k=3</text>
+
+    <rect x="328" y="66" width="56" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+    <text x="356" y="88" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">12</text>
+    <text x="356" y="104" text-anchor="middle" font-size="10" fill="#446688">k=4</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <text x="412" y="84" font-size="11.5" fill="#666">每个 query 二分：</text>
+    <text x="412" y="102" font-size="11.5" fill="#666">最后一个 ≤ q 的下标 k</text>
+  </g>
+
+  <!-- ===== query rows ===== -->
+  <!-- q=3 -> pre[2]=3 -->
+  <g filter="url(#rough2)">
+    <rect x="46" y="146" width="66" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="7"/>
+    <text x="79" y="170" text-anchor="middle" font-size="15" fill="#333" font-weight="bold">q = 3</text>
+  </g>
+  <path d="M 116 164 Q 170 140 226 118" stroke="#d6a040" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arro)"/>
+  <g filter="url(#rough2)">
+    <rect x="200" y="146" width="180" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="7"/>
+    <text x="290" y="162" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">pre[2] = 3 ≤ 3，pre[3] = 7 &gt; 3</text>
+    <text x="290" y="178" text-anchor="middle" font-size="11" fill="#666">answer[0] = 2　子序列取 [2,1]（前 2 小）</text>
+  </g>
+
+  <!-- q=10 -> pre[3]=7 -->
+  <g filter="url(#rough2)">
+    <rect x="46" y="216" width="66" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="7"/>
+    <text x="79" y="240" text-anchor="middle" font-size="15" fill="#333" font-weight="bold">q = 10</text>
+  </g>
+  <path d="M 116 234 Q 180 210 284 118" stroke="#d6a040" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arro)"/>
+  <g filter="url(#rough2)">
+    <rect x="200" y="216" width="180" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="7"/>
+    <text x="290" y="232" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">pre[3] = 7 ≤ 10，pre[4] = 12 &gt; 10</text>
+    <text x="290" y="248" text-anchor="middle" font-size="11" fill="#666">answer[1] = 3　取 [1,2,4]（和 7）</text>
+  </g>
+
+  <!-- q=21 -> pre[4]=12 -->
+  <g filter="url(#rough2)">
+    <rect x="46" y="286" width="66" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="7"/>
+    <text x="79" y="310" text-anchor="middle" font-size="15" fill="#333" font-weight="bold">q = 21</text>
+  </g>
+  <path d="M 116 304 Q 200 280 348 118" stroke="#d6a040" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arro)"/>
+  <g filter="url(#rough2)">
+    <rect x="200" y="286" width="180" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="7"/>
+    <text x="290" y="302" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">pre[4] = 12 ≤ 21（全部都行）</text>
+    <text x="290" y="318" text-anchor="middle" font-size="11" fill="#666">answer[2] = 4　整个数组全选</text>
+  </g>
+
+  <!-- ===== bottom note: example 2 ===== -->
+  <line x1="40" y1="344" x2="520" y2="344" stroke="#ddd" stroke-width="1.2" stroke-dasharray="3,4" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <text x="40" y="368" font-size="12" fill="#b85450" font-weight="bold">对照示例 2：nums = [2,3,4,5]，q = 1：</text>
+    <text x="40" y="390" font-size="11.5" fill="#666">pre = [0,2,5,9,14]，pre[1] = 2 &gt; 1 → 连 1 个数都装不下 → answer = 0（空子序列，和为 0）</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="420" y="352" width="100" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+    <text x="470" y="374" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">取等也算合法：</text>
+    <text x="470" y="392" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">是「≤」不是「&lt;」</text>
+  </g>
+</svg>
