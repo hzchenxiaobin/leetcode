@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#555"/>
+    </marker>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="470" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：上界型滑动窗口</text>
+  <path d="M 175 38 Q 320 46 465 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- complexity note -->
+  <g filter="url(#sk)"><rect x="445" y="50" width="180" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/></g>
+  <text x="535" y="70" text-anchor="middle" font-size="10" fill="#a06a1a">l 单调不退，两指针各走 n 步</text>
+  <text x="535" y="88" text-anchor="middle" font-size="10" font-weight="bold" fill="#a06a1a">总时间 Θ(n)</text>
+
+  <!-- step 1: count -->
+  <g filter="url(#sk)"><rect x="110" y="52" width="240" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="230" y="75" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66">一趟统计 cnt[a], cnt[b], cnt[c]</text>
+
+  <path d="M 230 92 Q 230 100 230 98" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#sk)"><polygon points="230,100 330,134 230,168 130,134" fill="#ffffff" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="230" y="130" text-anchor="middle" font-size="11" fill="#2b4a66">任一 cnt[c] &lt; k ?</text>
+  <text x="230" y="146" text-anchor="middle" font-size="9.5" fill="#888">（全取也不够）</text>
+
+  <path d="M 330 134 Q 356 134 376 134" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="352" y="126" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450">是</text>
+
+  <g filter="url(#sk)"><rect x="380" y="116" width="110" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/></g>
+  <text x="435" y="139" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a3a">返回 −1</text>
+
+  <path d="M 230 168 Q 230 178 230 184" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="180" font-size="10.5" font-weight="bold" fill="#4a7a3a">否</text>
+
+  <!-- step 2: init -->
+  <g filter="url(#sk)"><rect x="70" y="188" width="320" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="230" y="208" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e5e2e">limit[c] = cnt[c] − k（保证 ≥ 0）</text>
+  <text x="230" y="226" text-anchor="middle" font-size="11" fill="#4a7a3a">l = 0，win = {0,0,0}，maxWin = 0</text>
+
+  <path d="M 230 234 Q 230 244 230 250" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 3: loop -->
+  <g filter="url(#sk)"><rect x="90" y="252" width="280" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="230" y="272" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66">for r = 0 … n−1：</text>
+  <text x="230" y="290" text-anchor="middle" font-size="11" fill="#2b4a66">win[s[r]] += 1（右端纳入）</text>
+
+  <path d="M 230 298 Q 230 306 230 308" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2 -->
+  <g filter="url(#sk)"><polygon points="230,310 340,346 230,382 120,346" fill="#ffffff" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="230" y="342" text-anchor="middle" font-size="11" fill="#2b4a66">win[s[r]] &gt; limit[s[r]] ?</text>
+  <text x="230" y="358" text-anchor="middle" font-size="9.5" fill="#888">（只可能是 s[r] 这类越界）</text>
+
+  <path d="M 340 346 Q 368 346 394 346" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="366" y="338" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#a06a1a">是</text>
+
+  <!-- shrink box -->
+  <g filter="url(#sk)"><rect x="398" y="328" width="150" height="36" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="473" y="351" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">win[s[l]] −= 1，l += 1</text>
+
+  <path d="M 473 326 C 478 300, 400 300, 342 320" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="437" y="306" text-anchor="middle" font-size="9.5" fill="#a06a1a">继续判定</text>
+
+  <path d="M 230 382 Q 230 392 230 396" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="394" font-size="10.5" font-weight="bold" fill="#4a7a3a">否</text>
+
+  <!-- record -->
+  <g filter="url(#sk)"><rect x="95" y="400" width="270" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="230" y="423" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e">maxWin = max(maxWin, r − l + 1)</text>
+
+  <!-- loop back -->
+  <path d="M 95 418 C 42 418, 42 275, 88 275" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="50" y="344" text-anchor="middle" font-size="9.5" fill="#777">下一个 r</text>
+
+  <!-- return -->
+  <path d="M 365 418 Q 400 418 426 420" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="394" y="410" text-anchor="middle" font-size="9.5" fill="#777">r 走完</text>
+  <g filter="url(#sk)"><rect x="430" y="402" width="160" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/></g>
+  <text x="510" y="426" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b4a66">返回 n − maxWin</text>
+</svg>
