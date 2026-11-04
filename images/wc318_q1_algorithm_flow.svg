@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="660" viewBox="0 0 680 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="660" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">两阶段算法流程：先合并，再搬零</text>
+  <path d="M 170 42 Q 340 50 510 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- input -->
+  <g filter="url(#sk)"><rect x="250" y="58" width="180" height="40" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+  <text x="340" y="83" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a94">输入 nums（长度 n）</text>
+  <path d="M 340 100 L 340 120" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== phase 1 container ===== -->
+  <g filter="url(#sk)"><rect x="40" y="124" width="600" height="168" rx="12" fill="#fffdf3" stroke="#d6a040" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><rect x="56" y="112" width="256" height="24" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="184" y="129" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a5f14">阶段① 合并相邻相等（i: 0 → n−2）</text>
+  <text x="624" y="162" text-anchor="end" font-size="9.5" fill="#a5844a">零吸收 ⇒ 读到 0 无需特判</text>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)"><polygon points="170,156 262,200 170,244 78,200" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="170" y="196" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a5f14">nums[i] ==</text>
+  <text x="170" y="212" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a5f14">nums[i+1] ?</text>
+
+  <!-- yes branch -->
+  <path d="M 264 200 L 296 200" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="278" y="192" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">是</text>
+  <g filter="url(#sk)"><rect x="300" y="176" width="256" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="428" y="198" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" font-family="monospace">nums[i] *= 2; nums[i+1] = 0</text>
+  <text x="428" y="215" text-anchor="middle" font-size="9.5" fill="#5a8a5a">翻倍 + 置零</text>
+
+  <!-- no branch -->
+  <path d="M 170 246 Q 170 268 200 268 L 296 268" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="186" y="262" font-size="10" fill="#888" font-weight="bold">否</text>
+  <g filter="url(#sk)"><rect x="300" y="246" width="256" height="44" rx="8" fill="#f0f0f0" stroke="#888" stroke-width="1.6"/></g>
+  <text x="428" y="273" text-anchor="middle" font-size="12" fill="#666">跳过该步</text>
+
+  <path d="M 340 292 L 340 318" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== phase 2 container ===== -->
+  <g filter="url(#sk)"><rect x="40" y="322" width="600" height="168" rx="12" fill="#f7fcf8" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><rect x="56" y="310" width="340" height="24" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/></g>
+  <text x="226" y="327" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">阶段② 读写双指针搬零（fast: 0 → n−1，slow 初值 0）</text>
+  <text x="624" y="360" text-anchor="end" font-size="9.5" fill="#5a8a5a">写指针只进不退，非零保序</text>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)"><polygon points="170,354 262,398 170,442 78,398" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="170" y="394" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">nums[fast]</text>
+  <text x="170" y="410" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">!= 0 ?</text>
+
+  <!-- yes branch -->
+  <path d="M 264 398 L 296 398" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="278" y="390" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">是</text>
+  <g filter="url(#sk)"><rect x="300" y="374" width="256" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="428" y="396" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" font-family="monospace">nums[slow++] = nums[fast]</text>
+  <text x="428" y="413" text-anchor="middle" font-size="9.5" fill="#5a8a5a">非零前置</text>
+
+  <!-- no branch -->
+  <path d="M 170 444 Q 170 466 200 466 L 296 466" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="186" y="460" font-size="10" fill="#888" font-weight="bold">否</text>
+  <g filter="url(#sk)"><rect x="300" y="444" width="256" height="44" rx="8" fill="#f0f0f0" stroke="#888" stroke-width="1.6"/></g>
+  <text x="428" y="471" text-anchor="middle" font-size="12" fill="#666">跳过（此位回收为零）</text>
+
+  <path d="M 340 492 L 340 512" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- tail zero-fill -->
+  <g filter="url(#sk)"><rect x="220" y="516" width="240" height="44" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="340" y="536" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a" font-family="monospace">[slow, n) 全部置 0</text>
+  <text x="340" y="553" text-anchor="middle" font-size="9.5" fill="#b85450">覆盖写必须补零！</text>
+  <path d="M 340 562 L 340 580" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- return -->
+  <g filter="url(#sk)"><rect x="220" y="584" width="240" height="40" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+  <text x="340" y="609" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a94">返回 nums（原地）</text>
+
+  <!-- checklist -->
+  <g filter="url(#sk)"><rect x="484" y="552" width="176" height="80" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.4"/></g>
+  <text x="572" y="572" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8a5f14">提交前自检</text>
+  <text x="496" y="590" font-size="9.5" fill="#555">① 顺序执行，勿并行</text>
+  <text x="496" y="606" font-size="9.5" fill="#555">② 尾部补零勿省</text>
+  <text x="496" y="622" font-size="9.5" fill="#555">③ 翻倍 ≤ 2000，int 安全</text>
+</svg>
