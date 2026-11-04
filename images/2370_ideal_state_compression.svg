@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="470" viewBox="0 0 680 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="470" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">核心观察：状态不必开 n 个——按「末字母」建 26 槽</text>
+  <path d="M 150 40 Q 340 48 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Row 1: two competing state designs -->
+  <g filter="url(#sk)"><rect x="30" y="56" width="285" height="118" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="172" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#a04040" filter="url(#sk)">思路 A：按下标 i 建状态</text>
+  <text x="172" y="103" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#sk)">f[i] = 1 + max{ f[j] : j&lt;i 且 |s[j]−s[i]| ≤ k }</text>
+  <text x="172" y="126" text-anchor="middle" font-size="11" fill="#555" filter="url(#sk)">转移要回扫 i 前面的全部下标 j</text>
+  <text x="172" y="150" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04040" filter="url(#sk)">n = 10^5 ⇒ 约 10^10 次 ⇒ TLE</text>
+
+  <g filter="url(#sk)"><path d="M 318 115 L 356 115" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/></g>
+  <text x="337" y="103" text-anchor="middle" font-size="11" font-weight="bold" fill="#666" filter="url(#sk)">压缩</text>
+
+  <g filter="url(#sk)"><rect x="365" y="56" width="285" height="118" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="507" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">思路 B：按末字母 c 建状态</text>
+  <text x="507" y="103" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#sk)">dp[c] = 以字母 c 结尾的最长长度（c ∈ [0,25]）</text>
+  <text x="507" y="126" text-anchor="middle" font-size="11" fill="#555" filter="url(#sk)">每步只扫邻域 ≤ 2k+1 ≤ 51 格</text>
+  <text x="507" y="150" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">O(n·(2k+1)) ≈ 5×10^6 ⇒ 稳过</text>
+
+  <!-- Row 2: alphabet strip with neighborhood band -->
+  <text x="340" y="198" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#sk)">处理字符 'n'（编码 13，k = 3）：邻域 = 字母表上 [10, 16]，即 k..q</text>
+
+  <g filter="url(#sk)"><rect x="80" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="90" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">a</text>
+  <g filter="url(#sk)"><rect x="100" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="110" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">b</text>
+  <g filter="url(#sk)"><rect x="120" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="130" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">c</text>
+  <g filter="url(#sk)"><rect x="140" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="150" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">d</text>
+  <g filter="url(#sk)"><rect x="160" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="170" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">e</text>
+  <g filter="url(#sk)"><rect x="180" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="190" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">f</text>
+  <g filter="url(#sk)"><rect x="200" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="210" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">g</text>
+  <g filter="url(#sk)"><rect x="220" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="230" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">h</text>
+  <g filter="url(#sk)"><rect x="240" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="250" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">i</text>
+  <g filter="url(#sk)"><rect x="260" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="270" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">j</text>
+
+  <g filter="url(#sk)"><rect x="280" y="210" width="20" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="290" y="228" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a10" filter="url(#sk)">k</text>
+  <g filter="url(#sk)"><rect x="300" y="210" width="20" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="310" y="228" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a10" filter="url(#sk)">l</text>
+  <g filter="url(#sk)"><rect x="320" y="210" width="20" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="330" y="228" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a10" filter="url(#sk)">m</text>
+  <g filter="url(#sk)"><rect x="340" y="210" width="20" height="26" rx="3" fill="#fbe3b3" stroke="#d6a040" stroke-width="2.4"/></g>
+  <text x="350" y="228" text-anchor="middle" font-size="12" font-weight="bold" fill="#a06a10" filter="url(#sk)">n</text>
+  <g filter="url(#sk)"><rect x="360" y="210" width="20" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="370" y="228" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a10" filter="url(#sk)">o</text>
+  <g filter="url(#sk)"><rect x="380" y="210" width="20" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="390" y="228" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a10" filter="url(#sk)">p</text>
+  <g filter="url(#sk)"><rect x="400" y="210" width="20" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="410" y="228" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a10" filter="url(#sk)">q</text>
+
+  <g filter="url(#sk)"><rect x="420" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="430" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">r</text>
+  <g filter="url(#sk)"><rect x="440" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="450" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">s</text>
+  <g filter="url(#sk)"><rect x="460" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="470" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">t</text>
+  <g filter="url(#sk)"><rect x="480" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="490" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">u</text>
+  <g filter="url(#sk)"><rect x="500" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="510" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">v</text>
+  <g filter="url(#sk)"><rect x="520" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="530" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">w</text>
+  <g filter="url(#sk)"><rect x="540" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="550" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">x</text>
+  <g filter="url(#sk)"><rect x="560" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="570" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">y</text>
+  <g filter="url(#sk)"><rect x="580" y="210" width="20" height="26" rx="3" fill="#fdfcf7" stroke="#c9c4b8" stroke-width="1.2"/></g>
+  <text x="590" y="228" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">z</text>
+
+  <text x="608" y="250" text-anchor="end" font-size="10" fill="#888" filter="url(#sk)">共 26 槽</text>
+
+  <g filter="url(#sk)"><path d="M 280 236 L 280 246" stroke="#d6a040" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><path d="M 420 236 L 420 246" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="280" y="258" text-anchor="middle" font-size="10" fill="#a06a10" filter="url(#sk)">lo = max(0, 13−3) = 10</text>
+  <text x="420" y="258" text-anchor="middle" font-size="10" fill="#a06a10" filter="url(#sk)">hi = min(25, 13+3) = 16</text>
+
+  <g filter="url(#sk)"><path d="M 350 250 L 350 282" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/></g>
+
+  <!-- Row 3: formula box -->
+  <g filter="url(#sk)"><rect x="80" y="286" width="520" height="62" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="340" y="312" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">dp[ci] ← 1 + max( dp[lo .. hi] )</text>
+  <text x="340" y="336" text-anchor="middle" font-size="11" fill="#444" filter="url(#sk)">先读后写：读的是写入前的旧值；邻域含 ci 自身 ⇒ 覆盖即提升</text>
+
+  <!-- Row 4: two supporting properties -->
+  <g filter="url(#sk)"><rect x="80" y="364" width="250" height="94" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="205" y="386" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">无后效性</text>
+  <text x="205" y="408" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">理想性只看相邻两位的差，</text>
+  <text x="205" y="424" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">能否再接只由末字符决定，</text>
+  <text x="205" y="440" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">更早的历史不起作用</text>
+
+  <g filter="url(#sk)"><rect x="350" y="364" width="250" height="94" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="475" y="386" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">支配性</text>
+  <text x="475" y="408" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">同末字符的子序列，</text>
+  <text x="475" y="424" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">将来能接的集合完全相同，</text>
+  <text x="475" y="440" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#sk)">长者支配短者 ⇒ 每桶只留最长</text>
+</svg>
