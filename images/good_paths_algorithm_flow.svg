@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 650" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2"/>
+    </filter>
+    <filter id="sk2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.3"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="650" fill="#fafafa"/>
+
+  <g filter="url(#sk2)">
+    <text x="280" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：排序分组 + 并查集（先合并、后计数）</text>
+    <path d="M 100 40 Q 280 50 460 40" stroke="#2b2b2b" stroke-width="1.5" fill="none"/>
+  </g>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="150" y="52" width="260" height="40" rx="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="280" y="77" text-anchor="middle" font-size="11.5" fill="#2e6e2e">ans = n（每个节点自身是 1 条好路径）</text>
+  </g>
+  <g filter="url(#sk)">
+    <path d="M 280 92 L 280 102" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- build + sort -->
+  <g filter="url(#sk)">
+    <rect x="120" y="108" width="320" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="280" y="129" text-anchor="middle" font-size="11" fill="#2b4a6e">建邻接表 g；节点按 vals 升序排序</text>
+    <text x="280" y="147" text-anchor="middle" font-size="11" fill="#2b4a6e">（同值节点相邻，构成一个组）</text>
+  </g>
+  <g filter="url(#sk)">
+    <path d="M 280 158 L 280 168" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- take group -->
+  <g filter="url(#sk)">
+    <rect x="120" y="174" width="320" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="280" y="195" text-anchor="middle" font-size="11" fill="#2b4a6e">取出下一个同值组</text>
+    <text x="280" y="213" text-anchor="middle" font-size="11" fill="#2b4a6e">值 v 的节点组 G = {u₁, u₂, …}</text>
+  </g>
+  <g filter="url(#sk)">
+    <path d="M 280 224 L 280 234" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- merge phase -->
+  <g filter="url(#sk)">
+    <rect x="88" y="240" width="384" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="280" y="262" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415">合并阶段</text>
+    <text x="280" y="280" text-anchor="middle" font-size="10.5" fill="#555">对每个 u ∈ G，遍历邻居 w：</text>
+    <text x="280" y="297" text-anchor="middle" font-size="10.5" fill="#555">若 vals[w] ≤ v 则 union(u, w)（等值邻居也合并）</text>
+  </g>
+  <g filter="url(#sk)">
+    <path d="M 280 306 L 280 316" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- count phase -->
+  <g filter="url(#sk)">
+    <rect x="88" y="322" width="384" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="280" y="344" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415">计数阶段</text>
+    <text x="280" y="362" text-anchor="middle" font-size="10.5" fill="#555">对每个 u ∈ G 求 find(u)，按根分桶，</text>
+    <text x="280" y="379" text-anchor="middle" font-size="10.5" fill="#555">得到各桶大小 k₁, k₂, …</text>
+  </g>
+  <g filter="url(#sk)">
+    <path d="M 280 388 L 280 398" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- accumulate -->
+  <g filter="url(#sk)">
+    <rect x="120" y="404" width="320" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="280" y="425" text-anchor="middle" font-size="11.5" fill="#2e6e2e">ans += Σ kᵢ·(kᵢ−1)/2</text>
+    <text x="280" y="443" text-anchor="middle" font-size="10" fill="#666">（同根的同值节点中任取两点成一条好路径）</text>
+  </g>
+  <g filter="url(#sk)">
+    <path d="M 280 454 L 280 464" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="280,468 375,505 280,542 185,505" fill="#ffffff" stroke="#666" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="280" y="510" text-anchor="middle" font-size="11" fill="#333">还有组未处理？</text>
+  </g>
+
+  <!-- yes loop back -->
+  <g filter="url(#sk)">
+    <path d="M 375 505 H 470 Q 488 505 488 487 V 217 Q 488 199 470 199 H 448" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="408" y="492" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+    <text x="500" y="355" font-size="9.5" fill="#999" transform="rotate(90 500 355)">下一个更大的值</text>
+  </g>
+
+  <!-- no to return -->
+  <g filter="url(#sk)">
+    <path d="M 280 542 L 280 570" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="297" y="562" font-size="11" fill="#b03a3a" font-weight="bold">否</text>
+  </g>
+
+  <!-- return -->
+  <g filter="url(#sk)">
+    <rect x="150" y="578" width="260" height="40" rx="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk2)">
+    <text x="280" y="603" text-anchor="middle" font-size="11.5" fill="#2e6e2e">返回 ans</text>
+  </g>
+</svg>
