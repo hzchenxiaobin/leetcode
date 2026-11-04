@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="410" viewBox="0 0 680 410" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="410" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：三遍线性扫描，全程迭代</text>
+  <path d="M 150 44 Q 340 52 530 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)"><rect x="55" y="66" width="380" height="70" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="75" y="90" font-size="12.5" font-weight="bold" fill="#446688">① 建邻接表 + BFS 定序</text>
+  <text x="75" y="112" font-size="10.5" fill="#2b2b2b">order[] 本身当队列，同步记 parent[]</text>
+  <text x="75" y="128" font-size="10.5" fill="#2b2b2b">order 天然「父先于子」，逆序即「子先于父」</text>
+  <g filter="url(#sk)"><path d="M 245 136 V 156" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/></g>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)"><rect x="55" y="156" width="380" height="74" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="75" y="180" font-size="12.5" font-weight="bold" fill="#4a7a3a">② 逆序扫 order（自底向上）：求 down</text>
+  <text x="75" y="202" font-size="10.5" fill="#2b2b2b">down[u] = price[u] + max( 0, 孩子的 down )</text>
+  <text x="75" y="220" font-size="10.5" fill="#2b2b2b">同时记录 d1 / d2（最大 / 次大）与 heavy（最大来源）</text>
+  <g filter="url(#sk)"><path d="M 245 230 V 250" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/></g>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)"><rect x="55" y="250" width="380" height="86" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="75" y="274" font-size="12.5" font-weight="bold" fill="#7a5415">③ 正序扫 order（自顶向下）：换根求 up</text>
+  <text x="75" y="296" font-size="10.5" fill="#2b2b2b">up[v] = price[v] + max( up[p]，price[p] + d* )</text>
+  <text x="75" y="314" font-size="10.5" fill="#2b2b2b">d*：p 的孩子中除 v 外的最大 down（heavy / d2）</text>
+  <text x="75" y="332" font-size="10.5" fill="#2b2b2b">顺带统计 ans = max( ans，best[v] − price[v] )</text>
+  <g filter="url(#sk)"><path d="M 245 336 V 352" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/></g>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)"><rect x="55" y="352" width="380" height="40" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="245" y="377" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">④ 返回 ans</text>
+
+  <!-- right notes -->
+  <text x="465" y="84" font-size="11" font-weight="bold" fill="#b85450">⚠ 防爆栈</text>
+  <text x="465" y="102" font-size="10" fill="#2b2b2b">n ≤ 10⁵，链状树递归深度 10⁵</text>
+  <text x="465" y="118" font-size="10" fill="#2b2b2b">→ 全程用 BFS 序迭代，无递归</text>
+
+  <text x="465" y="176" font-size="11" font-weight="bold" fill="#b85450">⚠ 溢出</text>
+  <text x="465" y="194" font-size="10" fill="#2b2b2b">路径和 ≤ 10⁵ × 10⁵ = 10¹⁰</text>
+  <text x="465" y="210" font-size="10" fill="#2b2b2b">超出 int32 → C++ 用 long long</text>
+
+  <text x="465" y="272" font-size="11" font-weight="bold" fill="#b85450">⚠ 初始化</text>
+  <text x="465" y="290" font-size="10" fill="#2b2b2b">up[0] = price[0]（根没有父边）</text>
+  <text x="465" y="306" font-size="10" fill="#2b2b2b">ans 初值 0：n = 1 时答案为 0</text>
+</svg>
