@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="560" viewBox="0 0 940 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="560" fill="#fdfcf7"/>
+  <text x="470" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法：双指针爬树找 LCA —— 谁编号大，谁往上跳一步</text>
+  <path d="M 200 42 Q 470 50 740 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="470" y="64" text-anchor="middle" font-size="12" fill="#888" filter="url(#sk)">b 的真祖先编号 ≤ ⌊b/2⌋ &lt; b ⟹ 编号大者绝非小者的祖先，跳它不会跳过 LCA</text>
+
+  <!-- left: flowchart -->
+  <rect x="36" y="80" width="420" height="428" rx="12" fill="#f7fafc" stroke="#d8e0ea" stroke-width="1.2" filter="url(#sk)"/>
+
+  <rect x="60" y="96" width="200" height="36" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="160" y="118" text-anchor="middle" font-size="12.5" fill="#2b4a66" filter="url(#sk)">取出查询 (a, b)，steps = 0</text>
+  <path d="M 160 132 L 160 150" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <polygon points="88,192 160,154 232,192 160,230" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="160" y="197" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">a ≠ b ?</text>
+
+  <path d="M 232 192 L 304 192" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="262" y="182" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#sk)">否</text>
+  <rect x="308" y="174" width="136" height="36" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="376" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">记录答案 steps+1</text>
+  <text x="376" y="226" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#sk)">相遇点即 LCA，结束 ✓</text>
+
+  <path d="M 160 230 L 160 256" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="170" y="248" font-size="11.5" fill="#444" filter="url(#sk)">是</text>
+
+  <polygon points="88,300 160,262 232,300 160,338" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="160" y="305" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a66" filter="url(#sk)">a &gt; b ?</text>
+
+  <path d="M 232 300 L 304 300" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="289" font-size="10.5" fill="#444" filter="url(#sk)">是：a 大</text>
+  <rect x="308" y="282" width="136" height="36" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="376" y="304" text-anchor="middle" font-size="12" fill="#7a5415" filter="url(#sk)">a ≫ 1，steps+1</text>
+
+  <path d="M 160 338 L 160 364" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="176" y="356" font-size="10.5" fill="#444" filter="url(#sk)">否：b 大</text>
+  <rect x="92" y="368" width="136" height="36" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="160" y="390" text-anchor="middle" font-size="12" fill="#7a5415" filter="url(#sk)">b ≫ 1，steps+1</text>
+
+  <path d="M 376 318 L 376 442 L 52 442 L 52 192 L 84 192" stroke="#8a94a6" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 160 404 L 160 442" stroke="#8a94a6" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <text x="216" y="462" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">跳完回到「a ≠ b ?」继续</text>
+  <text x="246" y="496" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">每步 dep(a)+dep(b) 严格减 1 ⟹ 至多 2(n−1) ≤ 58 步必相遇</text>
+
+  <!-- right: climb trace for query [4,7] -->
+  <rect x="466" y="80" width="438" height="428" rx="12" fill="#fbf7ef" stroke="#dcc99a" stroke-width="1.2" filter="url(#sk)"/>
+
+  <rect x="486" y="96" width="13" height="13" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="504" y="107" font-size="11" fill="#444" filter="url(#sk)">a 侧</text>
+  <rect x="548" y="96" width="13" height="13" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="566" y="107" font-size="11" fill="#444" filter="url(#sk)">b 侧</text>
+  <text x="700" y="107" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">查询 [4, 7]：四步相遇</text>
+
+  <!-- jump arrows (child -> parent) -->
+  <path d="M 582 320 L 603 270" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 788 320 L 767 270" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 624 233 L 669 178" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 746 233 L 701 178" stroke="#555" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step badges -->
+  <circle cx="579" cy="291" r="10" fill="#ffffff" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="579" y="295" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a66" filter="url(#sk)">2</text>
+  <text x="565" y="295" text-anchor="end" font-size="10.5" fill="#2b4a66" filter="url(#sk)">a 跳</text>
+
+  <circle cx="783" cy="291" r="10" fill="#ffffff" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="783" y="295" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415" filter="url(#sk)">1</text>
+  <text x="801" y="295" font-size="10.5" fill="#7a5415" filter="url(#sk)">b 跳</text>
+
+  <circle cx="646" cy="206" r="10" fill="#ffffff" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="646" y="210" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a66" filter="url(#sk)">4</text>
+  <text x="630" y="210" text-anchor="end" font-size="10.5" fill="#2b4a66" filter="url(#sk)">a 跳</text>
+
+  <circle cx="724" cy="206" r="10" fill="#ffffff" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="724" y="210" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415" filter="url(#sk)">3</text>
+  <text x="742" y="210" font-size="10.5" fill="#7a5415" filter="url(#sk)">b 跳</text>
+
+  <!-- nodes -->
+  <circle cx="685" cy="158" r="27" fill="none" stroke="#4a8e4a" stroke-width="1.2" stroke-dasharray="4,4" filter="url(#sk)"/>
+  <circle cx="685" cy="158" r="21" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.6" filter="url(#sk)"/>
+  <text x="685" y="163" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">1</text>
+  <text x="685" y="198" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">LCA ✓</text>
+
+  <circle cx="612" cy="248" r="19" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2" filter="url(#sk)"/>
+  <text x="612" y="253" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a66" filter="url(#sk)">2</text>
+  <circle cx="758" cy="248" r="19" fill="#fef6e6" stroke="#c98a2b" stroke-width="2" filter="url(#sk)"/>
+  <text x="758" y="253" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">3</text>
+
+  <circle cx="575" cy="338" r="19" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2" filter="url(#sk)"/>
+  <text x="575" y="343" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a66" filter="url(#sk)">4</text>
+  <circle cx="795" cy="338" r="19" fill="#fef6e6" stroke="#c98a2b" stroke-width="2" filter="url(#sk)"/>
+  <text x="795" y="343" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">7</text>
+
+  <!-- tally box -->
+  <rect x="500" y="384" width="400" height="88" rx="8" fill="#eef3f9" stroke="#7a94b8" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="524" y="410" font-size="12" fill="#333" filter="url(#sk)">① 4&lt;7：b 跳 7→3　　② 4&gt;3：a 跳 4→2</text>
+  <text x="524" y="434" font-size="12" fill="#333" filter="url(#sk)">③ 2&lt;3：b 跳 3→1　　④ 2&gt;1：a 跳 2→1</text>
+  <text x="524" y="460" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#sk)">ca = 2，cb = 2 ⟹ 环长 = ca + cb + 1 = 5 ✓</text>
+  <text x="685" y="494" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">整个过程只做「比较 + 右移」，连树都不用建</text>
+</svg>
