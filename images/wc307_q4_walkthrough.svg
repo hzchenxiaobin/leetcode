@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="640" viewBox="0 0 780 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="780" height="640" fill="#fafafa"/>
+  <text x="390" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例演算：nums = [2, 4, −2]，k = 5</text>
+  <path d="M 210 42 Q 390 50 570 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="390" y="70" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">total = 2 + 4 = 6；a = |nums| 升序 = [2, 2, 4]（子集以 a 的下标 a₀a₁a₂ 表示）</text>
+
+  <!-- ===== pop table ===== -->
+  <!-- cols: 步 30..74 | 弹出 74..194 | 子集 194..294 | 压入 294..514 | 堆 514..754 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="88" width="44" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="74" y="88" width="120" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="194" y="88" width="100" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="294" y="88" width="220" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="514" y="88" width="240" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="30" y="118" width="44" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="74" y="118" width="120" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="194" y="118" width="100" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="294" y="118" width="220" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="514" y="118" width="240" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="30" y="162" width="44" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="74" y="162" width="120" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="194" y="162" width="100" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="294" y="162" width="220" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="514" y="162" width="240" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="30" y="206" width="44" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="74" y="206" width="120" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="194" y="206" width="100" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="294" y="206" width="220" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="514" y="206" width="240" height="44" rx="3" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <rect x="30" y="250" width="44" height="44" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="74" y="250" width="120" height="44" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="194" y="250" width="100" height="44" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="294" y="250" width="220" height="44" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="514" y="250" width="240" height="44" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <g text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">
+    <text x="52" y="108">步</text>
+    <text x="134" y="108">弹出 (s, i)</text>
+    <text x="244" y="108">对应子集</text>
+    <text x="404" y="108">压入后继</text>
+    <text x="634" y="108">弹出后的堆</text>
+  </g>
+  <g text-anchor="middle" font-size="12" fill="#333">
+    <text x="52" y="144">1</text>
+    <text x="134" y="138" font-weight="bold">(0, 0)</text>
+    <text x="134" y="156" font-size="10" fill="#888">第 1 小</text>
+    <text x="244" y="144">∅</text>
+    <text x="404" y="144" fill="#2e6e2e" font-weight="bold">add (2,1)</text>
+    <text x="634" y="144" font-family="monospace">{(2,1)}</text>
+
+    <text x="52" y="188">2</text>
+    <text x="134" y="182" font-weight="bold">(2, 1)</text>
+    <text x="134" y="200" font-size="10" fill="#888">第 2 小</text>
+    <text x="244" y="188">{a₀}</text>
+    <text x="404" y="182" fill="#2e6e2e" font-weight="bold">add (4,2)</text>
+    <text x="404" y="200" fill="#b8860b" font-weight="bold">repl (2,2) = +2−2</text>
+    <text x="634" y="188" font-family="monospace">{(2,2), (4,2)}</text>
+
+    <text x="52" y="232">3</text>
+    <text x="134" y="226" font-weight="bold">(2, 2)</text>
+    <text x="134" y="244" font-size="10" fill="#888">第 3 小</text>
+    <text x="244" y="232">{a₁}</text>
+    <text x="404" y="226" fill="#2e6e2e" font-weight="bold">add (6,3)</text>
+    <text x="404" y="244" fill="#b8860b" font-weight="bold">repl (4,3) = +4−2</text>
+    <text x="634" y="226" font-family="monospace">{(4,2), (4,3),</text>
+    <text x="634" y="244" font-family="monospace">(6,3)}</text>
+
+    <text x="52" y="276">4</text>
+    <text x="134" y="270" font-weight="bold">(4, 2)</text>
+    <text x="134" y="288" font-size="10" fill="#888">第 4 小</text>
+    <text x="244" y="276">{a₀a₁}</text>
+    <text x="404" y="270" fill="#2e6e2e" font-weight="bold">add (8,3)</text>
+    <text x="404" y="288" fill="#b8860b" font-weight="bold">repl (6,3) = +4−2</text>
+    <text x="634" y="270" font-family="monospace">{(4,3), (6,3),</text>
+    <text x="634" y="288" font-family="monospace">(6,3), (8,3)}</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="30" y="310" width="724" height="50" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="392" y="331" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">弹完 k−1 = 4 次 → 堆顶 (4,3)：第 5 小子集和 = 4</text>
+  <text x="392" y="351" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">答案 = total − 4 = 6 − 4 = 2 ✓</text>
+
+  <!-- ===== correspondence strip ===== -->
+  <text x="390" y="392" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">翻转对应：全部 8 个子集和（2³ = 8）</text>
+
+  <text x="112" y="436" text-anchor="end" font-size="12" font-weight="bold" fill="#446688">升序子集和 →</text>
+  <g filter="url(#sk)">
+    <rect x="122" y="418" width="36" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="172" y="418" width="36" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="222" y="418" width="36" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="272" y="418" width="36" height="30" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="322" y="418" width="36" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="372" y="418" width="36" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="422" y="418" width="36" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="472" y="418" width="36" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <g text-anchor="middle" font-size="13" font-weight="bold" fill="#446688">
+    <text x="140" y="438">0</text>
+    <text x="190" y="438">2</text>
+    <text x="240" y="438">2</text>
+    <text x="290" y="438" fill="#b8860b">4</text>
+    <text x="340" y="438">4</text>
+    <text x="390" y="438">6</text>
+    <text x="440" y="438">6</text>
+    <text x="490" y="438">8</text>
+  </g>
+  <text x="530" y="430" font-size="10" fill="#888">← 堆按此顺序</text>
+  <text x="530" y="444" font-size="10" fill="#888">逐个弹出</text>
+
+  <path d="M 140 452 L 140 480" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arO)" filter="url(#sk)"/>
+  <path d="M 490 452 L 490 480" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="320" y="472" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040">total − s（第 k 大 ⟷ 第 k 小，位置一一对应）</text>
+
+  <text x="112" y="516" text-anchor="end" font-size="12" font-weight="bold" fill="#4a7a3a">降序子序列和 →</text>
+  <g filter="url(#sk)">
+    <rect x="122" y="498" width="36" height="30" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="172" y="498" width="36" height="30" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="222" y="498" width="36" height="30" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="272" y="498" width="36" height="30" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="322" y="498" width="36" height="30" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="372" y="498" width="36" height="30" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="422" y="498" width="36" height="30" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="472" y="498" width="36" height="30" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+  </g>
+  <g text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">
+    <text x="140" y="518">6</text>
+    <text x="190" y="518">4</text>
+    <text x="240" y="518">4</text>
+    <text x="290" y="518" fill="#b8860b">2</text>
+    <text x="340" y="518">2</text>
+    <text x="390" y="518">0</text>
+    <text x="440" y="518">0</text>
+    <text x="490" y="518">−2</text>
+  </g>
+  <text x="530" y="512" font-size="10" fill="#888">← 题面的降序表</text>
+  <text x="530" y="526" font-size="10" fill="#888">第 5 个即答案</text>
+
+  <g filter="url(#sk)">
+    <rect x="56" y="552" width="668" height="66" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="390" y="576" text-anchor="middle" font-size="11.5" fill="#444">两个 0 ⟷ ∅ 与 {2,−2}；两个 2 ⟷ {2} 与 {4,−2}；两个 4 ⟷ {4} 与 {2,4,−2} —— 重复按重数计入</text>
+  <text x="390" y="598" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">堆只生成前 k 个状态，代价 O(k log k)，与 2ⁿ 无关 —— 这就是 k ≤ 2000 的全部意义</text>
+</svg>
