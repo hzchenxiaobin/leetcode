@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：「每字母恰好两次」→ 只记首次下标，遇第二次定判</text>
+
+  <!-- ===== ① string s with paired occurrences ===== -->
+  <text x="40" y="56" font-size="12" fill="#4a7a3a" font-weight="bold">① s = "abaccb"，每个字母恰好出现两次</text>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="68" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="6"/>
+    <text x="93" y="100" text-anchor="middle" font-size="20" fill="#333" font-weight="bold">a</text>
+    <text x="93" y="130" text-anchor="middle" font-size="11" fill="#446688">下标 0</text>
+
+    <rect x="116" y="68" width="46" height="46" fill="#fafafa" stroke="#bbb" stroke-width="1.4" rx="6"/>
+    <text x="139" y="100" text-anchor="middle" font-size="20" fill="#333" font-weight="bold">b</text>
+    <text x="139" y="130" text-anchor="middle" font-size="11" fill="#888">下标 1</text>
+
+    <rect x="162" y="68" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="6"/>
+    <text x="185" y="100" text-anchor="middle" font-size="20" fill="#333" font-weight="bold">a</text>
+    <text x="185" y="130" text-anchor="middle" font-size="11" fill="#446688">下标 2</text>
+
+    <rect x="208" y="68" width="46" height="46" fill="#fafafa" stroke="#bbb" stroke-width="1.4" rx="6"/>
+    <text x="231" y="100" text-anchor="middle" font-size="20" fill="#333" font-weight="bold">c</text>
+    <text x="231" y="130" text-anchor="middle" font-size="11" fill="#888">下标 3</text>
+
+    <rect x="254" y="68" width="46" height="46" fill="#fafafa" stroke="#bbb" stroke-width="1.4" rx="6"/>
+    <text x="277" y="100" text-anchor="middle" font-size="20" fill="#333" font-weight="bold">c</text>
+    <text x="277" y="130" text-anchor="middle" font-size="11" fill="#888">下标 4</text>
+
+    <rect x="300" y="68" width="46" height="46" fill="#fafafa" stroke="#bbb" stroke-width="1.4" rx="6"/>
+    <text x="323" y="100" text-anchor="middle" font-size="20" fill="#333" font-weight="bold">b</text>
+    <text x="323" y="130" text-anchor="middle" font-size="11" fill="#888">下标 5</text>
+  </g>
+
+  <path d="M 93 140 Q 139 170 185 140" stroke="#446688" stroke-width="1.6" fill="none" stroke-dasharray="4,3" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <text x="139" y="168" text-anchor="middle" font-size="11" fill="#446688">两个 a 之间只夹 1 个字母 b</text>
+
+  <g filter="url(#rough2)">
+    <text x="400" y="80" font-size="12" fill="#666">出现配对：</text>
+    <text x="400" y="100" font-size="12" fill="#446688" font-weight="bold">a → (0, 2)</text>
+    <text x="400" y="120" font-size="12" fill="#4a7a3a" font-weight="bold">b → (1, 5)</text>
+    <text x="400" y="140" font-size="12" fill="#d6a040" font-weight="bold">c → (3, 4)</text>
+  </g>
+
+  <line x1="40" y1="186" x2="520" y2="186" stroke="#ddd" stroke-width="1.2" stroke-dasharray="3,4" filter="url(#rough2)"/>
+
+  <!-- ===== ② first[26] slots ===== -->
+  <text x="40" y="208" font-size="12" fill="#d6a040" font-weight="bold">② first[26]：只存「首次下标」，−1 表示尚未见过</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="220" width="58" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="5"/>
+    <text x="89" y="238" text-anchor="middle" font-size="10" fill="#446688">first[0]</text>
+    <text x="89" y="258" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">0</text>
+    <text x="89" y="280" text-anchor="middle" font-size="10" fill="#888">a 首见@0</text>
+
+    <rect x="122" y="220" width="58" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="5"/>
+    <text x="151" y="238" text-anchor="middle" font-size="10" fill="#4a7a3a">first[1]</text>
+    <text x="151" y="258" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">1</text>
+    <text x="151" y="280" text-anchor="middle" font-size="10" fill="#888">b 首见@1</text>
+
+    <rect x="184" y="220" width="58" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="5"/>
+    <text x="213" y="238" text-anchor="middle" font-size="10" fill="#d6a040">first[2]</text>
+    <text x="213" y="258" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">3</text>
+    <text x="213" y="280" text-anchor="middle" font-size="10" fill="#888">c 首见@3</text>
+
+    <rect x="246" y="220" width="58" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="5"/>
+    <text x="275" y="238" text-anchor="middle" font-size="10" fill="#b85450">first[3]</text>
+    <text x="275" y="258" text-anchor="middle" font-size="16" fill="#999" font-weight="bold">−1</text>
+    <text x="275" y="280" text-anchor="middle" font-size="10" fill="#888">d 未出现</text>
+
+    <text x="318" y="248" font-size="14" fill="#888">…</text>
+
+    <rect x="336" y="220" width="58" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="5"/>
+    <text x="365" y="238" text-anchor="middle" font-size="10" fill="#b85450">first[25]</text>
+    <text x="365" y="258" text-anchor="middle" font-size="16" fill="#999" font-weight="bold">−1</text>
+    <text x="365" y="280" text-anchor="middle" font-size="10" fill="#888">z 未出现</text>
+  </g>
+
+  <text x="452" y="248" font-size="11" fill="#666">哨兵 −1 与下标 0</text>
+  <text x="452" y="264" font-size="11" fill="#666">区分「没见过」和</text>
+  <text x="452" y="280" font-size="11" fill="#666">「首次就在 0」</text>
+
+  <line x1="40" y1="300" x2="520" y2="300" stroke="#ddd" stroke-width="1.2" stroke-dasharray="3,4" filter="url(#rough2)"/>
+
+  <!-- ===== ③ gap formula & verdict ===== -->
+  <text x="40" y="322" font-size="12" fill="#b85450" font-weight="bold">③ 遇第二次出现即定判：间隔 = q − p − 1，与 distance[idx] 比对</text>
+
+  <rect x="60" y="334" width="440" height="82" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="360" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">gap = i − first[idx] − 1</text>
+  <text x="280" y="382" text-anchor="middle" font-size="12" fill="#666">a：2 − 0 − 1 = 1 = distance[0] ✓　b：5 − 1 − 1 = 3 ✓　c：4 − 3 − 1 = 0 ✓</text>
+  <text x="280" y="404" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold">恰好两次 → 第二次比完即定论，无需第三态</text>
+</svg>
