@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="480" fill="#fafafa"/>
+  <text x="430" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：以 pos 为锚——左段建哈希频次表，右段枚举查表配对</text>
+  <path d="M 180 42 Q 430 50 680 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 数组条 -->
+  <path d="M 115 74 L 115 66 L 269 66 L 269 74" stroke="#446688" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="192" y="60" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">左段（可为空）</text>
+  <path d="M 331 74 L 331 66 L 377 66 L 377 74" stroke="#4a7a3a" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="354" y="60" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">右段（可为空）</text>
+
+  <rect x="115" y="80" width="46" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="138" y="104" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">3</text>
+  <rect x="169" y="80" width="46" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="192" y="104" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">2</text>
+  <rect x="223" y="80" width="46" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="246" y="104" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="277" y="80" width="46" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4" filter="url(#rough2)"/>
+  <text x="300" y="104" text-anchor="middle" font-size="14" font-weight="bold" fill="#a07830" filter="url(#rough2)">4</text>
+  <rect x="331" y="80" width="46" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="354" y="104" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">5</text>
+
+  <text x="138" y="136" text-anchor="middle" font-size="11.5" fill="#8e3030" filter="url(#rough2)">−1</text>
+  <text x="192" y="136" text-anchor="middle" font-size="11.5" fill="#8e3030" filter="url(#rough2)">−1</text>
+  <text x="246" y="136" text-anchor="middle" font-size="11.5" fill="#8e3030" filter="url(#rough2)">−1</text>
+  <text x="300" y="136" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a07830" filter="url(#rough2)">0</text>
+  <text x="354" y="136" text-anchor="middle" font-size="11.5" fill="#2e5e28" filter="url(#rough2)">+1</text>
+
+  <path d="M 300 168 L 300 144" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="300" y="186" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">k 的下标 pos = 3</text>
+
+  <text x="450" y="96" font-size="11.5" fill="#555" filter="url(#rough2)">变换：&gt;k → +1，&lt;k → −1，= k → 0</text>
+  <text x="450" y="114" font-size="11.5" fill="#555" filter="url(#rough2)">k 不进左右段和，空段和为 0</text>
+
+  <!-- 拆分公式 -->
+  <rect x="60" y="206" width="740" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="430" y="235" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a07830" filter="url(#rough2)">子数组 = 左段 + [k] + 右段 ⇒ d = 左和 + 右和 ∈ {0, 1} ⇒ 左和 ∈ {−右和, 1 − 右和}</text>
+
+  <!-- 流程步骤 -->
+  <rect x="55" y="280" width="255" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="182" y="311" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">① 定位 pos = nums.index(k)</text>
+
+  <path d="M 182 332 L 182 352" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="55" y="356" width="255" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="182" y="378" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">② 左扫建表（i：pos−1 → 0）</text>
+  <text x="182" y="398" text-anchor="middle" font-size="11.5" fill="#2e5e28" filter="url(#rough2)">bal += ±1，cnt[bal]++；cnt[0] = 1 表空段</text>
+
+  <path d="M 182 408 L 182 428" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="55" y="432" width="255" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="182" y="454" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">③ 右扫查表（j：pos → n−1）</text>
+  <text x="182" y="474" text-anchor="middle" font-size="11.5" fill="#2b4a6e" filter="url(#rough2)">j &gt; pos 时 rb += ±1（j = pos 时 rb = 0）</text>
+
+  <!-- 查询框 -->
+  <path d="M 310 458 Q 350 458 366 375" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <rect x="370" y="290" width="430" height="80" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="585" y="328" text-anchor="middle" font-size="16" font-weight="bold" fill="#a07830" filter="url(#rough2)">ans += cnt[−rb] + cnt[1 − rb]</text>
+  <text x="585" y="354" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">右段每扩一步，O(1) 查两个键</text>
+
+  <path d="M 585 370 L 585 392" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <rect x="370" y="396" width="430" height="60" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="585" y="420" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">每个（左段, 右段）组合恰统计一次</text>
+  <text x="585" y="442" text-anchor="middle" font-size="11.5" fill="#2e5e28" filter="url(#rough2)">不重不漏，合计即答案</text>
+</svg>

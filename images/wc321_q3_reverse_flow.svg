@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 510"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="510" fill="#fafafa"/>
+  <text x="430" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：反转 → 一趟过滤（维护 maxv）→ 再反转</text>
+  <path d="M 210 38 Q 430 46 650 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- ============ 左侧主流程 ============ -->
+  <!-- A 反转链表 -->
+  <rect x="100" y="58" width="180" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="83" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">① 反转链表（三指针）</text>
+  <path d="M 190 98 L 190 118" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- B 初始化 -->
+  <rect x="100" y="120" width="180" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="144" text-anchor="middle" font-size="12.5" fill="#2b4a6e" filter="url(#rough2)">② p = 新头；maxv = 0</text>
+  <path d="M 190 158 L 190 178" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- C 菱形 p==null? -->
+  <polygon points="190,180 278,214 190,248 102,214" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="219" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a07830" filter="url(#rough2)">p == null ?</text>
+  <text x="290" y="196" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">否</text>
+  <text x="88" y="196" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- C 是 → 左侧绕到 G -->
+  <path d="M 102 214 Q 50 214 50 300 Q 50 388 138 388" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- C 否 → D -->
+  <path d="M 278 214 Q 320 214 320 258 Q 320 296 282 316" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- D 菱形 p.val < maxv? -->
+  <polygon points="190,282 282,322 190,362 98,322" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="327" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8e3030" filter="url(#rough2)">p.val &lt; maxv ?</text>
+  <text x="296" y="300" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">是</text>
+  <text x="196" y="382" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">否</text>
+
+  <!-- E 移除（右上） -->
+  <rect x="330" y="282" width="160" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="410" y="307" text-anchor="middle" font-size="12.5" font-weight="bold" filter="url(#rough2)" fill="#8e3030">跳过 p（删除该节点）</text>
+  <path d="M 282 316 L 330 306" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+
+  <!-- F 保留（下方） -->
+  <rect x="100" y="396" width="180" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="416" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">保留 p；maxv ← p.val</text>
+  <text x="190" y="436" text-anchor="middle" font-size="11.5" fill="#2e5e28" filter="url(#rough2)">（p.val ≥ maxv，含相等）</text>
+  <path d="M 190 362 L 190 396" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- E/F → 回 C：p 前进 -->
+  <path d="M 410 282 Q 410 200 286 210" stroke="#446688" stroke-width="1.6" fill="none" stroke-dasharray="6,4" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="418" y="238" font-size="11.5" fill="#446688" filter="url(#rough2)">p ← p.next</text>
+  <path d="M 100 420 Q 40 420 40 300 Q 40 214 96 212" stroke="#446688" stroke-width="1.6" fill="none" stroke-dasharray="6,4" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="44" y="348" font-size="11.5" fill="#446688" filter="url(#rough2)" transform="rotate(-90 44 348)">p ← p.next</text>
+
+  <!-- G 再次反转（中下） -->
+  <rect x="138" y="366" width="150" height="0" rx="8" fill="none" stroke="none"/>
+  <rect x="150" y="456" width="230" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="265" y="481" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">③ 再反转 → 返回新头 head</text>
+
+  <!-- ============ 右侧示例演示 ============ -->
+  <!-- 阶段1 链表 -->
+  <text x="560" y="64" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">原链表（只能从头单向走）：</text>
+  <rect x="560" y="72" width="38" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="606" y="72" width="38" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="652" y="72" width="38" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="698" y="72" width="38" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <rect x="744" y="72" width="38" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="579" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">5</text>
+  <text x="625" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">2</text>
+  <text x="671" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">13</text>
+  <text x="717" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">3</text>
+  <text x="763" y="93" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">8</text>
+
+  <!-- 反转箭头 -->
+  <path d="M 700 112 Q 660 130 636 108" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="700" y="136" font-size="11.5" font-weight="bold" fill="#a07830" filter="url(#rough2)">反转 = 换个方向读（从右往左）</text>
+
+  <!-- 阶段2 反转后 -->
+  <text x="560" y="164" font-size="12.5" font-weight="bold" fill="#a07830" filter="url(#rough2)">反转后：从原链表尾往头走 →</text>
+  <rect x="560" y="172" width="38" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <rect x="606" y="172" width="38" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <rect x="652" y="172" width="38" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <rect x="698" y="172" width="38" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <rect x="744" y="172" width="38" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="579" y="193" text-anchor="middle" font-size="13" font-weight="bold" fill="#a07830" filter="url(#rough2)">8</text>
+  <text x="625" y="193" text-anchor="middle" font-size="13" font-weight="bold" fill="#a07830" filter="url(#rough2)">3</text>
+  <text x="671" y="193" text-anchor="middle" font-size="13" font-weight="bold" fill="#a07830" filter="url(#rough2)">13</text>
+  <text x="717" y="193" text-anchor="middle" font-size="13" font-weight="bold" fill="#a07830" filter="url(#rough2)">2</text>
+  <text x="763" y="193" text-anchor="middle" font-size="13" font-weight="bold" fill="#a07830" filter="url(#rough2)">5</text>
+
+  <!-- 阶段2 过滤表 -->
+  <text x="560" y="224" font-size="12.5" font-weight="bold" fill="#8e3030" filter="url(#rough2)">过滤（maxv = 已扫过的最大值）：</text>
+  <rect x="560" y="232" width="222" height="112" rx="8" fill="#fafafa" stroke="#8e5db8" stroke-width="1.2" filter="url(#rough2)"/>
+  <line x1="560" y1="258" x2="782" y2="258" stroke="#8e5db8" stroke-width="1" filter="url(#rough2)"/>
+  <line x1="634" y1="232" x2="634" y2="344" stroke="#8e5db8" stroke-width="1" filter="url(#rough2)"/>
+  <line x1="712" y1="232" x2="712" y2="344" stroke="#8e5db8" stroke-width="1" filter="url(#rough2)"/>
+  <text x="597" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#8e5db8" filter="url(#rough2)">节点</text>
+  <text x="673" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#8e5db8" filter="url(#rough2)">判定</text>
+  <text x="747" y="250" text-anchor="middle" font-size="11" font-weight="bold" fill="#8e5db8" filter="url(#rough2)">maxv</text>
+  <text x="597" y="276" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">8</text>
+  <text x="673" y="276" text-anchor="middle" font-size="11.5" fill="#2e5e28" filter="url(#rough2)">8≥0 留 ✓</text>
+  <text x="747" y="276" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">8</text>
+  <text x="597" y="297" text-anchor="middle" font-size="12" font-weight="bold" fill="#8e3030" filter="url(#rough2)">3</text>
+  <text x="673" y="297" text-anchor="middle" font-size="11.5" fill="#8e3030" filter="url(#rough2)">3&lt;8 删 ✗</text>
+  <text x="747" y="297" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">8</text>
+  <text x="597" y="318" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">13</text>
+  <text x="673" y="318" text-anchor="middle" font-size="11.5" fill="#2e5e28" filter="url(#rough2)">13≥8 留 ✓</text>
+  <text x="747" y="318" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">13</text>
+  <text x="597" y="339" text-anchor="middle" font-size="12" font-weight="bold" fill="#8e3030" filter="url(#rough2)">2, 5</text>
+  <text x="673" y="339" text-anchor="middle" font-size="11.5" fill="#8e3030" filter="url(#rough2)">&lt;13 删 ✗✗</text>
+  <text x="747" y="339" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">13</text>
+
+  <!-- 阶段3 结果 -->
+  <text x="560" y="376" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">过滤后（仍是反方向）：8 → 13</text>
+  <rect x="560" y="384" width="38" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="606" y="384" width="38" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="579" y="405" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">8</text>
+  <text x="625" y="405" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">13</text>
+  <path d="M 666 399 Q 700 388 700 399" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="560" y="440" font-size="12.5" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">再反转一次 ⇒</text>
+  <rect x="560" y="448" width="38" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4" filter="url(#rough2)"/>
+  <rect x="606" y="448" width="38" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4" filter="url(#rough2)"/>
+  <text x="579" y="469" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">13</text>
+  <text x="625" y="469" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">8</text>
+  <text x="662" y="469" font-size="12.5" font-weight="bold" fill="#2e5e28" filter="url(#rough2)">← 答案</text>
+</svg>
