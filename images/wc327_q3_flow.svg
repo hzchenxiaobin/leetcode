@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="450" viewBox="0 0 640 450" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="43" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="450" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">判定流程：至多 676 个字符对，每对 O(1)</text>
+  <path d="M 150 36 Q 320 46 490 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="140" y="52" width="260" height="38" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <path d="M 270 90 L 270 106" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="270" y="75" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">统计频次表 cnt1/cnt2 与 d1/d2</text>
+
+  <!-- enumerate x -->
+  <g filter="url(#sk)">
+    <rect x="160" y="110" width="220" height="36" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <path d="M 270 146 L 270 160" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="270" y="132" text-anchor="middle" font-size="12.5" fill="#2b6e9e">枚举字符 x（cnt1[x] &gt; 0）</text>
+
+  <!-- enumerate y -->
+  <g filter="url(#sk)">
+    <rect x="160" y="164" width="220" height="36" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <path d="M 270 200 L 270 218" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="270" y="186" text-anchor="middle" font-size="12.5" fill="#2b6e9e">枚举字符 y（cnt2[y] &gt; 0）</text>
+
+  <!-- diamond 1: x == y -->
+  <g filter="url(#sk)">
+    <polygon points="270,222 352,254 270,286 188,254" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <path d="M 186 254 L 170 254" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 270 288 L 270 302" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="270" y="259" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6415">x == y ?</text>
+  <text x="176" y="246" font-size="11" fill="#555555">是</text>
+  <text x="278" y="300" font-size="11" fill="#555555">否</text>
+
+  <!-- noop branch -->
+  <g filter="url(#sk)">
+    <rect x="16" y="228" width="150" height="56" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <path d="M 91 226 L 91 190 L 154 190" stroke="#888888" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#ar)"/>
+  </g>
+  <text x="91" y="247" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6415">空操作：失即得</text>
+  <text x="91" y="263" text-anchor="middle" font-size="11" fill="#8a6415">d1==d2 ⇒ true</text>
+  <text x="91" y="279" text-anchor="middle" font-size="10" fill="#888888">否则跳过该对</text>
+
+  <!-- formula -->
+  <g filter="url(#sk)">
+    <rect x="140" y="306" width="260" height="52" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <path d="M 270 358 L 270 374" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="270" y="327" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">nd1 = d1 − [cnt1[x]=1] + [cnt1[y]=0]</text>
+  <text x="270" y="347" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">nd2 = d2 − [cnt2[y]=1] + [cnt2[x]=0]</text>
+
+  <!-- diamond 2: nd1 == nd2 -->
+  <g filter="url(#sk)">
+    <polygon points="270,378 356,406 270,434 184,406" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <path d="M 182 406 L 168 406" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 358 406 L 434 406 L 434 182 L 384 182" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="270" y="411" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">nd1 == nd2 ?</text>
+  <text x="172" y="398" font-size="11" fill="#555555">是</text>
+  <text x="366" y="398" font-size="11" fill="#555555">否</text>
+  <text x="446" y="300" font-size="10.5" fill="#888888">否：下一个 (x, y)</text>
+
+  <!-- true -->
+  <g filter="url(#sk)">
+    <rect x="20" y="386" width="146" height="40" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="93" y="411" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">return true ✓</text>
+
+  <!-- false -->
+  <g filter="url(#sk)">
+    <rect x="452" y="108" width="178" height="46" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <path d="M 382 126 Q 415 120 448 130" stroke="#888888" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#ar)"/>
+  </g>
+  <text x="541" y="127" text-anchor="middle" font-size="11.5" fill="#b85450">全部字符对枚举完</text>
+  <text x="541" y="145" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">return false ✗</text>
+</svg>
