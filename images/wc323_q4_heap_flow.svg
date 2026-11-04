@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 560"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="560" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">算法流程：查询离线升序 + 最小堆维护扩张边界</text>
+
+  <rect x="60" y="46" width="280" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="71" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">① queries 按值升序排序，记下原下标</text>
+
+  <path d="M200 86 V 104" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="104" width="280" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="129" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">② 最小堆放入 (grid[0][0], 0, 0)，cnt = 0</text>
+
+  <path d="M200 144 V 162" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="200,162 312,198 200,234 88,198" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="204" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#d6a040" filter="url(#rough2)">堆非空 且 堆顶值 &lt; q ？</text>
+
+  <text x="210" y="252" font-size="11" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <path d="M200 234 V 260" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="262" width="280" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="284" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">③ 弹出堆顶 (v, r, c)：cnt + 1</text>
+  <text x="200" y="304" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">　未访问邻居标记 visited 并入堆</text>
+
+  <path d="M60 291 H 36 V 198 H 84" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="26" y="250" font-size="10.5" fill="#666" text-anchor="middle" transform="rotate(-90 26 250)" filter="url(#rough2)">继续弹 ↺</text>
+
+  <text x="320" y="190" font-size="11" fill="#b85450" filter="url(#rough2)">否</text>
+  <path d="M312 198 H 356" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="356" y="174" width="176" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="444" y="194" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">④ ans[q 的原下标] = cnt</text>
+  <text x="444" y="212" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">（cnt 是累计得分）</text>
+
+  <path d="M444 222 V 366 H 344" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="338" width="284" height="56" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="202" y="360" text-anchor="middle" font-size="12" fill="#d6a040" filter="url(#rough2)">⑤ 取下一个更大的 q → 回到菱形判断</text>
+  <text x="202" y="380" text-anchor="middle" font-size="12" fill="#d6a040" filter="url(#rough2)">　全部处理完则按原下标输出 answer</text>
+
+  <rect x="20" y="430" width="520" height="110" rx="10" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="280" y="452" text-anchor="middle" font-size="12" font-weight="bold" fill="#555" filter="url(#rough2)">关键不变量</text>
+  <text x="40" y="474" font-size="11" fill="#555" filter="url(#rough2)">· 堆 = 扩张边界：已发现、未计数的格子，堆顶就是下一个能被突破的格子</text>
+  <text x="40" y="496" font-size="11" fill="#555" filter="url(#rough2)">· visited 在入堆时标记 → 每格至多入堆一次，总代价 O(mn·log(mn))</text>
+  <text x="40" y="518" font-size="11" fill="#555" filter="url(#rough2)">· q 升序处理 → cnt 只增不减；相同值的重复查询直接沿用当前 cnt</text>
+</svg>
