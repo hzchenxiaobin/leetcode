@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="470" fill="#fafafa"/>
+
+  <text x="320" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：排序 → 起步 → 逐断点增量右移 → 取最小</text>
+  <path d="M 170 36 Q 320 44 470 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ① 排序 -->
+  <g filter="url(#sk)">
+    <rect x="150" y="52" width="340" height="46" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="72" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">① 数对 (nums[i], cost[i]) 按 nums 升序排序</text>
+  <text x="320" y="90" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">得 v₀ ≤ v₁ ≤ … ≤ v_{n−1}，对应权重 w₀, …, w_{n−1}，总权重 W</text>
+
+  <path d="M 320 98 V 120" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ② 起步 -->
+  <g filter="url(#sk)">
+    <rect x="150" y="124" width="340" height="46" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="144" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">② 以 t = v₀ 起步，O(n) 求初始代价 f(v₀)</text>
+  <text x="320" y="162" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">L = w₀（已越过断点一侧的权重和），R = W − w₀</text>
+
+  <path d="M 320 170 V 190" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ③ 增量右移 -->
+  <g filter="url(#sk)">
+    <rect x="130" y="194" width="380" height="64" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="320" y="214" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6415" filter="url(#sk)">③ 目标右移 v_k → v_{k+1}，步长 d = v_{k+1} − v_k</text>
+  <text x="320" y="232" text-anchor="middle" font-size="12" fill="#8a6415" filter="url(#sk)">f += (L − R)·d　　ans = min(ans, f)</text>
+  <text x="320" y="250" text-anchor="middle" font-size="10.5" fill="#8a6415" filter="url(#sk)">然后吸收 w_{k+1}：L += w_{k+1}，R −= w_{k+1}</text>
+
+  <path d="M 320 258 V 274" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 判断菱形 -->
+  <polygon points="320,278 408,310 320,342 232,310" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="315" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e22" filter="url(#sk)">还有下一个断点？</text>
+
+  <!-- 是：回到 ③ -->
+  <path d="M 232 310 H 96 V 226 H 126" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="108" y="300" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e22" filter="url(#sk)">是</text>
+
+  <!-- 否：输出 -->
+  <path d="M 408 310 H 464" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="432" y="300" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="470" y="292" width="112" height="36" rx="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="526" y="314" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e22" filter="url(#sk)">输出 ans</text>
+
+  <!-- 底部说明框 -->
+  <g filter="url(#sk)">
+    <rect x="55" y="372" width="530" height="86" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="396" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#sk)">delta = (L − R)·d 恰是凸函数的「斜率 × 步长」</text>
+  <text x="320" y="418" text-anchor="middle" font-size="11" fill="#333333" filter="url(#sk)">L &lt; R（左轻右重）→ delta &lt; 0，右移目标在省钱；L ≥ R → delta ≥ 0，再移只会更贵</text>
+  <text x="320" y="440" text-anchor="middle" font-size="11" fill="#333333" filter="url(#sk)">最小值落在斜率变号处 = 累计权重首次过半处 = 加权中位数；排序 O(n log n) 主导全程</text>
+</svg>
