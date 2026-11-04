@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：单遍扫街，顺手记账</text>
+
+  <!-- start -->
+  <g filter="url(#rough2)">
+    <rect x="170" y="42" width="260" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+    <text x="300" y="67" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">开始：ans = 0，dist = 0，last[M/P/G] = 0</text>
+  </g>
+  <path d="M 300 82 L 300 100" stroke="#446688" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arrb)"/>
+
+  <!-- house loop -->
+  <g filter="url(#rough2)">
+    <rect x="170" y="104" width="260" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+    <text x="300" y="129" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">取下一栋房子 i（从 0 到 n−1）</text>
+  </g>
+  <path d="M 300 144 L 300 162" stroke="#446688" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arrb)"/>
+
+  <!-- inner char loop -->
+  <g filter="url(#rough2)">
+    <rect x="140" y="166" width="320" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8"/>
+    <text x="300" y="188" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold">遍历 garbage[i] 的每个字符 c</text>
+    <text x="300" y="207" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">ans += 1；last[c] = dist</text>
+    <text x="300" y="221" text-anchor="middle" font-size="10" fill="#888">后写覆盖 → 扫完即「最后出现」</text>
+  </g>
+  <path d="M 300 224 L 300 242" stroke="#446688" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arrb)"/>
+
+  <!-- decision -->
+  <g filter="url(#rough2)">
+    <polygon points="300,246 380,296 300,346 220,296" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="300" y="293" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">i + 1 &lt; n ?</text>
+    <text x="300" y="311" text-anchor="middle" font-size="10" fill="#888">还有下一栋房子吗</text>
+  </g>
+
+  <!-- yes branch -->
+  <text x="390" y="284" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M 380 296 L 406 296" stroke="#4a7a3a" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arrg)"/>
+  <g filter="url(#rough2)">
+    <rect x="410" y="270" width="132" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+    <text x="476" y="291" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold">dist += travel[i]</text>
+    <text x="476" y="310" text-anchor="middle" font-size="10.5" fill="#666">累计到下一栋的行驶</text>
+  </g>
+
+  <!-- loop back -->
+  <path d="M 476 270 L 476 124 L 436 124" stroke="#4a7a3a" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arrg)"/>
+  <text x="466" y="205" text-anchor="end" font-size="10.5" fill="#888" filter="url(#rough2)">处理下一栋</text>
+
+  <!-- no branch -->
+  <text x="310" y="336" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">否（已是最后一栋）</text>
+  <path d="M 300 346 L 300 362" stroke="#b85450" stroke-width="1.8" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+
+  <!-- final -->
+  <g filter="url(#rough2)">
+    <rect x="140" y="366" width="320" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+    <text x="300" y="390" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">ans += last[M] + last[P] + last[G]</text>
+    <text x="300" y="410" text-anchor="middle" font-size="11" fill="#666">收集账 + 三辆车行驶账 → 返回 ans</text>
+  </g>
+</svg>

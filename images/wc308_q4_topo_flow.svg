@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 550" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="550" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：两次 Kahn 拓扑排序 + 坐标拼装</text>
+
+  <!-- ===== 主流程 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="195" y="40" width="250" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="320" y="66" text-anchor="middle" font-size="11" fill="#333">① 建图：Gr（above→below）与 Gc（left→right）</text>
+    <path d="M 320 84 L 320 102" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <rect x="195" y="102" width="250" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="320" y="127" text-anchor="middle" font-size="11.5" fill="#333">② 对 Gr 做 Kahn 拓扑排序</text>
+    <path d="M 320 142 L 320 160" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <polygon points="320,160 388,187 320,214 252,187" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="320" y="191" text-anchor="middle" font-size="11" fill="#333">Gr 排出 k 个？</text>
+    <path d="M 320 214 L 320 232" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+    <text x="329" y="228" font-size="10.5" fill="#4a7a3a" font-weight="bold">是</text>
+
+    <rect x="195" y="232" width="250" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="320" y="257" text-anchor="middle" font-size="11.5" fill="#333">③ 对 Gc 做 Kahn 拓扑排序</text>
+    <path d="M 320 272 L 320 290" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <polygon points="320,290 388,317 320,344 252,317" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="320" y="321" text-anchor="middle" font-size="11" fill="#333">Gc 排出 k 个？</text>
+    <path d="M 320 344 L 320 362" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+    <text x="329" y="358" font-size="10.5" fill="#4a7a3a" font-weight="bold">是</text>
+
+    <rect x="195" y="362" width="250" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="320" y="387" text-anchor="middle" font-size="11.5" fill="#333">④ 按拓扑序记录 row[v]、col[v]</text>
+    <path d="M 320 402 L 320 420" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <rect x="195" y="420" width="250" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="320" y="445" text-anchor="middle" font-size="11.5" fill="#333">⑤ ans[row[v]][col[v]] = v</text>
+    <path d="M 320 460 L 320 478" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <rect x="195" y="478" width="250" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="320" y="503" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">返回 k×k 矩阵 ans</text>
+  </g>
+
+  <!-- ===== 有环 → 返回 [] ===== -->
+  <g filter="url(#rough2)">
+    <rect x="458" y="165" width="84" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="500" y="191" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">返回 []</text>
+    <path d="M 388 187 L 458 187" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrr)"/>
+    <text x="412" y="180" font-size="10.5" fill="#b85450" font-weight="bold">否（有环）</text>
+    <path d="M 388 317 L 490 317 L 490 214" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrr)"/>
+    <text x="444" y="310" font-size="10.5" fill="#b85450" font-weight="bold">否（有环）</text>
+  </g>
+
+  <!-- ===== Kahn 模板备忘 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="22" y="232" width="160" height="150" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="102" y="254" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold">Kahn 模板</text>
+    <text x="102" y="278" text-anchor="middle" font-size="11" fill="#333">· 入度 0 的点入队</text>
+    <text x="102" y="298" text-anchor="middle" font-size="11" fill="#333">· 出队 v，记位置 i</text>
+    <text x="102" y="318" text-anchor="middle" font-size="11" fill="#333">· 后继入度 −1</text>
+    <text x="102" y="338" text-anchor="middle" font-size="11" fill="#333">· 减到 0 再入队</text>
+    <text x="102" y="362" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">· 出队数 &lt; k ⟺ 有环</text>
+  </g>
+</svg>
