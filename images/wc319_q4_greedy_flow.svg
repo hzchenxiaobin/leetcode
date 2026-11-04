@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="620" fill="#fafafa"/>
+
+  <text x="480" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#446688" filter="url(#rough2)">算法流程：中心扩展标记 + 一趟贪心（最早结束优先）</text>
+  <path d="M 250 38 Q 480 46 710 38" stroke="#446688" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 预处理框 -->
+  <rect x="150" y="52" width="660" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="480" y="74" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66" filter="url(#rough2)">预处理（2n−1 个中心向两侧扩展）：A[i] ← s[i..i+k−1] 回文；B[i] ← s[i..i+k] 回文</text>
+  <text x="480" y="94" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">初始化 i = 0，ans = 0</text>
+
+  <path d="M 480 106 L 480 138" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 判定 1 -->
+  <polygon points="480,142 576,192 480,242 384,192" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="480" y="198" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5410" filter="url(#rough2)">i + k ≤ n ？</text>
+
+  <path d="M 384 192 L 344 192" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="366" y="182" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <rect x="180" y="170" width="160" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="196" text-anchor="middle" font-size="13" font-weight="bold" fill="#2d5a20" filter="url(#rough2)">返回 ans</text>
+
+  <path d="M 480 242 L 480 264" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="494" y="260" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 判定 2 -->
+  <polygon points="480,268 586,314 480,360 374,314" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="480" y="312" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#rough2)">A[i] 为真？</text>
+  <text x="480" y="330" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">（s[i..i+k−1] 是回文）</text>
+
+  <path d="M 586 314 L 636 314" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="604" y="304" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="640" y="292" width="250" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="765" y="318" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2d5a20" filter="url(#rough2)">ans + 1，i += k（选中长度 k）</text>
+
+  <path d="M 480 360 L 480 382" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="494" y="378" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- 判定 3 -->
+  <polygon points="480,386 600,436 480,486 360,436" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="480" y="432" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#rough2)">B[i] 为真？</text>
+  <text x="480" y="452" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">（i+k+1 ≤ n 且 s[i..i+k] 是回文）</text>
+
+  <path d="M 600 436 L 636 436" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="612" y="426" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="640" y="414" width="250" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="765" y="440" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2d5a20" filter="url(#rough2)">ans + 1，i += k+1（选中长度 k+1）</text>
+
+  <path d="M 480 486 L 480 508" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="494" y="504" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <rect x="390" y="512" width="180" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="480" y="536" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5410" filter="url(#rough2)">i += 1（跳过）</text>
+
+  <!-- 回环 -->
+  <path d="M 890 314 L 930 314" stroke="#999" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M 890 436 L 930 436" stroke="#999" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M 570 531 L 930 531" stroke="#999" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M 930 531 L 930 120 L 512 120 L 512 154" stroke="#999" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="922" y="352" text-anchor="end" font-size="10" fill="#888" filter="url(#rough2)">回到循环开头</text>
+
+  <!-- 底部警示 -->
+  <rect x="60" y="562" width="840" height="46" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="480" y="581" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a3030" filter="url(#rough2)">⚠ 必须先查短的（长度 k）再查长的（长度 k+1）：同一起点时 [i, i+k−1] 结束更早</text>
+  <text x="480" y="600" text-anchor="middle" font-size="10.5" fill="#7a3030" filter="url(#rough2)">若先取长，s = "aaaa"、k = 2 只得 1；正确答案为 2（两个 "aa"）</text>
+</svg>
