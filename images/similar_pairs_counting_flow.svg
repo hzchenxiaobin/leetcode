@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="400" fill="#fafafa"/>
+
+  <text x="340" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：一次遍历 + 哈希计数</text>
+  <path d="M 190 44 Q 340 52 490 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough)"/>
+
+  <!-- step boxes -->
+  <rect x="36" y="72" width="136" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="104" y="91" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a68" filter="url(#rough2)">① 取一个词</text>
+  <text x="104" y="107" text-anchor="middle" font-size="10.5" font-family="monospace" fill="#555" filter="url(#rough2)">w = words[i]</text>
+
+  <path d="M 172 94 L 192 94" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough)"/>
+
+  <rect x="196" y="72" width="136" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="264" y="91" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a68" filter="url(#rough2)">② 建字符掩码</text>
+  <text x="264" y="107" text-anchor="middle" font-size="10" font-family="monospace" fill="#555" filter="url(#rough2)">mask |= 1&lt;&lt;(c-'a')</text>
+
+  <path d="M 332 94 L 352 94" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough)"/>
+
+  <rect x="356" y="72" width="136" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="424" y="91" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">③ 累加旧计数</text>
+  <text x="424" y="107" text-anchor="middle" font-size="10.5" font-family="monospace" fill="#555" filter="url(#rough2)">ans += cnt[mask]</text>
+
+  <path d="M 492 94 L 512 94" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough)"/>
+
+  <rect x="516" y="72" width="136" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="584" y="91" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#rough2)">④ 登记自己</text>
+  <text x="584" y="107" text-anchor="middle" font-size="10.5" font-family="monospace" fill="#555" filter="url(#rough2)">cnt[mask] += 1</text>
+
+  <!-- decision diamond -->
+  <polygon points="344,128 402,154 344,180 286,154" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="344" y="158" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#rough2)">还有词？</text>
+
+  <!-- box4 to diamond -->
+  <path d="M 584 118 L 584 154 L 406 154" stroke="#888" stroke-width="1.4" fill="none" stroke-dasharray="5 3" marker-end="url(#arr)" filter="url(#rough)"/>
+
+  <!-- yes: loop back -->
+  <path d="M 286 154 L 118 154 Q 104 154 104 140 L 104 122" stroke="#888" stroke-width="1.4" fill="none" stroke-dasharray="5 3" marker-end="url(#arr)" filter="url(#rough)"/>
+  <text x="128" y="147" font-size="11" font-weight="bold" fill="#444" filter="url(#rough2)">是</text>
+
+  <!-- no: to result -->
+  <path d="M 344 180 L 344 198" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough)"/>
+  <text x="352" y="192" font-size="11" font-weight="bold" fill="#444" filter="url(#rough2)">否</text>
+
+  <rect x="284" y="202" width="120" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="344" y="222" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">返回 ans</text>
+  <text x="344" y="240" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">= 相似对总数</text>
+
+  <!-- cnt hash sketch -->
+  <rect x="36" y="202" width="210" height="136" rx="10" fill="#fdfdfd" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="141" y="224" text-anchor="middle" font-size="12" font-weight="bold" fill="#555" filter="url(#rough2)">cnt：掩码 → 次数</text>
+  <text x="56" y="248" font-size="11" font-family="monospace" fill="#333" filter="url(#rough2)">{a,b}     : 2</text>
+  <text x="56" y="270" font-size="11" font-family="monospace" fill="#333" filter="url(#rough2)">{a,b,c}   : 1</text>
+  <text x="56" y="292" font-size="11" font-family="monospace" fill="#333" filter="url(#rough2)">{a,b,c,d} : 1</text>
+  <path d="M 52 304 Q 141 308 230 304" stroke="#ddd" stroke-width="1.2" fill="none" filter="url(#rough)"/>
+  <text x="141" y="326" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">哈希表至多 n 个键</text>
+
+  <!-- formula box -->
+  <rect x="470" y="202" width="176" height="136" rx="10" fill="#e8f0fa" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="558" y="226" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a68" filter="url(#rough2)">等价视角</text>
+  <text x="558" y="250" text-anchor="middle" font-size="12.5" font-family="monospace" fill="#333" filter="url(#rough2)">ans = Σ C(k, 2)</text>
+  <text x="558" y="272" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">k = 同一掩码的词数</text>
+  <text x="558" y="294" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">增量累加 ⇔ 组内组合数</text>
+  <text x="558" y="322" text-anchor="middle" font-size="10" fill="#8899aa" filter="url(#rough2)">按掩码分组求和</text>
+
+  <!-- invariant strip -->
+  <rect x="36" y="352" width="610" height="40" rx="8" fill="#fffdf3" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="54" y="370" font-size="11" fill="#444" filter="url(#rough2)"><tspan font-weight="bold" fill="#2b2b2b">计数不变式：</tspan>处理词 i 时，cnt[mask] 恰为之前同掩码词的个数，</text>
+  <text x="54" y="385" font-size="11" fill="#444" filter="url(#rough2)">ans += cnt[mask] 把每个相似对 (j, i)（j &lt; i）恰好计入一次，随后自增维持不变式。</text>
+</svg>
