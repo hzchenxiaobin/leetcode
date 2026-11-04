@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="610" viewBox="0 0 640 610" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="57" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="610" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：push 转移 + 按行滚动的一维余数 DP</text>
+
+  <g filter="url(#sk)"><rect x="140" y="44" width="360" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="320" y="67" text-anchor="middle" font-size="12.5" fill="#2b4a66" filter="url(#sk)">① 初始化：f[0][0][grid[0][0] mod k] = 1（起点唯一路径）</text>
+  <path d="M 320 82 L 320 102" stroke="#446688" stroke-width="1.6" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="140" y="106" width="360" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="320" y="129" text-anchor="middle" font-size="12.5" fill="#2b4a66" filter="url(#sk)">② 逐行从左到右遍历 (i, j)，跳过起点 (0,0)</text>
+  <path d="M 320 144 L 320 164" stroke="#446688" stroke-width="1.6" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="80" y="168" width="480" height="308" rx="10" fill="#fffdf2" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="7 5"/></g>
+  <text x="320" y="192" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a1a" filter="url(#sk)">③ 对每个格子 (i, j)：</text>
+  <g filter="url(#sk)"><rect x="110" y="204" width="420" height="32" rx="6" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.2"/></g>
+  <text x="320" y="224" text-anchor="middle" font-size="12" fill="#555" filter="url(#sk)">cur[0..k−1] ← 全 0；g ← grid[i][j] mod k</text>
+  <g filter="url(#sk)"><rect x="110" y="246" width="200" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="210" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">i &gt; 0：上方源 f[j]</text>
+  <text x="210" y="282" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#sk)">未覆写 = 上一行旧值</text>
+  <text x="210" y="296" text-anchor="middle" font-size="11" fill="#2e5e2e" filter="url(#sk)">cur[(r+g)%k] += f[j][r]</text>
+  <g filter="url(#sk)"><rect x="330" y="246" width="200" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="430" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">j &gt; 0：左方源 f[j−1]</text>
+  <text x="430" y="282" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#sk)">已覆写 = 本行新值</text>
+  <text x="430" y="296" text-anchor="middle" font-size="11" fill="#2e5e2e" filter="url(#sk)">cur[(r+g)%k] += f[j−1][r]</text>
+  <g filter="url(#sk)"><rect x="110" y="314" width="420" height="30" rx="6" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.2"/></g>
+  <text x="320" y="333" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#sk)">每次累加后立即 mod (10⁹ + 7)</text>
+  <g filter="url(#sk)"><rect x="110" y="356" width="420" height="32" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="320" y="376" text-anchor="middle" font-size="12" font-weight="bold" fill="#a06a1a" filter="url(#sk)">f[j] ← cur（整组覆写，完成滚动）</text>
+  <g filter="url(#sk)"><rect x="110" y="400" width="420" height="64" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/></g>
+  <text x="320" y="420" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a3a" filter="url(#sk)">两处实战要点</text>
+  <text x="320" y="436" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#sk)">· push 方向：(r+g)%k 恒非负——规避 C++ 负数取模陷阱</text>
+  <text x="320" y="452" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#sk)">· j 递增 ⟹ f[j] 还是上一行、f[j−1] 已是本行，一维两源</text>
+  <path d="M 320 476 L 320 496" stroke="#446688" stroke-width="1.6" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="170" y="500" width="300" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="320" y="527" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">④ 返回 f[n−1][0]</text>
+  <text x="320" y="572" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#sk)">时间 O(m·n·k) ≤ 2.5×10⁶；空间 O(n·k)（滚动）</text>
+</svg>
