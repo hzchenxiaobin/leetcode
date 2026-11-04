@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：配对数 O(1) 增量维护 ＋ 好起点是连续前缀</text>
+  <path d="M 150 44 Q 340 52 530 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ① left: incremental pair counting -->
+  <text x="190" y="74" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#446688">① 增量配对计数</text>
+  <text x="190" y="93" text-anchor="middle" font-size="11" fill="#666">窗口 [3,1,4,3]，右端即将加入 x = 3</text>
+
+  <g filter="url(#sk)"><rect x="48" y="102" width="40" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="68" y="124" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688">3</text>
+  <g filter="url(#sk)"><rect x="96" y="102" width="40" height="34" rx="4" fill="#ffffff" stroke="#c4c4bc" stroke-width="1.2"/></g>
+  <text x="116" y="124" text-anchor="middle" font-size="13" fill="#333">1</text>
+  <g filter="url(#sk)"><rect x="144" y="102" width="40" height="34" rx="4" fill="#ffffff" stroke="#c4c4bc" stroke-width="1.2"/></g>
+  <text x="164" y="124" text-anchor="middle" font-size="13" fill="#333">4</text>
+  <g filter="url(#sk)"><rect x="192" y="102" width="40" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="212" y="124" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688">3</text>
+  <g filter="url(#sk)"><path d="M 238 119 L 252 119" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/></g>
+  <g filter="url(#sk)"><rect x="258" y="102" width="40" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" stroke-dasharray="5 3"/></g>
+  <text x="278" y="124" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">3</text>
+
+  <g filter="url(#sk)"><path d="M 262 100 Q 165 58 76 98" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)"/></g>
+  <g filter="url(#sk)"><path d="M 268 102 Q 244 74 218 98" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)"/></g>
+  <text x="165" y="64" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">新增 2 对 = cnt[3]</text>
+
+  <g filter="url(#sk)"><rect x="40" y="152" width="308" height="94" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="56" y="176" font-size="11.5" fill="#2b2b2b">加入 x：先 pairs += cnt[x]，再 cnt[x]++</text>
+  <text x="56" y="197" font-size="11.5" fill="#2b2b2b">移走 x：先 cnt[x] −−，再 pairs −= cnt[x]</text>
+  <text x="56" y="218" font-size="11.5" fill="#2b2b2b">窗口内值 v 出现 c 次 ⇒ 贡献 C(c,2) 对</text>
+  <text x="56" y="239" font-size="10.5" fill="#7a5415">顺序口诀：先改「另一侧」的计数，再取增量</text>
+
+  <text x="190" y="268" text-anchor="middle" font-size="11" fill="#666">移走左端 3：只与「仍在窗口内」的同值成对</text>
+  <g filter="url(#sk)"><rect x="70" y="278" width="36" height="28" rx="4" fill="#f0f0f0" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3"/></g>
+  <text x="88" y="297" text-anchor="middle" font-size="12" fill="#999">3</text>
+  <g filter="url(#sk)"><path d="M 74 282 L 102 302" stroke="#b85450" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="112" y="278" width="36" height="28" rx="4" fill="#ffffff" stroke="#c4c4bc" stroke-width="1.2"/></g>
+  <text x="130" y="297" text-anchor="middle" font-size="12" fill="#333">1</text>
+  <g filter="url(#sk)"><rect x="154" y="278" width="36" height="28" rx="4" fill="#ffffff" stroke="#c4c4bc" stroke-width="1.2"/></g>
+  <text x="172" y="297" text-anchor="middle" font-size="12" fill="#333">4</text>
+  <g filter="url(#sk)"><rect x="196" y="278" width="36" height="28" rx="4" fill="#ffffff" stroke="#c4c4bc" stroke-width="1.2"/></g>
+  <text x="214" y="297" text-anchor="middle" font-size="12" fill="#333">3</text>
+  <text x="248" y="290" font-size="10.5" fill="#b85450">移除后 cnt[3] = 1</text>
+  <text x="248" y="305" font-size="10.5" fill="#b85450">⇒ pairs −= 1</text>
+
+  <!-- ② right: prefix property of good starts -->
+  <text x="512" y="74" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#4a7a3a">② 固定 right：起点越靠右，对数越少</text>
+  <text x="512" y="93" text-anchor="middle" font-size="11" fill="#666">P(s, right) 随 s 单调不增（例）</text>
+
+  <g filter="url(#sk)"><path d="M 405 92 V 298" stroke="#555" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><path d="M 405 298 H 650" stroke="#555" stroke-width="1.5"/></g>
+  <text x="398" y="88" text-anchor="end" font-size="11" fill="#555">对数</text>
+  <text x="649" y="314" text-anchor="end" font-size="10.5" fill="#555">s →</text>
+
+  <g filter="url(#sk)"><rect x="415" y="148" width="24" height="150" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="448" y="208" width="24" height="90" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="481" y="238" width="24" height="60" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="514" y="238" width="24" height="60" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="547" y="268" width="24" height="30" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><path d="M 580 296 V 298" stroke="#b85450" stroke-width="2"/></g>
+  <g filter="url(#sk)"><path d="M 613 296 V 298" stroke="#b85450" stroke-width="2"/></g>
+
+  <text x="427" y="142" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">5</text>
+  <text x="460" y="202" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">3</text>
+  <text x="493" y="232" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">2</text>
+  <text x="526" y="232" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">2</text>
+  <text x="559" y="262" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">1</text>
+  <text x="592" y="262" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">0</text>
+  <text x="625" y="262" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">0</text>
+
+  <text x="427" y="314" text-anchor="middle" font-size="10" fill="#999">0</text>
+  <text x="460" y="314" text-anchor="middle" font-size="10" fill="#999">1</text>
+  <text x="493" y="314" text-anchor="middle" font-size="10" fill="#999">2</text>
+  <text x="526" y="314" text-anchor="middle" font-size="10" fill="#999">3</text>
+  <text x="559" y="314" text-anchor="middle" font-size="10" fill="#999">4</text>
+  <text x="592" y="314" text-anchor="middle" font-size="10" fill="#999">5</text>
+  <text x="625" y="314" text-anchor="middle" font-size="10" fill="#999">6</text>
+
+  <g filter="url(#sk)"><path d="M 405 238 H 648" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6 4"/></g>
+  <text x="646" y="231" text-anchor="end" font-size="11" font-weight="bold" fill="#b85450">k = 2</text>
+  <g filter="url(#sk)"><path d="M 542 112 V 298" stroke="#446688" stroke-width="1.4" stroke-dasharray="4 4"/></g>
+  <text x="542" y="106" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">L = 4</text>
+  <text x="512" y="336" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">好起点 s ∈ [0, L)，共 L = 4 个 → ans += 4</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)"><rect x="45" y="352" width="590" height="66" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="65" y="376" font-size="11.5" fill="#2b2b2b">「至少 k」：满足起点是连续前缀 [0, L) → 收缩到刚跌破 k，直接 ans += L</text>
+  <text x="65" y="400" font-size="11.5" fill="#2b2b2b">「恰好 k」（如 1248 优美子数组）：前缀性丧失 → atMost(K) − atMost(K−1) 相减</text>
+</svg>

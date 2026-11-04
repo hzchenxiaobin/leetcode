@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="400" viewBox="0 0 680 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="400" fill="#fdfcf7"/>
+  <text x="340" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：打标记 O(q) → 前缀和还原 O(n²)</text>
+  <path d="M 160 44 Q 340 52 520 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)"><rect x="15" y="72" width="150" height="158" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="90" y="98" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688">① 初始化</text>
+  <text x="90" y="124" text-anchor="middle" font-size="11" fill="#444">d 开 (n+1)×(n+1)</text>
+  <text x="90" y="142" text-anchor="middle" font-size="11" fill="#444">全部置 0</text>
+  <text x="90" y="160" text-anchor="middle" font-size="11" fill="#444">多出的一行一列</text>
+  <text x="90" y="178" text-anchor="middle" font-size="11" fill="#444">存放 r2+1 / c2+1</text>
+  <text x="90" y="196" text-anchor="middle" font-size="11" fill="#444">的边界标记</text>
+  <text x="90" y="218" text-anchor="middle" font-size="10.5" fill="#446688">O(1)</text>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)"><rect x="182" y="72" width="150" height="158" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="257" y="98" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">② 逐查询打标记</text>
+  <text x="257" y="124" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">d[r1][c1] += 1</text>
+  <text x="257" y="144" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">d[r2+1][c1] -= 1</text>
+  <text x="257" y="164" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">d[r1][c2+1] -= 1</text>
+  <text x="257" y="184" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">d[r2+1][c2+1] += 1</text>
+  <text x="257" y="210" text-anchor="middle" font-size="10.5" fill="#2e6e2e">每个查询 O(1)</text>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)"><rect x="349" y="72" width="150" height="158" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="424" y="98" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">③ 二维前缀和还原</text>
+  <text x="424" y="124" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">mat[i][j] = d[i][j]</text>
+  <text x="424" y="144" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">+ mat[i-1][j]</text>
+  <text x="424" y="164" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">+ mat[i][j-1]</text>
+  <text x="424" y="184" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">− mat[i-1][j-1]</text>
+  <text x="424" y="210" text-anchor="middle" font-size="10.5" fill="#7a5415">越界项按 0</text>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)"><rect x="516" y="72" width="150" height="158" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="591" y="98" text-anchor="middle" font-size="13" font-weight="bold" fill="#a03030">④ 输出</text>
+  <text x="591" y="128" text-anchor="middle" font-size="11" fill="#444">取左上 n×n</text>
+  <text x="591" y="148" text-anchor="middle" font-size="11" fill="#444">即答案 mat</text>
+  <text x="591" y="176" text-anchor="middle" font-size="11" fill="#444">每格 = 覆盖它</text>
+  <text x="591" y="194" text-anchor="middle" font-size="11" fill="#444">的查询个数</text>
+
+  <!-- arrows -->
+  <g filter="url(#sk)"><path d="M 168 150 L 179 150" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)"/></g>
+  <g filter="url(#sk)"><path d="M 335 150 L 346 150" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)"/></g>
+  <g filter="url(#sk)"><path d="M 502 150 L 513 150" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)"/></g>
+
+  <!-- complexity chips -->
+  <g filter="url(#sk)"><rect x="222" y="246" width="70" height="24" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/></g>
+  <text x="257" y="262" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">O(q)</text>
+  <g filter="url(#sk)"><rect x="390" y="246" width="68" height="24" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/></g>
+  <text x="424" y="262" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415">O(n²)</text>
+
+  <!-- comparison box -->
+  <g filter="url(#sk)"><rect x="60" y="292" width="560" height="86" rx="8" fill="#fdfcf7" stroke="#b0b0a8" stroke-width="1.3"/></g>
+  <text x="340" y="316" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a03030">朴素逐格累加：O(q·n²) ≈ 10⁴ × 2.5×10⁵ = 2.5×10⁹ ✗ 超时</text>
+  <text x="340" y="342" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">二维差分：O(q + n²) ≈ 10⁴ + 2.5×10⁵ ≈ 2.6×10⁵ ✓ 毫秒级</text>
+  <text x="340" y="366" text-anchor="middle" font-size="11" fill="#444">总时间与单次查询面积解耦 —— 修改只记 4 个角，代价推迟到最后一次还原</text>
+</svg>
