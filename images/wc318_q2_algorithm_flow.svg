@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="660" viewBox="0 0 680 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="660" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">单趟扫描流程：先进窗、再出窗、后判更新</text>
+  <path d="M 170 42 Q 340 50 510 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- input -->
+  <g filter="url(#sk)"><rect x="250" y="58" width="180" height="40" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+  <text x="340" y="83" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a94">输入 nums（长 n）、k</text>
+  <path d="M 340 100 L 340 118" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== loop container ===== -->
+  <g filter="url(#sk)"><rect x="40" y="122" width="600" height="402" rx="12" fill="#fffdf3" stroke="#d6a040" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><rect x="56" y="110" width="300" height="24" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="206" y="127" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a5f14">单趟扫描 i: 0 → n−1（cnt、dup、sum 随窗口同步）</text>
+  <text x="624" y="160" text-anchor="end" font-size="9.5" fill="#a5844a">建首窗与滑动同一段代码</text>
+  <text x="624" y="470" text-anchor="end" font-size="9.5" fill="#a5844a">判据仅一次整数比较</text>
+
+  <!-- step 1: enter -->
+  <g filter="url(#sk)"><rect x="180" y="136" width="320" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="340" y="158" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">① 进窗 v = nums[i]</text>
+  <text x="340" y="177" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-family="monospace">sum += v；++cnt[v] == 2 则 ++dup</text>
+  <path d="M 340 194 L 340 212" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision 1 -->
+  <g filter="url(#sk)"><polygon points="170,216 258,260 170,304 82,260" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="170" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a5f14">i ≥ k ?</text>
+
+  <path d="M 258 260 L 292 260" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="275" y="252" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">是</text>
+  <g filter="url(#sk)"><rect x="296" y="232" width="284" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="438" y="254" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">② 出窗 u = nums[i−k]</text>
+  <text x="438" y="273" text-anchor="middle" font-size="10.5" fill="#b85450" font-family="monospace">sum −= u；cnt[u]−− == 2 则 −−dup</text>
+
+  <path d="M 170 306 Q 170 330 198 330 L 292 330" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="184" y="324" font-size="10" fill="#888" font-weight="bold">否</text>
+  <g filter="url(#sk)"><rect x="296" y="308" width="284" height="44" rx="8" fill="#f0f0f0" stroke="#888" stroke-width="1.6"/></g>
+  <text x="438" y="335" text-anchor="middle" font-size="11.5" fill="#666">跳过（首窗尚未满 k，不删元素）</text>
+
+  <path d="M 340 356 L 340 376" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision 2 -->
+  <g filter="url(#sk)"><polygon points="170,380 258,424 170,468 82,424" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="170" y="420" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a5f14">i ≥ k−1 且</text>
+  <text x="170" y="436" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a5f14">dup == 0 ?</text>
+
+  <path d="M 258 424 L 292 424" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="275" y="416" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">是</text>
+  <g filter="url(#sk)"><rect x="296" y="396" width="284" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="438" y="418" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" font-family="monospace">③ ans = max(ans, sum)</text>
+  <text x="438" y="437" text-anchor="middle" font-size="9.5" fill="#5a8a5a">有效窗口才更新</text>
+
+  <path d="M 170 470 Q 170 494 198 494 L 292 494" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="184" y="488" font-size="10" fill="#888" font-weight="bold">否</text>
+  <g filter="url(#sk)"><rect x="296" y="472" width="284" height="44" rx="8" fill="#f0f0f0" stroke="#888" stroke-width="1.6"/></g>
+  <text x="438" y="497" text-anchor="middle" font-size="11.5" fill="#666">跳过（sum 已照常维护）</text>
+  <text x="624" y="520" text-anchor="end" font-size="9.5" fill="#a5844a">i++，进入下一轮</text>
+
+  <path d="M 340 528 L 340 548" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- return -->
+  <g filter="url(#sk)"><rect x="220" y="552" width="240" height="40" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+  <text x="340" y="577" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a94">返回 ans（无有效窗口则 0）</text>
+
+  <!-- checklist -->
+  <g filter="url(#sk)"><rect x="484" y="552" width="176" height="80" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.4"/></g>
+  <text x="572" y="572" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8a5f14">提交前自检</text>
+  <text x="496" y="590" font-size="9.5" fill="#555">① sum 用 long long</text>
+  <text x="496" y="606" font-size="9.5" fill="#555">② cnt 开 1e5+1</text>
+  <text x="496" y="622" font-size="9.5" fill="#555">③ 无效窗口也维护 sum</text>
+</svg>

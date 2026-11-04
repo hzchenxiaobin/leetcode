@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fdfcf7"/>
+  <text x="340" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：先按 2·candidates 与 n 分流，再 k 轮「比较·弹出·补员」</text>
+  <path d="M 170 40 Q 340 48 510 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start box -->
+  <g filter="url(#sk)"><rect x="245" y="52" width="190" height="30" rx="8" fill="#f0f0f0" stroke="#888" stroke-width="1.6"/></g>
+  <text x="340" y="72" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">输入 costs, k, candidates</text>
+
+  <!-- arrow to diamond -->
+  <path d="M 340 82 L 340 100" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond: 2c >= n ? -->
+  <g filter="url(#sk)"><polygon points="340,102 470,138 340,174 210,138" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="340" y="133" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a5f14">2·candidates ≥ n ?</text>
+  <text x="340" y="150" text-anchor="middle" font-size="9.5" fill="#8a5f14">（两端窗口交叠或相切）</text>
+
+  <!-- yes branch -->
+  <path d="M 210 138 Q 160 138 158 168" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="160" y="130" font-size="10.5" font-weight="bold" fill="#2b5a94">是</text>
+
+  <!-- fast path boxes -->
+  <g filter="url(#sk)"><rect x="40" y="172" width="240" height="58" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="160" y="192" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b5a94">快路径：候选集恒为全体剩余</text>
+  <text x="160" y="210" text-anchor="middle" font-size="10.5" fill="#555">全体 (cost, idx) 一次 heapify（O(n)）</text>
+  <path d="M 160 230 L 160 252" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="40" y="255" width="240" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="160" y="274" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b5a94">连弹 k 次堆顶，累加代价</text>
+  <text x="160" y="292" text-anchor="middle" font-size="9.5" fill="#555">无补员、无空堆分支</text>
+
+  <!-- no branch -->
+  <path d="M 470 138 Q 520 138 522 168" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="482" y="130" font-size="10.5" font-weight="bold" fill="#2e6e2e">否</text>
+
+  <!-- two-heap init box -->
+  <g filter="url(#sk)"><rect x="400" y="172" width="240" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="520" y="192" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">双堆初始化</text>
+  <text x="520" y="210" text-anchor="middle" font-size="10.5" fill="#555">front←前 c 个；back←后 c 个</text>
+  <text x="520" y="225" text-anchor="middle" font-size="10.5" fill="#555">left = c；right = n−c−1</text>
+  <path d="M 520 230 L 520 252" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop box -->
+  <g filter="url(#sk)"><rect x="390" y="255" width="260" height="118" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="520" y="274" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a5f14">k 轮循环</text>
+  <text x="402" y="292" font-size="10" fill="#555">① 判空堆：front 空→取 back；back 空→取 front</text>
+  <text x="402" y="308" font-size="10" fill="#555">② 比较堆顶：front.top() ≤ back.top() ?</text>
+  <text x="402" y="324" font-size="10" fill="#555">③ 弹出较小者（并列→front），ans += cost</text>
+  <text x="402" y="340" font-size="10" fill="#555">④ 若 left ≤ right：同侧补员一枚</text>
+  <text x="402" y="356" font-size="9.5" fill="#8a5f14">（弹 front 补 left++；弹 back 补 right−−）</text>
+  <!-- loop back arrow -->
+  <path d="M 650 314 Q 668 314 668 285 Q 668 262 652 262" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- converge arrows -->
+  <path d="M 160 301 Q 160 330 250 368" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 520 373 Q 520 390 430 392" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- end box -->
+  <g filter="url(#sk)"><rect x="245" y="378" width="190" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="340" y="399" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">返回 ans（用 long long！）</text>
+</svg>
