@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">贪心：切点是被重复字符「逼」出来的</text>
+
+  <!-- 上半：第一刀特写 -->
+  <rect x="40" y="56" width="44" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="62" y="83" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">a</text>
+  <rect x="84" y="56" width="44" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="106" y="83" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">b</text>
+  <rect x="128" y="56" width="44" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="4" filter="url(#rough2)"/>
+  <text x="150" y="83" text-anchor="middle" font-size="15" fill="#b85450" filter="url(#rough2)">a</text>
+  <rect x="172" y="56" width="44" height="42" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <text x="194" y="83" text-anchor="middle" font-size="15" fill="#666" filter="url(#rough2)">c</text>
+  <rect x="216" y="56" width="44" height="42" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <text x="238" y="83" text-anchor="middle" font-size="15" fill="#666" filter="url(#rough2)">a</text>
+  <rect x="260" y="56" width="44" height="42" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <text x="282" y="83" text-anchor="middle" font-size="15" fill="#666" filter="url(#rough2)">b</text>
+  <rect x="304" y="56" width="44" height="42" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <text x="326" y="83" text-anchor="middle" font-size="15" fill="#666" filter="url(#rough2)">a</text>
+
+  <text x="62" y="112" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">0</text>
+  <text x="106" y="112" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">1</text>
+  <text x="150" y="112" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">2</text>
+  <text x="194" y="112" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">3</text>
+  <text x="238" y="112" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">4</text>
+  <text x="282" y="112" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">5</text>
+  <text x="326" y="112" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">6</text>
+
+  <!-- 切割线 -->
+  <path d="M126,50 L126,108" stroke="#b85450" stroke-width="2" stroke-dasharray="5,4" filter="url(#rough2)"/>
+  <text x="126" y="44" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">✂ 切！</text>
+
+  <!-- seen 集合框 -->
+  <rect x="368" y="60" width="132" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="434" y="85" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">seen = {a, b}</text>
+
+  <!-- 箭头：格子2 -> seen -->
+  <path d="M152,54 C220,32 310,36 364,64" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="252" y="38" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">a 已在段内 → 被迫切割</text>
+
+  <!-- 中部说明框 -->
+  <rect x="50" y="126" width="420" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="148" text-anchor="middle" font-size="12.5" fill="#6b5320" filter="url(#rough2)">扫描到 s[2] = 'a' 时它已在当前段 {a, b} 中，</text>
+  <text x="260" y="168" text-anchor="middle" font-size="12.5" fill="#6b5320" filter="url(#rough2)">切点位置不是自由选择 —— 它被重复字符唯一确定</text>
+
+  <!-- 下半：完整划分 -->
+  <text x="260" y="210" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">贪心对 abacaba 的完整划分</text>
+
+  <rect x="40" y="224" width="88" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="84" y="251" text-anchor="middle" font-size="15" fill="#446688" filter="url(#rough2)">ab</text>
+  <rect x="132" y="224" width="88" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="176" y="251" text-anchor="middle" font-size="15" fill="#4a7a3a" filter="url(#rough2)">ac</text>
+  <rect x="224" y="224" width="88" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="268" y="251" text-anchor="middle" font-size="15" fill="#a07820" filter="url(#rough2)">ab</text>
+  <rect x="316" y="224" width="44" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="338" y="251" text-anchor="middle" font-size="15" fill="#b85450" filter="url(#rough2)">a</text>
+
+  <text x="84" y="286" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">① 段1</text>
+  <text x="176" y="286" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">② 段2</text>
+  <text x="268" y="286" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">③ 段3</text>
+  <text x="338" y="286" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">④ 段4</text>
+
+  <text x="440" y="251" text-anchor="middle" font-size="14" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">= 4 段 ✓</text>
+
+  <text x="260" y="322" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">注：段内字符互异 ⇒ 每段至多 26 个字符（小写字母集）</text>
+  <text x="260" y="346" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">一遍扫描 O(n)：遇重复即切割，不回头、不搜索</text>
+</svg>

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="24" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">示例 1 演算：差分数组与前缀和（深度）逐点走查</text>
+
+  <!-- 表头行 -->
+  <rect x="44" y="52" width="58" height="24" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="73" y="68" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">点 x</text>
+  <rect x="102" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="120" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">1</text>
+  <rect x="138" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="156" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">2</text>
+  <rect x="174" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="192" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">3</text>
+  <rect x="210" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="228" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">4</text>
+  <rect x="246" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="264" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">5</text>
+  <rect x="282" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="300" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">6</text>
+  <rect x="318" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="336" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">7</text>
+  <rect x="354" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="372" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">8</text>
+  <rect x="390" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="408" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">9</text>
+  <rect x="426" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="444" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">10</text>
+  <rect x="462" y="52" width="36" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="480" y="68" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">11</text>
+
+  <!-- delta 行：非零格黄底 -->
+  <rect x="44" y="76" width="58" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="73" y="96" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">delta[x]</text>
+  <rect x="102" y="76" width="36" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="120" y="96" text-anchor="middle" font-size="12" fill="#a07820" filter="url(#rough2)">+2</text>
+  <rect x="138" y="76" width="36" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="156" y="96" text-anchor="middle" font-size="12" fill="#a07820" filter="url(#rough2)">+1</text>
+  <rect x="174" y="76" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="192" y="96" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="210" y="76" width="36" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="228" y="96" text-anchor="middle" font-size="12" fill="#a07820" filter="url(#rough2)">−1</text>
+  <rect x="246" y="76" width="36" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="264" y="96" text-anchor="middle" font-size="12" fill="#a07820" filter="url(#rough2)">+1</text>
+  <rect x="282" y="76" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="300" y="96" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="318" y="76" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="336" y="96" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="354" y="76" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="372" y="96" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="390" y="76" width="36" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="408" y="96" text-anchor="middle" font-size="12" fill="#a07820" filter="url(#rough2)">−1</text>
+  <rect x="426" y="76" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="444" y="96" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">0</text>
+  <rect x="462" y="76" width="36" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="480" y="96" text-anchor="middle" font-size="12" fill="#a07820" filter="url(#rough2)">−2</text>
+
+  <!-- cur（深度）行：峰值 3 红格 -->
+  <rect x="44" y="108" width="58" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="73" y="128" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">深度 cur</text>
+  <rect x="102" y="108" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="120" y="128" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">2</text>
+  <rect x="138" y="108" width="36" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3" filter="url(#rough2)"/>
+  <text x="156" y="128" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">3</text>
+  <rect x="174" y="108" width="36" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3" filter="url(#rough2)"/>
+  <text x="192" y="128" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">3</text>
+  <rect x="210" y="108" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="228" y="128" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">2</text>
+  <rect x="246" y="108" width="36" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3" filter="url(#rough2)"/>
+  <text x="264" y="128" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">3</text>
+  <rect x="282" y="108" width="36" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3" filter="url(#rough2)"/>
+  <text x="300" y="128" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">3</text>
+  <rect x="318" y="108" width="36" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3" filter="url(#rough2)"/>
+  <text x="336" y="128" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">3</text>
+  <rect x="354" y="108" width="36" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3" filter="url(#rough2)"/>
+  <text x="372" y="128" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">3</text>
+  <rect x="390" y="108" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="408" y="128" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">2</text>
+  <rect x="426" y="108" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="444" y="128" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">2</text>
+  <rect x="462" y="108" width="36" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="480" y="128" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">0</text>
+
+  <!-- ans 行 -->
+  <rect x="44" y="140" width="58" height="32" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="73" y="160" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">ans</text>
+  <rect x="102" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="120" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">2</text>
+  <rect x="138" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="3" filter="url(#rough2)"/>
+  <text x="156" y="160" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">3</text>
+  <rect x="174" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="192" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+  <rect x="210" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="228" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+  <rect x="246" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="264" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+  <rect x="282" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="300" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+  <rect x="318" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="336" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+  <rect x="354" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="372" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+  <rect x="390" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="408" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+  <rect x="426" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="444" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+  <rect x="462" y="140" width="36" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="480" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">3</text>
+
+  <!-- 图例 -->
+  <rect x="102" y="182" width="14" height="12" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="2" filter="url(#rough2)"/>
+  <text x="122" y="192" font-size="10.5" fill="#666" filter="url(#rough2)">深度达峰值 3</text>
+  <rect x="210" y="182" width="14" height="12" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="2" filter="url(#rough2)"/>
+  <text x="230" y="192" font-size="10.5" fill="#666" filter="url(#rough2)">delta 非零（事件处）</text>
+
+  <!-- 说明框 -->
+  <rect x="30" y="204" width="460" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="228" text-anchor="middle" font-size="11.5" fill="#6b5320" filter="url(#rough2)">x = 2 与 x = 5 处：三个区间同时覆盖该点 → 深度冲到峰值 3</text>
+
+  <rect x="30" y="250" width="460" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="274" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">x = 9：[6,8] 的减号生效于 r+1 = 9 → 深度回落（闭区间覆盖含右端点）</text>
+
+  <text x="260" y="312" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">最终 ans = 3 ✓ 分组：①{[1,5],[6,8]} ②{[2,3],[5,10]} ③{[1,10]}</text>
+  <text x="260" y="338" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">n 个区间只产生 2n 个事件（黄格仅 6 处）——值域稀疏时可用事件排序替代全值域扫描</text>
+</svg>
