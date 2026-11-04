@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="470" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">解法二：转折点合并——上行到 A，再下钻兄弟子树</text>
+  <path d="M 130 42 Q 320 50 510 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- plain tree edges -->
+  <g stroke="#b0b0b0" stroke-width="1.8" filter="url(#sk)">
+    <line x1="205" y1="100" x2="135" y2="180"/>
+    <line x1="205" y1="100" x2="280" y2="180"/>
+    <line x1="135" y1="180" x2="178" y2="260"/>
+    <line x1="280" y1="180" x2="252" y2="260"/>
+    <line x1="280" y1="180" x2="325" y2="260"/>
+    <line x1="178" y1="260" x2="135" y2="335"/>
+    <line x1="178" y1="260" x2="222" y2="335"/>
+  </g>
+
+  <!-- highlighted path: up from start to A, then down into sibling arm -->
+  <path d="M 271 173 L 214 107" stroke="#b85450" stroke-width="3.5" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <path d="M 196 107 L 126 173 M 143 190 L 170 250" stroke="#4a7a3a" stroke-width="3.5" fill="none" filter="url(#sk)"/>
+  <path d="M 168 270 L 137 316" stroke="#4a7a3a" stroke-width="3.5" fill="none" marker-end="url(#arg)" filter="url(#sk)"/>
+
+  <text x="234" y="128" text-anchor="end" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#sk)">上行 d(A) = 1</text>
+  <text x="118" y="152" text-anchor="end" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">下行 1 + h(c′) = 1 + 2</text>
+
+  <!-- turning point ring on node 1 -->
+  <circle cx="205" cy="100" r="26" fill="none" stroke="#d6a040" stroke-width="2" stroke-dasharray="5 4" filter="url(#sk)"/>
+  <text x="205" y="62" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b8860b" filter="url(#sk)">A = LCA(start, v)</text>
+
+  <!-- nodes -->
+  <g filter="url(#sk)">
+    <circle cx="205" cy="100" r="19" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <circle cx="135" cy="180" r="19" fill="#ffffff" stroke="#999" stroke-width="1.6"/>
+    <circle cx="280" cy="180" r="19" fill="#fce4ec" stroke="#b85450" stroke-width="2.6"/>
+    <circle cx="178" cy="260" r="19" fill="#ffffff" stroke="#999" stroke-width="1.6"/>
+    <circle cx="252" cy="260" r="19" fill="#ffffff" stroke="#999" stroke-width="1.6"/>
+    <circle cx="325" cy="260" r="19" fill="#ffffff" stroke="#999" stroke-width="1.6"/>
+    <circle cx="135" cy="335" r="19" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="222" cy="335" r="19" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#sk)">
+    <text x="205" y="105">1</text>
+    <text x="135" y="185">5</text>
+    <text x="280" y="185" fill="#b85450">3</text>
+    <text x="178" y="265">4</text>
+    <text x="252" y="265">10</text>
+    <text x="325" y="265">6</text>
+    <text x="135" y="340">9</text>
+    <text x="222" y="340">2</text>
+  </g>
+  <text x="308" y="174" text-anchor="start" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">start</text>
+  <text x="135" y="370" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#sk)">v（终点，9/2 并列）</text>
+  <text x="178" y="292" text-anchor="middle" font-size="10" fill="#2e6e2e" filter="url(#sk)">c′ = 5</text>
+
+  <!-- right panel -->
+  <g filter="url(#sk)">
+    <rect x="380" y="70" width="245" height="100" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="502" y="92" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#sk)">转折点候选公式</text>
+  <text x="502" y="116" text-anchor="middle" font-size="12" fill="#2b2b2b" filter="url(#sk)">候选(A) = d(start,A) + 1 + h(c′)</text>
+  <text x="502" y="138" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#sk)">A=1：1 + 1 + h(5) = 4</text>
+  <text x="502" y="158" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#sk)">c′ 不存在时 h(∅)=−1 → 退化为 d(start,A)</text>
+
+  <g filter="url(#sk)">
+    <rect x="380" y="188" width="245" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="502" y="210" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">候选(start) = h(start) = 1</text>
+  <text x="502" y="230" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#sk)">转折点就是 start：一路向下</text>
+
+  <g filter="url(#sk)">
+    <rect x="380" y="256" width="245" height="56" rx="8" fill="#ffffff" stroke="#999" stroke-width="1.4"/>
+  </g>
+  <text x="502" y="278" text-anchor="middle" font-size="12" fill="#2b2b2b" filter="url(#sk)">答案 = max{ 所有转折点候选 }</text>
+  <text x="502" y="300" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">= max{1, 4} = 4 ✓</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="40" y="402" width="585" height="56" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="332" y="425" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">与 543「二叉树的直径」同构：直径在节点处合并「左臂 + 右臂」，</text>
+  <text x="332" y="446" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#sk)">本题合并「上行距离 + 兄弟臂」；一次后序 DFS，不建图，额外空间仅 O(h) 递归栈</text>
+</svg>

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="480" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：父子边双向可达，感染 = 从 start 出发的 BFS 分层</text>
+  <path d="M 120 42 Q 320 50 520 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- edges of the tree -->
+  <g stroke="#b0b0b0" stroke-width="1.8" filter="url(#sk)">
+    <line x1="210" y1="110" x2="135" y2="195"/>
+    <line x1="210" y1="110" x2="285" y2="195"/>
+    <line x1="135" y1="195" x2="180" y2="285"/>
+    <line x1="285" y1="195" x2="255" y2="285"/>
+    <line x1="285" y1="195" x2="330" y2="285"/>
+    <line x1="180" y1="285" x2="135" y2="370"/>
+    <line x1="180" y1="285" x2="225" y2="370"/>
+  </g>
+
+  <!-- bidirectional arrows on edge 1-3 -->
+  <path d="M 272 182 Q 243 143 220 112" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <path d="M 223 122 Q 251 153 278 190" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arb)" filter="url(#sk)"/>
+  <text x="306" y="140" text-anchor="start" font-size="11" font-weight="bold" fill="#666" filter="url(#sk)">父 ↔ 子</text>
+  <text x="306" y="156" text-anchor="start" font-size="11" fill="#666" filter="url(#sk)">互为邻居</text>
+
+  <!-- nodes colored by infection minute -->
+  <g filter="url(#sk)">
+    <circle cx="210" cy="110" r="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <circle cx="135" cy="195" r="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <circle cx="285" cy="195" r="20" fill="#fce4ec" stroke="#b85450" stroke-width="2.6"/>
+    <circle cx="180" cy="285" r="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="255" cy="285" r="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <circle cx="330" cy="285" r="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <circle cx="135" cy="370" r="20" fill="#ffffff" stroke="#999" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <circle cx="225" cy="370" r="20" fill="#ffffff" stroke="#999" stroke-width="1.5" stroke-dasharray="4 3"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#sk)">
+    <text x="210" y="115">1</text>
+    <text x="135" y="200">5</text>
+    <text x="285" y="200" fill="#b85450">3</text>
+    <text x="180" y="290">4</text>
+    <text x="255" y="290">10</text>
+    <text x="330" y="290">6</text>
+    <text x="135" y="375">9</text>
+    <text x="225" y="375">2</text>
+  </g>
+  <g text-anchor="middle" font-size="10" fill="#888" filter="url(#sk)">
+    <text x="210" y="142">t=1</text>
+    <text x="135" y="227">t=2</text>
+    <text x="285" y="227">t=0</text>
+    <text x="180" y="317">t=3</text>
+    <text x="255" y="317">t=1</text>
+    <text x="330" y="317">t=1</text>
+    <text x="135" y="402">t=4</text>
+    <text x="225" y="402">t=4</text>
+  </g>
+  <text x="256" y="188" text-anchor="end" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">start</text>
+
+  <!-- right panel: adjacency -->
+  <g filter="url(#sk)">
+    <rect x="370" y="62" width="255" height="62" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="497" y="86" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#sk)">「相邻」= 有一条边直连</text>
+  <text x="497" y="108" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#sk)">节点的邻居：父 + 左右子（至多 3 个）</text>
+
+  <g filter="url(#sk)">
+    <rect x="370" y="138" width="255" height="80" rx="8" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+  </g>
+  <text x="497" y="160" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#555" filter="url(#sk)">start = 3 的邻接表</text>
+  <text x="497" y="182" text-anchor="middle" font-size="11.5" font-family="Consolas,'Comic Sans MS',monospace" fill="#333" filter="url(#sk)">adj[3] = [父1 | 左子10 | 右子6]</text>
+  <text x="497" y="204" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#sk)">第 1 分钟：三个邻居同时感染</text>
+
+  <g filter="url(#sk)">
+    <rect x="370" y="232" width="255" height="100" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="497" y="254" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">时刻 ↔ 距离</text>
+  <text x="497" y="276" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">感染分钟数 t(v) = dist(start, v)</text>
+  <text x="497" y="298" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">整树感染时间 = max dist</text>
+  <text x="497" y="320" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">= start 的离心率（换根后树高）</text>
+
+  <g filter="url(#sk)">
+    <rect x="370" y="346" width="255" height="76" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="497" y="368" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">陷阱：只往孩子方向感染</text>
+  <text x="497" y="390" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">= 只算 start 子树高度 → 示例 1 错答 1</text>
+  <text x="497" y="408" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">正确是 4（需上行到父再折返）</text>
+
+  <!-- legend -->
+  <g filter="url(#sk)">
+    <rect x="52" y="442" width="24" height="16" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/>
+    <rect x="164" y="442" width="24" height="16" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <rect x="266" y="442" width="24" height="16" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="368" y="442" width="24" height="16" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="470" y="442" width="24" height="16" rx="3" fill="#ffffff" stroke="#999" stroke-width="1.3" stroke-dasharray="4 3"/>
+  </g>
+  <g font-size="10.5" fill="#666" filter="url(#sk)">
+    <text x="82" y="454">第0分钟 start</text>
+    <text x="194" y="454">第1分钟</text>
+    <text x="296" y="454">第2分钟</text>
+    <text x="398" y="454">第3分钟</text>
+    <text x="500" y="454">第4分钟（最后）</text>
+  </g>
+</svg>
