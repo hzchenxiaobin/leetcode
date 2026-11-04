@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 700"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="700" fill="#fafafa"/>
+
+  <!-- 开始 -->
+  <ellipse cx="260" cy="38" rx="46" ry="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="44" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">开始</text>
+
+  <line x1="260" y1="56" x2="260" y2="78" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 初始化 -->
+  <rect x="145" y="82" width="230" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="106" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">prev = 0, bestDur = −1, bestId = −1</text>
+
+  <line x1="260" y1="120" x2="260" y2="144" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 取 log -->
+  <rect x="165" y="148" width="190" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="260" y="170" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">取下一条 log = [id, t]</text>
+
+  <line x1="260" y1="182" x2="260" y2="211" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 计算 dur -->
+  <rect x="175" y="215" width="170" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="260" y="237" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">dur = t − prev</text>
+
+  <line x1="260" y1="249" x2="260" y2="268" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断菱形 -->
+  <polygon points="260,272 400,320 260,368 120,320" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="314" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">dur &gt; bestDur</text>
+  <text x="260" y="334" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">或 dur == bestDur 且 id &lt; bestId ？</text>
+
+  <!-- 是：更新 -->
+  <line x1="260" y1="368" x2="260" y2="409" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="276" y="392" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="160" y="413" width="200" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="260" y="431" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">bestDur = dur</text>
+  <text x="260" y="449" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">bestId = id</text>
+
+  <line x1="260" y1="457" x2="260" y2="499" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 否：绕行 -->
+  <path d="M400,320 L466,320 L466,520 L334,520" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="424" y="308" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- prev = t -->
+  <rect x="190" y="503" width="140" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="260" y="525" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">prev = t</text>
+
+  <line x1="260" y1="537" x2="260" y2="556" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 循环判断 -->
+  <polygon points="260,560 352,600 260,640 168,600" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="606" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">还有 log ？</text>
+
+  <!-- 否：回环 -->
+  <path d="M168,600 L44,600 L44,165 L161,165" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="100" y="588" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- 是：返回 -->
+  <line x1="260" y1="640" x2="260" y2="652" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="276" y="650" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <ellipse cx="260" cy="674" rx="58" ry="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="680" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">返回 bestId</text>
+</svg>
