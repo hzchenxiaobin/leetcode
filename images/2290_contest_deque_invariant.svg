@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="600" viewBox="0 0 880 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="600" fill="#fdfcf7"/>
+  <text x="440" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">0-1 BFS：双端队列的「两段式」不变量</text>
+  <path d="M 200 44 Q 440 52 680 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 出队节点 u -->
+  <rect x="100" y="86" width="150" height="54" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2" filter="url(#sk)"/>
+  <text x="175" y="110" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e">出队节点 u</text>
+  <text x="175" y="130" text-anchor="middle" font-size="12" fill="#2b6e9e">d = dist[u]（最小）</text>
+
+  <!-- 0 边说明框 -->
+  <rect x="330" y="80" width="240" height="66" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="450" y="104" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">0 边：邻居 v 是空格</text>
+  <text x="450" y="124" text-anchor="middle" font-size="12" fill="#2e6e2e">nd = d + 0 = d → push_front</text>
+  <text x="450" y="140" text-anchor="middle" font-size="10.5" fill="#4a8e4a">与 u 同层，插到队首</text>
+
+  <!-- 1 边说明框 -->
+  <rect x="610" y="80" width="240" height="66" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="730" y="104" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">1 边：邻居 v 是障碍</text>
+  <text x="730" y="124" text-anchor="middle" font-size="12" fill="#7a5415">nd = d + 1 → push_back</text>
+  <text x="730" y="140" text-anchor="middle" font-size="10.5" fill="#c98a2b">比 u 大一层，插到队尾</text>
+
+  <!-- pop 箭头：队首 → u -->
+  <path d="M 205 216 Q 175 190 175 144" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="132" y="186" text-anchor="middle" font-size="11" fill="#8c3a36">pop_front</text>
+
+  <!-- deque 本体 -->
+  <text x="440" y="182" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">双端队列（键 = 入队时的 dist 值）</text>
+  <!-- 前段（键 d）蓝 -->
+  <rect x="170" y="196" width="72" height="48" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="206" y="225" text-anchor="middle" font-size="12" fill="#2b6e9e">v (d)</text>
+  <rect x="242" y="196" width="72" height="48" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="278" y="225" text-anchor="middle" font-size="12" fill="#2b6e9e">· · ·</text>
+  <rect x="314" y="196" width="72" height="48" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="350" y="225" text-anchor="middle" font-size="12" fill="#2b6e9e">· · ·</text>
+  <!-- 后段（键 d+1）橙 -->
+  <rect x="434" y="196" width="72" height="48" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="470" y="225" text-anchor="middle" font-size="12" fill="#7a5415">· · ·</text>
+  <rect x="506" y="196" width="72" height="48" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="542" y="225" text-anchor="middle" font-size="12" fill="#7a5415">· · ·</text>
+  <rect x="578" y="196" width="72" height="48" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="614" y="225" text-anchor="middle" font-size="12" fill="#7a5415">v' (d+1)</text>
+  <!-- front / back 标签 -->
+  <text x="206" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">队首 front（取最小键）</text>
+  <text x="614" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">队尾 back</text>
+  <!-- 段间箭头注释 -->
+  <path d="M 402 220 L 430 220" stroke="#8a8a8a" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="416" y="206" text-anchor="middle" font-size="10" fill="#888">层界</text>
+
+  <!-- 0 边 → 队首 箭头 -->
+  <path d="M 400 148 Q 300 168 240 192" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="298" y="158" text-anchor="middle" font-size="11" fill="#2e6e2e">push_front</text>
+  <!-- 1 边 → 队尾 箭头 -->
+  <path d="M 690 148 Q 660 168 622 192" stroke="#c98a2b" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="688" y="176" text-anchor="middle" font-size="11" fill="#7a5415">push_back</text>
+
+  <!-- 不变量框 -->
+  <rect x="80" y="300" width="360" height="176" rx="10" fill="#f0f6fc" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="260" y="328" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e">不变量（§5 引理 2，归纳可证）</text>
+  <text x="260" y="354" text-anchor="middle" font-size="12" fill="#333">① 队列键从队首到队尾非降</text>
+  <text x="260" y="378" text-anchor="middle" font-size="12" fill="#333">② 最大键 − 最小键 ≤ 1（至多两段）</text>
+  <text x="260" y="402" text-anchor="middle" font-size="12" fill="#333">③ 每个节点在队中恰有一个副本</text>
+  <text x="260" y="426" text-anchor="middle" font-size="12" fill="#333">   且副本键 = 该节点当前 dist</text>
+  <text x="260" y="454" text-anchor="middle" font-size="11.5" fill="#888">⟹ 出队序列的 dist 非降（两段首尾相接）</text>
+
+  <!-- Dijkstra 对照框 -->
+  <rect x="470" y="300" width="330" height="176" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="635" y="328" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415">对照 Dijkstra</text>
+  <text x="635" y="354" text-anchor="middle" font-size="12" fill="#333">优先队列：每次取最小 O(log mn)</text>
+  <text x="635" y="378" text-anchor="middle" font-size="12" fill="#333">双端队列：两端插入 / 队首取出 O(1)</text>
+  <text x="635" y="402" text-anchor="middle" font-size="12" fill="#333">键只有 d、d+1 两层 ⟹ 无需堆序</text>
+  <text x="635" y="430" text-anchor="middle" font-size="11.5" fill="#888">去掉 log 因子：O(mn log mn) → O(mn)</text>
+  <text x="635" y="454" text-anchor="middle" font-size="11.5" fill="#888">m·n ≤ 10⁵ 时快约 17 倍</text>
+
+  <!-- 底部结论 -->
+  <rect x="80" y="500" width="720" height="76" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="440" y="530" text-anchor="middle" font-size="14" font-weight="bold" fill="#8c3a36">出队顺序按 dist 非降 ⟹ 出队即定案</text>
+  <text x="440" y="556" text-anchor="middle" font-size="12" fill="#333">每个节点第一次出队时 dist 已是最短路长，且全程恰好入队一次（证明见 §5）</text>
+</svg>

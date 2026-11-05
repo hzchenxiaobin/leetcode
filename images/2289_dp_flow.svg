@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="660" viewBox="0 0 880 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="8" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="880" height="660" fill="#fdfcf7"/>
+  <text x="440" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：一趟扫描，弹 ≤ 者吸收 maxR，栈顶残留即杀手</text>
+  <path d="M 200 44 Q 440 52 680 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 开始 -->
+  <ellipse cx="440" cy="82" rx="52" ry="20" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="440" y="87" text-anchor="middle" font-size="13" fill="#2e6e2e">开始</text>
+  <path d="M 440 102 L 440 122" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- 初始化 -->
+  <rect x="330" y="126" width="220" height="40" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="440" y="151" text-anchor="middle" font-size="12.5" fill="#2b6e9e">空栈 st；dp[0..n-1] = 0；ans = 0</text>
+  <path d="M 440 166 L 440 186" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- for 循环 -->
+  <rect x="352" y="190" width="176" height="38" rx="19" fill="#f0f6fc" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="440" y="214" text-anchor="middle" font-size="12.5" fill="#2b6e9e">for i = 0 … n-1</text>
+  <path d="M 440 228 L 440 248" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- maxR = 0 -->
+  <rect x="372" y="252" width="136" height="36" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="440" y="275" text-anchor="middle" font-size="12.5" fill="#2b6e9e">maxR = 0</text>
+  <path d="M 440 288 L 440 308" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- 菱形1：弹栈判断 -->
+  <polygon points="440,310 590,362 440,414 290,362" fill="#fef9ef" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="440" y="356" text-anchor="middle" font-size="12.5" fill="#7a5415">栈非空 且</text>
+  <text x="440" y="376" text-anchor="middle" font-size="12.5" fill="#7a5415">nums[st.top()] ≤ nums[i] ?</text>
+
+  <!-- 是 → 弹栈取 max -->
+  <path d="M 590 362 L 654 362" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="620" y="352" text-anchor="middle" font-size="12" fill="#7a5415">是</text>
+  <rect x="658" y="336" width="196" height="52" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="756" y="358" text-anchor="middle" font-size="12" fill="#7a5415">maxR = max(maxR, dp[top])</text>
+  <text x="756" y="378" text-anchor="middle" font-size="12" fill="#7a5415">弹出 top（吸收障碍轮次）</text>
+  <path d="M 756 336 C 756 300, 620 300, 560 330" stroke="#c98a2b" stroke-width="1.6" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <!-- 否 → 菱形2 -->
+  <path d="M 440 414 L 440 442" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="452" y="432" font-size="12" fill="#2b6e9e">否</text>
+
+  <!-- 菱形2：栈空？ -->
+  <polygon points="440,444 560,492 440,540 320,492" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="440" y="498" text-anchor="middle" font-size="12.5" fill="#8c3a36">栈空 ?</text>
+
+  <!-- 左分支 dp=0 -->
+  <path d="M 320 492 L 240 492" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="284" y="482" text-anchor="middle" font-size="12" fill="#8c3a36">是</text>
+  <rect x="96" y="468" width="140" height="48" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="166" y="490" text-anchor="middle" font-size="12.5" fill="#2e6e2e">dp[i] = 0</text>
+  <text x="166" y="508" text-anchor="middle" font-size="10.5" fill="#888">迄今最大值，永不删</text>
+
+  <!-- 右分支 dp=maxR+1 -->
+  <path d="M 560 492 L 636 492" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="596" y="482" text-anchor="middle" font-size="12" fill="#8c3a36">否</text>
+  <rect x="640" y="468" width="168" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="724" y="490" text-anchor="middle" font-size="12.5" fill="#8c3a36">dp[i] = maxR + 1</text>
+  <text x="724" y="508" text-anchor="middle" font-size="10.5" fill="#888">栈顶残留者 = 杀手</text>
+
+  <!-- 汇合 -->
+  <path d="M 166 516 C 166 556, 300 556, 380 566" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 724 516 C 724 556, 590 556, 500 566" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+
+  <!-- 更新 ans + 入栈 -->
+  <rect x="330" y="556" width="220" height="40" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="440" y="581" text-anchor="middle" font-size="12.5" fill="#2b6e9e">ans = max(ans, dp[i])；i 入栈</text>
+
+  <!-- 回到循环 -->
+  <path d="M 330 576 C 240 576, 200 576, 176 540 C 150 500, 150 260, 200 226 L 348 210" stroke="#4a8edb" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="150" y="396" text-anchor="middle" font-size="11.5" fill="#888">下一个 i</text>
+
+  <!-- 结束 -->
+  <path d="M 550 586 L 612 596" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="572" y="576" text-anchor="middle" font-size="11.5" fill="#888">扫描结束</text>
+  <ellipse cx="676" cy="600" rx="56" ry="20" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="676" y="605" text-anchor="middle" font-size="13" fill="#2e6e2e">返回 ans</text>
+</svg>
