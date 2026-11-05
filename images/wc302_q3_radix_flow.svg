@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 452"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="452" fill="#fafafa"/>
+
+  <text x="300" y="24" text-anchor="middle" font-size="14" fill="#555" font-weight="bold" filter="url(#rough2)">算法流程：LSD 基数排序流水线，离线回答查询</text>
+
+  <!-- start -->
+  <rect x="60" y="38" width="360" height="36" rx="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="240" y="61" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">order ← [0..n−1]；查询按 trim 归组；t ← 1</text>
+  <path d="M 240 74 V 90" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- stable bucket pass -->
+  <rect x="60" y="94" width="360" height="44" rx="8" fill="#ffffff" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="240" y="112" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">按第 t 位数字（从右数第 t 个 ⟹ 字符 nums[i][L−t]）</text>
+  <text x="240" y="130" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">对 order 做稳定分桶：10 个桶，按当前顺序入桶</text>
+  <path d="M 240 138 V 156" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- answer queries at this trim level -->
+  <rect x="60" y="160" width="360" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="240" y="184" text-anchor="middle" font-size="12" fill="#3a6a2a" font-weight="bold" filter="url(#rough2)">回答所有 trim = t 的查询：ans[qi] ← order[k − 1]</text>
+  <path d="M 240 200 V 218" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond: t == L ? -->
+  <polygon points="240,222 330,262 240,302 150,262" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="240" y="267" text-anchor="middle" font-size="12" fill="#7a6020" filter="url(#rough2)">t = L ？</text>
+
+  <!-- yes -> return -->
+  <path d="M 330 262 H 408" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="366" y="252" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <rect x="414" y="244" width="110" height="36" rx="18" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="469" y="267" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">返回 ans</text>
+
+  <!-- no -> t++ -> loop -->
+  <path d="M 240 302 V 330" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="254" y="322" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <rect x="185" y="334" width="110" height="32" rx="6" fill="#ffffff" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="240" y="355" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">t ← t + 1</text>
+  <path d="M 185 350 H 28 V 116 H 54" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="42" y="240" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold" transform="rotate(-90 42 240)" filter="url(#rough2)">下一轮分桶</text>
+
+  <!-- side note: three pitfalls -->
+  <rect x="452" y="94" width="136" height="152" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="520" y="114" text-anchor="middle" font-size="11" fill="#a08030" font-weight="bold" filter="url(#rough2)">⚠ 三条易错</text>
+  <text x="464" y="134" font-size="10" fill="#7a6020" filter="url(#rough2)">① 同数字保持入桶</text>
+  <text x="470" y="148" font-size="10" fill="#7a6020" filter="url(#rough2)">前的顺序（稳定性）</text>
+  <text x="464" y="168" font-size="10" fill="#7a6020" filter="url(#rough2)">② k 为 1-indexed：</text>
+  <text x="470" y="182" font-size="10" fill="#7a6020" filter="url(#rough2)">取 order[k−1]</text>
+  <text x="464" y="202" font-size="10" fill="#7a6020" filter="url(#rough2)">③ 第 t 位从右数：</text>
+  <text x="470" y="216" font-size="10" fill="#7a6020" filter="url(#rough2)">字符下标 L−t</text>
+
+  <!-- complexity strip -->
+  <rect x="120" y="392" width="360" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="300" y="416" text-anchor="middle" font-size="11.5" fill="#3a6a2a" font-weight="bold" filter="url(#rough2)">复杂度：L 轮 × O(n+10) 稳定分桶 + O(q) 回答</text>
+</svg>

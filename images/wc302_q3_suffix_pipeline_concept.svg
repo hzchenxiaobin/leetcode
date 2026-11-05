@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="380" fill="#fafafa"/>
+
+  <text x="330" y="26" text-anchor="middle" font-size="14" fill="#555" font-weight="bold" filter="url(#rough2)">核心观察：trim 每加一位 = 追加一次稳定分桶</text>
+
+  <!-- nums row: three digit cells per number, key expansion colored -->
+  <!-- number 0: 102 -->
+  <rect x="100" y="42" width="26" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="113" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="128" y="42" width="26" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="141" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">0</text>
+  <rect x="156" y="42" width="26" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="169" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">2</text>
+  <text x="141" y="94" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">下标 0</text>
+
+  <!-- number 1: 473 -->
+  <rect x="218" y="42" width="26" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="231" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">4</text>
+  <rect x="246" y="42" width="26" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="259" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">7</text>
+  <rect x="274" y="42" width="26" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="287" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">3</text>
+  <text x="259" y="94" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">下标 1</text>
+
+  <!-- number 2: 251 -->
+  <rect x="336" y="42" width="26" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="349" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">2</text>
+  <rect x="364" y="42" width="26" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="377" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">5</text>
+  <rect x="392" y="42" width="26" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="405" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">1</text>
+  <text x="377" y="94" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">下标 2</text>
+
+  <!-- number 3: 814 -->
+  <rect x="454" y="42" width="26" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="467" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">8</text>
+  <rect x="482" y="42" width="26" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="495" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="510" y="42" width="26" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="523" y="64" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">4</text>
+  <text x="523" y="94" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">下标 3</text>
+
+  <text x="330" y="118" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">排序键从右往左逐位扩张：trim=1 只看红位，trim=2 看橙+红，trim=3 三位全看</text>
+
+  <!-- dashed arrow from nums down to pipeline start -->
+  <path d="M 240 128 Q 150 145 90 182" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- initial order box -->
+  <rect x="24" y="188" width="118" height="64" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="83" y="210" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">order₀（下标序）</text>
+  <text x="83" y="232" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">[0, 1, 2, 3]</text>
+  <path d="M 142 220 H 164" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- stage t=1 -->
+  <rect x="168" y="156" width="138" height="136" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <circle cx="182" cy="172" r="4" fill="#b85450" filter="url(#rough2)"/>
+  <text x="192" y="176" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">t=1：按末位分桶</text>
+  <text x="237" y="200" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">order = [2,0,1,3]</text>
+  <text x="237" y="218" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">裁剪值: 1 &lt; 2 &lt; 3 &lt; 4</text>
+  <rect x="180" y="226" width="114" height="18" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="237" y="239" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">(k=1, trim=1) → 2</text>
+  <text x="237" y="276" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">第 1 小 = 1 ⟹ 下标 2</text>
+
+  <path d="M 306 220 H 330" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="318" y="210" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">trim+1</text>
+
+  <!-- stage t=2 -->
+  <rect x="334" y="156" width="138" height="136" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <circle cx="348" cy="172" r="4" fill="#d6a040" filter="url(#rough2)"/>
+  <text x="358" y="176" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">t=2：按倒数第2位</text>
+  <text x="403" y="200" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">order = [0,3,2,1]</text>
+  <text x="403" y="218" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">裁剪值: 02&lt;14&lt;51&lt;73</text>
+  <rect x="346" y="226" width="114" height="18" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="403" y="239" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">(k=4, trim=2) → 1</text>
+  <rect x="346" y="248" width="114" height="18" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="403" y="261" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">(k=1, trim=2) → 0</text>
+
+  <path d="M 472 220 H 496" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="484" y="210" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">trim+1</text>
+
+  <!-- stage t=3 -->
+  <rect x="500" y="156" width="136" height="136" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <circle cx="514" cy="172" r="4" fill="#446688" filter="url(#rough2)"/>
+  <text x="524" y="176" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">t=3：按最高位</text>
+  <text x="568" y="200" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">order = [0,2,1,3]</text>
+  <text x="568" y="218" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">102&lt;251&lt;473&lt;814</text>
+  <rect x="512" y="226" width="112" height="18" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="568" y="239" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">(k=2, trim=3) → 2</text>
+  <text x="568" y="276" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">trim = L ⟹ 不裁剪</text>
+
+  <!-- bottom note -->
+  <rect x="100" y="316" width="460" height="44" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="330" y="334" text-anchor="middle" font-size="11" fill="#a08030" filter="url(#rough2)">稳定分桶：当前位相同 ⟹ 保持上一轮顺序；连末位都相同 ⟹ 保持初始下标序</text>
+  <text x="330" y="352" text-anchor="middle" font-size="11" fill="#a08030" filter="url(#rough2)">⟹ 平局「下标小者在前」自动成立；同 trim 的查询共享同一轮结果</text>
+</svg>
