@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="640" height="400" fill="#fdfcf7"/>
+  <text x="320" y="28" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察二与流程：末位二分 → 滚动斐波那契 → 一次平方</text>
+  <path d="M 140 36 Q 320 44 500 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 左：末位二分 -->
+  <text x="44" y="60" font-size="12" fill="#555">一侧前 i 个地块（1 = 放房，0 = 空）</text>
+  <g filter="url(#sk)"><rect x="56" y="68" width="30" height="30" rx="3" fill="#fdfcf7" stroke="#b9c8d8" stroke-width="1"/></g>
+  <text x="71" y="88" text-anchor="middle" font-size="13" fill="#333">1</text>
+  <g filter="url(#sk)"><rect x="92" y="68" width="30" height="30" rx="3" fill="#fdfcf7" stroke="#b9c8d8" stroke-width="1"/></g>
+  <text x="107" y="88" text-anchor="middle" font-size="13" fill="#333">0</text>
+  <g filter="url(#sk)"><rect x="128" y="68" width="30" height="30" rx="3" fill="#fdfcf7" stroke="#b9c8d8" stroke-width="1"/></g>
+  <text x="143" y="88" text-anchor="middle" font-size="13" fill="#333">1</text>
+  <g filter="url(#sk)"><rect x="164" y="68" width="30" height="30" rx="3" fill="#fdfcf7" stroke="#b9c8d8" stroke-width="1"/></g>
+  <text x="179" y="88" text-anchor="middle" font-size="13" fill="#333">0</text>
+  <g filter="url(#sk)"><rect x="200" y="68" width="30" height="30" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="215" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#b07818">?</text>
+
+  <path d="M 215 102 Q 160 112 124 118" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 219 102 Q 264 112 282 118" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="44" y="120" width="152" height="62" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/></g>
+  <text x="120" y="139" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e">A：第 i 位不放房</text>
+  <text x="120" y="156" text-anchor="middle" font-size="11" fill="#555">前 i−1 位任意合法</text>
+  <text x="120" y="173" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e" font-family="monospace">= g(i−1)</text>
+
+  <g filter="url(#sk)"><rect x="204" y="120" width="152" height="62" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="280" y="139" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">B：第 i 位放房</text>
+  <text x="280" y="156" text-anchor="middle" font-size="11" fill="#555">第 i−1 位必空</text>
+  <text x="280" y="173" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" font-family="monospace">= g(i−2)</text>
+
+  <g filter="url(#sk)"><rect x="44" y="192" width="312" height="32" rx="6" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.3"/></g>
+  <text x="200" y="213" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#7a5415" font-family="monospace">g(i) = g(i−1) + g(i−2)</text>
+
+  <text x="44" y="246" font-size="11.5" fill="#555">初值：g(0) = 1（空方案）、g(1) = 2（放 / 不放）</text>
+  <text x="44" y="264" font-size="11.5" fill="#555">两情形互斥且完备 → 加法原理（引理 2）</text>
+
+  <!-- 右：算法流程 -->
+  <g filter="url(#sk)"><rect x="404" y="52" width="72" height="24" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/></g>
+  <text x="440" y="68" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e">输入 n</text>
+  <path d="M 440 76 L 440 88" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="368" y="88" width="144" height="26" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="440" y="105" text-anchor="middle" font-size="12" fill="#2b2b2b" font-family="monospace">a = 1, b = 2  (g₀, g₁)</text>
+  <path d="M 440 114 L 440 124" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><polygon points="440,124 506,150 440,176 374,150" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.5"/></g>
+  <text x="440" y="155" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" font-family="monospace">i ≤ n ?</text>
+
+  <text x="512" y="141" font-size="11" font-weight="bold" fill="#2e5e2e">是</text>
+  <path d="M 506 150 L 516 150" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="516" y="130" width="104" height="42" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="568" y="147" text-anchor="middle" font-size="10.5" fill="#2b2b2b" font-family="monospace">c = (a+b) % MOD</text>
+  <text x="568" y="164" text-anchor="middle" font-size="10.5" fill="#2b2b2b" font-family="monospace">a ← b; b ← c; i++</text>
+  <path d="M 568 130 L 568 116 L 448 116" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <text x="452" y="192" font-size="11" font-weight="bold" fill="#a04a48">否</text>
+  <path d="M 440 176 L 440 194" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="376" y="194" width="128" height="26" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+  <text x="440" y="211" text-anchor="middle" font-size="12" fill="#2b2b2b" font-family="monospace">ans = b × b % MOD</text>
+  <path d="M 440 220 L 440 230" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="404" y="230" width="72" height="24" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/></g>
+  <text x="440" y="246" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e">返回 ans</text>
+
+  <!-- 底部结论框 -->
+  <g filter="url(#sk)"><rect x="64" y="278" width="512" height="88" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="320" y="302" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" font-family="monospace">g 序列：1 → 2 → 3 → 5 → 8 → 13 → …（从 g(0) 起）</text>
+  <text x="320" y="324" text-anchor="middle" font-size="11.5" fill="#555">与斐波那契逐项吻合：g(n) = Fib(n + 2)（Fib(1) = Fib(2) = 1）</text>
+  <text x="320" y="344" text-anchor="middle" font-size="11.5" fill="#555">校验：g(1)² = 4 ✓（示例 1）、g(2)² = 9 ✓（示例 2）</text>
+  <text x="320" y="360" text-anchor="middle" font-size="11.5" fill="#555">n = 1 时循环体不执行，b = 2 直接平方 —— 初值即答案，无需特判</text>
+
+  <text x="320" y="386" text-anchor="middle" font-size="12" fill="#888">递推只依赖前两项：两个滚动变量足够；平方必须在递推之外单独做</text>
+</svg>

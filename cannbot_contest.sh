@@ -14,30 +14,22 @@ echo ">>> 工作目录: $(pwd)"
 
 # ========== 1. 计算待检查的周赛与双周赛场次 ==========
 # 规则：下一场即将开赛的场次编号（LeetCode upcomingContests）减一 = 已结束的最新场次
-# 范围：周赛固定从第 300 场开始，双周赛从本地最小场次开始，均检查到最新已结束场次
-# 区分：周赛编号 >= 300（当前 5xx），双周赛编号 < 300（当前 19x）
+# 范围：周赛和双周赛均从第 0 场开始，检查到最新已结束场次
+# 顺序：周赛倒序，双周赛正序
 mapfile -t MISSING_LIST < <(curl -s 'https://leetcode.com/graphql' \
     -H 'Content-Type: application/json' \
     -d '{"query":"query { upcomingContests { titleSlug } }"}' | python3 -c "
-import os, re, json, sys
+import json, sys
 
 data = json.load(sys.stdin)
 upcoming = [c['titleSlug'] for c in data['data']['upcomingContests']]
-
-# 本地已有的场次编号（纯数字目录）
-local = [int(d) for d in os.listdir('contest')
-         if re.fullmatch(r'\d+', d) and os.path.isdir(os.path.join('contest', d))]
 
 for prefix, kind in (('weekly-contest-', '周赛'), ('biweekly-contest-', '双周赛')):
     slug = next((s for s in upcoming if s.startswith(prefix)), None)
     if slug is None:
         continue
     latest_done = int(slug.rsplit('-', 1)[1]) - 1
-    if kind == '周赛':
-        start = 300
-    else:
-        pool = [n for n in local if n < 300]
-        start = min(pool, default=latest_done + 1)
+    start = 0
     numbers = range(latest_done, start - 1, -1) if kind == '周赛' else range(start, latest_done + 1)
     for n in numbers:
         print(f'{prefix}{n}')
