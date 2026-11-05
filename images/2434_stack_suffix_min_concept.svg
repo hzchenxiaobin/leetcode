@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="470" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">核心观察：弹不弹，只看「栈顶 vs 后缀最小」</text>
+
+  <!-- top: data flow s -> t -> p -->
+  <g filter="url(#sk)"><rect x="20" y="44" width="600" height="128" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="320" y="66" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a66" filter="url(#sk)">数据流：s（队列）→ t（栈）→ p（纸）</text>
+  <!-- s queue -->
+  <g filter="url(#sk)"><rect x="52" y="86" width="30" height="30" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.4"/></g>
+  <g filter="url(#sk)"><rect x="82" y="86" width="30" height="30" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.4"/></g>
+  <g filter="url(#sk)"><rect x="112" y="86" width="30" height="30" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.4"/></g>
+  <text x="67" y="106" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">s₀</text>
+  <text x="97" y="106" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">s₁</text>
+  <text x="127" y="106" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">…</text>
+  <text x="97" y="140" text-anchor="middle" font-size="11.5" fill="#556" filter="url(#sk)">队首才能走</text>
+  <!-- t stack -->
+  <g filter="url(#sk)"><rect x="278" y="82" width="56" height="38" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="306" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#sk)">top</text>
+  <g filter="url(#sk)"><rect x="278" y="120" width="56" height="22" rx="4" fill="#ffffff" stroke="#b85450" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="278" y="142" width="56" height="22" rx="4" fill="#ffffff" stroke="#b85450" stroke-width="1.2"/></g>
+  <text x="306" y="160" text-anchor="middle" font-size="11.5" fill="#556" filter="url(#sk)">只有栈顶能走</text>
+  <!-- p paper -->
+  <g filter="url(#sk)"><path d="M 492 82 L 556 82 L 566 94 L 566 152 L 492 152 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="529" y="120" text-anchor="middle" font-size="13" fill="#a06a1a" filter="url(#sk)">p（输出）</text>
+  <text x="529" y="140" text-anchor="middle" font-size="11.5" fill="#556" filter="url(#sk)">追加到尾部</text>
+  <!-- arrows -->
+  <path d="M 148 101 L 272 101" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="210" y="92" text-anchor="middle" font-size="11" fill="#446688" filter="url(#sk)">操作① 压入</text>
+  <path d="M 340 101 L 486 101" fill="none" stroke="#b85450" stroke-width="1.6" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="413" y="92" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">操作② 弹出</text>
+
+  <!-- bottom left: top <= m, pop now -->
+  <g filter="url(#sk)"><rect x="20" y="190" width="292" height="256" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="166" y="216" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">top(t) ≤ m：立即弹！</text>
+  <!-- example: t top 'a', s remain "zza" -->
+  <g filter="url(#sk)"><rect x="76" y="236" width="40" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="96" y="258" text-anchor="middle" font-size="15" font-weight="bold" fill="#b85450" filter="url(#sk)">a</text>
+  <text x="96" y="286" text-anchor="middle" font-size="11.5" fill="#556" filter="url(#sk)">栈顶 c = a</text>
+  <g filter="url(#sk)"><rect x="196" y="236" width="30" height="30" rx="4" fill="#ffffff" stroke="#8aa2b8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="226" y="236" width="30" height="30" rx="4" fill="#ffffff" stroke="#8aa2b8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="256" y="236" width="30" height="30" rx="4" fill="#ffffff" stroke="#8aa2b8" stroke-width="1.2"/></g>
+  <text x="211" y="256" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">z</text>
+  <text x="241" y="256" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">z</text>
+  <text x="271" y="256" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">a</text>
+  <text x="241" y="286" text-anchor="middle" font-size="11.5" fill="#556" filter="url(#sk)">剩余最小 m = a</text>
+  <path d="M 122 252 L 192 252" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="157" y="244" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">c ≤ m ✓</text>
+  <text x="166" y="318" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">后面再也不会有更小的字符</text>
+  <text x="166" y="340" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">晚弹只会让 c 前面垫上别的字符</text>
+  <text x="166" y="374" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">现在弹 = 最优时机</text>
+  <text x="166" y="400" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#sk)">（等下去 p 的前缀不会更小）</text>
+
+  <!-- bottom right: top > m, keep pushing -->
+  <g filter="url(#sk)"><rect x="328" y="190" width="292" height="256" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="474" y="216" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#a06a1a" filter="url(#sk)">top(t) &gt; m：按住别弹，继续压</text>
+  <!-- example: t top 'b', s remain "ac" -->
+  <g filter="url(#sk)"><rect x="384" y="236" width="40" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/></g>
+  <text x="404" y="258" text-anchor="middle" font-size="15" font-weight="bold" fill="#b85450" filter="url(#sk)">b</text>
+  <text x="404" y="286" text-anchor="middle" font-size="11.5" fill="#556" filter="url(#sk)">栈顶 c = b</text>
+  <g filter="url(#sk)"><rect x="504" y="236" width="30" height="30" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.4"/></g>
+  <g filter="url(#sk)"><rect x="534" y="236" width="30" height="30" rx="4" fill="#ffffff" stroke="#8aa2b8" stroke-width="1.2"/></g>
+  <text x="519" y="256" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">a</text>
+  <text x="549" y="256" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">c</text>
+  <text x="534" y="286" text-anchor="middle" font-size="11.5" fill="#556" filter="url(#sk)">剩余最小 m = a</text>
+  <path d="M 430 252 L 500 252" fill="none" stroke="#b85450" stroke-width="1.6" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="465" y="244" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">c &gt; m ✗</text>
+  <text x="474" y="318" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">现在弹 c，p 就以 c 开头</text>
+  <text x="474" y="340" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">但后面还藏着更小的 m = a</text>
+  <text x="474" y="374" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a06a1a" filter="url(#sk)">把队首压进栈，等 m 进栈再弹</text>
+  <text x="474" y="400" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#sk)">（压到 m 后必有 m ≤ 栈顶）</text>
+</svg>
