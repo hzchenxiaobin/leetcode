@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="420" viewBox="0 0 940 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#999"/>
+    </marker>
+  </defs>
+  <rect width="940" height="420" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：单遍扫描，首命中即返回</text>
+  <path d="M 260 44 Q 470 52 680 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 主流程 -->
+  <g filter="url(#sk)"><ellipse cx="95" cy="120" rx="55" ry="30" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="95" y="126" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">开始</text>
+
+  <path d="M 152 120 L 196 120" stroke="#4a8edb" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="202" y="92" width="150" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="277" y="116" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">取下一字符 c</text>
+  <text x="277" y="134" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">c = s[i], i = i+1</text>
+
+  <path d="M 356 120 L 396 120" stroke="#4a8edb" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><polygon points="470,78 545,120 470,162 395,120" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+  <text x="470" y="126" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">c ∈ seen ?</text>
+
+  <path d="M 545 120 L 628 120" stroke="#4a8edb" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="584" y="108" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">是</text>
+
+  <g filter="url(#sk)"><ellipse cx="716" cy="120" rx="84" ry="34" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/></g>
+  <text x="716" y="126" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">返回 c ✓ 终止</text>
+
+  <!-- 否分支：登记后回到取字符 -->
+  <path d="M 470 164 L 470 216" stroke="#999" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="486" y="194" font-size="11" font-weight="bold" fill="#888">否</text>
+
+  <g filter="url(#sk)"><rect x="395" y="218" width="160" height="52" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="475" y="240" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e" font-family="monospace">seen.add(c)</text>
+  <text x="475" y="258" text-anchor="middle" font-size="11" fill="#444">登记后继续右扫</text>
+
+  <path d="M 395 244 C 330 254, 277 236, 277 154" stroke="#999" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="300" y="266" text-anchor="middle" font-size="10.5" fill="#888">循环</text>
+
+  <!-- 鸽巢注记 -->
+  <g filter="url(#sk)"><rect x="560" y="214" width="340" height="72" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/></g>
+  <text x="580" y="238" font-size="12.5" font-weight="bold" fill="#7a5415">鸽巢原理</text>
+  <text x="580" y="260" font-size="11" fill="#555">26 个字母 + 保证有重复 ⟹</text>
+  <text x="580" y="278" font-size="11" fill="#555">至多扫前 27 个字符必命中（27 &gt; 26）</text>
+
+  <!-- 三种 seen 实现 -->
+  <text x="70" y="312" font-size="13" font-weight="bold" fill="#2b6e9e">seen 的三种实现</text>
+
+  <g filter="url(#sk)"><rect x="70" y="322" width="250" height="86" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <text x="90" y="346" font-size="12" font-weight="bold" fill="#2e6e2e">① 哈希集合（通用）</text>
+  <text x="90" y="370" font-size="10.5" fill="#444" font-family="monospace">seen = set() / unordered_set</text>
+  <text x="90" y="392" font-size="11" fill="#888">任意字符集可用，时间 O(n) 均摊</text>
+
+  <g filter="url(#sk)"><rect x="345" y="322" width="250" height="86" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="365" y="346" font-size="12" font-weight="bold" fill="#2b6e9e">② 定长数组 int[26]</text>
+  <text x="365" y="370" font-size="10.5" fill="#444" font-family="monospace">下标 c - 'a'，无哈希开销</text>
+  <text x="365" y="392" font-size="11" fill="#888">小写字母集下常数最小</text>
+
+  <g filter="url(#sk)"><rect x="620" y="322" width="250" height="86" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/></g>
+  <text x="640" y="346" font-size="12" font-weight="bold" fill="#7a5415">③ 26 位位掩码</text>
+  <text x="640" y="370" font-size="10.5" fill="#444" font-family="monospace">mask |= 1 &lt;&lt; (c-'a')</text>
+  <text x="640" y="392" font-size="11" fill="#888">一个整数当集合，空间 O(1)</text>
+</svg>
