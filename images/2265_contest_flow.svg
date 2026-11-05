@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="560" viewBox="0 0 680 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="560" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：dfs(u) 返回 (sum, cnt)，命中则计数</text>
+  <path d="M 150 38 Q 340 48 530 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="145" y="56" width="110" height="32" rx="14" fill="#e8f0fa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="200" y="77" text-anchor="middle" font-size="13" fill="#2b4a66" font-family="monospace" font-weight="bold">dfs(u)</text>
+
+  <!-- arrow start -> diamond1 -->
+  <g filter="url(#sk)">
+    <path d="M 200 88 L 200 116" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- diamond 1: null? -->
+  <g filter="url(#sk)">
+    <polygon points="200,118 262,152 200,186 138,152" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="200" y="150" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">u 为空 ?</text>
+  <text x="200" y="167" text-anchor="middle" font-size="10" fill="#999">(空子树)</text>
+
+  <!-- yes branch: return (0,0) -->
+  <g filter="url(#sk)">
+    <path d="M 262 152 L 336 152" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="296" y="143" text-anchor="middle" font-size="11.5" fill="#8e3a36" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="340" y="134" width="130" height="36" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="405" y="157" text-anchor="middle" font-size="12.5" fill="#8e3a36" font-family="monospace" font-weight="bold">return (0, 0)</text>
+  <text x="478" y="157" font-size="10.5" fill="#888">不判定、不除法</text>
+
+  <!-- no branch -->
+  <g filter="url(#sk)">
+    <path d="M 200 186 L 200 214" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="212" y="205" font-size="11.5" fill="#4a8e4a" font-weight="bold">否</text>
+
+  <!-- recurse box -->
+  <g filter="url(#sk)">
+    <rect x="88" y="216" width="224" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="200" y="238" text-anchor="middle" font-size="11.5" fill="#2b4a66" font-family="monospace">(sL, cL) = dfs(u.left)</text>
+  <text x="200" y="258" text-anchor="middle" font-size="11.5" fill="#2b4a66" font-family="monospace">(sR, cR) = dfs(u.right)</text>
+  <text x="330" y="248" font-size="10.5" fill="#888">先左右</text>
+
+  <g filter="url(#sk)">
+    <path d="M 200 272 L 200 298" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- aggregate box -->
+  <g filter="url(#sk)">
+    <rect x="100" y="300" width="200" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="200" y="322" text-anchor="middle" font-size="11.5" fill="#2b4a66" font-family="monospace">s = u.val + sL + sR</text>
+  <text x="200" y="342" text-anchor="middle" font-size="11.5" fill="#2b4a66" font-family="monospace">c = 1 + cL + cR</text>
+  <text x="316" y="332" font-size="10.5" fill="#888">后根</text>
+
+  <g filter="url(#sk)">
+    <path d="M 200 356 L 200 382" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- diamond 2: avg == val ? -->
+  <g filter="url(#sk)">
+    <polygon points="200,384 278,418 200,452 122,418" fill="#f4faf5" stroke="#4a8e4a" stroke-width="1.7"/>
+  </g>
+  <text x="200" y="415" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace" font-weight="bold">⌊s / c⌋ == u.val</text>
+  <text x="200" y="434" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">?</text>
+
+  <!-- yes branch: ans += 1 -->
+  <g filter="url(#sk)">
+    <path d="M 278 418 L 336 418" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="304" y="409" text-anchor="middle" font-size="11.5" fill="#8e3a36" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="340" y="400" width="104" height="36" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="392" y="423" text-anchor="middle" font-size="12.5" fill="#2e6e2e" font-family="monospace" font-weight="bold">ans += 1</text>
+
+  <!-- merge to return -->
+  <g filter="url(#sk)">
+    <path d="M 392 436 L 392 501 L 272 501" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 200 452 L 200 478" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="230" y="475" font-size="11.5" fill="#4a8e4a" font-weight="bold">否</text>
+
+  <!-- return box -->
+  <g filter="url(#sk)">
+    <rect x="138" y="482" width="126" height="38" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2"/>
+  </g>
+  <text x="201" y="506" text-anchor="middle" font-size="12.5" fill="#2e6e2e" font-family="monospace" font-weight="bold">return (s, c)</text>
+  <text x="284" y="506" font-size="10.5" fill="#888">供父节点合并</text>
+
+  <!-- right notes -->
+  <g filter="url(#sk)">
+    <rect x="496" y="216" width="166" height="180" rx="10" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="579" y="240" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#9a6a15">实现要点</text>
+  <text x="512" y="266" font-size="10.5" fill="#444">• 空节点不做除法判定</text>
+  <text x="512" y="288" font-size="10.5" fill="#444">• 非空节点 c ≥ 1，无除零</text>
+  <text x="512" y="310" font-size="10.5" fill="#444">• 整数除法即向下取整</text>
+  <text x="512" y="332" font-size="10.5" fill="#444">  （值域非负）</text>
+  <text x="512" y="354" font-size="10.5" fill="#444">• ans 用成员 / nonlocal</text>
+  <text x="512" y="376" font-size="10.5" fill="#444">  副作用累计</text>
+
+  <!-- bottom bar -->
+  <g filter="url(#sk)">
+    <rect x="40" y="530" width="618" height="22" rx="6" fill="#f4f6f8" stroke="#aab4be" stroke-width="1"/>
+  </g>
+  <text x="349" y="546" text-anchor="middle" font-size="11" fill="#555">主函数：ans = 0；dfs(root)；return ans —— 每个节点恰好访问一次，总时间 O(n)</text>
+</svg>
