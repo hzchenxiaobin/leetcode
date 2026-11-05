@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="520" viewBox="0 0 680 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="520" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：预处理 f3 / f4，再单遍扫描结算</text>
+  <path d="M 120 42 Q 340 52 560 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- left: preprocessing panel -->
+  <g filter="url(#sk)">
+    <rect x="26" y="78" width="216" height="196" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="134" y="104" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">预处理（一次，O(n)）</text>
+  <text x="134" y="130" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">f3[0] = f4[0] = 1</text>
+  <text x="134" y="156" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">f3[i] = f3[i-1]+f3[i-2]+f3[i-3]</text>
+  <text x="134" y="182" text-anchor="middle" font-size="11.5" fill="#444" font-family="monospace">f4[i] = f4[i-1]+…+f4[i-4]</text>
+  <text x="134" y="208" text-anchor="middle" font-size="11.5" fill="#666" font-family="monospace">每步对 1e9+7 取模</text>
+  <text x="134" y="234" text-anchor="middle" font-size="11.5" fill="#666">也可滚动 4 个变量做到 O(1) 空间</text>
+  <text x="134" y="260" text-anchor="middle" font-size="11" fill="#888">f3 ↔ 按键 2,3,4,5,6,8</text>
+  <path d="M 242 176 L 268 176" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- main flow -->
+  <g filter="url(#sk)">
+    <ellipse cx="400" cy="86" rx="52" ry="22" fill="#f2f7fc" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="400" y="91" text-anchor="middle" font-size="13" fill="#2b6e9e">开始</text>
+  <path d="M 400 108 L 400 126" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="322" y="128" width="156" height="34" rx="6" fill="#fff" stroke="#5a5a5a" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="150" text-anchor="middle" font-size="12.5" fill="#333" font-family="monospace">i = 0, ans = 1</text>
+  <path d="M 400 162 L 400 180" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="292" y="182" width="216" height="36" rx="6" fill="#fff" stroke="#5a5a5a" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="205" text-anchor="middle" font-size="12" fill="#333">j 右移到首个 s[j] ≠ s[i]，令 L = j − i</text>
+  <path d="M 400 218 L 400 236" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="400,238 478,282 400,326 322,282" fill="#fdf6ee" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="400" y="287" text-anchor="middle" font-size="12.5" fill="#9a6a15">s[i] 是 7 或 9 ?</text>
+  <path d="M 322 282 L 276 282" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 478 282 L 524 282" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="292" y="272" font-size="11.5" fill="#2e6e2e">否</text>
+  <text x="496" y="272" font-size="11.5" fill="#2b6e9e">是</text>
+
+  <g filter="url(#sk)">
+    <rect x="156" y="264" width="118" height="36" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="215" y="287" text-anchor="middle" font-size="12.5" fill="#2e6e2e" font-family="monospace">f = f3[L]</text>
+  <g filter="url(#sk)">
+    <rect x="526" y="264" width="118" height="36" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="585" y="287" text-anchor="middle" font-size="12.5" fill="#2b6e9e" font-family="monospace">f = f4[L]</text>
+  <path d="M 215 300 L 215 336 L 346 336" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 585 300 L 585 336 L 454 336" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="348" y="322" width="104" height="34" rx="6" fill="#fff8e1" stroke="#c98a2b" stroke-width="2.2"/>
+  </g>
+  <text x="400" y="344" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#9a6a15" font-family="monospace">ans = ans·f % p</text>
+  <path d="M 400 356 L 400 374" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="400,376 462,412 400,448 338,412" fill="#f2f7fc" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="400" y="417" text-anchor="middle" font-size="12.5" fill="#2b6e9e">i = j &lt; n ?</text>
+  <path d="M 462 412 L 528 412" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="484" y="404" font-size="11.5" fill="#b85450">否</text>
+  <path d="M 338 412 L 240 412 Q 220 412 220 392 L 220 200 Q 220 182 240 182 L 288 182" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="256" y="432" font-size="11.5" fill="#b85450">是：继续下一段</text>
+
+  <g filter="url(#sk)">
+    <ellipse cx="588" cy="412" rx="58" ry="24" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="588" y="417" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">返回 ans</text>
+
+  <!-- bottom complexity note -->
+  <g filter="url(#sk)">
+    <rect x="26" y="458" width="628" height="42" rx="8" fill="#f4faf5" stroke="#4a8e4a" stroke-width="1.2"/>
+  </g>
+  <text x="50" y="484" font-size="12.5" fill="#333">每段结算 O(1) 查表，总时间 O(n)；空间 O(n)（预处理数组）或 O(1)（滚动四值）。</text>
+</svg>
