@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="560" viewBox="0 0 680 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="560" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：三剪枝 → 行序逐格递推（bitset 压位）→ 终点判 bit0</text>
+  <path d="M 120 42 Q 340 52 560 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <ellipse cx="360" cy="74" rx="46" ry="20" fill="#f2f7fc" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="360" y="79" text-anchor="middle" font-size="13" fill="#2b6e9e">开始</text>
+  <path d="M 360 94 L 360 110" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- prune diamond -->
+  <g filter="url(#sk)">
+    <polygon points="360,112 490,148 360,184 230,148" fill="#fdf6ee" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="360" y="144" text-anchor="middle" font-size="12" fill="#9a6a15">m+n 为奇 · 首 '(' · 末 ')'</text>
+  <text x="360" y="162" text-anchor="middle" font-size="12" fill="#9a6a15">三条都成立？</text>
+  <path d="M 490 148 L 536 148" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="504" y="140" font-size="11.5" fill="#b85450">否</text>
+  <g filter="url(#sk)">
+    <ellipse cx="596" cy="148" rx="52" ry="21" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="596" y="153" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">返回 false</text>
+  <path d="M 360 184 L 360 200" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="370" y="198" font-size="11.5" fill="#2e6e2e">是</text>
+
+  <!-- init -->
+  <g filter="url(#sk)">
+    <rect x="250" y="202" width="220" height="36" rx="6" fill="#fff" stroke="#5a5a5a" stroke-width="1.5"/>
+  </g>
+  <text x="360" y="225" text-anchor="middle" font-size="12" fill="#333">dp[0][0] ← bit 1（起点必 '(' → bal = 1）</text>
+  <path d="M 360 238 L 360 254" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop box (double border) -->
+  <g filter="url(#sk)">
+    <rect x="258" y="258" width="204" height="34" rx="6" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.8"/>
+    <rect x="262" y="262" width="196" height="26" rx="4" fill="none" stroke="#c98a2b" stroke-width="0.9"/>
+  </g>
+  <text x="360" y="280" text-anchor="middle" font-size="12" fill="#9a6a15">按行序遍历每格 (i, j)（跳过起点）</text>
+
+  <path d="M 360 292 L 360 308" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="370" y="306" font-size="11" fill="#666">每格</text>
+
+  <!-- frm -->
+  <g filter="url(#sk)">
+    <rect x="265" y="310" width="190" height="34" rx="6" fill="#fff" stroke="#5a5a5a" stroke-width="1.5"/>
+  </g>
+  <text x="360" y="332" text-anchor="middle" font-size="12" fill="#333" font-family="monospace">frm = dp[i-1][j] | dp[i][j-1]</text>
+  <path d="M 360 344 L 360 360" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- char diamond -->
+  <g filter="url(#sk)">
+    <polygon points="360,362 452,396 360,430 268,396" fill="#f2f7fc" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="360" y="401" text-anchor="middle" font-size="12" fill="#2b6e9e" font-family="monospace">grid[i][j] = '(' ?</text>
+
+  <path d="M 268 396 L 240 396" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="252" y="388" font-size="11.5" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <rect x="76" y="378" width="160" height="38" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="156" y="393" text-anchor="middle" font-size="12" fill="#2b6e9e" font-family="monospace">cur = frm &lt;&lt; 1</text>
+  <text x="156" y="409" text-anchor="middle" font-size="10.5" fill="#666">全体 bal +1</text>
+
+  <path d="M 452 396 L 480 396" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="460" y="388" font-size="11.5" fill="#b85450">否</text>
+  <g filter="url(#sk)">
+    <rect x="484" y="378" width="160" height="38" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="564" y="393" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">cur = frm &gt;&gt; 1</text>
+  <text x="564" y="409" text-anchor="middle" font-size="10.5" fill="#666">bal −1，bit0 自动丢弃</text>
+
+  <!-- merge into mask -->
+  <path d="M 156 416 L 156 462 L 246 462" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 564 416 L 564 462 L 474 462" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="250" y="444" width="220" height="38" rx="6" fill="#fff8e1" stroke="#c98a2b" stroke-width="2"/>
+  </g>
+  <text x="360" y="460" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#9a6a15" font-family="monospace">cur &amp;= (1&lt;&lt;(rem+1))−1，dp[i][j] = cur</text>
+  <text x="360" y="476" text-anchor="middle" font-size="10.5" fill="#666">上界剪枝：只保留 bal ≤ rem</text>
+
+  <!-- loop back -->
+  <path d="M 360 482 L 360 496 L 52 496 L 52 274 L 252 274" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="130" y="490" font-size="11" fill="#b85450">下一格</text>
+
+  <!-- loop end -> final check -->
+  <path d="M 462 275 L 575 275 L 575 304" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="502" y="268" font-size="11" fill="#666">遍历结束</text>
+
+  <g filter="url(#sk)">
+    <polygon points="575,306 660,340 575,374 490,340" fill="#f2f7fc" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="575" y="336" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-family="monospace">dp[m-1][n-1]</text>
+  <text x="575" y="353" text-anchor="middle" font-size="11.5" fill="#2b6e9e">的 bit0 = 1 ?</text>
+
+  <path d="M 575 374 L 575 398" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="585" y="392" font-size="11.5" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <ellipse cx="575" cy="422" rx="54" ry="20" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="575" y="427" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">返回 true</text>
+
+  <path d="M 490 340 L 446 340 L 446 400" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="470" y="332" font-size="11.5" fill="#b85450">否</text>
+  <g filter="url(#sk)">
+    <ellipse cx="446" cy="422" rx="54" ry="20" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="446" y="427" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">返回 false</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="26" y="452" width="400" height="76" rx="8" fill="#f4faf5" stroke="#4a8e4a" stroke-width="1.2"/>
+  </g>
+  <text x="42" y="476" font-size="11.5" fill="#333">每格一个 ≤ 200 位 bitset ≈ 4 个 64 位字，</text>
+  <text x="42" y="496" font-size="11.5" fill="#333">总时间 O(mn·(m+n)/w)；按行滚动可把空间</text>
+  <text x="42" y="516" font-size="11.5" fill="#333">降到 O(n·(m+n)/w)。右移丢 bit0 即下界剪枝。</text>
+</svg>
