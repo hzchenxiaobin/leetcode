@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="900" height="520" fill="#fdfcf7"/>
+  <text x="450" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">核心观察：只看一层的局部决策会翻车 —— 子结构必须递归</text>
+  <path d="M 200 40 Q 450 48 700 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 左：报价表 ===== -->
+  <g filter="url(#sk)"><rect x="25" y="70" width="230" height="240" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3"/></g>
+  <text x="140" y="94" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">报价表（m = n = 3）</text>
+  <text x="45" y="122" font-size="12.5" fill="#a04a48" font-weight="bold">3×3 → 10 元（整块）</text>
+  <text x="45" y="148" font-size="12.5" fill="#444">1×3 → 4 元</text>
+  <text x="45" y="174" font-size="12.5" fill="#444">2×3 → 5 元</text>
+  <text x="45" y="200" font-size="12.5" fill="#444">2×2 → 4 元</text>
+  <text x="45" y="226" font-size="12.5" fill="#444">2×1 → 3 元</text>
+  <line x1="45" y1="240" x2="235" y2="240" stroke="#e0d8c0" stroke-width="1" filter="url(#sk)"/>
+  <text x="45" y="262" font-size="11" fill="#888">陷阱一：2×2 报价 4，切成两个</text>
+  <text x="45" y="280" font-size="11" fill="#888">2×1 反而 3 + 3 = 6，切赢整块</text>
+  <text x="45" y="298" font-size="11" fill="#888">陷阱二：2×1 单价 1.5 最高</text>
+
+  <!-- ===== 中：方案 A ===== -->
+  <g filter="url(#sk)"><rect x="275" y="70" width="310" height="240" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="430" y="94" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">方案 A：单刀视角 → 整块卖 10 元</text>
+  <!-- 3x3 整块 grid: cell 32, origin (374, 106) -->
+  <g filter="url(#sk)"><rect x="374" y="106" width="96" height="96" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+  <g filter="url(#sk)" stroke="#4a8edb" stroke-width="1" opacity="0.45">
+    <line x1="406" y1="106" x2="406" y2="202"/><line x1="438" y1="106" x2="438" y2="202"/>
+    <line x1="374" y1="138" x2="470" y2="138"/><line x1="374" y1="170" x2="470" y2="170"/>
+  </g>
+  <text x="422" y="160" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">3×3</text>
+  <text x="500" y="128" font-size="11" fill="#2b6e9e" font-weight="bold">不切 = 10 元</text>
+  <text x="500" y="148" font-size="11" fill="#888">（整块报价）</text>
+  <text x="295" y="228" font-size="11.5" fill="#444">横切 k=1：1×3 + 2×3 = 4 + 5 = <tspan font-weight="bold" fill="#a04a48">9 ＜ 10</tspan></text>
+  <text x="295" y="250" font-size="11.5" fill="#444">竖切 k=1：3×1 + 3×2 = 0 + 0 = <tspan font-weight="bold">0</tspan></text>
+  <text x="295" y="278" font-size="11.5" fill="#2b6e9e" font-weight="bold">→ 整块不输任何一刀，看似不该切 ✓</text>
+  <text x="295" y="298" font-size="11" fill="#a04a48">（用「原始报价」比一刀，是假象）</text>
+
+  <!-- ===== 右：方案 B ===== -->
+  <g filter="url(#sk)"><rect x="605" y="70" width="270" height="240" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/></g>
+  <text x="740" y="94" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">方案 B：往深再切两刀 → 13 元</text>
+  <!-- grid: cell 32, origin (689, 106)；顶条 1×3 绿；下部三个 2×1 橙 -->
+  <g filter="url(#sk)"><rect x="689" y="106" width="96" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="689" y="138" width="32" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="721" y="138" width="32" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="753" y="138" width="32" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <!-- 切割线：红色虚线 -->
+  <g filter="url(#sk)">
+    <line x1="684" y1="138" x2="790" y2="138" stroke="#b85450" stroke-width="2.4" stroke-dasharray="6 4"/>
+    <line x1="721" y1="134" x2="721" y2="206" stroke="#b85450" stroke-width="2.4" stroke-dasharray="6 4"/>
+    <line x1="753" y1="134" x2="753" y2="206" stroke="#b85450" stroke-width="2.4" stroke-dasharray="6 4"/>
+  </g>
+  <text x="737" y="127" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">1×3 卖 4</text>
+  <text x="705" y="174" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a20">3</text>
+  <text x="737" y="174" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a20">3</text>
+  <text x="769" y="174" text-anchor="middle" font-size="11" font-weight="bold" fill="#a06a20">3</text>
+  <text x="625" y="228" font-size="11.5" fill="#444">横切分出 1×3；下块 2×3</text>
+  <text x="625" y="248" font-size="11.5" fill="#444">再竖切成三个 2×1</text>
+  <text x="625" y="272" font-size="12" fill="#2e6e2e" font-weight="bold">收入 4 + 3 + 3 + 3 = 13 元</text>
+  <text x="625" y="296" font-size="12.5" fill="#a04a48" font-weight="bold">13 ＞ 10，深切反超！</text>
+
+  <!-- ===== 结论框 ===== -->
+  <g filter="url(#sk)"><rect x="25" y="336" width="850" height="122" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="450" y="362" text-anchor="middle" font-size="13" font-weight="bold" fill="#a04a48">一刀比不过 ≠ 不该切：收益藏在子块的第二、三层里</text>
+  <text x="450" y="386" text-anchor="middle" font-size="11.5" fill="#444">单价贪心同样没保证：如 3×3 整块报 11 元、2×2 报 8 元 —— 先抢单价高的 2×2，</text>
+  <text x="450" y="406" text-anchor="middle" font-size="11.5" fill="#444">剩余的 3×1、1×2 无报价可卖，总共只赚 8 ＜ 11（整块反而更优）</text>
+  <text x="450" y="434" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">→ 「一块 i×j 木块最多卖多少钱」必须整体递归求解 —— 二维切分 DP 登场</text>
+
+  <text x="450" y="488" text-anchor="middle" font-size="11" fill="#888">切割必须完全贯穿（每刀得到两个矩形）；切好的子块独立定价、互不影响 —— 最优子结构的来源</text>
+</svg>
