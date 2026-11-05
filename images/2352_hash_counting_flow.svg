@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="620" viewBox="0 0 900 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="6" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arGr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+  </defs>
+  <rect width="900" height="620" fill="#fdfcf7"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：阶段一「行建索引」→ 阶段二「列查索引」</text>
+  <path d="M 250 44 Q 450 52 650 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 阶段一容器 -->
+  <rect x="40" y="62" width="820" height="212" rx="12" fill="#f0f6fc" stroke="#4a8edb" stroke-width="1.4" stroke-dasharray="7 5" filter="url(#sk)"/>
+  <text x="64" y="90" font-size="14" font-weight="bold" fill="#2b6e9e">阶段一 · 建行索引（遍历每一行）</text>
+
+  <rect x="64" y="108" width="176" height="27" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="152" y="126" text-anchor="middle" font-size="12" fill="#333">R0 = [3,1,2,2]</text>
+  <rect x="64" y="141" width="176" height="27" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="152" y="159" text-anchor="middle" font-size="12" fill="#333">R1 = [1,4,4,5]</text>
+  <rect x="64" y="174" width="176" height="27" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="152" y="192" text-anchor="middle" font-size="12" fill="#7a5415">R2 = [2,4,2,2]</text>
+  <rect x="64" y="207" width="176" height="27" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="152" y="225" text-anchor="middle" font-size="12" fill="#7a5415">R3 = [2,4,2,2]</text>
+
+  <path d="M 246 170 L 266 170" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <rect x="272" y="128" width="212" height="84" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="378" y="152" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">序列化作键</text>
+  <text x="378" y="172" text-anchor="middle" font-size="11" fill="#555">to_string 逐元素 + '#' 连接</text>
+  <text x="378" y="192" text-anchor="middle" font-size="11" fill="#555">例：[2,4,2,2] → "2#4#2#2#"</text>
+
+  <path d="M 488 170 L 526 170" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- 哈希表 -->
+  <rect x="530" y="90" width="310" height="156" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="685" y="114" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415">rowCnt（哈希表）</text>
+  <rect x="550" y="126" width="270" height="26" rx="4" fill="#fdfcf7" stroke="#bbb" stroke-width="1.2" filter="url(#sk)"/>
+  <text x="566" y="143" font-size="11.5" fill="#444">"3#1#2#2#"</text>
+  <text x="800" y="143" text-anchor="end" font-size="11.5" fill="#444">→ 1</text>
+  <rect x="550" y="158" width="270" height="26" rx="4" fill="#fdfcf7" stroke="#bbb" stroke-width="1.2" filter="url(#sk)"/>
+  <text x="566" y="175" font-size="11.5" fill="#444">"1#4#4#5#"</text>
+  <text x="800" y="175" text-anchor="end" font-size="11.5" fill="#444">→ 1</text>
+  <rect x="550" y="190" width="270" height="26" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="566" y="207" font-size="11.5" font-weight="bold" fill="#8c3a36">"2#4#2#2#"</text>
+  <text x="800" y="207" text-anchor="end" font-size="11.5" font-weight="bold" fill="#8c3a36">→ 2 ★</text>
+  <text x="685" y="236" text-anchor="middle" font-size="10.5" fill="#b85450">R2、R3 同键 → 计数合并为 2</text>
+
+  <!-- 阶段二容器 -->
+  <rect x="40" y="300" width="820" height="212" rx="12" fill="#f0f9f1" stroke="#4a8e4a" stroke-width="1.4" stroke-dasharray="7 5" filter="url(#sk)"/>
+  <text x="64" y="328" font-size="14" font-weight="bold" fill="#2e6e2e">阶段二 · 列查索引（遍历每一列）</text>
+
+  <rect x="64" y="346" width="176" height="27" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="152" y="364" text-anchor="middle" font-size="12" fill="#333">C0 = [3,1,2,2]</text>
+  <rect x="64" y="379" width="176" height="27" rx="6" fill="#f7f6f1" stroke="#9a9a92" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="152" y="397" text-anchor="middle" font-size="12" fill="#666">C1 = [1,4,4,4]</text>
+  <rect x="64" y="412" width="176" height="27" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="152" y="430" text-anchor="middle" font-size="12" fill="#7a5415">C2 = [2,4,2,2]</text>
+  <rect x="64" y="445" width="176" height="27" rx="6" fill="#f7f6f1" stroke="#9a9a92" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="152" y="463" text-anchor="middle" font-size="12" fill="#666">C3 = [2,5,2,2]</text>
+
+  <path d="M 246 408 L 266 408" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arGr)" filter="url(#sk)"/>
+
+  <rect x="272" y="366" width="212" height="84" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="378" y="390" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">同样方式序列化列</text>
+  <text x="378" y="410" text-anchor="middle" font-size="11" fill="#555">按行下标自上而下读取</text>
+  <text x="378" y="430" text-anchor="middle" font-size="11" fill="#555">例：C2 → "2#4#2#2#"</text>
+
+  <path d="M 488 402 C 504 396, 512 388, 526 380" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arGr)" filter="url(#sk)"/>
+
+  <!-- 查询累加框 -->
+  <rect x="530" y="328" width="310" height="156" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="685" y="354" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e">ans += rowCnt[key]</text>
+  <text x="685" y="384" text-anchor="middle" font-size="12" fill="#444">C0：+1　C1：+0　C2：+2　C3：+0</text>
+  <text x="685" y="410" text-anchor="middle" font-size="12" fill="#444">ans 变化：0 → 1 → 1 → 3 → 3</text>
+  <text x="685" y="442" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">返回 ans = 3 ✓</text>
+  <text x="685" y="466" text-anchor="middle" font-size="10.5" fill="#888">缺失键计 0，不贡献</text>
+
+  <!-- 哈希表 → 查询框 的虚线连接 -->
+  <path d="M 685 250 L 685 322" stroke="#c98a2b" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <!-- 底部小结 -->
+  <rect x="40" y="534" width="820" height="64" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="450" y="560" text-anchor="middle" font-size="12.5" fill="#333">两次线性扫描：2n 次序列化（每次 O(n)）+ 2n 次哈希插入/查询（摊还 O(1)）</text>
+  <text x="450" y="584" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">时间 O(n²)，空间 O(n²)（至多 n 个键 × 每键长 O(n)）</text>
+</svg>
