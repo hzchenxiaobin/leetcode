@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="430" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：按边界 j 分解，两侧按不同字符数 d 分桶，乘法原理合并</text>
+  <text x="320" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">s = "abcac"，边界 j = 1：s1 必须以 1 结尾，s2 必须以 2 开头，两侧独立选取</text>
+
+  <!-- 字符格子 -->
+  <rect x="160" y="66" width="56" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="188" y="90" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">a</text>
+  <rect x="216" y="66" width="56" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="244" y="90" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">b</text>
+  <rect x="272" y="66" width="56" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="90" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">c</text>
+  <rect x="328" y="66" width="56" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="356" y="90" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">a</text>
+  <rect x="384" y="66" width="56" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="412" y="90" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">c</text>
+
+  <text x="188" y="116" text-anchor="middle" font-size="9.5" fill="#446688" filter="url(#rough2)">下标 0</text>
+  <text x="244" y="116" text-anchor="middle" font-size="9.5" fill="#446688" filter="url(#rough2)">下标 1 = j</text>
+  <text x="300" y="116" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">下标 2 = j+1</text>
+  <text x="412" y="116" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">下标 4</text>
+
+  <!-- 边界虚线 -->
+  <path d="M272,58 L272,112" stroke="#b85450" stroke-width="2.5" stroke-dasharray="6 4" fill="none" filter="url(#rough2)"/>
+
+  <!-- 两个桶框 -->
+  <rect x="52" y="134" width="250" height="118" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="177" y="156" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">L 桶：以 j=1 结尾的子串</text>
+  <text x="72" y="180" font-size="11" fill="#333" filter="url(#rough2)">d = 1：[1,1]"b"　→　1 个</text>
+  <text x="72" y="202" font-size="11" fill="#333" filter="url(#rough2)">d = 2：[0,1]"ab"　→　1 个</text>
+  <text x="72" y="232" font-size="10.5" fill="#888" filter="url(#rough2)">记 L₁(1) = 1，L₁(2) = 1，其余为 0</text>
+
+  <rect x="338" y="134" width="250" height="118" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="463" y="156" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">R 桶：以 j+1=2 开头的子串</text>
+  <text x="358" y="180" font-size="11" fill="#333" filter="url(#rough2)">d = 1：[2,2]"c"　→　1 个</text>
+  <text x="358" y="202" font-size="11" fill="#333" filter="url(#rough2)">d = 2：[2,3]"ca"、[2,4]"cac"　→　2 个</text>
+  <text x="358" y="232" font-size="10.5" fill="#888" filter="url(#rough2)">记 R₂(1) = 1，R₂(2) = 2，其余为 0</text>
+
+  <!-- 乘号连接 -->
+  <text x="320" y="198" text-anchor="middle" font-size="20" fill="#d6a040" font-weight="bold" filter="url(#rough2)">×</text>
+
+  <!-- 贡献框 -->
+  <rect x="52" y="266" width="536" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="291" text-anchor="middle" font-size="12" fill="#8a6a1a" filter="url(#rough2)">边界 1 的贡献 = L₁(1)×R₂(1) + L₁(2)×R₂(2) = 1×1 + 1×2 = 3</text>
+
+  <!-- 公式框 -->
+  <rect x="52" y="318" width="536" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="343" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">ans = Σ (j=0..n−2) Σ (d=1..26)  L_j(d) × R_(j+1)(d)</text>
+
+  <text x="320" y="386" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">小写字母 → 不同字符数 d ∈ [1, 26]，桶极少，逐对枚举被桶内乘法取代</text>
+  <text x="320" y="408" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">固定一端、向另一端扩展时，d 可 O(1) 增量维护 → 每个桶表一趟线性扫描可得</text>
+</svg>
