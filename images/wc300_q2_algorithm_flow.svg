@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 600"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="600" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14" fill="#555" font-weight="bold" filter="url(#rough2)">算法流程：边推进链表，边螺旋填格</text>
+
+  <!-- init -->
+  <rect x="95" y="42" width="270" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="230" y="60" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">ans ← m×n 全 −1；(x,y) ← (0,0)</text>
+  <text x="230" y="78" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">d ← 0（向右）；cur ← head</text>
+
+  <path d="M 230 86 Q 230 91 230 97" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="230,100 335,136 230,172 125,136" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="230" y="141" text-anchor="middle" font-size="11.5" fill="#a08030" filter="url(#rough2)">cur ≠ null ?</text>
+
+  <!-- no -> return -->
+  <path d="M 335 136 L 405 136" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="362" y="128" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="408" y="118" width="132" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="474" y="141" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">返回 ans</text>
+
+  <!-- yes -->
+  <path d="M 230 172 Q 230 177 230 183" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="238" y="181" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- fill value -->
+  <rect x="110" y="184" width="240" height="40" fill="#ffffff" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="230" y="202" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">ans[x][y] ← cur-&gt;val</text>
+  <text x="230" y="218" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">cur ← cur-&gt;next</text>
+
+  <path d="M 230 224 Q 230 229 230 235" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- probe -->
+  <rect x="110" y="236" width="240" height="34" fill="#ffffff" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="230" y="257" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">(nx,ny) ← (x+dx[d], y+dy[d])</text>
+
+  <path d="M 230 270 Q 230 275 230 281" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond 2 -->
+  <polygon points="230,282 352,322 230,362 108,322" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="230" y="318" text-anchor="middle" font-size="11" fill="#a08030" filter="url(#rough2)">出界 或</text>
+  <text x="230" y="336" text-anchor="middle" font-size="11" fill="#a08030" filter="url(#rough2)">ans[nx][ny] ≠ −1 ?</text>
+
+  <!-- yes -> turn right -->
+  <path d="M 352 322 L 392 322" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="366" y="314" font-size="10.5" fill="#b85450" filter="url(#rough2)">是</text>
+  <rect x="395" y="302" width="150" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="8" filter="url(#rough2)"/>
+  <text x="470" y="320" text-anchor="middle" font-size="11" fill="#a08030" font-weight="bold" filter="url(#rough2)">d ← (d+1) mod 4</text>
+  <text x="470" y="336" text-anchor="middle" font-size="10" fill="#a08030" filter="url(#rough2)">（右转 90°）</text>
+
+  <!-- turn box joins move box -->
+  <path d="M 470 342 Q 470 372 470 402 L 354 404" fill="none" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- no -> move -->
+  <path d="M 230 362 Q 230 373 230 386" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="240" y="378" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">否（直行）</text>
+
+  <!-- move -->
+  <rect x="110" y="388" width="240" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="230" y="411" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold" filter="url(#rough2)">x ← x+dx[d]；y ← y+dy[d]</text>
+
+  <!-- loop back -->
+  <path d="M 110 406 L 56 406 L 56 136 L 121 136" fill="none" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="44" y="280" font-size="10" fill="#888" transform="rotate(-90 44 280)" text-anchor="middle" filter="url(#rough2)">回到 cur 判空</text>
+
+  <!-- side note 1 -->
+  <rect x="395" y="180" width="150" height="80" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="470" y="204" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">链表耗尽即停</text>
+  <text x="470" y="226" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">未访问格子保持 −1</text>
+  <text x="470" y="248" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">无需先统计链表长度</text>
+
+  <!-- side note 2 -->
+  <rect x="390" y="432" width="160" height="104" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="470" y="454" text-anchor="middle" font-size="11" fill="#a08030" font-weight="bold" filter="url(#rough2)">最后一步的「脏坐标」</text>
+  <text x="470" y="476" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">填完最后一格后仍会</text>
+  <text x="470" y="492" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">探测移动一次，坐标可能</text>
+  <text x="470" y="508" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">无效——循环随即终止，</text>
+  <text x="470" y="524" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">不再被读取</text>
+</svg>
