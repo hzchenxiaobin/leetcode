@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="560" viewBox="0 0 640 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="640" height="560" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：预处理子集和 → k 层「状态 × 子集」递推 → f[U] 即答案</text>
+  <path d="M 110 36 Q 320 44 530 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 开始 -->
+  <g filter="url(#sk)"><ellipse cx="230" cy="62" rx="40" ry="15" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="230" y="66" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33455e">开始</text>
+  <path d="M 230 77 L 230 86" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 输入 -->
+  <g filter="url(#sk)"><rect x="100" y="88" width="260" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="230" y="107" text-anchor="middle" font-size="11.5" fill="#33455e" font-family="monospace">n = len(cookies)；U = (1&lt;&lt;n) − 1</text>
+  <path d="M 230 118 L 230 130" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 预处理子集和 -->
+  <g filter="url(#sk)"><rect x="50" y="132" width="360" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="230" y="150" text-anchor="middle" font-size="11" fill="#33455e" font-family="monospace">sum[s] = sum[s&amp;(s−1)] + cookies[lowbit(s)]</text>
+  <text x="230" y="168" text-anchor="middle" font-size="10.5" fill="#666">一遍 O(1) 递推，共 2^n 项</text>
+  <path d="M 230 176 L 230 188" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 第 0 层 -->
+  <g filter="url(#sk)"><rect x="100" y="190" width="260" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="230" y="209" text-anchor="middle" font-size="12" fill="#33455e">第 0 层：f[∅] = 0，其余 = ∞</text>
+  <path d="M 230 220 L 230 230" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 外层判断 -->
+  <g filter="url(#sk)"><polygon points="230,232 336,266 230,300 124,266" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="230" y="271" text-anchor="middle" font-size="12.5" fill="#2e5e2e">i ≤ k ？</text>
+  <path d="M 336 266 L 398 266" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="366" y="258" text-anchor="middle" font-size="11.5" fill="#666">否</text>
+  <g filter="url(#sk)"><rect x="400" y="250" width="132" height="32" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="466" y="270" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e2e">答案 = f[U]</text>
+  <path d="M 466 282 L 466 300" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><ellipse cx="466" cy="316" rx="34" ry="14" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="466" y="321" text-anchor="middle" font-size="12" fill="#2e5e2e">返回</text>
+  <path d="M 230 300 L 230 318" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="240" y="313" font-size="11.5" fill="#666">是</text>
+
+  <!-- 逐状态 -->
+  <g filter="url(#sk)"><rect x="90" y="320" width="280" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="230" y="339" text-anchor="middle" font-size="12" fill="#33455e">对每个状态 s = 0 … U（共 2^n 个）</text>
+  <path d="M 230 350 L 230 360" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 枚举子集 -->
+  <g filter="url(#sk)"><rect x="90" y="362" width="280" height="30" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="230" y="381" text-anchor="middle" font-size="12" fill="#7a5415">枚举 s 的全部子集 t（含 ∅ 与 s）</text>
+  <path d="M 230 392 L 230 402" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 松弛 -->
+  <g filter="url(#sk)"><rect x="60" y="404" width="340" height="36" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="230" y="426" text-anchor="middle" font-size="11" fill="#7a5415" font-family="monospace">newf[s] ← min( newf[s], max( f[s∖t], sum[t] ) )</text>
+  <path d="M 230 440 L 230 450" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 滚动 -->
+  <g filter="url(#sk)"><rect x="90" y="452" width="280" height="30" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="230" y="471" text-anchor="middle" font-size="12" fill="#2e5e2e">整层算完：f = newf（滚动翻面）</text>
+
+  <!-- 子集小回环 -->
+  <path d="M 402 422 L 434 422 L 434 377 L 376 377" stroke="#d6a040" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="404" y="371" font-size="10.5" fill="#7a5415">下一个 t</text>
+
+  <!-- 外层大回环 -->
+  <path d="M 230 482 L 230 506 L 60 506 L 60 266 L 120 266" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="95" y="524" text-anchor="middle" font-size="10.5" fill="#2e5e2e">i++，进入下一层</text>
+
+  <!-- 右侧警示：子集枚举模板 -->
+  <g filter="url(#sk)"><rect x="440" y="88" width="186" height="132" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/></g>
+  <text x="533" y="108" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a04a48">⚠ 子集枚举模板（头号易错）</text>
+  <text x="454" y="128" font-size="10.5" fill="#a04a48" font-family="monospace">t = s;</text>
+  <text x="454" y="146" font-size="10.5" fill="#a04a48" font-family="monospace">do { 用 t 转移;</text>
+  <text x="454" y="164" font-size="10.5" fill="#a04a48" font-family="monospace">  t = (t−1) &amp; s;</text>
+  <text x="454" y="182" font-size="10.5" fill="#a04a48" font-family="monospace">} while (t != s);</text>
+  <text x="533" y="206" text-anchor="middle" font-size="10.5" fill="#a04a48">写成 while(t) 会漏掉 t=∅</text>
+
+  <!-- 右侧注：复杂度 -->
+  <g filter="url(#sk)"><rect x="440" y="380" width="186" height="92" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/></g>
+  <text x="533" y="400" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e5e2e">复杂度账本</text>
+  <text x="533" y="420" text-anchor="middle" font-size="10.5" fill="#2e5e2e">每层 Σ_s 2^|s| = 3^n</text>
+  <text x="533" y="438" text-anchor="middle" font-size="10.5" fill="#2e5e2e">共 k 层 ⇒ k·3^n</text>
+  <text x="533" y="456" text-anchor="middle" font-size="10.5" fill="#2e5e2e">n=8, k=8：约 5.2×10^4 次</text>
+</svg>

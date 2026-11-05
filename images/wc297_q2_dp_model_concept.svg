@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b85450"/></marker>
+    <marker id="arb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#446688"/></marker>
+  </defs>
+  <rect width="640" height="440" fill="#fdfcf7"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：只能逐行向下 → 无环拓扑序 → 逐层网格 DP</text>
+  <path d="M 120 38 Q 320 46 520 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 列标签 -->
+  <text x="100" y="62" text-anchor="middle" font-size="10" fill="#999">列 0</text>
+  <text x="166" y="62" text-anchor="middle" font-size="10" fill="#999">列 1</text>
+  <text x="232" y="62" text-anchor="middle" font-size="10" fill="#999">列 2</text>
+
+  <!-- 第 0 行（起点行，虚线示意） -->
+  <g filter="url(#sk)"><rect x="70" y="70" width="60" height="30" rx="4" fill="#f4f4f4" stroke="#bdbdbd" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <g filter="url(#sk)"><rect x="136" y="70" width="60" height="30" rx="4" fill="#f4f4f4" stroke="#bdbdbd" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <g filter="url(#sk)"><rect x="202" y="70" width="60" height="30" rx="4" fill="#f4f4f4" stroke="#bdbdbd" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <text x="166" y="108" text-anchor="middle" font-size="14" fill="#999">⋮</text>
+  <text x="62" y="89" text-anchor="end" font-size="10.5" fill="#888">第 0 行</text>
+  <text x="62" y="102" text-anchor="end" font-size="9" fill="#aaa">起点任选</text>
+
+  <!-- 第 i−1 行：三个 k 格（浅蓝） -->
+  <g filter="url(#sk)"><rect x="70" y="124" width="60" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="136" y="124" width="60" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <g filter="url(#sk)"><rect x="202" y="124" width="60" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="100" y="143" text-anchor="middle" font-size="10.5" fill="#33455e">(i−1,0)</text>
+  <text x="166" y="143" text-anchor="middle" font-size="10.5" fill="#33455e">(i−1,1)</text>
+  <text x="232" y="143" text-anchor="middle" font-size="10.5" fill="#33455e">(i−1,2)</text>
+  <text x="62" y="143" text-anchor="end" font-size="10.5" fill="#446688" font-weight="bold">第 i−1 行</text>
+
+  <!-- 入边箭头：三个 k 都指向 (i,1) -->
+  <path d="M 100 154 Q 118 172 155 177" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arb)" filter="url(#sk)"/>
+  <path d="M 166 154 L 166 177" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arb)" filter="url(#sk)"/>
+  <path d="M 232 154 Q 214 172 177 177" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arb)" filter="url(#sk)"/>
+  <text x="166" y="172" text-anchor="middle" font-size="9" fill="#446688">n 条入边</text>
+
+  <!-- 第 i 行：目标格 (i,1) 高亮橙 -->
+  <g filter="url(#sk)"><rect x="70" y="178" width="60" height="30" rx="4" fill="#f6f6f4" stroke="#b8b8b8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="136" y="178" width="60" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/></g>
+  <g filter="url(#sk)"><rect x="202" y="178" width="60" height="30" rx="4" fill="#f6f6f4" stroke="#b8b8b8" stroke-width="1.2"/></g>
+  <text x="100" y="197" text-anchor="middle" font-size="10.5" fill="#777">(i,0)</text>
+  <text x="166" y="197" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#7a5415">(i,1)</text>
+  <text x="232" y="197" text-anchor="middle" font-size="10.5" fill="#777">(i,2)</text>
+  <text x="62" y="197" text-anchor="end" font-size="10.5" fill="#d6a040" font-weight="bold">第 i 行</text>
+  <text x="166" y="226" text-anchor="middle" font-size="14" fill="#999">⋮</text>
+
+  <!-- 第 m−1 行（终点行，虚线示意） -->
+  <g filter="url(#sk)"><rect x="70" y="232" width="60" height="30" rx="4" fill="#f4f4f4" stroke="#bdbdbd" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <g filter="url(#sk)"><rect x="136" y="232" width="60" height="30" rx="4" fill="#f4f4f4" stroke="#bdbdbd" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <g filter="url(#sk)"><rect x="202" y="232" width="60" height="30" rx="4" fill="#f4f4f4" stroke="#bdbdbd" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+  <text x="62" y="251" text-anchor="end" font-size="10.5" fill="#888">第 m−1 行</text>
+  <text x="62" y="264" text-anchor="end" font-size="9" fill="#aaa">终点任选</text>
+
+  <text x="166" y="286" text-anchor="middle" font-size="10.5" fill="#555">每格 n 条入边 ⇒ 单格转移 O(n)</text>
+
+  <!-- 连接箭头：网格 → 公式 -->
+  <path d="M 272 192 Q 312 176 336 112" stroke="#3a3a3a" stroke-width="1.3" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 转移公式框 -->
+  <g filter="url(#sk)"><rect x="340" y="70" width="282" height="72" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="481" y="92" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e" font-family="monospace">dp[i][j] = grid[i][j] +</text>
+  <text x="481" y="110" text-anchor="middle" font-size="11" fill="#2b6e9e" font-family="monospace">min_k { dp[i−1][k] +</text>
+  <text x="481" y="128" text-anchor="middle" font-size="11" fill="#2b6e9e" font-family="monospace">moveCost[grid[i−1][k]][j] }</text>
+
+  <!-- 值索引陷阱框 -->
+  <g filter="url(#sk)"><rect x="340" y="156" width="282" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/></g>
+  <text x="481" y="177" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">⚠ moveCost 第一维 = 出发格的「值」</text>
+  <text x="481" y="195" text-anchor="middle" font-size="10.5" fill="#555">grid[i−1][k]，不是列号 k —— 头号 WA</text>
+
+  <!-- 无后效性框 -->
+  <g filter="url(#sk)"><rect x="340" y="226" width="282" height="56" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/></g>
+  <text x="481" y="247" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e5e2e">无后效性：代价只看「当前格值 + 目标列」</text>
+  <text x="481" y="265" text-anchor="middle" font-size="10.5" fill="#555">怎么到达 (i,j) 不影响未来 → 状态 (i,j) 足够</text>
+
+  <!-- 底部答案框 -->
+  <g filter="url(#sk)"><rect x="70" y="312" width="552" height="52" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="346" y="334" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">答案 = min_j dp[m−1][j]</text>
+  <text x="346" y="352" text-anchor="middle" font-size="10.5" fill="#555">行号每步 +1 ⇒ 行序即拓扑序、无环 —— 逐行递推本身就是最短路</text>
+
+  <text x="320" y="420" text-anchor="middle" font-size="10.5" fill="#888">「只能到下一行」是题眼：先数每格入边（n 条）定复杂度 O(m·n²)，再按行序一层层推到底</text>
+</svg>
