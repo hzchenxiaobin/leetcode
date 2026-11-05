@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="680" viewBox="0 0 900 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="6" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="680" fill="#fdfcf7"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">changeRating("sushi", 16) 的两条实现路线</text>
+  <path d="M 230 44 Q 450 52 670 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 左栏：有序集合路线 -->
+  <rect x="40" y="62" width="400" height="470" rx="12" fill="#f0f6fc" stroke="#4a8edb" stroke-width="1.4" stroke-dasharray="7 5" filter="url(#sk)"/>
+  <text x="240" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">路线 A · 有序集合（C++ set / SortedList）</text>
+
+  <rect x="70" y="108" width="340" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="240" y="135" text-anchor="middle" font-size="12" fill="#333">① 查真值：foodRating["sushi"] = 8（旧评分）</text>
+  <path d="M 240 152 L 240 172" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <rect x="70" y="176" width="340" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="240" y="203" text-anchor="middle" font-size="12" fill="#333">② erase((−8, "sushi"))——用旧评分删旧键</text>
+  <path d="M 240 220 L 240 240" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <rect x="70" y="244" width="340" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="240" y="271" text-anchor="middle" font-size="12" fill="#333">③ foodRating["sushi"] ← 16（更新真值表）</text>
+  <path d="M 240 288 L 240 308" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <rect x="70" y="312" width="340" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="240" y="339" text-anchor="middle" font-size="12" fill="#333">④ insert((−16, "sushi"))——插入新键</text>
+  <path d="M 240 356 L 240 376" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <rect x="70" y="380" width="340" height="58" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="240" y="405" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">highestRated：返回 *begin()</text>
+  <text x="240" y="426" text-anchor="middle" font-size="11" fill="#4a7a3a">首元素即答案，O(1)</text>
+  <text x="240" y="466" text-anchor="middle" font-size="10.5" fill="#888">集合中任意时刻只有当前键，无幽灵条目</text>
+
+  <!-- 右栏：懒删除堆路线 -->
+  <rect x="460" y="62" width="400" height="470" rx="12" fill="#fdf6ec" stroke="#c98a2b" stroke-width="1.4" stroke-dasharray="7 5" filter="url(#sk)"/>
+  <text x="660" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">路线 B · 懒删除堆（Python heapq）</text>
+
+  <polygon points="610,116 728,152 610,188 492,152" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8" rx="4" filter="url(#sk)"/>
+  <text x="610" y="147" text-anchor="middle" font-size="11.5" fill="#7a5415">newRating ==</text>
+  <text x="610" y="164" text-anchor="middle" font-size="11.5" fill="#7a5415">foodRating[food] ?</text>
+  <path d="M 728 152 L 738 152" stroke="#9a9a92" stroke-width="1.6" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="733" y="143" text-anchor="middle" font-size="11" fill="#888">是</text>
+  <rect x="744" y="132" width="102" height="40" rx="8" fill="#f7f6f1" stroke="#9a9a92" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="795" y="156" text-anchor="middle" font-size="11.5" fill="#666">直接 return</text>
+  <path d="M 610 188 L 610 212" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="622" y="204" font-size="11" fill="#888">否</text>
+
+  <rect x="490" y="216" width="300" height="44" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="640" y="243" text-anchor="middle" font-size="12" fill="#7a5415">① foodRating["sushi"] ← 16（更新真值表）</text>
+  <path d="M 640 260 L 640 280" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <rect x="490" y="284" width="300" height="44" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="640" y="311" text-anchor="middle" font-size="12" fill="#7a5415">② push((−16, "sushi"))——新条目入堆</text>
+  <path d="M 640 328 L 640 346" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <rect x="490" y="350" width="300" height="76" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" filter="url(#sk)"/>
+  <text x="640" y="372" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8c3a36">旧条目 (−8, "sushi") 不删除</text>
+  <text x="640" y="390" text-anchor="middle" font-size="11" fill="#8c3a36">留在堆中成为「幽灵条目」</text>
+  <text x="640" y="408" text-anchor="middle" font-size="11" fill="#8c3a36">查询时按真值表识别后弹出</text>
+  <path d="M 640 426 L 640 444" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <rect x="490" y="448" width="300" height="58" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="640" y="473" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">highestRated：弹出过期堆顶</text>
+  <text x="640" y="494" text-anchor="middle" font-size="11" fill="#4a7a3a">→ 返回堆顶的名字</text>
+
+  <!-- 底部对比 -->
+  <rect x="40" y="550" width="820" height="106" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="450" y="576" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">复杂度对比（n 为菜系内食物数，堆中条目至多 n + q 个）</text>
+  <text x="450" y="602" text-anchor="middle" font-size="12" fill="#333">set：changeRating = erase + insert = O(log n)；highestRated = O(1)（Python 需第三方 SortedList）</text>
+  <text x="450" y="628" text-anchor="middle" font-size="12" fill="#333">heap：changeRating = push = O(log(n+q))；highestRated 摊还 O(log(n+q))（只依赖标准库 heapq）</text>
+</svg>
