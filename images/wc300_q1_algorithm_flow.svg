@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 620"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="620" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14" fill="#555" font-weight="bold" filter="url(#rough2)">算法流程：先建表，再解码</text>
+
+  <!-- Phase 1 background -->
+  <rect x="30" y="44" width="360" height="272" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" stroke-dasharray="7 5" rx="12" filter="url(#rough2)"/>
+  <text x="48" y="68" font-size="12.5" fill="#446688" font-weight="bold" filter="url(#rough2)">阶段一：建表（扫一遍 key）</text>
+
+  <rect x="110" y="78" width="180" height="32" fill="#ffffff" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="200" y="98" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">idx = 0；空表 map</text>
+
+  <path d="M 200 110 Q 200 116 200 122" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="110" y="126" width="180" height="32" fill="#ffffff" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="200" y="146" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">取 key 的下一字符 c</text>
+
+  <path d="M 200 158 Q 200 164 200 170" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="200,172 288,210 200,248 112,210" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="206" text-anchor="middle" font-size="11" fill="#a08030" filter="url(#rough2)">c 是空格</text>
+  <text x="200" y="222" text-anchor="middle" font-size="11" fill="#a08030" filter="url(#rough2)">或已登记？</text>
+
+  <path d="M 288 210 Q 296 210 304 210" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="294" y="202" font-size="10.5" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <rect x="308" y="194" width="72" height="32" fill="#f0f0f0" stroke="#bbb" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="344" y="214" text-anchor="middle" font-size="11.5" fill="#777" filter="url(#rough2)">跳过</text>
+
+  <path d="M 344 194 Q 344 140 346 140 L 294 140" fill="none" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 200 248 Q 200 254 200 260" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="208" y="258" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">否（首次出现）</text>
+
+  <rect x="100" y="262" width="200" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="200" y="283" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">map[c] = 'a' + idx；idx += 1</text>
+
+  <path d="M 100 279 Q 84 279 78 279 L 78 142 L 106 142" fill="none" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- side note for phase 1 -->
+  <rect x="408" y="120" width="138" height="112" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="477" y="144" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">两个跳过条件</text>
+  <text x="477" y="166" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">· 空格不是字母，</text>
+  <text x="477" y="182" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">  不占下标</text>
+  <text x="477" y="202" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">· 重复字母只在首次</text>
+  <text x="477" y="218" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">  出现时登记一次</text>
+
+  <!-- phase transition -->
+  <path d="M 210 316 Q 210 326 210 336" fill="none" stroke="#446688" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="222" y="332" font-size="10.5" fill="#446688" filter="url(#rough2)">key 扫完 → 表恰好填满 26 项</text>
+
+  <!-- Phase 2 background -->
+  <rect x="30" y="344" width="360" height="200" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" stroke-dasharray="7 5" rx="12" filter="url(#rough2)"/>
+  <text x="48" y="368" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">阶段二：解码（扫一遍 message）</text>
+
+  <rect x="110" y="378" width="180" height="32" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="200" y="398" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">取 message 的下一字符 ch</text>
+
+  <path d="M 200 410 Q 200 414 200 418" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="200,420 282,452 200,484 118,452" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="448" text-anchor="middle" font-size="11" fill="#a08030" filter="url(#rough2)">ch 是</text>
+  <text x="200" y="464" text-anchor="middle" font-size="11" fill="#a08030" filter="url(#rough2)">空格？</text>
+
+  <path d="M 282 452 Q 290 452 298 452" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="288" y="444" font-size="10.5" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <rect x="302" y="436" width="76" height="32" fill="#f0f0f0" stroke="#bbb" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="340" y="456" text-anchor="middle" font-size="11.5" fill="#777" filter="url(#rough2)">输出 ' '</text>
+
+  <path d="M 340 436 Q 340 384 342 384 L 294 384" fill="none" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 200 484 Q 200 488 200 492" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="208" y="492" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">否</text>
+
+  <rect x="100" y="494" width="200" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="200" y="515" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">输出 map[ch]（查表 O(1)）</text>
+
+  <path d="M 100 511 Q 84 511 78 511 L 78 394 L 106 394" fill="none" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- side note for phase 2 -->
+  <rect x="408" y="380" width="138" height="112" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="477" y="404" text-anchor="middle" font-size="11.5" fill="#a08030" font-weight="bold" filter="url(#rough2)">为什么不用兜底？</text>
+  <text x="477" y="426" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">key 保证含全部</text>
+  <text x="477" y="442" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">26 个字母，表必满，</text>
+  <text x="477" y="462" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">message 的字母</text>
+  <text x="477" y="478" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">查表必中</text>
+
+  <!-- final -->
+  <path d="M 200 544 Q 200 550 200 556" fill="none" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="560" width="140" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="200" y="583" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">返回拼接结果 res</text>
+</svg>
