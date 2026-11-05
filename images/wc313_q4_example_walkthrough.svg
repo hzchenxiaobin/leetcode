@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="420" fill="#fafafa"/>
+  <text x="380" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk2)">示例演算：s = aaabaab（n = 7），从最短后缀倒推</text>
+  <path d="M 170 42 Q 380 50 590 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk2)"/>
+
+  <!-- 表头 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="56" width="700" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <g font-size="12.5" font-weight="bold" fill="#2b4466" filter="url(#sk2)">
+    <text x="58" y="76" text-anchor="middle">l</text>
+    <text x="170" y="76" text-anchor="middle">s[l:]</text>
+    <text x="380" y="76" text-anchor="middle">合法 j（lcp(l, l+j) ≥ j）</text>
+    <text x="575" y="76" text-anchor="middle">dp[l]</text>
+    <text x="678" y="76" text-anchor="middle">最优路径</text>
+  </g>
+
+  <!-- 行模板：l=6..0，行高 34，从 y=90 开始 -->
+  <!-- l=6 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="90" width="700" height="34" rx="5" fill="#ffffff" stroke="#ccc" stroke-width="1"/>
+  </g>
+  <text x="58" y="112" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">6</text>
+  <g filter="url(#sk)"><rect x="100" y="95" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/></g>
+  <text x="110" y="112" text-anchor="middle" font-size="12" fill="#555" filter="url(#sk2)">b</text>
+  <text x="380" y="112" text-anchor="middle" font-size="12" fill="#999" filter="url(#sk2)">—（只能删整串）</text>
+  <text x="575" y="112" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">1</text>
+
+  <!-- l=5 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="124" width="700" height="34" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <text x="58" y="146" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">5</text>
+  <g filter="url(#sk)">
+    <rect x="100" y="129" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="120" y="129" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#555" filter="url(#sk2)">
+    <text x="110" y="146">a</text><text x="130" y="146">b</text>
+  </g>
+  <text x="380" y="146" text-anchor="middle" font-size="12" fill="#999" filter="url(#sk2)">—</text>
+  <text x="575" y="146" text-anchor="middle" font-size="13" fill="#7a5415" filter="url(#sk2)">1</text>
+  <circle cx="678" cy="141" r="4.5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#sk2)"/>
+
+  <!-- l=4 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="158" width="700" height="34" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <text x="58" y="180" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">4</text>
+  <g filter="url(#sk)">
+    <rect x="100" y="163" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="120" y="163" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="140" y="163" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#555" filter="url(#sk2)">
+    <text x="110" y="180">a</text><text x="130" y="180">a</text><text x="150" y="180">b</text>
+  </g>
+  <text x="380" y="180" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk2)">j = 1（a = a）</text>
+  <text x="575" y="180" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk2)">2</text>
+  <circle cx="678" cy="175" r="4.5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#sk2)"/>
+
+  <!-- l=3 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="192" width="700" height="34" rx="5" fill="#ffffff" stroke="#ccc" stroke-width="1"/>
+  </g>
+  <text x="58" y="214" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">3</text>
+  <g filter="url(#sk)">
+    <rect x="100" y="197" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="120" y="197" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="140" y="197" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="160" y="197" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#555" filter="url(#sk2)">
+    <text x="110" y="214">b</text><text x="130" y="214">a</text><text x="150" y="214">a</text><text x="170" y="214">b</text>
+  </g>
+  <text x="380" y="214" text-anchor="middle" font-size="12" fill="#999" filter="url(#sk2)">—</text>
+  <text x="575" y="214" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">1</text>
+
+  <!-- l=2 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="226" width="700" height="34" rx="5" fill="#ffffff" stroke="#ccc" stroke-width="1"/>
+  </g>
+  <text x="58" y="248" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">2</text>
+  <g filter="url(#sk)">
+    <rect x="100" y="231" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="120" y="231" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="140" y="231" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="160" y="231" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="180" y="231" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#555" filter="url(#sk2)">
+    <text x="110" y="248">a</text><text x="130" y="248">b</text><text x="150" y="248">a</text><text x="170" y="248">a</text><text x="190" y="248">b</text>
+  </g>
+  <text x="380" y="248" text-anchor="middle" font-size="12" fill="#999" filter="url(#sk2)">—</text>
+  <text x="575" y="248" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">1</text>
+
+  <!-- l=1 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="260" width="700" height="34" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <text x="58" y="282" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">1</text>
+  <g filter="url(#sk)">
+    <rect x="100" y="265" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="120" y="265" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="140" y="265" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="160" y="265" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="180" y="265" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="200" y="265" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#555" filter="url(#sk2)">
+    <text x="110" y="282">a</text><text x="130" y="282">a</text><text x="150" y="282">b</text>
+    <text x="170" y="282">a</text><text x="190" y="282">a</text><text x="210" y="282">b</text>
+  </g>
+  <text x="380" y="282" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk2)">j = 1，j = 3（aab = aab）</text>
+  <text x="575" y="282" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk2)">3</text>
+  <circle cx="678" cy="277" r="4.5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#sk2)"/>
+
+  <!-- l=0 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="294" width="700" height="34" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="58" y="316" text-anchor="middle" font-size="13" fill="#555" filter="url(#sk2)">0</text>
+  <g filter="url(#sk)">
+    <rect x="100" y="299" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="120" y="299" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="140" y="299" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="160" y="299" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="180" y="299" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="200" y="299" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+    <rect x="220" y="299" width="20" height="24" rx="3" fill="#ffffff" stroke="#aaa" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#555" filter="url(#sk2)">
+    <text x="110" y="316">a</text><text x="130" y="316">a</text><text x="150" y="316">a</text>
+    <text x="170" y="316">b</text><text x="190" y="316">a</text><text x="210" y="316">a</text><text x="230" y="316">b</text>
+  </g>
+  <text x="380" y="316" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk2)">j = 1（a = a）</text>
+  <text x="575" y="316" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#sk2)">4</text>
+  <circle cx="678" cy="311" r="5" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#sk2)"/>
+
+  <!-- 最优路径箭头（右列，自下而上 0→1→4→5→∅） -->
+  <path d="M 683 305 Q 690 292 681 283" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk2)"/>
+  <text x="700" y="298" font-size="10" fill="#b85450" filter="url(#sk2)">j=1</text>
+  <path d="M 681 271 Q 690 230 679 181" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk2)"/>
+  <text x="698" y="228" font-size="10" fill="#b85450" filter="url(#sk2)">j=3</text>
+  <path d="M 681 169 Q 688 158 680 149" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk2)"/>
+  <text x="698" y="162" font-size="10" fill="#b85450" filter="url(#sk2)">j=1</text>
+  <path d="M 681 137 Q 688 126 680 117" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk2)"/>
+  <text x="698" y="130" font-size="10" fill="#b85450" filter="url(#sk2)">整删</text>
+
+  <!-- 底部结论 -->
+  <g filter="url(#sk)">
+    <rect x="30" y="338" width="700" height="66" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="46" y="360" font-size="12.5" font-weight="bold" fill="#2f4f2f" filter="url(#sk2)">最优路径：0 --j=1--&gt; 1 --j=3--&gt; 4 --j=1--&gt; 5 --删整串--&gt; ∅，共 4 步</text>
+  <text x="46" y="384" font-size="12" fill="#333" filter="url(#sk2)">注意 l = 1 处弃 j = 1 取 j = 3：1 + dp[4] = 3 ＞ 1 + dp[2] = 2，删得多反而更优</text>
+  <text x="46" y="400" font-size="11" fill="#888" filter="url(#sk2)">（对照官方示例 2 的四步删除：a → aab → a → 删整串）</text>
+</svg>
