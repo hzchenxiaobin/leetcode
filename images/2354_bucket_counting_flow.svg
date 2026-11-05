@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="600" fill="#fdfcf7"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：去重 → 按 popcount 分桶 → 枚举桶对计数</text>
+  <path d="M 230 44 Q 450 52 670 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 第一步：去重 -->
+  <rect x="60" y="70" width="240" height="120" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="180" y="98" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b6e9e">① 去重</text>
+  <text x="180" y="124" text-anchor="middle" font-size="11.5" fill="#333">数对按「值」计数：(a,b) 与 (c,d) 不同</text>
+  <text x="180" y="142" text-anchor="middle" font-size="11.5" fill="#333">⟺ a≠c 或 b≠d，与下标无关</text>
+  <text x="180" y="164" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b6e9e">重复元素只保留一份 → set(nums)</text>
+
+  <path d="M 300 130 L 340 130" stroke="#4a8edb" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- 第二步：分桶 -->
+  <rect x="350" y="70" width="240" height="120" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="470" y="98" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">② 按 popcount 分桶</text>
+  <text x="470" y="124" text-anchor="middle" font-size="11.5" fill="#333">cnt[c] = 满足 pc(x) = c 的</text>
+  <text x="470" y="142" text-anchor="middle" font-size="11.5" fill="#333">不同取值 x 的个数</text>
+  <text x="470" y="164" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">nums[i] ≤ 10⁹ &lt; 2³⁰，c ∈ [1, 30]</text>
+
+  <path d="M 590 130 L 630 130" stroke="#c98a2b" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <!-- 第三步：枚举桶对 -->
+  <rect x="640" y="70" width="220" height="120" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="750" y="98" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">③ 枚举桶对求和</text>
+  <text x="750" y="124" text-anchor="middle" font-size="11.5" fill="#333">ans = Σ cnt[c₁]·cnt[c₂]</text>
+  <text x="750" y="142" text-anchor="middle" font-size="11.5" fill="#333">（对所有 c₁ + c₂ ≥ k）</text>
+  <text x="750" y="164" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">桶仅 31 个，双重循环 O(31²)</text>
+
+  <!-- 中部：桶数组示意 -->
+  <rect x="60" y="220" width="800" height="180" rx="12" fill="#f0f6fc" stroke="#4a8edb" stroke-width="1.4" stroke-dasharray="7 5" filter="url(#sk)"/>
+  <text x="460" y="250" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2b6e9e">桶数组 cnt[0..30] 示意（每格下标 = popcount 值，格内 = 该桶的值）</text>
+
+  <rect x="90" y="270" width="52" height="36" rx="4" fill="#f7f6f1" stroke="#9a9a92" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="116" y="293" text-anchor="middle" font-size="11" fill="#666">0</text>
+  <rect x="150" y="270" width="52" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="176" y="293" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <rect x="210" y="270" width="52" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="236" y="293" text-anchor="middle" font-size="11" fill="#333">2</text>
+  <rect x="270" y="270" width="52" height="36" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="296" y="293" text-anchor="middle" font-size="11" fill="#333">3</text>
+  <rect x="330" y="270" width="52" height="36" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="356" y="293" text-anchor="middle" font-size="11" fill="#333">4</text>
+  <rect x="390" y="270" width="52" height="36" rx="4" fill="#f7f6f1" stroke="#9a9a92" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="416" y="293" text-anchor="middle" font-size="11" fill="#666">5</text>
+  <rect x="450" y="270" width="52" height="36" rx="4" fill="#f7f6f1" stroke="#9a9a92" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="476" y="293" text-anchor="middle" font-size="11" fill="#666">…</text>
+  <rect x="510" y="270" width="52" height="36" rx="4" fill="#f7f6f1" stroke="#9a9a92" stroke-width="1.3" filter="url(#sk)"/>
+  <text x="536" y="293" text-anchor="middle" font-size="11" fill="#666">29</text>
+  <rect x="570" y="270" width="52" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="596" y="293" text-anchor="middle" font-size="11" fill="#333">30</text>
+
+  <text x="176" y="326" text-anchor="middle" font-size="10.5" fill="#2b6e9e">{1, 2, 4, 8, …}</text>
+  <text x="236" y="326" text-anchor="middle" font-size="10.5" fill="#2b6e9e">{3, 5, 6, 9, …}</text>
+  <text x="296" y="326" text-anchor="middle" font-size="10.5" fill="#7a5415">{7, 11, 13, …}</text>
+  <text x="356" y="326" text-anchor="middle" font-size="10.5" fill="#7a5415">{15, 23, 30, …}</text>
+  <text x="596" y="326" text-anchor="middle" font-size="10.5" fill="#2e6e2e">{2³⁰−1}</text>
+
+  <text x="460" y="360" text-anchor="middle" font-size="11.5" fill="#333">cnt[c] 记录每桶的元素个数；同桶的值两两之间「地位等价」——</text>
+  <text x="460" y="380" text-anchor="middle" font-size="11.5" fill="#333">判定只看 pc 之和是否 ≥ k，桶内具体是谁并不影响计数</text>
+
+  <!-- 底部：计数公式两种写法 -->
+  <rect x="60" y="424" width="390" height="120" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="255" y="452" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">写法 A：双重循环 O(31²)</text>
+  <text x="255" y="478" text-anchor="middle" font-size="12" fill="#333">for c₁ in 0..30:</text>
+  <text x="255" y="496" text-anchor="middle" font-size="12" fill="#333">  for c₂ in 0..30:</text>
+  <text x="255" y="514" text-anchor="middle" font-size="12" fill="#333">    if c₁ + c₂ ≥ k: ans += cnt[c₁] * cnt[c₂]</text>
+  <text x="255" y="534" text-anchor="middle" font-size="10.5" fill="#4a7a3a">31×31 = 961 次迭代，可忽略不计</text>
+
+  <rect x="470" y="424" width="390" height="120" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="665" y="452" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">写法 B：后缀和 O(31)</text>
+  <text x="665" y="478" text-anchor="middle" font-size="12" fill="#333">suf[c] = Σ_{c' ≥ c} cnt[c']（桶计数后缀和）</text>
+  <text x="665" y="496" text-anchor="middle" font-size="12" fill="#333">ans = Σ_c cnt[c] * suf[max(k − c, 0)]</text>
+  <text x="665" y="516" text-anchor="middle" font-size="12" fill="#333">k − c ≤ 0 时搭档桶为全部，即 suf[0]</text>
+  <text x="665" y="534" text-anchor="middle" font-size="10.5" fill="#7a5415">注意下标越界：k − c 可为负</text>
+</svg>

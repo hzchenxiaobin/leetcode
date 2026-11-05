@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="12" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="640" fill="#fdfcf7"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 1 演算：nums = [1, 2, 3, 1]，k = 3</text>
+  <path d="M 230 44 Q 450 52 670 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 第一步：去重 -->
+  <rect x="60" y="66" width="780" height="66" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="450" y="92" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 去重（第二个 1 只算一次）</text>
+  <text x="450" y="116" text-anchor="middle" font-size="13" fill="#333">[1, 2, 3, 1]  →  {1, 2, 3}</text>
+
+  <path d="M 450 134 L 450 156" stroke="#4a8edb" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- 第二步：分桶 -->
+  <rect x="60" y="162" width="780" height="130" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="450" y="188" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">② 逐个计算 popcount 并入桶</text>
+
+  <rect x="110" y="202" width="180" height="72" rx="8" fill="#fdfcf7" stroke="#c98a2b" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="200" y="228" text-anchor="middle" font-size="12.5" fill="#333">1 = (01)₂  pc = 1</text>
+  <text x="200" y="252" text-anchor="middle" font-size="11" fill="#7a5415">→ 桶 c = 1</text>
+
+  <rect x="360" y="202" width="180" height="72" rx="8" fill="#fdfcf7" stroke="#c98a2b" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="450" y="228" text-anchor="middle" font-size="12.5" fill="#333">2 = (10)₂  pc = 1</text>
+  <text x="450" y="252" text-anchor="middle" font-size="11" fill="#7a5415">→ 桶 c = 1</text>
+
+  <rect x="610" y="202" width="180" height="72" rx="8" fill="#fdfcf7" stroke="#c98a2b" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="700" y="228" text-anchor="middle" font-size="12.5" fill="#333">3 = (11)₂  pc = 2</text>
+  <text x="700" y="252" text-anchor="middle" font-size="11" fill="#7a5415">→ 桶 c = 2</text>
+
+  <path d="M 450 294 L 450 316" stroke="#c98a2b" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <!-- 桶状态 -->
+  <rect x="60" y="322" width="780" height="120" rx="10" fill="#f0f6fc" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="450" y="350" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">③ 桶计数：cnt[1] = 2，cnt[2] = 1</text>
+
+  <rect x="230" y="364" width="120" height="58" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="290" y="390" text-anchor="middle" font-size="12.5" fill="#333">cnt[1] = 2</text>
+  <text x="290" y="410" text-anchor="middle" font-size="11" fill="#2b6e9e">{1, 2}</text>
+
+  <rect x="550" y="364" width="120" height="58" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="610" y="390" text-anchor="middle" font-size="12.5" fill="#333">cnt[2] = 1</text>
+  <text x="610" y="410" text-anchor="middle" font-size="11" fill="#2e6e2e">{3}</text>
+
+  <text x="450" y="442" text-anchor="middle" font-size="11.5" fill="#333">其余桶 cnt[c] = 0（c = 0 及 c ≥ 3）</text>
+
+  <path d="M 450 446 L 450 468" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- 枚举桶对 -->
+  <rect x="60" y="474" width="780" height="132" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="450" y="500" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">④ 枚举满足 c₁ + c₂ ≥ 3 的桶对（有序）</text>
+
+  <rect x="90" y="514" width="220" height="76" rx="8" fill="#fdfcf7" stroke="#4a8e4a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="200" y="540" text-anchor="middle" font-size="12" fill="#333">(1, 2) 与 (2, 1)：和 = 3 ≥ 3 ✓</text>
+  <text x="200" y="562" text-anchor="middle" font-size="12" fill="#333">cnt[1]·cnt[2] × 2 = 2·1·2 = 4</text>
+  <text x="200" y="582" text-anchor="middle" font-size="10.5" fill="#2e6e2e">(1,3),(3,1),(2,3),(3,2)</text>
+
+  <rect x="340" y="514" width="220" height="76" rx="8" fill="#fdfcf7" stroke="#4a8e4a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="450" y="540" text-anchor="middle" font-size="12" fill="#333">(2, 2)：和 = 4 ≥ 3 ✓</text>
+  <text x="450" y="562" text-anchor="middle" font-size="12" fill="#333">cnt[2]·cnt[2] = 1·1 = 1</text>
+  <text x="450" y="582" text-anchor="middle" font-size="10.5" fill="#2e6e2e">(3,3)</text>
+
+  <rect x="590" y="514" width="220" height="76" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="700" y="540" text-anchor="middle" font-size="12" fill="#8c3a36">(1, 1)：和 = 2 &lt; 3 ✗</text>
+  <text x="700" y="562" text-anchor="middle" font-size="12" fill="#8c3a36">cnt[1]·cnt[1] = 4 不计入</text>
+  <text x="700" y="582" text-anchor="middle" font-size="10.5" fill="#8c3a36">(1,1),(1,2),(2,1),(2,2)</text>
+
+  <!-- 结论 -->
+  <rect x="60" y="474" width="780" height="132" rx="10" fill="none" stroke="none"/>
+  <text x="450" y="632" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">ans = 4 + 1 = 5，与枚举值对的结果一致</text>
+</svg>
