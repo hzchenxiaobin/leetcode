@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="14" fill="#555" font-weight="bold" filter="url(#rough2)">前缀和差分：O(n) 递推流程</text>
+
+  <!-- start -->
+  <rect x="175" y="40" width="210" height="32" rx="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="60" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">读入 n，D = delay，F = forget</text>
+  <path d="M 280 72 L 280 88" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- init -->
+  <rect x="175" y="90" width="210" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="108" text-anchor="middle" font-size="11.5" fill="#2a5a1a" filter="url(#rough2)">a[1] = 1，S[1] = 1（天降初始）</text>
+  <text x="280" y="126" text-anchor="middle" font-size="11.5" fill="#2a5a1a" filter="url(#rough2)">i = 2</text>
+  <path d="M 280 134 L 280 150" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="280,152 360,190 280,228 200,190" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="195" text-anchor="middle" font-size="13" fill="#a08030" font-weight="bold" filter="url(#rough2)">i ≤ n ?</text>
+
+  <!-- yes branch -->
+  <path d="M 280 228 L 280 248" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="293" y="243" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- recurrence box -->
+  <rect x="95" y="250" width="370" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="271" text-anchor="middle" font-size="12" fill="#33475e" font-weight="bold" filter="url(#rough2)">a[i] = (S[i−D] − S[i−F] + MOD) % MOD</text>
+  <text x="280" y="291" text-anchor="middle" font-size="12" fill="#33475e" font-weight="bold" filter="url(#rough2)">S[i] = (S[i−1] + a[i]) % MOD</text>
+  <text x="280" y="308" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">S[i−D] − S[i−F] 即窗口 [i−F+1, i−D] 之和 = 当天活跃人数</text>
+  <path d="M 280 316 L 280 332" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- increment -->
+  <rect x="230" y="334" width="100" height="28" fill="#ffffff" stroke="#888" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="352" text-anchor="middle" font-size="12" fill="#555" font-weight="bold" filter="url(#rough2)">i ← i + 1</text>
+
+  <!-- loop back -->
+  <path d="M 230 348 L 140 348 L 140 190 L 196 190" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- no branch -->
+  <path d="M 360 190 L 424 190" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="384" y="181" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+
+  <!-- answer box -->
+  <rect x="426" y="166" width="118" height="50" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="485" y="186" text-anchor="middle" font-size="10.5" fill="#2a5a1a" font-weight="bold" filter="url(#rough2)">ans = S[n] − S[n−F]</text>
+  <text x="485" y="204" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">(+ MOD) % MOD</text>
+  <path d="M 485 216 L 485 234" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- output -->
+  <rect x="435" y="236" width="100" height="30" rx="15" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="485" y="255" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">输出 ans</text>
+
+  <!-- footnotes -->
+  <text x="280" y="398" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">负下标的前缀和按 0 计；约束 F ≤ n 保证 n − F ≥ 0</text>
+  <text x="280" y="418" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">存活条件 i + F &gt; n：答案取尾段和 S[n] − S[n−F]</text>
+</svg>
