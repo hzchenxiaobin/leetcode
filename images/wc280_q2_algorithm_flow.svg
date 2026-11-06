@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 520"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="520" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：分组 → 计数 → 前二 + 哨兵 → 2×2 枚举</text>
+  <path d="M 120 38 Q 320 46 520 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- step 1 -->
+  <rect x="70" y="58" width="250" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="195" y="76" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e" filter="url(#rough2)">① 按下标奇偶分组</text>
+  <text x="195" y="93" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">n₁ = ⌈n/2⌉，n₂ = ⌊n/2⌋</text>
+  <path d="M 195 102 L 195 118" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <rect x="70" y="120" width="250" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="195" y="138" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e" filter="url(#rough2)">② 分别统计频次</text>
+  <text x="195" y="155" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">值域 1..10⁵ → 桶直址 ce[v] / co[v]</text>
+  <path d="M 195 164 L 195 180" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 3 -->
+  <rect x="70" y="182" width="250" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="195" y="202" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">③ 每组取频次前二 (v₁,c₁)(v₂,c₂)</text>
+  <text x="195" y="219" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">不足两个 → 补哨兵 (⊥, 0)</text>
+  <path d="M 195 234 L 195 250" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 4 -->
+  <rect x="70" y="252" width="250" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="195" y="270" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e" filter="url(#rough2)">④ 枚举 2×2 组合</text>
+  <text x="195" y="287" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">(x, cx) ∈ 偶组候选 × (y, cy) ∈ 奇组候选</text>
+  <path d="M 195 296 L 195 312" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="195,314 285,356 195,398 105,356" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="195" y="351" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">x = y ?</text>
+  <text x="195" y="368" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">（含双哨兵）</text>
+
+  <!-- yes branch -->
+  <path d="M 285 356 L 340 356" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="305" y="346" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">是</text>
+  <rect x="344" y="330" width="262" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="475" y="350" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">跳过：两组同值非法</text>
+  <text x="475" y="368" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">(⊥,⊥) 全改组合被 (top1,⊥) 支配，丢了不亏</text>
+
+  <!-- no branch -->
+  <path d="M 195 398 L 195 414" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="206" y="410" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">否</text>
+
+  <!-- step 5 -->
+  <rect x="70" y="416" width="250" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="195" y="434" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">⑤ 代价取最小</text>
+  <text x="195" y="451" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">ans = min(ans, (n₁−cx) + (n₂−cy))</text>
+  <path d="M 195 460 L 195 472" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- output -->
+  <rect x="110" y="474" width="170" height="34" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="195" y="496" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">返回 ans</text>
+
+  <!-- side box: why top2 + sentinel suffices -->
+  <rect x="360" y="58" width="246" height="240" rx="10" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.4" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="483" y="82" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">为什么前二 + 哨兵就够？</text>
+  <text x="375" y="106" font-size="10.5" fill="#444" filter="url(#rough2)">固定奇组取值 y，偶组最优 x：</text>
+  <g filter="url(#rough2)">
+    <rect x="375" y="116" width="216" height="40" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+  </g>
+  <text x="483" y="132" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">top1 ≠ y → 取 top1（全局最大）</text>
+  <text x="483" y="148" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">top1 = y → 取 top2（自动 ≠ y）</text>
+  <g filter="url(#rough2)">
+    <rect x="375" y="164" width="216" height="40" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2"/>
+  </g>
+  <text x="483" y="180" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">top2 也不存在（全组都是 y）</text>
+  <text x="483" y="196" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">→ 任取全新值，保留 0 个 = 哨兵</text>
+  <text x="483" y="224" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">第三高频频次 ≤ top2，永不更优</text>
+  <text x="483" y="244" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">对称地，固定 x 时奇组同理</text>
+  <text x="483" y="272" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold" filter="url(#rough2)">哨兵一举消掉三类特判：</text>
+  <text x="483" y="288" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">单值组无 top2 / 奇组为空 (n=1) / 撞车兜底</text>
+
+  <!-- bottom note -->
+  <rect x="360" y="416" width="246" height="92" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="483" y="436" text-anchor="middle" font-size="11" font-weight="bold" fill="#b03a3a" filter="url(#rough2)">复杂度与实现提示</text>
+  <text x="483" y="456" text-anchor="middle" font-size="10" fill="#444" filter="url(#rough2)">桶版 O(n + V)，V = 10⁵；哨兵取 0/None</text>
+  <text x="483" y="474" text-anchor="middle" font-size="10" fill="#444" filter="url(#rough2)">（值域从 1 开始，永不与真实值撞）</text>
+  <text x="483" y="494" text-anchor="middle" font-size="10" fill="#444" filter="url(#rough2)">全程 int 即可，无溢出风险</text>
+</svg>
