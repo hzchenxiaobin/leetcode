@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="480" viewBox="0 0 720 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="480" fill="#fdfcf7"/>
+  <text x="360" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：两条根路径剥公共前缀，LCA 拆成「上行 U ＋ 下行 L/R」</text>
+  <text x="360" y="47" text-anchor="middle" font-size="11" fill="#888">树中两点路径唯一：start 先上行到 LCA、再下行到 dest —— 转折点就是两条根路径的分岔处</text>
+
+  <!-- tree edges (drawn under nodes) -->
+  <g filter="url(#sk)">
+    <path d="M 240 100 L 150 185" stroke="#446688" stroke-width="2.4" fill="none"/>
+    <path d="M 240 100 L 330 185" stroke="#4a7a3a" stroke-width="2.4" fill="none"/>
+    <path d="M 150 185 L 105 270" stroke="#446688" stroke-width="2.4" fill="none"/>
+    <path d="M 330 185 L 290 270" stroke="#4a7a3a" stroke-width="2.4" fill="none"/>
+    <path d="M 330 185 L 375 270" stroke="#8a8a8a" stroke-width="1.4" fill="none"/>
+  </g>
+
+  <!-- movement arrows along the answer path -->
+  <path d="M 130 255 C 138 235, 140 215, 143 198" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="112" y="232" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">U</text>
+  <path d="M 162 158 C 180 140, 198 124, 218 110" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="166" y="132" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">U</text>
+  <path d="M 258 116 C 278 130, 296 148, 312 168" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="298" y="130" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">R</text>
+  <path d="M 344 196 C 338 220, 336 235, 332 254" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="352" y="230" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">L</text>
+
+  <!-- tree nodes -->
+  <g filter="url(#sk)">
+    <circle cx="240" cy="100" r="21" fill="#fff8e1" stroke="#c98a2b" stroke-width="2.2"/>
+    <circle cx="150" cy="185" r="21" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="330" cy="185" r="21" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="105" cy="270" r="21" fill="#e8f0fe" stroke="#b85450" stroke-width="2.4"/>
+    <circle cx="290" cy="270" r="21" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+    <circle cx="375" cy="270" r="21" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+  </g>
+  <g text-anchor="middle" filter="url(#sk)">
+    <text x="240" y="105" font-size="13" font-weight="bold" fill="#7a5415">5</text>
+    <text x="150" y="190" font-size="13" font-weight="bold" fill="#2a4a6a">1</text>
+    <text x="330" y="190" font-size="13" font-weight="bold" fill="#2e6e2e">2</text>
+    <text x="105" y="275" font-size="13" font-weight="bold" fill="#a04038">3</text>
+    <text x="290" y="275" font-size="13" font-weight="bold" fill="#2e6e2e">6</text>
+    <text x="375" y="275" font-size="13" fill="#333">4</text>
+  </g>
+  <text x="240" y="68" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#c98a2b" filter="url(#sk)">★ LCA ＝ 根 5</text>
+  <text x="105" y="305" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">start</text>
+  <text x="290" y="305" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">dest</text>
+
+  <!-- right panel: derivation -->
+  <text x="521" y="78" text-anchor="middle" font-size="12" font-weight="bold" fill="#555" filter="url(#sk)">把两条根路径写成方向串</text>
+
+  <g filter="url(#sk)">
+    <rect x="368" y="86" width="306" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="380" y="112" font-size="12" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">pathStart</text>
+  <g filter="url(#sk)">
+    <rect x="462" y="92" width="30" height="30" rx="4" fill="#fff" stroke="#446688" stroke-width="1.5"/>
+    <rect x="498" y="92" width="30" height="30" rx="4" fill="#fff" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="477" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">L</text>
+  <text x="513" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">L</text>
+  <text x="544" y="112" font-size="10" fill="#555" filter="url(#sk)">（根→3）</text>
+
+  <g filter="url(#sk)">
+    <rect x="368" y="140" width="306" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="380" y="166" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">pathDest</text>
+  <g filter="url(#sk)">
+    <rect x="462" y="146" width="30" height="30" rx="4" fill="#fff" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="498" y="146" width="30" height="30" rx="4" fill="#fff" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="477" y="166" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">R</text>
+  <text x="513" y="166" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">L</text>
+  <text x="544" y="166" font-size="10" fill="#555" filter="url(#sk)">（根→6）</text>
+
+  <g filter="url(#sk)">
+    <rect x="368" y="194" width="306" height="54" rx="8" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="521" y="216" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">比对第 0 位：L ≠ R → i ＝ 0 即停</text>
+  <text x="521" y="236" text-anchor="middle" font-size="11" fill="#7a5415" filter="url(#sk)">公共前缀为空，分岔点（LCA）＝ 根 5</text>
+
+  <g filter="url(#sk)">
+    <rect x="368" y="260" width="306" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="521" y="278" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">上行段：'U' × (2 − 0) ＝ 「UU」</text>
+  <text x="521" y="294" text-anchor="middle" font-size="10" fill="#555" filter="url(#sk)">3 → 1 → 5，每步都走向父亲</text>
+
+  <g filter="url(#sk)">
+    <rect x="368" y="310" width="306" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="521" y="328" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">下行段：pathDest[0:] ＝ 「RL」</text>
+  <text x="521" y="344" text-anchor="middle" font-size="10" fill="#555" filter="url(#sk)">5 → 2 → 6，方向照抄 L/R</text>
+
+  <g filter="url(#sk)">
+    <rect x="368" y="362" width="306" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="521" y="383" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a04038" filter="url(#sk)">answer ＝ 「UU」＋「RL」＝ UURL</text>
+  <text x="521" y="400" text-anchor="middle" font-size="10" fill="#a04038" filter="url(#sk)">3 →(U) 1 →(U) 5 →(R) 2 →(L) 6</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="40" y="326" width="308" height="82" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="194" y="350" text-anchor="middle" font-size="10.5" fill="#7a5415" filter="url(#sk)">根→3：L、L ⇒ pathStart ＝「LL」（蓝）</text>
+  <text x="194" y="370" text-anchor="middle" font-size="10.5" fill="#7a5415" filter="url(#sk)">根→6：R、L ⇒ pathDest ＝「RL」（绿）</text>
+  <text x="194" y="394" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">红色箭头即实际走法：U U R L</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="418" width="640" height="48" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="360" y="437" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#sk)">公共前缀的终点 ＝ 分岔点 ＝ LCA；剥掉前缀后两条剩余段互不干扰，</text>
+  <text x="360" y="455" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">start 剩余段每步都逆着走 → 全记 'U'，dest 剩余段原样拼接 —— 无需显式求出 LCA 节点</text>
+</svg>
