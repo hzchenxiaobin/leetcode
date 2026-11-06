@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="580" viewBox="0 0 760 580" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="760" height="580" fill="#fafafa"/>
+  <text x="380" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例演算：同时间连锁传播 + 组后重置</text>
+  <path d="M 170 36 Q 380 44 590 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="380" y="58" text-anchor="middle" font-size="11.5" fill="#666" font-family="monospace">n = 5, meetings = [[3,4,2],[1,2,1],[2,3,1]], firstPerson = 1</text>
+
+  <!-- row 1: t=0 -->
+  <g filter="url(#sk)"><rect x="50" y="80" width="66" height="32" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="83" y="101" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a03a36">t = 0</text>
+  <text x="140" y="101" font-size="11.5" fill="#666">初始传播：0 → firstPerson(=1)，尚无会议</text>
+  <path d="M 340 100 L 368 100" stroke="#b85450" stroke-width="2" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <circle cx="318" cy="100" r="18" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <circle cx="400" cy="100" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="318" y="105" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a03a36" font-family="monospace">0</text>
+  <text x="400" y="105" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22" font-family="monospace">1</text>
+  <g filter="url(#sk)"><rect x="590" y="78" width="150" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="665" y="104" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e5e22" font-family="monospace">knows = {0,1}</text>
+
+  <path d="M 380 136 L 380 158" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- row 2: t=1 -->
+  <g filter="url(#sk)"><rect x="50" y="162" width="66" height="32" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="83" y="183" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">t = 1</text>
+  <text x="140" y="177" font-size="11.5" fill="#666">同刻两场会议 [1,2] 与 [2,3]</text>
+  <text x="140" y="194" font-size="11" fill="#888">① union 后连成一个分量 {1,2,3}</text>
+  <path d="M 288 222 L 340 222" stroke="#4a7a3a" stroke-width="2.2" filter="url(#sk)"/>
+  <path d="M 370 222 L 422 222" stroke="#4a7a3a" stroke-width="2.2" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <circle cx="268" cy="222" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+    <circle cx="355" cy="222" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+    <circle cx="442" cy="222" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+  </g>
+  <text x="268" y="227" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22" font-family="monospace">1</text>
+  <text x="355" y="227" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22" font-family="monospace">2</text>
+  <text x="442" y="227" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22" font-family="monospace">3</text>
+  <text x="268" y="196" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450">种子</text>
+  <text x="355" y="258" text-anchor="middle" font-size="10.5" fill="#4a7a3a">②③ 分量含种子 1 ⇒ 2、3 同刻习得</text>
+  <text x="355" y="276" text-anchor="middle" font-size="10.5" fill="#7a5415">④ 重置 parent[1]=1, parent[2]=2, parent[3]=3（knows 保留）</text>
+  <g filter="url(#sk)"><rect x="590" y="160" width="150" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="665" y="186" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e5e22" font-family="monospace">knows = {0,1,2,3}</text>
+
+  <path d="M 380 292 L 380 314" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- row 3: t=2 -->
+  <g filter="url(#sk)"><rect x="50" y="318" width="66" height="32" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="83" y="339" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">t = 2</text>
+  <text x="140" y="333" font-size="11.5" fill="#666">会议 [3,4]：分量 {3,4}</text>
+  <text x="140" y="350" font-size="11" fill="#888">③ 3 已知晓 ⇒ 4 习得</text>
+  <path d="M 328 378 L 388 378" stroke="#4a7a3a" stroke-width="2.2" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <circle cx="308" cy="378" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+    <circle cx="410" cy="378" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+  </g>
+  <text x="308" y="383" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22" font-family="monospace">3</text>
+  <text x="410" y="383" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22" font-family="monospace">4</text>
+  <text x="308" y="352" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450">种子</text>
+  <g filter="url(#sk)"><rect x="590" y="316" width="150" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="665" y="342" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e5e22" font-family="monospace">knows = {0,1,2,3,4}</text>
+
+  <path d="M 380 408 L 380 432" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- result -->
+  <g filter="url(#sk)"><rect x="150" y="436" width="460" height="54" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="380" y="459" text-anchor="middle" font-size="12.5" fill="#2e5e22">所有会议结束</text>
+  <text x="380" y="480" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e5e22" font-family="monospace">输出 [0, 1, 2, 3, 4] ✓</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)"><rect x="50" y="508" width="690" height="58" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/></g>
+  <text x="395" y="531" text-anchor="middle" font-size="11.5" fill="#7a5415">⚠ 若逐场处理且 [2,3] 排在 [1,2] 前面：[2,3] 双方不知晓白开，随后 [1,2] 只点亮 2 —— 3 被漏掉。</text>
+  <text x="395" y="552" text-anchor="middle" font-size="11.5" fill="#7a5415">本例恰好展示不出「不重置」的后果（t=1 组全员知晓）；跨组误伤的反例见正文第 8 节第 2 条。</text>
+</svg>

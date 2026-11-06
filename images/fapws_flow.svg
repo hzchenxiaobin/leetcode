@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="680" height="680" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：按时间分组，组内并查集四步循环</text>
+  <path d="M 130 36 Q 340 44 550 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- A: sort -->
+  <g filter="url(#sk)"><rect x="210" y="52" width="260" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="340" y="75" text-anchor="middle" font-size="12.5" fill="#2b4a6e">meetings 按 time 升序排序</text>
+  <path d="M 340 88 L 340 108" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- B: group -->
+  <g filter="url(#sk)"><rect x="190" y="112" width="300" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="340" y="135" text-anchor="middle" font-size="12.5" fill="#2b4a6e">双指针切出同时间组 [i, j)</text>
+  <path d="M 340 148 L 340 170" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop box -->
+  <g filter="url(#sk)"><rect x="60" y="174" width="440" height="352" rx="10" fill="#fffdf3" stroke="#d6a040" stroke-width="1.8" stroke-dasharray="7 5"/></g>
+  <text x="280" y="198" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">对每个时间组（同 time 的会议一起结算）</text>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)"><rect x="90" y="208" width="380" height="48" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="280" y="228" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">① 组内 union(x, y)</text>
+  <text x="280" y="247" text-anchor="middle" font-size="11" fill="#2b4a6e">会议边全部并入 ⇒ 连通分量</text>
+  <path d="M 280 256 L 280 276" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)"><rect x="90" y="280" width="380" height="48" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="280" y="300" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22">② 收集种子根</text>
+  <text x="280" y="319" text-anchor="middle" font-size="11" fill="#2e5e22">knows[u] ⇒ mark[find(u)] = 组号</text>
+  <path d="M 280 328 L 280 348" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)"><rect x="90" y="352" width="380" height="48" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="280" y="372" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22">③ 点亮分量</text>
+  <text x="280" y="391" text-anchor="middle" font-size="11" fill="#2e5e22">mark[find(v)] = 组号 ⇒ knows[v] = true</text>
+  <path d="M 280 400 L 280 420" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)"><rect x="90" y="424" width="380" height="48" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="280" y="444" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">④ 重置临时连通</text>
+  <text x="280" y="463" text-anchor="middle" font-size="11" fill="#7a5415">parent[端点] = 端点（knows 保留！）</text>
+
+  <!-- side notes -->
+  <g filter="url(#sk)"><rect x="518" y="208" width="150" height="96" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="593" y="232" text-anchor="middle" font-size="12" font-weight="bold" fill="#a03a36" font-family="monospace">knows[]</text>
+  <text x="593" y="254" text-anchor="middle" font-size="11" fill="#a03a36">持久保留</text>
+  <text x="593" y="274" text-anchor="middle" font-size="11" fill="#a03a36">知晓 = 终身事实</text>
+  <text x="593" y="293" text-anchor="middle" font-size="11" fill="#a03a36">跨组继续生效</text>
+
+  <g filter="url(#sk)"><rect x="518" y="322" width="150" height="96" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="593" y="346" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e" font-family="monospace">parent[]</text>
+  <text x="593" y="368" text-anchor="middle" font-size="11" fill="#2b4a6e">临时状态</text>
+  <text x="593" y="388" text-anchor="middle" font-size="11" fill="#2b4a6e">只在本组内有效</text>
+  <text x="593" y="407" text-anchor="middle" font-size="11" fill="#2b4a6e">组后必须重置</text>
+
+  <!-- loop exit -->
+  <path d="M 280 476 L 280 500" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)"><polygon points="280,500 400,546 280,592 160,546" fill="#f5f8ff" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="280" y="541" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e">还有下一组？</text>
+
+  <!-- yes: back edge to B -->
+  <path d="M 160 546 L 106 546 L 106 130 L 186 130" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="128" y="536" font-size="12" font-weight="bold" fill="#2e5e22">是</text>
+
+  <!-- no: output -->
+  <path d="M 400 546 L 458 546" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="424" y="536" font-size="12" font-weight="bold" fill="#b85450">否</text>
+  <g filter="url(#sk)"><rect x="462" y="522" width="190" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="557" y="542" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22">输出全部</text>
+  <text x="557" y="561" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5e22">knows = true 的人</text>
+
+  <!-- bottom note -->
+  <text x="340" y="640" text-anchor="middle" font-size="12" fill="#666">排序 O(M log M) 是主体开销；组内四步各把本组会议扫一遍，并查集近常数。</text>
+  <text x="340" y="660" text-anchor="middle" font-size="11.5" fill="#999">重置只动本组端点的 parent——被改写过的 parent 一定属于本组端点集合（见正文证明）。</text>
+</svg>
