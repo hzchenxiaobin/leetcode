@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="400" viewBox="0 0 660 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="aro" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="660" height="400" fill="#fdfcf7"/>
+  <text x="330" y="28" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察：一场比赛只贡献两条计数信息</text>
+  <path d="M 170 38 Q 330 46 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- left: matches -->
+  <text x="70" y="60" text-anchor="middle" font-size="12" fill="#888">matches（n 场）</text>
+  <g filter="url(#sk)">
+    <rect x="25" y="68" width="90" height="30" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="70" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" font-family="monospace">[1,3]</text>
+  <g filter="url(#sk)">
+    <rect x="25" y="106" width="90" height="30" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="70" y="126" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" font-family="monospace">[2,3]</text>
+  <g filter="url(#sk)">
+    <rect x="25" y="144" width="90" height="30" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="70" y="164" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" font-family="monospace">[3,6]</text>
+  <text x="70" y="194" text-anchor="middle" font-size="15" fill="#888">⋯</text>
+
+  <!-- middle: hash table -->
+  <g filter="url(#sk)">
+    <rect x="225" y="68" width="190" height="30" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">loss：玩家 → 败场</text>
+  <g filter="url(#sk)">
+    <rect x="225" y="102" width="190" height="26" rx="4" fill="#fffdf3" stroke="#b9b39f" stroke-width="1"/>
+  </g>
+  <text x="320" y="120" text-anchor="middle" font-size="12.5" fill="#444" font-family="monospace">1 → 0</text>
+  <g filter="url(#sk)">
+    <rect x="225" y="132" width="190" height="26" rx="4" fill="#fffdf3" stroke="#b9b39f" stroke-width="1"/>
+  </g>
+  <text x="320" y="150" text-anchor="middle" font-size="12.5" fill="#444" font-family="monospace">3 → 2</text>
+  <g filter="url(#sk)">
+    <rect x="225" y="162" width="190" height="26" rx="4" fill="#fffdf3" stroke="#b9b39f" stroke-width="1"/>
+  </g>
+  <text x="320" y="180" text-anchor="middle" font-size="12.5" fill="#444" font-family="monospace">6 → 2</text>
+  <text x="320" y="212" text-anchor="middle" font-size="15" fill="#888">⋯</text>
+
+  <!-- arrows matches -> table -->
+  <path d="M 118 83 L 220 83" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 118 121 L 220 121" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 118 159 L 220 159" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="169" y="232" text-anchor="middle" font-size="11" fill="#888">每场 [w, l]：</text>
+  <text x="169" y="248" text-anchor="middle" font-size="11" fill="#888">w 缺省置 0，l 败场 +1</text>
+
+  <!-- right: buckets -->
+  <g filter="url(#sk)">
+    <rect x="470" y="66" width="165" height="62" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="552" y="92" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">败场 = 0</text>
+  <text x="552" y="114" text-anchor="middle" font-size="11.5" fill="#2e6e2e">answer[0]（零败玩家）</text>
+  <g filter="url(#sk)">
+    <rect x="470" y="150" width="165" height="62" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="2"/>
+  </g>
+  <text x="552" y="176" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">败场 = 1</text>
+  <text x="552" y="198" text-anchor="middle" font-size="11.5" fill="#7a5415">answer[1]（一败玩家）</text>
+  <g filter="url(#sk)">
+    <rect x="470" y="234" width="165" height="62" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="552" y="260" text-anchor="middle" font-size="14" font-weight="bold" fill="#a03a36">败场 ≥ 2</text>
+  <text x="552" y="282" text-anchor="middle" font-size="11.5" fill="#a03a36">丢弃（不入答案）</text>
+
+  <!-- arrows table -> buckets -->
+  <path d="M 419 96 L 464 96" stroke="#4a8e4a" stroke-width="1.8" fill="none" marker-end="url(#arg)" filter="url(#sk)"/>
+  <path d="M 419 181 L 464 181" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#aro)" filter="url(#sk)"/>
+  <path d="M 419 190 Q 446 265 464 265" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="60" y="326" width="540" height="34" rx="6" fill="#fffdf3" stroke="#c98a2b" stroke-width="1"/>
+  </g>
+  <text x="330" y="348" text-anchor="middle" font-size="11.5" fill="#888">答案只依赖每个玩家的总败场数，与比赛顺序、对手无关 → 一趟聚合即可得到全部信息</text>
+</svg>
