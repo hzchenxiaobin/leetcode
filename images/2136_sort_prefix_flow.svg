@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：按 growTime 降序排序 + 一遍前缀和取 max</text>
+  <path d="M 150 42 Q 340 52 530 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- main flow column -->
+  <g filter="url(#sk)">
+    <rect x="64" y="58" width="236" height="40" rx="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="182" y="83" text-anchor="middle" font-size="12.5" fill="#333">输入 plantTime[ ]、growTime[ ]</text>
+  <path d="M 182 98 L 182 116" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="64" y="120" width="236" height="48" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="182" y="140" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d25">按 growTime 降序排序</text>
+  <text x="182" y="158" text-anchor="middle" font-size="11" fill="#555">（相等的先种谁无所谓）</text>
+  <path d="M 182 168 L 182 186" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="64" y="190" width="236" height="36" rx="6" fill="#fff" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3"/>
+  </g>
+  <text x="182" y="213" text-anchor="middle" font-size="12.5" fill="#333">依次取下一枚种子 i</text>
+  <path d="M 182 226 L 182 244" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="64" y="248" width="236" height="52" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="182" y="269" text-anchor="middle" font-size="12" fill="#333" font-family="monospace">cur += plantTime[i]</text>
+  <text x="182" y="289" text-anchor="middle" font-size="11.5" fill="#446688">cur = 已消耗的播种天数（前缀和）</text>
+  <path d="M 182 300 L 182 318" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="64" y="322" width="236" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="182" y="341" text-anchor="middle" font-size="12" fill="#333" font-family="monospace">ans = max(ans, cur + growTime[i])</text>
+  <text x="182" y="358" text-anchor="middle" font-size="11" fill="#446688">开花日 = cur + g</text>
+
+  <!-- loop back -->
+  <path d="M 64 344 L 38 344 Q 30 344 30 336 L 30 206 Q 30 198 38 198 L 60 198"
+        stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="22" y="272" font-size="10.5" fill="#666" transform="rotate(-90 22 272)" text-anchor="middle">还有种子 →</text>
+
+  <!-- exit -->
+  <path d="M 182 366 L 182 386 L 244 386" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="248" y="368" width="150" height="38" rx="19" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="323" y="392" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">返回 ans</text>
+
+  <!-- side note: bloom day meaning -->
+  <g filter="url(#sk)">
+    <rect x="392" y="58" width="244" height="118" rx="10" fill="#eef7ee" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="514" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d25">开花日 = cur + g 的含义</text>
+  <text x="514" y="102" text-anchor="middle" font-size="11" fill="#444">第 cur−1 天收工（种完最后一锹土）</text>
+  <text x="514" y="120" text-anchor="middle" font-size="11" fill="#444">生长占第 cur ~ cur+g−1 天</text>
+  <text x="514" y="138" text-anchor="middle" font-size="11" fill="#444">开花在生长最后一天之后 → 第 cur+g 天</text>
+  <text x="514" y="162" text-anchor="middle" font-size="10.5" fill="#4a7a3a">校准：p=g=1 时第 0 天种、第 2 天开 ✓</text>
+
+  <!-- side warning -->
+  <g filter="url(#sk)">
+    <rect x="392" y="196" width="244" height="112" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="514" y="218" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8f3a35">⚠ 三个高频错误</text>
+  <text x="514" y="240" text-anchor="middle" font-size="11" fill="#444">① 排序键混入 plantTime（如 p+g）✗</text>
+  <text x="514" y="258" text-anchor="middle" font-size="11" fill="#444">② 开花写成 cur+g−1 或 cur+g+1 ✗</text>
+  <text x="514" y="276" text-anchor="middle" font-size="11" fill="#444">③ 真的去模拟「每天种谁」✗</text>
+  <text x="514" y="298" text-anchor="middle" font-size="10.5" fill="#8f3a35">穿插/闲置都可规范化掉（引理 1）</text>
+</svg>
