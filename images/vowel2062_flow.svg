@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="410" viewBox="0 0 640 410" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="410" fill="#fdfcf7"/>
+  <text x="320" y="20" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：枚举左端点 + 位掩码向右扩展右端点</text>
+  <text x="320" y="38" text-anchor="middle" font-size="11" fill="#666666">V = {a, e, i, o, u}；pos(c) 为 c 在 "aeiou" 中的下标 0–4</text>
+
+  <!-- outer loop -->
+  <g filter="url(#sk)">
+    <rect x="36" y="56" width="126" height="38" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="99" y="74" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">枚举左端点</text>
+  <text x="99" y="89" text-anchor="middle" font-size="11" fill="#2b6e9e">i = 0 … n−1</text>
+
+  <path d="M162,75 L177,75" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="251,51 322,75 251,99 180,75" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="251" y="71" text-anchor="middle" font-size="11" fill="#8a6415">word[i]</text>
+  <text x="251" y="85" text-anchor="middle" font-size="11" fill="#8a6415">是元音？</text>
+
+  <path d="M322,75 L352,75" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="334" y="68" font-size="10" fill="#b85450">否</text>
+
+  <g filter="url(#sk)">
+    <rect x="356" y="57" width="118" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="415" y="72" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">continue（i++）</text>
+  <text x="415" y="86" text-anchor="middle" font-size="9.5" fill="#888888">起点废弃，换下一个 i</text>
+
+  <path d="M474,75 Q520,75 520,42 L99,42 L99,53" stroke="#8899aa" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="300" y="37" text-anchor="middle" font-size="10" fill="#888888">下一个 i</text>
+
+  <path d="M251,99 L251,115" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="259" y="110" font-size="10" fill="#2e6e2e">是</text>
+
+  <!-- inner loop -->
+  <g filter="url(#sk)">
+    <rect x="188" y="118" width="126" height="34" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="251" y="139" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">mask = 0，j = i</text>
+
+  <path d="M251,152 L251,165" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="251,166 322,190 251,214 180,190" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="251" y="186" text-anchor="middle" font-size="11" fill="#8a6415">word[j]</text>
+  <text x="251" y="200" text-anchor="middle" font-size="11" fill="#8a6415">是元音？</text>
+
+  <path d="M322,190 L352,190" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="334" y="183" font-size="10" fill="#b85450">否</text>
+
+  <g filter="url(#sk)">
+    <rect x="356" y="166" width="150" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="431" y="186" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">break：撞辅音墙</text>
+  <text x="431" y="202" text-anchor="middle" font-size="9.5" fill="#888888">起点 i 的子串全部判完</text>
+
+  <path d="M251,214 L251,229" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="259" y="224" font-size="10" fill="#2e6e2e">是</text>
+
+  <g filter="url(#sk)">
+    <rect x="181" y="230" width="140" height="34" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="251" y="251" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b6e9e">mask |= 1 &lt;&lt; pos(word[j])</text>
+
+  <path d="M251,264 L251,277" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="251,278 320,300 251,322 182,300" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="251" y="297" text-anchor="middle" font-size="11" fill="#8a6415">mask == 31 ？</text>
+  <text x="251" y="311" text-anchor="middle" font-size="9" fill="#999999">31 = 0b11111（5 种齐）</text>
+
+  <path d="M320,300 L348,300" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="330" y="293" font-size="10" fill="#2e6e2e">是</text>
+
+  <g filter="url(#sk)">
+    <rect x="352" y="284" width="76" height="32" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="390" y="305" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">ans++</text>
+
+  <path d="M182,300 L116,300" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="150" y="293" font-size="10" fill="#b85450">否</text>
+
+  <g filter="url(#sk)">
+    <rect x="36" y="284" width="80" height="32" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="76" y="305" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">j++</text>
+
+  <path d="M390,316 L390,330 L76,330 L76,318" stroke="#8899aa" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="233" y="344" text-anchor="middle" font-size="9.5" fill="#888888">ans++ 之后同样 j++ 右移</text>
+
+  <path d="M76,284 L76,190 L177,190" stroke="#8899aa" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="76" y="278" text-anchor="middle" font-size="9.5" fill="#888888">j 右移后回到内层判定</text>
+
+  <!-- bottom summary -->
+  <g filter="url(#sk)">
+    <rect x="36" y="356" width="568" height="42" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="374" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">时间 O(n²)：每个起点最多扫到段尾（n ≤ 100 ⇒ 内层至多约 10⁴ 次常数判断）</text>
+  <text x="320" y="390" text-anchor="middle" font-size="10.5" fill="#555555">空间 O(1)：只维护 mask 与两个下标；mask 是 5 位二进制，每位对应一种元音</text>
+</svg>
