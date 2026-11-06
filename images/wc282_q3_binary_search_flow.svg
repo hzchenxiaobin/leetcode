@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="500" fill="#fafafa"/>
+  <text x="320" y="22" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：闭区间二分 —— 可行向左收缩，不可行向右扩张</text>
+
+  <!-- ① init -->
+  <rect x="200" y="36" width="240" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="58" text-anchor="middle" font-size="12" font-weight="bold" fill="#33506b" filter="url(#rough2)">① 初始化</text>
+  <text x="320" y="78" text-anchor="middle" font-size="10.5" fill="#33506b" filter="url(#rough2)">lo = 1，hi = min(time) × totalTrips（long long）</text>
+  <path d="M320,92 L320,110" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② while diamond -->
+  <polygon points="320,112 425,156 320,200 215,156" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="152" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#rough2)">② lo ≤ hi ?</text>
+  <text x="320" y="168" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">（区间非空）</text>
+
+  <!-- no -> return lo -->
+  <path d="M425,156 L451,156" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="436" y="148" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <ellipse cx="523" cy="156" rx="68" ry="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="523" y="152" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5b2e" filter="url(#rough2)">返回 lo</text>
+  <text x="523" y="168" text-anchor="middle" font-size="9.5" fill="#2e5b2e" filter="url(#rough2)">（= hi+1，首个可行 t*）</text>
+
+  <!-- yes -> mid -->
+  <path d="M320,200 L320,224" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="332" y="218" font-size="10.5" fill="#2e5b2e" filter="url(#rough2)">是</text>
+
+  <rect x="190" y="228" width="260" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="251" text-anchor="middle" font-size="11.5" fill="#2e5b2e" filter="url(#rough2)">③ mid = lo + (hi − lo) / 2</text>
+  <path d="M320,264 L320,284" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ check -->
+  <rect x="150" y="288" width="340" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="308" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#33506b" filter="url(#rough2)">④ check(mid)：total = Σ ⌊mid / time[i]⌋</text>
+  <text x="320" y="326" text-anchor="middle" font-size="9.5" fill="#33506b" filter="url(#rough2)">累加中一旦 ≥ totalTrips 立即返回 true（防溢出）</text>
+  <path d="M320,342 L320,360" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ⑤ verdict diamond -->
+  <polygon points="320,362 440,406 320,450 200,406" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="402" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#rough2)">⑤ total ≥ totalTrips ?</text>
+  <text x="320" y="418" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">（mid 时刻跑得完吗）</text>
+
+  <!-- yes -> shrink left -->
+  <path d="M200,406 L178,406" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="190" y="398" text-anchor="middle" font-size="10.5" fill="#2e5b2e" filter="url(#rough2)">是</text>
+  <rect x="50" y="382" width="128" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="114" y="402" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e5b2e" filter="url(#rough2)">hi = mid − 1</text>
+  <text x="114" y="418" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">可行：t* ≤ mid</text>
+  <text x="114" y="430" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">向左找更小</text>
+
+  <!-- no -> expand right -->
+  <path d="M440,406 L462,406" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="451" y="398" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="466" y="382" width="128" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="530" y="402" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a30" filter="url(#rough2)">lo = mid + 1</text>
+  <text x="530" y="418" text-anchor="middle" font-size="9" fill="#8a3a30" filter="url(#rough2)">不可行：t* &gt; mid</text>
+  <text x="530" y="430" text-anchor="middle" font-size="9" fill="#8a3a30" filter="url(#rough2)">时间不够，加大</text>
+
+  <!-- loop back: right box down, left, up, into diamond left vertex -->
+  <path d="M 530 434 L 530 468 L 40 468 L 40 156 L 207 156" stroke="#888" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 114 434 L 114 468" stroke="#888" stroke-width="1.6" fill="none" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="52" y="320" text-anchor="middle" font-size="9.5" fill="#888" transform="rotate(-90 52 320)" filter="url(#rough2)">继续二分（区间每次减半）</text>
+
+  <text x="320" y="492" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">不变式：lo−1 及其左侧全不可行，hi+1 及其右侧全可行 —— 结束时 lo = hi+1 恰为最小可行 t*</text>
+</svg>
