@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="470" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">核心观察：字典序最大 = 永远优先「连放」当前最大字母</text>
+  <path d="M 140 36 Q 320 44 500 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- Panel A: rule 1 -->
+  <rect x="16" y="52" width="608" height="158" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="74" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">规则一：能放就放最大 m —— 一口气连放 k = min(cnt[m], L) 个</text>
+
+  <text x="52" y="112" font-size="10.5" fill="#888" filter="url(#rough2)">已有</text>
+  <rect x="86" y="92" width="32" height="32" rx="4" fill="#f0f0f0" stroke="#aaa" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="102" y="113" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">z</text>
+  <rect x="122" y="92" width="32" height="32" rx="4" fill="#f0f0f0" stroke="#aaa" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="138" y="113" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">z</text>
+
+  <path d="M166,108 L196,108" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="204" y="92" width="32" height="32" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="220" y="113" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">c</text>
+  <rect x="240" y="92" width="32" height="32" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="256" y="113" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">c</text>
+  <rect x="276" y="92" width="32" height="32" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="292" y="113" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">c</text>
+
+  <path d="M 204 138 Q 240 148 276 138" stroke="#446688" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <text x="240" y="168" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">k = min(4, 3) = 3</text>
+
+  <text x="348" y="104" font-size="10.8" fill="#444" filter="url(#rough2)">z 已用尽 → c 是当前最大可用字母</text>
+  <text x="348" y="126" font-size="10.8" fill="#444" filter="url(#rough2)">放 1 个 c 后它仍最大、仍未封顶</text>
+  <text x="348" y="148" font-size="10.8" fill="#444" filter="url(#rough2)">→ 接着放，直到 run = L 或用完</text>
+  <text x="348" y="186" font-size="10.8" fill="#446688" filter="url(#rough2)">连放一批只需 O(1)，无需逐个试探</text>
+
+  <!-- Panel B: rule 2 -->
+  <rect x="16" y="224" width="608" height="158" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="246" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">规则二：m 被封顶 → 垫 1 个次大字母 m′ 解封，再回头连放 m</text>
+
+  <rect x="50" y="264" width="32" height="32" rx="4" fill="#f0f0f0" stroke="#aaa" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="66" y="285" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">z</text>
+  <rect x="86" y="264" width="32" height="32" rx="4" fill="#f0f0f0" stroke="#aaa" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="102" y="285" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">z</text>
+
+  <rect x="122" y="264" width="32" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="138" y="285" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">c</text>
+  <rect x="158" y="264" width="32" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="174" y="285" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">c</text>
+  <rect x="194" y="264" width="32" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="210" y="285" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">c</text>
+  <text x="174" y="316" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">run = L → c 被封顶 ✗</text>
+
+  <path d="M238,280 L266,280" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="274" y="264" width="32" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="290" y="285" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">a</text>
+  <text x="290" y="316" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">垫 1 个次大 m′</text>
+
+  <path d="M318,280 L346,280" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="354" y="264" width="32" height="32" rx="4" fill="#ffffff" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="370" y="285" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">c</text>
+  <text x="370" y="316" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">run 清零 → c 解封</text>
+
+  <text x="446" y="276" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">m′ 取次大（首位更大恒优）</text>
+  <text x="446" y="296" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">只垫 1 个就回头放 m</text>
+  <text x="446" y="316" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">没有 m′ → 剩余 m 报废</text>
+
+  <!-- Bottom summary -->
+  <rect x="16" y="394" width="608" height="62" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="418" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">贪心整串形态：z z | c c c | a | c —— 「铺满最大 → 垫片解封」交替，直到无字母可垫</text>
+  <text x="320" y="440" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">「省着用大字母」永远不优：任何位置放更大字母都严格更优（交换论证见 §5）</text>
+</svg>
