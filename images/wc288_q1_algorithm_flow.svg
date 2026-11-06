@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="113" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="480" fill="#fafafa"/>
+  <text x="320" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：分组 → 各自降序 → 按原位奇偶回填</text>
+  <path d="M 150 42 Q 320 52 490 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk2)">
+    <ellipse cx="180" cy="66" rx="72" ry="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="180" y="71" text-anchor="middle" font-size="13" fill="#2b4a6e">读入 num → s</text>
+
+  <path d="M 180 88 L 180 102" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- box1: group -->
+  <g filter="url(#sk2)">
+    <rect x="70" y="104" width="220" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="180" y="126" text-anchor="middle" font-size="12" fill="#2b4a6e">遍历 s：奇数字入 odd[]，偶数字入 even[]</text>
+
+  <path d="M 180 140 L 180 154" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- box2: sort -->
+  <g filter="url(#sk2)">
+    <rect x="70" y="158" width="220" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="180" y="180" text-anchor="middle" font-size="12" fill="#2b4a6e">odd[]、even[] 各自降序排序</text>
+
+  <path d="M 180 194 L 180 210" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond: loop end? -->
+  <g filter="url(#sk2)">
+    <polygon points="180,212 280,254 180,296 80,254" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="180" y="248" text-anchor="middle" font-size="13" fill="#7a5415">还有未处理的位 c ?</text>
+  <text x="180" y="266" text-anchor="middle" font-size="10" fill="#7a5415">（从左到右逐位）</text>
+
+  <!-- no: return -->
+  <path d="M 284 254 L 424 254" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="350" y="246" font-size="12" fill="#2e5e22" font-weight="bold">否</text>
+  <g filter="url(#sk2)">
+    <rect x="430" y="230" width="170" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="515" y="251" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e22">返回 ans</text>
+  <text x="515" y="269" text-anchor="middle" font-size="10" fill="#4a7a3a">int 不溢出（ans ≤ 10⁹）</text>
+
+  <!-- yes: process position -->
+  <path d="M 180 298 L 180 322" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="190" y="314" font-size="12" fill="#b85450" font-weight="bold">是</text>
+
+  <g filter="url(#sk2)">
+    <rect x="70" y="326" width="220" height="64" rx="6" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+  </g>
+  <text x="180" y="344" text-anchor="middle" font-size="10" fill="#666">按原位 c 的奇偶取组内当前最大：</text>
+  <text x="180" y="362" text-anchor="middle" font-size="12" fill="#a06a1a" font-family="monospace">奇 → d = odd[oi++]（已降序）</text>
+  <text x="180" y="380" text-anchor="middle" font-size="12" fill="#2b4a6e" font-family="monospace">偶 → d = even[ei++]（已降序）</text>
+
+  <path d="M 180 390 L 180 406" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ans box -->
+  <g filter="url(#sk2)">
+    <rect x="70" y="408" width="220" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="180" y="431" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" font-family="monospace">ans = ans × 10 + d</text>
+
+  <!-- loop back -->
+  <path d="M 66 426 Q 22 426 22 300 Q 22 254 74 254" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="28" y="340" font-size="11" fill="#8a3a36" font-weight="bold">下一位 c</text>
+
+  <!-- bucket note -->
+  <g filter="url(#sk2)">
+    <rect x="430" y="330" width="180" height="118" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="520" y="352" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">桶计数版 O(d) / O(1)</text>
+  <text x="520" y="372" text-anchor="middle" font-size="11" fill="#7a5415">代替排序：cnt[0..9] 计数</text>
+  <text x="520" y="390" text-anchor="middle" font-size="11" fill="#7a5415">奇位从 9→1、偶位从 8→0</text>
+  <text x="520" y="408" text-anchor="middle" font-size="11" fill="#7a5415">取首个 cnt &gt; 0 的数字</text>
+  <text x="520" y="426" text-anchor="middle" font-size="11" fill="#7a5415">（步长 2，至多 5 次探测）</text>
+</svg>
