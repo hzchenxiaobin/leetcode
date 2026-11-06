@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="456" viewBox="0 0 680 456" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="aor" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="680" height="456" fill="#fafafa"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：从记忆化搜索到反向递推</text>
+  <path d="M 190 40 Q 340 50 490 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ====== Section 1: evolution ====== -->
+  <text x="48" y="62" font-size="12.5" font-weight="bold" fill="#446688">① 赛场三步演进</text>
+  <g filter="url(#sk)">
+    <rect x="56" y="78" width="180" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <rect x="270" y="78" width="186" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="490" y="78" width="170" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <path d="M 240 104 L 264 104" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 460 104 L 484 104" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="146" y="100" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">暴力枚举 2ⁿ</text>
+  <text x="146" y="118" text-anchor="middle" font-size="10.5" fill="#777">n = 10⁵ 直接爆炸 ✗</text>
+  <text x="363" y="100" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">记忆化搜索 dfs(i)</text>
+  <text x="363" y="118" text-anchor="middle" font-size="10.5" fill="#777">O(n)，但递归深达 n ⚠</text>
+  <text x="575" y="100" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24">反向递推 ✓</text>
+  <text x="575" y="118" text-anchor="middle" font-size="10.5" fill="#777">O(n) 一趟填表</text>
+
+  <!-- ====== Section 2: flow chart ====== -->
+  <text x="48" y="158" font-size="12.5" font-weight="bold" fill="#446688">② 反向递推流程（i 从 n−1 扫到 0）</text>
+  <g filter="url(#sk)">
+    <rect x="56" y="176" width="160" height="52" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="250" y="168" width="230" height="62" rx="6" fill="#fff" stroke="#4a7a3a" stroke-width="1.8"/>
+    <polygon points="575,170 648,199 575,228 502,199" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="250" y="244" width="236" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <path d="M 216 202 L 246 202" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 480 202 L 500 202" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 575 170 L 575 150 L 365 150 L 365 164" stroke="#b8860b" stroke-width="1.6" fill="none" marker-end="url(#aor)"/>
+    <path d="M 575 228 L 575 264 L 486 264" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="136" y="194" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66">dp[0..n] 全 0</text>
+  <text x="136" y="210" text-anchor="middle" font-size="10" fill="#666">dp[n] = 0 当哨兵</text>
+  <text x="136" y="222" text-anchor="middle" font-size="10" fill="#666">i = n−1 起步</text>
+  <g font-size="11" font-weight="bold" fill="#2f5d24" text-anchor="middle">
+    <text x="365" y="186">j = min(i + brainpower[i] + 1, n)</text>
+    <text x="365" y="204">dp[i] = max(dp[i+1],</text>
+    <text x="365" y="220">points[i] + dp[j])</text>
+  </g>
+  <text x="575" y="203" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">i &lt; 0 ?</text>
+  <text x="470" y="144" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b8860b">否：i = i − 1，继续</text>
+  <text x="588" y="248" font-size="11" font-weight="bold" fill="#2f5d24">是</text>
+  <text x="368" y="268" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f5d24">返回 dp[0]</text>
+
+  <!-- ====== Section 3: why backward ====== -->
+  <text x="48" y="308" font-size="12.5" font-weight="bold" fill="#446688">③ 为什么「反向」：dp[i] 的两个依赖都在右边</text>
+  <g filter="url(#sk)">
+    <rect x="70" y="322" width="78" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="188" y="322" width="84" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="316" y="322" width="76" height="36" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="436" y="322" width="100" height="36" rx="6" fill="#f5f5f5" stroke="#aaa" stroke-width="1.4"/>
+    <path d="M 150 340 L 184 340" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#ar)"/>
+    <path d="M 148 326 Q 260 298 352 324" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#aor)"/>
+    <path d="M 560 380 L 110 380" stroke="#4a7a3a" stroke-width="2" marker-end="url(#ar)"/>
+  </g>
+  <text x="109" y="344" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66">dp[i]</text>
+  <text x="230" y="344" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24">dp[i+1]</text>
+  <text x="296" y="344" text-anchor="middle" font-size="14" fill="#999">···</text>
+  <text x="354" y="344" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">dp[j]</text>
+  <text x="412" y="344" text-anchor="middle" font-size="14" fill="#999">···</text>
+  <text x="486" y="344" text-anchor="middle" font-size="11" fill="#777">dp[n] = 0</text>
+  <text x="167" y="332" text-anchor="middle" font-size="10" font-weight="bold" fill="#4a7a3a">跳过</text>
+  <text x="250" y="306" text-anchor="middle" font-size="10" font-weight="bold" fill="#b8860b">解决分支跳到 j</text>
+  <text x="335" y="400" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24">递推方向：i 从 n−1 扫向 0（右 → 左），取用时必已就绪</text>
+  <g filter="url(#sk)">
+    <rect x="56" y="412" width="568" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="433" text-anchor="middle" font-size="11.5" fill="#444">若改成正向填表：dp[i+1] 与 dp[j] 都还没算（读到 0），答案偏小——方向就是正确性</text>
+</svg>
