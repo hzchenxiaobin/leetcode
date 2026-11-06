@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="470" viewBox="0 0 680 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="680" height="470" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：第一趟定「墙」，第二趟数「墙之间」</text>
+  <path d="M 150 40 Q 340 50 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- side note: degenerate case -->
+  <g filter="url(#sk)">
+    <rect x="436" y="64" width="208" height="96" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="540" y="88" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">退化情形：mn == mx</text>
+  <text x="540" y="108" text-anchor="middle" font-size="10.5" fill="#444">（所有元素相等）</text>
+  <text x="540" y="128" text-anchor="middle" font-size="10.5" fill="#444">判定 mn &lt; x &lt; mx 恒假</text>
+  <text x="540" y="150" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">cnt 自然为 0，无需特判 ✓</text>
+  <path d="M 380 128 L 436 112" stroke="#d6a040" stroke-width="1.2" stroke-dasharray="4,3" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <ellipse cx="250" cy="70" rx="40" ry="17" fill="#fff" stroke="#5a5a5a" stroke-width="1.5"/>
+  </g>
+  <text x="250" y="75" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333">开始</text>
+  <g filter="url(#sk)">
+    <path d="M 250 88 L 250 104" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- pass 1 -->
+  <g filter="url(#sk)">
+    <rect x="120" y="106" width="260" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="128" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333">第一趟扫描：求出 mn 与 mx</text>
+  <text x="250" y="144" text-anchor="middle" font-size="10" fill="#666" font-family="monospace">mn 自 +∞ 起降，mx 自 −∞ 起升</text>
+  <g filter="url(#sk)">
+    <path d="M 250 152 L 250 168" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- pass 2 -->
+  <g filter="url(#sk)">
+    <rect x="120" y="170" width="260" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="192" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333">第二趟扫描：cnt = 0</text>
+  <text x="250" y="208" text-anchor="middle" font-size="11" fill="#666">逐个取出元素 x</text>
+  <g filter="url(#sk)">
+    <path d="M 250 214 L 250 230" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="250,230 368,272 250,314 132,272" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="276" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" font-family="monospace">mn &lt; x &lt; mx ?</text>
+
+  <!-- yes branch -->
+  <g filter="url(#sk)">
+    <path d="M 368 272 L 404 272" stroke="#4a7a3a" stroke-width="1.5" marker-end="url(#arG)"/>
+  </g>
+  <text x="383" y="264" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <rect x="408" y="254" width="86" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="451" y="277" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" font-family="monospace">cnt += 1</text>
+  <!-- loop back: next x -->
+  <g filter="url(#sk)">
+    <path d="M 451 254 L 451 192 L 384 192" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arG)"/>
+  </g>
+  <text x="457" y="222" text-anchor="start" font-size="10" fill="#4a7a3a" font-weight="bold">下一个 x</text>
+
+  <!-- no branch: loop back left -->
+  <g filter="url(#sk)">
+    <path d="M 132 272 L 96 272 L 96 192 L 116 192" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arR)"/>
+  </g>
+  <text x="126" y="264" text-anchor="end" font-size="10.5" font-weight="bold" fill="#b85450">否</text>
+  <text x="96" y="222" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold">跳过，下一个</text>
+
+  <!-- exit -->
+  <g filter="url(#sk)">
+    <path d="M 250 314 L 250 336" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+  <text x="258" y="330" text-anchor="start" font-size="10" fill="#666">所有 x 判定完毕</text>
+  <g filter="url(#sk)">
+    <rect x="185" y="338" width="130" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="362" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">返回 cnt</text>
+
+  <!-- bottom callout -->
+  <g filter="url(#sk)">
+    <rect x="60" y="400" width="560" height="52" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="422" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">两趟各扫一遍数组：时间 O(n)，额外空间 O(1)</text>
+  <text x="340" y="442" text-anchor="middle" font-size="11.5" fill="#444">判定写法：C++ 用 mn &lt; x &amp;&amp; x &lt; mx（链式 mn &lt; x &lt; mx 语义错误）；Python 可直接链式</text>
+</svg>
