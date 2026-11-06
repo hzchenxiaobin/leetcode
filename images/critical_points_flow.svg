@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="496" viewBox="0 0 680 496" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="87" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="496" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：滑动三元组一趟扫描</text>
+  <path d="M 180 40 Q 340 48 500 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <ellipse cx="340" cy="66" rx="40" ry="15" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="71" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">开始</text>
+
+  <path d="M 340 81 L 340 96" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- init -->
+  <g filter="url(#sk)">
+    <rect x="140" y="100" width="400" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="120" text-anchor="middle" font-size="12" fill="#2b6e9e">初始化：pos = 1，prev = head.val，curr = head.next</text>
+  <text x="340" y="138" text-anchor="middle" font-size="12" fill="#2b6e9e">first = prevIdx = −1，minGap = ∞</text>
+
+  <path d="M 340 146 L 340 166" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1: loop condition -->
+  <g filter="url(#sk)">
+    <polygon points="340,170 425,202 340,234 255,202" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="198" text-anchor="middle" font-size="12" fill="#8a6415" font-weight="bold">curr 且 curr.next</text>
+  <text x="340" y="214" text-anchor="middle" font-size="12" fill="#8a6415" font-weight="bold">都存在？</text>
+
+  <!-- loop condition: no -> settle -->
+  <path d="M 427 202 L 475 202" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="450" y="193" text-anchor="middle" font-size="10.5" fill="#a04040" font-weight="bold">否（扫完）</text>
+
+  <!-- settle diamond -->
+  <g filter="url(#sk)">
+    <polygon points="565,170 650,202 565,234 480,202" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="565" y="207" text-anchor="middle" font-size="12" fill="#8a6415" font-weight="bold">临界点 ≥ 2 ？</text>
+
+  <!-- settle yes -> answer -->
+  <path d="M 565 234 L 565 262" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="578" y="253" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="470" y="266" width="185" height="32" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="562" y="287" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">返回 [minGap, prevIdx − first]</text>
+
+  <!-- settle no -> [-1,-1] -->
+  <path d="M 652 202 L 666 202 L 666 338 L 659 338" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="655" y="248" text-anchor="middle" font-size="12" fill="#a04040" font-weight="bold">否</text>
+  <g filter="url(#sk)">
+    <rect x="470" y="322" width="185" height="32" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="562" y="343" text-anchor="middle" font-size="12" fill="#a04040" font-weight="bold">返回 [−1, −1]</text>
+  <text x="562" y="372" text-anchor="middle" font-size="9.5" fill="#889">（临界点 ≥ 2 ⟺ first ≠ −1 且 prevIdx ≠ first）</text>
+
+  <!-- loop condition yes -> critical judgment -->
+  <path d="M 340 234 L 340 256" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="353" y="249" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">是</text>
+
+  <!-- diamond 2: critical judgment -->
+  <g filter="url(#sk)">
+    <polygon points="340,260 450,292 340,324 230,292" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="288" text-anchor="middle" font-size="11.5" fill="#8a6415" font-weight="bold">curr 严格大于两侧</text>
+  <text x="340" y="304" text-anchor="middle" font-size="11.5" fill="#8a6415" font-weight="bold">或严格小于两侧？</text>
+
+  <!-- critical judgment no -> bypass to advance -->
+  <path d="M 230 292 L 110 292 L 110 436 L 156 436" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="205" y="284" text-anchor="middle" font-size="11" fill="#a04040" font-weight="bold">否</text>
+
+  <!-- critical judgment yes -> record -->
+  <path d="M 340 324 L 340 344" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="353" y="338" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold">是</text>
+
+  <!-- record box -->
+  <g filter="url(#sk)">
+    <rect x="160" y="348" width="360" height="52" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="366" text-anchor="middle" font-size="11" fill="#2e6e2e">临界点！首个 → first = pos</text>
+  <text x="340" y="382" text-anchor="middle" font-size="11" fill="#2e6e2e">非首个 → minGap = min(minGap, pos − prevIdx)</text>
+  <text x="340" y="396" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">prevIdx = pos</text>
+
+  <path d="M 340 400 L 340 416" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- advance box -->
+  <g filter="url(#sk)">
+    <rect x="160" y="420" width="360" height="32" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="441" text-anchor="middle" font-size="12" fill="#2b6e9e">prev = curr.val；curr = curr.next；pos++</text>
+
+  <!-- loop back -->
+  <path d="M 340 452 L 340 470 L 62 470 L 62 202 L 251 202" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="150" y="463" text-anchor="middle" font-size="10" fill="#889">回到循环条件</text>
+
+  <text x="340" y="488" text-anchor="middle" font-size="10.5" fill="#888">头节点（curr 从 head.next 出发）与尾节点（要求 curr.next 存在）天然被排除在判定之外</text>
+</svg>
