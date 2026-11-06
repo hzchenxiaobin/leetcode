@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="113" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="700" fill="#fafafa"/>
+  <text x="450" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：行/列前缀和 + 转角 × 4 满臂组合</text>
+  <path d="M 250 42 Q 450 52 650 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 1: 因子试除 -->
+  <g filter="url(#sk)"><rect x="170" y="62" width="560" height="76" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="190" y="88" font-size="13" font-weight="bold" fill="#2b6e9e">Step 1：因子试除——逐格数出 v₂、v₅</text>
+  <text x="190" y="110" font-size="11" fill="#444">c₂[i][j] = v₂(grid[i][j])，c₅[i][j] = v₅(grid[i][j])</text>
+  <text x="190" y="128" font-size="10" fill="#888">grid ≤ 1000 → 单格 v₂ ≤ 9、v₅ ≤ 4；逐格试除 O(mn·log V)</text>
+  <path d="M 450 138 L 450 154" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 2: 行/列前缀和 -->
+  <g filter="url(#sk)"><rect x="170" y="158" width="560" height="84" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <text x="190" y="184" font-size="13" font-weight="bold" fill="#2e6e2e">Step 2：预处理行/列前缀和（各多开一位）</text>
+  <text x="190" y="206" font-size="11" fill="#444">row₂[i][k] = 行 i 前 k 列的 v₂ 之和；col₂[j][k] = 列 j 前 k 行</text>
+  <text x="190" y="224" font-size="10" fill="#888">区间 [l,r] 之和 = prefix[r+1] − prefix[l]，免 l=0 特判；row₅/col₅ 同理</text>
+  <path d="M 450 242 L 450 258" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 3: 枚举转角 -->
+  <g filter="url(#sk)"><rect x="170" y="262" width="560" height="64" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g>
+  <text x="190" y="288" font-size="13" font-weight="bold" fill="#2b6e9e">Step 3：枚举转角 (i,j)——双重循环</text>
+  <text x="190" y="310" font-size="11" fill="#444">跑遍全部 m·n 个转角；全部枚举完 → return ans</text>
+  <path d="M 450 326 L 450 342" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 4: 四条满臂 -->
+  <g filter="url(#sk)"><rect x="170" y="346" width="560" height="86" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/></g>
+  <text x="190" y="372" font-size="13" font-weight="bold" fill="#7a5415">Step 4：取四条「含转角」的满臂（O(1)）</text>
+  <text x="190" y="394" font-size="11" fill="#444">H₂ = { row₂[i][j+1]（左）, row₂[i][n]−row₂[i][j]（右） }</text>
+  <text x="190" y="412" font-size="11" fill="#444">V₂ = { col₂[j][i+1]（上）, col₂[j][m]−col₂[j][i]（下） }；H₅、V₅ 同理</text>
+  <text x="190" y="428" font-size="10" fill="#888">左/上臂端点含转角取 [j+1]、[i+1]；右/下臂区间 [j,n−1]、[i,m−1]</text>
+  <path d="M 450 432 L 450 448" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- Step 5: 2x2 组合 -->
+  <g filter="url(#sk)"><rect x="170" y="452" width="560" height="90" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="190" y="478" font-size="13" font-weight="bold" fill="#7a5415">Step 5：2×2 组合双循环 (左|右)×(上|下)</text>
+  <text x="190" y="500" font-size="11" fill="#444">total₂ = H₂[a]+V₂[b] − c₂[i][j]　← 两臂各含转角一次，减去一份</text>
+  <text x="190" y="518" font-size="11" fill="#444">total₅ = H₅[a]+V₅[b] − c₅[i][j]</text>
+  <text x="190" y="536" font-size="11.5" font-weight="bold" fill="#8a3a36">ans ← max(ans, min(total₂, total₅))</text>
+  <path d="M 450 542 L 450 558" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- loop back to Step 3 -->
+  <path d="M 170 497 L 100 497 L 100 294 L 162 294" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="84" y="396" font-size="11" fill="#2e6e2e" transform="rotate(-90 84 396)">下一转角</text>
+
+  <!-- return -->
+  <g filter="url(#sk)"><rect x="170" y="562" width="560" height="56" rx="10" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/></g>
+  <text x="190" y="586" font-size="13" font-weight="bold" fill="#5a3a7a">return ans</text>
+  <text x="190" y="606" font-size="11" fill="#444">ans = 所有转角 × 4 种满臂组合中的最大 min(total₂, total₅)</text>
+
+  <!-- 复杂度注释 -->
+  <g filter="url(#sk)"><rect x="170" y="632" width="560" height="44" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="450" y="659" text-anchor="middle" font-size="11" fill="#555">复杂度：时间 O(mn)（每转角 4 组合、每组 O(1)）｜ 空间 6 张表 O(mn)，可按行/列滚动至 O(m+n)</text>
+</svg>
