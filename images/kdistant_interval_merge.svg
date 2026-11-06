@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="400" fill="#fdfcf7"/>
+  <text x="320" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">区间合并：right 指针推进，天然递增 + 自动去重</text>
+  <path d="M 150 44 Q 320 52 490 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 左侧流程 -->
+  <g filter="url(#sk)">
+    <rect x="52" y="70" width="180" height="30" rx="15" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="142" y="90" text-anchor="middle" font-size="12" fill="#2b6e9e" font-weight="bold">开始：right = 0（未覆盖）</text>
+  <path d="M 142 100 L 142 118" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="142,120 208,148 142,176 76,148" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="142" y="152" text-anchor="middle" font-size="12" fill="#7a5415" font-weight="bold">nums[j] == key ?</text>
+  <text x="118" y="140" text-anchor="middle" font-size="10" fill="#999">j 递增遍历</text>
+
+  <path d="M 142 176 L 142 194" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="152" y="190" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+
+  <g filter="url(#sk)">
+    <rect x="52" y="196" width="180" height="30" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="142" y="216" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">left = max(right, j−k)</text>
+  <path d="M 142 226 L 142 244" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="52" y="246" width="180" height="30" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="142" y="266" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">right = min(n−1, j+k)+1</text>
+  <path d="M 142 276 L 142 294" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="52" y="296" width="180" height="30" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="142" y="316" text-anchor="middle" font-size="12" fill="#8a3a36" font-family="monospace">输出 [left, right) 中的 i</text>
+
+  <path d="M 208 148 L 246 148 L 246 311 L 232 311" stroke="#3a3a3a" stroke-width="1.2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="226" y="142" text-anchor="middle" font-size="11" fill="#999">否</text>
+  <path d="M 52 311 L 40 311 L 40 148 L 76 148" stroke="#3a3a3a" stroke-width="1.2" fill="none" stroke-dasharray="5,4" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 右侧重叠裁剪示例 -->
+  <text x="450" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">重叠区间怎么去重？</text>
+  <text x="450" y="98" text-anchor="middle" font-size="11" fill="#888">key 下标相邻很近时，区间会重叠</text>
+
+  <g font-size="11" fill="#444">
+    <text x="292" y="126">j=2, k=1:</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="352" y="112" width="120" height="22" rx="7" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/>
+  </g>
+  <text x="412" y="127" text-anchor="middle" font-size="11" fill="#2b6e9e">[1, 3] → 输出 1,2,3</text>
+
+  <g font-size="11" fill="#444">
+    <text x="292" y="160">j=3, k=1:</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="352" y="146" width="120" height="22" rx="7" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3" stroke-dasharray="5,3"/>
+  </g>
+  <text x="412" y="161" text-anchor="middle" font-size="11" fill="#2b6e9e">[2, 4] 但 2,3 已输出</text>
+
+  <g filter="url(#sk)">
+    <rect x="352" y="146" width="60" height="22" rx="7" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="382" y="161" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">重复!</text>
+
+  <g filter="url(#sk)">
+    <rect x="300" y="196" width="300" height="56" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="450" y="218" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace" font-weight="bold">left = max(right, j−k) = max(4, 2) = 4</text>
+  <text x="450" y="238" text-anchor="middle" font-size="12" fill="#2e6e2e">只补输出 4 → 最终 1,2,3,4 ✓</text>
+
+  <!-- 底注 -->
+  <g filter="url(#sk)">
+    <rect x="300" y="272" width="300" height="54" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="450" y="294" text-anchor="middle" font-size="12" fill="#7a5415">j 递增 ⇒ j+k 递增 ⇒ 区间右端单调右移，</text>
+  <text x="450" y="312" text-anchor="middle" font-size="12" fill="#7a5415">right 只进不退，一趟扫描 O(n) 完成。</text>
+
+  <g filter="url(#sk)">
+    <rect x="60" y="352" width="520" height="32" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1"/>
+  </g>
+  <text x="320" y="373" text-anchor="middle" font-size="11" fill="#888">比赛最短路径（可选）：bool 标记数组直接涂区间再收集，O(n·k) 但 n ≤ 1000 稳过。</text>
+</svg>
