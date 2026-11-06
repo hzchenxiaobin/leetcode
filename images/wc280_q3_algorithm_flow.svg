@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="430" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">算法流程：排序 → 总量 → 枚举保留量 → ans = total − max(keep)</text>
+  <path d="M 90 38 Q 320 46 550 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- step 1 -->
+  <rect x="140" y="58" width="360" height="50" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="320" y="88" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">① beans 升序排序（O(n log n) 主导）</text>
+  <path d="M 320 108 L 320 126" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <rect x="140" y="128" width="360" height="50" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="320" y="158" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">② total = Σ beans[i]（long long 存）</text>
+  <path d="M 320 178 L 320 196" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 3: loop -->
+  <rect x="140" y="198" width="360" height="58" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="320" y="222" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">③ 枚举 i = 0 … n−1</text>
+  <text x="320" y="243" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">keep = beans[i] × (n − i)</text>
+  <path d="M 500 214 Q 558 210 558 228 Q 558 246 504 242" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="566" y="234" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">i 递增</text>
+  <path d="M 320 256 L 320 274" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 4 -->
+  <rect x="140" y="276" width="360" height="50" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="306" text-anchor="middle" font-size="13.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">④ ans = total − max(keep)</text>
+
+  <!-- bottom note -->
+  <rect x="30" y="352" width="580" height="62" rx="8" fill="#ffffff" stroke="#888" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="320" y="376" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">keep_i = 目标值取 beans[i] 时能保留的豆子总数：右侧 n − i 个袋子、每袋 beans[i] 颗</text>
+  <text x="320" y="398" text-anchor="middle" font-size="11" fill="#d6a040" font-weight="bold" filter="url(#rough2)">朴素前缀和式 cost(i) = pre[i] + (total − pre[i]) − beans[i]·(n − i) 中 pre[i] 抵消</text>
+</svg>
