@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="620" viewBox="0 0 680 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="620" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：前缀和预处理 → 滚动数组分组背包（t 倒序）</text>
+  <path d="M 140 42 Q 340 52 540 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="62" text-anchor="middle" font-size="12" fill="#888">三层循环：外层组（栈）→ 中层容量 t 倒序 → 内层选项 j；总代价 k·Σlen ≤ 4×10⁶</text>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="240" y="84" width="200" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="103" text-anchor="middle" font-size="13" font-weight="bold" fill="#33475e">① 预处理每栈前缀和</text>
+  <text x="340" y="121" text-anchor="middle" font-size="11" fill="#556">prefix[j] = 前 j 枚面值之和，O(S)</text>
+  <path d="M 340 128 L 340 150" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="240" y="154" width="200" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="173" text-anchor="middle" font-size="13" font-weight="bold" fill="#33475e">② 初始化 dp[0]=0，其余 −∞</text>
+  <text x="340" y="191" text-anchor="middle" font-size="11" fill="#556">一维滚动数组，长度 k+1</text>
+  <path d="M 340 198 L 340 220" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- note: -inf -->
+  <g filter="url(#sk)">
+    <rect x="474" y="146" width="192" height="62" rx="8" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="570" y="168" text-anchor="middle" font-size="11" fill="#666">−∞ = 「恰好 t 次」暂不可达，</text>
+  <text x="570" y="186" text-anchor="middle" font-size="11" fill="#666">只有可达状态参与转移；</text>
+  <text x="570" y="202" text-anchor="middle" font-size="11" fill="#666">k ≤ Σlen 保证 dp[k] 终可达</text>
+
+  <!-- step 3: next pile -->
+  <g filter="url(#sk)">
+    <rect x="240" y="224" width="200" height="44" rx="9" fill="#fffdf5" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="243" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">③ 处理下一个栈 i</text>
+  <text x="340" y="261" text-anchor="middle" font-size="11" fill="#556">外层循环：组（i = 0…n−1）</text>
+  <path d="M 340 268 L 340 290" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 4: t descending -->
+  <g filter="url(#sk)">
+    <rect x="240" y="294" width="200" height="44" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="313" text-anchor="middle" font-size="13" font-weight="bold" fill="#a04038">④ t 从 k 倒序到 1</text>
+  <text x="340" y="331" text-anchor="middle" font-size="11" fill="#556">中层循环：容量倒序</text>
+  <path d="M 340 338 L 340 360" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- note: descending -->
+  <g filter="url(#sk)">
+    <rect x="24" y="294" width="196" height="62" rx="8" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="122" y="316" text-anchor="middle" font-size="11" fill="#666">倒序保证 dp[t−j] 读到的</text>
+  <text x="122" y="334" text-anchor="middle" font-size="11" fill="#666">是上一轮（前 i−1 栈）旧值，</text>
+  <text x="122" y="350" text-anchor="middle" font-size="11" fill="#666">与 0-1 背包倒序同理</text>
+
+  <!-- step 5: enumerate j -->
+  <g filter="url(#sk)">
+    <rect x="180" y="364" width="320" height="74" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="386" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a04038">⑤ 枚举 j = 1 … min(t, len_i)</text>
+  <text x="340" y="406" text-anchor="middle" font-size="11.5" fill="#a04038">dp[t−j] 可达时（内层循环：组内选项）：</text>
+  <text x="340" y="426" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a04038">dp[t] = max(dp[t], dp[t−j] + prefix[j])</text>
+
+  <!-- note: complexity -->
+  <g filter="url(#sk)">
+    <rect x="24" y="372" width="132" height="66" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="90" y="394" text-anchor="middle" font-size="11" fill="#7a5415">每栈转移 ≤</text>
+  <text x="90" y="412" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">k · len_i 次</text>
+  <text x="90" y="430" text-anchor="middle" font-size="11" fill="#7a5415">合计 ≤ k·S = 4×10⁶</text>
+
+  <!-- loop back: step 5 to step 4 (t decrement) -->
+  <path d="M 500 388 L 560 388 L 560 316 L 444 316" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="560" y="306" text-anchor="middle" font-size="11" font-weight="bold" fill="#a04038" filter="url(#sk)">t−− 继续</text>
+
+  <!-- step 6: diamond -->
+  <path d="M 340 438 L 340 458" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <polygon points="340,462 452,500 340,538 228,500" fill="#fff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="496" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33475e">所有栈都处理完 ?</text>
+  <text x="340" y="514" text-anchor="middle" font-size="10.5" fill="#999">（i == n ?）</text>
+
+  <!-- yes -> back to step 3 -->
+  <path d="M 452 500 L 620 500 L 620 246 L 444 246" stroke="#4a8e4a" stroke-width="1.4" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="536" y="488" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">否：下一栈 ↺</text>
+
+  <!-- no -> return -->
+  <path d="M 340 538 L 340 558" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="354" y="554" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">是</text>
+  <g filter="url(#sk)">
+    <rect x="240" y="562" width="200" height="40" rx="9" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="587" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e">⑥ 返回 dp[k]（恰好 k 次）</text>
+</svg>

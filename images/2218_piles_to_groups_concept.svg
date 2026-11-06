@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="500" viewBox="0 0 680 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="13" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="680" height="500" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：只能连续取顶 → 前 j 枚之和 = 前缀和 → 每栈一组互斥选项</text>
+  <path d="M 140 42 Q 340 52 540 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="62" text-anchor="middle" font-size="12" fill="#888">栈是 LIFO：取 j 枚没有选择余地，价值就是前 j 个元素之和 —— 「怎么取」坍缩成「取几个」</text>
+
+  <!-- ================= left: stacks ================= -->
+  <text x="150" y="94" text-anchor="middle" font-size="13" font-weight="bold" fill="#33475e" filter="url(#sk)">① 栈：只能从顶往下连续取</text>
+
+  <!-- stack 1: [1,100,3] top to bottom -->
+  <g filter="url(#sk)">
+    <rect x="40" y="112" width="56" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <rect x="40" y="144" width="56" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <rect x="40" y="176" width="56" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+  </g>
+  <g font-size="14" font-weight="bold" fill="#333" text-anchor="middle">
+    <text x="68" y="132">1</text>
+    <text x="68" y="164">100</text>
+    <text x="68" y="196">3</text>
+  </g>
+  <text x="68" y="106" text-anchor="middle" font-size="11" font-weight="bold" fill="#33475e" filter="url(#sk)">栈 1（顶→底）</text>
+  <!-- brace: take top 2 coins -->
+  <path d="M 100 112 Q 118 112 118 130 Q 118 144 132 144" stroke="#b85450" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 100 174 Q 112 174 112 158 Q 112 148 132 144" stroke="#b85450" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="160" y="140" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04038" filter="url(#sk)">取 2 枚</text>
+  <text x="160" y="157" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a04038" filter="url(#sk)">= 1+100 = 101</text>
+
+  <!-- stack 2: [7,8,9] -->
+  <g filter="url(#sk)">
+    <rect x="40" y="232" width="56" height="30" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" rx="4"/>
+    <rect x="40" y="264" width="56" height="30" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" rx="4"/>
+    <rect x="40" y="296" width="56" height="30" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8" rx="4"/>
+  </g>
+  <g font-size="14" font-weight="bold" fill="#333" text-anchor="middle">
+    <text x="68" y="252">7</text>
+    <text x="68" y="284">8</text>
+    <text x="68" y="316">9</text>
+  </g>
+  <text x="68" y="226" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">栈 2（顶→底）</text>
+  <text x="160" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">取 j 枚的价值：</text>
+  <text x="160" y="280" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">prefix[j]（前缀和）</text>
+
+  <!-- prefix table -->
+  <g filter="url(#sk)">
+    <rect x="36" y="348" width="272" height="130" rx="10" fill="#f8fbff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="172" y="370" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33475e" filter="url(#sk)">前缀和表 prefix（取 0 枚 = 0）</text>
+  <g font-size="12" fill="#555" text-anchor="middle">
+    <text x="88" y="394">j（枚数）</text>
+    <text x="172" y="394">0</text><text x="212" y="394">1</text><text x="252" y="394">2</text><text x="288" y="394">3</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="58" y="402" width="228" height="1.4" fill="#c8d4e4"/>
+  </g>
+  <g font-size="12.5" font-weight="bold" fill="#33475e" text-anchor="middle">
+    <text x="88" y="424">栈 1</text><text x="172" y="424">0</text><text x="212" y="424">1</text><text x="252" y="424" fill="#a04038">101</text><text x="288" y="424">104</text>
+  </g>
+  <g font-size="12.5" font-weight="bold" fill="#2e6e2e" text-anchor="middle">
+    <text x="88" y="448">栈 2</text><text x="172" y="448">0</text><text x="212" y="448">7</text><text x="252" y="448">15</text><text x="288" y="448">24</text>
+  </g>
+  <text x="172" y="470" text-anchor="middle" font-size="10.5" fill="#999">O(len) 预处理，转移时 O(1) 查询</text>
+
+  <!-- ================= right: grouped knapsack ================= -->
+  <text x="500" y="94" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">② 每个栈 = 一个物品组，组内互斥选一项</text>
+
+  <!-- group 1 -->
+  <g filter="url(#sk)">
+    <rect x="348" y="106" width="304" height="130" rx="10" fill="#fffdf5" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="394" y="128" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">组 1 = 栈 1</text>
+  <g filter="url(#sk)">
+    <rect x="446" y="112" width="192" height="26" rx="6" fill="#fdf3df" stroke="#c98a2b" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="542" y="130" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415" filter="url(#sk)">组内选项互斥：至多选一个 j</text>
+  <g filter="url(#sk)">
+    <rect x="366" y="140" width="120" height="24" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" rx="4"/>
+    <rect x="366" y="170" width="120" height="24" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" rx="4"/>
+    <rect x="366" y="200" width="120" height="24" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="4"/>
+  </g>
+  <g font-size="11.5" fill="#555" text-anchor="middle">
+    <text x="426" y="156">j=0：重 0 · 值 0</text>
+    <text x="426" y="186">j=1：重 1 · 值 1</text>
+    <text x="426" y="216" font-weight="bold" fill="#a04038">j=2：重 2 · 值 101</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="502" y="140" width="120" height="24" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" rx="4"/>
+  </g>
+  <g font-size="11.5" fill="#555" text-anchor="middle">
+    <text x="562" y="156">j=3：重 3 · 值 104</text>
+  </g>
+  <g font-size="11" fill="#999" text-anchor="middle">
+    <text x="562" y="186">（j=3 超出容量 k=2，</text>
+    <text x="562" y="202">枚举上界 min(t, len) 自动剪掉）</text>
+  </g>
+
+  <!-- group 2 -->
+  <g filter="url(#sk)">
+    <rect x="348" y="252" width="304" height="112" rx="10" fill="#f4faf4" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="394" y="274" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">组 2 = 栈 2</text>
+  <g filter="url(#sk)">
+    <rect x="446" y="258" width="192" height="26" rx="6" fill="#e8f4e8" stroke="#4a8e4a" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="542" y="276" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">「各取 1 枚」「只取 2 枚」也互斥</text>
+  <g filter="url(#sk)">
+    <rect x="366" y="286" width="120" height="24" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" rx="4"/>
+    <rect x="366" y="316" width="120" height="24" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" rx="4"/>
+  </g>
+  <g font-size="11.5" fill="#555" text-anchor="middle">
+    <text x="426" y="302">j=0：重 0 · 值 0</text>
+    <text x="426" y="332">j=1：重 1 · 值 7</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="502" y="286" width="120" height="24" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" rx="4"/>
+  </g>
+  <g font-size="11.5" fill="#555" text-anchor="middle">
+    <text x="562" y="302">j=2：重 2 · 值 15</text>
+  </g>
+
+  <!-- arrow left -> right -->
+  <path d="M 322 240 Q 336 240 344 236" stroke="#8a8a8a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="333" y="224" text-anchor="middle" font-size="10.5" fill="#888">归约</text>
+
+  <!-- bottom summary -->
+  <g filter="url(#sk)">
+    <rect x="360" y="382" width="292" height="84" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="506" y="406" text-anchor="middle" font-size="12" fill="#7a5415" filter="url(#sk)">容量 = 恰好 k 次操作；n 组，每组至多选 1 项</text>
+  <text x="506" y="428" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">dp[t] = max(dp[t−j] + prefix[j])</text>
+  <text x="506" y="450" text-anchor="middle" font-size="11" fill="#999">j = 0 … min(t, len)；k ≤ Σlen 保证恰好 k 可达</text>
+</svg>

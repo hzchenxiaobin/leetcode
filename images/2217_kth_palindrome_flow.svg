@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="560" viewBox="0 0 680 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="560" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：预处理一次 → 每个查询 O(1) 定位左半并镜像</text>
+  <path d="M 140 42 Q 340 52 540 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="62" text-anchor="middle" font-size="12" fill="#888">无解判定只依赖 intLength；查询彼此独立，共享同一组 (h, start, total)</text>
+
+  <!-- preprocess -->
+  <g filter="url(#sk)">
+    <rect x="170" y="74" width="340" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="93" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33475e" filter="url(#sk)">预处理（仅一次）：h = ⌈n/2⌉</text>
+  <text x="340" y="111" text-anchor="middle" font-size="12" fill="#33475e" filter="url(#sk)">start = 10^(h−1)，total = 9 × 10^(h−1)</text>
+  <path d="M 340 120 L 340 142" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop entry -->
+  <g filter="url(#sk)">
+    <rect x="210" y="146" width="260" height="36" rx="9" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="169" text-anchor="middle" font-size="12.5" fill="#555" filter="url(#sk)">遍历 queries：取当前查询 q</text>
+  <path d="M 470 164 L 538 164" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="504" y="156" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#sk)">处理完</text>
+  <g filter="url(#sk)">
+    <rect x="542" y="146" width="124" height="36" rx="9" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="604" y="169" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">返回 answer</text>
+
+  <path d="M 340 182 L 340 204" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D1 -->
+  <g filter="url(#sk)">
+    <polygon points="340,208 436,246 340,284 244,246" fill="#fff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="251" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#33475e">q &gt; total ?</text>
+  <text x="340" y="268" text-anchor="middle" font-size="10.5" fill="#999">（排名越界？）</text>
+
+  <!-- D1 yes -> -1 -->
+  <path d="M 436 246 L 492 246" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="450" y="238" font-size="12" font-weight="bold" fill="#a04038" filter="url(#sk)">是</text>
+  <g filter="url(#sk)">
+    <rect x="496" y="228" width="170" height="36" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="581" y="251" text-anchor="middle" font-size="12.5" fill="#a04038" filter="url(#sk)">answer[i] = −1</text>
+
+  <!-- D1 no -> half -->
+  <path d="M 340 284 L 340 306" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="352" y="302" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="200" y="310" width="280" height="42" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="328" text-anchor="middle" font-size="13" font-weight="bold" fill="#33475e" filter="url(#sk)">half = start + (q − 1)</text>
+  <text x="340" y="345" text-anchor="middle" font-size="11" fill="#555" filter="url(#sk)">第 q 小的 h 位整数（1-indexed 偏移）</text>
+  <path d="M 340 352 L 340 374" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- mirror construct -->
+  <g filter="url(#sk)">
+    <rect x="150" y="378" width="380" height="50" rx="9" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="398" text-anchor="middle" font-size="12.5" fill="#2e6e2e" filter="url(#sk)">s = str(half)；t = reverse( s[:n−h] )</text>
+  <text x="340" y="417" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">answer[i] = 整数(s + t)，用 64 位承载</text>
+
+  <!-- loop back -->
+  <path d="M 581 264 L 581 486" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 340 428 L 340 486" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 581 486 L 90 486" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 90 486 L 90 164" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 90 164 L 206 164" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="460" y="508" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#sk)">↺ 继续下一个查询</text>
+
+  <!-- side note -->
+  <g filter="url(#sk)">
+    <rect x="36" y="516" width="610" height="38" rx="8" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="341" y="533" text-anchor="middle" font-size="11" fill="#666" filter="url(#sk)">镜像长度 = n − h：偶数 n 整体翻转；奇数 n 去中点（中点不重复拼接）；n = 1 时为空串</text>
+  <text x="341" y="549" text-anchor="middle" font-size="11" fill="#666" filter="url(#sk)">n = 15 的回文 ≈ 10^15 超 int —— C++ 全程 long long + stoll</text>
+</svg>
