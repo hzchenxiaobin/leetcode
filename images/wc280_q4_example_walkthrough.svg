@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="430" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">示例演算：nums = [1,2,3,4,5,6]，numSlots = 3，沿一条最优路径</text>
+  <path d="M 90 38 Q 320 46 550 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="320" y="62" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">按 nums 下标顺序逐个放置：占用 (d₁,d₂,d₃) 从 (0,0,0) 长到终态 (2,2,2)，状态 s 是占用的三进制编码</text>
+
+  <!-- header row -->
+  <rect x="42" y="76" width="34" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <rect x="76" y="76" width="52" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <rect x="128" y="76" width="58" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <rect x="186" y="76" width="168" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <rect x="354" y="76" width="104" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <rect x="458" y="76" width="92" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <rect x="550" y="76" width="62" height="30" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="59" y="96" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">步</text>
+  <text x="102" y="96" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">放入 x</text>
+  <text x="157" y="96" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">选篮</text>
+  <text x="270" y="96" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">占用 (d₁,d₂,d₃) 变化</text>
+  <text x="406" y="96" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">状态 s</text>
+  <text x="504" y="96" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">收益 x&amp;i</text>
+  <text x="581" y="96" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-weight="bold" filter="url(#rough2)">累计 dp</text>
+
+  <!-- row 1 -->
+  <rect x="42" y="106" width="34" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="76" y="106" width="52" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="128" y="106" width="58" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="186" y="106" width="168" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="354" y="106" width="104" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="458" y="106" width="92" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="550" y="106" width="62" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="59" y="127" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="102" y="127" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="157" y="127" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">篮 1</text>
+  <text x="270" y="127" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(0,0,0) → (1,0,0)</text>
+  <text x="406" y="127" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">0 → 1</text>
+  <text x="504" y="127" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#rough2)">1&amp;1 = 1</text>
+  <text x="581" y="127" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">1</text>
+
+  <!-- row 2 -->
+  <rect x="42" y="138" width="34" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="76" y="138" width="52" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="128" y="138" width="58" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="186" y="138" width="168" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="354" y="138" width="104" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="458" y="138" width="92" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="550" y="138" width="62" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="59" y="159" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">2</text>
+  <text x="102" y="159" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">2</text>
+  <text x="157" y="159" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">篮 2</text>
+  <text x="270" y="159" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(1,0,0) → (1,1,0)</text>
+  <text x="406" y="159" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">1 → 4</text>
+  <text x="504" y="159" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#rough2)">2&amp;2 = 2</text>
+  <text x="581" y="159" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">3</text>
+
+  <!-- row 3 -->
+  <rect x="42" y="170" width="34" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="76" y="170" width="52" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="128" y="170" width="58" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="186" y="170" width="168" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="354" y="170" width="104" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="458" y="170" width="92" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="550" y="170" width="62" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="59" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">3</text>
+  <text x="102" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">3</text>
+  <text x="157" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">篮 3</text>
+  <text x="270" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(1,1,0) → (1,1,1)</text>
+  <text x="406" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">4 → 13</text>
+  <text x="504" y="191" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#rough2)">3&amp;3 = 3</text>
+  <text x="581" y="191" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">6</text>
+
+  <!-- row 4 -->
+  <rect x="42" y="202" width="34" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="76" y="202" width="52" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="128" y="202" width="58" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="186" y="202" width="168" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="354" y="202" width="104" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="458" y="202" width="92" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="550" y="202" width="62" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="59" y="223" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">4</text>
+  <text x="102" y="223" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">4</text>
+  <text x="157" y="223" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">篮 1</text>
+  <text x="270" y="223" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(1,1,1) → (2,1,1)</text>
+  <text x="406" y="223" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">13 → 14</text>
+  <text x="504" y="223" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">4&amp;1 = 0</text>
+  <text x="581" y="223" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">6</text>
+
+  <!-- row 5 -->
+  <rect x="42" y="234" width="34" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="76" y="234" width="52" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="128" y="234" width="58" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="186" y="234" width="168" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="354" y="234" width="104" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="458" y="234" width="92" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="550" y="234" width="62" height="32" rx="3" fill="#ffffff" stroke="#999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="59" y="255" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">5</text>
+  <text x="102" y="255" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">5</text>
+  <text x="157" y="255" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">篮 3</text>
+  <text x="270" y="255" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">(2,1,1) → (2,1,2)</text>
+  <text x="406" y="255" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">14 → 23</text>
+  <text x="504" y="255" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#rough2)">5&amp;3 = 1</text>
+  <text x="581" y="255" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">7</text>
+
+  <!-- row 6 (final, highlighted) -->
+  <rect x="42" y="266" width="34" height="32" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="76" y="266" width="52" height="32" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="128" y="266" width="58" height="32" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="186" y="266" width="168" height="32" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="354" y="266" width="104" height="32" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="458" y="266" width="92" height="32" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="550" y="266" width="62" height="32" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="59" y="287" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">6</text>
+  <text x="102" y="287" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">6</text>
+  <text x="157" y="287" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">篮 2</text>
+  <text x="270" y="287" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">(2,1,2) → (2,2,2)</text>
+  <text x="406" y="287" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">23 → 26</text>
+  <text x="504" y="287" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">6&amp;2 = 2</text>
+  <text x="581" y="287" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">9 ✓</text>
+
+  <!-- left note box -->
+  <rect x="30" y="314" width="350" height="102" rx="8" fill="#ffffff" stroke="#888" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="205" y="336" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">第 4 步 4&amp;1 = 0：4 = 100₂，与编号 1~3（01/10/11₂）按位与全零</text>
+  <text x="205" y="354" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">放哪个篮都不亏，但篮子容量必须被消耗掉</text>
+  <text x="205" y="378" text-anchor="middle" font-size="12" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">终态 s = (2,2,2)₃ = 26，dp[26] = 9</text>
+  <text x="205" y="398" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">DP 比较所有到达同一占用的路径，9 即最大与和</text>
+
+  <!-- right note box -->
+  <rect x="396" y="314" width="214" height="102" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="503" y="336" text-anchor="middle" font-size="11" fill="#a67c00" font-weight="bold" filter="url(#rough2)">对照示例 2：n = 6 &lt; 2×9</text>
+  <text x="503" y="356" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">最优终态占用</text>
+  <text x="503" y="374" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">(2,0,1,1,0,0,1,0,1)</text>
+  <text x="503" y="394" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">篮 2/5/6/8 空 ⇒ 判据是 cnt = n</text>
+  <text x="503" y="410" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">而非「篮子全满」</text>
+</svg>
