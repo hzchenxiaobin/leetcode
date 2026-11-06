@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="400" fill="#fdfcf7"/>
+  <text x="320" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：外层短路遍历 + 内层双指针判定</text>
+  <path d="M 160 40 Q 320 48 480 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <ellipse cx="320" cy="72" rx="66" ry="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="320" y="77" text-anchor="middle" font-size="13" fill="#2b4a6e" font-weight="bold">开始：i = 0</text>
+
+  <!-- outer word box -->
+  <path d="M 320 96 L 320 118" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)" marker-end="url(#ar)"/>
+  <g filter="url(#sk)">
+    <rect x="220" y="122" width="200" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="320" y="147" text-anchor="middle" font-size="13" fill="#2e5e2e" font-weight="bold">取当前词 w = words[i]</text>
+
+  <!-- inner init -->
+  <path d="M 320 166 L 320 188" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)" marker-end="url(#ar)"/>
+  <g filter="url(#sk)">
+    <rect x="230" y="192" width="180" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="215" text-anchor="middle" font-size="13" fill="#2b4a6e">l = 0，r = m − 1</text>
+
+  <!-- compare diamond -->
+  <path d="M 320 232 L 320 252" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)" marker-end="url(#ar)"/>
+  <g filter="url(#sk)">
+    <polygon points="320,256 415,296 320,336 225,296" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="291" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">l &lt; r 且</text>
+  <text x="320" y="307" text-anchor="middle" font-size="12.5" fill="#7a5415" font-weight="bold">w[l] == w[r] ?</text>
+
+  <!-- inner loop back -->
+  <path d="M 415 296 L 470 296 Q 490 296 490 276 L 490 210 L 412 210" stroke="#4a7a3a" stroke-width="1.5" fill="none" filter="url(#sk)" marker-end="url(#ag)"/>
+  <text x="528" y="252" text-anchor="middle" font-size="11.5" fill="#2e5e2e">是：l++，r−−</text>
+  <text x="528" y="266" text-anchor="middle" font-size="11.5" fill="#2e5e2e">继续收拢</text>
+
+  <!-- not equal / loop end -->
+  <path d="M 320 336 L 320 356" stroke="#b85450" stroke-width="1.6" fill="none" filter="url(#sk)" marker-end="url(#ar)"/>
+  <text x="336" y="352" font-size="11.5" fill="#a04038" font-weight="bold">否（含 l ≥ r 退出）</text>
+
+  <!-- palindrome check diamond -->
+  <g filter="url(#sk)">
+    <polygon points="320,360 390,388 320,414 250,388" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" transform="translate(0,-2)"/>
+  </g>
+  <text x="320" y="384" text-anchor="middle" font-size="12" fill="#a04038" font-weight="bold">w 是回文？</text>
+  <text x="320" y="397" text-anchor="middle" font-size="10.5" fill="#a04038">(l ≥ r 自然退出)</text>
+
+  <!-- right side: return w -->
+  <path d="M 390 386 L 480 386" stroke="#4a7a3a" stroke-width="1.7" fill="none" filter="url(#sk)" marker-end="url(#ag)"/>
+  <text x="446" y="380" text-anchor="middle" font-size="11.5" fill="#2e5e2e" font-weight="bold">是</text>
+  <g filter="url(#sk)">
+    <rect x="484" y="368" width="140" height="38" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="554" y="392" text-anchor="middle" font-size="13" fill="#2e5e2e" font-weight="bold">返回 w ✓</text>
+
+  <!-- no: next word -->
+  <path d="M 250 386 L 150 386 Q 132 386 132 368 L 132 142 L 216 142" stroke="#b85450" stroke-width="1.5" fill="none" filter="url(#sk)" marker-end="url(#ar)"/>
+  <text x="150" y="380" text-anchor="end" font-size="11.5" fill="#a04038" font-weight="bold">否</text>
+  <text x="118" y="256" text-anchor="middle" font-size="11.5" fill="#a04038" transform="rotate(-90 118 256)">i++，看下一个词</text>
+
+  <!-- exhausted -->
+  <g filter="url(#sk)">
+    <rect x="220" y="122" width="0" height="0" fill="none"/>
+  </g>
+  <path d="M 150 120 Q 90 120 90 90 Q 90 66 130 72" stroke="#888" stroke-width="1.3" fill="none" filter="url(#sk)" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  <text x="76" y="96" text-anchor="middle" font-size="11" fill="#777">i = n：</text>
+  <text x="76" y="110" text-anchor="middle" font-size="11" fill="#777">扫完</text>
+  <g filter="url(#sk)">
+    <rect x="18" y="52" width="118" height="34" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="77" y="74" text-anchor="middle" font-size="12.5" fill="#8a6a20" font-weight="bold">返回 ""</text>
+</svg>
