@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 600"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="600" fill="#fafafa"/>
+
+  <text x="360" y="24" text-anchor="middle" font-size="14" fill="#555" font-weight="bold" filter="url(#rough2)">算法流程：单趟扫描 + while 级联吞噬</text>
+
+  <!-- 开始 -->
+  <ellipse cx="360" cy="60" rx="62" ry="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="360" y="65" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">开始</text>
+  <path d="M 360 80 L 360 90" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- A：取元素 -->
+  <rect x="275" y="92" width="170" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="360" y="116" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">取下一个元素 x</text>
+  <path d="M 360 132 L 360 140" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D1：栈非空？ -->
+  <polygon points="250,184 360,144 470,184 360,224" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="360" y="189" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">栈非空？</text>
+  <text x="368" y="242" font-size="11" fill="#7a5415" filter="url(#rough2)">是</text>
+  <path d="M 360 224 L 360 246" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D1 否（右）→ 压入 -->
+  <path d="M 470 184 L 541 184" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="504" y="174" text-anchor="middle" font-size="10.5" fill="#7a5415" filter="url(#rough2)">否（栈空）</text>
+
+  <!-- D2：gcd > 1 ？ -->
+  <polygon points="230,296 360,252 490,296 360,340" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="360" y="288" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">g = gcd(栈顶, x)</text>
+  <text x="360" y="306" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">g &gt; 1 ？</text>
+  <text x="372" y="362" font-size="11" fill="#7a5415" filter="url(#rough2)">是（非互质，吞噬）</text>
+  <path d="M 360 340 L 360 368" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- B：级联合并 -->
+  <rect x="250" y="372" width="220" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="360" y="394" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">x ← 栈顶 / g × x（即 lcm）</text>
+  <text x="360" y="414" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">弹出栈顶</text>
+
+  <!-- 级联回环：B 左侧 → D1 左顶点 -->
+  <path d="M 250 400 L 110 400 L 110 184 L 244 184" stroke="#b85450" stroke-width="1.8" fill="none" stroke-dasharray="7 5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="178" y="390" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">级联回环</text>
+  <text x="178" y="420" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">新值重新检查</text>
+
+  <!-- D2 否（互质）→ 绕右上方进入「压入」 -->
+  <path d="M 490 296 L 490 140 L 610 140 L 610 155" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="556" y="132" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">否（互质边界）</text>
+
+  <!-- C：压入 x -->
+  <rect x="545" y="161" width="130" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="610" y="189" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#rough2)">压入 x</text>
+
+  <!-- C → D3 -->
+  <path d="M 610 207 L 610 424" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D3：还有元素？ -->
+  <polygon points="505,460 610,428 715,460 610,492" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="610" y="465" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">还有元素？</text>
+
+  <!-- D3 是：回 A -->
+  <path d="M 505 460 L 70 460 L 70 116 L 271 116" stroke="#888" stroke-width="1.5" fill="none" stroke-dasharray="7 5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="240" y="450" text-anchor="middle" font-size="10.5" fill="#7a5415" filter="url(#rough2)">是 → 处理下一个元素</text>
+
+  <!-- D3 否 → 结束 -->
+  <text x="622" y="508" font-size="10.5" fill="#7a5415" filter="url(#rough2)">否（取尽）</text>
+  <path d="M 610 492 L 610 517" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <ellipse cx="610" cy="545" rx="92" ry="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="610" y="550" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold" filter="url(#rough2)">返回栈（底→顶 = 答案）</text>
+
+  <!-- 左下角要点框 -->
+  <rect x="40" y="505" width="400" height="66" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="240" y="528" text-anchor="middle" font-size="10.5" fill="#a08030" filter="url(#rough2)">「级联回环」让每个 x 一次性吞完所有非互质栈顶，</text>
+  <text x="240" y="548" text-anchor="middle" font-size="10.5" fill="#a08030" filter="url(#rough2)">元素入栈 / 出栈各一次 ⇒ 全程至多 2n 次 gcd 检查，</text>
+  <text x="240" y="564" text-anchor="middle" font-size="10.5" fill="#a08030" filter="url(#rough2)">单趟扫描即得唯一终态</text>
+</svg>

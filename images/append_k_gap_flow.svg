@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="560" viewBox="0 0 560 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="560" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：排序去重 → 缺口遍历 → 等差求和</text>
+  <path d="M 120 40 Q 280 50 440 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- box1 sort -->
+  <g filter="url(#sk)">
+    <rect x="160" y="56" width="240" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="76" text-anchor="middle" font-size="12.5" fill="#2b3b52" filter="url(#sk)">排序 + 去重：挡板 v₁ &lt; v₂ &lt; … &lt; vₘ</text>
+
+  <!-- box2 init -->
+  <g filter="url(#sk)">
+    <rect x="170" y="106" width="220" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="126" text-anchor="middle" font-size="12.5" fill="#2b3b52" filter="url(#sk)">next = 1，need = k，sum = 0</text>
+
+  <!-- box3 loop head -->
+  <g filter="url(#sk)">
+    <rect x="175" y="156" width="210" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="176" text-anchor="middle" font-size="12.5" fill="#2b3b52" filter="url(#sk)">取下一挡板 v（need = 0 或取完则跳出）</text>
+
+  <!-- box4 gap -->
+  <g filter="url(#sk)">
+    <rect x="145" y="206" width="270" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="226" text-anchor="middle" font-size="12.5" fill="#2b3b52" filter="url(#sk)">gap = v − next：缺口 [next, v−1] 的可用数个数</text>
+
+  <!-- three branch boxes -->
+  <g filter="url(#sk)">
+    <rect x="26" y="288" width="158" height="58" rx="8" fill="#ffffff" stroke="#c8c8c8" stroke-width="1.8"/>
+  </g>
+  <text x="105" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#666" filter="url(#sk)">gap = 0</text>
+  <text x="105" y="326" text-anchor="middle" font-size="11" fill="#666" filter="url(#sk)">挡板紧贴候选</text>
+  <text x="105" y="340" text-anchor="middle" font-size="11" fill="#666" filter="url(#sk)">跳过（不取数）</text>
+
+  <g filter="url(#sk)">
+    <rect x="202" y="288" width="158" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="281" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#sk)">0 &lt; gap &lt; need</text>
+  <text x="281" y="326" text-anchor="middle" font-size="11" fill="#446688" filter="url(#sk)">整段取走 next..v−1</text>
+  <text x="281" y="340" text-anchor="middle" font-size="11" fill="#446688" filter="url(#sk)">sum += (next+v−1)·gap/2</text>
+
+  <g filter="url(#sk)">
+    <rect x="378" y="288" width="158" height="58" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="457" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">gap ≥ need</text>
+  <text x="457" y="326" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">只取前 need 个</text>
+  <text x="457" y="340" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#sk)">sum += (2·next+need−1)·need/2</text>
+
+  <!-- box5 next=v+1 -->
+  <g filter="url(#sk)">
+    <rect x="195" y="376" width="170" height="28" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="395" text-anchor="middle" font-size="12" fill="#2b3b52" filter="url(#sk)">next = v + 1，回到「取下一挡板」</text>
+
+  <!-- diamond: need>0 -->
+  <g filter="url(#sk)">
+    <polygon points="280,424 366,462 280,500 194,462" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="280" y="466" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">挡板遍历完，need &gt; 0 ?</text>
+
+  <!-- tail box -->
+  <g filter="url(#sk)">
+    <rect x="392" y="440" width="148" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="466" y="458" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a1e" filter="url(#sk)">末尾缺口兜底</text>
+  <text x="466" y="476" text-anchor="middle" font-size="11" fill="#2b4a1e" filter="url(#sk)">取 next..next+need−1（无限长）</text>
+
+  <!-- return box -->
+  <g filter="url(#sk)">
+    <rect x="222" y="520" width="116" height="28" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="280" y="539" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a1e" filter="url(#sk)">返回 sum</text>
+
+  <!-- arrows: main chain -->
+  <g filter="url(#sk)" stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 280 86 V 102" marker-end="url(#ag)"/>
+    <path d="M 280 136 V 152" marker-end="url(#ag)"/>
+    <path d="M 280 186 V 202" marker-end="url(#ag)"/>
+    <!-- fork from box4 to three branches -->
+    <path d="M 280 236 V 262 H 105 V 282" marker-end="url(#ag)"/>
+    <path d="M 280 236 V 262 H 281 V 282" marker-end="url(#ag)"/>
+    <path d="M 280 236 V 262 H 457 V 282" marker-end="url(#ag)"/>
+    <!-- branch labels -->
+  </g>
+  <text x="105" y="272" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#sk)">紧贴</text>
+  <text x="281" y="272" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">不够 need</text>
+  <text x="457" y="272" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#sk)">够了</text>
+
+  <!-- arrows: three branches join box5 -->
+  <g filter="url(#sk)" stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 105 346 V 362 H 240 V 372" marker-end="url(#ag)"/>
+    <path d="M 281 346 V 372" marker-end="url(#ag)"/>
+    <path d="M 457 346 V 362 H 320 V 372" marker-end="url(#ag)"/>
+  </g>
+
+  <!-- loop back arrow: box5 left edge up to box3 left edge -->
+  <g filter="url(#sk)" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-dasharray="6 4">
+    <path d="M 195 390 H 14 V 171 H 171" marker-end="url(#ag)"/>
+  </g>
+  <text x="20" y="290" font-size="11" fill="#888" filter="url(#sk)">循环</text>
+
+  <!-- box5 to diamond -->
+  <g filter="url(#sk)" stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 280 404 V 418" marker-end="url(#ag)"/>
+  </g>
+
+  <!-- diamond yes to tail -->
+  <g filter="url(#sk)" stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 366 462 H 388" marker-end="url(#ag)"/>
+    <path d="M 280 500 V 516" marker-end="url(#ag)"/>
+    <path d="M 466 484 V 502 H 344" marker-end="url(#ag)"/>
+  </g>
+  <text x="374" y="452" text-anchor="middle" font-size="11" fill="#7a5415" filter="url(#sk)">是</text>
+  <text x="288" y="512" font-size="11" fill="#7a5415" filter="url(#sk)">否（need = 0）</text>
+
+  <!-- complexity note -->
+  <text x="508" y="530" font-size="11" fill="#4a7a3a" text-anchor="end" filter="url(#sk)">O(n log n)，与 k 无关</text>
+</svg>
