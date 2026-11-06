@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="440" viewBox="0 0 680 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="440" fill="#fafafa"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例 1 演算：逐 target 枚举「删一位」候选并查询集合</text>
+  <path d="M 150 40 Q 340 50 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- hash set -->
+  <g filter="url(#sk)">
+    <rect x="48" y="54" width="584" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="79" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333">start 掩码集合 S = { {a,n,t}(ant), {a,c,t}(act), {a,c,t,k}(tack) }</text>
+
+  <!-- header -->
+  <g font-size="11" font-weight="bold" fill="#666" text-anchor="middle">
+    <text x="76" y="114">target</text>
+    <text x="150" y="114">掩码</text>
+    <text x="388" y="114">删一位后的候选（逐个查 S）</text>
+    <text x="586" y="114">判定</text>
+  </g>
+
+  <!-- row 1: tack -->
+  <g filter="url(#sk)">
+    <rect x="48" y="134" width="56" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="76" y="155" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333">tack</text>
+  <text x="150" y="155" font-size="11.5" fill="#333">{a,c,t,k}</text>
+  <g font-size="9" fill="#b85450" text-anchor="middle">
+    <text x="268" y="130">删a</text><text x="348" y="130">删c</text>
+    <text x="428" y="130">删t</text><text x="508" y="130">删k</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="232" y="134" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="312" y="134" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="392" y="134" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="472" y="134" width="72" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g font-size="10.5" fill="#555" text-anchor="middle">
+    <text x="262" y="154">{c,t,k}</text><text x="342" y="154">{a,t,k}</text>
+    <text x="422" y="154">{a,c,k}</text><text x="502" y="154" font-weight="bold">{a,c,t}</text>
+  </g>
+  <g font-size="11" font-weight="bold" text-anchor="middle">
+    <text x="294" y="154" fill="#b85450">✗</text><text x="374" y="154" fill="#b85450">✗</text>
+    <text x="454" y="154" fill="#b85450">✗</text><text x="534" y="154" fill="#4a7a3a">✓</text>
+  </g>
+  <text x="560" y="155" font-size="11.5" font-weight="bold" fill="#4a7a3a">计数 → 1</text>
+
+  <!-- row 2: act -->
+  <g filter="url(#sk)">
+    <rect x="48" y="182" width="56" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="76" y="203" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333">act</text>
+  <text x="150" y="203" font-size="11.5" fill="#333">{a,c,t}</text>
+  <g font-size="9" fill="#b85450" text-anchor="middle">
+    <text x="268" y="178">删a</text><text x="348" y="178">删c</text><text x="428" y="178">删t</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="232" y="182" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="312" y="182" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="392" y="182" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+  </g>
+  <g font-size="10.5" fill="#555" text-anchor="middle">
+    <text x="262" y="202">{c,t}</text><text x="342" y="202">{a,t}</text><text x="422" y="202">{a,c}</text>
+  </g>
+  <g font-size="11" font-weight="bold" text-anchor="middle">
+    <text x="294" y="202" fill="#b85450">✗</text><text x="374" y="202" fill="#b85450">✗</text><text x="454" y="202" fill="#b85450">✗</text>
+  </g>
+  <text x="560" y="203" font-size="11.5" font-weight="bold" fill="#b85450">不计数</text>
+  <text x="370" y="228" text-anchor="middle" font-size="10" fill="#b85450">「act」的掩码本身就在 S 里，但删一位后的候选都不是它 → 不可行</text>
+
+  <!-- row 3: acti -->
+  <g filter="url(#sk)">
+    <rect x="48" y="246" width="56" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="76" y="267" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333">acti</text>
+  <text x="150" y="267" font-size="11.5" fill="#333">{a,c,t,i}</text>
+  <g font-size="9" fill="#b85450" text-anchor="middle">
+    <text x="268" y="242">删a</text><text x="348" y="242">删c</text>
+    <text x="428" y="242">删t</text><text x="508" y="242">删i</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="232" y="246" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="312" y="246" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="392" y="246" width="72" height="32" rx="6" fill="#fff" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="472" y="246" width="72" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g font-size="10.5" fill="#555" text-anchor="middle">
+    <text x="262" y="266">{c,t,i}</text><text x="342" y="266">{a,t,i}</text>
+    <text x="422" y="266">{a,c,i}</text><text x="502" y="266" font-weight="bold">{a,c,t}</text>
+  </g>
+  <g font-size="11" font-weight="bold" text-anchor="middle">
+    <text x="294" y="266" fill="#b85450">✗</text><text x="374" y="266" fill="#b85450">✗</text>
+    <text x="454" y="266" fill="#b85450">✗</text><text x="534" y="266" fill="#4a7a3a">✓</text>
+  </g>
+  <text x="560" y="267" font-size="11.5" font-weight="bold" fill="#4a7a3a">计数 → 2</text>
+
+  <!-- answer -->
+  <g filter="url(#sk)">
+    <rect x="48" y="298" width="584" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="324" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b2b2b">输出 = 2（tack ← act+k，acti ← act+i；act 不可行）</text>
+
+  <!-- callout -->
+  <g filter="url(#sk)">
+    <rect x="55" y="356" width="570" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="378" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">必须「追加一个字母再重排」，不能原样相等</text>
+  <text x="340" y="398" text-anchor="middle" font-size="11.5" fill="#444">删位候选比 target 恰短 1，天然排除了「target == 某个 start」的情形</text>
+</svg>
