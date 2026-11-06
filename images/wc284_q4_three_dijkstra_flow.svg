@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="560" viewBox="0 0 620 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#556" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="620" height="560" fill="#fdfcf7"/>
+  <text x="310" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：三次 Dijkstra + 枚举汇合点</text>
+  <path d="M 150 44 Q 310 54 470 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 开始 -->
+  <g filter="url(#sk)">
+    <rect x="195" y="62" width="230" height="40" rx="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="310" y="87" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#33475e" filter="url(#sk)">读入 n, edges, src1, src2, dest</text>
+  <path d="M 310 102 L 310 122" stroke="#556" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- 建图 -->
+  <g filter="url(#sk)">
+    <rect x="130" y="126" width="360" height="58" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="310" y="149" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">建正图 g 和反图 rg</text>
+  <text x="310" y="170" text-anchor="middle" font-size="12" fill="#556" filter="url(#sk)">每条边 (u, v, w)：g 加 u→v，rg 加 v→u（同时保留多重边）</text>
+  <path d="M 310 184 L 310 204" stroke="#556" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- 三次 Dijkstra -->
+  <g filter="url(#sk)">
+    <rect x="100" y="208" width="420" height="76" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="310" y="231" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">堆优化 Dijkstra 跑三次（边权 &gt; 0）</text>
+  <text x="310" y="253" text-anchor="middle" font-size="12" fill="#556" filter="url(#sk)">d₁ = dist(g, src1)：src1 到各点 ｜ d₂ = dist(g, src2)：src2 到各点</text>
+  <text x="310" y="272" text-anchor="middle" font-size="12" fill="#556" filter="url(#sk)">d₃ = dist(rg, dest)：各点到 dest（反图上从 dest 出发）</text>
+  <path d="M 310 284 L 310 304" stroke="#556" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- 枚举汇合点 -->
+  <g filter="url(#sk)">
+    <rect x="100" y="308" width="420" height="58" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="310" y="331" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#33475e" filter="url(#sk)">枚举汇合点 x = 0 … n−1</text>
+  <text x="310" y="352" text-anchor="middle" font-size="12" fill="#556" filter="url(#sk)">三段都 &lt; INF 时：ans = min(ans, d₁[x] + d₂[x] + d₃[x])</text>
+  <path d="M 310 366 L 310 388" stroke="#556" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- 判断菱形 -->
+  <g filter="url(#sk)">
+    <path d="M 310 392 L 400 432 L 310 472 L 220 432 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="310" y="429" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">ans &lt; INF ？</text>
+  <text x="310" y="448" text-anchor="middle" font-size="11" fill="#556" filter="url(#sk)">（存在三段都通的 x 吗）</text>
+
+  <!-- 是：返回 ans -->
+  <path d="M 400 432 L 470 432 L 470 456" stroke="#556" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="436" y="424" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">是</text>
+  <g filter="url(#sk)">
+    <rect x="400" y="460" width="150" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="475" y="486" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">返回 ans（long long）</text>
+
+  <!-- 否：返回 -1 -->
+  <path d="M 220 432 L 150 432 L 150 456" stroke="#556" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="185" y="424" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="80" y="460" width="140" height="42" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="150" y="486" text-anchor="middle" font-size="13" font-weight="bold" fill="#8c3a36" filter="url(#sk)">返回 −1</text>
+
+  <!-- 复杂度标注 -->
+  <g filter="url(#sk)">
+    <rect x="130" y="516" width="360" height="32" rx="10" fill="#f4f4ee" stroke="#9a9a9a" stroke-width="1.4" stroke-dasharray="6 4"/>
+  </g>
+  <text x="310" y="537" text-anchor="middle" font-size="12" fill="#556" filter="url(#sk)">时间 O((n+m) log n)，空间 O(n+m)：n, m ≤ 10⁵ 轻松通过</text>
+</svg>
