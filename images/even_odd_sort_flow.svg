@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="520" viewBox="0 0 560 520"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="520" fill="#fafafa"/>
+
+  <text x="280" y="34" text-anchor="middle" font-size="18" font-weight="bold" fill="#333" filter="url(#rough2)">计数排序解法流程（值域仅 1~100）</text>
+  <path d="M 150 44 Q 280 52 410 44" stroke="#333" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <rect x="50" y="64" width="460" height="74" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">Step 1：奇偶分别建计数桶</text>
+  <text x="280" y="114" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">cntEven[v] / cntOdd[v]：偶 / 奇数下标上值 v 出现的次数（各 101 个桶）</text>
+
+  <path d="M 280 138 L 280 154" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="50" y="158" width="460" height="74" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="184" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">Step 2：双指针就位</text>
+  <text x="280" y="206" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">loE = 1：在 cntEven 上向上找「剩余最小值」</text>
+  <text x="280" y="224" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">hiO = 100：在 cntOdd 上向下找「剩余最大值」</text>
+
+  <path d="M 280 232 L 280 248" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="50" y="252" width="460" height="88" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="278" text-anchor="middle" font-size="13" font-weight="bold" fill="#a07830" filter="url(#rough2)">Step 3：从左到右逐位填 i（i = 0 … n−1）</text>
+  <text x="280" y="302" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">i 为偶数下标：跳过空桶取 loE，然后 cntEven[loE] 减 1</text>
+  <text x="280" y="322" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">i 为奇数下标：跳过空桶取 hiO，然后 cntOdd[hiO] 减 1</text>
+
+  <path d="M 280 340 L 280 356" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="50" y="360" width="460" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="384" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">Step 4：填满 n 位 → 得到答案 ✓</text>
+  <text x="280" y="406" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">时间 O(n + V)，空间 O(V)，V = 101</text>
+
+  <rect x="50" y="434" width="460" height="72" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 3" filter="url(#rough2)"/>
+  <text x="280" y="458" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">⚠ 不能只用一个全局计数桶！</text>
+  <text x="280" y="480" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">偶数位取「全局最小」会抢走奇数类的值：</text>
+  <text x="280" y="498" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">如 [4,1,2,3] 中属于奇数类的 1 会被错误地填到位置 0</text>
+</svg>

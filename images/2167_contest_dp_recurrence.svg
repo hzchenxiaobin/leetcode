@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="440" viewBox="0 0 700 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="700" height="440" fill="#fdfcf7"/>
+  <text x="350" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">转移的两选项：直删 / 跳过 vs 弹端重置</text>
+  <path d="M 180 38 Q 350 48 520 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="350" y="58" text-anchor="middle" font-size="11.5" fill="#888">pre[i] = 只用「左弹 + 直删」处理前 i 辆的最小代价；suf 完全对称：suf[i] = min(n−i, suf[i+1] + 2·[s[i]='1'])</text>
+
+  <!-- source state -->
+  <g filter="url(#sk)">
+    <rect x="250" y="78" width="200" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="350" y="103" text-anchor="middle" font-size="13" font-weight="bold" fill="#33475e" filter="url(#sk)">pre[i−1]：前 i−1 辆已最优</text>
+
+  <!-- branch arrows -->
+  <path d="M 295 120 Q 240 138 200 150" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 405 120 Q 460 138 500 150" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="232" y="146" font-size="10.5" fill="#666" filter="url(#sk)">续用前缀</text>
+  <text x="438" y="146" font-size="10.5" fill="#666" filter="url(#sk)">推倒重来</text>
+
+  <!-- option A -->
+  <g filter="url(#sk)">
+    <rect x="55" y="154" width="290" height="98" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="200" y="176" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">选项 A｜直删 / 跳过第 i 辆</text>
+  <text x="200" y="196" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">s[i−1] = '1' → 加 2；s[i−1] = '0' → 加 0</text>
+  <text x="200" y="216" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">候选 = pre[i−1] + 2·[s[i−1] = '1']</text>
+  <text x="200" y="238" text-anchor="middle" font-size="10" fill="#999" filter="url(#sk)">（'0' 不含违禁货物，跳过不花钱）</text>
+
+  <!-- option B -->
+  <g filter="url(#sk)">
+    <rect x="355" y="154" width="290" height="98" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="500" y="176" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6415" filter="url(#sk)">选项 B｜弹端重置</text>
+  <text x="500" y="196" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">把 s[0..i−1] 共 i 辆全部左弹，每辆 1</text>
+  <text x="500" y="216" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#sk)">候选 = i</text>
+  <text x="500" y="238" text-anchor="middle" font-size="10" fill="#999" filter="url(#sk)">（一次性吞下前缀里所有 '1' 与 '0'）</text>
+
+  <!-- arrows into min -->
+  <path d="M 200 252 Q 255 272 305 283" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 500 252 Q 445 272 395 283" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- min pill -->
+  <g filter="url(#sk)">
+    <rect x="308" y="286" width="84" height="32" rx="16" fill="#fff" stroke="#333" stroke-width="1.6"/>
+  </g>
+  <text x="350" y="307" text-anchor="middle" font-size="13" font-weight="bold" fill="#333" filter="url(#sk)">min( , )</text>
+
+  <path d="M 350 318 L 350 330" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- result state -->
+  <g filter="url(#sk)">
+    <rect x="268" y="334" width="164" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="350" y="356" text-anchor="middle" font-size="13" font-weight="bold" fill="#33475e" filter="url(#sk)">pre[i]</text>
+
+  <!-- warning -->
+  <g filter="url(#sk)">
+    <rect x="55" y="384" width="590" height="48" rx="8" fill="#fbf5f4" stroke="#b85450" stroke-width="1.4" stroke-dasharray="6 4"/>
+  </g>
+  <text x="350" y="404" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a04038" filter="url(#sk)">⚠ 高频写错：把选项 B 写成 pre[i−1] + 1</text>
+  <text x="350" y="423" text-anchor="middle" font-size="11" fill="#7a5550" filter="url(#sk)">第 i 辆左侧只要还有未移除的车，就不可能只花 1 左弹它 —— 从零左弹到第 i 辆的总价恰为 i</text>
+</svg>
