@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="680" viewBox="0 0 940 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="680" fill="#fafafa"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：一次 Kahn 剥离，同时拿到「环集合」与「挂链深度」</text>
+  <path d="M 230 42 Q 470 50 710 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- main flow -->
+  <g filter="url(#sk)"><rect x="290" y="64" width="360" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="470" y="91" text-anchor="middle" font-size="12.5" fill="#2b2b2b">① 统计入度 indeg[v] = 喜欢 v 的人数</text>
+
+  <g filter="url(#sk)"><rect x="290" y="136" width="360" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="470" y="163" text-anchor="middle" font-size="12.5" fill="#2b2b2b">② 所有 indeg = 0 的节点入队（挂树叶子 = 链尾）</text>
+
+  <g filter="url(#sk)"><rect x="270" y="208" width="400" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="470" y="231" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">③ 出队 u，令 v = favorite[u]：</text>
+  <text x="470" y="252" text-anchor="middle" font-size="11.5" fill="#444">depth[v] = max(depth[v], depth[u] + 1)；indeg[v]−−，归零则入队</text>
+
+  <g filter="url(#sk)"><rect x="290" y="294" width="360" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="470" y="321" text-anchor="middle" font-size="12.5" fill="#2b2b2b">④ 队列空：剩余 indeg &gt; 0 的节点恰是全部环上节点</text>
+
+  <g filter="url(#sk)"><rect x="290" y="366" width="360" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="470" y="387" text-anchor="middle" font-size="12.5" fill="#2b2b2b">⑤ 逐环沿 favorite 走一圈，得环长 L</text>
+  <text x="470" y="404" text-anchor="middle" font-size="10.5" fill="#888">（indeg 置 0 兼作 visited 标记）</text>
+
+  <!-- arrows of main flow -->
+  <path d="M 470 108 L 470 132" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 470 180 L 470 204" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 470 266 L 470 290" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 470 338 L 470 362" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 470 412 L 470 420" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond -->
+  <g filter="url(#sk)"><polygon points="470,424 590,462 470,500 350,462" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="470" y="467" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a1a">L == 2 ？</text>
+
+  <!-- branch arrows -->
+  <path d="M 350 462 Q 255 470 255 534" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="292" y="450" font-size="12" font-weight="bold" fill="#4a7a3a">是</text>
+  <path d="M 590 462 Q 685 470 685 534" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="640" y="450" font-size="12" font-weight="bold" fill="#b85450">否</text>
+
+  <!-- branch boxes -->
+  <g filter="url(#sk)"><rect x="85" y="540" width="340" height="54" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="255" y="562" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">sum2 += 2 + depth[a] + depth[b]</text>
+  <text x="255" y="582" text-anchor="middle" font-size="11" fill="#4a7a3a">所有二元环累加 —— 可拼桌</text>
+
+  <g filter="url(#sk)"><rect x="515" y="540" width="340" height="54" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="685" y="562" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6a1a">maxCycle = max(maxCycle, L)</text>
+  <text x="685" y="582" text-anchor="middle" font-size="11" fill="#a08040">只取最长 —— 独占一桌</text>
+
+  <!-- converge arrows -->
+  <path d="M 255 594 Q 300 622 385 628" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 685 594 Q 640 622 555 628" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- final box -->
+  <g filter="url(#sk)"><rect x="290" y="618" width="360" height="42" rx="8" fill="#446688" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="470" y="644" text-anchor="middle" font-size="13" font-weight="bold" fill="#ffffff">⑥ 返回 max(maxCycle, sum2)</text>
+
+  <!-- side annotation for depth -->
+  <g filter="url(#sk)">
+    <rect x="700" y="196" width="230" height="84" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="715" y="218" font-size="11" font-weight="bold" fill="#2b2b2b">depth[u] = u 处挂链长度</text>
+  <text x="715" y="236" font-size="10.5" fill="#666">（不含 u 自身，初值 0）</text>
+  <text x="715" y="254" font-size="10.5" fill="#666">环上节点永不被剥，</text>
+  <text x="715" y="271" font-size="10.5" fill="#666">depth 只统计环外挂链</text>
+
+  <!-- side annotation for cycle nodes -->
+  <g filter="url(#sk)">
+    <rect x="35" y="296" width="225" height="64" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="52" y="318" font-size="10.5" fill="#666">环上节点入度 ≥ 1</text>
+  <text x="52" y="336" font-size="10.5" fill="#666">（环内前驱保底），</text>
+  <text x="52" y="353" font-size="10.5" fill="#666">故永远剥不掉</text>
+</svg>
