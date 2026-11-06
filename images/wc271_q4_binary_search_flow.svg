@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="470" viewBox="0 0 720 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="axg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#888888"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="470" fill="#fdfcf7"/>
+  <text x="360" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：枚举左端 i + 二分最大右端 j</text>
+  <path d="M 190 40 Q 360 48 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="360" y="58" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">固定 i 时代价 cost(i, j) 关于 j 单调不减 —— 可行的 j 是一段前缀，二分找最右端</text>
+
+  <rect x="55" y="66" width="260" height="32" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="185" y="86" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">预处理前缀和 prefix（O(1) 区间和）</text>
+
+  <path d="M 185 98 L 185 112" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#axg)" filter="url(#sk)"/>
+
+  <rect x="55" y="114" width="260" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="185" y="134" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">枚举左端 i = 0 … n−1</text>
+
+  <path d="M 185 146 L 185 160" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#axg)" filter="url(#sk)"/>
+
+  <polygon points="185,162 275,204 185,246 95,204" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="185" y="202" text-anchor="middle" font-size="11" font-weight="bold" fill="#b06a10" filter="url(#sk)">cost(i, i) ≤ k ?</text>
+  <text x="185" y="218" text-anchor="middle" font-size="9" fill="#87621a" filter="url(#sk)">（自己这一格能否够到）</text>
+
+  <path d="M 95 204 L 48 204 L 48 130 L 51 130" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#axg)" filter="url(#sk)"/>
+  <text x="34" y="172" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">否</text>
+  <text x="34" y="188" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#sk)">i++</text>
+
+  <path d="M 185 246 L 185 260" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#axg)" filter="url(#sk)"/>
+  <text x="196" y="258" text-anchor="start" font-size="10" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">是</text>
+
+  <rect x="55" y="262" width="260" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="185" y="280" text-anchor="middle" font-size="11" fill="#2b4a6e" filter="url(#sk)">在 [i, n−1] 上二分</text>
+  <text x="185" y="296" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">找最大 j 使 cost(i, j) ≤ k</text>
+
+  <path d="M 185 306 L 185 320" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#axg)" filter="url(#sk)"/>
+
+  <rect x="55" y="322" width="260" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="185" y="346" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">ans = max(ans, prefix[j+1] − prefix[i])</text>
+
+  <path d="M 185 362 L 185 376" stroke="#888" stroke-width="1.8" fill="none" marker-end="url(#axg)" filter="url(#sk)"/>
+
+  <rect x="115" y="378" width="140" height="30" rx="12" fill="#b85450" filter="url(#sk)"/>
+  <text x="185" y="397" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#ffffff" filter="url(#sk)">返回 ans</text>
+
+  <rect x="340" y="66" width="370" height="150" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="525" y="88" text-anchor="middle" font-size="12" font-weight="bold" fill="#b06a10" filter="url(#sk)">cost(i, j)：摘光水果 i..j 的最少步数</text>
+  <text x="525" y="112" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#sk)">p_j ≤ s（整段在左）→ 代价 = s − p_i（向左走到底）</text>
+  <text x="525" y="138" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#sk)">p_i ≥ s（整段在右）→ 代价 = p_j − s（向右走到底）</text>
+  <text x="525" y="164" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#sk)">p_i &lt; s &lt; p_j（跨两侧）→ 代价 = min(2a + b, a + 2b)</text>
+  <text x="525" y="194" text-anchor="middle" font-size="9.5" fill="#87621a" filter="url(#sk)">其中 a = s − p_i，b = p_j − s；两分支在 p = s 处取值一致，无缝衔接</text>
+
+  <rect x="340" y="232" width="370" height="140" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="525" y="254" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">单调性：固定 i，j 增大 ⇒ cost 不减</text>
+  <text x="525" y="276" text-anchor="middle" font-size="10" fill="#555" filter="url(#sk)">左区（p_j ≤ s）：cost 恒为 a；右区：min(2a+b, a+2b) ≥ a 随 b 增</text>
+  <text x="525" y="296" text-anchor="middle" font-size="10" fill="#555" filter="url(#sk)">p_i ≥ s 时 cost = p_j − s 直接递增 —— 判定前真后假，二分合法</text>
+  <text x="525" y="316" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">⇒ { j : cost(i, j) ≤ k } 是 [i, n−1] 的前缀</text>
+  <text x="525" y="344" text-anchor="middle" font-size="9.5" fill="#4a6a4a" filter="url(#sk)">且 amount ≥ 1 ⇒ 区间和随 j 严格增，每个 i 只需查最大 j</text>
+
+  <rect x="340" y="386" width="370" height="62" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="525" y="408" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8c3a36" filter="url(#sk)">复杂度 O(n log n)：n 次枚举 × 每次一次二分</text>
+  <text x="525" y="428" text-anchor="middle" font-size="10" fill="#8c3a36" filter="url(#sk)">把二分换成双指针滑动窗口 → O(n)（每日版主线，同一个 cost 函数）</text>
+
+  <text x="360" y="462" text-anchor="middle" font-size="10" fill="#777" filter="url(#sk)">形状分解变体：先左后右 R = s + k − 2a（需 2a ≤ k）；先右后左 R = s + ⌊(k−a)/2⌋（需 a ≤ k）—— 纯单侧由后者覆盖</text>
+</svg>
