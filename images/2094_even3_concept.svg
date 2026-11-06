@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="455" viewBox="0 0 720 455" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="455" fill="#fdfcf7"/>
+  <text x="360" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：不枚举输入拼答案，直接枚举答案值域</text>
+  <path d="M 190 42 Q 360 52 530 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="360" y="62" text-anchor="middle" font-size="12" fill="#888">三位偶数只有 [100, 998] 步长 2 共 450 个候选，比输入组合数小三个数量级</text>
+
+  <!-- lane 1: forward brute force -->
+  <text x="50" y="100" font-size="11.5" font-weight="bold" fill="#a04038" filter="url(#sk)">正向 · 从输入出发（暴力）</text>
+  <g filter="url(#sk)">
+    <rect x="48" y="112" width="148" height="46" rx="8" fill="#fff" stroke="#b85450" stroke-width="1.5"/>
+    <rect x="210" y="112" width="112" height="46" rx="8" fill="#fff" stroke="#b85450" stroke-width="1.5"/>
+    <rect x="336" y="112" width="96" height="46" rx="8" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.6"/>
+    <rect x="446" y="112" width="96" height="46" rx="8" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.6"/>
+    <rect x="556" y="112" width="92" height="46" rx="8" fill="#f2f2ee" stroke="#8a8a8a" stroke-width="1.4"/>
+  </g>
+  <text x="122" y="131" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333" filter="url(#sk)">选位置 i, j, k</text>
+  <text x="122" y="148" text-anchor="middle" font-size="10.5" fill="#777">O(n³) ≈ 10⁶ 组</text>
+  <text x="266" y="131" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333" filter="url(#sk)">拼三位数</text>
+  <text x="266" y="148" text-anchor="middle" font-size="10.5" fill="#777">判 3 个条件</text>
+  <text x="384" y="131" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#9a6a15" filter="url(#sk)">set 去重</text>
+  <text x="384" y="148" text-anchor="middle" font-size="10.5" fill="#777">防重复</text>
+  <text x="494" y="131" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#9a6a15" filter="url(#sk)">sort 排序</text>
+  <text x="494" y="148" text-anchor="middle" font-size="10.5" fill="#777">变升序</text>
+  <text x="602" y="138" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#555" filter="url(#sk)">输出</text>
+  <g stroke="#3a3a3a" stroke-width="1.4">
+    <path d="M 196 135 L 206 135" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 322 135 L 332 135" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 432 135 L 442 135" marker-end="url(#ar)" filter="url(#sk)"/>
+    <path d="M 542 135 L 552 135" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+  <text x="348" y="182" text-anchor="middle" font-size="11.5" fill="#a04038" filter="url(#sk)">重复元素 → 大量重复候选；生成顺序乱 → 去重、排序两步事后补救</text>
+
+  <!-- lane 2: backward enumeration -->
+  <text x="50" y="232" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">反向 · 从答案值域出发（本题做法）</text>
+  <g filter="url(#sk)">
+    <rect x="48" y="244" width="168" height="46" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="234" y="244" width="132" height="46" rx="8" fill="#fff" stroke="#4a8e4a" stroke-width="1.5"/>
+    <polygon points="466,235 552,267 466,299 380,267" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.8"/>
+    <rect x="570" y="244" width="100" height="46" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="132" y="263" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">x = 100, 102, …, 998</text>
+  <text x="132" y="280" text-anchor="middle" font-size="10.5" fill="#777">仅 450 个候选</text>
+  <text x="300" y="263" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333" filter="url(#sk)">拆位 → 计数</text>
+  <text x="300" y="280" text-anchor="middle" font-size="10" font-family="monospace" fill="#777">need[d0]++ …</text>
+  <text x="466" y="262" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a6a15" filter="url(#sk)">∀d : need[d]</text>
+  <text x="466" y="277" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a6a15">≤ freq[d] ?</text>
+  <text x="620" y="263" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">按序收入</text>
+  <text x="620" y="280" text-anchor="middle" font-size="10.5" fill="#777">ans</text>
+  <path d="M 216 267 L 230 267" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 366 267 L 376 267" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 554 267 L 566 267" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="560" y="258" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">是</text>
+  <path d="M 466 299 L 466 318" stroke="#999" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="479" y="314" font-size="11" fill="#999" filter="url(#sk)">否 · 跳过</text>
+  <text x="348" y="340" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#sk)">枚举严格递增 → 天然升序；每个 x 只枚举一次 → 天然互异</text>
+
+  <!-- bottom compare note -->
+  <g filter="url(#sk)">
+    <rect x="80" y="362" width="560" height="56" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="360" y="384" text-anchor="middle" font-size="12" fill="#7a5415">同是「生成 + 验证」，把枚举方向反过来，</text>
+  <text x="360" y="404" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">去重与排序两件麻烦事直接消失 —— 这就是签到题的最短路径</text>
+</svg>

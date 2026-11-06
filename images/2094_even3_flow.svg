@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="420" fill="#fdfcf7"/>
+  <text x="360" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：频次表 + 值域枚举验证</text>
+  <path d="M 200 42 Q 360 52 520 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1: build freq -->
+  <text x="50" y="86" font-size="11" font-weight="bold" fill="#999" filter="url(#sk)">第 1 步 · 预处理频次表 O(n)</text>
+  <g filter="url(#sk)">
+    <rect x="48" y="98" width="170" height="44" rx="8" fill="#fff" stroke="#5a5a5a" stroke-width="1.4"/>
+  </g>
+  <text x="133" y="124" text-anchor="middle" font-size="12.5" font-family="monospace" font-weight="bold" fill="#333" filter="url(#sk)">digits=[2,1,3,0]</text>
+  <path d="M 218 120 L 254 120" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="236" y="110" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#sk)">一遍扫描</text>
+  <g filter="url(#sk)">
+    <rect x="260" y="98" width="340" height="44" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <g font-size="9.5" fill="#8a8a8a" text-anchor="middle">
+    <text x="277" y="110">0</text><text x="311" y="110">1</text><text x="345" y="110">2</text><text x="379" y="110">3</text><text x="413" y="110">4</text><text x="447" y="110">5</text><text x="481" y="110">6</text><text x="515" y="110">7</text><text x="549" y="110">8</text><text x="583" y="110">9</text>
+  </g>
+  <g font-size="13" font-weight="bold" fill="#2b6e9e" text-anchor="middle" filter="url(#sk)">
+    <text x="277" y="132">1</text><text x="311" y="132">1</text><text x="345" y="132">1</text><text x="379" y="132">1</text><text x="413" y="132">0</text><text x="447" y="132">0</text><text x="481" y="132">0</text><text x="515" y="132">0</text><text x="549" y="132">0</text><text x="583" y="132">0</text>
+  </g>
+  <g stroke="#4a8edb" stroke-width="1" opacity="0.5">
+    <line x1="294" y1="100" x2="294" y2="140"/><line x1="328" y1="100" x2="328" y2="140"/><line x1="362" y1="100" x2="362" y2="140"/><line x1="396" y1="100" x2="396" y2="140"/><line x1="430" y1="100" x2="430" y2="140"/><line x1="464" y1="100" x2="464" y2="140"/><line x1="498" y1="100" x2="498" y2="140"/><line x1="532" y1="100" x2="532" y2="140"/><line x1="566" y1="100" x2="566" y2="140"/>
+  </g>
+  <text x="618" y="118" font-size="10.5" fill="#666" filter="url(#sk)">freq[10]</text>
+  <text x="618" y="133" font-size="10.5" fill="#999">值域仅 10</text>
+
+  <path d="M 430 142 L 430 164 L 133 164 L 133 198" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="4 3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="290" y="160" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#sk)">freq 备好，开始枚举</text>
+
+  <!-- step 2: enumerate & verify -->
+  <text x="50" y="200" font-size="11" font-weight="bold" fill="#999" filter="url(#sk)">第 2 步 · 枚举 450 个候选，逐一验证</text>
+  <g filter="url(#sk)">
+    <rect x="48" y="212" width="170" height="48" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="244" y="212" width="176" height="48" rx="8" fill="#fff" stroke="#4a8e4a" stroke-width="1.5"/>
+    <polygon points="534,202 620,236 534,270 448,236" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.8"/>
+    <rect x="638" y="214" width="68" height="44" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="133" y="231" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">x = 100, 102, …, 998</text>
+  <text x="133" y="248" text-anchor="middle" font-size="10.5" fill="#777">步长 2 · 恒为偶数</text>
+  <text x="332" y="231" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333" filter="url(#sk)">拆位 → need[ ] 计数</text>
+  <text x="332" y="249" text-anchor="middle" font-size="9.5" font-family="monospace" fill="#777">d0=x/100 d1=x/10%10 d2=x%10</text>
+  <text x="534" y="232" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a6a15" filter="url(#sk)">每个 d 都满足</text>
+  <text x="534" y="247" text-anchor="middle" font-size="11" font-weight="bold" fill="#9a6a15">need[d] ≤ freq[d] ?</text>
+  <text x="672" y="232" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">收入</text>
+  <text x="672" y="249" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">ans</text>
+  <path d="M 218 236 L 240 236" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 420 236 L 444 236" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 624 236 L 634 236" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="629" y="227" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">是</text>
+  <path d="M 534 270 L 534 294" stroke="#999" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="547" y="290" font-size="11" fill="#999" filter="url(#sk)">否 · 跳过</text>
+
+  <!-- loop back -->
+  <path d="M 672 258 L 672 312 L 133 312 L 133 262" stroke="#8a8a8a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="400" y="308" text-anchor="middle" font-size="11" fill="#999" filter="url(#sk)">下一个 x（+2），直到 998</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="80" y="338" width="560" height="56" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="360" y="360" text-anchor="middle" font-size="12" fill="#2b6e9e">枚举严格递增 → 按命中顺序收集即升序，无需 sort；</text>
+  <text x="360" y="380" text-anchor="middle" font-size="12" fill="#2b6e9e">每个 x 只枚举一次 → 天然互异，无需 set。返回 ans 即为答案</text>
+</svg>
