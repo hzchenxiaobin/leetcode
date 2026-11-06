@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+  </defs>
+  <rect width="640" height="480" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">示例 2 演算：枚举 k 从 4 到 0</text>
+  <path d="M 170 38 Q 320 48 470 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="320" y="58" text-anchor="middle" font-size="11.5" fill="#666">封顶排序后 flowers = [2,3,4,5] · newFlowers = 10 · target = 5 · full = 2 · partial = 6</text>
+
+  <!-- table header -->
+  <g filter="url(#sk2)">
+    <rect x="50" y="74" width="540" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="73" y="94" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e">k</text>
+  <text x="143" y="94" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e">完善后缀</text>
+  <text x="238" y="94" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e">completeCost</text>
+  <text x="318" y="94" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e">remain</text>
+  <text x="393" y="94" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e">前缀最小 m</text>
+  <text x="513" y="94" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e">美丽值</text>
+
+  <!-- rows -->
+  <g filter="url(#sk2)">
+    <rect x="50" y="106" width="540" height="39" fill="#f2f2f2" stroke="#d8d8d8" stroke-width="1"/>
+    <rect x="50" y="145" width="540" height="39" fill="#ffffff" stroke="#d8d8d8" stroke-width="1"/>
+    <rect x="50" y="184" width="540" height="39" fill="#fbfbfb" stroke="#d8d8d8" stroke-width="1"/>
+    <rect x="50" y="223" width="540" height="39" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="50" y="262" width="540" height="39" fill="#ffffff" stroke="#d8d8d8" stroke-width="1"/>
+  </g>
+
+  <!-- column separators -->
+  <g stroke="#c8c8c8" stroke-width="1">
+    <path d="M 96 74 L 96 301" filter="url(#sk)"/>
+    <path d="M 190 74 L 190 301" filter="url(#sk)"/>
+    <path d="M 286 74 L 286 301" filter="url(#sk)"/>
+    <path d="M 350 74 L 350 301" filter="url(#sk)"/>
+    <path d="M 436 74 L 436 301" filter="url(#sk)"/>
+  </g>
+
+  <!-- row k=4 (invalid) -->
+  <text x="73" y="130" text-anchor="middle" font-size="11.5" fill="#999">4</text>
+  <text x="143" y="130" text-anchor="middle" font-size="11.5" fill="#999">∅</text>
+  <text x="238" y="130" text-anchor="middle" font-size="11.5" fill="#999">0</text>
+  <text x="318" y="130" text-anchor="middle" font-size="11.5" fill="#999">10</text>
+  <text x="393" y="130" text-anchor="middle" font-size="10.5" fill="#999">—（非法前缀）*</text>
+  <text x="513" y="130" text-anchor="middle" font-size="11.5" fill="#999">—</text>
+
+  <!-- row k=3 -->
+  <text x="73" y="169" text-anchor="middle" font-size="11.5" fill="#333">3</text>
+  <text x="143" y="169" text-anchor="middle" font-size="11.5" fill="#333">[5]</text>
+  <text x="238" y="169" text-anchor="middle" font-size="11.5" fill="#333">0</text>
+  <text x="318" y="169" text-anchor="middle" font-size="11.5" fill="#333">10</text>
+  <text x="393" y="169" text-anchor="middle" font-size="10.5" fill="#333">4（cost 3）</text>
+  <text x="513" y="169" text-anchor="middle" font-size="11.5" fill="#333">1×2 + 4×6 = 26</text>
+
+  <!-- row k=2 -->
+  <text x="73" y="208" text-anchor="middle" font-size="11.5" fill="#333">2</text>
+  <text x="143" y="208" text-anchor="middle" font-size="11.5" fill="#333">[4,5]</text>
+  <text x="238" y="208" text-anchor="middle" font-size="11.5" fill="#333">1</text>
+  <text x="318" y="208" text-anchor="middle" font-size="11.5" fill="#333">9</text>
+  <text x="393" y="208" text-anchor="middle" font-size="10.5" fill="#333">4（cost 3）</text>
+  <text x="513" y="208" text-anchor="middle" font-size="11.5" fill="#333">2×2 + 4×6 = 28</text>
+
+  <!-- row k=1 (best) -->
+  <text x="73" y="247" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">1</text>
+  <text x="143" y="247" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">[3,4,5]</text>
+  <text x="238" y="247" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">3</text>
+  <text x="318" y="247" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">7</text>
+  <text x="393" y="247" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#7a5415">4（cost 2）</text>
+  <text x="513" y="247" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">3×2 + 4×6 = 30 ✓</text>
+
+  <!-- row k=0 -->
+  <text x="73" y="286" text-anchor="middle" font-size="11.5" fill="#333">0</text>
+  <text x="143" y="286" text-anchor="middle" font-size="11.5" fill="#333">全部完善</text>
+  <text x="238" y="286" text-anchor="middle" font-size="11.5" fill="#333">6</text>
+  <text x="318" y="286" text-anchor="middle" font-size="11.5" fill="#333">4</text>
+  <text x="393" y="286" text-anchor="middle" font-size="10.5" fill="#333">—（无前缀）</text>
+  <text x="513" y="286" text-anchor="middle" font-size="11.5" fill="#333">4×2 = 8 <tspan font-size="10" fill="#b85450">（＜30）</tspan></text>
+
+  <!-- note box -->
+  <g filter="url(#sk2)">
+    <rect x="50" y="318" width="540" height="132" rx="8" fill="#f4f7fb" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="68" y="340" font-size="11.2" fill="#2b4a6e">* k=4：flowers[3] = 5 = target 已天然完善，前缀混入完善花园 ⇒ 非法划分，跳过（并非预算问题）。</text>
+  <text x="68" y="362" font-size="11.2" fill="#2b4a6e">completeCost 随 k 递减单调累加：每步 += target − flowers[k−1]（花园 k−1 从前缀移入后缀）。</text>
+  <text x="68" y="384" font-size="11.2" fill="#2b4a6e">m 全程被上界 target−1 = 4 封顶：remain = 7~10 都足够把前缀抬到 4，故三行 m 相同。</text>
+  <text x="68" y="406" font-size="11.2" fill="#2b4a6e">k=0 全完善只得 8：partial·(target−1) = 24 ≫ full = 2，「留一个抬到 4」完胜「多完善一个」。</text>
+  <text x="68" y="428" font-size="11.2" font-weight="bold" fill="#2e5e22">答案 = 30 ✓（与官方示例一致；枚举 k 自动覆盖拐点，无需手写判据）</text>
+</svg>
