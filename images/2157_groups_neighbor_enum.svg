@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="500" viewBox="0 0 680 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="680" height="500" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">邻居枚举：主动生成候选，再查哈希表找边</text>
+  <path d="M 170 36 Q 340 44 510 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- source node -->
+  <g filter="url(#sk)">
+    <rect x="42" y="196" width="120" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+  </g>
+  <text x="102" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#2f4a66">"a"（m=1）</text>
+  <text x="102" y="240" text-anchor="middle" font-size="10.5" fill="#555">下标 0</text>
+
+  <!-- add candidates -->
+  <g filter="url(#sk)">
+    <rect x="200" y="96" width="216" height="76" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10"/>
+  </g>
+  <text x="308" y="118" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f4a66">添加：m | (1&lt;&lt;c)，c ∉ m</text>
+  <text x="308" y="138" text-anchor="middle" font-size="10.5" fill="#555">候选 3 ✓、5 ✗、9 ✗、17 ✗、…（≤ 26 个）</text>
+  <text x="308" y="158" text-anchor="middle" font-size="10.5" fill="#555">命中 → union(a, "ab")</text>
+  <path d="M 150 208 Q 176 170 196 148" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- replace candidates -->
+  <g filter="url(#sk)">
+    <rect x="200" y="276" width="216" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10"/>
+  </g>
+  <text x="308" y="298" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">替换：m^(1&lt;&lt;c)^(1&lt;&lt;d)</text>
+  <text x="308" y="318" text-anchor="middle" font-size="10.5" fill="#555">c ∈ m，d ∉ m</text>
+  <text x="308" y="338" text-anchor="middle" font-size="10.5" fill="#555">候选 2 ✓、4 ✗、8 ✗、16 ✗、…</text>
+  <text x="308" y="354" text-anchor="middle" font-size="10.5" fill="#555">（|m|·(26−|m|) ≤ 169 个）命中 → union(a,"b")</text>
+  <path d="M 150 242 Q 176 278 196 300" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+
+  <!-- dict -->
+  <g filter="url(#sk)">
+    <rect x="470" y="96" width="186" height="266" fill="#fff" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="563" y="122" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f4a66">哈希表 id</text>
+  <text x="563" y="140" text-anchor="middle" font-size="10.5" fill="#888">掩码 → 下标</text>
+  <g filter="url(#sk)">
+    <rect x="492" y="152" width="142" height="26" fill="#e8f0fe" stroke="#9aa8b5" stroke-width="1.1" rx="4"/>
+  </g>
+  <text x="563" y="169" text-anchor="middle" font-size="11" fill="#333">1 → 0（"a"）</text>
+  <g filter="url(#sk)">
+    <rect x="492" y="184" width="142" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+  </g>
+  <text x="563" y="201" text-anchor="middle" font-size="11" fill="#1e5e1e">2 → 1（"b"）</text>
+  <g filter="url(#sk)">
+    <rect x="492" y="216" width="142" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+  </g>
+  <text x="563" y="233" text-anchor="middle" font-size="11" fill="#1e5e1e">3 → 2（"ab"）</text>
+  <g filter="url(#sk)">
+    <rect x="492" y="248" width="142" height="26" fill="#e8f0fe" stroke="#9aa8b5" stroke-width="1.1" rx="4"/>
+  </g>
+  <text x="563" y="265" text-anchor="middle" font-size="11" fill="#333">28 → 3（"cde"）</text>
+  <text x="563" y="296" text-anchor="middle" font-size="10" fill="#888">只存出现过的掩码</text>
+  <text x="563" y="312" text-anchor="middle" font-size="10" fill="#888">（≤ 2×10⁴ 项）</text>
+  <text x="563" y="346" text-anchor="middle" font-size="10.5" fill="#7a5415">查不到 = 无边，跳过</text>
+  <path d="M 416 134 L 466 134" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 416 312 L 466 300" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- symmetry box -->
+  <g filter="url(#sk)">
+    <rect x="24" y="382" width="392" height="88" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="220" y="406" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#1e5e1e">对称性：删除无需单独枚举！</text>
+  <text x="220" y="428" text-anchor="middle" font-size="11" fill="#3e6a34">a −{c}→ b　⟺　b +{c}→ a（同一条边两个方向）</text>
+  <text x="220" y="448" text-anchor="middle" font-size="11" fill="#3e6a34">每个掩码都枚举「添加」时，</text>
+  <text x="220" y="464" text-anchor="middle" font-size="11" fill="#3e6a34">所有删除边都会从对侧被发现</text>
+
+  <!-- count box -->
+  <g filter="url(#sk)">
+    <rect x="440" y="382" width="216" height="88" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10"/>
+  </g>
+  <text x="548" y="406" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a34">代价对比</text>
+  <text x="548" y="428" text-anchor="middle" font-size="11" fill="#8a3a34">两两判断：n² = 4×10⁸ 对</text>
+  <text x="548" y="448" text-anchor="middle" font-size="11" fill="#8a3a34">枚举邻居：≤ (26+169)·n</text>
+  <text x="548" y="468" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a34">≈ 3.9×10⁶ 次查表</text>
+</svg>

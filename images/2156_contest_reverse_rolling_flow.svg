@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="500" viewBox="0 0 680 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="500" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：一趟逆序滚动（从右端滑到左端）</text>
+  <path d="M 170 36 Q 340 44 510 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- A: preprocess -->
+  <g filter="url(#sk)">
+    <rect x="70" y="46" width="280" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="210" y="67" text-anchor="middle" font-size="11.5" fill="#333">预处理：pk ← powerᵏ mod m；h ← 0；res ← 0</text>
+  <path d="M 210 80 L 210 94" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- B: loop -->
+  <g filter="url(#sk)">
+    <rect x="70" y="98" width="280" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="210" y="117" text-anchor="middle" font-size="11.5" fill="#333">for i = n−1 downto 0（逆序扫描）</text>
+  <path d="M 210 128 L 210 142" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- C: push -->
+  <g filter="url(#sk)">
+    <rect x="45" y="146" width="330" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="210" y="164" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333">h ← (h·p + val(s[i])) mod m</text>
+  <text x="210" y="181" text-anchor="middle" font-size="10.5" fill="#555">新字符压入最低位 p⁰，旧项整体升一位</text>
+  <path d="M 210 188 L 210 202" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- C2: conditional remove -->
+  <g filter="url(#sk)">
+    <rect x="45" y="206" width="330" height="46" fill="#fff" stroke="#d6a040" stroke-width="1.6" rx="8" stroke-dasharray="6,4"/>
+  </g>
+  <text x="210" y="223" text-anchor="middle" font-size="10.5" fill="#a07020">若 i + k &lt; n（窗口已满，有字符越界）——建窗阶段跳过</text>
+  <text x="210" y="243" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415">h ← (h − val(s[i+k])·pk + m) mod m</text>
+  <path d="M 210 252 L 210 266" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D: hit? -->
+  <g filter="url(#sk)">
+    <polygon points="210,268 295,300 210,332 125,300" fill="#fff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="210" y="297" text-anchor="middle" font-size="11" fill="#333">h = hashValue</text>
+  <text x="210" y="313" text-anchor="middle" font-size="11" fill="#333">且 i + k ≤ n ?</text>
+  <text x="322" y="292" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+  <path d="M 295 300 L 350 300" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- G: record -->
+  <g filter="url(#sk)">
+    <rect x="354" y="278" width="250" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="479" y="296" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1e5e1e">res ← i</text>
+  <text x="479" y="314" text-anchor="middle" font-size="10.5" fill="#3e6a34">i 递减，后写覆盖 → 最终 res 最左</text>
+
+  <!-- no branch + rejoin -->
+  <text x="220" y="330" font-size="11" font-weight="bold" fill="#888">否</text>
+  <path d="M 210 332 L 210 358" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 479 322 L 479 358 L 218 358" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 210 358 L 210 378" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- H: loop decision -->
+  <g filter="url(#sk)">
+    <polygon points="210,382 280,412 210,442 140,412" fill="#fff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="210" y="416" text-anchor="middle" font-size="11" fill="#333">i &gt; 0 ?</text>
+  <text x="88" y="404" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688">是（i−−）</text>
+  <path d="M 140 412 L 28 412 L 28 167 L 41 167" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="222" y="460" font-size="11" font-weight="bold" fill="#888">否</text>
+  <path d="M 210 442 L 210 460" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- end -->
+  <g filter="url(#sk)">
+    <rect x="70" y="464" width="280" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="210" y="483" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#1e5e1e">返回 s[res … res+k−1]</text>
+
+  <!-- annotations -->
+  <g filter="url(#sk)">
+    <rect x="425" y="46" width="240" height="152" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8"/>
+  </g>
+  <text x="545" y="68" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">守卫条件的分工</text>
+  <text x="437" y="90" font-size="10.5" fill="#555">① i+k &lt; n → 才移出：建窗阶段</text>
+  <text x="437" y="106" font-size="10.5" fill="#555">　（i &gt; n−k）窗口未满，无字</text>
+  <text x="437" y="122" font-size="10.5" fill="#555">　符越界，跳过减法</text>
+  <text x="437" y="144" font-size="10.5" fill="#555">② i+k ≤ n → 才判定：恰好覆</text>
+  <text x="437" y="160" font-size="10.5" fill="#555">　盖 n−k+1 个合法起点</text>
+  <text x="437" y="182" font-size="10.5" fill="#555">③ 建窗期 h 是部分后缀哈希</text>
+  <text x="545" y="483" text-anchor="middle" font-size="10.5" fill="#888">时间 O(n)·空间 O(1)·无需模逆元</text>
+</svg>

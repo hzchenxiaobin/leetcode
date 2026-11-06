@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="520" viewBox="0 0 680 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="13" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="680" height="520" fill="#fafafa"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：字符串 → 字母集合 → 26 位掩码</text>
+  <path d="M 170 38 Q 340 46 510 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- row 1: word -> set -> bit row -->
+  <g filter="url(#sk)">
+    <rect x="42" y="66" width="64" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="74" y="88" text-anchor="middle" font-size="15" font-weight="bold" fill="#2f4a66">"ab"</text>
+  <path d="M 106 83 L 138 83" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="144" y="66" width="88" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="188" y="88" text-anchor="middle" font-size="13" fill="#2f4a66">{a, b}</text>
+  <path d="M 232 83 L 262 83" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 26 bit cells: pitch 14, start x=268 -->
+  <g filter="url(#sk)">
+    <rect x="268" y="66" width="13" height="26" fill="#446688" stroke="#446688" stroke-width="1.2"/>
+    <rect x="282" y="66" width="13" height="26" fill="#446688" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="296" y="66" width="336" height="26" fill="none" stroke="#9aa8b5" stroke-width="1.1" stroke-dasharray="4,3"/>
+  </g>
+  <text x="274.5" y="106" text-anchor="middle" font-size="10" fill="#446688">a</text>
+  <text x="288.5" y="106" text-anchor="middle" font-size="10" fill="#446688">b</text>
+  <text x="612" y="106" text-anchor="middle" font-size="10" fill="#888">z</text>
+  <text x="274.5" y="56" text-anchor="middle" font-size="9.5" fill="#b85450">1</text>
+  <text x="288.5" y="56" text-anchor="middle" font-size="9.5" fill="#b85450">1</text>
+  <text x="470" y="52" text-anchor="middle" font-size="11" fill="#555">其余 24 位为 0，掩码 m = 0b11 = 3</text>
+  <text x="340" y="126" text-anchor="middle" font-size="11.5" fill="#7a5415">每字母至多出现一次 ⟹ 字符串由字母集合唯一决定（顺序无关）</text>
+
+  <!-- three operation panels -->
+  <!-- panel 1: add -->
+  <g filter="url(#sk)">
+    <rect x="24" y="146" width="200" height="132" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="124" y="170" text-anchor="middle" font-size="14" font-weight="bold" fill="#2f4a66">添加一个字母</text>
+  <text x="124" y="196" text-anchor="middle" font-size="12.5" fill="#333">m → m | (1&lt;&lt;c)，c ∉ m</text>
+  <text x="124" y="220" text-anchor="middle" font-size="11.5" fill="#555">例：{a,b} → {a,b,x}</text>
+  <text x="124" y="244" text-anchor="middle" font-size="11.5" fill="#555">0b011 → 0b111</text>
+  <text x="124" y="268" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">popcount：+1，子集关系</text>
+
+  <!-- panel 2: delete -->
+  <g filter="url(#sk)">
+    <rect x="240" y="146" width="200" height="132" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="340" y="170" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e5e1e">删去一个字母</text>
+  <text x="340" y="196" text-anchor="middle" font-size="12.5" fill="#333">m → m ^ (1&lt;&lt;c)，c ∈ m</text>
+  <text x="340" y="220" text-anchor="middle" font-size="11.5" fill="#555">例：{a,b} → {b}</text>
+  <text x="340" y="244" text-anchor="middle" font-size="11.5" fill="#555">0b011 → 0b010</text>
+  <text x="340" y="268" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a">popcount：−1，超集关系</text>
+
+  <!-- panel 3: replace -->
+  <g filter="url(#sk)">
+    <rect x="456" y="146" width="200" height="132" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="556" y="170" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">替换一个字母</text>
+  <text x="556" y="196" text-anchor="middle" font-size="12.5" fill="#333">m → m^(1&lt;&lt;c)^(1&lt;&lt;d)</text>
+  <text x="556" y="220" text-anchor="middle" font-size="11.5" fill="#555">例：{a,b} → {b,x}（a 换成 x）</text>
+  <text x="556" y="244" text-anchor="middle" font-size="11.5" fill="#555">c ∈ m，d ∉ m</text>
+  <text x="556" y="268" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a07020">popcount 不变，⊕ 后恰 2 位不同</text>
+
+  <!-- summary box -->
+  <g filter="url(#sk)">
+    <rect x="60" y="298" width="560" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="340" y="320" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a34">关联判定：两字符串关联 ⟺ 掩码相等（替换为自身）</text>
+  <text x="340" y="340" text-anchor="middle" font-size="12" fill="#8a3a34">或两掩码满足 添加 / 删除 / 替换 三种位运算关系之一</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="60" y="374" width="560" height="66" fill="#fff" stroke="#9aa8b5" stroke-width="1.3" rx="10" stroke-dasharray="6,4"/>
+  </g>
+  <text x="340" y="398" text-anchor="middle" font-size="11.5" fill="#555">n ≤ 2×10⁴ 个字符串 → 至多 2×10⁴ 个不同掩码</text>
+  <text x="340" y="422" text-anchor="middle" font-size="11.5" fill="#555">不要开 2²⁶ 的大数组（67M 项）——用哈希表「掩码 → 下标」只存出现过的</text>
+
+  <text x="340" y="478" text-anchor="middle" font-size="10.5" fill="#888">三步走的本质：把「字符串配对问题」压成「26 位整数上的邻居问题」</text>
+  <path d="M 470 486 Q 340 494 210 486" stroke="#2b2b2b" stroke-width="1" fill="none" filter="url(#sk)"/>
+</svg>
