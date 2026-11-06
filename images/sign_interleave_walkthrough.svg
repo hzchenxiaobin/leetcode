@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="600" viewBox="0 0 680 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="680" height="600" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例演算：nums = [3,1,−2,−5,2,−4] 的双游标走查</text>
+  <path d="M 150 40 Q 340 47 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- table header -->
+  <g filter="url(#sk)">
+    <rect x="20" y="64" width="40" height="30" fill="#eee" stroke="#999" stroke-width="1.2"/>
+    <rect x="60" y="64" width="44" height="30" fill="#eee" stroke="#999" stroke-width="1.2"/>
+    <rect x="104" y="64" width="104" height="30" fill="#eee" stroke="#999" stroke-width="1.2"/>
+    <rect x="208" y="64" width="70" height="30" fill="#eee" stroke="#999" stroke-width="1.2"/>
+    <rect x="278" y="64" width="70" height="30" fill="#eee" stroke="#999" stroke-width="1.2"/>
+    <rect x="348" y="64" width="308" height="30" fill="#eee" stroke="#999" stroke-width="1.2"/>
+  </g>
+  <g font-size="12" font-weight="bold" fill="#444" text-anchor="middle">
+    <text x="40" y="83">步</text>
+    <text x="82" y="83">x</text>
+    <text x="156" y="83">写入</text>
+    <text x="243" y="83">posIdx</text>
+    <text x="313" y="83">negIdx</text>
+    <text x="502" y="83">ans 逐步快照</text>
+  </g>
+
+  <!-- row separators -->
+  <g stroke="#ddd" stroke-width="1" filter="url(#sk)">
+    <line x1="20" y1="94" x2="656" y2="94"/>
+    <line x1="20" y1="138" x2="656" y2="138"/>
+    <line x1="20" y1="182" x2="656" y2="182"/>
+    <line x1="20" y1="226" x2="656" y2="226"/>
+    <line x1="20" y1="270" x2="656" y2="270"/>
+    <line x1="20" y1="314" x2="656" y2="314"/>
+  </g>
+  <g stroke="#e0e0e0" stroke-width="1" filter="url(#sk)">
+    <line x1="60" y1="94" x2="60" y2="358"/>
+    <line x1="104" y1="94" x2="104" y2="358"/>
+    <line x1="208" y1="94" x2="208" y2="358"/>
+    <line x1="278" y1="94" x2="278" y2="358"/>
+    <line x1="348" y1="94" x2="348" y2="358"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="20" y="64" width="636" height="294" fill="none" stroke="#999" stroke-width="1.2"/>
+  </g>
+
+  <!-- row 1: x=3 -->
+  <g font-size="11.5" text-anchor="middle" font-family="monospace" font-weight="bold">
+    <text x="40" y="120" fill="#444">1</text>
+    <text x="82" y="120" fill="#2e6e2e">3</text>
+    <text x="156" y="120" fill="#444">ans[0]=3</text>
+    <text x="243" y="120" fill="#2b6e9e">0→2</text>
+    <text x="313" y="120" fill="#a06a20">1</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="350" y="101" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#b85450" stroke-width="2"/>
+    <rect x="402" y="101" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="454" y="101" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="506" y="101" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="558" y="101" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="610" y="101" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+  </g>
+  <text x="374" y="121" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">3</text>
+
+  <!-- row 2: x=1 -->
+  <g font-size="11.5" text-anchor="middle" font-family="monospace" font-weight="bold">
+    <text x="40" y="164" fill="#444">2</text>
+    <text x="82" y="164" fill="#2e6e2e">1</text>
+    <text x="156" y="164" fill="#444">ans[2]=1</text>
+    <text x="243" y="164" fill="#2b6e9e">2→4</text>
+    <text x="313" y="164" fill="#a06a20">1</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="350" y="145" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="402" y="145" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="454" y="145" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#b85450" stroke-width="2"/>
+    <rect x="506" y="145" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="558" y="145" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="610" y="145" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+  </g>
+  <text x="374" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">3</text>
+  <text x="478" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">1</text>
+
+  <!-- row 3: x=-2 -->
+  <g font-size="11.5" text-anchor="middle" font-family="monospace" font-weight="bold">
+    <text x="40" y="208" fill="#444">3</text>
+    <text x="82" y="208" fill="#a06a20">−2</text>
+    <text x="156" y="208" fill="#444">ans[1]=−2</text>
+    <text x="243" y="208" fill="#2b6e9e">4</text>
+    <text x="313" y="208" fill="#a06a20">1→3</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="350" y="189" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="402" y="189" width="48" height="30" rx="4" fill="#fff8e1" stroke="#b85450" stroke-width="2"/>
+    <rect x="454" y="189" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="506" y="189" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="558" y="189" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="610" y="189" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+  </g>
+  <text x="374" y="209" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">3</text>
+  <text x="426" y="209" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a20" font-family="monospace">−2</text>
+  <text x="478" y="209" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">1</text>
+
+  <!-- row 4: x=-5 -->
+  <g font-size="11.5" text-anchor="middle" font-family="monospace" font-weight="bold">
+    <text x="40" y="252" fill="#444">4</text>
+    <text x="82" y="252" fill="#a06a20">−5</text>
+    <text x="156" y="252" fill="#444">ans[3]=−5</text>
+    <text x="243" y="252" fill="#2b6e9e">4</text>
+    <text x="313" y="252" fill="#a06a20">3→5</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="350" y="233" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="402" y="233" width="48" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="454" y="233" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="506" y="233" width="48" height="30" rx="4" fill="#fff8e1" stroke="#b85450" stroke-width="2"/>
+    <rect x="558" y="233" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="610" y="233" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+  </g>
+  <text x="374" y="253" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">3</text>
+  <text x="426" y="253" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a20" font-family="monospace">−2</text>
+  <text x="478" y="253" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">1</text>
+  <text x="530" y="253" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a20" font-family="monospace">−5</text>
+
+  <!-- row 5: x=2 -->
+  <g font-size="11.5" text-anchor="middle" font-family="monospace" font-weight="bold">
+    <text x="40" y="296" fill="#444">5</text>
+    <text x="82" y="296" fill="#2e6e2e">2</text>
+    <text x="156" y="296" fill="#444">ans[4]=2</text>
+    <text x="243" y="296" fill="#2b6e9e">4→6</text>
+    <text x="313" y="296" fill="#a06a20">5</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="350" y="277" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="402" y="277" width="48" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="454" y="277" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="506" y="277" width="48" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="558" y="277" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#b85450" stroke-width="2"/>
+    <rect x="610" y="277" width="48" height="30" rx="4" fill="#fff" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4,3"/>
+  </g>
+  <text x="374" y="297" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">3</text>
+  <text x="426" y="297" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a20" font-family="monospace">−2</text>
+  <text x="478" y="297" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">1</text>
+  <text x="530" y="297" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a20" font-family="monospace">−5</text>
+  <text x="582" y="297" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">2</text>
+
+  <!-- row 6: x=-4 -->
+  <g font-size="11.5" text-anchor="middle" font-family="monospace" font-weight="bold">
+    <text x="40" y="340" fill="#444">6</text>
+    <text x="82" y="340" fill="#a06a20">−4</text>
+    <text x="156" y="340" fill="#444">ans[5]=−4</text>
+    <text x="243" y="340" fill="#2b6e9e">6</text>
+    <text x="313" y="340" fill="#a06a20">5→7</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="350" y="321" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="402" y="321" width="48" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="454" y="321" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="506" y="321" width="48" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="558" y="321" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="610" y="321" width="48" height="30" rx="4" fill="#fff8e1" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="374" y="341" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">3</text>
+  <text x="426" y="341" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a20" font-family="monospace">−2</text>
+  <text x="478" y="341" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">1</text>
+  <text x="530" y="341" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a20" font-family="monospace">−5</text>
+  <text x="582" y="341" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">2</text>
+  <text x="634" y="341" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a20" font-family="monospace">−4</text>
+
+  <!-- answer banner -->
+  <g filter="url(#sk)">
+    <rect x="60" y="372" width="560" height="46" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="392" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e" font-family="monospace">返回 [3, −2, 1, −5, 2, −4] ✓</text>
+  <text x="340" y="411" text-anchor="middle" font-size="11.5" fill="#444">正数流 3,1,2 → 下标 0,2,4 保序 ✓ ；负数流 −2,−5,−4 → 下标 1,3,5 保序 ✓</text>
+
+  <!-- extreme case callout -->
+  <g filter="url(#sk)">
+    <rect x="20" y="432" width="640" height="148" rx="10" fill="#fff" stroke="#b85450" stroke-width="1.6" stroke-dasharray="7,5"/>
+  </g>
+  <text x="340" y="456" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a04038">极端分布自检：nums = [1,2,3,−1,−2,−3]（正数连成整块在前）</text>
+  <text x="340" y="478" text-anchor="middle" font-size="11.5" fill="#444">前 3 步 posIdx 一路 0→2→4→6 跑满偶落点，negIdx 停在 1 等待；后 3 步负数依序填 1,3,5。</text>
+  <text x="340" y="497" text-anchor="middle" font-size="11.5" fill="#444">因正数恰有 n/2 = 3 个，posIdx 止步于 n = 6，全程不越界（§5 引理 2）。</text>
+  <text x="292" y="530" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">输出 =</text>
+  <g filter="url(#sk)">
+    <rect x="350" y="510" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="402" y="510" width="48" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="454" y="510" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="506" y="510" width="48" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="558" y="510" width="48" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="610" y="510" width="48" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <g text-anchor="middle" font-size="13" font-weight="bold" font-family="monospace">
+    <text x="374" y="530" fill="#2e6e2e">1</text>
+    <text x="426" y="530" fill="#a06a20">−1</text>
+    <text x="478" y="530" fill="#2e6e2e">2</text>
+    <text x="530" y="530" fill="#a06a20">−2</text>
+    <text x="582" y="530" fill="#2e6e2e">3</text>
+    <text x="634" y="530" fill="#a06a20">−3</text>
+  </g>
+  <text x="340" y="566" text-anchor="middle" font-size="11.5" fill="#666">游标各走各的步长 2：无论同号块连成多长，落点永不越界。</text>
+</svg>
