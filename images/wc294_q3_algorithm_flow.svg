@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b85450"/></marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/></marker>
+  </defs>
+  <rect width="640" height="470" fill="#fdfcf7"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：排序 → 叉积判斜率变化 → 计数</text>
+  <path d="M 130 38 Q 320 46 500 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 主链 -->
+  <g filter="url(#sk)"><rect x="250" y="52" width="140" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="320" y="72" text-anchor="middle" font-size="13" fill="#33455e">按 day 升序排序</text>
+  <path d="M 320 82 V 100" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><polygon points="320,102 410,130 320,158 230,130" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="320" y="135" text-anchor="middle" font-size="13" fill="#7a5415">n ≤ 1 ?</text>
+  <path d="M 410 130 H 470 V 165" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="442" y="122" font-size="12" fill="#a04040">是</text>
+  <g filter="url(#sk)"><rect x="428" y="165" width="110" height="28" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="483" y="184" text-anchor="middle" font-size="13" fill="#a04040">返回 0</text>
+
+  <path d="M 320 158 V 176" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arg)" filter="url(#sk)"/>
+  <text x="330" y="172" font-size="12" fill="#2e5e2e">否</text>
+
+  <g filter="url(#sk)"><rect x="200" y="176" width="240" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="320" y="197" text-anchor="middle" font-size="12.5" font-family="monospace" fill="#33455e">ans = 1; (px,py) = P1 − P0</text>
+  <path d="M 320 210 V 228" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="185" y="228" width="270" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="320" y="249" text-anchor="middle" font-size="12.5" font-family="monospace" fill="#33455e">i = 2 … n−1: (dx,dy) = Pi − Pi−1</text>
+  <path d="M 320 262 V 280" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><polygon points="320,282 445,312 320,342 195,312" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="320" y="317" text-anchor="middle" font-size="13" fill="#7a5415">dy·px = py·dx ?</text>
+
+  <path d="M 195 312 H 120 V 352" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arg)" filter="url(#sk)"/>
+  <text x="150" y="304" font-size="12" fill="#2e5e2e">是 · 共线</text>
+  <path d="M 445 312 H 520 V 352" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="470" y="304" font-size="12" fill="#a04040">否 · 变了！</text>
+
+  <g filter="url(#sk)"><rect x="440" y="352" width="160" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="520" y="373" text-anchor="middle" font-size="12.5" font-family="monospace" fill="#a04040">ans++; px=dx; py=dy</text>
+
+  <path d="M 520 386 V 410 H 330" stroke="#3a3a3a" stroke-width="1.6" filter="url(#sk)"/>
+  <path d="M 120 386 V 410 H 310" stroke="#3a3a3a" stroke-width="1.6" filter="url(#sk)"/>
+  <path d="M 320 262 V 380 Q 320 400 320 400" stroke="none" fill="none"/>
+
+  <g filter="url(#sk)"><rect x="230" y="400" width="180" height="32" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="320" y="421" text-anchor="middle" font-size="13" fill="#2e5e2e">扫描结束，返回 ans</text>
+
+  <!-- 左侧警示框 -->
+  <g filter="url(#sk)"><rect x="22" y="236" width="150" height="120" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="97" y="258" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">两个细节</text>
+  <text x="97" y="278" text-anchor="middle" font-size="10.5" fill="#7a5415">① 只在变化时更新</text>
+  <text x="97" y="294" text-anchor="middle" font-size="10.5" fill="#7a5415">(px,py) 保持段基准</text>
+  <text x="97" y="314" text-anchor="middle" font-size="10.5" fill="#7a5415">② day 互不相同</text>
+  <text x="97" y="330" text-anchor="middle" font-size="10.5" fill="#7a5415">⇒ dx &gt; 0 无除零</text>
+  <text x="97" y="348" text-anchor="middle" font-size="10.5" fill="#7a5415">⇒ 无需特判竖线</text>
+
+  <!-- 底部警示 -->
+  <g filter="url(#sk)"><rect x="36" y="440" width="568" height="24" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/></g>
+  <text x="320" y="456" text-anchor="middle" font-size="11.5" fill="#a04040">⚠ 乘积可达 999999998² ≈ 10¹⁸：C++ 必须 long long；double 除法斜率会误判（见 §5 反例）</text>
+</svg>
