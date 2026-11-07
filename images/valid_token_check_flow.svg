@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="680" viewBox="0 0 940 680"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="680" fill="#fafafa"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：切分 → 逐字符分类校验 → 短路返回</text>
+  <path d="M 250 44 Q 470 52 690 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 顶部：切分 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="58" width="230" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="165" y="77" text-anchor="middle" font-size="12" font-family="monospace" fill="#333" filter="url(#rough2)">sentence = "cat and  dog"</text>
+  <text x="165" y="94" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">（注意两个空格）</text>
+  <path d="M 282 81 L 320 81" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="324" y="58" width="270" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="459" y="77" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">切分：split() / istringstream</text>
+  <text x="459" y="94" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">自动合并连续空格，不产生空 token</text>
+  <path d="M 596 81 L 634 81" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="638" y="58" width="250" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="763" y="77" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">tokens: [cat] [and] [dog]</text>
+  <text x="763" y="94" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">逐个 token 进入下方校验</text>
+  <path d="M 763 106 L 763 128 L 430 128 L 430 140" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 D：还有字符？ -->
+  <g filter="url(#rough2)">
+    <polygon points="430,142 540,168 430,194 320,168" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="430" y="164" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">还有字符？</text>
+  <text x="430" y="182" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">ch = t[i++]</text>
+
+  <path d="M 540 168 L 676 168" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="575" y="158" font-size="11" fill="#4a7a3a" filter="url(#rough2)">扫描完</text>
+  <g filter="url(#rough2)">
+    <rect x="680" y="146" width="210" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="785" y="173" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">✓ token 有效 → ans++</text>
+
+  <path d="M 430 194 L 430 230" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="440" y="216" font-size="11" fill="#666" filter="url(#rough2)">未完</text>
+
+  <!-- 菱形 F：数字？ -->
+  <g filter="url(#rough2)">
+    <polygon points="430,232 540,258 430,284 320,258" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="430" y="264" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">ch 是数字？</text>
+  <path d="M 540 258 L 676 258" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="575" y="248" font-size="11" fill="#b85450" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="680" y="236" width="210" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="785" y="263" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough2)">✗ 无效（含数字）</text>
+  <path d="M 430 284 L 430 320" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="440" y="306" font-size="11" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 菱形 G：连字符？ -->
+  <g filter="url(#rough2)">
+    <polygon points="430,322 540,348 430,374 320,348" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="430" y="354" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">ch == '-'？</text>
+  <path d="M 540 348 L 656 348" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="575" y="338" font-size="11" fill="#666" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="660" y="316" width="230" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="775" y="336" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a67c1e" filter="url(#rough2)">hyphen_cnt+1</text>
+  <text x="775" y="354" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">违规：&gt;1 / 在首尾 / 两侧非字母</text>
+  <text x="775" y="372" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">任一违规 → ✗ 无效</text>
+  <path d="M 430 374 L 430 410" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="440" y="396" font-size="11" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 菱形 I：标点？ -->
+  <g filter="url(#rough2)">
+    <polygon points="430,412 540,438 430,464 320,438" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="430" y="444" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">ch 是标点 ! . , ？</text>
+  <path d="M 540 438 L 656 438" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="575" y="428" font-size="11" fill="#666" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="660" y="406" width="230" height="66" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="775" y="426" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">punct_cnt+1</text>
+  <text x="775" y="444" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">违规：&gt;1 或不在末尾 i≠n-1</text>
+  <text x="775" y="462" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">任一违规 → ✗ 无效</text>
+  <path d="M 430 464 L 430 498" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="440" y="484" font-size="11" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 循环框 -->
+  <g filter="url(#rough2)">
+    <rect x="330" y="500" width="200" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="430" y="525" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">继续下一个字符</text>
+
+  <!-- 回边 -->
+  <path d="M 330 520 L 150 520 L 150 168 L 316 168" stroke="#446688" stroke-width="1.6" fill="none"
+        stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="150" y="356" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">单趟循环</text>
+
+  <!-- 底部注释 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="570" width="820" height="86" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="82" y="594" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">短路思想：任一规则违规立即 return false，无需扫完整个 token</text>
+  <text x="82" y="616" font-size="12" fill="#444" filter="url(#rough2)">空格已在切分时处理，token 内只有字母/数字/连字符/标点四类互斥字符 → 一次遍历校验全部规则</text>
+  <text x="82" y="638" font-size="12" fill="#888" filter="url(#rough2)">全部字符扫描完且未触发任何短路 → token 有效；对每个有效 token 计数即为答案</text>
+</svg>
