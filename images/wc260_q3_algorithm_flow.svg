@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="460" viewBox="0 0 680 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="59" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="460" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：行 / 列统一「切槽 → 比长度 → 双向匹配」</text>
+  <path d="M 150 42 Q 340 52 530 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- A: take next line -->
+  <g filter="url(#sk)">
+    <rect x="130" y="58" width="250" height="40" rx="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="255" y="83" text-anchor="middle" font-size="12" fill="#333">取下一行；行尽则转置取列</text>
+  <path d="M 255 98 L 255 112" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- B: split into slots -->
+  <g filter="url(#sk)">
+    <rect x="130" y="114" width="250" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="255" y="134" text-anchor="middle" font-size="11.5" fill="#333" font-family="monospace">join(line).split('#')</text>
+  <text x="255" y="152" text-anchor="middle" font-size="10" fill="#446688">得到该行 / 列的全部槽</text>
+  <path d="M 255 158 L 255 172" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- C: decision -->
+  <g filter="url(#sk)">
+    <path d="M 255 172 L 372 216 L 255 260 L 138 216 Z" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="255" y="210" text-anchor="middle" font-size="12" fill="#2f5d25">存在长恰为 L 的槽</text>
+  <text x="255" y="228" text-anchor="middle" font-size="12" fill="#2f5d25">且正读 / 反读相容？</text>
+
+  <!-- yes -> return true -->
+  <text x="380" y="208" font-size="11.5" font-weight="bold" fill="#2f5d25">是</text>
+  <path d="M 372 216 L 398 216" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="402" y="196" width="150" height="40" rx="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="477" y="221" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f5d25">return true</text>
+
+  <!-- no -> next decision -->
+  <text x="263" y="276" font-size="11.5" font-weight="bold" fill="#b85450">否</text>
+  <path d="M 255 260 L 255 290" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D: more lines? -->
+  <g filter="url(#sk)">
+    <path d="M 255 290 L 372 334 L 255 378 L 138 334 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="255" y="330" text-anchor="middle" font-size="12" fill="#7a5415">还有未处理的行 / 列？</text>
+  <text x="255" y="348" text-anchor="middle" font-size="10" fill="#a08040">（行完了转置再扫列）</text>
+
+  <!-- yes -> loop back to A -->
+  <text x="118" y="324" font-size="11.5" font-weight="bold" fill="#7a5415">有</text>
+  <path d="M 138 334 L 80 334 Q 72 334 72 326 L 72 88 Q 72 80 80 80 L 126 80"
+        stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="64" y="206" font-size="10.5" fill="#666" transform="rotate(-90 64 206)" text-anchor="middle">换行 / 转置取列 →</text>
+
+  <!-- no -> return false -->
+  <text x="263" y="396" font-size="11.5" font-weight="bold" fill="#b85450">无</text>
+  <path d="M 255 378 L 255 396" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="170" y="398" width="170" height="38" rx="19" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="255" y="422" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a34">return false</text>
+
+  <!-- slot inner details box -->
+  <g filter="url(#sk)">
+    <rect x="402" y="270" width="238" height="118" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="521" y="292" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">槽内三步（细节）</text>
+  <text x="521" y="313" text-anchor="middle" font-size="10.5" fill="#5c4512">① len(seg) == len(word)？</text>
+  <text x="521" y="331" text-anchor="middle" font-size="10.5" fill="#5c4512">② 正读：seg[k] = ' ' 或 word[k]</text>
+  <text x="521" y="349" text-anchor="middle" font-size="10.5" fill="#5c4512">③ 反读：seg[k] = ' ' 或 word[L−1−k]</text>
+  <text x="521" y="367" text-anchor="middle" font-size="10.5" fill="#5c4512">④ 命中任一即 true</text>
+
+  <text x="340" y="448" text-anchor="middle" font-size="10.5" fill="#8a3a34">⚠ 长度过滤先行：槽长 ≠ L 直接跳过，匹配只发生在长 L 的槽上 → 总耗时 O(m·n)</text>
+</svg>
