@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="600" viewBox="0 0 680 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="600" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：二进制子集枚举（12 位 mask）</text>
+  <path d="M 140 42 Q 340 52 540 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="62" text-anchor="middle" font-size="12" fill="#888">mask 第 k 位 = 1 表示 Bob 打算赢下区域 k；共 2^12 = 4096 种</text>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="230" y="84" width="220" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="104" text-anchor="middle" font-size="13" font-weight="bold" fill="#33475e">① 初始化 bestScore = −1</text>
+  <text x="340" y="122" text-anchor="middle" font-size="11" fill="#556">bestMask = 0</text>
+  <path d="M 340 130 L 340 152" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="230" y="156" width="220" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="176" text-anchor="middle" font-size="13" font-weight="bold" fill="#33475e">② 取下一个 mask（0 … 4095）</text>
+  <text x="340" y="194" text-anchor="middle" font-size="11" fill="#556">枚举全部子集</text>
+  <path d="M 340 202 L 340 224" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="170" y="228" width="340" height="60" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="251" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">③ 扫描 12 位：第 k 位为 1 时累加</text>
+  <text x="340" y="273" text-anchor="middle" font-size="12" fill="#7a5415" filter="url(#sk)">cost += ak + 1 ，score += k</text>
+
+  <!-- note: pruning -->
+  <g filter="url(#sk)">
+    <rect x="30" y="230" width="120" height="58" rx="8" fill="#f4f4ee" stroke="#8a8a8a" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="90" y="252" text-anchor="middle" font-size="10.5" fill="#666">cost &gt; numArrows</text>
+  <text x="90" y="270" text-anchor="middle" font-size="10.5" fill="#666">可提前 break</text>
+  <text x="90" y="288" text="middle" font-size="10.5" fill="#666" text-anchor="middle">（小剪枝）</text>
+  <path d="M 340 288 L 340 310" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 4: diamond -->
+  <g filter="url(#sk)">
+    <polygon points="340,314 468,356 340,398 212,356" fill="#fff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="351" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33475e">cost ≤ numArrows 且</text>
+  <text x="340" y="369" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33475e">score &gt; bestScore ?</text>
+
+  <!-- yes -->
+  <path d="M 468 356 L 560 356 L 560 440 L 340 440 L 340 458" stroke="#4a8e4a" stroke-width="1.4" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="540" y="346" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">是</text>
+  <g filter="url(#sk)">
+    <rect x="480" y="404" width="150" height="44" rx="9" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="555" y="424" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">④ 更新答案</text>
+  <text x="555" y="441" text-anchor="middle" font-size="10.5" fill="#556" filter="url(#sk)">bestScore / bestMask</text>
+  <path d="M 555 404 L 555 390 L 470 356" stroke="#4a8e4a" stroke-width="1.2" fill="none" stroke-dasharray="4 3" filter="url(#sk)"/>
+
+  <!-- no: back to step 2 -->
+  <path d="M 212 356 L 120 356 L 120 179 L 224 179" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="128" y="344" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a04038" filter="url(#sk)">否 ↺</text>
+
+  <!-- step 5: build answer -->
+  <path d="M 340 458 L 340 462" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="150" y="470" width="380" height="60" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="492" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a04038">⑤ 枚举全部 mask 后构造 bobArrows：</text>
+  <text x="340" y="514" text-anchor="middle" font-size="12" fill="#a04038" filter="url(#sk)">bestMask 中的 k 放 ak+1 支；剩余箭全部放区域 0</text>
+
+  <path d="M 340 530 L 340 548" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="230" y="552" width="220" height="38" rx="9" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="576" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">⑥ 返回 bobArrows（Σ = numArrows）</text>
+</svg>
