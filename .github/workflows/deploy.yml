@@ -70,6 +70,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 40
     steps:
       - name: Download batch artifacts
         uses: actions/download-artifact@v4
@@ -95,3 +96,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          # 大型站点在高峰期同步可能超过默认的 10 分钟
+          timeout: 1800000
+          reporting_interval: 30000
