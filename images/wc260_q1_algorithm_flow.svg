@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="480" viewBox="0 0 680 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="480" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：一次遍历，先算差、后更新前缀最小</text>
+  <path d="M 150 42 Q 340 52 530 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- init -->
+  <g filter="url(#sk)">
+    <rect x="130" y="58" width="220" height="40" rx="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="240" y="83" text-anchor="middle" font-size="12.5" fill="#333">preMin = nums[0]，ans = −1</text>
+  <path d="M 240 98 L 240 116" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop -->
+  <g filter="url(#sk)">
+    <rect x="130" y="118" width="220" height="40" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.5" stroke-dasharray="6 3"/>
+  </g>
+  <text x="240" y="143" text-anchor="middle" font-size="12.5" fill="#333">j = 1 … n−1 逐个处理</text>
+  <path d="M 240 158 L 240 176" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <path d="M 240 186 L 350 225 L 240 264 L 130 225 Z" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="240" y="221" text-anchor="middle" font-size="12" fill="#2f5d25">nums[j] &gt; preMin ？</text>
+  <text x="240" y="239" text-anchor="middle" font-size="10.5" fill="#6b8f60">（严格大于才算增量）</text>
+
+  <!-- yes branch -->
+  <text x="358" y="216" font-size="11.5" font-weight="bold" fill="#2f5d25">是</text>
+  <path d="M 350 225 L 378 225" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="380" y="204" width="248" height="42" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="504" y="223" text-anchor="middle" font-size="11.5" fill="#333" font-family="monospace">ans = max(ans, nums[j] − preMin)</text>
+  <text x="504" y="240" text-anchor="middle" font-size="10" fill="#446688">以 j 为右端点的最优差</text>
+  <path d="M 504 246 L 504 272 Q 504 280 496 280 L 248 280" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- no branch -->
+  <text x="248" y="280" font-size="11.5" font-weight="bold" fill="#b85450">否</text>
+  <path d="M 240 264 L 240 296" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- update preMin -->
+  <g filter="url(#sk)">
+    <rect x="130" y="300" width="220" height="40" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="240" y="318" text-anchor="middle" font-size="11.5" fill="#333" font-family="monospace">preMin = min(preMin, nums[j])</text>
+  <text x="240" y="334" text-anchor="middle" font-size="10" fill="#446688">走「是」分支时此步不改变 preMin</text>
+
+  <!-- loop back -->
+  <path d="M 130 320 L 82 320 Q 74 320 74 312 L 74 146 Q 74 138 82 138 L 126 138"
+        stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="66" y="232" font-size="10.5" fill="#666" transform="rotate(-90 66 232)" text-anchor="middle">j+1 →</text>
+
+  <!-- exit path -->
+  <path d="M 350 138 L 648 138 L 648 414 L 356 414" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="640" y="290" font-size="10.5" fill="#666" transform="rotate(-90 640 290)" text-anchor="middle">j 越界（j = n）→</text>
+
+  <!-- return -->
+  <g filter="url(#sk)">
+    <rect x="130" y="396" width="224" height="38" rx="19" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="242" y="420" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">返回 ans（无更新则为 −1）</text>
+
+  <!-- pitfalls box -->
+  <g filter="url(#sk)">
+    <rect x="392" y="300" width="248" height="80" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="516" y="322" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a34">⚠ 易错点</text>
+  <text x="516" y="341" text-anchor="middle" font-size="10.5" fill="#8a3a34">先算差、后更新 preMin（顺序不能反）</text>
+  <text x="516" y="358" text-anchor="middle" font-size="10.5" fill="#8a3a34">严格 &gt; 才算增量，相等差 0 不计入</text>
+  <text x="516" y="375" text-anchor="middle" font-size="10.5" fill="#8a3a34">ans 初值 −1 兼作「未找到」哨兵</text>
+</svg>
