@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+  </defs>
+  <rect width="900" height="640" fill="#fdfcf7"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">求 size 的两遍扫描：先序入表 → 逆序「把 size 传给父亲」</text>
+  <path d="M 260 44 Q 450 52 640 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: preorder via stack ===== -->
+  <g filter="url(#sk)">
+    <rect x="52" y="70" width="380" height="150" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="72" y="94" font-size="13" font-weight="bold" fill="#2b6e9e">① 栈式先序：弹出一个，压入它的孩子</text>
+  <!-- stack snapshots -->
+  <g font-size="11">
+    <g filter="url(#sk)"><rect x="72" y="110" width="60" height="26" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="102" y="128" text-anchor="middle" fill="#2e6e2e" font-weight="bold">栈 [0]</text>
+    <g filter="url(#sk)"><rect x="150" y="110" width="96" height="26" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="198" y="128" text-anchor="middle" fill="#2e6e2e" font-weight="bold">弹0 压[2,4]</text>
+    <g filter="url(#sk)"><rect x="264" y="110" width="72" height="26" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="300" y="128" text-anchor="middle" fill="#2e6e2e" font-weight="bold">弹4 压[]</text>
+    <g filter="url(#sk)"><rect x="354" y="110" width="66" height="26" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/></g>
+    <text x="387" y="128" text-anchor="middle" fill="#2e6e2e" font-weight="bold">弹2 压[1,3]</text>
+  </g>
+  <!-- order chips -->
+  <text x="72" y="168" font-size="11" fill="#555">先序 order =</text>
+  <g font-size="12" font-weight="bold">
+    <g filter="url(#sk)"><rect x="140" y="152" width="30" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="155" y="170" text-anchor="middle" fill="#2b6e9e">0</text>
+    <g filter="url(#sk)"><rect x="174" y="152" width="30" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="189" y="170" text-anchor="middle" fill="#2b6e9e">4</text>
+    <g filter="url(#sk)"><rect x="208" y="152" width="30" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="223" y="170" text-anchor="middle" fill="#2b6e9e">2</text>
+    <g filter="url(#sk)"><rect x="242" y="152" width="30" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="257" y="170" text-anchor="middle" fill="#2b6e9e">3</text>
+    <g filter="url(#sk)"><rect x="276" y="152" width="30" height="26" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="291" y="170" text-anchor="middle" fill="#2b6e9e">1</text>
+  </g>
+  <text x="330" y="170" font-size="11" fill="#888">（祖先必排在子孙前面）</text>
+  <text x="72" y="204" font-size="10" fill="#888">⚠ parents[i] 与 i 大小无保证（示例 1 中 parents[1] = 2 &gt; 1），</text>
+  <text x="72" y="216" font-size="10" fill="#888">不能直接按下标逆序累加，必须先跑一遍先序 / BFS。</text>
+
+  <!-- ===== Panel 2: reversed order ===== -->
+  <g filter="url(#sk)">
+    <rect x="470" y="70" width="378" height="150" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="490" y="94" font-size="13" font-weight="bold" fill="#7a5415">② 倒着走 = 自底向上</text>
+  <g font-size="12" font-weight="bold">
+    <g filter="url(#sk)"><rect x="490" y="152" width="30" height="26" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/></g>
+    <text x="505" y="170" text-anchor="middle" fill="#7a5415">1</text>
+    <g filter="url(#sk)"><rect x="524" y="152" width="30" height="26" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/></g>
+    <text x="539" y="170" text-anchor="middle" fill="#7a5415">3</text>
+    <g filter="url(#sk)"><rect x="558" y="152" width="30" height="26" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/></g>
+    <text x="573" y="170" text-anchor="middle" fill="#7a5415">2</text>
+    <g filter="url(#sk)"><rect x="592" y="152" width="30" height="26" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/></g>
+    <text x="607" y="170" text-anchor="middle" fill="#7a5415">4</text>
+    <g filter="url(#sk)"><rect x="626" y="152" width="30" height="26" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/></g>
+    <text x="641" y="170" text-anchor="middle" fill="#7a5415">0</text>
+  </g>
+  <text x="490" y="128" font-size="11" fill="#555">逆序遍历：孩子必在父亲之前</text>
+  <text x="670" y="170" font-size="11" fill="#888">合法「拓扑序」</text>
+  <text x="490" y="204" font-size="10" fill="#888">逐个执行 size[parents[v]] += size[v]（v = 0 跳过）。</text>
+  <text x="490" y="216" font-size="10" fill="#888">逆 BFS 序同理可行，任何「孩子先于父亲」的序都行。</text>
+
+  <!-- ===== Panel 3: tree with upward accumulation arrows ===== -->
+  <text x="250" y="260" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">③ size 沿父边上传（处理顺序 ①→⑤）</text>
+  <!-- tree: 0@(250,320) 2@(160,420) 4@(340,420) 1@(100,520) 3@(230,520) -->
+  <path d="M 234 334 L 178 404" stroke="#999" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 268 334 L 326 404" stroke="#999" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 148 434 L 112 490" stroke="#999" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 174 434 L 218 490" stroke="#999" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+
+  <!-- upward arrows along edges -->
+  <path d="M 106 508 Q 130 468 154 432" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="88" y="470" font-size="11" fill="#2e6e2e" font-weight="bold">① +1</text>
+  <path d="M 224 508 Q 200 468 172 432" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="216" y="470" font-size="11" fill="#2e6e2e" font-weight="bold">② +1</text>
+  <path d="M 168 412 Q 200 372 232 338" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="140" y="380" font-size="11" fill="#2e6e2e" font-weight="bold">③ +3</text>
+  <path d="M 330 410 Q 300 372 270 340" stroke="#4a8edb" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="330" y="380" font-size="11" fill="#2b6e9e" font-weight="bold">④ +1</text>
+
+  <g font-size="14" font-weight="bold">
+    <g filter="url(#sk)"><circle cx="250" cy="322" r="23" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+    <text x="250" y="327" text-anchor="middle" fill="#2b6e9e">0</text>
+    <text x="250" y="296" text-anchor="middle" font-size="10" fill="#2b6e9e">⑤ size=5</text>
+    <g filter="url(#sk)"><circle cx="160" cy="422" r="23" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2"/></g>
+    <text x="160" y="427" text-anchor="middle" fill="#2e6e2e">2</text>
+    <text x="160" y="460" text-anchor="middle" font-size="10" fill="#2e6e2e">③ size=3</text>
+    <g filter="url(#sk)"><circle cx="340" cy="422" r="23" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+    <text x="340" y="427" text-anchor="middle" fill="#2b6e9e">4</text>
+    <text x="340" y="460" text-anchor="middle" font-size="10" fill="#2b6e9e">④ size=1</text>
+    <g filter="url(#sk)"><circle cx="100" cy="522" r="23" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2"/></g>
+    <text x="100" y="527" text-anchor="middle" fill="#2e6e2e">1</text>
+    <text x="100" y="560" text-anchor="middle" font-size="10" fill="#2e6e2e">① size=1</text>
+    <g filter="url(#sk)"><circle cx="230" cy="522" r="23" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2"/></g>
+    <text x="230" y="527" text-anchor="middle" fill="#2e6e2e">3</text>
+    <text x="230" y="560" text-anchor="middle" font-size="10" fill="#2e6e2e">② size=1</text>
+  </g>
+
+  <!-- ===== Panel 4: result ===== -->
+  <g filter="url(#sk)">
+    <rect x="500" y="252" width="348" height="300" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="520" y="280" font-size="13" font-weight="bold" fill="#2e6e2e">④ 一遍累加后的 size[]</text>
+  <g font-size="12" font-weight="bold">
+    <g filter="url(#sk)"><rect x="520" y="296" width="52" height="28" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="546" y="315" text-anchor="middle" fill="#2b6e9e">5</text>
+    <g filter="url(#sk)"><rect x="576" y="296" width="52" height="28" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="602" y="315" text-anchor="middle" fill="#2b6e9e">1</text>
+    <g filter="url(#sk)"><rect x="632" y="296" width="52" height="28" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="658" y="315" text-anchor="middle" fill="#2b6e9e">3</text>
+    <g filter="url(#sk)"><rect x="688" y="296" width="52" height="28" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="714" y="315" text-anchor="middle" fill="#2b6e9e">1</text>
+    <g filter="url(#sk)"><rect x="744" y="296" width="52" height="28" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="770" y="315" text-anchor="middle" fill="#2b6e9e">1</text>
+  </g>
+  <text x="520" y="348" font-size="10" fill="#888">下标 0…4，size[v] 即 v 的子树大小</text>
+  <text x="520" y="376" font-size="12" fill="#444" font-weight="bold">size[v] = 1 + Σ size[c]</text>
+  <text x="520" y="404" font-size="11" fill="#555">每条父边恰好触发一次累加</text>
+  <text x="520" y="424" font-size="11" fill="#555">⇒ 两遍扫描合计 O(n)，无递归</text>
+  <g filter="url(#sk)">
+    <rect x="520" y="444" width="308" height="88" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/>
+  </g>
+  <text x="536" y="470" font-size="11" fill="#b03a3a" font-weight="bold">链状树递归深度可达 10⁵</text>
+  <text x="536" y="492" font-size="11" fill="#555">Python 默认递归上限 1000，直接递归会崩；</text>
+  <text x="536" y="512" font-size="11" fill="#555">先序 + 逆序累加完全迭代，天然免疫深树。</text>
+</svg>
