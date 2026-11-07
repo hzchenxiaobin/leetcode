@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="17" font-weight="bold"
+        fill="#333" filter="url(#rough2)">核心观察：节点维护「前缀 run + 后缀 run + 段内最长」</text>
+  <text x="260" y="48" text-anchor="middle" font-size="12"
+        fill="#888" filter="url(#rough2)">最长单字符子串 = 最长 run；五元组在 merge 下封闭，可自底向上传递</text>
+
+  <text x="170" y="74" text-anchor="middle" font-size="11.5" font-weight="bold"
+        fill="#446688" filter="url(#rough2)">前缀 run：('a', 2)</text>
+  <path d="M 134 86 Q 134 78 142 78 L 198 78 Q 206 78 206 86"
+        stroke="#446688" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+
+  <text x="118" y="112" text-anchor="end" font-size="10.5"
+        fill="#999" filter="url(#rough2)">len=7</text>
+
+  <rect x="134" y="90" width="36" height="36" rx="4" fill="#e8f0fe"
+        stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="170" y="90" width="36" height="36" rx="4" fill="#e8f0fe"
+        stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="206" y="90" width="36" height="36" rx="4" fill="#fff8e1"
+        stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="242" y="90" width="36" height="36" rx="4" fill="#fff8e1"
+        stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="278" y="90" width="36" height="36" rx="4" fill="#fff8e1"
+        stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="314" y="90" width="36" height="36" rx="4" fill="#e6f4ea"
+        stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <rect x="350" y="90" width="36" height="36" rx="4" fill="#e6f4ea"
+        stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="152" y="112" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">a</text>
+  <text x="188" y="112" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">a</text>
+  <text x="224" y="112" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">b</text>
+  <text x="260" y="112" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">b</text>
+  <text x="296" y="112" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">b</text>
+  <text x="332" y="112" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">a</text>
+  <text x="368" y="112" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">a</text>
+
+  <path d="M 206 138 Q 206 132 214 132 L 306 132 Q 314 132 314 138"
+        stroke="#d6a040" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+  <text x="260" y="158" text-anchor="middle" font-size="11.5" font-weight="bold"
+        fill="#d6a040" filter="url(#rough2)">段内最长：maxL = 3</text>
+  <path d="M 314 138 Q 314 132 322 132 L 378 132 Q 386 132 386 138"
+        stroke="#4a7a3a" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+  <text x="350" y="158" text-anchor="middle" font-size="11.5" font-weight="bold"
+        fill="#4a7a3a" filter="url(#rough2)">后缀 run：('a', 2)</text>
+
+  <rect x="30" y="182" width="225" height="76" rx="8" fill="#fce4ec"
+        stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="142" y="204" text-anchor="middle" font-size="12" font-weight="bold"
+        fill="#b85450" filter="url(#rough2)">「最长」不满足区间可加</text>
+  <text x="142" y="224" text-anchor="middle" font-size="11.5"
+        fill="#b85450" filter="url(#rough2)">左右两段拼接时，跨界处可能接龙变长</text>
+  <text x="142" y="244" text-anchor="middle" font-size="11.5"
+        fill="#b85450" filter="url(#rough2)">⇒ 需要陪跑信息：前缀 / 后缀 run</text>
+
+  <rect x="265" y="182" width="225" height="76" rx="8" fill="#e6f4ea"
+        stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="377" y="204" text-anchor="middle" font-size="12" font-weight="bold"
+        fill="#4a7a3a" filter="url(#rough2)">五元组 (prefC, prefL, sufC, sufL, mx)</text>
+  <text x="377" y="224" text-anchor="middle" font-size="11.5"
+        fill="#4a7a3a" filter="url(#rough2)">本例 = ('a', 2, 'a', 2, 3)</text>
+  <text x="377" y="244" text-anchor="middle" font-size="11.5"
+        fill="#4a7a3a" filter="url(#rough2)">儿子五元组 + 段长 ⇒ O(1) 算出父亲</text>
+
+  <rect x="30" y="272" width="460" height="74" rx="10" fill="#e8f0fe"
+        stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="294" text-anchor="middle" font-size="12"
+        fill="#446688" filter="url(#rough2)">单点修改 ⇒ 仅根→叶路径上 O(log n) 个节点需 pushup 重算</text>
+  <text x="260" y="312" text-anchor="middle" font-size="12"
+        fill="#446688" filter="url(#rough2)">根节点的 mx 即全局最长 run —— 信息只上浮，无懒标记、无 pushdown</text>
+  <text x="260" y="330" text-anchor="middle" font-size="10.5"
+        fill="#888" filter="url(#rough2)">与「区间最大子段和」同款骨架：前缀 / 后缀 / 内部最优三字段</text>
+  <text x="260" y="348" text-anchor="middle" font-size="10.5"
+        fill="#888" filter="url(#rough2)">总复杂度 O(n + k log n)</text>
+</svg>
