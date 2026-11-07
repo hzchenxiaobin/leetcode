@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="620" viewBox="0 0 780 620"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="620" fill="#fafafa"/>
+  <text x="390" y="32" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：数组劈两半各枚举 2ⁿ 个子集，在中间按元素个数 k 会合</text>
+  <path d="M 150 44 Q 390 54 630 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- band 1: split -->
+  <text x="50" y="74" font-size="13.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">① 把 nums 从中间劈开：前一半 A、后一半 B（各 n ≤ 15 个元素）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="90" y="88" width="54" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="154" y="88" width="54" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="218" y="88" width="54" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="352" y="88" width="54" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="416" y="88" width="54" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="480" y="88" width="54" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="117" y="109" text-anchor="middle" font-size="13" fill="#2b4666" filter="url(#rough2)">a₁</text>
+  <text x="181" y="109" text-anchor="middle" font-size="13" fill="#2b4666" filter="url(#rough2)">a₂</text>
+  <text x="245" y="109" text-anchor="middle" font-size="13" fill="#2b4666" filter="url(#rough2)">⋯</text>
+  <text x="379" y="109" text-anchor="middle" font-size="13" fill="#3a5c2e" filter="url(#rough2)">b₁</text>
+  <text x="443" y="109" text-anchor="middle" font-size="13" fill="#3a5c2e" filter="url(#rough2)">b₂</text>
+  <text x="507" y="109" text-anchor="middle" font-size="13" fill="#3a5c2e" filter="url(#rough2)">⋯</text>
+  <path d="M 322 82 L 322 132" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="322" y="76" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">✂ 切一半</text>
+  <text x="181" y="140" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">A = nums[0..n−1]</text>
+  <text x="443" y="140" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">B = nums[n..2n−1]</text>
+
+  <g filter="url(#rough2)">
+    <rect x="570" y="82" width="185" height="52" rx="8" fill="#ffffff" stroke="#888" stroke-width="1.5"/>
+  </g>
+  <text x="662" y="103" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">n ≤ 15 → 每侧 2ⁿ = 32768</text>
+  <text x="662" y="122" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">个待枚举的子集，甜区！</text>
+
+  <!-- band 2: two side panels -->
+  <text x="50" y="180" font-size="13.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">② 两侧各自独立枚举全部 2ⁿ 个子集，按元素个数 k（popcount）分桶</text>
+
+  <!-- left panel: A -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="194" width="340" height="228" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="210" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4666" filter="url(#rough2)">A 侧子集和桶 sumsA[k]</text>
+  <g filter="url(#rough2)">
+    <rect x="62" y="230" width="296" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="62" y="262" width="296" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="62" y="294" width="296" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="62" y="326" width="296" height="26" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="80" y="247" font-size="11" font-weight="bold" fill="#2b4666" filter="url(#rough2)">k = 0</text>
+  <text x="150" y="247" font-size="11" fill="#333" filter="url(#rough2)">{0}（空子集）</text>
+  <text x="80" y="279" font-size="11" font-weight="bold" fill="#2b4666" filter="url(#rough2)">k = 1</text>
+  <text x="150" y="279" font-size="11" fill="#333" filter="url(#rough2)">{a₁, a₂, …}</text>
+  <text x="80" y="311" font-size="11" font-weight="bold" fill="#2b4666" filter="url(#rough2)">k = 2</text>
+  <text x="150" y="311" font-size="11" fill="#333" filter="url(#rough2)">{a₁+a₂, …}</text>
+  <text x="80" y="343" font-size="11" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">k = n</text>
+  <text x="150" y="343" font-size="11" fill="#333" filter="url(#rough2)">{a₁+⋯+aₙ}（全取）</text>
+  <text x="210" y="384" text-anchor="middle" font-size="10" fill="#2b4666" filter="url(#rough2)">递推求和：f[mask] = f[mask &amp; (mask−1)] + A[ctz(mask)]</text>
+  <text x="210" y="404" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">每个子集和 O(1) 得到，整侧 O(2ⁿ)</text>
+
+  <!-- right panel: B -->
+  <g filter="url(#rough2)">
+    <rect x="400" y="194" width="340" height="228" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="570" y="218" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">B 侧子集和桶 sumsB[k]（桶内排序）</text>
+  <g filter="url(#rough2)">
+    <rect x="422" y="230" width="296" height="26" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="422" y="262" width="296" height="26" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="422" y="294" width="296" height="26" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="422" y="326" width="296" height="26" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="440" y="247" font-size="11" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">k = 0</text>
+  <text x="510" y="247" font-size="11" fill="#333" filter="url(#rough2)">{0}（空子集）</text>
+  <text x="440" y="279" font-size="11" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">k = 1</text>
+  <text x="510" y="279" font-size="11" fill="#333" filter="url(#rough2)">{b₁, b₂, …} → 排序</text>
+  <text x="440" y="311" font-size="11" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">k = 2</text>
+  <text x="510" y="311" font-size="11" fill="#333" filter="url(#rough2)">{b₁+b₂, …} → 排序</text>
+  <text x="440" y="343" font-size="11" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">k = n</text>
+  <text x="510" y="343" font-size="11" fill="#333" filter="url(#rough2)">{b₁+⋯+bₙ}（全取）</text>
+  <text x="570" y="384" text-anchor="middle" font-size="10" fill="#3a5c2e" filter="url(#rough2)">桶内 sort，供配对阶段二分查找</text>
+  <text x="570" y="404" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">sumsA 不排序，作遍历方</text>
+
+  <!-- band 3: meet in the middle -->
+  <path d="M 382 460 L 540 460" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <path d="M 398 460 L 240 460" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="250" y="440" width="280" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="390" y="465" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6414" filter="url(#rough2)">A 取 k 个 + B 取 n−k 个 = n 个</text>
+
+  <path d="M 390 482 L 390 500" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="180" y="502" width="420" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="390" y="524" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">配对 s₁ + s₂ → 逼近 S/2，差 = |2(s₁+s₂) − S|</text>
+
+  <!-- bottom conclusion -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="552" width="660" height="50" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="390" y="573" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">暴力 C(30,15) ≈ 1.55×10⁸ 个子集 ✗ → 两半各 2¹⁵ = 32768 ✓</text>
+  <text x="390" y="592" text-anchor="middle" font-size="11" fill="#8a3a34" filter="url(#rough2)">指数从 2²ⁿ 砍到 2·2ⁿ——这就是 Meet in the Middle（中途相遇）</text>
+</svg>

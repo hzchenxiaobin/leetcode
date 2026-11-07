@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="620" viewBox="0 0 780 620"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="620" fill="#fafafa"/>
+  <text x="390" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">示例演算：nums = [3,9,7,3]，n = 2，S = 22，目标 S/2 = 11</text>
+  <path d="M 150 42 Q 390 52 630 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- band 1: split -->
+  <text x="50" y="72" font-size="13" font-weight="bold" fill="#2b4666" filter="url(#rough2)">① 切半：A = [3, 9]，B = [7, 3]</text>
+  <g filter="url(#rough2)">
+    <rect x="90" y="84" width="54" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="152" y="84" width="54" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="300" y="84" width="54" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="362" y="84" width="54" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="117" y="105" text-anchor="middle" font-size="13" fill="#2b4666" filter="url(#rough2)">3</text>
+  <text x="179" y="105" text-anchor="middle" font-size="13" fill="#2b4666" filter="url(#rough2)">9</text>
+  <text x="327" y="105" text-anchor="middle" font-size="13" fill="#3a5c2e" filter="url(#rough2)">7</text>
+  <text x="389" y="105" text-anchor="middle" font-size="13" fill="#3a5c2e" filter="url(#rough2)">3</text>
+  <path d="M 256 78 L 256 126" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="256" y="72" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">✂</text>
+
+  <g filter="url(#rough2)">
+    <rect x="480" y="78" width="250" height="44" rx="8" fill="#ffffff" stroke="#888" stroke-width="1.5"/>
+  </g>
+  <text x="605" y="96" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">S = 3+9+7+3 = 22</text>
+  <text x="605" y="114" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6414" filter="url(#rough2)">差 = |2(s₁+s₂) − 22|，逼近 S/2 = 11</text>
+
+  <!-- band 2: buckets -->
+  <text x="50" y="154" font-size="13" font-weight="bold" fill="#2b4666" filter="url(#rough2)">② 枚举各半子集，按大小 k 分桶（B 侧桶内排序）</text>
+  <g filter="url(#rough2)">
+    <rect x="120" y="166" width="540" height="120" rx="4" fill="#ffffff" stroke="#888" stroke-width="1.5"/>
+    <path d="M 120 198 L 660 198 M 120 230 L 660 230 M 120 262 L 660 262" stroke="#bbb" stroke-width="1"/>
+    <path d="M 230 166 L 230 286 M 445 166 L 445 286" stroke="#bbb" stroke-width="1"/>
+  </g>
+  <text x="175" y="188" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#555" filter="url(#rough2)">k</text>
+  <text x="337" y="188" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">sumsA[k]</text>
+  <text x="552" y="188" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">sumsB[k]（排序后）</text>
+  <text x="175" y="220" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">0</text>
+  <text x="337" y="220" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">{0}</text>
+  <text x="552" y="220" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">{0}</text>
+  <text x="175" y="252" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="337" y="252" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">{3, 9}</text>
+  <text x="552" y="252" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">{3, 7}</text>
+  <text x="175" y="280" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">2</text>
+  <text x="337" y="280" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">{12}</text>
+  <text x="552" y="280" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">{10}</text>
+
+  <!-- band 3: pairing table -->
+  <text x="50" y="322" font-size="13" font-weight="bold" fill="#2b4666" filter="url(#rough2)">③ 按 k 配对：二分找最接近 target = 11 − s₁ 的 s₂</text>
+  <g filter="url(#rough2)">
+    <rect x="70" y="334" width="640" height="146" rx="4" fill="#ffffff" stroke="#888" stroke-width="1.5"/>
+    <path d="M 70 366 L 710 366 M 70 398 L 710 398 M 70 430 L 710 430 M 70 462 L 710 462" stroke="#bbb" stroke-width="1"/>
+    <path d="M 130 334 L 130 480 M 210 334 L 210 480 M 360 334 L 360 480 M 510 334 L 510 480 M 590 334 L 590 480" stroke="#bbb" stroke-width="1"/>
+  </g>
+  <text x="100" y="356" text-anchor="middle" font-size="11" font-weight="bold" fill="#555" filter="url(#rough2)">k</text>
+  <text x="170" y="356" text-anchor="middle" font-size="11" font-weight="bold" fill="#555" filter="url(#rough2)">s₁</text>
+  <text x="285" y="356" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6414" filter="url(#rough2)">target = 11−s₁</text>
+  <text x="435" y="356" text-anchor="middle" font-size="11" font-weight="bold" fill="#555" filter="url(#rough2)">最近 s₂（查两位置）</text>
+  <text x="550" y="356" text-anchor="middle" font-size="11" font-weight="bold" fill="#555" filter="url(#rough2)">s₁+s₂</text>
+  <text x="650" y="356" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">|2·和−S|</text>
+
+  <text x="100" y="388" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">0</text>
+  <text x="170" y="388" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">0</text>
+  <text x="285" y="388" text-anchor="middle" font-size="11.5" fill="#8a6414" filter="url(#rough2)">11</text>
+  <text x="435" y="388" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">B[2]={10} → 10</text>
+  <text x="550" y="388" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">10</text>
+  <text x="650" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">2</text>
+
+  <g filter="url(#rough2)">
+    <rect x="71" y="399" width="638" height="29" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="100" y="420" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="170" y="420" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">3</text>
+  <text x="285" y="420" text-anchor="middle" font-size="11.5" fill="#8a6414" filter="url(#rough2)">8</text>
+  <text x="435" y="420" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">{3,7} → 7（次近 3）</text>
+  <text x="550" y="420" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">10</text>
+  <text x="650" y="420" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">2</text>
+
+  <text x="100" y="452" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="170" y="452" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">9</text>
+  <text x="285" y="452" text-anchor="middle" font-size="11.5" fill="#8a6414" filter="url(#rough2)">2</text>
+  <text x="435" y="452" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">{3,7} → 3（次近 7）</text>
+  <text x="550" y="452" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">12</text>
+  <text x="650" y="452" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">2</text>
+
+  <text x="100" y="476" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">2</text>
+  <text x="170" y="476" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">12</text>
+  <text x="285" y="476" text-anchor="middle" font-size="11.5" fill="#8a6414" filter="url(#rough2)">−1</text>
+  <text x="435" y="476" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">B[0]={0} → 0</text>
+  <text x="550" y="476" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">12</text>
+  <text x="650" y="476" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">2</text>
+
+  <!-- bottom conclusion -->
+  <path d="M 210 480 Q 210 508 210 508" stroke="none" fill="none" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="90" y="500" width="600" height="94" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="390" y="524" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">四个配对通道全部给出最小差 2</text>
+  <g filter="url(#rough2)">
+    <rect x="150" y="536" width="200" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="430" y="536" width="200" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="556" text-anchor="middle" font-size="12" fill="#2b4666" filter="url(#rough2)">第一组 [3, 7]，和 10</text>
+  <text x="530" y="556" text-anchor="middle" font-size="12" fill="#3a5c2e" filter="url(#rough2)">第二组 [9, 3]，和 12</text>
+  <text x="390" y="586" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">|10 − 12| = 2 ✎ 答案：2</text>
+</svg>
