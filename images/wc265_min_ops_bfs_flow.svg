@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 540" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+    <marker id="argy" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#999"/></marker>
+  </defs>
+  <rect width="660" height="540" fill="#fdfcf7"/>
+  <text x="330" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">BFS 三步法：先判等、再判域、后入队</text>
+  <path d="M 190 40 Q 330 48 470 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- init -->
+  <g filter="url(#sk)"><rect x="130" y="58" width="340" height="38" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+  <text x="300" y="82" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b5a94">① dist[start] = 0，start 入队</text>
+  <path d="M 300 96 L 300 118" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- dequeue -->
+  <g filter="url(#sk)"><rect x="150" y="120" width="300" height="38" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+  <text x="300" y="144" text-anchor="middle" font-size="12.5" fill="#2b5a94">② 取出队首 x（dist[x] 已知）</text>
+  <path d="M 450 139 L 498 139" stroke="#999" stroke-width="1.4" marker-end="url(#argy)" filter="url(#sk)"/>
+  <text x="474" y="128" text-anchor="middle" font-size="10.5" fill="#888">队空</text>
+  <g filter="url(#sk)"><rect x="500" y="117" width="120" height="44" rx="8" fill="#f4f4f4" stroke="#999" stroke-width="1.6"/></g>
+  <text x="560" y="144" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">返回 −1</text>
+  <path d="M 300 158 L 300 180" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- expand -->
+  <g filter="url(#sk)"><rect x="95" y="182" width="410" height="46" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="300" y="209" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">③ 对每个 num ∈ nums：nx ∈ {x+num, x−num, x^num}</text>
+  <path d="M 300 228 L 300 252" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1: equality check -->
+  <polygon points="300,254 424,292 300,330 176,292" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="300" y="297" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">nx == goal ?</text>
+  <path d="M 424 292 L 498 292" stroke="#b85450" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="456" y="282" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">是</text>
+  <g filter="url(#sk)"><rect x="500" y="268" width="145" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/></g>
+  <text x="572" y="289" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">返回 dist[x] + 1</text>
+  <text x="572" y="307" text-anchor="middle" font-size="10" fill="#b85450">越界也能命中 ★</text>
+  <path d="M 300 330 L 300 354" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="312" y="347" font-size="11" fill="#888">否</text>
+
+  <!-- diamond 2: domain + visited check -->
+  <polygon points="300,356 440,396 300,436 160,396" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2" filter="url(#sk)"/>
+  <text x="300" y="392" text-anchor="middle" font-size="12" fill="#2b5a94">0 ≤ nx ≤ 1000</text>
+  <text x="300" y="409" text-anchor="middle" font-size="12" fill="#2b5a94">且 dist[nx] == −1 ?</text>
+  <path d="M 300 436 L 300 460" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="312" y="452" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+  <g filter="url(#sk)"><rect x="170" y="462" width="260" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+  <text x="300" y="487" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">④ dist[nx] = dist[x]+1 · 入队</text>
+  <path d="M 440 396 L 498 396" stroke="#999" stroke-width="1.4" marker-end="url(#argy)" filter="url(#sk)"/>
+  <text x="464" y="386" text-anchor="middle" font-size="11" fill="#888">否</text>
+  <g filter="url(#sk)"><rect x="500" y="374" width="140" height="44" rx="8" fill="#f4f4f4" stroke="#aaa" stroke-width="1.5"/></g>
+  <text x="570" y="393" text-anchor="middle" font-size="12" font-weight="bold" fill="#777">丢弃 nx</text>
+  <text x="570" y="410" text-anchor="middle" font-size="10" fill="#999">（越界 / 已访问）</text>
+
+  <!-- loop back -->
+  <path d="M 170 483 L 78 483 L 78 139 L 146 139" stroke="#999" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#argy)" filter="url(#sk)"/>
+  <text x="62" y="310" text-anchor="middle" font-size="10" fill="#999" transform="rotate(-90 62 310)">处理下一个状态</text>
+
+  <!-- pitfall -->
+  <g filter="url(#sk)"><rect x="445" y="455" width="205" height="70" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.4"/></g>
+  <text x="547" y="478" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">易错：判等必须先于判域</text>
+  <text x="547" y="498" text-anchor="middle" font-size="10.5" fill="#777">若先判域：域外 goal 的</text>
+  <text x="547" y="514" text-anchor="middle" font-size="10.5" fill="#777">越界结果被直接跳过 → 漏判</text>
+</svg>

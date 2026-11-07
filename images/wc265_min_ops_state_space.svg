@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/></marker>
+    <marker id="aro" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/></marker>
+  </defs>
+  <rect width="640" height="430" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：可扩展状态域只有 [0,1000] 共 1001 个节点</text>
+  <path d="M 130 40 Q 320 50 510 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- expandable domain -->
+  <g filter="url(#sk)"><rect x="45" y="68" width="365" height="228" rx="14" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2.2"/></g>
+  <text x="227" y="96" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b5a94">可扩展域 0 ≤ x ≤ 1000</text>
+  <text x="227" y="114" text-anchor="middle" font-size="11" fill="#5a7a9a">只有域内状态能继续运算</text>
+
+  <g filter="url(#sk)"><circle cx="92" cy="185" r="17" fill="#ffffff" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="92" y="190" text-anchor="middle" font-size="12" fill="#2b5a94">0</text>
+  <g filter="url(#sk)"><circle cx="150" cy="185" r="17" fill="#ffffff" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="150" y="190" text-anchor="middle" font-size="12" fill="#2b5a94">1</text>
+  <g filter="url(#sk)"><circle cx="208" cy="185" r="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/></g>
+  <text x="208" y="190" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">2</text>
+  <text x="258" y="190" text-anchor="middle" font-size="13" fill="#5a7a9a">· · ·</text>
+  <g filter="url(#sk)"><circle cx="322" cy="185" r="17" fill="#ffffff" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="322" y="190" text-anchor="middle" font-size="10.5" fill="#2b5a94">1000</text>
+  <text x="208" y="222" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">start</text>
+
+  <!-- in-domain op -->
+  <path d="M 229 167 Q 280 122 320 168" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arg)" filter="url(#sk)"/>
+  <text x="277" y="132" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">x + num 落回域内 → 入队</text>
+
+  <!-- out-of-domain ops -->
+  <path d="M 348 168 Q 420 130 474 132" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#aro)" filter="url(#sk)"/>
+  <text x="415" y="120" text-anchor="middle" font-size="10.5" fill="#a5762a">x − num（越界）</text>
+  <path d="M 348 202 Q 420 240 474 228" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#aro)" filter="url(#sk)"/>
+  <text x="415" y="252" text-anchor="middle" font-size="10.5" fill="#a5762a">x ^ num（越界）</text>
+
+  <text x="227" y="262" text-anchor="middle" font-size="10.5" fill="#5a7a9a">每个域内状态引出 3n 条边（n = nums.length）</text>
+  <text x="227" y="280" text-anchor="middle" font-size="10.5" fill="#5a7a9a">结果要么落回域内，要么越界成终态</text>
+
+  <!-- out-of-range terminal zone -->
+  <g filter="url(#sk)"><rect x="478" y="100" width="148" height="155" rx="12" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <text x="552" y="124" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a5f14">越界终态区</text>
+  <text x="552" y="142" text-anchor="middle" font-size="10.5" fill="#a5842a">nx &lt; 0 或 nx &gt; 1000</text>
+  <text x="552" y="162" text-anchor="middle" font-size="10.5" fill="#7a6a3a">不能再做任何运算</text>
+  <text x="552" y="178" text-anchor="middle" font-size="10.5" fill="#7a6a3a">只判等一次即丢弃</text>
+  <g filter="url(#sk)"><rect x="488" y="192" width="128" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="552" y="212" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">nx == goal ?</text>
+  <text x="552" y="230" text-anchor="middle" font-size="10" fill="#b85450">命中 → 返回答案 ★</text>
+
+  <!-- insight -->
+  <g filter="url(#sk)"><rect x="45" y="316" width="580" height="92" rx="10" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.4"/></g>
+  <text x="65" y="342" font-size="12.5" font-weight="bold" fill="#8a5f14">goal 的两种位置（|goal| 可达 10⁹）：</text>
+  <text x="65" y="364" font-size="11.5" fill="#555">① goal ∈ [0,1000]：域内普通节点，扩展邻居时判等命中</text>
+  <text x="65" y="386" font-size="11.5" fill="#555">② goal 在域外：越界后不能再运算 → 唯一命中方式 = 某个域内状态做一次越界运算恰好等于 goal</text>
+</svg>
