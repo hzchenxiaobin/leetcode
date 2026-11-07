@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2"/>
+    </filter>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="640" fill="#fafafa"/>
+  <text x="470" y="36" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：子集枚举 → 全排列 → 排序 → 二分</text>
+  <path d="M 280 46 Q 470 54 660 46" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 左列：预生成主流程 -->
+  <g filter="url(#rough2)">
+    <rect x="150" y="66" width="170" height="36" rx="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="235" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">开始：预生成候选</text>
+  <path d="M 235 102 L 235 126" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="130" width="330" height="52" rx="8" fill="#fafafa" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="235" y="152" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">位掩码枚举子集 S ⊆ {1,…,7}</text>
+  <text x="235" y="172" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">（8、9 自身已占 8+ 位，自动出局）</text>
+  <path d="M 235 182 L 235 206" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="210" width="330" height="48" rx="8" fill="#fafafa" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="235" y="240" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">计算总位数 L = Σ d（d ∈ S）</text>
+  <path d="M 235 258 L 235 282" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <polygon points="235,282 355,332 235,382 115,332" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="235" y="338" text-anchor="middle" font-size="14" font-weight="bold" fill="#a67c1e" filter="url(#rough2)">L ≤ 7 ？</text>
+
+  <!-- 否：剪枝 -->
+  <text x="368" y="322" font-size="12" fill="#b85450" filter="url(#rough2)">否</text>
+  <path d="M 355 332 L 516 332" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="522" y="310" width="158" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="601" y="337" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">剪枝：直接跳过</text>
+  <path d="M 522 332 L 46 332" stroke="#b85450" stroke-width="1.4" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="280" y="324" font-size="10" fill="#b85450" filter="url(#rough2)">回到下一轮子集枚举</text>
+
+  <!-- 是：继续 -->
+  <text x="246" y="400" font-size="12" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <path d="M 235 382 L 235 406" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="410" width="330" height="48" rx="8" fill="#fafafa" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="235" y="440" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">构造多重集：每个 d ∈ S 写 d 个 d</text>
+  <path d="M 235 458 L 235 482" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="486" width="330" height="64" rx="8" fill="#fafafa" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="235" y="510" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">全排列生成并转成整数收集（去重）</text>
+  <text x="235" y="532" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">C++：sort 后 next_permutation；Python：permutations + set</text>
+
+  <!-- 循环回 trunk -->
+  <path d="M 70 518 L 38 518 L 38 156 L 66 156" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="30" y="350" font-size="11" fill="#666" filter="url(#rough2)" transform="rotate(-90 30 350)">处理下一个子集，直到 2^7−1 个枚举完</text>
+
+  <!-- 右列：查询阶段 -->
+  <path d="M 400 518 C 480 518 520 436 596 436" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="600" y="410" width="290" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="745" y="432" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">候选数组排序（278 个整数）</text>
+  <text x="745" y="452" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">预生成结束，只做一次</text>
+  <path d="M 745 462 L 745 486" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="600" y="490" width="290" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="745" y="513" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">二分 upper_bound(n)</text>
+  <text x="745" y="534" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">定位第一个严格大于 n 的候选</text>
+  <path d="M 745 546 L 745 570" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="620" y="574" width="250" height="40" rx="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="745" y="600" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">返回答案（O(log 278)）</text>
+
+  <!-- 右上说明卡 -->
+  <g filter="url(#rough2)">
+    <rect x="600" y="66" width="290" height="216" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="618" y="92" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">预生成规模（一次性）</text>
+  <text x="618" y="116" font-size="11" fill="#444" filter="url(#rough2)">· 合法子集 18 个（Σ d ≤ 7）</text>
+  <text x="618" y="136" font-size="11" fill="#444" filter="url(#rough2)">· 候选整数共 278 个</text>
+  <text x="618" y="156" font-size="11" fill="#444" filter="url(#rough2)">· 最大候选 7777777，int 即可存</text>
+  <text x="618" y="184" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">实现要点</text>
+  <text x="618" y="208" font-size="11" fill="#444" filter="url(#rough2)">· next_permutation 从升序起点</text>
+  <text x="618" y="226" font-size="11" fill="#444" filter="url(#rough2)">  枚举，重复元素天然去重</text>
+  <text x="618" y="248" font-size="11" fill="#444" filter="url(#rough2)">· Python 按下标展开会重复，set 收集</text>
+  <text x="618" y="270" font-size="11" fill="#444" filter="url(#rough2)">· 多重集不含 0 → 无前导 0 之忧</text>
+
+  <!-- 底部一句话 -->
+  <text x="70" y="616" font-size="12" fill="#666" filter="url(#rough2)">本质：把「在数轴上搜索平衡数」变成「在 278 个元素的有序表里二分」。</text>
+</svg>
