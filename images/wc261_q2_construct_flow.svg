@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="470" viewBox="0 0 900 470"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="470" fill="#fafafa"/>
+  <text x="450" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：整型换算 → 区间判定 → 商余均摊</text>
+  <path d="M 230 40 Q 450 48 670 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="450" y="56" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">全程 O(n+m)：一趟求和 + 一次除法；无搜索、无 DP、无浮点</text>
+
+  <!-- step 1 & 2 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="92" width="185" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="258" y="92" width="185" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="132" y="114" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">① T ← mean × (n+m)</text>
+  <text x="132" y="132" text-anchor="middle" font-size="10" fill="#8899aa" filter="url(#rough2)">全部 n+m 次的总和</text>
+  <text x="350" y="114" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">② M ← T − Σ rolls</text>
+  <text x="350" y="132" text-anchor="middle" font-size="10" fill="#8899aa" filter="url(#rough2)">缺失部分须凑出的定值</text>
+  <path d="M 227 118 L 253 118" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <path d="M 445 118 L 460 118" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="565,74 665,118 565,162 465,118" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="565" y="114" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a67c1e" filter="url(#rough2)">③ n ≤ M ≤ 6n ?</text>
+  <text x="565" y="132" text-anchor="middle" font-size="9.5" fill="#a67c1e" filter="url(#rough2)">双向夹逼</text>
+
+  <!-- no branch -->
+  <path d="M 665 118 L 695 118" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="680" y="108" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="700" y="96" width="165" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="782" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">返回 []（无解）</text>
+
+  <!-- yes branch -->
+  <path d="M 565 162 L 565 200" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <text x="578" y="186" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- step 4 -->
+  <rect x="465" y="204" width="200" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="565" y="226" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">④ q ← ⌊M/n⌋，r ← M mod n</text>
+  <text x="565" y="244" text-anchor="middle" font-size="10" fill="#78997a" filter="url(#rough2)">商 = 基线，余 = 垫高名额</text>
+  <path d="M 565 256 L 565 292" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrg)" filter="url(#rough2)"/>
+
+  <!-- step 5 -->
+  <rect x="465" y="296" width="200" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="565" y="318" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">⑤ r 个 (q+1) ＋ (n−r) 个 q</text>
+  <text x="565" y="336" text-anchor="middle" font-size="10" fill="#78997a" filter="url(#rough2)">垫高位置任选</text>
+  <path d="M 565 348 L 565 384" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrg)" filter="url(#rough2)"/>
+
+  <!-- step 6 -->
+  <rect x="465" y="388" width="200" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="565" y="417" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">返回 ans ✓</text>
+
+  <!-- annotations under step 1/2 -->
+  <text x="132" y="166" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">· mean 为整数 → 精确整型</text>
+  <text x="132" y="184" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">· ✗ 先除回去再乘（浮点雷）</text>
+  <text x="350" y="166" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">· 一趟 O(m) 求和</text>
+  <text x="350" y="184" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">· C++ 中间量用 long long</text>
+
+  <!-- right annotations -->
+  <text x="700" y="178" font-size="10.5" fill="#777" filter="url(#rough2)">值域 [n, 6n] 连续无空洞，</text>
+  <text x="700" y="196" font-size="10.5" fill="#777" filter="url(#rough2)">判定即充要 → 先判后构</text>
+  <text x="700" y="238" font-size="10.5" fill="#777" filter="url(#rough2)">q ≥ 1（由 M ≥ n 保证）</text>
+  <text x="700" y="256" font-size="10.5" fill="#777" filter="url(#rough2)">q = 6 ⟹ r = 0 → 不冒 7</text>
+  <text x="700" y="320" font-size="10.5" fill="#777" filter="url(#rough2)">和 = nq + r = M ✓</text>
+  <text x="700" y="338" font-size="10.5" fill="#777" filter="url(#rough2)">构造阶段无需校验值域</text>
+  <text x="700" y="412" font-size="10.5" fill="#777" filter="url(#rough2)">顺序任意，任一解即可</text>
+
+  <!-- complexity panel -->
+  <rect x="40" y="280" width="360" height="128" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3" filter="url(#rough2)"/>
+  <text x="60" y="306" font-size="12.5" font-weight="bold" fill="#666" filter="url(#rough2)">复杂度与赛场定位</text>
+  <text x="60" y="330" font-size="11.5" fill="#444" filter="url(#rough2)">· 时间 O(n+m) = 读入 + 输出规模，已到下界</text>
+  <text x="60" y="352" font-size="11.5" fill="#444" filter="url(#rough2)">· 空间 O(1)（不计输出数组）</text>
+  <text x="60" y="374" font-size="11.5" fill="#444" filter="url(#rough2)">· 周赛 Q2 速度题：一次除法收工，别恋战</text>
+
+  <text x="450" y="446" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">「先判后构」范式：可行性看区间、构造靠一次除法 —— 与 1103 分糖果 II / 1663 最小字符串同骨架</text>
+</svg>
