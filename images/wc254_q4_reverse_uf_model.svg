@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+  </defs>
+  <rect width="900" height="600" fill="#fdfcf7"/>
+  <text x="450" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">核心观察二：时间倒流「退洪」—— 并查集只会加边，不会删边</text>
+  <path d="M 240 44 Q 450 52 660 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Section 1: forward (delete) vs reverse (add) ===== -->
+  <text x="90" y="78" font-size="14" font-weight="bold" fill="#2b2b2b">① 正向（删点）行不通，反向（加点）正合适</text>
+
+  <text x="110" y="104" font-size="13" font-weight="bold" fill="#b85450">正向：每天淹一格 = 删点 ✗</text>
+  <g filter="url(#sk)">
+    <rect x="110" y="116" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="144" y="116" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="178" y="116" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="110" y="150" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="144" y="150" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/>
+    <rect x="178" y="150" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="110" y="184" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="144" y="184" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="178" y="184" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="240" font-size="12" fill="#444">陆地连通块可能被水拆散</text>
+  <text x="110" y="260" font-size="12" fill="#444">并查集只有 union、没有 split ✗</text>
+  <text x="110" y="280" font-size="12" fill="#888">逐天重建 BFS：O((row·col)²) 超时</text>
+
+  <path d="M 240 167 L 520 167" stroke="#4a8e4a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="380" y="150" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">时间倒流</text>
+
+  <text x="560" y="104" font-size="13" font-weight="bold" fill="#2e6e2e">反向：倒着退洪 = 加点 ✓</text>
+  <g filter="url(#sk)">
+    <rect x="560" y="116" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="594" y="116" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="628" y="116" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="560" y="150" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="594" y="150" width="34" height="34" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="628" y="150" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="560" y="184" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="594" y="184" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="628" y="184" width="34" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="560" y="240" font-size="12" fill="#444">从「全部被淹」的终态出发</text>
+  <text x="560" y="260" font-size="12" fill="#444">倒序把格子一块块补回陆地</text>
+  <text x="560" y="280" font-size="12" fill="#444">加点 = union ✓，并查集拿手好戏</text>
+
+  <!-- ===== Section 2: virtual top/bottom nodes ===== -->
+  <text x="90" y="326" font-size="14" font-weight="bold" fill="#2b2b2b">② 虚拟源汇：整行 ↔ 整行的连通，折叠成两个节点的同根判断（示例 3 逆向到 i=3 的瞬间）</text>
+
+  <ellipse cx="453" cy="352" rx="38" ry="15" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="453" y="357" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">TOP</text>
+  <path d="M 453 366 L 417 386" stroke="#4a8edb" stroke-width="1.4" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <path d="M 453 366 L 489 386" stroke="#4a8edb" stroke-width="1.4" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="399" y="388" width="36" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="435" y="388" width="36" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="471" y="388" width="36" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="399" y="424" width="36" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="435" y="424" width="36" height="36" rx="4" fill="#fef6e6" stroke="#c98a2b" stroke-width="2.4"/>
+    <rect x="471" y="424" width="36" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="399" y="460" width="36" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="435" y="460" width="36" height="36" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+    <rect x="471" y="460" width="36" height="36" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="453" y="447" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415">桥</text>
+  <path d="M 453 512 L 417 494" stroke="#4a8edb" stroke-width="1.4" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <path d="M 453 512 L 453 498" stroke="#4a8edb" stroke-width="1.4" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <ellipse cx="453" cy="526" rx="38" ry="15" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="453" y="531" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">BOT</text>
+
+  <text x="90" y="392" font-size="12" fill="#444">恢复格子 (r,c) 时：</text>
+  <text x="90" y="416" font-size="12" fill="#444">· 与已恢复的四邻 union</text>
+  <text x="90" y="440" font-size="12" fill="#444">· 顶行格 → union TOP</text>
+  <text x="90" y="464" font-size="12" fill="#444">· 底行格 → union BOT</text>
+  <text x="90" y="488" font-size="12" fill="#444">· 每步查 find(TOP) == find(BOT)</text>
+
+  <text x="530" y="392" font-size="12" fill="#444">顶簇 = 顶行已恢复的格子（并入 TOP）</text>
+  <text x="530" y="416" font-size="12" fill="#444">底簇 = 底行已恢复的格子（并入 BOT）</text>
+  <text x="530" y="440" font-size="12" fill="#444">橙色「桥梁格」恢复的瞬间：</text>
+  <text x="530" y="464" font-size="12" fill="#444">四邻 union 把顶簇、底簇缝成一片</text>
+  <text x="530" y="488" font-size="12" font-weight="bold" fill="#2e6e2e">→ TOP 与 BOT 同根，返回下标 i</text>
+
+  <!-- ===== Section 3: conclusion ===== -->
+  <g filter="url(#sk)">
+    <rect x="80" y="552" width="740" height="34" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="450" y="574" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">删点难、加点易 —— 与 803. 打砖块同款逆向套路；倒序首次同根的下标 i 恰是「最后能过河的天数」</text>
+</svg>
