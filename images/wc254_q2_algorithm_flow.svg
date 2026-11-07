@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">「排序 + 奇偶交错」算法流程</text>
+  <path d="M 280 42 Q 470 50 660 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Step 1: sort ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="62" width="820" height="74" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="88" font-size="14" font-weight="bold" fill="#2b6e9e">Step 1：对 nums 升序排序</text>
+  <text x="80" y="110" font-size="11" fill="#444">O(n log n)。排序后前一半整体小于后一半，为「切半」创造条件</text>
+  <text x="80" y="128" font-size="11" fill="#444">例：[6,2,0,9,7] → [0,2,6,7,9]</text>
+
+  <path d="M 470 140 L 470 152" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- ===== Step 2: split ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="158" width="820" height="92" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="184" font-size="14" font-weight="bold" fill="#2e6e2e">Step 2：令 m = ⌈n/2⌉，切成两半</text>
+  <text x="80" y="208" font-size="11" fill="#444" font-family="monospace">A = nums[0..m-1]（较小一半，m 个）    B = nums[m..n-1]（较大一半，⌊n/2⌋ 个）</text>
+  <text x="80" y="228" font-size="12" fill="#c98a2b" font-weight="bold">元素互不相同 ⇒ A 中任意元素 &lt; B 中任意元素（max(A) &lt; min(B)）</text>
+  <text x="80" y="244" font-size="10" fill="#888">例：n=5，m=3，A=[0,2,6]，B=[7,9]</text>
+
+  <path d="M 470 254 L 470 266" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- ===== Step 3: interleave ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="272" width="820" height="104" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="298" font-size="14" font-weight="bold" fill="#7a5415">Step 3：交错填充结果数组 res</text>
+  <text x="80" y="322" font-size="11" fill="#444" font-family="monospace">res[2k]   = A[k]   （偶数位放小值）</text>
+  <text x="80" y="340" font-size="11" fill="#444" font-family="monospace">res[2k+1] = B[k]   （奇数位放大值）</text>
+  <text x="80" y="360" font-size="11" fill="#444">n 为奇数时 B 比 A 少一个，末尾偶数位恰好由 A 的最后一个补上</text>
+
+  <path d="M 470 380 L 470 392" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- ===== Step 4: return ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="398" width="820" height="66" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="422" font-size="14" font-weight="bold" fill="#5a3a7a">Step 4：返回 res</text>
+  <text x="80" y="444" font-size="11" fill="#444">res 呈「小-大-小-大…」锯齿形，每个内部元素都严格偏离两侧邻居的平均值</text>
+
+  <!-- ===== example box ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="486" width="820" height="120" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="510" font-size="12" font-weight="bold" fill="#2b2b2b">示例走查：nums = [6,2,0,9,7]</text>
+  <text x="80" y="532" font-size="11" fill="#444" font-family="monospace">排序 [0,2,6,7,9] → A=[0,2,6]，B=[7,9] → 交错 res=[0,7,2,9,6]</text>
+  <text x="80" y="552" font-size="11" fill="#444" font-family="monospace">i=1: (0+2)/2=1 ≠ 7 ✓    i=2: (7+9)/2=8 ≠ 2 ✓    i=3: (2+6)/2=4 ≠ 9 ✓</text>
+  <text x="80" y="578" font-size="11" fill="#2e6e2e" font-weight="bold">与示例输出 [9,7,6,2,0] 不同，但同样合法（special judge）✓</text>
+  <text x="80" y="598" font-size="10" fill="#888">复杂度：时间 O(n log n)（排序主导，交错 O(n)）| 空间 O(n)</text>
+</svg>
