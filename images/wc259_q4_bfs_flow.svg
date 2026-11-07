@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="460" viewBox="0 0 680 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="aor" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="680" height="460" fill="#fafafa"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：按层 BFS——合法才入队，非法前缀整棵子树剪掉</text>
+  <path d="M 150 40 Q 340 50 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ====== main flow ====== -->
+  <g filter="url(#sk)">
+    <rect x="56" y="62" width="210" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="56" y="126" width="210" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="56" y="196" width="210" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="161" y="87" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66">① 统计频次 freq</text>
+  <text x="161" y="151" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66">② 过滤候选：freq ≥ k，降序</text>
+  <text x="161" y="216" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d24">③ cur ← 当前层</text>
+  <text x="161" y="232" text-anchor="middle" font-size="10.5" fill="#555">（初始为 { "" }）</text>
+  <g filter="url(#sk)">
+    <path d="M 161 102 L 161 120" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)"/>
+    <path d="M 161 166 L 161 188" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- decision diamond D -->
+  <g filter="url(#sk)">
+    <polygon points="161,250 251,296 161,342 71,296" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="161" y="290" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">(seq + c) * k</text>
+  <text x="161" y="306" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">⊆ s ？</text>
+  <g filter="url(#sk)">
+    <path d="M 161 240 Q 161 232 161 228" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" fill="none"/>
+  </g>
+
+  <!-- yes branch -->
+  <g filter="url(#sk)">
+    <rect x="300" y="276" width="160" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <path d="M 251 296 L 292 296" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#ar)"/>
+  </g>
+  <text x="380" y="293" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24">t = seq + c</text>
+  <text x="380" y="309" text-anchor="middle" font-size="10.5" fill="#555">加入下一层 nxt</text>
+  <text x="268" y="286" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+
+  <!-- no branch -->
+  <g filter="url(#sk)">
+    <path d="M 161 342 L 161 374 L 292 374" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" fill="none"/>
+  </g>
+  <text x="176" y="362" font-size="11" font-weight="bold" fill="#b85450">否</text>
+  <g filter="url(#sk)">
+    <rect x="298" y="356" width="230" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="413" y="373" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a36">直接丢弃：该非法前缀的</text>
+  <text x="413" y="388" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a36">整棵扩展子树都不用再试</text>
+
+  <!-- decision diamond F -->
+  <g filter="url(#sk)">
+    <polygon points="520,276 586,296 520,316 454,296" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="520" y="292" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415">nxt 空？</text>
+  <text x="520" y="306" text-anchor="middle" font-size="10" fill="#7a5415">（还能变长吗）</text>
+  <g filter="url(#sk)">
+    <path d="M 460 296 L 448 296" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- no: loop back to cur -->
+  <g filter="url(#sk)">
+    <path d="M 586 296 Q 660 296 660 220 Q 660 178 620 178 Q 300 178 268 178 Q 268 196 268 210" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#aor)"/>
+  </g>
+  <text x="592" y="272" font-size="11" font-weight="bold" fill="#b8860b">否</text>
+  <text x="664" y="242" font-size="10.5" fill="#b8860b" font-weight="bold" transform="rotate(90 664 242)">cur ← nxt，进入下一层</text>
+
+  <!-- yes: return -->
+  <g filter="url(#sk)">
+    <path d="M 520 316 L 520 380 L 560 380" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" fill="none"/>
+  </g>
+  <text x="534" y="338" font-size="11" font-weight="bold" fill="#b85450">是</text>
+  <g filter="url(#sk)">
+    <rect x="566" y="358" width="98" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="615" y="376" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24">返回</text>
+  <text x="615" y="393" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24">max(cur)</text>
+
+  <!-- side note: check cost -->
+  <g filter="url(#sk)">
+    <rect x="356" y="56" width="268" height="92" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="490" y="78" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66">单次判定 = 贪心双指针，O(n)</text>
+  <text x="490" y="97" text-anchor="middle" font-size="10.5" fill="#555">指针 j 走 seq[j mod |seq|]，只进不退</text>
+  <text x="490" y="113" text-anchor="middle" font-size="10.5" fill="#555">Python 可用 s.find(c, pos) 交给 C</text>
+  <text x="490" y="132" text-anchor="middle" font-size="10.5" fill="#888">每个节点只试 ≤ 7 个候选字符</text>
+
+  <!-- bottom strip -->
+  <g filter="url(#sk)">
+    <rect x="56" y="418" width="568" height="32" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="439" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">总代价 = 合法节点(≤13700) × 候选(≤7) × 判定 O(n ≤ 2000)，实际节点数远小于上界</text>
+</svg>
