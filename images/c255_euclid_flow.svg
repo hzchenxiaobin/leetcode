@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程:一遍扫描求 mn / mx,再辗转相除求 gcd</text>
+
+  <!-- 右上原理说明框 -->
+  <rect x="350" y="44" width="180" height="74" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="440" y="66" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">辗转相除原理</text>
+  <text x="440" y="84" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">gcd(a, b) = gcd(b, a mod b)</text>
+  <text x="440" y="101" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">b 每轮严格递减 → 必终止</text>
+
+  <!-- 步骤1 -->
+  <rect x="180" y="140" width="200" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="165" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">① 初始化:mn = mx = nums[0]</text>
+  <path d="M 280 180 L 280 200" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="292" y="196" font-size="9.5" fill="#888" filter="url(#rough2)">逐个读入 x</text>
+
+  <!-- 步骤2 -->
+  <rect x="160" y="204" width="240" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="221" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">② 一遍扫描</text>
+  <text x="280" y="236" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">mn = min(mn, x),mx = max(mx, x)</text>
+  <path d="M 280 244 L 280 268" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="292" y="262" font-size="9.5" fill="#888" filter="url(#rough2)">扫描结束</text>
+
+  <!-- 步骤3 -->
+  <rect x="170" y="272" width="220" height="48" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="292" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6420" filter="url(#rough2)">③ 辗转相除</text>
+  <text x="280" y="310" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">(a, b) = (mx, mn)</text>
+
+  <!-- b != 0 → 更新 -->
+  <path d="M 280 320 L 280 344" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="292" y="338" font-size="10.5" font-weight="bold" fill="#8a6420" filter="url(#rough2)">b ≠ 0</text>
+  <rect x="155" y="348" width="250" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="366" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">(a, b) ← (b, a mod b)</text>
+  <text x="280" y="382" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">余数成为新的 b</text>
+
+  <!-- 回到步骤3 -->
+  <path d="M 155 370 C 96 370, 96 296, 166 296" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="104" y="336" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">重复</text>
+
+  <!-- b = 0 → 返回 -->
+  <path d="M 390 296 C 470 300, 470 330, 465 344" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="490" y="322" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">b = 0</text>
+  <rect x="390" y="348" width="150" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="465" y="366" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">④ 返回 a</text>
+  <text x="465" y="382" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">= gcd(mn, mx)</text>
+</svg>
