@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="480" viewBox="0 0 780 480"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="480" fill="#fafafa"/>
+  <text x="390" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：update 覆盖真相 + 增删/入堆；查询 O(1) 取表或堆顶校验</text>
+  <path d="M 150 42 Q 390 52 630 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <text x="60" y="74" font-size="12.5" font-weight="bold" fill="#8a6414" filter="url(#rough2)">update(t, p) —— 写路径</text>
+  <text x="480" y="74" font-size="12.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">查询接口 —— 读路径</text>
+
+  <!-- left: update chain -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="88" width="140" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="170" y="110" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6414" filter="url(#rough2)">update(t, p)</text>
+  <path d="M 170 122 L 170 138" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="170,140 250,172 170,204 90,172" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="170" y="176" text-anchor="middle" font-size="11" fill="#2b4666" filter="url(#rough2)">t 已有记录？</text>
+
+  <path d="M 250 172 L 286 172" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="264" y="164" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="290" y="148" width="185" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="382" y="167" text-anchor="middle" font-size="10.5" fill="#8a3a34" filter="url(#rough2)">old = ts2price[t]</text>
+  <text x="382" y="185" text-anchor="middle" font-size="10.5" fill="#8a3a34" filter="url(#rough2)">A：erase(find(old))　B：不删</text>
+
+  <path d="M 170 204 L 170 232" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="182" y="224" font-size="10" fill="#888" filter="url(#rough2)">否（新增时间戳）</text>
+  <path d="M 382 196 L 382 232" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="50" y="236" width="420" height="86" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="260" y="260" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">ts2price[t] = p —— 覆盖，确立新真相</text>
+  <text x="260" y="281" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">maxTs = max(maxTs, t)</text>
+  <text x="260" y="302" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">A：prices.insert(p)　　B：maxHeap、minHeap 各 push (p, t)</text>
+
+  <path d="M 260 322 L 260 342" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="190" y="346" width="140" height="32" rx="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="260" y="367" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">完成，O(log n)</text>
+
+  <!-- right: queries -->
+  <g filter="url(#rough2)">
+    <rect x="480" y="88" width="250" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="605" y="109" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4666" filter="url(#rough2)">current()</text>
+  <text x="605" y="127" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">return ts2price[maxTs]，O(1)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="480" y="152" width="250" height="96" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="605" y="174" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">maximum()</text>
+  <text x="605" y="193" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">A：return *prices.rbegin()，O(1)</text>
+  <text x="605" y="212" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">B：校验 maxHeap 堆顶 (p, t)：</text>
+  <text x="605" y="231" text-anchor="middle" font-size="10.5" fill="#8a3a34" filter="url(#rough2)">ts2price[t] ≠ p → pop（过时）</text>
+  <text x="605" y="244" text-anchor="middle" font-size="10.5" fill="#3a5c2e" filter="url(#rough2)">匹配 → return p</text>
+
+  <g filter="url(#rough2)">
+    <rect x="480" y="264" width="250" height="84" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="605" y="286" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">minimum()</text>
+  <text x="605" y="305" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">A：return *prices.begin()，O(1)</text>
+  <text x="605" y="324" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">B：对称地校验 minHeap 堆顶，</text>
+  <text x="605" y="340" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">过时弹出后返回堆顶价</text>
+
+  <!-- bottom note -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="388" width="670" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="395" y="411" text-anchor="middle" font-size="11" fill="#6b5312" filter="url(#rough2)">题面保证查询前至少有一次 update：每个时间戳最近一次入堆的条目必有效，</text>
+  <text x="395" y="432" text-anchor="middle" font-size="11" fill="#6b5312" filter="url(#rough2)">且有效条目永不被弹出——while 校验不会把堆弹空；multiset 则因哈希非空而天然非空</text>
+</svg>
