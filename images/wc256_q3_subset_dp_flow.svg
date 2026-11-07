@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2b6e9e"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#fdfcf7"/>
+  <text x="440" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：锚定 lowbit，枚举「lowbit 所在时段」的候选子集</text>
+  <path d="M 190 40 Q 440 50 690 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- left column: state & recurrence -->
+  <g filter="url(#sk)">
+    <rect x="30" y="64" width="370" height="84" rx="10" fill="#f5f9fd" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="50" y="88" font-size="13" fill="#2b6e9e" font-weight="bold">状态定义</text>
+  <text x="50" y="112" font-size="12" fill="#445" font-family="monospace">dp[mask]：把 mask 内的任务划分成</text>
+  <text x="50" y="132" font-size="12" fill="#445" font-family="monospace">合法时段的最少段数；dp[0] = 0</text>
+  <g filter="url(#sk)">
+    <rect x="30" y="164" width="370" height="100" rx="10" fill="#fdf1e3" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="50" y="188" font-size="13" fill="#a06a1a" font-weight="bold">转移（枚举一个「时段」）</text>
+  <text x="50" y="212" font-size="12.5" fill="#445" font-family="monospace">dp[mask] = 1 + min dp[mask∖s]</text>
+  <text x="50" y="234" font-size="11.5" fill="#776" font-family="monospace">s 取遍：∅ ≠ s ⊆ mask，sum(s) ≤ sessionTime</text>
+  <text x="50" y="252" font-size="11" fill="#a08040">s 装一个时段，mask∖s 递归求最少段数</text>
+  <g filter="url(#sk)">
+    <rect x="30" y="280" width="370" height="98" rx="10" fill="#fffdf3" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="50" y="304" font-size="13" fill="#b85450" font-weight="bold">lowbit 锚定（减半）</text>
+  <text x="50" y="328" font-size="12" fill="#445" font-family="monospace">任意划分里，「lowbit(mask) 所在时段」</text>
+  <text x="50" y="348" font-size="12" fill="#445" font-family="monospace">是唯一确定的 → s 只需取「含 lowbit」的</text>
+  <text x="50" y="368" font-size="11" fill="#a05a5a">子集，其余子集全是重复劳动</text>
+
+  <!-- right column: flow -->
+  <g filter="url(#sk)">
+    <rect x="470" y="64" width="290" height="34" rx="6" fill="#e8f0fa" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="615" y="85" text-anchor="middle" font-size="12" fill="#335" font-family="monospace">for mask = 1 … 2ⁿ−1（按数值递增）</text>
+  <path d="M 615 98 L 615 116" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="470" y="120" width="290" height="34" rx="6" fill="#e8f0fa" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="615" y="141" text-anchor="middle" font-size="12" fill="#335" font-family="monospace">low = mask &amp; −mask；rest = mask ⊕ low</text>
+  <path d="M 615 154 L 615 172" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="470" y="176" width="290" height="34" rx="6" fill="#e8f0fa" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="615" y="197" text-anchor="middle" font-size="11.5" fill="#335" font-family="monospace">枚举 rest 的子集 sub（含空），s = sub | low</text>
+  <path d="M 615 210 L 615 228" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <polygon points="615,238 700,270 615,302 530,270" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="615" y="266" text-anchor="middle" font-size="11.5" fill="#7a5415" font-family="monospace">sum(s) ≤</text>
+  <text x="615" y="282" text-anchor="middle" font-size="11.5" fill="#7a5415" font-family="monospace">sessionTime ?</text>
+  <path d="M 700 270 L 766 270 L 766 193" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="778" y="238" font-size="11" fill="#b03a3a">否</text>
+  <text x="778" y="252" font-size="10.5" fill="#a05a5a">跳过，</text>
+  <text x="778" y="266" font-size="10.5" fill="#a05a5a">下一个</text>
+  <text x="778" y="280" font-size="10.5" fill="#a05a5a">sub</text>
+  <path d="M 615 302 L 615 320" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="632" y="316" font-size="11" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <rect x="452" y="324" width="326" height="38" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="615" y="348" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">dp[mask] ← min(dp[mask], dp[mask∖s] + 1)</text>
+  <path d="M 782 343 L 818 343 L 818 193 L 772 193" stroke="#2e6e2e" stroke-width="1.2" fill="none" stroke-dasharray="4,3" filter="url(#sk)"/>
+  <path d="M 615 362 L 615 384" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="470" y="388" width="290" height="30" rx="6" fill="#e8f0fa" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="615" y="408" text-anchor="middle" font-size="12" fill="#335" font-family="monospace">mask 走完 → return dp[2ⁿ−1]</text>
+
+  <!-- bottom strip -->
+  <g filter="url(#sk)">
+    <rect x="30" y="392" width="370" height="30" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="215" y="412" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-family="monospace">子集枚举总量 3ⁿ ≈ 4.8×10⁶ → 锚定后 3ⁿ/2 ≈ 2.4×10⁶</text>
+</svg>
