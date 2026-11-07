@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#fdfcf7"/>
+  <text x="440" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例演算：nums = ["2","21","12","1"]，k = 3</text>
+  <path d="M 240 42 Q 440 52 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="34" y="66" font-size="12" fill="#888" font-family="monospace">n = 4，第 k 大 = 升序排序后下标 n − k = 1 处的元素</text>
+  <g filter="url(#sk)">
+    <rect x="640" y="52" width="210" height="32" rx="8" fill="#fdf1e3" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="745" y="72" text-anchor="middle" font-size="12.5" fill="#7a5415" font-family="monospace">k = 3：返回第 3 大</text>
+
+  <!-- step 1: bucket by length -->
+  <text x="34" y="122" font-size="12.5" fill="#2b6e9e" font-weight="bold">① 按长度分桶</text>
+  <g filter="url(#sk)">
+    <rect x="150" y="84" width="300" height="64" rx="8" fill="#f5f9fd" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="170" y="122" font-size="12" fill="#2b6e9e" font-family="monospace" font-weight="bold">长度 1</text>
+  <g font-size="15" font-family="monospace" text-anchor="middle" font-weight="bold">
+    <g filter="url(#sk)"><rect x="280" y="98" width="52" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g><text x="306" y="122" fill="#333">"1"</text>
+    <g filter="url(#sk)"><rect x="336" y="98" width="52" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g><text x="362" y="122" fill="#333">"2"</text>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="470" y="84" width="300" height="64" rx="8" fill="#f5f9fd" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="490" y="122" font-size="12" fill="#2b6e9e" font-family="monospace" font-weight="bold">长度 2</text>
+  <g font-size="15" font-family="monospace" text-anchor="middle" font-weight="bold">
+    <g filter="url(#sk)"><rect x="600" y="98" width="52" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g><text x="626" y="122" fill="#333">"12"</text>
+    <g filter="url(#sk)"><rect x="656" y="98" width="52" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g><text x="682" y="122" fill="#333">"21"</text>
+  </g>
+
+  <!-- merge arrows -->
+  <path d="M 300 152 Q 340 172 396 176" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <path d="M 620 152 Q 580 172 484 176" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <text x="440" y="164" text-anchor="middle" font-size="11.5" fill="#555">组内字典序，短组在前拼接</text>
+
+  <!-- step 2: merged sorted array -->
+  <text x="34" y="200" font-size="12.5" fill="#2b6e9e" font-weight="bold">② 拼接有序数组</text>
+  <g font-size="15" font-family="monospace" text-anchor="middle" font-weight="bold">
+    <g filter="url(#sk)"><rect x="294" y="176" width="64" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g><text x="326" y="200" fill="#333">"1"</text>
+    <g filter="url(#sk)"><rect x="370" y="176" width="64" height="36" rx="5" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.4"/></g><text x="402" y="200" fill="#2e6e2e">"2"</text>
+    <g filter="url(#sk)"><rect x="446" y="176" width="64" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g><text x="478" y="200" fill="#333">"12"</text>
+    <g filter="url(#sk)"><rect x="522" y="176" width="64" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/></g><text x="554" y="200" fill="#333">"21"</text>
+  </g>
+  <g font-size="10" font-family="monospace" text-anchor="middle" fill="#999">
+    <text x="326" y="230">0</text>
+    <text x="402" y="230">1</text>
+    <text x="478" y="230">2</text>
+    <text x="554" y="230">3</text>
+  </g>
+
+  <!-- step 3: rank from right -->
+  <text x="34" y="274" font-size="12.5" fill="#2b6e9e" font-weight="bold">③ 从右数第 k 个</text>
+  <path d="M 402 250 L 402 236" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <path d="M 478 250 L 478 236" stroke="#c98a2b" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <path d="M 554 250 L 554 236" stroke="#c98a2b" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  <g filter="url(#sk)">
+    <rect x="367" y="252" width="70" height="30" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="402" y="272" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-weight="bold">第 3 大 ★</text>
+  <g filter="url(#sk)">
+    <rect x="443" y="252" width="70" height="30" rx="6" fill="#fdf1e3" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="478" y="272" text-anchor="middle" font-size="11.5" fill="#7a5415" font-weight="bold">第 2 大</text>
+  <g filter="url(#sk)">
+    <rect x="519" y="252" width="70" height="30" rx="6" fill="#fdf1e3" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="554" y="272" text-anchor="middle" font-size="11.5" fill="#7a5415" font-weight="bold">第 1 大</text>
+
+  <!-- result banner -->
+  <g filter="url(#sk)">
+    <rect x="60" y="320" width="760" height="50" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="440" y="342" text-anchor="middle" font-size="13" fill="#2e6e2e" font-weight="bold" font-family="monospace">答案：nums[n−k] = nums[4−3] = nums[1] = "2" ✓</text>
+  <text x="440" y="362" text-anchor="middle" font-size="11.5" fill="#4a7a3a">第 1 大 "21" → 第 2 大 "12" → 第 3 大 "2"；长度 2 的整体排在长度 1 之后</text>
+
+  <!-- warning strip -->
+  <g filter="url(#sk)">
+    <rect x="60" y="388" width="760" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="440" y="410" text-anchor="middle" font-size="12" fill="#b03a3a" font-weight="bold">⚠ 若忘了先比长度、直接按字典序排序：["1","12","2","21"]，第 3 大会错成 "12"</text>
+  <text x="440" y="430" text-anchor="middle" font-size="11" fill="#a05a5a">长度优先是本题的命门 —— 示例 2 的设计正是为了拦住这个错误</text>
+</svg>
