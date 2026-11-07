@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="480" viewBox="0 0 880 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="880" height="480" fill="#fdfcf7"/>
+  <text x="440" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">状态转移：两个计数器按「当前字符」覆盖式更新</text>
+  <path d="M 250 40 Q 440 50 630 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- left column -->
+  <g filter="url(#sk)">
+    <rect x="30" y="58" width="370" height="100" rx="10" fill="#f5f9fd" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="50" y="80" font-size="13" font-weight="bold" fill="#2b6e9e">状态定义（特例 "0" 不占状态）</text>
+  <text x="50" y="104" font-size="12" fill="#445" font-family="monospace">ends0 = 以 '0' 结尾的好子序列个数</text>
+  <text x="50" y="124" font-size="12" fill="#445" font-family="monospace">ends1 = 以 '1' 结尾的好子序列个数</text>
+  <text x="50" y="144" font-size="11.5" fill="#777">两者均不含特例 "0"；初始都为 0，has0 = false</text>
+
+  <g filter="url(#sk)">
+    <rect x="30" y="172" width="370" height="110" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="50" y="194" font-size="13" font-weight="bold" fill="#a06a1a" font-family="monospace">读 '1'：ends1 ← ends0 + ends1 + 1</text>
+  <text x="50" y="218" font-size="11.5" fill="#445">把这个 '1' 拼到「两桶全体 ＋ 空串」末尾，</text>
+  <text x="50" y="236" font-size="11.5" fill="#445">全部以 '1' 结尾 → 进 ends1；+1 即空串拼出的 "1"</text>
+  <text x="50" y="254" font-size="11.5" fill="#445">旧 ends1 的每个元素都能把末位重挂到当前 '1' 上</text>
+  <text x="50" y="272" font-size="11" fill="#a05a5a">→ 整桶覆盖（=），不丢不重；若写成累加（+=）则 "1" 重复计</text>
+
+  <g filter="url(#sk)">
+    <rect x="30" y="292" width="370" height="110" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="50" y="314" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">读 '0'：ends0 ← ends0 + ends1（无 +1）</text>
+  <text x="50" y="338" font-size="11.5" fill="#445">两桶全体拼上这个 '0'：首字符仍是 '1'，依然好</text>
+  <text x="50" y="356" font-size="11.5" fill="#445">空串拼 '0' 得 "0"：合法但属特例，不入 ends0</text>
+  <text x="50" y="374" font-size="11.5" fill="#445">has0 ← true："0" 最后单独 +1（走下方旁路）</text>
+  <text x="50" y="392" font-size="11" fill="#a05a5a">若误加 +1："0" 会被每个 '0' 计一次，还会拼出非法 "00"</text>
+
+  <g filter="url(#sk)">
+    <rect x="30" y="412" width="370" height="50" rx="10" fill="#fdf1e3" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="215" y="442" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" font-family="monospace">答案 = (ends0 + ends1 + (has0?1:0)) mod 1e9+7</text>
+
+  <!-- right column: row 1 -->
+  <text x="430" y="70" font-size="12.5" font-weight="bold" fill="#a06a1a">① 读 '1'：三个来源，覆盖进 ends1</text>
+  <g filter="url(#sk)">
+    <rect x="430" y="78" width="252" height="54" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="440" y="91" width="74" height="28" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="522" y="91" width="74" height="28" rx="4" fill="#e8f0fa" stroke="#446688" stroke-width="1.3"/>
+    <rect x="604" y="91" width="68" height="28" rx="4" fill="#fdfcf7" stroke="#d6a040" stroke-width="1.3" stroke-dasharray="4,3"/>
+  </g>
+  <text x="477" y="109" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">ends0</text>
+  <text x="559" y="109" text-anchor="middle" font-size="12" fill="#2b6e9e" font-family="monospace">ends1</text>
+  <text x="638" y="109" text-anchor="middle" font-size="11" fill="#a06a1a" font-family="monospace">新建"1"</text>
+  <path d="M 690 105 L 726 105" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="730" y="86" width="116" height="40" rx="6" fill="#e8f0fa" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="788" y="110" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e" font-family="monospace">ends1（覆盖）</text>
+
+  <!-- row 2 -->
+  <text x="430" y="156" font-size="12.5" font-weight="bold" fill="#2e6e2e">② 读 '0'：两个来源，覆盖进 ends0</text>
+  <g filter="url(#sk)">
+    <rect x="430" y="164" width="252" height="54" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="440" y="177" width="74" height="28" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="522" y="177" width="74" height="28" rx="4" fill="#e8f0fa" stroke="#446688" stroke-width="1.3"/>
+    <rect x="604" y="177" width="68" height="28" rx="4" fill="#f3f3f3" stroke="#999" stroke-width="1.3" stroke-dasharray="4,3"/>
+  </g>
+  <text x="477" y="195" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">ends0</text>
+  <text x="559" y="195" text-anchor="middle" font-size="12" fill="#2b6e9e" font-family="monospace">ends1</text>
+  <text x="638" y="195" text-anchor="middle" font-size="11" fill="#888" font-family="monospace">空串 ✗</text>
+  <path d="M 690 191 L 726 191" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="730" y="172" width="116" height="40" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="788" y="196" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" font-family="monospace">ends0（覆盖）</text>
+
+  <!-- row 3 -->
+  <text x="430" y="242" font-size="12.5" font-weight="bold" fill="#b85450">③ 特例通道："0" 不进桶，由 has0 记账</text>
+  <g filter="url(#sk)">
+    <rect x="430" y="250" width="252" height="54" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="556" y="272" text-anchor="middle" font-size="11.5" fill="#445" font-family="monospace">空串 + '0' = "0"（仅此一个值）</text>
+  <text x="556" y="292" text-anchor="middle" font-size="10.5" fill="#a05a5a">不随 '0' 的个数与位置重复计数</text>
+  <path d="M 690 277 L 726 277" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="730" y="258" width="116" height="40" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="788" y="282" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" font-family="monospace">has0 ? 1 : 0</text>
+
+  <!-- answer strip -->
+  <g filter="url(#sk)">
+    <rect x="430" y="322" width="416" height="48" rx="8" fill="#fdf1e3" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="638" y="350" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" font-family="monospace">每步 O(1)，一趟 O(n)：答案 = ends0 + ends1 + (has0?1:0)</text>
+
+  <!-- invariant -->
+  <g filter="url(#sk)">
+    <rect x="430" y="386" width="416" height="84" rx="8" fill="#f5f9fd" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="450" y="408" font-size="12.5" font-weight="bold" fill="#2b6e9e">不变式（归纳可证，见题解 §5）</text>
+  <text x="450" y="430" font-size="11.5" fill="#445" font-family="monospace">扫完前缀 P：ends0 / ends1 恰等于 P 中以 '0' / '1'</text>
+  <text x="450" y="448" font-size="11.5" fill="#445" font-family="monospace">结尾的好子序列个数（特例 "0" 除外）</text>
+  <text x="450" y="466" font-size="11" fill="#777">覆盖式更新 ⟸ 旧桶可整体「重挂」到当前字符，先算新值再赋值</text>
+</svg>
