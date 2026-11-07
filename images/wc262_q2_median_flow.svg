@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="600" viewBox="0 0 780 600"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="600" fill="#fafafa"/>
+  <text x="390" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：同余检查 → 排序取中位数 → 距离和 ÷ x</text>
+  <path d="M 200 44 Q 390 54 580 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- left note card -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="140" width="210" height="245" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="135" y="164" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a67c1e" filter="url(#rough2)">为什么是中位数？</text>
+  <text x="42" y="188" font-size="10" fill="#444" filter="url(#rough2)">f(t) = Σ|a_i − t| 分段线性、凸</text>
+  <text x="42" y="208" font-size="10" fill="#444" filter="url(#rough2)">t 每右移 1：左 L 项各 +1，</text>
+  <text x="42" y="224" font-size="10" fill="#444" filter="url(#rough2)">右 R 项各 −1，增量 = L − R</text>
+  <text x="42" y="248" font-size="10" fill="#444" filter="url(#rough2)">跨过中位点前增量恒 ≤ 0，</text>
+  <text x="42" y="264" font-size="10" fill="#444" filter="url(#rough2)">故最小值停在中位数处</text>
+  <text x="42" y="290" font-size="10" fill="#b85450" filter="url(#rough2)">取平均值 ×：[1,1,1,1,100]</text>
+  <text x="42" y="308" font-size="10" fill="#b85450" filter="url(#rough2)">中位数 1 → 99 步；</text>
+  <text x="42" y="324" font-size="10" fill="#b85450" filter="url(#rough2)">取均值邻近的 21 → 159 步</text>
+  <text x="42" y="350" font-size="10" fill="#666" filter="url(#rough2)">L1 距离看「中位」；</text>
+  <text x="42" y="366" font-size="10" fill="#666" filter="url(#rough2)">L2（平方和）才看「均值」</text>
+
+  <!-- right note card -->
+  <g filter="url(#rough2)">
+    <rect x="578" y="240" width="170" height="210" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="663" y="262" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">细节备忘</text>
+  <text x="590" y="286" font-size="10" fill="#444" filter="url(#rough2)">· med 是真实元素，</text>
+  <text x="590" y="302" font-size="10" fill="#444" filter="url(#rough2)">   故 med mod x = r</text>
+  <text x="590" y="326" font-size="10" fill="#444" filter="url(#rough2)">· 每个 |a_i − med|</text>
+  <text x="590" y="342" font-size="10" fill="#444" filter="url(#rough2)">   都被 x 整除</text>
+  <text x="590" y="366" font-size="10" fill="#444" filter="url(#rough2)">· N = 1 → 答案 0</text>
+  <text x="590" y="386" font-size="10" fill="#444" filter="url(#rough2)">· 最后一步 ÷ x，别漏</text>
+  <text x="590" y="406" font-size="10" fill="#444" filter="url(#rough2)">· x = 1 时恒可行</text>
+
+  <!-- main flow -->
+  <g filter="url(#rough2)">
+    <rect x="265" y="58" width="250" height="46" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="390" y="78" text-anchor="middle" font-size="12.5" fill="#2b4666" filter="url(#rough2)">展平：a ← grid 全部元素</text>
+  <text x="390" y="94" text-anchor="middle" font-size="9.5" fill="#778" filter="url(#rough2)">（N = m·n ≤ 10⁵，行列位置无关）</text>
+  <path d="M 390 104 L 390 122" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <polygon points="390,126 530,176 390,226 250,176" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="390" y="172" text-anchor="middle" font-size="12" fill="#2b4666" filter="url(#rough2)">所有元素 mod x 同余？</text>
+  <text x="390" y="189" text-anchor="middle" font-size="9.5" fill="#778" filter="url(#rough2)">（r = a[0] mod x）</text>
+
+  <path d="M 530 176 L 574 176" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="540" y="166" font-size="11" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="578" y="150" width="136" height="52" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="646" y="172" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a34" filter="url(#rough2)">return −1</text>
+  <text x="646" y="190" text-anchor="middle" font-size="9.5" fill="#996" filter="url(#rough2)">（不可行）</text>
+
+  <path d="M 390 226 L 390 246" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="400" y="240" font-size="11" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <g filter="url(#rough2)">
+    <rect x="265" y="250" width="250" height="46" rx="10" fill="#ffffff" stroke="#888" stroke-width="1.5"/>
+  </g>
+  <text x="390" y="270" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">排序（或计数排序 / nth_element）</text>
+  <text x="390" y="286" text-anchor="middle" font-size="9.5" fill="#778" filter="url(#rough2)">（值域 ≤ 10⁴ → 桶排序 O(N + V)）</text>
+  <path d="M 390 296 L 390 314" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="265" y="318" width="250" height="46" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="390" y="338" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6414" filter="url(#rough2)">取中位数 med = a[N/2]</text>
+  <text x="390" y="354" text-anchor="middle" font-size="9.5" fill="#778" filter="url(#rough2)">（N 为偶数时中间区间任取一点皆可）</text>
+  <path d="M 390 364 L 390 382" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="265" y="386" width="250" height="46" rx="10" fill="#ffffff" stroke="#888" stroke-width="1.5"/>
+  </g>
+  <text x="390" y="406" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">sum ← Σ |a_i − med|</text>
+  <text x="390" y="422" text-anchor="middle" font-size="9.5" fill="#778" filter="url(#rough2)">（long long 累加，上界 ~10⁹）</text>
+  <path d="M 390 432 L 390 450" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="265" y="454" width="250" height="46" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="390" y="474" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">return sum / x</text>
+  <text x="390" y="490" text-anchor="middle" font-size="9.5" fill="#567" filter="url(#rough2)">（差值都是 x 的倍数，整除安全）</text>
+
+  <text x="390" y="555" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">时间 O(N log N)（计数排序 O(N + V)）· 空间 O(N)　——　N = m·n，V ≤ 10⁴ 为值域上界</text>
+</svg>
