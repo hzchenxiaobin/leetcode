@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="460" viewBox="0 0 640 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="460" fill="#fdfcf7"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：结构 ID 法四步走</text>
+  <path d="M 170 38 Q 320 48 470 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="55" y="56" width="530" height="70" rx="9" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="80" y="82" font-size="14" fill="#2c4a6e" font-weight="bold" filter="url(#sk)">① 建 Trie</text>
+  <text x="320" y="82" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#sk)">逐条路径插入字典树、共享公共前缀</text>
+  <text x="320" y="104" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#sk)">结点数 N ≤ 2×10⁵（由总字符数约束），深度 ≤ 500</text>
+
+  <path d="M 320 126 L 320 146" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="55" y="150" width="530" height="82" rx="9" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="80" y="176" font-size="14" fill="#2f5d2f" font-weight="bold" filter="url(#sk)">② 后序 DFS 求签名</text>
+  <text x="320" y="176" text-anchor="middle" font-size="11.5" fill="#3a6e3a" filter="url(#sk)">sig(v) = 按名字排序的 [ (子名, 子ID), … ]</text>
+  <text x="320" y="198" text-anchor="middle" font-size="11.5" fill="#3a6e3a" filter="url(#sk)">子 ID 是一个整数，却代表了整棵子子树的结构</text>
+  <text x="320" y="220" text-anchor="middle" font-size="11.5" fill="#4a8e4a" filter="url(#sk)">⟹ 签名长度只和孩子数有关，与深度、子树大小脱钩</text>
+
+  <path d="M 320 232 L 320 252" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="55" y="256" width="530" height="82" rx="9" fill="#fdf1e3" stroke="#c98a2b" stroke-width="1.6"/></g>
+  <text x="80" y="282" font-size="14" fill="#7a5415" font-weight="bold" filter="url(#sk)">③ 查表分配结构 ID + 计数</text>
+  <text x="320" y="282" text-anchor="middle" font-size="11.5" fill="#8a6a2a" filter="url(#sk)">哈希表 sig → id：新签名发新号，旧签名复用旧号</text>
+  <text x="320" y="304" text-anchor="middle" font-size="11.5" fill="#8a6a2a" filter="url(#sk)">每访问一个非叶结点就 cnt[id]++</text>
+  <text x="320" y="326" text-anchor="middle" font-size="11.5" fill="#c98a2b" filter="url(#sk)">叶子固定 id = 0 且永不计数（空集合不算相同文件夹）</text>
+
+  <path d="M 320 338 L 320 358" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="55" y="362" width="530" height="70" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="80" y="388" font-size="14" fill="#8f3b37" font-weight="bold" filter="url(#sk)">④ 剪枝输出</text>
+  <text x="320" y="388" text-anchor="middle" font-size="11.5" fill="#8f3b37" filter="url(#sk)">从 root 再走一遍：cnt[id] ≥ 2 的结点整棵子树直接跳过</text>
+  <text x="320" y="410" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#sk)">其余结点收集路径；全部判定基于原树 ⟹ 天然满足「只删一次」</text>
+
+  <text x="320" y="450" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">签名总长 O(N)、时间 O(S + N log N)、空间 O(S + N)，其中 S 为输入总字符数</text>
+</svg>
