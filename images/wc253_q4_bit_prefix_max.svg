@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="560" viewBox="0 0 720 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="21" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="560" fill="#fdfcf7"/>
+  <text x="360" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">另解：值域树状数组——「找 ≤ x 的最大 dp」就是前缀最大值查询</text>
+  <path d="M 120 38 Q 360 48 600 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="360" y="58" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">以 [3,1,5,6,4,2] 为例（恰好 6 个不同值，离散化后 rank = 值本身）：dp 挂在值域上</text>
+
+  <!-- scene 1 -->
+  <text x="56" y="90" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#sk)">场景一 · 处理 i=3（x=6，rank=6）——已处理 [3,1,5]，各值当前最优 dp：</text>
+  <text x="360" y="136" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#sk)">query(rank 6) = max{dp[1], dp[3], dp[5]} = 2 → ans[3] = 3，写入 dp[6]</text>
+  <path d="M 84 168 L 84 146 L 661 146 L 661 168" stroke="#446688" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <path d="M 661 167 C 697 195 692 232 658 226" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="84" y="170" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="189" y="170" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="294" y="170" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="399" y="170" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="504" y="170" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="609" y="170" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="90" y="210" width="40" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="195" y="210" width="40" height="30" rx="6" fill="none" stroke="#ccc" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="300" y="210" width="40" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="405" y="210" width="40" height="30" rx="6" fill="none" stroke="#ccc" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="510" y="210" width="40" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="615" y="210" width="40" height="30" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g text-anchor="middle" filter="url(#sk)">
+    <text x="110" y="191" font-size="13" font-weight="bold" fill="#555">1</text>
+    <text x="215" y="191" font-size="13" font-weight="bold" fill="#555">2</text>
+    <text x="320" y="191" font-size="13" font-weight="bold" fill="#555">3</text>
+    <text x="425" y="191" font-size="13" font-weight="bold" fill="#555">4</text>
+    <text x="530" y="191" font-size="13" font-weight="bold" fill="#555">5</text>
+    <text x="635" y="191" font-size="13" font-weight="bold" fill="#555">6</text>
+    <text x="110" y="230" font-size="12" fill="#2f4a63">1</text>
+    <text x="215" y="230" font-size="12" fill="#bbb">−</text>
+    <text x="320" y="230" font-size="12" fill="#2f4a63">1</text>
+    <text x="425" y="230" font-size="12" fill="#bbb">−</text>
+    <text x="530" y="230" font-size="12" fill="#2f4a63">2</text>
+    <text x="635" y="230" font-size="12.5" font-weight="bold" fill="#2e6e2e">3</text>
+  </g>
+  <text x="110" y="256" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#sk)">值 1</text>
+  <text x="320" y="256" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#sk)">值 3</text>
+  <text x="530" y="256" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#sk)">值 5</text>
+  <text x="635" y="256" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#sk)">值 6 ← 本次写入</text>
+
+  <!-- scene 2 -->
+  <text x="56" y="318" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">场景二 · 处理 i=4（x=4，rank=4）——已处理 [3,1,5,6]，各值当前最优 dp：</text>
+  <text x="267" y="366" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">query(rank 4) = max{dp[1], dp[3]} = 1 → ans[4] = 2，写入 dp[4]</text>
+  <path d="M 84 398 L 84 376 L 451 376 L 451 398" stroke="#4a7a3a" stroke-width="2" fill="none" filter="url(#sk)"/>
+  <path d="M 451 397 C 487 425 482 462 450 456" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="84" y="400" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="189" y="400" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="294" y="400" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="399" y="400" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="504" y="400" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="609" y="400" width="52" height="32" rx="4" fill="#fff" stroke="#8a8a8a" stroke-width="1.4"/>
+    <rect x="90" y="440" width="40" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="195" y="440" width="40" height="30" rx="6" fill="none" stroke="#ccc" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <rect x="300" y="440" width="40" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="405" y="440" width="40" height="30" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="510" y="440" width="40" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="615" y="440" width="40" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <g text-anchor="middle" filter="url(#sk)">
+    <text x="110" y="421" font-size="13" font-weight="bold" fill="#555">1</text>
+    <text x="215" y="421" font-size="13" font-weight="bold" fill="#555">2</text>
+    <text x="320" y="421" font-size="13" font-weight="bold" fill="#555">3</text>
+    <text x="425" y="421" font-size="13" font-weight="bold" fill="#555">4</text>
+    <text x="530" y="421" font-size="13" font-weight="bold" fill="#555">5</text>
+    <text x="635" y="421" font-size="13" font-weight="bold" fill="#555">6</text>
+    <text x="110" y="460" font-size="12" fill="#2f4a63">1</text>
+    <text x="215" y="460" font-size="12" fill="#bbb">−</text>
+    <text x="320" y="460" font-size="12" fill="#2f4a63">1</text>
+    <text x="425" y="460" font-size="12.5" font-weight="bold" fill="#2e6e2e">2</text>
+    <text x="530" y="460" font-size="12" fill="#2f4a63">2</text>
+    <text x="635" y="460" font-size="12" fill="#2f4a63">3</text>
+  </g>
+  <text x="425" y="486" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#sk)">值 4 ← 本次写入</text>
+
+  <!-- bottom note -->
+  <rect x="60" y="494" width="600" height="54" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="360" y="517" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">树状数组两件套：单点 chmax（update）+ 前缀查 max（query），各 O(log m)，无需线段树的懒标记</text>
+  <text x="360" y="539" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#sk)">离散化把 10^7 值域压到 m ≤ n；顺序必须「先 query 后 update」——把自己也算进前缀会凭空 +1</text>
+</svg>

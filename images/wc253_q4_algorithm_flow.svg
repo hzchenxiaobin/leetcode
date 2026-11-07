@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="600" viewBox="0 0 720 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="720" height="600" fill="#fdfcf7"/>
+  <text x="360" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：耐心排序 + upper_bound，统一出口 ans[i] = pos + 1</text>
+  <path d="M 170 38 Q 360 48 550 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <rect x="290" y="58" width="140" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="360" y="82" text-anchor="middle" font-size="12.5" fill="#2f4a63" filter="url(#sk)">tails=[]，ans=[]</text>
+  <path d="M 360 96 L 360 108" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop take x -->
+  <rect x="270" y="112" width="180" height="38" rx="8" fill="#fff" stroke="#8a8a8a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="360" y="136" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#sk)">取 x = obstacles[i]</text>
+  <path d="M 360 150 L 360 162" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- binary search -->
+  <rect x="230" y="166" width="260" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="360" y="188" text-anchor="middle" font-size="12.5" fill="#2f4a63" filter="url(#sk)">pos = 二分找第一个 &gt; x 的下标</text>
+  <text x="360" y="206" text-anchor="middle" font-size="10" fill="#557" filter="url(#sk)">（upper_bound / bisect_right）</text>
+  <path d="M 360 214 L 360 228" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="360,232 455,282 360,332 265,282" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#sk)"/>
+  <text x="360" y="278" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">pos ==</text>
+  <text x="360" y="296" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">len(tails) ?</text>
+
+  <!-- yes branch (append) -->
+  <text x="462" y="272" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">是</text>
+  <path d="M 455 282 L 473 282" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <rect x="477" y="262" width="188" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="571" y="280" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">tails 追加 x</text>
+  <text x="571" y="296" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#sk)">x 能接在所有子序列后面</text>
+
+  <!-- no branch (replace) -->
+  <text x="250" y="256" font-size="11" font-weight="bold" fill="#9a6a15" text-anchor="end" filter="url(#sk)">否</text>
+  <path d="M 265 282 L 252 282" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <rect x="80" y="262" width="172" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="166" y="280" text-anchor="middle" font-size="12" font-weight="bold" fill="#9a6a15" filter="url(#sk)">tails[pos] ← x</text>
+  <text x="166" y="296" text-anchor="middle" font-size="9.5" fill="#9a6a15" filter="url(#sk)">长度 pos+1 换上更小末尾</text>
+
+  <!-- merge to ans -->
+  <path d="M 571 302 Q 571 336 438 352" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 166 302 Q 166 336 292 352" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <rect x="290" y="356" width="140" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="360" y="378" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#a04038" filter="url(#sk)">ans[i] = pos + 1</text>
+  <text x="360" y="394" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#sk)">两个分支的统一出口！</text>
+  <path d="M 360 402 L 360 416" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2 -->
+  <polygon points="360,420 445,468 360,516 275,468" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="360" y="474" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">还有障碍？</text>
+
+  <!-- loop back -->
+  <text x="262" y="460" font-size="11" font-weight="bold" fill="#446688" text-anchor="end" filter="url(#sk)">是</text>
+  <path d="M 275 468 C 60 468 40 131 266 131" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+
+  <!-- end -->
+  <text x="368" y="528" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">否</text>
+  <path d="M 360 516 L 360 538" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)" filter="url(#sk)"/>
+  <rect x="290" y="542" width="140" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="360" y="566" text-anchor="middle" font-size="12.5" fill="#2f4a63" filter="url(#sk)">返回 ans</text>
+
+  <!-- side note -->
+  <rect x="512" y="430" width="186" height="108" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="605" y="456" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#sk)">复杂度</text>
+  <text x="605" y="478" text-anchor="middle" font-size="10.5" fill="#7a5415" filter="url(#sk)">每步一次二分 O(log n)</text>
+  <text x="605" y="498" text-anchor="middle" font-size="10.5" fill="#7a5415" filter="url(#sk)">追加 / 替换均 O(1)</text>
+  <text x="605" y="522" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">总时间 O(n log n)</text>
+</svg>
