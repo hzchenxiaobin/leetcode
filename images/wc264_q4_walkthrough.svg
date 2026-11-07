@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 690" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="900" height="690" fill="#fdfcf7"/>
+  <text x="450" y="30" text-anchor="middle" font-size="15.5" font-weight="bold" fill="#2b2b2b">示例 2 演算：Kahn 队列逐步松弛 dist</text>
+  <text x="450" y="52" text-anchor="middle" font-size="12" fill="#666">n = 5，relations = [[1,5],[2,5],[3,5],[3,4],[4,5]]，time = [1,2,3,4,5]</text>
+
+  <!-- initial state card -->
+  <g filter="url(#sk)">
+    <rect x="60" y="66" width="780" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="450" y="93" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4e6e">初始：dist = [1, 2, 3, 4, 5]（各自耗时），队列 = [1, 2, 3]（入度为 0 的课程）</text>
+
+  <!-- highlight row ④ (u=4) -->
+  <g filter="url(#sk)">
+    <rect x="60" y="366" width="780" height="52" fill="#fff8e1"/>
+  </g>
+
+  <!-- table grid -->
+  <g filter="url(#sk)" stroke="#8a9aaa" stroke-width="1.2">
+    <rect x="60" y="124" width="780" height="398" fill="none"/>
+    <line x1="60" y1="158" x2="840" y2="158"/>
+    <line x1="60" y1="210" x2="840" y2="210"/>
+    <line x1="60" y1="262" x2="840" y2="262"/>
+    <line x1="60" y1="314" x2="840" y2="314"/>
+    <line x1="60" y1="366" x2="840" y2="366"/>
+    <line x1="60" y1="418" x2="840" y2="418"/>
+    <line x1="60" y1="470" x2="840" y2="470"/>
+    <line x1="116" y1="124" x2="116" y2="522"/>
+    <line x1="196" y1="124" x2="196" y2="522"/>
+    <line x1="292" y1="124" x2="292" y2="522"/>
+    <line x1="642" y1="124" x2="642" y2="522"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="60" y="124" width="780" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g font-size="12" font-weight="bold" fill="#2b4e6e">
+    <text x="88" y="146" text-anchor="middle">步骤</text>
+    <text x="156" y="146" text-anchor="middle">处理 u</text>
+    <text x="244" y="146" text-anchor="middle">松弛边</text>
+    <text x="304" y="146">dist 更新</text>
+    <text x="741" y="146" text-anchor="middle">队列</text>
+  </g>
+
+  <!-- rows -->
+  <g filter="url(#sk)" font-size="11.5" fill="#333">
+    <text x="88" y="190" text-anchor="middle">①</text>
+    <text x="156" y="190" text-anchor="middle">u = 1</text>
+    <text x="244" y="190" text-anchor="middle">1 → 5</text>
+    <text x="304" y="190">dist[5] = max(5, 1+5) = 6</text>
+    <text x="741" y="190" text-anchor="middle">[2, 3]</text>
+
+    <text x="88" y="242" text-anchor="middle">②</text>
+    <text x="156" y="242" text-anchor="middle">u = 2</text>
+    <text x="244" y="242" text-anchor="middle">2 → 5</text>
+    <text x="304" y="242">dist[5] = max(6, 2+5) = 7</text>
+    <text x="741" y="242" text-anchor="middle">[3]</text>
+
+    <text x="88" y="318" text-anchor="middle">③</text>
+    <text x="156" y="318" text-anchor="middle">u = 3</text>
+    <text x="244" y="294" text-anchor="middle">3 → 5</text>
+    <text x="304" y="294">dist[5] = max(7, 3+5) = 8</text>
+    <text x="741" y="294" text-anchor="middle">[]</text>
+    <text x="244" y="346" text-anchor="middle">3 → 4</text>
+    <text x="304" y="346">dist[4] = max(4, 3+4) = 7 → 入度归零，4 入队</text>
+    <text x="741" y="346" text-anchor="middle">[4]</text>
+
+    <text x="88" y="398" text-anchor="middle" font-weight="bold">④</text>
+    <text x="156" y="398" text-anchor="middle" font-weight="bold">u = 4</text>
+    <text x="244" y="398" text-anchor="middle" font-weight="bold">4 → 5</text>
+    <text x="304" y="398" font-weight="bold" fill="#b03a3a">dist[5] = max(8, 7+5) = 12 ★关键松弛</text>
+    <text x="741" y="398" text-anchor="middle" font-weight="bold">[5]</text>
+
+    <text x="88" y="450" text-anchor="middle">⑤</text>
+    <text x="156" y="450" text-anchor="middle">u = 5</text>
+    <text x="244" y="450" text-anchor="middle">—</text>
+    <text x="304" y="450">无后继，所有课程处理完毕</text>
+    <text x="741" y="450" text-anchor="middle">[]</text>
+
+    <text x="88" y="502" text-anchor="middle">终态</text>
+    <text x="304" y="502">dist = [1, 2, 3, 7, 12]，全部定型</text>
+    <text x="741" y="502" text-anchor="middle">空</text>
+  </g>
+
+  <!-- verdict banner -->
+  <g filter="url(#sk)">
+    <rect x="60" y="540" width="780" height="48" rx="8" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="570" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e">答案 = max(dist) = max(1, 2, 3, 7, 12) = 12 ✓（关键路径 3 → 4 → 5：3 + 4 + 5 = 12）</text>
+
+  <!-- note card -->
+  <g filter="url(#sk)">
+    <rect x="60" y="600" width="780" height="72" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="624" font-size="12" font-weight="bold" fill="#2b2b2b">⚠️ 关键瞬间在 u = 4 松弛 5</text>
+  <text x="80" y="646" font-size="11.5" fill="#444">u = 3 处理完后 dist[5] = 8，看似答案已出；但 4 也是 5 的先修且 dist[4] = 7 &gt; 3 ——</text>
+  <text x="80" y="664" font-size="11.5" fill="#444">拓扑排序保证处理 5 之前，先修 {1, 2, 3, 4} 全部松弛完毕，「所有先修都要完成」一步不漏。</text>
+</svg>

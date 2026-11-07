@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#7a8a99"/>
+    </marker>
+    <marker id="arrr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="880" height="600" fill="#fdfcf7"/>
+  <text x="440" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">并行免费 ⇒ 总工期 = 最长依赖链（DAG 带权最长路）</text>
+  <path d="M 250 46 Q 440 54 630 46" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Left: example 2 DAG ===== -->
+  <text x="250" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">示例 2：n = 5，time = [1,2,3,4,5]</text>
+
+  <!-- non-critical edges (gray) -->
+  <g filter="url(#sk)">
+    <path d="M 112 173 L 201 345" stroke="#7a8a99" stroke-width="1.8" fill="none" marker-end="url(#arrg)"/>
+    <path d="M 215 176 L 215 346" stroke="#7a8a99" stroke-width="1.8" fill="none" marker-end="url(#arrg)"/>
+    <path d="M 318 173 L 229 345" stroke="#7a8a99" stroke-width="1.8" fill="none" marker-end="url(#arrg)"/>
+    <!-- critical edges 3->4, 4->5 (red, thick) -->
+    <path d="M 330 176 L 330 236" stroke="#b85450" stroke-width="3" fill="none" marker-end="url(#arrr)"/>
+    <path d="M 311 280 L 236 351" stroke="#b85450" stroke-width="3" fill="none" marker-end="url(#arrr)"/>
+  </g>
+
+  <!-- nodes -->
+  <g font-size="15" font-weight="bold">
+    <g filter="url(#sk)"><circle cx="100" cy="150" r="24" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+    <text x="100" y="155" text-anchor="middle" fill="#2b6e9e">1</text>
+    <g filter="url(#sk)"><circle cx="215" cy="150" r="24" fill="#e8f0fa" stroke="#4a8edb" stroke-width="2"/></g>
+    <text x="215" y="155" text-anchor="middle" fill="#2b6e9e">2</text>
+    <g filter="url(#sk)"><circle cx="330" cy="150" r="24" fill="#fce4ec" stroke="#b85450" stroke-width="2.4"/></g>
+    <text x="330" y="155" text-anchor="middle" fill="#b03a3a">3</text>
+    <g filter="url(#sk)"><circle cx="330" cy="262" r="24" fill="#fce4ec" stroke="#b85450" stroke-width="2.4"/></g>
+    <text x="330" y="267" text-anchor="middle" fill="#b03a3a">4</text>
+    <g filter="url(#sk)"><circle cx="215" cy="372" r="24" fill="#fce4ec" stroke="#b85450" stroke-width="2.4"/></g>
+    <text x="215" y="377" text-anchor="middle" fill="#b03a3a">5</text>
+  </g>
+
+  <!-- time / dist chips -->
+  <g filter="url(#sk)">
+    <text x="100" y="106" text-anchor="middle" font-size="11" fill="#666">t = 1</text>
+    <text x="100" y="122" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b6e9e">dist = 1</text>
+    <text x="215" y="106" text-anchor="middle" font-size="11" fill="#666">t = 2</text>
+    <text x="215" y="122" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b6e9e">dist = 2</text>
+    <text x="330" y="106" text-anchor="middle" font-size="11" fill="#666">t = 3</text>
+    <text x="330" y="122" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b03a3a">dist = 3</text>
+    <text x="368" y="256" font-size="11" fill="#666">t = 4</text>
+    <text x="368" y="272" font-size="11.5" font-weight="bold" fill="#b03a3a">dist = 7</text>
+    <text x="215" y="418" text-anchor="middle" font-size="11" fill="#666">t = 5</text>
+    <text x="215" y="436" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b03a3a">dist = 12</text>
+    <text x="215" y="476" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#b03a3a">关键路径 3 → 4 → 5：3 + 4 + 5 = 12</text>
+  </g>
+
+  <!-- ===== Right: formula panels ===== -->
+  <g filter="url(#sk)">
+    <rect x="520" y="72" width="328" height="120" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="540" y="96" font-size="13" font-weight="bold" fill="#2b6e9e">最早完成时间的递推（DP 转移）</text>
+  <text x="540" y="124" font-size="13.5" font-weight="bold" fill="#2b4e6e">dist[v] = time[v] + max{ dist[u] : u→v }</text>
+  <text x="540" y="148" font-size="11" fill="#444">先修全部完成才开课：等最晚的那个</text>
+  <text x="540" y="168" font-size="11" fill="#444">无先修时 max 项按 0（第 0 月即可开始）</text>
+
+  <g filter="url(#sk)">
+    <rect x="520" y="208" width="328" height="104" rx="8" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="540" y="232" font-size="13" font-weight="bold" fill="#2e6e2e">总工期 = 全体 dist 的最大值</text>
+  <text x="540" y="258" font-size="13.5" font-weight="bold" fill="#2e4e2e">答案 = max dist[v] = DAG 带权最长路</text>
+  <text x="540" y="280" font-size="11" fill="#444">路径权 = 沿途节点 time 之和（关键路径）</text>
+  <text x="540" y="298" font-size="10.5" fill="#888">工程上即 CPM（Critical Path Method）</text>
+
+  <g filter="url(#sk)">
+    <rect x="520" y="328" width="328" height="126" rx="8" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="540" y="352" font-size="13" font-weight="bold" fill="#7a5415">为什么「并行门数」无关紧要？</text>
+  <text x="540" y="376" font-size="11" fill="#444">同时上任意多门课都不额外花时间——</text>
+  <text x="540" y="394" font-size="11" fill="#444">并行是免费的，资源不设上限，</text>
+  <text x="540" y="412" font-size="11" fill="#444">瓶颈只挂在最长的依赖链上。</text>
+  <text x="540" y="436" font-size="11" font-weight="bold" fill="#b03a3a">压缩非关键课程不会缩短总工期。</text>
+
+  <!-- ===== Bottom: semester-model trap ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="474" width="784" height="108" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="500" font-size="12" font-weight="bold" fill="#2b2b2b">⚠️ 「学期分层」模型（1136 的惯性）在带权时失灵</text>
+  <text x="80" y="524" font-size="11.5" fill="#444">按学期分层、每层取该层最大 time 累加：n = 4、边 1→3 与 2→4、time = [1,10,10,1] 时算出 10 + 10 = 20，</text>
+  <text x="80" y="544" font-size="11.5" fill="#444">而真实答案 11——两条独立链各 11 个月、互不等待，分层却把快的那条强行拖到学期边界。</text>
+  <text x="80" y="566" font-size="11" font-weight="bold" fill="#b03a3a">只有所有 time 相等（无权）时，分层才与关键路径等价。</text>
+</svg>
