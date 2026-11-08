@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="480" viewBox="0 0 680 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="aor" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="680" height="480" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：上界型二分——可行就往右</text>
+  <path d="M 190 38 Q 340 48 490 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ====== Section 1: evolution ====== -->
+  <text x="48" y="60" font-size="12.5" font-weight="bold" fill="#446688">① 赛场演进：三条路</text>
+  <g filter="url(#sk)">
+    <rect x="56" y="74" width="182" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <rect x="270" y="74" width="196" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="498" y="74" width="126" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <path d="M 242 100 L 266 100" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 470 100 L 494 100" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="147" y="96" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">模拟调度 ✗</text>
+  <text x="147" y="114" text-anchor="middle" font-size="10" fill="#777">换电池时机是决策，组合爆炸</text>
+  <text x="368" y="96" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">逐 t 枚举 ✗</text>
+  <text x="368" y="114" text-anchor="middle" font-size="10" fill="#777">上界 ⌊Σb/n⌋ ≈ 10¹⁴ 跑不完</text>
+  <text x="561" y="96" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24">二分答案 ✓</text>
+  <text x="561" y="114" text-anchor="middle" font-size="10" fill="#777">O(m log S)</text>
+
+  <!-- ====== Section 2: flow chart ====== -->
+  <text x="48" y="152" font-size="12.5" font-weight="bold" fill="#446688">② 流程（判定：Σ min(bᵢ, mid) ≥ n·mid ?）</text>
+  <g filter="url(#sk)">
+    <rect x="56" y="168" width="160" height="48" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <polygon points="330,164 413,192 330,220 247,192" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="458" y="166" width="182" height="52" rx="8" fill="#fff" stroke="#446688" stroke-width="1.8"/>
+    <polygon points="549,240 648,268 549,296 450,268" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="258" y="246" width="176" height="44" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="470" y="312" width="158" height="40" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <rect x="252" y="336" width="156" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <path d="M 216 192 L 243 192" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 417 192 L 454 192" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 549 218 L 549 236" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 450 268 L 436 268" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#ar)"/>
+    <path d="M 549 296 L 549 308" stroke="#b85450" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 330 220 L 330 356" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="5,4" fill="none" marker-end="url(#aor)"/>
+    <path d="M 258 268 L 210 268 L 210 192 L 243 192" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 470 332 L 202 332 L 202 196" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="136" y="188" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a66">lo = 1, hi = Σb/n</text>
+  <text x="136" y="204" text-anchor="middle" font-size="11" fill="#555">ans = 0</text>
+  <text x="330" y="196" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">lo ≤ hi ?</text>
+  <text x="342" y="240" font-size="10.5" font-weight="bold" fill="#b8860b">否：收敛</text>
+  <text x="549" y="188" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a66">mid = (lo+hi)/2</text>
+  <text x="549" y="204" text-anchor="middle" font-size="11" fill="#555">s = Σ min(bᵢ, mid)</text>
+  <text x="549" y="216" text-anchor="middle" font-size="9.5" fill="#999">（s ≥ n·mid 即提前返回）</text>
+  <text x="549" y="272" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">s ≥ n·mid ?</text>
+  <text x="440" y="260" font-size="11" font-weight="bold" fill="#2f5d24">是</text>
+  <text x="558" y="308" font-size="11" font-weight="bold" fill="#b85450">否</text>
+  <text x="346" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f5d24">ans = mid</text>
+  <text x="346" y="280" text-anchor="middle" font-size="10.5" fill="#555">lo = mid + 1（往右试更长）</text>
+  <text x="549" y="330" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">hi = mid − 1</text>
+  <text x="549" y="345" text-anchor="middle" font-size="10" fill="#777">缩短时间</text>
+  <text x="330" y="358" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d24">返回 ans</text>
+
+  <!-- ====== Section 3: direction comparison ====== -->
+  <text x="48" y="398" font-size="12.5" font-weight="bold" fill="#446688">③ 方向对照：同一套模板，方向相反</text>
+  <g filter="url(#sk)">
+    <rect x="56" y="412" width="276" height="50" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="352" y="412" width="272" height="50" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="194" y="432" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f5d24">本题：最大化可行值（找最后一个「真」）</text>
+  <text x="194" y="450" text-anchor="middle" font-size="10.5" fill="#555">可行 → ans = mid, lo = mid + 1（右移）</text>
+  <text x="488" y="432" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a66">875 / 2064：最小化最大值（找第一个「真」）</text>
+  <text x="488" y="450" text-anchor="middle" font-size="10.5" fill="#555">可行 → ans = mid, hi = mid − 1（左移）</text>
+</svg>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="470" viewBox="0 0 680 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="aor" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="680" height="470" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：换电池的调度 → 一行带截断的不等式</text>
+  <path d="M 150 38 Q 340 48 530 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ====== Section 1: min(b,t) truncation ====== -->
+  <text x="48" y="60" font-size="12.5" font-weight="bold" fill="#446688">① 单节电池的贡献封顶 min(b, t)</text>
+  <text x="70" y="80" font-size="10.5" fill="#777">一节 b = 10 的电池，t = 4 时：</text>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="88" width="88" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="158" y="88" width="132" height="28" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5,3"/>
+    <path d="M 158 82 L 158 124" stroke="#b85450" stroke-width="1.6" stroke-dasharray="4,3"/>
+  </g>
+  <g font-size="10.5" fill="#888" text-anchor="middle">
+    <text x="70" y="130">0</text>
+    <text x="158" y="130" font-weight="bold" fill="#b85450">t=4</text>
+    <text x="290" y="130">10</text>
+  </g>
+  <text x="114" y="106" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a66">可用 4</text>
+  <text x="224" y="106" text-anchor="middle" font-size="10.5" fill="#b85450">多余 6 分钟</text>
+  <text x="180" y="152" text-anchor="middle" font-size="10.5" fill="#555">电脑只活 [0, t] ⇒ 超出 t 的能量没有时间窗口</text>
+
+  <!-- battery cannot split -->
+  <g filter="url(#sk)">
+    <rect x="420" y="72" width="60" height="26" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <path d="M 448 98 Q 400 116 386 140" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+    <path d="M 452 98 Q 500 116 512 140" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5,3" fill="none" marker-end="url(#arr)"/>
+    <rect x="352" y="142" width="66" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="480" y="142" width="66" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="450" y="90" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415">电池 i</text>
+  <text x="385" y="162" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2b4a66">电脑 A ✓</text>
+  <text x="513" y="162" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450">电脑 B ✗</text>
+  <text x="498" y="124" font-size="10" font-weight="bold" fill="#b85450">同一时刻</text>
+  <text x="498" y="137" font-size="10" font-weight="bold" fill="#b85450">只能供一台</text>
+  <text x="470" y="186" text-anchor="middle" font-size="10.5" fill="#555">⇒ 单节有效贡献 ≤ min(bᵢ, t)</text>
+
+  <!-- ====== Section 2: unimodality ====== -->
+  <text x="48" y="212" font-size="12.5" font-weight="bold" fill="#446688">② 二段性：f(t) = Σ min(bᵢ, t) − n·t 只穿零一次（以 n=2, b=[10,1,1] 为例）</text>
+
+  <g filter="url(#sk)">
+    <rect x="120" y="262" width="240" height="38" rx="2" fill="#e6f4ea" stroke="none"/>
+    <rect x="360" y="300" width="250" height="48" rx="2" fill="#fce4ec" stroke="none"/>
+    <path d="M 120 300 L 620 300" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 120 300 L 120 212" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+    <path d="M 120 300 L 240 260 L 360 300 L 480 340" stroke="#446688" stroke-width="2.4" fill="none"/>
+    <path d="M 480 340 L 560 380" stroke="#446688" stroke-width="1.6" stroke-dasharray="5,4" fill="none"/>
+    <path d="M 360 296 L 360 252" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="4,3"/>
+    <circle cx="240" cy="260" r="4" fill="#fff" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="360" cy="300" r="5" fill="#d6a040" stroke="#7a5415" stroke-width="1.6"/>
+  </g>
+  <text x="632" y="304" font-size="12" font-weight="bold" fill="#555">t</text>
+  <text x="108" y="210" font-size="12" font-weight="bold" fill="#555">f(t)</text>
+  <text x="240" y="292" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d24">t ≤ t*：Σmin ≥ n·t ✓ 可行</text>
+  <text x="482" y="322" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">t &gt; t*：不够 ✗ 不可行</text>
+  <text x="168" y="278" font-size="10" font-weight="bold" fill="#446688">斜率 = m−n ≥ 0</text>
+  <text x="243" y="250" font-size="10" fill="#666">min(b)=1 触顶</text>
+  <text x="300" y="272" font-size="10" font-weight="bold" fill="#7a5415">斜率转负</text>
+  <text x="360" y="246" text-anchor="middle" font-size="12" font-weight="bold" fill="#b8860b">t* = 2（答案）</text>
+  <text x="560" y="388" font-size="10" fill="#999">··· 恒降</text>
+  <text x="120" y="368" font-size="10.5" fill="#555">触顶的电池越多，Σmin 增速越慢；一旦「活跃电池数 &lt; n」，斜率恒负</text>
+
+  <!-- ====== callouts ====== -->
+  <g filter="url(#sk)">
+    <rect x="56" y="386" width="568" height="38" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="404" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66">判定 t 可行 ⇔ Σ min(bᵢ, t) ≥ n·t —— 「换电池的艺术」塌缩成一行求和</text>
+  <text x="340" y="419" text-anchor="middle" font-size="10.5" fill="#555">可行 ⇒ 更小的 t 也可行（把调度截短即可）⇒ 可行集合是前缀 ⇒ 二分答案</text>
+  <g filter="url(#sk)">
+    <rect x="56" y="432" width="568" height="32" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="452" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">截断不可省：n=2, b=[10,1,1] 的能量上界 ⌊Σ/n⌋=6，真实答案只有 2</text>
+</svg>

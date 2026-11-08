@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="512" viewBox="0 0 680 512" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="43" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="aor" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="680" height="512" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">示例演算：n = 2, batteries = [3,3,3] —— 二分三轮与 t*=4 的构造</text>
+  <path d="M 110 36 Q 340 46 570 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ====== Section 1: binary search table ====== -->
+  <text x="48" y="56" font-size="12.5" font-weight="bold" fill="#446688">① 二分过程（total = 9，hi = ⌊9/2⌋ = 4）</text>
+  <g filter="url(#sk)">
+    <rect x="60" y="62" width="36" height="26" rx="2" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="96" y="62" width="90" height="26" rx="2" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="186" y="62" width="50" height="26" rx="2" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="236" y="62" width="144" height="26" rx="2" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="380" y="62" width="82" height="26" rx="2" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="462" y="62" width="186" height="26" rx="2" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <g font-size="10.5" font-weight="bold" fill="#2b4a66" text-anchor="middle">
+    <text x="78" y="79">轮次</text>
+    <text x="141" y="79">区间 [lo,hi]</text>
+    <text x="211" y="79">mid</text>
+    <text x="308" y="79">Σ min(bᵢ,mid)</text>
+    <text x="421" y="79">判定</text>
+    <text x="555" y="79">动作</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="60" y="88" width="588" height="32" rx="2" fill="#fff" stroke="#ccc" stroke-width="1.1"/>
+  </g>
+  <g font-size="11" fill="#333" text-anchor="middle">
+    <text x="78" y="108">1</text><text x="141" y="108">[1,4]</text><text x="211" y="108">2</text>
+    <text x="308" y="108">3×min(3,2)=6</text>
+    <text x="421" y="108" font-weight="bold" fill="#2f5d24">6 ≥ 4 ✓</text>
+    <text x="555" y="108">ans=2, lo=3</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="60" y="120" width="588" height="32" rx="2" fill="#fff" stroke="#ccc" stroke-width="1.1"/>
+  </g>
+  <g font-size="11" fill="#333" text-anchor="middle">
+    <text x="78" y="140">2</text><text x="141" y="140">[3,4]</text><text x="211" y="140">3</text>
+    <text x="308" y="140">3×3 = 9</text>
+    <text x="421" y="140" font-weight="bold" fill="#2f5d24">9 ≥ 6 ✓</text>
+    <text x="555" y="140">ans=3, lo=4</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="60" y="152" width="588" height="32" rx="2" fill="#fff" stroke="#ccc" stroke-width="1.1"/>
+  </g>
+  <g font-size="11" fill="#333" text-anchor="middle">
+    <text x="78" y="172">3</text><text x="141" y="172">[4,4]</text><text x="211" y="172">4</text>
+    <text x="308" y="172">3×3 = 9</text>
+    <text x="421" y="172" font-weight="bold" fill="#2f5d24">9 ≥ 8 ✓</text>
+    <text x="555" y="172">ans=4, lo=5 &gt; hi</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="60" y="184" width="588" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="354" y="204" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24">lo &gt; hi 收敛，返回 ans = 4 ✓（三轮全可行，被上界 total/n 挡住）</text>
+
+  <!-- ====== Section 2: strip construction ====== -->
+  <text x="48" y="238" font-size="12.5" font-weight="bold" fill="#446688">② 构造：能量条首尾相接成 [0,9]，按 t = 4 切段（引理 2）</text>
+  <g filter="url(#sk)">
+    <rect x="70" y="258" width="120" height="28" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="190" y="258" width="120" height="28" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="310" y="258" width="120" height="28" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <path d="M 230 252 L 230 300" stroke="#b85450" stroke-width="1.6" stroke-dasharray="4,3"/>
+    <path d="M 390 252 L 390 300" stroke="#b85450" stroke-width="1.6" stroke-dasharray="4,3"/>
+  </g>
+  <g font-size="11" font-weight="bold" fill="#333" text-anchor="middle">
+    <text x="130" y="276">电池 0</text><text x="250" y="276">电池 1</text><text x="370" y="276">电池 2</text>
+  </g>
+  <text x="230" y="250" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#b85450">切口 4 落在电池 1 内</text>
+  <text x="391" y="250" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#b85450">切口 8</text>
+  <g font-size="9" fill="#888" text-anchor="middle">
+    <text x="70" y="312">0</text><text x="110" y="312">1</text><text x="150" y="312">2</text><text x="190" y="312">3</text>
+    <text x="230" y="312" font-weight="bold" fill="#b85450">4</text><text x="270" y="312">5</text><text x="310" y="312">6</text>
+    <text x="350" y="312">7</text><text x="390" y="312" font-weight="bold" fill="#b85450">8</text><text x="430" y="312">9</text>
+  </g>
+  <g font-size="10.5" font-weight="bold" text-anchor="middle">
+    <text x="150" y="330" fill="#2b4a66">电脑 0 ← [0,4]</text>
+    <text x="310" y="330" fill="#2b4a66">电脑 1 ← [4,8]</text>
+  </g>
+  <text x="438" y="330" font-size="9.5" fill="#999">舍弃 [8,9]</text>
+
+  <!-- ====== Section 3: timelines ====== -->
+  <text x="48" y="352" font-size="12.5" font-weight="bold" fill="#446688">③ 展开成两台电脑的时间线（同一电池的两段不重叠）</text>
+  <g filter="url(#sk)">
+    <rect x="70" y="362" width="120" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="190" y="362" width="40" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <path d="M 190 356 L 190 394" stroke="#b8860b" stroke-width="1.4" stroke-dasharray="4,3"/>
+    <rect x="70" y="416" width="80" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="150" y="416" width="80" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <path d="M 150 410 L 150 448" stroke="#b8860b" stroke-width="1.4" stroke-dasharray="4,3"/>
+  </g>
+  <text x="56" y="378" text-anchor="end" font-size="11" font-weight="bold" fill="#555">电脑 0</text>
+  <text x="130" y="379" text-anchor="middle" font-size="10" font-weight="bold" fill="#2b4a66">电池 0 [0,3]</text>
+  <text x="212" y="379" text-anchor="middle" font-size="9" font-weight="bold" fill="#7a5415">电池1</text>
+  <text x="196" y="356" font-size="9.5" font-weight="bold" fill="#b8860b">第 3 分钟末换 0→1</text>
+  <g font-size="9" fill="#888" text-anchor="middle">
+    <text x="70" y="400">0</text><text x="110" y="400">1</text><text x="150" y="400">2</text><text x="190" y="400">3</text><text x="230" y="400">4</text>
+  </g>
+  <text x="56" y="432" text-anchor="end" font-size="11" font-weight="bold" fill="#555">电脑 1</text>
+  <text x="110" y="433" text-anchor="middle" font-size="10" font-weight="bold" fill="#7a5415">电池 1 [0,2]</text>
+  <text x="190" y="433" text-anchor="middle" font-size="10" font-weight="bold" fill="#2f5d24">电池 2 [2,4]</text>
+  <text x="156" y="410" font-size="9.5" font-weight="bold" fill="#b8860b">第 2 分钟换 1→2</text>
+  <g font-size="9" fill="#888" text-anchor="middle">
+    <text x="70" y="454">0</text><text x="110" y="454">1</text><text x="150" y="454">2</text><text x="190" y="454">3</text><text x="230" y="454">4</text>
+  </g>
+
+  <!-- ====== callout ====== -->
+  <g filter="url(#sk)">
+    <rect x="56" y="464" width="568" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="481" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f5d24">电池 1 先供电脑 1（第 0–2 分钟）、再供电脑 0（第 3–4 分钟）：条长 3 ≤ t = 4 ⇒ 两段不重叠</text>
+  <text x="340" y="498" text-anchor="middle" font-size="10.5" fill="#555">这正是 min(b,t) 截断的几何意义；展开后与官方解释的调度完全一致 ✓</text>
+</svg>
