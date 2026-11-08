@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="470" viewBox="0 0 620 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="57" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="620" height="470" fill="#fdfcf7"/>
+  <text x="310" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">等价实现：两趟「扩散」—— 价值每传一格衰减 1</text>
+  <path d="M 150 40 Q 310 50 470 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="310" y="66" text-anchor="middle" font-size="12" fill="#666">以 dp = [2, 7, 4] 为例（示例 1 第 2 轮转移前的上一行）</text>
+
+  <text x="40" y="100" font-size="12" fill="#2b5d8e" font-weight="bold">扩散前</text>
+  <g filter="url(#sk)">
+    <rect x="180" y="76" width="70" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="280" y="76" width="70" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="380" y="76" width="70" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="215" y="101" text-anchor="middle" font-size="13.5" fill="#2b5d8e" font-weight="bold">2</text>
+  <text x="315" y="101" text-anchor="middle" font-size="13.5" fill="#2b5d8e" font-weight="bold">7</text>
+  <text x="415" y="101" text-anchor="middle" font-size="13.5" fill="#2b5d8e" font-weight="bold">4</text>
+  <g filter="url(#sk)" fill="none" stroke="#888" stroke-width="1.3">
+    <path d="M 258 95 L 272 95" marker-end="url(#ar)"/>
+    <path d="M 358 95 L 372 95" marker-end="url(#ar)"/>
+  </g>
+  <text x="265" y="88" text-anchor="middle" font-size="10" fill="#888">−1</text>
+  <text x="365" y="88" text-anchor="middle" font-size="10" fill="#888">−1</text>
+
+  <path d="M 215 118 L 215 142" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="238" y="132" font-size="11" fill="#555" font-family="monospace">左趟 c=1…n−1：dp[c] = max(dp[c], dp[c−1]−1)</text>
+
+  <text x="40" y="174" font-size="12" fill="#2b5d8e" font-weight="bold">左趟后 →</text>
+  <g filter="url(#sk)">
+    <rect x="180" y="150" width="70" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="280" y="150" width="70" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="380" y="150" width="70" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="215" y="175" text-anchor="middle" font-size="13.5" fill="#2b5d8e" font-weight="bold">2</text>
+  <text x="315" y="175" text-anchor="middle" font-size="13.5" fill="#2b5d8e" font-weight="bold">7</text>
+  <text x="415" y="175" text-anchor="middle" font-size="13.5" fill="#2f5d2f" font-weight="bold">6</text>
+  <text x="470" y="170" font-size="10.5" fill="#4a7a3a" font-family="monospace">max(4, 7−1) = 6</text>
+  <text x="470" y="184" font-size="10" fill="#888">7 向右传一步变 6</text>
+
+  <path d="M 215 192 L 215 216" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="238" y="206" font-size="11" fill="#555" font-family="monospace">右趟 c=n−2…0：dp[c] = max(dp[c], dp[c+1]−1)</text>
+
+  <text x="40" y="248" font-size="12" fill="#2b5d8e" font-weight="bold">右趟后 ←</text>
+  <g filter="url(#sk)">
+    <rect x="180" y="224" width="70" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="280" y="224" width="70" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="380" y="224" width="70" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="215" y="249" text-anchor="middle" font-size="13.5" fill="#2f5d2f" font-weight="bold">6</text>
+  <text x="315" y="249" text-anchor="middle" font-size="13.5" fill="#2b5d8e" font-weight="bold">7</text>
+  <text x="415" y="249" text-anchor="middle" font-size="13.5" fill="#2b5d8e" font-weight="bold">6</text>
+  <text x="470" y="244" font-size="10.5" fill="#4a7a3a" font-family="monospace">max(2, 7−1) = 6</text>
+  <text x="470" y="258" font-size="10" fill="#888">7 向左传一步变 6</text>
+
+  <g filter="url(#sk)">
+    <rect x="30" y="286" width="560" height="66" rx="8" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="310" y="310" text-anchor="middle" font-size="12.5" fill="#2f5d2f" font-family="monospace" font-weight="bold">扩散两趟后 dp[c] = max over c′ of ( 原 dp[c′] − |c−c′| )</text>
+  <text x="310" y="336" text-anchor="middle" font-size="11.5" fill="#2f5d2f">恰好就是转移里那个 max —— 与前后缀写法完全等价（§5 引理 3）</text>
+
+  <g filter="url(#sk)">
+    <rect x="30" y="370" width="560" height="78" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="310" y="392" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold">原地、免哨兵、免辅助数组——这就是图像处理里 L1 距离变换的两趟扫描</text>
+  <text x="310" y="414" text-anchor="middle" font-size="11.5" fill="#b85450">「绕路不赚」由三角不等式保证：|c₀−c₁| + |c₀−c| ≥ |c−c₁|</text>
+  <text x="310" y="436" text-anchor="middle" font-size="11" fill="#b85450">（7 先向右再折返的传递路径，总衰减不小于直达距离）</text>
+</svg>

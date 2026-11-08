@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="566" viewBox="0 0 560 566" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="63" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="566" fill="#fdfcf7"/>
+  <text x="280" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：逐行滚动，每行「两趟扩散 + 累加」</text>
+  <path d="M 130 40 Q 280 50 430 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <ellipse cx="175" cy="72" rx="42" ry="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="175" y="77" text-anchor="middle" font-size="12.5" fill="#2f5d2f" font-weight="bold">开始</text>
+  <path d="M 175 90 L 175 110" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="93" y="114" width="164" height="32" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="175" y="135" text-anchor="middle" font-size="12" fill="#2b5d8e" font-family="monospace" font-weight="bold">dp ← points[0]</text>
+  <text x="272" y="128" font-size="10" fill="#888">第 0 行没有上一行，</text>
+  <text x="272" y="141" font-size="10" fill="#888">选哪格得哪格，无扣分</text>
+  <path d="M 175 146 L 175 166" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <polygon points="175,170 265,205 175,240 85,205" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="175" y="201" text-anchor="middle" font-size="12" fill="#2b5d8e" font-weight="bold">还有未处理的</text>
+  <text x="175" y="217" text-anchor="middle" font-size="12" fill="#2b5d8e" font-weight="bold">行 r？（1 ≤ r ≤ m−1）</text>
+
+  <path d="M 265 205 H 396" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="322" y="196" text-anchor="middle" font-size="11.5" fill="#2f5d2f" font-weight="bold">否</text>
+  <g filter="url(#sk)">
+    <ellipse cx="446" cy="205" rx="52" ry="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="446" y="210" text-anchor="middle" font-size="12" fill="#2f5d2f" font-family="monospace" font-weight="bold">返回 max(dp)</text>
+
+  <path d="M 175 240 L 175 260" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="186" y="254" font-size="11.5" fill="#2f5d2f" font-weight="bold">是</text>
+
+  <g filter="url(#sk)">
+    <rect x="62" y="264" width="226" height="40" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="175" y="281" text-anchor="middle" font-size="11.5" fill="#2b5d8e" font-weight="bold">左趟：c = 1 … n−1（从左往右）</text>
+  <text x="175" y="298" text-anchor="middle" font-size="11.5" fill="#2b5d8e" font-family="monospace" font-weight="bold">dp[c] = max(dp[c], dp[c−1] − 1)</text>
+  <text x="304" y="284" font-size="10" fill="#888">读的是「已更新的左邻」，</text>
+  <text x="304" y="297" font-size="10" fill="#888">衰减链才能一格格传下去</text>
+  <path d="M 175 304 L 175 324" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="62" y="328" width="226" height="40" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="175" y="345" text-anchor="middle" font-size="11.5" fill="#2b5d8e" font-weight="bold">右趟：c = n−2 … 0（从右往左）</text>
+  <text x="175" y="362" text-anchor="middle" font-size="11.5" fill="#2b5d8e" font-family="monospace" font-weight="bold">dp[c] = max(dp[c], dp[c+1] − 1)</text>
+  <text x="304" y="348" font-size="10" fill="#888">方向反了或只跑一趟，</text>
+  <text x="304" y="361" font-size="10" fill="#888">就学不到另一侧的更优源</text>
+  <path d="M 175 368 L 175 388" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="62" y="392" width="226" height="36" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="175" y="415" text-anchor="middle" font-size="12" fill="#8f6b1f" font-family="monospace" font-weight="bold">dp[c] += points[r][c]</text>
+  <text x="304" y="408" font-size="10" fill="#b85450" font-weight="bold">先扩散、后累加——</text>
+  <text x="304" y="421" font-size="10" fill="#b85450">顺序不能反（§8）</text>
+
+  <path d="M 62 410 L 46 410 Q 38 410 38 400 L 38 215 Q 38 205 48 205 L 81 205" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="30" y="330" font-size="10.5" fill="#888" transform="rotate(-90 30 330)">回到循环，处理下一行</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="462" width="480" height="88" rx="6" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="280" y="484" text-anchor="middle" font-size="11.5" fill="#2f5d2f" font-weight="bold">时间 O(m·n)：每行至多三趟线性扫描（m·n ≤ 10⁵，瞬时通过）</text>
+  <text x="280" y="505" text-anchor="middle" font-size="11.5" fill="#2f5d2f">空间 O(n)：原地滚动，零辅助数组、零哨兵</text>
+  <text x="280" y="526" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold">C++ 记得 long long：答案上界 m × 10⁵ = 10¹⁰，超 int32（§8）</text>
+  <text x="280" y="543" text-anchor="middle" font-size="10.5" fill="#888">对照暴力 O(m·n²)：n = 10⁵ 时单行转移就 10¹⁰ 次——必 TLE</text>
+</svg>
