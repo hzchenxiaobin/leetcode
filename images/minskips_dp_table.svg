@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="520" viewBox="0 0 660 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="660" height="520" fill="#fdfcf7"/>
+  <text x="330" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例 2 演算：DP 表与答案提取</text>
+  <text x="330" y="52" text-anchor="middle" font-size="12" fill="#888">dist = [7,3,5,5]，speed = 2，limit = hoursBefore × speed = 20（单位：千米）</text>
+
+  <!-- column headers -->
+  <text x="185" y="70" text-anchor="end" font-size="10.5" fill="#999">行：已走完前 i+1 条路</text>
+  <text x="365" y="70" text-anchor="middle" font-size="10.5" fill="#999">列：至多跳过 j 次休息</text>
+  <g font-size="12" fill="#555" text-anchor="middle">
+    <text x="233" y="86">j=0</text>
+    <text x="299" y="86">j=1</text>
+    <text x="365" y="86">j=2</text>
+    <text x="431" y="86">j=3</text>
+  </g>
+
+  <!-- ===== grid: origin (200, 92), cell 66x48 ===== -->
+  <!-- row i=0 -->
+  <g filter="url(#sk)"><rect x="200" y="92" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="233" y="120" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">7</text>
+  <g filter="url(#sk)"><rect x="266" y="92" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="299" y="120" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">7</text>
+  <g filter="url(#sk)"><rect x="332" y="92" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="365" y="120" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">7</text>
+  <g filter="url(#sk)"><rect x="398" y="92" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="431" y="120" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">7</text>
+
+  <!-- row i=1 -->
+  <g filter="url(#sk)"><rect x="200" y="140" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="233" y="168" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">11</text>
+  <g filter="url(#sk)"><rect x="266" y="140" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="299" y="168" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">10</text>
+  <g filter="url(#sk)"><rect x="332" y="140" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="365" y="168" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">10</text>
+  <g filter="url(#sk)"><rect x="398" y="140" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="431" y="168" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">10</text>
+
+  <!-- row i=2 -->
+  <g filter="url(#sk)"><rect x="200" y="188" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="233" y="216" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">17</text>
+  <g filter="url(#sk)"><rect x="266" y="188" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="299" y="216" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">15</text>
+  <g filter="url(#sk)"><rect x="332" y="188" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="365" y="216" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">15</text>
+  <g filter="url(#sk)"><rect x="398" y="188" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="431" y="216" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">15</text>
+
+  <!-- row i=3 -->
+  <g filter="url(#sk)"><rect x="200" y="236" width="66" height="48" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/></g>
+  <text x="233" y="264" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">23</text>
+  <g filter="url(#sk)"><rect x="266" y="236" width="66" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="299" y="264" text-anchor="middle" font-size="15" font-weight="bold" fill="#7a5415">21</text>
+  <g filter="url(#sk)"><rect x="332" y="236" width="66" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/></g>
+  <text x="365" y="264" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">20</text>
+  <g filter="url(#sk)"><rect x="398" y="236" width="66" height="48" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.2"/></g>
+  <text x="431" y="264" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">20</text>
+
+  <!-- row labels -->
+  <g font-size="12" fill="#555" text-anchor="end">
+    <text x="188" y="118">i=0</text>
+    <text x="188" y="166">i=1</text>
+    <text x="188" y="214">i=2</text>
+    <text x="188" y="262">i=3</text>
+  </g>
+
+  <!-- transitions on the grid -->
+  <!-- skip into f[1][1]: from cell(0,0) to cell(1,1) -->
+  <path d="M 240 122 Q 265 140 292 152" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)" opacity="0.85"/>
+  <text x="222" y="140" text-anchor="end" font-size="9.5" fill="#7a5415" font-weight="bold">跳 7+3=10 ✓</text>
+  <!-- rest into f[1][1]: from cell(0,1) down -->
+  <path d="M 299 126 L 299 150" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)" opacity="0.85"/>
+  <text x="306" y="140" font-size="9.5" fill="#2b6e9e">休 11</text>
+  <!-- skip into f[3][2]: from cell(2,1) to cell(3,2) -->
+  <path d="M 306 218 Q 330 236 358 250" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arO)" filter="url(#sk)" opacity="0.85"/>
+  <text x="288" y="238" text-anchor="end" font-size="9.5" fill="#7a5415" font-weight="bold">跳 15+5=20 ✓</text>
+  <!-- rest into f[3][2]: from cell(2,2) down -->
+  <path d="M 365 222 L 365 246" stroke="#4a8edb" stroke-width="1.8" fill="none" marker-end="url(#arB)" filter="url(#sk)" opacity="0.85"/>
+  <text x="372" y="238" font-size="9.5" fill="#2b6e9e">休 21</text>
+
+  <!-- ===== right callouts ===== -->
+  <g filter="url(#sk)">
+    <rect x="490" y="100" width="160" height="92" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2"/>
+  </g>
+  <text x="570" y="120" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">f[1][1] 的计算</text>
+  <text x="570" y="140" text-anchor="middle" font-size="10" fill="#2b6e9e">休息：⌈7/2⌉·2+3 = 11</text>
+  <text x="570" y="158" text-anchor="middle" font-size="10" fill="#7a5415">跳过：7+3 = 10 ← 取 min</text>
+  <text x="570" y="180" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">f[1][1] = 10</text>
+
+  <g filter="url(#sk)">
+    <rect x="490" y="204" width="160" height="92" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2"/>
+  </g>
+  <text x="570" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">f[3][2] 的计算</text>
+  <text x="570" y="244" text-anchor="middle" font-size="10" fill="#2b6e9e">休息：⌈15/2⌉·2+5 = 21</text>
+  <text x="570" y="262" text-anchor="middle" font-size="10" fill="#7a5415">跳过：15+5 = 20 ← 取 min</text>
+  <text x="570" y="284" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">f[3][2] = 20 ✓</text>
+
+  <!-- ===== answer extraction box ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="312" width="590" height="88" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="336" font-size="12.5" font-weight="bold" fill="#2b6e9e">逐 j 检查 f[3][j] ≤ 20：</text>
+  <text x="80" y="362" font-size="12" fill="#444">j=0：23 ✗</text>
+  <text x="185" y="362" font-size="12" fill="#7a5415">j=1：21 ✗（就差 1 千米！）</text>
+  <text x="360" y="362" font-size="12" font-weight="bold" fill="#2e6e2e">j=2：20 ≤ 20 ✓</text>
+  <text x="510" y="362" font-size="12" font-weight="bold" fill="#2e6e2e">→ 返回 2</text>
+  <text x="80" y="386" font-size="10" fill="#888">j=3 的 20 同样可行，但 j=2 更小 —— 由单调性，可行 j 是一段后缀，第一个可行即最小跳过数</text>
+
+  <!-- ===== backtracking box ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="416" width="590" height="86" rx="10" fill="#eaf6ee" stroke="#4a7a3a" stroke-width="1.4" stroke-dasharray="6 3"/>
+  </g>
+  <text x="355" y="440" text-anchor="middle" font-size="11" fill="#444">方案回溯：f[3][2]=20 ← 跳过休息2（15+5）← f[2][1]=15 ← 休息（⌈10/2⌉·2+5）</text>
+  <text x="355" y="458" text-anchor="middle" font-size="11" fill="#444">← f[1][1]=10 ← 跳过休息0（7+3）← f[0][0]=7</text>
+  <text x="355" y="484" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">即跳过第 1、3 次休息（1 编号），总时间恰为 20 / 2 = 10 小时，与官方解释一致</text>
+</svg>

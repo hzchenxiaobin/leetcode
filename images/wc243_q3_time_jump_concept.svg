@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="430" fill="#fafafa"/>
+
+  <text x="330" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">核心观察：双堆分工 + 时间快进（事件驱动模拟）</text>
+
+  <!-- 时间轴 -->
+  <text x="40" y="60" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">① 事件只有两类：任务到达（第 j 秒）与服务器完成（busy 堆顶）</text>
+  <line x1="70" y1="112" x2="590" y2="112" stroke="#888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="46" y="116" font-size="10" fill="#888" filter="url(#rough2)">t</text>
+
+  <!-- 到达事件（示例1：tasks[0..5] 在 t=0..5 到达） -->
+  <g filter="url(#rough2)">
+    <rect x="88" y="86" width="26" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="101" y="100" text-anchor="middle" font-size="9.5" fill="#446688">j0</text>
+    <rect x="152" y="86" width="26" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="165" y="100" text-anchor="middle" font-size="9.5" fill="#446688">j1</text>
+    <rect x="216" y="86" width="26" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="229" y="100" text-anchor="middle" font-size="9.5" fill="#446688">j2</text>
+    <rect x="280" y="86" width="26" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="293" y="100" text-anchor="middle" font-size="9.5" fill="#446688">j3</text>
+    <rect x="344" y="86" width="26" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="357" y="100" text-anchor="middle" font-size="9.5" fill="#446688">j4</text>
+    <rect x="408" y="86" width="26" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="421" y="100" text-anchor="middle" font-size="9.5" fill="#446688">j5</text>
+    <text x="480" y="100" font-size="9.5" fill="#888">到达时刻 = 下标</text>
+  </g>
+
+  <!-- 完成事件 -->
+  <g filter="url(#rough2)">
+    <rect x="139" y="120" width="26" height="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="152" y="134" text-anchor="middle" font-size="9" fill="#d6a040">完</text>
+    <rect x="267" y="120" width="26" height="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="280" y="134" text-anchor="middle" font-size="9" fill="#d6a040">完</text>
+    <rect x="395" y="120" width="52" height="20" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <text x="421" y="134" text-anchor="middle" font-size="9" fill="#b85450" font-weight="bold">完×3</text>
+    <text x="480" y="134" font-size="9.5" fill="#888">t=5 三台同刻完成</text>
+  </g>
+
+  <!-- 快进弧线：t=4 → t=5 -->
+  <path d="M 357 148 C 370 178, 420 178, 428 144" stroke="#b85450" stroke-width="2" stroke-dasharray="5,4"
+        fill="none" marker-end="url(#arrRed)" filter="url(#rough2)"/>
+  <text x="392" y="190" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">free 空 ⟹ 一步快进</text>
+  <text x="392" y="204" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">不逐秒空转，跳到 busy 堆顶完成时刻</text>
+
+  <!-- 双堆流转 -->
+  <text x="40" y="238" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">② 空闲堆 free：键 (权重, 下标)</text>
+  <text x="392" y="238" font-size="11.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">③ 忙碌堆 busy：键 (完成, 权重, 下标)</text>
+
+  <rect x="88" y="254" width="86" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="4" filter="url(#rough2)"/>
+  <text x="131" y="274" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">(2, #2)</text>
+  <rect x="56" y="294" width="72" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="92" y="311" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">(3, #0)</text>
+  <rect x="136" y="294" width="72" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="172" y="311" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">(3, #1)</text>
+  <path d="M 131 284 L 92 294" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <path d="M 131 284 L 172 294" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="56" y="338" font-size="9.5" fill="#888" filter="url(#rough2)">堆顶 = 权重最小、同则下标最小</text>
+  <text x="56" y="352" font-size="9.5" fill="#888" filter="url(#rough2)">—— 题目选择规则 = 堆序</text>
+
+  <rect x="414" y="254" width="104" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4" filter="url(#rough2)"/>
+  <text x="466" y="274" text-anchor="middle" font-size="10.5" fill="#333" font-weight="bold" filter="url(#rough2)">(5, 2, #2)</text>
+  <rect x="354" y="294" width="90" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="399" y="311" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">(5, 3, #0)</text>
+  <rect x="452" y="294" width="90" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="497" y="311" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">(5, 3, #1)</text>
+  <path d="M 466 284 L 399 294" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <path d="M 466 284 L 497 294" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="354" y="338" font-size="9.5" fill="#888" filter="url(#rough2)">堆顶 = 最早完成 —— 驱动时间快进</text>
+  <text x="354" y="352" font-size="9.5" fill="#888" filter="url(#rough2)">free 空时跳到它的完成时刻</text>
+
+  <!-- 流转箭头 -->
+  <path d="M 240 268 C 290 268, 300 250, 348 250" stroke="#4a7a3a" stroke-width="2" fill="none"
+        marker-end="url(#arrGreen)" filter="url(#rough2)"/>
+  <text x="294" y="242" text-anchor="middle" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">分配：pop 堆顶</text>
+  <path d="M 348 314 C 300 314, 290 332, 240 332" stroke="#d6a040" stroke-width="2" fill="none"
+        marker-end="url(#arrOrange)" filter="url(#rough2)"/>
+  <text x="294" y="352" text-anchor="middle" font-size="10" fill="#d6a040" font-weight="bold" filter="url(#rough2)">释放：while 完成 ≤ now</text>
+
+  <!-- 守恒说明 -->
+  <rect x="40" y="374" width="580" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="10" filter="url(#rough2)"/>
+  <text x="330" y="391" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">守恒不变量：|free| + |busy| = n（每台服务器要么空闲要么忙碌）</text>
+  <text x="330" y="407" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">⟹ free 空时 busy 必非空，快进必有目标；堆操作总数 O(n + m)</text>
+</svg>

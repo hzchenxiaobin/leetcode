@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="420" viewBox="0 0 680 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="680" height="420" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">状态设计与两条转移</text>
+  <path d="M 210 40 Q 340 48 470 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== left: state definition ===== -->
+  <g filter="url(#sk)">
+    <rect x="50" y="60" width="300" height="80" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="200" y="84" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">f[i][j] = 已走完第 0..i 条路、至多跳过</text>
+  <text x="200" y="103" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">j 次休息时，最早的到达时刻</text>
+  <text x="200" y="124" text-anchor="middle" font-size="11" fill="#888">（单位：小时 × speed，即千米 —— 全程整数）</text>
+
+  <!-- ===== states ===== -->
+  <g filter="url(#sk)">
+    <rect x="70" y="170" width="110" height="48" rx="6" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.4"/>
+  </g>
+  <text x="125" y="199" text-anchor="middle" font-size="14" fill="#555">f[i-1][j-1]</text>
+
+  <g filter="url(#sk)">
+    <rect x="210" y="170" width="110" height="48" rx="6" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.4"/>
+  </g>
+  <text x="265" y="199" text-anchor="middle" font-size="14" fill="#555">f[i-1][j]</text>
+
+  <g filter="url(#sk)">
+    <rect x="210" y="300" width="110" height="48" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="265" y="329" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e">f[i][j]</text>
+
+  <!-- rest arrow (vertical, blue) -->
+  <path d="M 265 222 L 265 296" stroke="#4a8edb" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="276" y="248" font-size="12" font-weight="bold" fill="#2b6e9e">休息：等整点再出发</text>
+  <text x="276" y="266" font-size="11" fill="#2b6e9e">⌈f/speed⌉·speed + dist[i]</text>
+
+  <!-- skip arrow (diagonal, orange) -->
+  <path d="M 165 222 Q 190 260 250 298" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="60" y="252" font-size="12" font-weight="bold" fill="#7a5415">跳过：立即出发</text>
+  <text x="60" y="270" font-size="11" fill="#7a5415">f + dist[i]，j 增加 1</text>
+
+  <!-- ===== left bottom: init & answer ===== -->
+  <g filter="url(#sk)">
+    <rect x="50" y="360" width="300" height="50" rx="8" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4" stroke-dasharray="5 3"/>
+  </g>
+  <text x="200" y="380" text-anchor="middle" font-size="11" fill="#5a3a7a">边界：f[0][j] = dist[0]（首条路前没有休息可跳）</text>
+  <text x="200" y="399" text-anchor="middle" font-size="11" fill="#5a3a7a">答案 = 最小的 j 使 f[n-1][j] ≤ hoursBefore × speed</text>
+
+  <!-- ===== right column ===== -->
+  <g filter="url(#sk)">
+    <rect x="390" y="60" width="250" height="88" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="515" y="84" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">单调性</text>
+  <text x="515" y="106" text-anchor="middle" font-size="11" fill="#444">f[i][j] ≥ f[i][j+1]（跳过永不吃亏）</text>
+  <text x="515" y="126" text-anchor="middle" font-size="11" fill="#444">→ 可行的 j 构成一段后缀</text>
+  <text x="515" y="142" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">第一个满足不等式的 j 即答案</text>
+
+  <g filter="url(#sk)">
+    <rect x="390" y="162" width="250" height="88" rx="10" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.4"/>
+  </g>
+  <text x="515" y="186" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a3a7a">无后效性</text>
+  <text x="515" y="208" text-anchor="middle" font-size="11" fill="#444">未来只由（当前时刻，剩余跳数）决定</text>
+  <text x="515" y="228" text-anchor="middle" font-size="11" fill="#444">与「具体跳过了哪几次」无关</text>
+  <text x="515" y="244" text-anchor="middle" font-size="11" font-weight="bold" fill="#5a3a7a">→ 二维状态 (i, j) 是充分的</text>
+
+  <g filter="url(#sk)">
+    <rect x="390" y="264" width="250" height="88" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="515" y="288" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">滚动数组</text>
+  <text x="515" y="310" text-anchor="middle" font-size="11" fill="#444">f[i][j] 只依赖上一行 → 压成一维</text>
+  <text x="515" y="330" text-anchor="middle" font-size="11" fill="#444">内层 j 从大到小更新</text>
+  <text x="515" y="346" text-anchor="middle" font-size="11" font-weight="bold" fill="#7a5415">（0-1 背包同款方向）</text>
+  <text x="515" y="376" text-anchor="middle" font-size="10.5" fill="#999">j 的范围：0 ~ n-1（一共只有 n-1 个休息）</text>
+  <text x="515" y="396" text-anchor="middle" font-size="10.5" fill="#999">时间 O(n²)，空间 O(n)</text>
+</svg>
