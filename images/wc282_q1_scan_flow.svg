@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 490"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="490" fill="#fafafa"/>
+  <text x="360" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：一次遍历 —— 长度守卫 → 逐位比较 → 计数</text>
+
+  <!-- side note -->
+  <rect x="420" y="44" width="270" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <g font-size="9.5" fill="#7a5415">
+    <text x="555" y="64" text-anchor="middle" filter="url(#rough2)">每个词恰好判定一次（过滤计数框架）</text>
+    <text x="555" y="82" text-anchor="middle" filter="url(#rough2)">判定谓词 = 引理右侧：|w| ≥ m 且前 m 位相等</text>
+  </g>
+
+  <!-- start -->
+  <rect x="140" y="44" width="180" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="230" y="69" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">开始：ans = 0，m = |pref|</text>
+  <path d="M 230 86 V 104" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop: next word -->
+  <rect x="140" y="108" width="180" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="230" y="128" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">取 words 中下一个词 w</text>
+  <text x="230" y="146" text-anchor="middle" font-size="9.5" fill="#7a8ba6" filter="url(#rough2)">（取尽则转「返回 ans」）</text>
+  <path d="M 230 156 V 176" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond 1: length guard -->
+  <polygon points="230,180 306,218 230,256 154,218" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="230" y="214" text-anchor="middle" font-size="11.5" fill="#7a5415" filter="url(#rough2)">|w| ≥ m ?</text>
+  <text x="230" y="230" text-anchor="middle" font-size="9" fill="#a8781f" filter="url(#rough2)">（长度守卫）</text>
+
+  <!-- no: skip -->
+  <path d="M 306 218 H 404" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="350" y="210" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="410" y="196" width="150" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="485" y="216" text-anchor="middle" font-size="11" fill="#8f3a36" filter="url(#rough2)">跳过 w</text>
+  <text x="485" y="232" text-anchor="middle" font-size="9.5" fill="#a8625e" filter="url(#rough2)">（0 次字符比较）</text>
+
+  <!-- yes: compare -->
+  <path d="M 230 256 V 274" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="242" y="270" font-size="10.5" fill="#2e5b2e" filter="url(#rough2)">是</text>
+  <rect x="140" y="278" width="180" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="230" y="300" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">j = 0 … m−1 逐位比较</text>
+  <text x="230" y="318" text-anchor="middle" font-size="10.5" fill="#33506b" filter="url(#rough2)">w[j] 与 pref[j]</text>
+  <text x="230" y="330" text-anchor="middle" font-size="9.5" fill="#7a8ba6" filter="url(#rough2)">（失配立即 break）</text>
+  <path d="M 230 334 V 352" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond 2: all equal -->
+  <polygon points="230,356 300,394 230,432 160,394" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="230" y="390" text-anchor="middle" font-size="11" fill="#7a5415" filter="url(#rough2)">前 m 位全部相等 ?</text>
+  <text x="230" y="406" text-anchor="middle" font-size="9" fill="#a8781f" filter="url(#rough2)">（是前缀判定）</text>
+
+  <!-- yes: count -->
+  <path d="M 300 394 H 404" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="348" y="386" text-anchor="middle" font-size="10.5" fill="#2e5b2e" filter="url(#rough2)">是</text>
+  <rect x="410" y="372" width="150" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="485" y="398" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5b2e" filter="url(#rough2)">ans += 1</text>
+
+  <!-- return channel: no / counted / skipped all go back to loop -->
+  <path d="M 230 432 V 452 H 620" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <text x="244" y="448" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <path d="M 560 218 H 620" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M 560 394 H 620" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M 620 452 V 132 H 328" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="648" y="296" font-size="9.5" fill="#888" transform="rotate(-90 648 296)" text-anchor="middle" filter="url(#rough2)">回到「取下一个词」</text>
+
+  <!-- exhausted: return ans -->
+  <path d="M 140 132 H 60 V 451 H 154" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="52" y="296" font-size="9.5" fill="#888" transform="rotate(-90 52 296)" text-anchor="middle" filter="url(#rough2)">words 取尽</text>
+  <rect x="160" y="430" width="140" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="230" y="455" text-anchor="middle" font-size="12" font-weight="bold" fill="#33506b" filter="url(#rough2)">返回 ans</text>
+</svg>
