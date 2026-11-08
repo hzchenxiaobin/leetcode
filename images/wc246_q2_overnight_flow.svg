@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="400" viewBox="0 0 680 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+  </defs>
+  <rect width="680" height="400" fill="#fdfcf7"/>
+  <text x="340" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：解析 → 通宵展开 → 取整相减</text>
+  <path d="M 180 42 Q 340 50 500 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1: parse -->
+  <g filter="url(#sk)">
+    <rect x="225" y="60" width="230" height="40" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" font-family="monospace">解析 "HH:MM" → 分钟 s、f</text>
+  <g filter="url(#sk)">
+    <path d="M 340 100 L 340 120" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- diamond: overnight? -->
+  <g filter="url(#sk)">
+    <polygon points="340,124 424,158 340,192 256,158" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="154" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415" font-family="monospace">f &lt; s ?</text>
+  <text x="340" y="172" text-anchor="middle" font-size="10" fill="#888">通宵会话？</text>
+
+  <!-- yes: unroll -->
+  <g filter="url(#sk)">
+    <path d="M 424 158 L 458 158" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="441" y="148" text-anchor="middle" font-size="12" fill="#b03a3a">是</text>
+  <g filter="url(#sk)">
+    <rect x="462" y="134" width="186" height="50" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="555" y="156" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#7a5415" font-family="monospace">f += 1440</text>
+  <text x="555" y="174" text-anchor="middle" font-size="9.5" fill="#888">环形时钟 → 线性区间</text>
+
+  <!-- merge dashed path -->
+  <g filter="url(#sk)">
+    <path d="M 555 184 L 555 220 Q 555 252 470 252" stroke="#c98a2b" stroke-width="1.6" stroke-dasharray="5 3" fill="none" marker-end="url(#ao)"/>
+  </g>
+  <text x="566" y="214" font-size="9.5" fill="#7a5415">展开后统一处理</text>
+
+  <!-- no: straight down -->
+  <g filter="url(#sk)">
+    <path d="M 340 192 L 340 222" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="352" y="212" font-size="12" fill="#2e6e2e">否</text>
+
+  <!-- formula -->
+  <g filter="url(#sk)">
+    <rect x="185" y="228" width="310" height="50" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="250" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" font-family="monospace">ans = max(0, ⌊f/15⌋ − ⌈s/15⌉)</text>
+  <text x="340" y="269" text-anchor="middle" font-size="10" fill="#666" font-family="monospace">整除实现：⌈s/15⌉ = (s+14)/15</text>
+
+  <!-- return -->
+  <g filter="url(#sk)">
+    <path d="M 340 278 L 340 300" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="270" y="304" width="140" height="34" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="326" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" font-family="monospace">返回 ans</text>
+
+  <!-- bottom notes -->
+  <g filter="url(#sk)">
+    <rect x="40" y="352" width="600" height="40" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="340" y="368" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b2b2b">通宵即 f &lt; s：+1440 把次日 00:00 接在今天 24:00 之后，环形剪开拉直</text>
+  <text x="340" y="385" text-anchor="middle" font-size="11" fill="#444">max(0, ·) 兜底：同一刻钟的短会话（12:01→12:10）公式为 −1，截断为 0</text>
+</svg>
