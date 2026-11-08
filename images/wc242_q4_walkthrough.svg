@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="21" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 1 倒序填表：stones = [-1, 2, -3, 4, -5]</text>
+  <path d="M 240 44 Q 470 52 700 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== pre row ===== -->
+  <text x="470" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">① 前缀和（1-indexed）：pre[j] = 前 j 块之和</text>
+
+  <g font-size="10.5">
+    <text x="195" y="102" text-anchor="middle" fill="#888">j=1</text>
+    <text x="355" y="102" text-anchor="middle" fill="#888">j=2</text>
+    <text x="515" y="102" text-anchor="middle" fill="#888">j=3</text>
+    <text x="675" y="102" text-anchor="middle" fill="#888">j=4</text>
+    <text x="835" y="102" text-anchor="middle" fill="#7a2828" font-weight="bold">j=5=n</text>
+
+    <g filter="url(#sk)"><rect x="130" y="106" width="130" height="38" rx="6" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="195" y="130" text-anchor="middle" font-size="13" fill="#999">pre=-1</text>
+    <g filter="url(#sk)"><rect x="290" y="106" width="130" height="38" rx="6" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="355" y="130" text-anchor="middle" font-size="13" fill="#999">pre=1</text>
+    <g filter="url(#sk)"><rect x="450" y="106" width="130" height="38" rx="6" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="515" y="130" text-anchor="middle" font-size="13" fill="#999">pre=-2</text>
+    <g filter="url(#sk)"><rect x="610" y="106" width="130" height="38" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+    <text x="675" y="130" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">pre=2</text>
+    <g filter="url(#sk)"><rect x="770" y="106" width="130" height="38" rx="6" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="835" y="130" text-anchor="middle" font-size="13" fill="#999">pre=-3</text>
+  </g>
+
+  <!-- ===== dp row ===== -->
+  <text x="470" y="182" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#5a3a7a">② 倒序递推 dp：dp[i] = max(dp[i+1], pre[i+1] − dp[i+1])，dp[4] = pre[5]</text>
+
+  <g font-size="10.5">
+    <!-- dp[1] answer -->
+    <g filter="url(#sk)"><rect x="130" y="196" width="130" height="66" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="2.4"/></g>
+    <text x="195" y="222" text-anchor="middle" font-size="16" fill="#7a5415" font-weight="bold">5</text>
+    <text x="195" y="244" text-anchor="middle" font-size="10" fill="#7a5415" font-family="monospace">max(5, 1−5)</text>
+    <text x="195" y="257" text-anchor="middle" font-size="9" fill="#c98a2b" font-weight="bold">dp[1] = 答案</text>
+    <!-- dp[2] -->
+    <g filter="url(#sk)"><rect x="290" y="196" width="130" height="66" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+    <text x="355" y="222" text-anchor="middle" font-size="16" fill="#2e6e2e" font-weight="bold">5</text>
+    <text x="355" y="244" text-anchor="middle" font-size="10" fill="#2e6e2e" font-family="monospace">max(5, −2−5)</text>
+    <!-- dp[3] -->
+    <g filter="url(#sk)"><rect x="450" y="196" width="130" height="66" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+    <text x="515" y="222" text-anchor="middle" font-size="16" fill="#2e6e2e" font-weight="bold">5</text>
+    <text x="515" y="244" text-anchor="middle" font-size="10" fill="#2e6e2e" font-family="monospace">max(−3, 2+3)</text>
+    <!-- dp[4] -->
+    <g filter="url(#sk)"><rect x="610" y="196" width="130" height="66" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+    <text x="675" y="222" text-anchor="middle" font-size="16" fill="#2b6e9e" font-weight="bold">−3</text>
+    <text x="675" y="244" text-anchor="middle" font-size="10" fill="#2b6e9e" font-family="monospace">= pre[5] = −3</text>
+    <!-- dp[5] sentinel -->
+    <g filter="url(#sk)"><rect x="770" y="196" width="130" height="66" rx="6" fill="#f4f4f4" stroke="#bbb" stroke-width="1.2" stroke-dasharray="4 3"/></g>
+    <text x="835" y="222" text-anchor="middle" font-size="14" fill="#999">0</text>
+    <text x="835" y="244" text-anchor="middle" font-size="9.5" fill="#999">dp[5]=0 哨兵</text>
+  </g>
+
+  <!-- backward arrows between dp cells -->
+  <path d="M 772 268 Q 675 296 614 268" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 612 268 Q 515 296 454 268" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 452 268 Q 355 296 294 268" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 292 268 Q 195 296 134 268" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="470" y="294" text-anchor="middle" font-size="9.5" fill="#888">从右往左填，每个 dp[i] 只依赖 dp[i+1]</text>
+
+  <!-- reading the answer -->
+  <g filter="url(#sk)">
+    <rect x="70" y="320" width="800" height="70" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="90" y="346" font-size="12" font-weight="bold" fill="#2b6e9e">读答案：dp[3] 起每一格的胜出分支都是「dp[i+1]」</text>
+  <text x="90" y="370" font-size="11.5" fill="#444">回溯策略：Alice 指针在 1，跳过 2、3 直接选 j = 4（得 pre[4] = 2）→ Bob 被迫选 5（得 −3）→ 差 = 2 − (−3) = 5 ✓</text>
+
+  <!-- ===== verify example 3 ===== -->
+  <g filter="url(#sk)">
+    <rect x="70" y="416" width="390" height="118" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="90" y="442" font-size="12.5" font-weight="bold" fill="#7a2828">用示例 3 检查边界（stones = [-10, -12]）</text>
+  <text x="90" y="466" font-size="11.5" fill="#444" font-family="monospace">n = 2：只有 dp[1] = pre[2] = −22</text>
+  <text x="90" y="490" font-size="11.5" fill="#444">Alice 必须一次全拿，无弃权选项</text>
+  <text x="90" y="516" font-size="11.5" fill="#7a2828" font-weight="bold">若误写成 max(0, pre[2]) 会得 0，出错！</text>
+
+  <!-- ===== verify example 2 ===== -->
+  <g filter="url(#sk)">
+    <rect x="480" y="416" width="390" height="118" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="500" y="442" font-size="12.5" font-weight="bold" fill="#2e6e2e">用示例 2 检查整体（答案 13）</text>
+  <text x="500" y="466" font-size="11" fill="#444" font-family="monospace">pre = 7, 1, 6, 16, 21, 19, 13</text>
+  <text x="500" y="488" font-size="11" fill="#444" font-family="monospace">dp[6]=13 → dp[5]=13 → … → dp[1]=13</text>
+  <text x="500" y="512" font-size="11.5" fill="#2e6e2e" font-weight="bold">Alice 首步直接吞并全部 7 块，得 13 ✓</text>
+
+  <!-- ===== final remark ===== -->
+  <g filter="url(#sk)">
+    <rect x="70" y="560" width="800" height="76" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="90" y="586" font-size="12" font-weight="bold" fill="#2b2b2b">小结</text>
+  <text x="90" y="608" font-size="11" fill="#444">倒序一趟即可；也可以正着做记忆化搜索 —— 但递归深度 10⁵ 有爆栈风险，迭代更稳</text>
+  <text x="90" y="628" font-size="11" fill="#444">滚动写法：cur 从 pre[n] 出发，循环 i = n−2 … 1 执行 cur = max(cur, pre[i] − cur)，返回 cur</text>
+</svg>

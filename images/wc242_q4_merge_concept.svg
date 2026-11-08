@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="600" viewBox="0 0 940 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+  </defs>
+  <rect width="940" height="600" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">一次操作 = 吞并一个前缀，得分恰为原始前缀和</text>
+  <path d="M 240 44 Q 470 52 700 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: initial row ===== -->
+  <text x="470" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 初始：stones = [-1, 2, -3, 4, -5]，Alice 选择 x = 4</text>
+
+  <!-- selection bracket over first 4 stones -->
+  <path d="M 128 158 L 122 168 L 480 168 L 474 158" stroke="#c98a2b" stroke-width="1.8" fill="none" filter="url(#sk)"/>
+  <text x="300" y="184" text-anchor="middle" font-size="11" fill="#7a5415" font-weight="bold">移除最左边 x = 4 个石子</text>
+
+  <g font-size="14">
+    <!-- stone 0 -->
+    <g filter="url(#sk)"><rect x="128" y="112" width="80" height="38" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+    <text x="168" y="137" text-anchor="middle" fill="#7a5415" font-weight="bold">-1</text>
+    <!-- stone 1 -->
+    <g filter="url(#sk)"><rect x="216" y="112" width="80" height="38" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+    <text x="256" y="137" text-anchor="middle" fill="#7a5415" font-weight="bold">2</text>
+    <!-- stone 2 -->
+    <g filter="url(#sk)"><rect x="304" y="112" width="80" height="38" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+    <text x="344" y="137" text-anchor="middle" fill="#7a5415" font-weight="bold">-3</text>
+    <!-- stone 3 -->
+    <g filter="url(#sk)"><rect x="392" y="112" width="80" height="38" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+    <text x="432" y="137" text-anchor="middle" fill="#7a5415" font-weight="bold">4</text>
+    <!-- stone 4 (not taken) -->
+    <g filter="url(#sk)"><rect x="480" y="112" width="80" height="38" rx="8" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="520" y="137" text-anchor="middle" fill="#999">-5</text>
+  </g>
+
+  <!-- score annotation -->
+  <path d="M 620 96 Q 660 84 690 100" stroke="#b03a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="600" y="112" width="300" height="64" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="750" y="136" text-anchor="middle" font-size="12" fill="#7a2828" font-weight="bold">Alice 得分累加：</text>
+  <text x="750" y="160" text-anchor="middle" font-size="13" fill="#b03a3a" font-family="monospace" font-weight="bold">(-1)+2+(-3)+4 = pre[4] = 2</text>
+
+  <!-- ===== Panel 2: operation steps ===== -->
+  <g filter="url(#sk)">
+    <rect x="110" y="216" width="720" height="60" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="140" y="240" font-size="11.5" fill="#2b6e9e" font-weight="bold">操作三步：移除前 x 个 → 得分加上它们的和 → 把一块值为「和」的新石头放回最左边</text>
+  <text x="140" y="262" font-size="11.5" fill="#555">关键：新石头的值 = 原始前缀和 pre[x]，因此后续任何一次「取前 j 个」的得分永远是原始 pre[j] —— 序列形态会变，前缀和不变！</text>
+
+  <!-- arrow down -->
+  <path d="M 470 282 L 470 316" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="500" y="304" font-size="11" fill="#666">x = 4 个合并成 1 个</text>
+
+  <!-- ===== Panel 3: result row ===== -->
+  <text x="470" y="346" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">② 操作后：stones = [2, -5]，只剩 2 块</text>
+
+  <g font-size="14">
+    <g filter="url(#sk)"><rect x="330" y="366" width="120" height="44" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="2.2"/></g>
+    <text x="390" y="394" text-anchor="middle" fill="#7a5415" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="466" y="366" width="120" height="44" rx="8" fill="#f0ede4" stroke="#bbb" stroke-width="1.2"/></g>
+    <text x="526" y="394" text-anchor="middle" fill="#999">-5</text>
+  </g>
+  <text x="390" y="428" text-anchor="middle" font-size="10.5" fill="#c98a2b" font-weight="bold">新石头 = 吞并了前 4 个（值为 pre[4]）</text>
+  <text x="526" y="428" text-anchor="middle" font-size="10.5" fill="#999">原始 stones[4] 原样保留</text>
+
+  <!-- Bob next move -->
+  <path d="M 240 452 Q 300 430 326 392" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)" opacity="0.9"/>
+  <g filter="url(#sk)">
+    <rect x="130" y="452" width="230" height="56" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="245" y="474" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">轮到 Bob：只能选 x = 2</text>
+  <text x="245" y="494" text-anchor="middle" font-size="11" fill="#2e6e2e" font-family="monospace">得分 = 2 + (-5) = pre[5] = -3</text>
+
+  <!-- ===== key insight box ===== -->
+  <g filter="url(#sk)">
+    <rect x="400" y="452" width="500" height="120" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="424" y="478" font-size="12.5" font-weight="bold" fill="#2b2b2b">关键洞察（前缀和不变性）</text>
+  <text x="424" y="502" font-size="11" fill="#444">游戏状态可只用一个指针 k 描述：最左石头已吞并前 k 个；</text>
+  <text x="424" y="522" font-size="11" fill="#444">一次操作 = 选一个 j &gt; k，得 pre[j] 分，指针变为 j；</text>
+  <text x="424" y="542" font-size="11" fill="#7a2828" font-weight="bold">石头序列只是「表象」，博弈的本质是在前缀和数组上跳格子。</text>
+  <text x="424" y="562" font-size="10.5" fill="#888">初始 k = 1（还没操作时，最左石头就是第 1 块本身）</text>
+</svg>
