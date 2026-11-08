@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9" fill="none" stroke="#8a8a8a" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="28" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：逆 BFS 序求子树大小 + 一次费马逆元</text>
+  <path d="M 210 40 Q 470 50 730 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- flow boxes -->
+  <g filter="url(#sk)">
+    <rect x="70" y="66" width="340" height="62" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="90" y="92" font-size="13.5" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">① 建邻接表</text>
+  <text x="90" y="114" font-size="11.5" fill="#555" filter="url(#sk)">children[prevRoom[i]].push_back(i)，根 = 0</text>
+
+  <path d="M 240 128 L 240 150" stroke="#8a8a8a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="156" width="340" height="62" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="90" y="182" font-size="13.5" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">② BFS 定序</text>
+  <text x="90" y="204" font-size="11.5" fill="#555" filter="url(#sk)">order = [0]，边遍历边 append 孩子（数组当队列）</text>
+
+  <path d="M 240 218 L 240 240" stroke="#8a8a8a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="246" width="340" height="62" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="90" y="272" font-size="13.5" font-weight="bold" fill="#2c4a6e" filter="url(#sk)">③ 逆序遍历 order 求 sz</text>
+  <text x="90" y="294" font-size="11.5" fill="#555" filter="url(#sk)">sz 初值全 1；sz[parent[u]] += sz[u]（孩子先于父）</text>
+
+  <path d="M 240 308 L 240 330" stroke="#8a8a8a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="336" width="340" height="62" rx="8" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="90" y="362" font-size="13.5" font-weight="bold" fill="#2f6b2f" filter="url(#sk)">④ 累乘</text>
+  <text x="90" y="384" font-size="11.5" fill="#555" filter="url(#sk)">prod = ∏ sz[v] mod p；fact = n! mod p</text>
+
+  <path d="M 240 398 L 240 420" stroke="#8a8a8a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="426" width="340" height="62" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="90" y="452" font-size="13.5" font-weight="bold" fill="#7a5518" filter="url(#sk)">⑤ 费马小定理求逆元</text>
+  <text x="90" y="474" font-size="11.5" fill="#555" filter="url(#sk)">inv = prod^(p−2) mod p（p = 10⁹+7 为质数）</text>
+
+  <path d="M 240 488 L 240 510" stroke="#8a8a8a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="516" width="340" height="62" rx="16" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="2.2"/>
+  </g>
+  <text x="240" y="553" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#2f6b2f" filter="url(#sk)">⑥ 返回 fact · inv mod p</text>
+
+  <!-- note 1 -->
+  <g filter="url(#sk)">
+    <rect x="470" y="66" width="410" height="158" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="490" y="94" font-size="13.5" font-weight="bold" fill="#a03d38" filter="url(#sk)">⚠ 不能按下标逆序偷懒</text>
+  <text x="490" y="120" font-size="12" fill="#444" filter="url(#sk)">prevRoom[i] 可以大于 i：</text>
+  <text x="490" y="142" font-size="12" fill="#444" filter="url(#sk)">如 prevRoom = [-1, 2, 0]，节点 1 的父是 2</text>
+  <text x="490" y="164" font-size="12" fill="#444" filter="url(#sk)">「i 从大到小」不保证孩子先于父，</text>
+  <text x="490" y="186" font-size="12" font-weight="bold" fill="#a03d38" filter="url(#sk)">必须用真实的 BFS / DFS 序</text>
+  <text x="490" y="210" font-size="11" fill="#888" filter="url(#sk)">（本题最常见的 WA 点）</text>
+
+  <!-- note 2 -->
+  <g filter="url(#sk)">
+    <rect x="470" y="244" width="410" height="140" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="490" y="272" font-size="13.5" font-weight="bold" fill="#a03d38" filter="url(#sk)">⚠ 递归爆栈</text>
+  <text x="490" y="298" font-size="12" fill="#444" filter="url(#sk)">链状树深度可达 10⁵：Python 直接</text>
+  <text x="490" y="320" font-size="12" fill="#444" filter="url(#sk)">RecursionError，C++ 也可能爆系统栈</text>
+  <text x="490" y="342" font-size="12" fill="#444" filter="url(#sk)">BFS + 逆序处理 = 迭代后序，</text>
+  <text x="490" y="364" font-size="12" font-weight="bold" fill="#a03d38" filter="url(#sk)">不碰递归，天然防爆</text>
+
+  <!-- note 3 -->
+  <g filter="url(#sk)">
+    <rect x="470" y="404" width="410" height="174" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="490" y="432" font-size="13.5" font-weight="bold" fill="#7a5518" filter="url(#sk)">💡 实现小技巧</text>
+  <text x="490" y="458" font-size="12" fill="#444" filter="url(#sk)">先把全部 sz 累乘成一个积，再整体做</text>
+  <text x="490" y="480" font-size="12" font-weight="bold" fill="#7a5518" filter="url(#sk)">一次快速幂求逆：O(n + log p)</text>
+  <text x="490" y="502" font-size="12" fill="#444" filter="url(#sk)">逐个 pow(sz, p−2) 是 O(n log p)，</text>
+  <text x="490" y="524" font-size="12" fill="#444" filter="url(#sk)">n = 10⁵ 时慢约 30 倍（也能过）</text>
+  <text x="490" y="548" font-size="12" fill="#444" filter="url(#sk)">sz ≤ 10⁵ &lt; p ⇒ prod ≢ 0 (mod p)，</text>
+  <text x="490" y="570" font-size="12" font-weight="bold" fill="#7a5518" filter="url(#sk)">逆元必定存在，放心「除」</text>
+</svg>

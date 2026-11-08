@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="800" viewBox="0 0 940 800" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="91" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="800" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">逐层「提取 → 取模左移 → 写回」流程</text>
+  <path d="M 250 44 Q 470 54 690 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 0 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="62" width="760" height="72" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="88" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">Step 0：层数 layers = min(m, n) / 2，从最外层 l = 0 开始</text>
+  <text x="110" y="114" font-size="11" fill="#666" filter="url(#sk)">m、n 均为偶数，保证每层是至少 2 行 2 列的完整矩形环</text>
+  <path d="M 470 134 L 470 148" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Step 1 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="150" width="760" height="72" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="176" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">Step 1：确定第 l 层边界</text>
+  <text x="110" y="202" font-size="12" fill="#444" font-family="monospace" filter="url(#sk)">top = l&#160;&#160;bottom = m−1−l&#160;&#160;left = l&#160;&#160;right = n−1−l</text>
+  <path d="M 470 222 L 470 236" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Step 2 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="238" width="760" height="88" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="264" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">Step 2：顺时针提取该层为环数组 ring（四段遍历，角点不重复）</text>
+  <text x="110" y="290" font-size="12" fill="#444" font-family="monospace" filter="url(#sk)">上边 [left..right]（含两角）→ 右边 (top..bottom] → 下边 [right−1..left] → 左边 [bottom−1..top+1]</text>
+  <text x="110" y="314" font-size="11" fill="#666" filter="url(#sk)">四段首尾相接、互不重叠，恰好覆盖整层一遍</text>
+  <path d="M 470 326 L 470 340" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Step 3 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="342" width="760" height="72" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="110" y="368" font-size="13" font-weight="bold" fill="#7a5415" filter="url(#sk)">Step 3：取模 shift = k mod L（L = ring 长度，每层不同！）</text>
+  <text x="110" y="394" font-size="11" fill="#666" filter="url(#sk)">k 可达 10⁹，但取模后 shift &lt; L ≤ 2(m+n)−4 &lt; 200，与 k 大小无关</text>
+  <path d="M 470 414 L 470 428" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Step 4 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="430" width="760" height="88" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="456" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">Step 4：环数组左移 shift 位</text>
+  <text x="110" y="482" font-size="12" fill="#444" font-family="monospace" filter="url(#sk)">new = ring[shift:] + ring[:shift]，即 new[i] = ring[(i + shift) mod L]</text>
+  <text x="110" y="506" font-size="11" fill="#666" filter="url(#sk)">逆时针轮转 k 次 ⇔ 顺时针数组左移 k 次（见方向推导图）</text>
+  <path d="M 470 518 L 470 532" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Step 5 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="534" width="760" height="72" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="110" y="560" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">Step 5：按与提取完全相同的四段顺序，把 new 写回该层</text>
+  <text x="110" y="586" font-size="11" fill="#666" filter="url(#sk)">用下标 idx 从 0 依次填充即可，无需再做位置映射</text>
+  <path d="M 470 606 L 470 620" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="320,668 470,622 620,668 470,714" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="674" text-anchor="middle" font-size="13" font-weight="bold" fill="#8c3b36" filter="url(#sk)">还有未处理的层？</text>
+
+  <!-- yes: loop back -->
+  <path d="M 320 668 L 130 668 L 130 186 L 86 186" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="142" y="660" font-size="12" fill="#444" filter="url(#sk)">是：l = l + 1，处理下一层</text>
+
+  <!-- no: return -->
+  <path d="M 470 714 L 470 738" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="484" y="732" font-size="12" fill="#444" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="330" y="742" width="280" height="46" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="470" y="771" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">返回 grid</text>
+</svg>

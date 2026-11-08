@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="620" viewBox="0 0 940 620" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="620" fill="#fdfcf7"/>
+  <text x="470" y="28" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：一趟扫描，每个字符 1 + 10 = 11 次查询</text>
+  <path d="M 230 40 Q 470 50 710 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- main flow column -->
+  <g filter="url(#sk)">
+    <rect x="120" y="58" width="360" height="54" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="300" y="80" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f6b2f" filter="url(#sk)">初始化：mask = 0，ans = 0</text>
+  <text x="300" y="100" text-anchor="middle" font-size="12" fill="#444" filter="url(#sk)">count[0] = 1（空前缀全偶）</text>
+
+  <g filter="url(#sk)">
+    <rect x="120" y="156" width="360" height="46" rx="8" fill="#e8f0fa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="300" y="184" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">取下一个字符 c（从左到右扫描）</text>
+
+  <g filter="url(#sk)">
+    <rect x="120" y="242" width="360" height="46" rx="8" fill="#e8f0fa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="300" y="270" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">mask ^= 1 &lt;&lt; (c − 'a')　（翻转 c 的奇偶位）</text>
+
+  <g filter="url(#sk)">
+    <rect x="120" y="328" width="360" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="300" y="350" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">ans += count[mask]</text>
+  <text x="300" y="366" text-anchor="middle" font-size="11" fill="#8a6d1a" filter="url(#sk)">配对「相等」的前缀 → 全偶子串</text>
+
+  <g filter="url(#sk)">
+    <rect x="120" y="414" width="360" height="56" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="300" y="436" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">for t = 0 … 9：ans += count[mask ^ (1 &lt;&lt; t)]</text>
+  <text x="300" y="456" text-anchor="middle" font-size="11" fill="#8a6d1a" filter="url(#sk)">配对「恰差第 t 位」的前缀 → 恰 1 奇子串</text>
+
+  <g filter="url(#sk)">
+    <rect x="120" y="506" width="360" height="46" rx="8" fill="#e8f0fa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="300" y="534" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">count[mask] += 1（登记当前前缀）</text>
+
+  <!-- diamond -->
+  <g filter="url(#sk)">
+    <polygon points="300,562 372,588 300,614 228,588" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="300" y="593" text-anchor="middle" font-size="12.5" fill="#8c3a34" filter="url(#sk)">还有字符？</text>
+
+  <!-- arrows -->
+  <g stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <line x1="300" y1="112" x2="300" y2="150" marker-end="url(#ar)" filter="url(#sk)"/>
+    <line x1="300" y1="202" x2="300" y2="236" marker-end="url(#ar)" filter="url(#sk)"/>
+    <line x1="300" y1="288" x2="300" y2="322" marker-end="url(#ar)" filter="url(#sk)"/>
+    <line x1="300" y1="374" x2="300" y2="408" marker-end="url(#ar)" filter="url(#sk)"/>
+    <line x1="300" y1="470" x2="300" y2="500" marker-end="url(#ar)" filter="url(#sk)"/>
+    <line x1="300" y1="552" x2="300" y2="556" marker-end="url(#ar)" filter="url(#sk)"/>
+  </g>
+  <!-- loop back: diamond left -> left rail -> up -> into loop header -->
+  <path d="M 228 588 L 82 588 Q 72 588 72 578 L 72 189 Q 72 179 82 179 L 114 179"
+        stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="196" y="578" font-size="12" font-weight="bold" fill="#2f6b2f" filter="url(#sk)">是</text>
+  <!-- no: diamond right -> return box -->
+  <line x1="372" y1="588" x2="552" y2="588" stroke="#3a3a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="452" y="578" font-size="12" font-weight="bold" fill="#a03d38" filter="url(#sk)">否</text>
+
+  <!-- return box -->
+  <g filter="url(#sk)">
+    <rect x="560" y="564" width="320" height="48" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="720" y="593" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2f6b2f" filter="url(#sk)">返回 ans（用 long long！）</text>
+
+  <!-- side notes -->
+  <g filter="url(#sk)">
+    <rect x="560" y="120" width="320" height="266" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="582" y="148" font-size="13.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">要点</text>
+  <text x="582" y="176" font-size="11.5" fill="#444" filter="url(#sk)">· 先查询、后登记：查询时 count 里</text>
+  <text x="594" y="194" font-size="11.5" fill="#444" filter="url(#sk)">只有 i &lt; j 的旧前缀，配对非空</text>
+  <text x="582" y="222" font-size="11.5" fill="#444" filter="url(#sk)">· 每步 1 + 10 = 11 次 O(1) 访问：</text>
+  <text x="594" y="240" font-size="11.5" fill="#444" filter="url(#sk)">1 次相等 + 10 次差一位</text>
+  <text x="582" y="268" font-size="11.5" fill="#444" filter="url(#sk)">· count 是长度 1024 的定长数组，</text>
+  <text x="594" y="286" font-size="11.5" fill="#444" filter="url(#sk)">比哈希表更快更省</text>
+  <text x="582" y="314" font-size="11.5" fill="#444" filter="url(#sk)">· 答案上限 ≈ n(n+1)/2 ≈ 5×10⁹，</text>
+  <text x="594" y="332" font-size="11.5" fill="#444" filter="url(#sk)">超出 32 位 int，必须 long long</text>
+  <text x="582" y="360" font-size="11.5" fill="#444" filter="url(#sk)">· 枚举的 10 个 t 是「对方状态」</text>
+  <text x="594" y="378" font-size="11.5" fill="#444" filter="url(#sk)">mask ^ 2^t，与该位现状无关</text>
+</svg>
