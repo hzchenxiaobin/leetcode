@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="560" viewBox="0 0 640 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="131" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#8a94a0"/>
+    </marker>
+  </defs>
+  <rect width="640" height="560" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">单条请求 (u,v) 的判定流程（在线，逐条处理）</text>
+  <path d="M 120 38 Q 320 48 520 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 公式脚注（右上空区） -->
+  <text x="496" y="98" text-anchor="middle" font-size="9.5" fill="#888">跨界 = (a=ru ∧ b=rv) ∨ (a=rv ∧ b=ru)</text>
+  <text x="496" y="114" text-anchor="middle" font-size="9.5" fill="#888">其中 a=find(x)、b=find(y) 为限制两端所在根</text>
+
+  <!-- ① 取根 -->
+  <g filter="url(#sk)"><rect x="150" y="54" width="200" height="40" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="250" y="78" text-anchor="middle" font-size="12" fill="#2b2b2b">① ru = find(u)，rv = find(v)</text>
+  <path d="M 250 94 L 250 114" stroke="#8a94a0" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ② 同根？ -->
+  <g filter="url(#sk)"><polygon points="250,116 340,164 250,212 160,164" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+  <text x="250" y="169" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">② ru = rv ？</text>
+
+  <!-- 是 → 已是好友 -->
+  <path d="M 340 164 L 396 164" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="366" y="156" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+  <g filter="url(#sk)"><rect x="400" y="144" width="192" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="496" y="168" text-anchor="middle" font-size="11.5" fill="#2f5426">result = true（已是好友）</text>
+
+  <!-- 否 ↓ -->
+  <path d="M 250 212 L 250 242" stroke="#8a94a0" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="264" y="232" font-size="11" font-weight="bold" fill="#b85450">否</text>
+
+  <!-- ③ 扫描限制 -->
+  <g filter="url(#sk)"><rect x="140" y="246" width="220" height="52" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="250" y="267" text-anchor="middle" font-size="12" fill="#2b2b2b">③ 逐条扫描限制 (x,y)</text>
+  <text x="250" y="286" text-anchor="middle" font-size="11" fill="#555">a = find(x)，b = find(y)</text>
+  <path d="M 250 298 L 250 318" stroke="#8a94a0" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ④ 有跨界限制？ -->
+  <g filter="url(#sk)"><polygon points="250,320 355,368 250,416 145,368" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+  <text x="250" y="363" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">④ 存在限制 (x,y)</text>
+  <text x="250" y="380" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415">恰跨 ru、rv 两侧？</text>
+
+  <!-- 是 → 拒绝 -->
+  <path d="M 355 368 L 396 368" stroke="#b85450" stroke-width="1.8" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="374" y="360" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">是</text>
+  <g filter="url(#sk)"><rect x="400" y="348" width="192" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="496" y="372" text-anchor="middle" font-size="11.5" fill="#7c2f2c">result = false（拒绝）</text>
+
+  <!-- 否 ↓ -->
+  <path d="M 250 416 L 250 440" stroke="#8a94a0" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="264" y="432" font-size="11" font-weight="bold" fill="#4a7a3a">否</text>
+
+  <!-- ⑤ 接受并合并 -->
+  <g filter="url(#sk)"><rect x="140" y="442" width="220" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <text x="250" y="462" text-anchor="middle" font-size="12" fill="#2f5426">result = true</text>
+  <text x="250" y="481" text-anchor="middle" font-size="11.5" fill="#2f5426">并 union(ru, rv) 合并分量</text>
+
+  <!-- 汇流 -->
+  <path d="M 250 494 L 250 520" stroke="#8a94a0" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 592 186 C 620 260, 600 500, 563 538" stroke="#8a94a0" stroke-width="1.4" fill="none" filter="url(#sk)"/>
+  <path d="M 592 390 C 615 430, 595 505, 563 539" stroke="#8a94a0" stroke-width="1.4" fill="none" filter="url(#sk)"/>
+  <g filter="url(#sk)"><circle cx="560" cy="540" r="3.5" fill="#8a94a0"/></g>
+  <path d="M 554 540 L 322 540" stroke="#8a94a0" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><rect x="185" y="524" width="130" height="32" rx="8" fill="#f2f2ee" stroke="#aab4be" stroke-width="1.4"/></g>
+  <text x="250" y="545" text-anchor="middle" font-size="11.5" fill="#555">处理下一条请求</text>
+</svg>
