@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="900" viewBox="0 0 900 900" font-family="'Comic Sans MS','Marker Felt','Kaiti SC','Segoe UI',cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="900" fill="#fafafa"/>
+
+  <text x="450" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例演算：二分轨迹 + check 的真实指纹（示意固定 B₁=100003、B₂=100019）</text>
+  <path d="M 170 42 Q 450 52 730 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: 二分轨迹 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="58" width="780" height="106" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="80" y="82" font-size="13.5" font-weight="bold" fill="#33517a">二分轨迹（排序后 minLen = 3，lo = 0, hi = 3）</text>
+
+  <g filter="url(#sk)">
+    <rect x="90"  y="96" width="70" height="26" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="160" y="96" width="70" height="26" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="230" y="96" width="70" height="26" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="300" y="96" width="110" height="26" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="410" y="96" width="150" height="26" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <rect x="90"  y="122" width="70" height="26" fill="#e6f4ea" stroke="#446688" stroke-width="1.2"/>
+    <rect x="160" y="122" width="70" height="26" fill="#e6f4ea" stroke="#446688" stroke-width="1.2"/>
+    <rect x="230" y="122" width="70" height="26" fill="#e6f4ea" stroke="#446688" stroke-width="1.2"/>
+    <rect x="300" y="122" width="110" height="26" fill="#e6f4ea" stroke="#446688" stroke-width="1.2"/>
+    <rect x="410" y="122" width="150" height="26" fill="#e6f4ea" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="125" y="113" text-anchor="middle" font-size="10.5" fill="#33517a">轮</text>
+  <text x="195" y="113" text-anchor="middle" font-size="10.5" fill="#33517a">lo</text>
+  <text x="265" y="113" text-anchor="middle" font-size="10.5" fill="#33517a">hi</text>
+  <text x="355" y="113" text-anchor="middle" font-size="10.5" fill="#33517a">mid（上取整）</text>
+  <text x="485" y="113" text-anchor="middle" font-size="10.5" fill="#33517a">check(mid) 与动作</text>
+  <text x="125" y="139" text-anchor="middle" font-size="10.5" fill="#333">1</text>
+  <text x="195" y="139" text-anchor="middle" font-size="10.5" fill="#333">0</text>
+  <text x="265" y="139" text-anchor="middle" font-size="10.5" fill="#333">3</text>
+  <text x="355" y="139" text-anchor="middle" font-size="10.5" fill="#333">2</text>
+  <text x="485" y="139" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e5e2e">✓ true → lo = 2</text>
+  <text x="640" y="132" font-size="10.5" fill="#333">第 2 轮：mid = 3，✗ false → hi = 2</text>
+  <text x="640" y="150" font-size="11" font-weight="bold" fill="#33517a">lo = hi = 2 ⇒ 答案 2</text>
+
+  <!-- ===== Panel 2: check(3) ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="180" width="780" height="240" rx="10" fill="#fef6f6" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="80" y="204" font-size="13.5" font-weight="bold" fill="#c0392b">check(3)：交集变空 → false（→ hi = 2）</text>
+
+  <text x="80" y="230" font-size="11" font-weight="bold" fill="#33517a">[2,3,4]（最短先建）</text>
+  <text x="300" y="230" font-size="11" fill="#444">窗口 [2,3,4] → (1499891, 7900603)</text>
+  <text x="640" y="230" font-size="11" font-weight="bold" fill="#33517a">common = {h(234)}</text>
+
+  <text x="80" y="262" font-size="11" font-weight="bold" fill="#33517a">[0,1,2,3,4]</text>
+  <text x="300" y="262" font-size="11" fill="#888">[0,1,2]→(100005, 100021) ✗　[1,2,3]→(799948, 4000312) ✗</text>
+  <text x="300" y="280" font-size="11" font-weight="bold" fill="#2e5e2e">[2,3,4]→(1499891, 7900603) ✓ 命中，保留</text>
+  <text x="640" y="271" font-size="11" font-weight="bold" fill="#33517a">common = {h(234)}</text>
+
+  <text x="80" y="312" font-size="11" font-weight="bold" fill="#33517a">[4,0,1,2,3]</text>
+  <text x="300" y="312" font-size="11" fill="#888">[4,0,1]→(2399757, 15201085) ✗　[0,1,2]→(100005, 100021) ✗</text>
+  <text x="300" y="330" font-size="11" fill="#888">[1,2,3]→(799948, 4000312) ✗</text>
+
+  <g filter="url(#sk)">
+    <rect x="620" y="316" width="200" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="720" y="333" text-anchor="middle" font-size="11" font-weight="bold" fill="#c0392b">交集 ∅ → return false</text>
+  <text x="720" y="349" text-anchor="middle" font-size="10" fill="#888">提前出局，不用再扫</text>
+
+  <text x="80" y="374" font-size="11" fill="#444">三个窗口指纹无一命中 {h(234)}——[2,3,4] 在第三条路径中不连续出现。</text>
+  <text x="80" y="398" font-size="11" fill="#444">注意 (100005, 100021) 在两条路径里都出现（都来自 [0,1,2]），但第三条路径才决定生死——交对所有路径生效。</text>
+
+  <!-- ===== Panel 3: check(2) ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="436" width="780" height="252" rx="10" fill="#f5faf5" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="80" y="460" font-size="13.5" font-weight="bold" fill="#2e5e2e">check(2)：交集保留 {h(23)} → true（→ lo = 2，收敛）</text>
+
+  <text x="80" y="486" font-size="11" font-weight="bold" fill="#33517a">[2,3,4]</text>
+  <text x="300" y="486" font-size="11" fill="#444">[2,3]→(200009, 200041)　[3,4]→(300013, 300061)</text>
+  <text x="640" y="486" font-size="11" font-weight="bold" fill="#2e5e2e">common = 两个指纹</text>
+
+  <text x="80" y="518" font-size="11" font-weight="bold" fill="#33517a">[0,1,2,3,4]</text>
+  <text x="300" y="518" font-size="11" fill="#888">[0,1]→(1, 1) ✗　[1,2]→(100005, 100021) ✗</text>
+  <text x="300" y="536" font-size="11" font-weight="bold" fill="#2e5e2e">[2,3]→(200009, 200041) ✓　[3,4]→(300013, 300061) ✓</text>
+  <text x="640" y="527" font-size="11" font-weight="bold" fill="#2e5e2e">两个指纹都保留</text>
+
+  <text x="80" y="568" font-size="11" font-weight="bold" fill="#33517a">[4,0,1,2,3]</text>
+  <text x="300" y="568" font-size="11" fill="#888">[4,0]→(400012, 400076) ✗　[0,1]→(1, 1) ✗　[1,2]→(100005, 100021) ✗</text>
+  <text x="300" y="586" font-size="11" font-weight="bold" fill="#2e5e2e">[2,3]→(200009, 200041) ✓</text>
+
+  <g filter="url(#sk)">
+    <rect x="620" y="572" width="200" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="720" y="589" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e5e2e">交集 = {h(23)} 非空</text>
+  <text x="720" y="605" text-anchor="middle" font-size="10" fill="#888">→ return true</text>
+
+  <text x="80" y="630" font-size="11" fill="#444">(300013, 300061) 在第三条路径里落选（[3,4] 只在前两条出现）；(200009, 200041) 三条全中。</text>
+  <text x="80" y="652" font-size="11" font-weight="bold" fill="#2e5e2e">对应公共子路径 [2,3] ✓ —— 与二分收敛值 2 互相印证。</text>
+  <text x="80" y="674" font-size="11" fill="#444">同一指纹在同一路径重复出现只计一次（集合语义）；跨路径才看「是否人人都有一票」。</text>
+
+  <!-- ===== Panel 4: 手算三则 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="704" width="780" height="172" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="80" y="728" font-size="13.5" font-weight="bold" fill="#8a6a1e">手算三则：看穿多项式哈希</text>
+  <text x="80" y="752" font-size="11.5" fill="#444">① h([2,3]) = 2B + 3 = 2×100003 + 3 = 200009（h₂ = 2×100019 + 3 = 200041）—— 长度 2：模未介入，编码即指纹</text>
+  <text x="80" y="776" font-size="11.5" fill="#444">② h([2,3,4]) = 2B² + 3B + 4 = 20001500031 ≡ 1499891 (mod 10⁹+7) —— 长度 3 起：模开始折叠</text>
+  <text x="80" y="800" font-size="11.5" fill="#444">③ 滑窗一步：200009 − 2·B(=200006) → 3 →×B→ 300009 → +4 → 300013 = h([3,4]) ✓（去头·移位·入尾）</text>
+  <text x="80" y="828" font-size="11" fill="#8a6a1e">彩蛋：h([0,1,2]) = (100005, 100021) = h([1,2]) —— 前导零的跨长度碰撞；</text>
+  <text x="80" y="848" font-size="11" fill="#8a6a1e">check(L) 只在同长度窗口之间比较指纹，跨长度碰撞不构成威胁（§8 第 7 条）。</text>
+  <text x="80" y="870" font-size="10.5" fill="#888">注：演算取固定底数便于手算；实战代码每次运行随机抽取 B₁、B₂，防赛前预构造的对抗数据。</text>
+</svg>

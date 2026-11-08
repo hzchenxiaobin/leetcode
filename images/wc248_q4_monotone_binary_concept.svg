@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="640" viewBox="0 0 900 640" font-family="'Comic Sans MS','Marker Felt','Kaiti SC','Segoe UI',cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="900" height="640" fill="#fafafa"/>
+
+  <text x="450" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">核心观察：子路径降维——定长判定 + 可行性单调 ⇒ 二分答案</text>
+  <path d="M 200 42 Q 450 52 700 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel A: 三条路径与公共子路径 ===== -->
+  <text x="70" y="72" font-size="13.5" font-weight="bold" fill="#33517a">示例 1：三条路径与公共子路径 [2,3]（必须连续）</text>
+
+  <g filter="url(#sk)">
+    <rect x="120" y="86" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="164" y="86" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="208" y="86" width="44" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="252" y="86" width="44" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="296" y="86" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+
+    <rect x="120" y="130" width="44" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="164" y="130" width="44" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="208" y="130" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+
+    <rect x="120" y="174" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="164" y="174" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="208" y="174" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="252" y="174" width="44" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="296" y="174" width="44" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+  </g>
+  <text x="112" y="107" text-anchor="end" font-size="11.5" fill="#33517a">路径 0</text>
+  <text x="112" y="151" text-anchor="end" font-size="11.5" fill="#33517a">路径 1</text>
+  <text x="112" y="195" text-anchor="end" font-size="11.5" fill="#33517a">路径 2</text>
+
+  <text x="142" y="107" text-anchor="middle" font-size="12" fill="#333">0</text>
+  <text x="186" y="107" text-anchor="middle" font-size="12" fill="#333">1</text>
+  <text x="230" y="107" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">2</text>
+  <text x="274" y="107" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">3</text>
+  <text x="318" y="107" text-anchor="middle" font-size="12" fill="#333">4</text>
+
+  <text x="142" y="151" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">2</text>
+  <text x="186" y="151" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">3</text>
+  <text x="230" y="151" text-anchor="middle" font-size="12" fill="#333">4</text>
+
+  <text x="142" y="195" text-anchor="middle" font-size="12" fill="#333">4</text>
+  <text x="186" y="195" text-anchor="middle" font-size="12" fill="#333">0</text>
+  <text x="230" y="195" text-anchor="middle" font-size="12" fill="#333">1</text>
+  <text x="274" y="195" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">2</text>
+  <text x="318" y="195" text-anchor="middle" font-size="12" font-weight="bold" fill="#c0392b">3</text>
+
+  <text x="380" y="100" font-size="11.5" fill="#444">红色段 [2,3]：三条路径中都连续出现 ✓</text>
+  <text x="380" y="120" font-size="11.5" fill="#444">[2,3,4] 只在前两条出现 ✗</text>
+  <text x="380" y="140" font-size="11.5" fill="#444">子路径 = 连续城市序列（≠ 子序列）</text>
+  <text x="380" y="160" font-size="11.5" fill="#444">上界 minLen = 3（最短路径长度）</text>
+  <g filter="url(#sk)">
+    <path d="M 375 152 Q 365 168 355 158" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- ===== Panel B 左：单调性阶梯 ===== -->
+  <text x="70" y="240" font-size="13.5" font-weight="bold" fill="#33517a">观察二：可行性单调 ⇒ 二分</text>
+
+  <g filter="url(#sk)">
+    <rect x="80"  y="262" width="66" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="166" y="262" width="66" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="252" y="262" width="66" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="338" y="262" width="66" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="113" y="280" text-anchor="middle" font-size="11.5" fill="#2e5e2e">L = 0</text>
+  <text x="199" y="280" text-anchor="middle" font-size="11.5" fill="#2e5e2e">L = 1</text>
+  <text x="285" y="280" text-anchor="middle" font-size="11.5" fill="#2e5e2e">L = 2</text>
+  <text x="371" y="280" text-anchor="middle" font-size="11.5" fill="#c0392b">L = 3</text>
+  <text x="113" y="298" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e">✓</text>
+  <text x="199" y="298" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e">✓</text>
+  <text x="285" y="298" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5e2e">✓</text>
+  <text x="371" y="298" text-anchor="middle" font-size="13" font-weight="bold" fill="#c0392b">✗</text>
+
+  <g filter="url(#sk)">
+    <path d="M 250 252 Q 199 236 155 254" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="203" y="234" text-anchor="middle" font-size="10.5" fill="#4a7a3a">L 可行 ⇒ L−1 可行（截取前 L−1 段）</text>
+
+  <text x="70" y="330" font-size="11.5" fill="#444">可行长度构成前缀区间 [0, L*]</text>
+  <text x="70" y="348" font-size="11.5" fill="#444">→ 二分找右端点 L*，候选 17 轮内收敛</text>
+  <text x="70" y="366" font-size="11.5" fill="#444">（图示示例 1：L* = 2）</text>
+
+  <!-- ===== Panel B 右：集合交 ===== -->
+  <text x="480" y="240" font-size="13.5" font-weight="bold" fill="#33517a">观察一：定长判定 = m 个集合求交</text>
+
+  <g filter="url(#sk)">
+    <ellipse cx="590" cy="300" rx="78" ry="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" opacity="0.85"/>
+    <ellipse cx="700" cy="300" rx="78" ry="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" opacity="0.85"/>
+    <ellipse cx="645" cy="360" rx="78" ry="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" opacity="0.85"/>
+  </g>
+  <text x="545" y="268" font-size="11" font-weight="bold" fill="#33517a">S₀ (路径0)</text>
+  <text x="715" y="268" font-size="11" font-weight="bold" fill="#2e5e2e">S₁ (路径1)</text>
+  <text x="645" y="422" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6a1e">S₂ (路径2)</text>
+
+  <text x="520" y="302" font-size="10.5" fill="#33517a">01</text>
+  <text x="540" y="322" font-size="10.5" fill="#33517a">12</text>
+  <text x="700" y="308" font-size="10.5" fill="#2e5e2e">34</text>
+  <text x="722" y="328" font-size="10.5" fill="#2e5e2e">23</text>
+  <text x="600" y="398" font-size="10.5" fill="#8a6a1e">40</text>
+  <text x="668" y="398" font-size="10.5" fill="#8a6a1e">12</text>
+
+  <g filter="url(#sk)">
+    <circle cx="645" cy="316" r="21" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+  </g>
+  <text x="645" y="321" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#c0392b">h(23)</text>
+
+  <text x="480" y="448" font-size="11.5" fill="#444">∩ Sᵢ ≠ ∅ ⇔ 存在长度 L 的公共子路径</text>
+  <text x="480" y="466" font-size="11.5" fill="#444">观察三：滚动哈希让每条路径的定长窗口 O(len) 枚举</text>
+  <text x="480" y="484" font-size="11.5" fill="#444">多串「公共」拆成沿路径逐条求交，空即提前出局</text>
+
+  <!-- ===== Panel C: 二分框架 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="502" width="780" height="118" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="80" y="526" font-size="13.5" font-weight="bold" fill="#8a6a1e">二分框架：「答案单调」族的定长判定版</text>
+  <text x="80" y="550" font-size="12" fill="#444">lo, hi = 0, minLen（公共子路径 ≤ 最短路径） ； mid = (lo + hi + 1) / 2（上取整防死循环）</text>
+  <text x="80" y="572" font-size="12" fill="#444">check(mid) 为真 → lo = mid ； 为假 → hi = mid − 1 ； 收敛时 lo 即答案</text>
+  <text x="80" y="594" font-size="11.5" font-weight="bold" fill="#b85450">总复杂度 O(S log minLen) ≈ 17 轮 × O(S)；⚠️ 本题暗礁：哈希须防对抗数据 → 双哈希 + 随机底数</text>
+</svg>
