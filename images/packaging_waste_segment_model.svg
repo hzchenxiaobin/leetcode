@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+  </defs>
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">排序分段：一段包裹共享一个箱子尺寸</text>
+  <path d="M 250 42 Q 470 50 690 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel A: sorted packages + prefix sum ===== -->
+  <text x="470" y="74" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">① 全局预处理（只做一次）：包裹排序 + 前缀和</text>
+
+  <g font-size="11">
+    <text x="88" y="104" font-size="10" fill="#888" font-weight="bold">排序后:</text>
+    <g filter="url(#sk)"><rect x="130" y="88" width="52" height="28" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="156" y="107" text-anchor="middle" fill="#2b4e6e">2</text>
+    <g filter="url(#sk)"><rect x="188" y="88" width="52" height="28" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="214" y="107" text-anchor="middle" fill="#2b4e6e">3</text>
+    <g filter="url(#sk)"><rect x="246" y="88" width="52" height="28" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="272" y="107" text-anchor="middle" fill="#2b4e6e">5</text>
+    <g filter="url(#sk)"><rect x="304" y="88" width="52" height="28" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="330" y="107" text-anchor="middle" fill="#2b4e6e">8</text>
+    <g filter="url(#sk)"><rect x="362" y="88" width="52" height="28" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="388" y="107" text-anchor="middle" fill="#2b4e6e">10</text>
+    <g filter="url(#sk)"><rect x="420" y="88" width="52" height="28" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="446" y="107" text-anchor="middle" fill="#2b4e6e">11</text>
+    <g filter="url(#sk)"><rect x="478" y="88" width="52" height="28" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/></g>
+    <text x="504" y="107" text-anchor="middle" fill="#2b4e6e">12</text>
+
+    <text x="88" y="146" font-size="10" fill="#888" font-weight="bold">前缀和:</text>
+    <g filter="url(#sk)"><rect x="130" y="130" width="52" height="28" fill="#f0ede4" stroke="#bbb" stroke-width="1"/></g>
+    <text x="156" y="149" text-anchor="middle" fill="#777">0</text>
+    <g filter="url(#sk)"><rect x="188" y="130" width="52" height="28" fill="#f0ede4" stroke="#bbb" stroke-width="1"/></g>
+    <text x="214" y="149" text-anchor="middle" fill="#777">2</text>
+    <g filter="url(#sk)"><rect x="246" y="130" width="52" height="28" fill="#f0ede4" stroke="#bbb" stroke-width="1"/></g>
+    <text x="272" y="149" text-anchor="middle" fill="#777">5</text>
+    <g filter="url(#sk)"><rect x="304" y="130" width="52" height="28" fill="#f0ede4" stroke="#bbb" stroke-width="1"/></g>
+    <text x="330" y="149" text-anchor="middle" fill="#777">10</text>
+    <g filter="url(#sk)"><rect x="362" y="130" width="52" height="28" fill="#f0ede4" stroke="#bbb" stroke-width="1"/></g>
+    <text x="388" y="149" text-anchor="middle" fill="#777">18</text>
+    <g filter="url(#sk)"><rect x="420" y="130" width="52" height="28" fill="#f0ede4" stroke="#bbb" stroke-width="1"/></g>
+    <text x="446" y="149" text-anchor="middle" fill="#777">28</text>
+    <g filter="url(#sk)"><rect x="478" y="130" width="52" height="28" fill="#f0ede4" stroke="#bbb" stroke-width="1"/></g>
+    <text x="504" y="149" text-anchor="middle" fill="#777">39</text>
+    <g filter="url(#sk)"><rect x="530" y="130" width="52" height="28" fill="#f0ede4" stroke="#bbb" stroke-width="1"/></g>
+    <text x="556" y="149" text-anchor="middle" fill="#777">51</text>
+  </g>
+  <text x="630" y="118" font-size="11" fill="#666" font-family="monospace">prefix[i+1] = prefix[i] + pkg[i]</text>
+  <text x="630" y="140" font-size="11" fill="#666" font-family="monospace">任意段和 O(1) 可得</text>
+
+  <!-- ===== Panel B: segments by box sizes ===== -->
+  <text x="470" y="196" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">② 供应商箱子尺寸升序后，把包裹切成若干段（示例 boxes = [5, 10, 14]）</text>
+
+  <!-- segment brackets -->
+  <path d="M 130 216 L 126 224 L 292 224 L 288 216" stroke="#4a8e4a" stroke-width="1.4" fill="none" filter="url(#sk)"/>
+  <text x="211" y="238" text-anchor="middle" font-size="10" fill="#2e6e2e" font-weight="bold">段1: 尺寸∈(−∞,5] → 用箱 5</text>
+
+  <path d="M 304 216 L 300 224 L 406 224 L 402 216" stroke="#c98a2b" stroke-width="1.4" fill="none" filter="url(#sk)"/>
+  <text x="355" y="252" text-anchor="middle" font-size="10" fill="#7a5415" font-weight="bold">段2: (5,10] → 用箱 10</text>
+
+  <path d="M 420 216 L 416 224 L 522 224 L 518 216" stroke="#b85450" stroke-width="1.4" fill="none" filter="url(#sk)"/>
+  <text x="471" y="238" text-anchor="middle" font-size="10" fill="#a04440" font-weight="bold">段3: (10,14] → 用箱 14</text>
+
+  <!-- packages with segment colors -->
+  <g font-size="11">
+    <g filter="url(#sk)"><rect x="130" y="258" width="52" height="30" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <text x="156" y="278" text-anchor="middle" fill="#2e6e2e" font-weight="bold">2</text>
+    <g filter="url(#sk)"><rect x="188" y="258" width="52" height="30" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <text x="214" y="278" text-anchor="middle" fill="#2e6e2e" font-weight="bold">3</text>
+    <g filter="url(#sk)"><rect x="246" y="258" width="52" height="30" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/></g>
+    <text x="272" y="278" text-anchor="middle" fill="#2e6e2e" font-weight="bold">5</text>
+    <g filter="url(#sk)"><rect x="304" y="258" width="52" height="30" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/></g>
+    <text x="330" y="278" text-anchor="middle" fill="#7a5415" font-weight="bold">8</text>
+    <g filter="url(#sk)"><rect x="362" y="258" width="52" height="30" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/></g>
+    <text x="388" y="278" text-anchor="middle" fill="#7a5415" font-weight="bold">10</text>
+    <g filter="url(#sk)"><rect x="420" y="258" width="52" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/></g>
+    <text x="446" y="278" text-anchor="middle" fill="#a04440" font-weight="bold">11</text>
+    <g filter="url(#sk)"><rect x="478" y="258" width="52" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/></g>
+    <text x="504" y="278" text-anchor="middle" fill="#a04440" font-weight="bold">12</text>
+  </g>
+
+  <!-- arrows from segment to waste computation -->
+  <path d="M 211 296 Q 240 330 280 352" stroke="#4a8e4a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 355 296 Q 350 330 340 352" stroke="#c98a2b" stroke-width="1.4" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <path d="M 471 296 Q 440 330 400 352" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== Panel C: waste formula per segment ===== -->
+  <g filter="url(#sk)">
+    <rect x="110" y="356" width="460" height="118" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="130" y="380" font-size="13" font-weight="bold" fill="#2b2b2b">③ 每段浪费 = 箱尺寸 × 段内个数 − 段内包裹和</text>
+  <text x="130" y="410" font-size="13" fill="#b03a3a" font-family="monospace" font-weight="bold">waste_t = b_t·(r_t − r_{t−1}) − (prefix[r_t] − prefix[r_{t−1}])</text>
+  <text x="130" y="436" font-size="11" fill="#444" font-family="monospace">r_t = upper_bound(packages, b_t)：≤ b_t 的包裹个数</text>
+  <text x="130" y="458" font-size="11" fill="#666">段和 O(1)、边界 O(log n)，无需逐包裹累加</text>
+
+  <!-- greedy note -->
+  <g filter="url(#sk)">
+    <rect x="600" y="300" width="300" height="174" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.3"/>
+  </g>
+  <text x="620" y="326" font-size="12" font-weight="bold" fill="#7a5415">贪心：装「能装下它的最小箱子」</text>
+  <text x="620" y="350" font-size="11" fill="#444" font-family="monospace">若 b_s &lt; b_t 都能装下包裹 p：</text>
+  <text x="620" y="372" font-size="11" fill="#444" font-family="monospace">b_s − p &lt; b_t − p，选小箱严格更优</text>
+  <text x="620" y="400" font-size="11" fill="#666">箱子供应无限，包裹归属互不影响</text>
+  <text x="620" y="424" font-size="11" fill="#666">→ 每个包裹独立取最小可行箱即可</text>
+  <text x="620" y="452" font-size="11" fill="#a04440" font-weight="bold">⚠ 若最大箱 &lt; 最大包裹 → 供应商无效</text>
+
+  <!-- ===== bottom: overall pipeline ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="500" width="840" height="112" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="524" font-size="13" font-weight="bold" fill="#2b6e9e">整体流程</text>
+  <g font-size="11">
+    <g filter="url(#sk)"><rect x="80" y="540" width="150" height="44" rx="6" fill="#fdfcf7" stroke="#4a8edb" stroke-width="1.2"/></g>
+    <text x="155" y="558" text-anchor="middle" fill="#2b4e6e" font-weight="bold">排序 packages</text>
+    <text x="155" y="574" text-anchor="middle" fill="#888" font-size="10">+ 前缀和</text>
+    <path d="M 236 562 L 268 562" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+    <g filter="url(#sk)"><rect x="274" y="540" width="170" height="44" rx="6" fill="#fdfcf7" stroke="#4a8edb" stroke-width="1.2"/></g>
+    <text x="359" y="558" text-anchor="middle" fill="#2b4e6e" font-weight="bold">枚举每个供应商</text>
+    <text x="359" y="574" text-anchor="middle" fill="#888" font-size="10">排序其箱子尺寸</text>
+    <path d="M 450 562 L 482 562" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+    <g filter="url(#sk)"><rect x="488" y="540" width="190" height="44" rx="6" fill="#fdfcf7" stroke="#4a8edb" stroke-width="1.2"/></g>
+    <text x="583" y="558" text-anchor="middle" fill="#2b4e6e" font-weight="bold">逐箱二分 + 段浪费累加</text>
+    <text x="583" y="574" text-anchor="middle" fill="#888" font-size="10">prev 游标只进不退</text>
+    <path d="M 684 562 L 716 562" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)" filter="url(#sk)"/>
+    <g filter="url(#sk)"><rect x="722" y="540" width="160" height="44" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+    <text x="802" y="558" text-anchor="middle" fill="#2e6e2e" font-weight="bold">取全局最小</text>
+    <text x="802" y="574" text-anchor="middle" fill="#888" font-size="10">最后取模返回</text>
+  </g>
+</svg>
