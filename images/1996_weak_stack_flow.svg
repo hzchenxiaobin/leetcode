@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="470" viewBox="0 0 680 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="aro" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arg" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="470" fill="#fdfcf7"/>
+  <text x="340" y="24" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：单调栈 —— 防御维的「下一个更大元素」</text>
+  <path d="M 150 34 Q 340 42 530 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="340" y="54" text-anchor="middle" font-size="11.5" fill="#a06a10" filter="url(#sk)">栈不变式：自底向顶防御非递增；每个角色一进一出，弹出即计数、不重不漏</text>
+
+  <!-- step 1: sort -->
+  <g filter="url(#sk)">
+    <rect x="190" y="64" width="300" height="38" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">① 排序：攻击升序，同攻击防御降序</text>
+  <path d="M 340 102 L 340 126" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2: next character -->
+  <g filter="url(#sk)">
+    <rect x="190" y="132" width="300" height="38" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="156" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">② 取下一个角色 (a, d)</text>
+  <path d="M 340 170 L 340 194" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond A: exhausted? -->
+  <g filter="url(#sk)">
+    <path d="M 340 202 L 440 236 L 340 270 L 240 236 Z" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="241" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">角色取完？</text>
+  <path d="M 440 236 L 554 236" stroke="#d6a040" stroke-width="1.8" marker-end="url(#aro)" filter="url(#sk)"/>
+  <text x="486" y="228" text-anchor="middle" font-size="12" font-weight="bold" fill="#a06a10" filter="url(#sk)">是</text>
+  <g filter="url(#sk)">
+    <rect x="560" y="216" width="100" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="610" y="241" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06a10" filter="url(#sk)">⑤ 返回 ans</text>
+  <path d="M 340 270 L 340 294" stroke="#4a8e4a" stroke-width="1.8" marker-end="url(#arg)" filter="url(#sk)"/>
+  <text x="352" y="288" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">否</text>
+
+  <!-- diamond B: stack top < d ? -->
+  <g filter="url(#sk)">
+    <path d="M 340 302 L 456 338 L 340 374 L 224 338 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="332" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a06a10" filter="url(#sk)">栈非空 且</text>
+  <text x="340" y="350" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a06a10" filter="url(#sk)">栈顶防御 &lt; d ？</text>
+  <path d="M 456 338 L 518 338" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="480" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">是</text>
+
+  <!-- step 3: pop and count -->
+  <g filter="url(#sk)">
+    <rect x="524" y="316" width="130" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="589" y="335" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#sk)">③ 弹出栈顶</text>
+  <text x="589" y="353" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#sk)">ans + 1</text>
+  <path d="M 589 314 C 589 272, 420 262, 348 296" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- step 4: push -->
+  <path d="M 340 374 L 340 398" stroke="#4a8e4a" stroke-width="1.8" marker-end="url(#arg)" filter="url(#sk)"/>
+  <text x="352" y="392" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="255" y="404" width="170" height="36" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="427" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">④ d 入栈</text>
+  <path d="M 255 422 L 150 422 L 150 151 L 182 151" stroke="#4a8e4a" stroke-width="1.6" fill="none" marker-end="url(#arg)" filter="url(#sk)"/>
+
+  <!-- side note -->
+  <g filter="url(#sk)">
+    <rect x="36" y="200" width="180" height="72" rx="10" fill="#fffdf5" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="126" y="224" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a06a10" filter="url(#sk)">弹出的都找到了</text>
+  <text x="126" y="242" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a06a10" filter="url(#sk)">支配者 → 确认为弱</text>
+  <text x="126" y="260" text-anchor="middle" font-size="11" fill="#777" filter="url(#sk)">（严格性已由排序保证）</text>
+</svg>
