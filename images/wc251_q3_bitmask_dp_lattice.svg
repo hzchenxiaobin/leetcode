@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="650" viewBox="0 0 620 650" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#9a9a9a"/>
+    </marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+  <rect width="620" height="650" fill="#fdfcf7"/>
+  <text x="310" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">状压 DP：m! 条配对序列，归并成 2^m 个「导师集合」状态</text>
+  <text x="310" y="44" text-anchor="middle" font-size="11" fill="#777">示例 1（m=3）：状态按 popcount 分层，dp[S] 只保留最优前缀</text>
+
+  <text x="14" y="128" font-size="10.5" fill="#7a5415" font-weight="bold">配学生 S0</text>
+  <text x="14" y="142" font-size="10.5" fill="#7a5415">+ score[0][j]</text>
+  <text x="14" y="252" font-size="10.5" fill="#7a5415" font-weight="bold">配学生 S1</text>
+  <text x="14" y="266" font-size="10.5" fill="#7a5415">+ score[1][j]</text>
+  <text x="14" y="388" font-size="10.5" fill="#7a5415" font-weight="bold">配学生 S2</text>
+  <text x="14" y="402" font-size="10.5" fill="#7a5415">+ score[2][j]</text>
+
+  <g filter="url(#sk)">
+    <rect x="280" y="66" width="100" height="46" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="125" y="170" width="100" height="46" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="280" y="170" width="100" height="46" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="435" y="170" width="100" height="46" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="125" y="300" width="100" height="46" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="280" y="300" width="100" height="46" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="435" y="300" width="100" height="46" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="280" y="430" width="100" height="46" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2"/>
+  </g>
+  <text x="330" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5d8e" font-family="monospace">000</text>
+  <text x="330" y="103" text-anchor="middle" font-size="11" fill="#2b5d8e" font-family="monospace">dp = 0</text>
+  <text x="175" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5d8e" font-family="monospace">001</text>
+  <text x="175" y="207" text-anchor="middle" font-size="11" fill="#2b5d8e" font-family="monospace">dp = 2</text>
+  <text x="330" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5d8e" font-family="monospace">010</text>
+  <text x="330" y="207" text-anchor="middle" font-size="11" fill="#2b5d8e" font-family="monospace">dp = 0</text>
+  <text x="485" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5d8e" font-family="monospace">100</text>
+  <text x="485" y="207" text-anchor="middle" font-size="11" fill="#2b5d8e" font-family="monospace">dp = 3</text>
+  <text x="175" y="320" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5d8e" font-family="monospace">011</text>
+  <text x="175" y="337" text-anchor="middle" font-size="11" fill="#2b5d8e" font-family="monospace">dp = 4</text>
+  <text x="330" y="320" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5d8e" font-family="monospace">101</text>
+  <text x="330" y="337" text-anchor="middle" font-size="11" fill="#2b5d8e" font-family="monospace">dp = 5</text>
+  <text x="485" y="320" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5d8e" font-family="monospace">110</text>
+  <text x="485" y="337" text-anchor="middle" font-size="11" fill="#2b5d8e" font-family="monospace">dp = 5</text>
+  <text x="330" y="450" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f5d2f" font-family="monospace">111</text>
+  <text x="330" y="467" text-anchor="middle" font-size="11" fill="#2f5d2f" font-family="monospace">dp = 8</text>
+
+  <path d="M 330 112 L 178 168" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+  <path d="M 330 112 L 330 168" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+  <path d="M 330 112 L 482 168" stroke="#4a8e4a" stroke-width="2.5" fill="none" marker-end="url(#arg)"/>
+
+  <path d="M 175 216 L 175 298" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+  <path d="M 175 216 L 325 298" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+  <path d="M 330 216 L 185 298" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+  <path d="M 330 216 L 478 298" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+  <path d="M 485 216 L 335 298" stroke="#4a8e4a" stroke-width="2.5" fill="none" marker-end="url(#arg)"/>
+  <path d="M 485 216 L 485 298" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <path d="M 175 346 L 325 428" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+  <path d="M 330 346 L 330 428" stroke="#4a8e4a" stroke-width="2.5" fill="none" marker-end="url(#arg)"/>
+  <path d="M 485 346 L 335 428" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)"/>
+
+  <g filter="url(#sk)">
+    <rect x="239" y="133" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+    <rect x="317" y="133" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+    <rect x="394" y="133" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#4a8e4a" stroke-width="1.2"/>
+    <rect x="162" y="250" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+    <rect x="208" y="233" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+    <rect x="208" y="267" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+    <rect x="363" y="233" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+    <rect x="425" y="233" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#4a8e4a" stroke-width="1.2"/>
+    <rect x="472" y="250" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+    <rect x="239" y="380" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+    <rect x="317" y="380" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#4a8e4a" stroke-width="1.2"/>
+    <rect x="394" y="380" width="26" height="17" rx="3" fill="#fdfcf7" stroke="#bbb" stroke-width="0.8"/>
+  </g>
+  <text x="252" y="146" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+2</text>
+  <text x="330" y="146" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+0</text>
+  <text x="407" y="146" text-anchor="middle" font-size="10.5" fill="#2f5d2f" font-weight="bold" font-family="monospace">+3</text>
+  <text x="175" y="263" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+2</text>
+  <text x="221" y="246" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+1</text>
+  <text x="221" y="280" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+2</text>
+  <text x="376" y="246" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+1</text>
+  <text x="438" y="246" text-anchor="middle" font-size="10.5" fill="#2f5d2f" font-weight="bold" font-family="monospace">+2</text>
+  <text x="485" y="263" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+2</text>
+  <text x="252" y="393" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+0</text>
+  <text x="330" y="393" text-anchor="middle" font-size="10.5" fill="#2f5d2f" font-weight="bold" font-family="monospace">+3</text>
+  <text x="407" y="393" text-anchor="middle" font-size="10.5" fill="#666" font-family="monospace">+1</text>
+
+  <text x="393" y="459" font-size="11.5" fill="#7a5415" font-weight="bold">⭐ 答案 dp[111] = 8</text>
+
+  <g filter="url(#sk)">
+    <rect x="125" y="496" width="370" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="310" y="515" text-anchor="middle" font-size="12.5" fill="#2b5d8e" font-family="monospace" font-weight="bold">dp[S] = max{ dp[S − {j}] + score[|S|−1][j] }</text>
+  <text x="310" y="533" text-anchor="middle" font-size="10.5" fill="#555">j 取遍 S 中的导师（去掉最后配掉的那位）；学生 i = |S| − 1</text>
+
+  <text x="310" y="568" text-anchor="middle" font-size="11" fill="#7a5415">归并规模：到达 |S| = c 的状态有 c! 条入径 —— m=3：6 条序列 → 8 状态；m=8：40320 → 256</text>
+  <text x="310" y="592" text-anchor="middle" font-size="11" fill="#2f5d2f">耦合面：未来只依赖「剩哪些导师」+「下一个学生 = popcount(S)」，两件事一个整数装下</text>
+  <text x="310" y="616" text-anchor="middle" font-size="11" fill="#555">历史的顺序细节被 max 丢弃 —— 这就是 m! → 2^m 压缩的全部代价与收益</text>
+</svg>

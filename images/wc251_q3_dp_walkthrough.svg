@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="545" viewBox="0 0 620 545" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="620" height="545" fill="#fdfcf7"/>
+  <text x="310" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例 1 演算：评分矩阵 → 逐层填 dp → 回溯最优配对</text>
+  <text x="310" y="44" text-anchor="middle" font-size="11" fill="#777">students = [[1,1,0],[1,0,1],[0,0,1]]，mentors = [[1,0,0],[0,0,1],[1,1,0]]</text>
+
+  <g filter="url(#sk)">
+    <rect x="20" y="62" width="70" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="90" y="62" width="58" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="148" y="62" width="58" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="206" y="62" width="58" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="20" y="92" width="70" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="20" y="122" width="70" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="20" y="152" width="70" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="90" y="92" width="58" height="30" rx="4" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.2"/>
+    <rect x="148" y="92" width="58" height="30" rx="4" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.2"/>
+    <rect x="206" y="92" width="58" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="90" y="122" width="58" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="148" y="122" width="58" height="30" rx="4" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.2"/>
+    <rect x="206" y="122" width="58" height="30" rx="4" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.2"/>
+    <rect x="90" y="152" width="58" height="30" rx="4" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.2"/>
+    <rect x="148" y="152" width="58" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="206" y="152" width="58" height="30" rx="4" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.2"/>
+  </g>
+  <text x="55" y="81" text-anchor="middle" font-size="10" fill="#2b5d8e" font-family="monospace">score</text>
+  <text x="119" y="81" text-anchor="middle" font-size="9.5" fill="#2b5d8e" font-family="monospace">M0[1,0,0]</text>
+  <text x="177" y="81" text-anchor="middle" font-size="9.5" fill="#2b5d8e" font-family="monospace">M1[0,0,1]</text>
+  <text x="235" y="81" text-anchor="middle" font-size="9.5" fill="#2b5d8e" font-family="monospace">M2[1,1,0]</text>
+  <text x="55" y="111" text-anchor="middle" font-size="9.5" fill="#2b5d8e" font-family="monospace">S0[1,1,0]</text>
+  <text x="55" y="141" text-anchor="middle" font-size="9.5" fill="#2b5d8e" font-family="monospace">S1[1,0,1]</text>
+  <text x="55" y="171" text-anchor="middle" font-size="9.5" fill="#2b5d8e" font-family="monospace">S2[0,0,1]</text>
+  <text x="119" y="111" text-anchor="middle" font-size="12" fill="#555">2</text>
+  <text x="177" y="111" text-anchor="middle" font-size="12" fill="#555">0</text>
+  <text x="235" y="111" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f5d2f">3</text>
+  <text x="119" y="141" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f5d2f">2</text>
+  <text x="177" y="141" text-anchor="middle" font-size="12" fill="#555">2</text>
+  <text x="235" y="141" text-anchor="middle" font-size="12" fill="#555">1</text>
+  <text x="119" y="171" text-anchor="middle" font-size="12" fill="#555">1</text>
+  <text x="177" y="171" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f5d2f">3</text>
+  <text x="235" y="171" text-anchor="middle" font-size="12" fill="#555">0</text>
+  <text x="149" y="194" text-anchor="middle" font-size="10" fill="#777">评分矩阵：行 = 学生，列 = 导师（绿色 = 最优配对占用的格）</text>
+
+  <text x="447" y="76" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d2f">最优配对（回溯自 dp[111]）</text>
+  <g filter="url(#sk)">
+    <rect x="300" y="86" width="160" height="28" rx="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+    <rect x="300" y="122" width="160" height="28" rx="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+    <rect x="300" y="158" width="160" height="28" rx="14" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+    <rect x="480" y="92" width="125" height="88" rx="8" fill="#fdf1e3" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="380" y="104" text-anchor="middle" font-size="11.5" fill="#2f5d2f" font-family="monospace">S0 → M2（+3）</text>
+  <text x="380" y="140" text-anchor="middle" font-size="11.5" fill="#2f5d2f" font-family="monospace">S1 → M0（+2）</text>
+  <text x="380" y="176" text-anchor="middle" font-size="11.5" fill="#2f5d2f" font-family="monospace">S2 → M1（+3）</text>
+  <text x="542" y="124" text-anchor="middle" font-size="11" fill="#7a5415">总分</text>
+  <text x="542" y="146" text-anchor="middle" font-size="12" fill="#7a5415" font-family="monospace">3+2+3</text>
+  <text x="542" y="170" text-anchor="middle" font-size="16" font-weight="bold" fill="#7a5415" font-family="monospace">= 8</text>
+
+  <g filter="url(#sk)">
+    <rect x="21" y="313" width="578" height="29" fill="#eaf6ee"/>
+    <rect x="21" y="371" width="578" height="29" fill="#eaf6ee"/>
+    <rect x="21" y="429" width="578" height="29" fill="#eaf6ee"/>
+    <rect x="20" y="200" width="580" height="258" rx="6" fill="none" stroke="#9a9a9a" stroke-width="1.4"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="20" y="200" width="580" height="26" fill="#e8f0fa"/>
+  </g>
+  <path d="M 20 226 L 600 226" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 20 255 L 600 255" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 20 284 L 600 284" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 20 313 L 600 313" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 20 342 L 600 342" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 20 371 L 600 371" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 20 400 L 600 400" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 20 429 L 600 429" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 84 200 L 84 458" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 124 200 L 124 458" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 176 200 L 176 458" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+  <path d="M 506 200 L 506 458" stroke="#c9c9c9" stroke-width="1" fill="none"/>
+
+  <text x="52" y="218" text-anchor="middle" font-size="10.5" fill="#2b5d8e" font-weight="bold">S（二进制）</text>
+  <text x="104" y="218" text-anchor="middle" font-size="10.5" fill="#2b5d8e" font-weight="bold">|S|</text>
+  <text x="150" y="218" text-anchor="middle" font-size="10.5" fill="#2b5d8e" font-weight="bold">学生</text>
+  <text x="341" y="218" text-anchor="middle" font-size="10.5" fill="#2b5d8e" font-weight="bold">候选转移（取 max）</text>
+  <text x="553" y="218" text-anchor="middle" font-size="10.5" fill="#2b5d8e" font-weight="bold">dp[S]</text>
+
+  <text x="52" y="245" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">000</text>
+  <text x="104" y="245" text-anchor="middle" font-size="11" fill="#555">0</text>
+  <text x="150" y="245" text-anchor="middle" font-size="11" fill="#555">—</text>
+  <text x="186" y="245" font-size="10.5" fill="#888" font-family="monospace">（初始）</text>
+  <text x="553" y="245" text-anchor="middle" font-size="11.5" fill="#555" font-family="monospace">0</text>
+
+  <text x="52" y="274" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">001</text>
+  <text x="104" y="274" text-anchor="middle" font-size="11" fill="#555">1</text>
+  <text x="150" y="274" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">S0</text>
+  <text x="186" y="274" font-size="10.5" fill="#555" font-family="monospace">dp[000] + score[0][0] = 0 + 2</text>
+  <text x="553" y="274" text-anchor="middle" font-size="11.5" fill="#555" font-family="monospace">2</text>
+
+  <text x="52" y="303" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">010</text>
+  <text x="104" y="303" text-anchor="middle" font-size="11" fill="#555">1</text>
+  <text x="150" y="303" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">S0</text>
+  <text x="186" y="303" font-size="10.5" fill="#555" font-family="monospace">dp[000] + score[0][1] = 0 + 0</text>
+  <text x="553" y="303" text-anchor="middle" font-size="11.5" fill="#555" font-family="monospace">0</text>
+
+  <text x="52" y="332" text-anchor="middle" font-size="11" fill="#2f5d2f" font-weight="bold" font-family="monospace">100</text>
+  <text x="104" y="332" text-anchor="middle" font-size="11" fill="#555">1</text>
+  <text x="150" y="332" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">S0</text>
+  <text x="186" y="332" font-size="10.5" fill="#555" font-family="monospace">dp[000] + score[0][2] = 0 + 3</text>
+  <text x="553" y="332" text-anchor="middle" font-size="11.5" fill="#2f5d2f" font-weight="bold" font-family="monospace">3</text>
+
+  <text x="52" y="361" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">011</text>
+  <text x="104" y="361" text-anchor="middle" font-size="11" fill="#555">2</text>
+  <text x="150" y="361" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">S1</text>
+  <text x="186" y="361" font-size="10.5" fill="#555" font-family="monospace">max( dp[001] + 2, dp[010] + 2 )</text>
+  <text x="553" y="361" text-anchor="middle" font-size="11.5" fill="#555" font-family="monospace">4</text>
+
+  <text x="52" y="390" text-anchor="middle" font-size="11" fill="#2f5d2f" font-weight="bold" font-family="monospace">101</text>
+  <text x="104" y="390" text-anchor="middle" font-size="11" fill="#555">2</text>
+  <text x="150" y="390" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">S1</text>
+  <text x="186" y="390" font-size="10.5" fill="#555" font-family="monospace">max( dp[001] + 1, dp[100] + 2 )</text>
+  <text x="553" y="390" text-anchor="middle" font-size="11.5" fill="#2f5d2f" font-weight="bold" font-family="monospace">5</text>
+
+  <text x="52" y="419" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">110</text>
+  <text x="104" y="419" text-anchor="middle" font-size="11" fill="#555">2</text>
+  <text x="150" y="419" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">S1</text>
+  <text x="186" y="419" font-size="10.5" fill="#555" font-family="monospace">max( dp[010] + 1, dp[100] + 2 )</text>
+  <text x="553" y="419" text-anchor="middle" font-size="11.5" fill="#555" font-family="monospace">5</text>
+
+  <text x="52" y="448" text-anchor="middle" font-size="11" fill="#2f5d2f" font-weight="bold" font-family="monospace">111</text>
+  <text x="104" y="448" text-anchor="middle" font-size="11" fill="#555">3</text>
+  <text x="150" y="448" text-anchor="middle" font-size="11" fill="#555" font-family="monospace">S2</text>
+  <text x="186" y="448" font-size="10.5" fill="#555" font-family="monospace">max( dp[011] + 0, dp[101] + 3, dp[110] + 1 )</text>
+  <text x="553" y="448" text-anchor="middle" font-size="12.5" fill="#2f5d2f" font-weight="bold" font-family="monospace">8 ⭐</text>
+
+  <g filter="url(#sk)">
+    <rect x="20" y="472" width="580" height="56" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="310" y="494" text-anchor="middle" font-size="12" fill="#2f5d2f" font-weight="bold" font-family="monospace">最优路径：000 →(S0→M2 +3) 100 →(S1→M0 +2) 101 →(S2→M1 +3) 111</text>
+  <text x="310" y="516" text-anchor="middle" font-size="11.5" fill="#2f5d2f">同一状态的多条入径只有带着最优前缀的那条幸存 —— 010→011 的 +2 输给 001→011 的 2+2</text>
+</svg>
