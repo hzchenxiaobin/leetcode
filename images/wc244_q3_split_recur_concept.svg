@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="450" viewBox="0 0 680 450" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="61" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="sk2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="ab" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8edb"/>
+    </marker>
+  </defs>
+  <rect width="680" height="450" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：旋转挪「位置」、翻转改「字符」→ 可分离；一步递推免倍增</text>
+  <path d="M 170 40 Q 340 48 510 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ================= Panel A: separability ================= -->
+  <text x="52" y="70" font-size="13.5" font-weight="bold" fill="#2b6e9e">① 旋转与翻转可交换 ——「边转边翻」不会更省（引理 1）</text>
+
+  <g filter="url(#sk)">
+    <rect x="70" y="84" width="44" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="120" y="84" width="44" height="36" rx="5" fill="#fff3d6" stroke="#c98a2b" stroke-width="1.5"/>
+    <rect x="170" y="84" width="44" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+    <rect x="220" y="84" width="44" height="36" rx="5" fill="#fff3d6" stroke="#c98a2b" stroke-width="1.5"/>
+    <rect x="270" y="84" width="44" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="92" y="107" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">转</text>
+  <text x="142" y="107" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">翻</text>
+  <text x="192" y="107" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">转</text>
+  <text x="242" y="107" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">翻</text>
+  <text x="292" y="107" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">转</text>
+  <text x="340" y="108" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">=</text>
+  <g filter="url(#sk)">
+    <rect x="362" y="84" width="92" height="36" rx="5" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="408" y="107" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">选起点 k</text>
+  <text x="463" y="108" text-anchor="middle" font-size="14" fill="#2b2b2b">＋</text>
+  <g filter="url(#sk)">
+    <rect x="478" y="84" width="100" height="36" rx="5" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="528" y="107" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">翻转集合 S</text>
+
+  <text x="70" y="146" font-size="11.5" fill="#888">翻转改「值」、旋转挪「位置」，作用对象不同 → 可交换；任意交错策略都可重排成「先定起点、再翻字符」</text>
+  <text x="70" y="166" font-size="12" font-weight="bold" fill="#2b2b2b">于是 ans = 枚举 n 个起点，每个起点数一次最少翻转</text>
+
+  <g filter="url(#sk)">
+    <rect x="470" y="132" width="186" height="52" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="563" y="152" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">ans = min f(k)，0 ≤ k &lt; n</text>
+  <text x="563" y="172" text-anchor="middle" font-size="10.5" fill="#666">f(k) = min( d(ρ^k(s), A), d(ρ^k(s), B) )</text>
+
+  <path d="M 60 190 Q 340 198 620 190" stroke="#cccccc" stroke-width="1.2" fill="none" filter="url(#sk)"/>
+
+  <!-- ================= Panel B: one-step recurrence ================= -->
+  <text x="52" y="216" font-size="13.5" font-weight="bold" fill="#2e6e2e">② 相对模式一步递推：中间位「匹配状态全体反转」+ 首尾两个修正</text>
+  <text x="70" y="238" font-size="10.5" fill="#888">位置 j 的期望值 = j mod 2（模式 A = 0101…；B 互补，b = n − a）</text>
+
+  <!-- before row -->
+  <text x="70" y="264" font-size="11" fill="#888">旋转前</text>
+  <g filter="url(#sk2)">
+    <rect x="118" y="248" width="44" height="34" rx="4" fill="#fdecea" stroke="#b85450" stroke-width="2"/>
+    <rect x="168" y="248" width="44" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="218" y="248" width="44" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="268" y="248" width="44" height="34" rx="4" fill="none" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="4 4"/>
+    <rect x="318" y="248" width="44" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="140" y="270" text-anchor="middle" font-size="14" font-weight="bold" fill="#b03a3a">c</text>
+  <text x="190" y="270" text-anchor="middle" font-size="13" fill="#2b6e9e">x₁</text>
+  <text x="240" y="270" text-anchor="middle" font-size="13" fill="#2b6e9e">x₂</text>
+  <text x="290" y="270" text-anchor="middle" font-size="13" fill="#999">⋯</text>
+  <text x="340" y="270" text-anchor="middle" font-size="12.5" fill="#2b6e9e">x</text>
+  <text x="344" y="266" font-size="9" fill="#2b6e9e" baseline-shift="sub">n−1</text>
+  <text x="140" y="296" text-anchor="middle" font-size="10" fill="#b03a3a">0</text>
+  <text x="190" y="296" text-anchor="middle" font-size="10" fill="#888">1</text>
+  <text x="240" y="296" text-anchor="middle" font-size="10" fill="#888">2</text>
+  <text x="290" y="296" text-anchor="middle" font-size="10" fill="#888">⋯</text>
+  <text x="340" y="296" text-anchor="middle" font-size="10" fill="#888">n−1</text>
+
+  <!-- move arrow -->
+  <g filter="url(#sk)">
+    <path d="M 140 242 Q 250 210 362 288" stroke="#b85450" stroke-width="2" fill="none" stroke-dasharray="7 5" marker-end="url(#ar)"/>
+  </g>
+  <text x="252" y="222" text-anchor="middle" font-size="11" font-weight="bold" fill="#b03a3a">c 从头移到尾</text>
+
+  <!-- after row -->
+  <text x="70" y="352" font-size="11" fill="#888">旋转后</text>
+  <g filter="url(#sk2)">
+    <rect x="118" y="336" width="44" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="168" y="336" width="44" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="218" y="336" width="44" height="34" rx="4" fill="none" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="4 4"/>
+    <rect x="268" y="336" width="44" height="34" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+    <rect x="318" y="336" width="44" height="34" rx="4" fill="#fdecea" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="140" y="358" text-anchor="middle" font-size="13" fill="#2b6e9e">x₁</text>
+  <text x="190" y="358" text-anchor="middle" font-size="13" fill="#2b6e9e">x₂</text>
+  <text x="240" y="358" text-anchor="middle" font-size="13" fill="#999">⋯</text>
+  <text x="290" y="358" text-anchor="middle" font-size="12.5" fill="#2b6e9e">x</text>
+  <text x="294" y="354" font-size="9" fill="#2b6e9e" baseline-shift="sub">n−1</text>
+  <text x="340" y="358" text-anchor="middle" font-size="14" font-weight="bold" fill="#b03a3a">c</text>
+  <text x="140" y="384" text-anchor="middle" font-size="10" fill="#888">0</text>
+  <text x="190" y="384" text-anchor="middle" font-size="10" fill="#888">1</text>
+  <text x="240" y="384" text-anchor="middle" font-size="10" fill="#888">⋯</text>
+  <text x="290" y="384" text-anchor="middle" font-size="10" fill="#888">n−2</text>
+  <text x="340" y="384" text-anchor="middle" font-size="10" fill="#b03a3a">n−1</text>
+
+  <!-- middle annotation -->
+  <g filter="url(#sk)">
+    <path d="M 384 292 Q 396 288 400 280" stroke="#4a8edb" stroke-width="1.4" fill="none" marker-end="url(#ab)"/>
+  </g>
+  <text x="412" y="252" font-size="11.5" fill="#444">中间 n−1 位各左移一格：期望奇偶翻转</text>
+  <text x="412" y="271" font-size="11.5" font-weight="bold" fill="#2b6e9e">→ 匹配变失配、失配变匹配</text>
+  <text x="412" y="292" font-size="11.5" fill="#444">这 n−1 位失配数 = (n−1) − (a − m₁)</text>
+
+  <!-- formula card -->
+  <g filter="url(#sk)">
+    <rect x="404" y="312" width="252" height="88" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="530" y="336" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" font-family="monospace">a ← (n−1) − (a − m₁) + m₂</text>
+  <text x="530" y="358" text-anchor="middle" font-size="10.5" fill="#555">m₁ = [c ≠ '0']：c 原来在位置 0 的失配</text>
+  <text x="530" y="376" text-anchor="middle" font-size="10.5" fill="#555">m₂ = [c ≠ (n−1)%2]：c 落到位置 n−1 的失配</text>
+  <text x="530" y="394" text-anchor="middle" font-size="10.5" fill="#888">更新后 b = n − a（互补 trick）</text>
+
+  <text x="340" y="432" text-anchor="middle" font-size="10.5" fill="#888">免倍增：不建 t = s+s，只递推一个整数 a —— O(1) 额外空间</text>
+</svg>
