@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="460" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">核心观察：奇数次访问跳回 nextVisit[i] —— 折返腿「原路重放」后才能前进</text>
+  <path d="M 140 36 Q 320 44 500 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- Panel A: fold-back structure -->
+  <rect x="16" y="46" width="608" height="204" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="68" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">折返结构：首访 i（奇）→ 跳回 j → 走回 i → 再访 i（偶）→ 前进 i+1</text>
+
+  <!-- labels above rooms -->
+  <text x="92" y="90" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">j = nextVisit[i]</text>
+  <text x="340" y="90" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">i（首访）</text>
+  <text x="464" y="90" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">i+1</text>
+
+  <!-- room boxes -->
+  <rect x="64" y="96" width="56" height="34" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="92" y="118" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">0</text>
+  <rect x="188" y="96" width="56" height="34" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="216" y="118" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="312" y="96" width="56" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="340" y="118" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">2</text>
+  <rect x="436" y="96" width="56" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="464" y="118" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">3</text>
+
+  <!-- forward arrows -->
+  <path d="M 124 113 L 182 113" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 248 113 L 306 113" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 372 113 L 430 113" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- back arc -->
+  <path d="M 340 134 Q 216 172 100 134" stroke="#b85450" stroke-width="2.2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="216" y="168" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">次日：跳回 j（本次访问是 i 的第 1 次·奇）</text>
+
+  <!-- three segment chips -->
+  <rect x="28" y="186" width="180" height="52" rx="8" fill="#ffffff" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="118" y="206" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">① 首访 i 当天（第 1 次·奇）</text>
+  <text x="118" y="224" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">次日跳到 j：花 1 天</text>
+  <rect x="222" y="186" width="186" height="52" rx="8" fill="#ffffff" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="315" y="206" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">② 折返腿：从 j 走回 i</text>
+  <text x="315" y="224" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">耗时 dp[j] + … + dp[i−1] 天</text>
+  <rect x="422" y="186" width="186" height="52" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="515" y="206" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">③ 再访 i（第 2 次·偶）</text>
+  <text x="515" y="224" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">次日首访 i+1：花 1 天</text>
+
+  <!-- Panel B: why the return leg can be replayed -->
+  <rect x="16" y="262" width="608" height="186" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="284" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2d5a24" filter="url(#rough2)">为什么折返腿能「照抄」：奇偶状态一致 + 过程确定 ⇒ 轨迹重放</text>
+
+  <rect x="32" y="298" width="266" height="96" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="165" y="316" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">跳回 j 的那一刻（真实过程）</text>
+  <text x="44" y="336" font-size="10.5" fill="#333" filter="url(#rough2)">· 房间 0..j−1：偶数次（不变量延续）</text>
+  <text x="44" y="352" font-size="10.5" fill="#333" filter="url(#rough2)">· 房间 j：刚被访问 → 翻成奇</text>
+  <text x="44" y="368" font-size="10.5" fill="#333" filter="url(#rough2)">· 房间 j+1..i−1：各 ≥ 2 次 → 仍偶</text>
+  <text x="44" y="384" font-size="10.5" fill="#333" filter="url(#rough2)">· 当前位置：j</text>
+
+  <text x="322" y="344" text-anchor="middle" font-size="17" font-weight="bold" fill="#2d5a24" filter="url(#rough2)">≡</text>
+  <text x="322" y="362" text-anchor="middle" font-size="9.5" fill="#2d5a24" filter="url(#rough2)">奇偶向量一致</text>
+
+  <rect x="344" y="298" width="266" height="96" rx="8" fill="#ffffff" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="477" y="316" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">当初首访 j 的那一刻（过程的过去）</text>
+  <text x="356" y="336" font-size="10.5" fill="#333" filter="url(#rough2)">· 房间 0..j−1：偶数次（归纳假设）</text>
+  <text x="356" y="352" font-size="10.5" fill="#333" filter="url(#rough2)">· 房间 j：刚被访问 → 翻成奇</text>
+  <text x="356" y="368" font-size="10.5" fill="#333" filter="url(#rough2)">· 房间 j+1..i−1：0 次 → 也是偶</text>
+  <text x="356" y="384" font-size="10.5" fill="#333" filter="url(#rough2)">· 当前位置：j</text>
+
+  <text x="320" y="414" text-anchor="middle" font-size="11" fill="#2d5a24" filter="url(#rough2)">访问只翻转当前房间的奇偶；明日位置 = f(位置, 奇偶向量) —— 状态一致 ⇒ 此后逐日重放</text>
+  <text x="320" y="434" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2d5a24" filter="url(#rough2)">dp[i] = 1 + Σ + 1 = 2 + dp[j] + … + dp[i−1]</text>
+</svg>

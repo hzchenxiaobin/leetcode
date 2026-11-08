@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 620"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="620" fill="#fafafa"/>
+  <text x="260" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：前缀和 + 单趟线性递推（i = 0 … n−2）</text>
+  <path d="M 130 36 Q 260 44 390 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- init -->
+  <rect x="185" y="48" width="150" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="66" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">pre[0] ← 0</text>
+  <text x="260" y="82" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">i ← 0</text>
+
+  <path d="M 260 90 L 260 104" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <path d="M 260 106 L 344 140 L 260 174 L 176 140 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="145" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">i ≤ n−2 ?</text>
+
+  <!-- no branch -->
+  <path d="M 344 140 L 396 140" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="368" y="132" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">否</text>
+  <rect x="400" y="116" width="104" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="452" y="136" text-anchor="middle" font-size="11.5" fill="#2d5a24" filter="url(#rough2)">返回 pre[n−1]</text>
+  <text x="452" y="153" text-anchor="middle" font-size="9.5" fill="#2d5a24" filter="url(#rough2)">（mod 10⁹+7）</text>
+  <text x="452" y="180" text-anchor="middle" font-size="9.5" fill="#2d5a24" filter="url(#rough2)">= dp[0] + … + dp[n−2]</text>
+
+  <!-- yes branch -->
+  <path d="M 260 174 L 260 190" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="274" y="188" font-size="10.5" fill="#333" filter="url(#rough2)">是</text>
+
+  <rect x="185" y="192" width="150" height="34" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="213" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">j ← nextVisit[i]</text>
+
+  <path d="M 260 226 L 260 238" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="130" y="240" width="260" height="50" rx="8" fill="#ffffff" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="260" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">dp ← (2 + pre[i] − pre[j] + MOD) mod MOD</text>
+  <text x="260" y="279" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">= 2 + dp[j] + … + dp[i−1]（防负数：先 + MOD）</text>
+
+  <path d="M 260 290 L 260 302" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="150" y="304" width="220" height="36" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="326" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">pre[i+1] ← (pre[i] + dp) mod MOD</text>
+
+  <path d="M 260 340 L 260 352" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="210" y="354" width="100" height="32" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="374" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">i ← i + 1</text>
+
+  <!-- loop back -->
+  <path d="M 210 370 L 122 370 L 122 140 L 172 140" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="106" y="256" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">循环</text>
+
+  <!-- notes -->
+  <rect x="24" y="410" width="472" height="190" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="434" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">实现要点（易错细节见题解 §8）</text>
+  <text x="44" y="460" font-size="10.5" fill="#333" filter="url(#rough2)">① 防负数：pre 取模后相减可能为负，C++ 要先 + MOD 再取模</text>
+  <text x="44" y="484" font-size="10.5" fill="#333" filter="url(#rough2)">② j = i（nextVisit[i] = i）时区间和为空 → dp[i] = 2 自动成立</text>
+  <text x="44" y="508" font-size="10.5" fill="#333" filter="url(#rough2)">③ 只递推到 dp[n−2]：首访 n−1 即「全部到访」，dp[n−1] 用不上</text>
+  <text x="44" y="532" font-size="10.5" fill="#333" filter="url(#rough2)">④ pre[j] 是随机访问（j 可为 0…i 任意值）→ 数组须整体保留</text>
+  <text x="44" y="556" font-size="10.5" fill="#333" filter="url(#rough2)">⑤ 答案 = pre[n−1] = dp[0] + … + dp[n−2]（mod 10⁹+7）</text>
+  <text x="44" y="580" font-size="10.5" fill="#333" filter="url(#rough2)">⑥ n = 2 时循环恰好执行一次：dp[0] = 2，即示例 1 的答案</text>
+</svg>
