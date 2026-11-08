@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="495" viewBox="0 0 680 495" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="680" height="495" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">示例演算：removeTime 构造与二分三轮走查</text>
+  <text x="340" y="52" text-anchor="middle" font-size="12" fill="#444" font-family="monospace">s = "abcacb"　p = "ab"　removable = [3,1,0]　m = 3</text>
+
+  <!-- top table: s[i] and removeTime -->
+  <text x="82" y="78" text-anchor="middle" font-size="9.5" fill="#888" font-family="monospace">0</text>
+  <text x="122" y="78" text-anchor="middle" font-size="9.5" fill="#888" font-family="monospace">1</text>
+  <text x="162" y="78" text-anchor="middle" font-size="9.5" fill="#888" font-family="monospace">2</text>
+  <text x="202" y="78" text-anchor="middle" font-size="9.5" fill="#888" font-family="monospace">3</text>
+  <text x="242" y="78" text-anchor="middle" font-size="9.5" fill="#888" font-family="monospace">4</text>
+  <text x="282" y="78" text-anchor="middle" font-size="9.5" fill="#888" font-family="monospace">5</text>
+  <text x="56" y="106" text-anchor="end" font-size="11" fill="#666" font-family="monospace">s[i]</text>
+  <g filter="url(#sk)">
+    <rect x="64" y="84" width="36" height="32" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="104" y="84" width="36" height="32" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="144" y="84" width="36" height="32" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="184" y="84" width="36" height="32" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="224" y="84" width="36" height="32" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="264" y="84" width="36" height="32" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+  </g>
+  <text x="82" y="105" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">a</text>
+  <text x="122" y="105" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">b</text>
+  <text x="162" y="105" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">c</text>
+  <text x="202" y="105" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">a</text>
+  <text x="242" y="105" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">c</text>
+  <text x="282" y="105" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">b</text>
+  <text x="56" y="142" text-anchor="end" font-size="11" fill="#666" font-family="monospace">时刻</text>
+  <g filter="url(#sk)">
+    <rect x="64" y="126" width="36" height="22" rx="4" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.6"/>
+    <rect x="104" y="126" width="36" height="22" rx="4" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.6"/>
+    <rect x="184" y="126" width="36" height="22" rx="4" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="82" y="142" text-anchor="middle" font-size="12" fill="#7a5415" font-family="monospace">2</text>
+  <text x="122" y="142" text-anchor="middle" font-size="12" fill="#7a5415" font-family="monospace">1</text>
+  <text x="162" y="142" text-anchor="middle" font-size="12" fill="#888" font-family="monospace">−1</text>
+  <text x="202" y="142" text-anchor="middle" font-size="12" fill="#7a5415" font-family="monospace">0</text>
+  <text x="242" y="142" text-anchor="middle" font-size="12" fill="#888" font-family="monospace">−1</text>
+  <text x="282" y="142" text-anchor="middle" font-size="12" fill="#888" font-family="monospace">−1</text>
+
+  <g filter="url(#sk)">
+    <rect x="330" y="76" width="314" height="64" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="487" y="96" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">removeTime[i] = t：i 在第 t 步被删，否则 −1</text>
+  <text x="487" y="114" text-anchor="middle" font-size="11" fill="#444">第 0 步删下标 3 → 第 1 步删下标 1 → 第 2 步删下标 0</text>
+  <text x="487" y="131" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">i 已移除 ⟺ 0 ≤ removeTime[i] &lt; k</text>
+
+  <!-- legend -->
+  <g filter="url(#sk)">
+    <rect x="108" y="150" width="18" height="14" rx="3" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <rect x="204" y="150" width="18" height="14" rx="3" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="292" y="150" width="18" height="14" rx="3" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+  </g>
+  <text x="64" y="162" font-size="11" fill="#666">图例：</text>
+  <text x="132" y="162" font-size="11" fill="#666">匹配成功</text>
+  <text x="228" y="162" font-size="11" fill="#666">已移除</text>
+  <text x="316" y="162" font-size="11" fill="#666">保留未匹配</text>
+
+  <!-- round 1 -->
+  <text x="64" y="192" font-size="12" font-weight="bold" fill="#2b2b2b" font-family="monospace">第 1 轮：lo=0，hi=3，mid=1（删 removeTime &lt; 1）</text>
+  <g filter="url(#sk)">
+    <rect x="64" y="200" width="36" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="104" y="200" width="36" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="144" y="200" width="36" height="30" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="184" y="200" width="36" height="30" rx="4" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="224" y="200" width="36" height="30" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="264" y="200" width="36" height="30" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+  </g>
+  <text x="82" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" font-family="monospace">a</text>
+  <text x="122" y="220" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" font-family="monospace">b</text>
+  <text x="162" y="220" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">c</text>
+  <text x="202" y="220" text-anchor="middle" font-size="14" fill="#b03a3a" font-family="monospace">a</text>
+  <text x="242" y="220" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">c</text>
+  <text x="282" y="220" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">b</text>
+  <text x="330" y="206" font-size="11.5" fill="#444" font-family="monospace">剩 "abccb"：a@0 → b@1 ✓</text>
+  <text x="330" y="226" font-size="11.5" font-weight="bold" fill="#2e6e2e">可行：ans = 1，lo = 2</text>
+
+  <!-- round 2 -->
+  <text x="64" y="278" font-size="12" font-weight="bold" fill="#2b2b2b" font-family="monospace">第 2 轮：lo=2，hi=3，mid=2（删 removeTime &lt; 2）</text>
+  <g filter="url(#sk)">
+    <rect x="64" y="286" width="36" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+    <rect x="104" y="286" width="36" height="30" rx="4" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="144" y="286" width="36" height="30" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="184" y="286" width="36" height="30" rx="4" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="224" y="286" width="36" height="30" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="264" y="286" width="36" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="82" y="306" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" font-family="monospace">a</text>
+  <text x="122" y="306" text-anchor="middle" font-size="14" fill="#b03a3a" font-family="monospace">b</text>
+  <text x="162" y="306" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">c</text>
+  <text x="202" y="306" text-anchor="middle" font-size="14" fill="#b03a3a" font-family="monospace">a</text>
+  <text x="242" y="306" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">c</text>
+  <text x="282" y="306" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" font-family="monospace">b</text>
+  <text x="330" y="292" font-size="11.5" fill="#444" font-family="monospace">剩 "accb"：a@0 → b@5 ✓（贪心最靠前）</text>
+  <text x="330" y="312" font-size="11.5" font-weight="bold" fill="#2e6e2e">可行：ans = 2，lo = 3</text>
+
+  <!-- round 3 -->
+  <text x="64" y="364" font-size="12" font-weight="bold" fill="#2b2b2b" font-family="monospace">第 3 轮：lo=3，hi=3，mid=3（删 removeTime &lt; 3）</text>
+  <g filter="url(#sk)">
+    <rect x="64" y="372" width="36" height="30" rx="4" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="104" y="372" width="36" height="30" rx="4" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="144" y="372" width="36" height="30" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="184" y="372" width="36" height="30" rx="4" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="224" y="372" width="36" height="30" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+    <rect x="264" y="372" width="36" height="30" rx="4" fill="#f2f2f0" stroke="#999999" stroke-width="1.2"/>
+  </g>
+  <text x="82" y="392" text-anchor="middle" font-size="14" fill="#b03a3a" font-family="monospace">a</text>
+  <text x="122" y="392" text-anchor="middle" font-size="14" fill="#b03a3a" font-family="monospace">b</text>
+  <text x="162" y="392" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">c</text>
+  <text x="202" y="392" text-anchor="middle" font-size="14" fill="#b03a3a" font-family="monospace">a</text>
+  <text x="242" y="392" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">c</text>
+  <text x="282" y="392" text-anchor="middle" font-size="14" fill="#444" font-family="monospace">b</text>
+  <text x="330" y="378" font-size="11.5" fill="#444" font-family="monospace">剩 "ccb"：'a' 全部被删，j 卡在 0 ✗</text>
+  <text x="330" y="398" font-size="11.5" font-weight="bold" fill="#b03a3a">不可行：hi = 2</text>
+
+  <!-- final -->
+  <g filter="url(#sk)">
+    <rect x="240" y="446" width="200" height="34" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="467" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">lo &gt; hi 结束，返回 ans = 2</text>
+  <text x="460" y="467" font-size="11" fill="#888">三轮各一次 O(|s|) 判定</text>
+</svg>

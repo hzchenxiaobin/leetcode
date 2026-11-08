@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="460" viewBox="0 0 680 460" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="460" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：过滤越界 → 逐维聚合 max → 比对 target</text>
+  <path d="M 150 40 Q 340 48 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- A: init -->
+  <g filter="url(#sk)">
+    <rect x="190" y="54" width="220" height="32" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="300" y="75" text-anchor="middle" font-size="12.5" fill="#2b6e9e" font-family="monospace">初始化：ra = rb = rc = 0</text>
+  <g filter="url(#sk)">
+    <path d="M 300 86 L 300 100" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- loop region -->
+  <g filter="url(#sk)">
+    <rect x="120" y="104" width="440" height="192" rx="10" fill="none" stroke="#999999" stroke-width="1.4" stroke-dasharray="7 5"/>
+  </g>
+  <text x="300" y="126" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b">对每个三元组 t = [a, b, c]（单遍扫描）</text>
+
+  <!-- C: filter diamond -->
+  <g filter="url(#sk)">
+    <polygon points="300,140 400,170 300,200 200,170" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/>
+  </g>
+  <text x="300" y="165" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">三维全 ≤ target ？</text>
+  <text x="300" y="182" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">(a ≤ x 且 b ≤ y 且 c ≤ z)</text>
+  <g filter="url(#sk)">
+    <path d="M 400 170 L 436 170" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="416" y="162" text-anchor="middle" font-size="11" fill="#b03a3a">否</text>
+  <g filter="url(#sk)">
+    <rect x="440" y="152" width="100" height="36" rx="8" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="490" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">跳过 t</text>
+  <text x="490" y="186" text-anchor="middle" font-size="10.5" fill="#b03a3a">（越界弃用）</text>
+  <text x="490" y="206" text-anchor="middle" font-size="10" fill="#888">↻ 下一个 t</text>
+  <g filter="url(#sk)">
+    <path d="M 300 200 L 300 218" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="310" y="214" font-size="11" fill="#2e6e2e">是</text>
+
+  <!-- D: merge box -->
+  <g filter="url(#sk)">
+    <rect x="150" y="222" width="300" height="50" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="300" y="242" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">并入：ra = max(ra, a)</text>
+  <text x="300" y="260" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">rb = max(rb, b)，rc = max(rc, c)</text>
+  <text x="300" y="288" text-anchor="middle" font-size="10" fill="#888">↻ 下一个 t</text>
+
+  <!-- exit loop to final check -->
+  <g filter="url(#sk)">
+    <path d="M 300 296 L 300 310" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- E: final diamond -->
+  <g filter="url(#sk)">
+    <polygon points="340,314 448,346 340,378 232,346" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="341" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" font-family="monospace">ra == x 且 rb == y</text>
+  <text x="340" y="358" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" font-family="monospace">且 rc == z ？</text>
+  <g filter="url(#sk)">
+    <path d="M 448 346 L 484 346" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="464" y="338" text-anchor="middle" font-size="11" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <rect x="488" y="330" width="110" height="32" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="543" y="350" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" font-family="monospace">return true</text>
+  <text x="543" y="378" text-anchor="middle" font-size="10" fill="#888">即 M(U) = target</text>
+  <g filter="url(#sk)">
+    <path d="M 232 346 L 196 346" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+  <text x="214" y="338" text-anchor="middle" font-size="11" fill="#b03a3a">否</text>
+  <g filter="url(#sk)">
+    <rect x="82" y="330" width="112" height="32" rx="8" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="138" y="350" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a" font-family="monospace">return false</text>
+  <text x="138" y="378" text-anchor="middle" font-size="10" fill="#888">某维永远差一点</text>
+
+  <!-- bottom notes -->
+  <text x="340" y="416" text-anchor="middle" font-size="11.5" fill="#444">每个三元组 O(1) 判定与更新 ⇒ 总时间 O(n)，额外空间 O(1)</text>
+  <text x="340" y="436" text-anchor="middle" font-size="11" fill="#888">n ≤ 10⁵，一遍扫描即出答案，无需模拟任何合并过程</text>
+</svg>
