@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="600" viewBox="0 0 940 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="600" fill="#fafafa"/>
+  <text x="470" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例演算：逐下标走查与压缩验证</text>
+  <path d="M 300 44 Q 470 52 640 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- table header -->
+  <g filter="url(#sk)" fill="#e8f0fe" stroke="#446688" stroke-width="1.5">
+    <rect x="110" y="64" width="70" height="34" rx="3"/>
+    <rect x="180" y="64" width="90" height="34" rx="3"/>
+    <rect x="270" y="64" width="140" height="34" rx="3"/>
+    <rect x="410" y="64" width="140" height="34" rx="3"/>
+    <rect x="550" y="64" width="200" height="34" rx="3"/>
+    <rect x="750" y="64" width="80" height="34" rx="3"/>
+  </g>
+  <text x="145" y="85" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#sk)">下标 i</text>
+  <text x="225" y="85" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#sk)">nums[i]</text>
+  <text x="340" y="85" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#sk)">左侧最近不等</text>
+  <text x="480" y="85" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#sk)">右侧最近不等</text>
+  <text x="650" y="85" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#sk)">判定</text>
+  <text x="790" y="85" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66" filter="url(#sk)">ans</text>
+
+  <!-- row 1 : i=1 peak -->
+  <g filter="url(#sk)" fill="#fdfcf7" stroke="#b8c4d4" stroke-width="1.1">
+    <rect x="110" y="98" width="70" height="38" rx="3"/>
+    <rect x="180" y="98" width="90" height="38" rx="3"/>
+    <rect x="270" y="98" width="140" height="38" rx="3"/>
+    <rect x="410" y="98" width="140" height="38" rx="3"/>
+    <rect x="550" y="98" width="200" height="38" rx="3"/>
+    <rect x="750" y="98" width="80" height="38" rx="3"/>
+  </g>
+  <text x="145" y="121" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">1</text>
+  <text x="225" y="121" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">4</text>
+  <text x="340" y="121" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">2</text>
+  <text x="480" y="121" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">1</text>
+  <text x="650" y="121" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">峰：4 &gt; 2 且 4 &gt; 1</text>
+  <text x="790" y="121" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" filter="url(#sk)">1</text>
+
+  <!-- row 2 : i=2 valley -->
+  <g filter="url(#sk)" fill="#fdfcf7" stroke="#b8c4d4" stroke-width="1.1">
+    <rect x="110" y="136" width="70" height="38" rx="3"/>
+    <rect x="180" y="136" width="90" height="38" rx="3"/>
+    <rect x="270" y="136" width="140" height="38" rx="3"/>
+    <rect x="410" y="136" width="140" height="38" rx="3"/>
+    <rect x="550" y="136" width="200" height="38" rx="3"/>
+    <rect x="750" y="136" width="80" height="38" rx="3"/>
+  </g>
+  <text x="145" y="159" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">2</text>
+  <text x="225" y="159" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">1</text>
+  <text x="340" y="159" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">4</text>
+  <text x="480" y="159" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">6（跨过 1）</text>
+  <text x="650" y="159" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">谷：1 &lt; 4 且 1 &lt; 6</text>
+  <text x="790" y="159" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" filter="url(#sk)">2</text>
+
+  <!-- row 3 : i=3 skipped (orange) -->
+  <g filter="url(#sk)" fill="#fff8e1" stroke="#d6a040" stroke-width="1.1">
+    <rect x="110" y="174" width="70" height="38" rx="3"/>
+    <rect x="180" y="174" width="90" height="38" rx="3"/>
+    <rect x="270" y="174" width="140" height="38" rx="3"/>
+    <rect x="410" y="174" width="140" height="38" rx="3"/>
+    <rect x="550" y="174" width="200" height="38" rx="3"/>
+    <rect x="750" y="174" width="80" height="38" rx="3"/>
+  </g>
+  <text x="145" y="197" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">3</text>
+  <text x="225" y="197" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">1</text>
+  <text x="340" y="197" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#sk)">—（与左邻相等）</text>
+  <text x="480" y="197" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#sk)">—</text>
+  <text x="650" y="197" text-anchor="middle" font-size="11" font-weight="bold" fill="#a0782a" filter="url(#sk)">跳过：与 i=2 同一个谷</text>
+  <text x="790" y="197" text-anchor="middle" font-size="12" fill="#999" filter="url(#sk)">2</text>
+
+  <!-- row 4 : i=4 peak -->
+  <g filter="url(#sk)" fill="#fdfcf7" stroke="#b8c4d4" stroke-width="1.1">
+    <rect x="110" y="212" width="70" height="38" rx="3"/>
+    <rect x="180" y="212" width="90" height="38" rx="3"/>
+    <rect x="270" y="212" width="140" height="38" rx="3"/>
+    <rect x="410" y="212" width="140" height="38" rx="3"/>
+    <rect x="550" y="212" width="200" height="38" rx="3"/>
+    <rect x="750" y="212" width="80" height="38" rx="3"/>
+  </g>
+  <text x="145" y="235" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">4</text>
+  <text x="225" y="235" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">6</text>
+  <text x="340" y="235" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">1</text>
+  <text x="480" y="235" text-anchor="middle" font-size="12" fill="#333" filter="url(#sk)">5</text>
+  <text x="650" y="235" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">峰：6 &gt; 1 且 6 &gt; 5</text>
+  <text x="790" y="235" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" filter="url(#sk)">3</text>
+
+  <text x="470" y="272" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#sk)">i = 0 与 i = 5 是首尾下标：缺一侧最近不等邻居，不计入</text>
+
+  <!-- result chip -->
+  <g filter="url(#sk)">
+    <rect x="360" y="288" width="220" height="36" rx="10" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.8"/>
+  </g>
+  <text x="470" y="311" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e5e2e" filter="url(#sk)">示例 1 返回 3 ✓</text>
+
+  <!-- example 2 -->
+  <text x="470" y="368" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例 2：nums = [6, 6, 5, 5, 4, 1]（答案 0）</text>
+  <g filter="url(#sk)">
+    <rect x="317" y="384" width="46" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="369" y="384" width="46" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="421" y="384" width="46" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="473" y="384" width="46" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="525" y="384" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="577" y="384" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="340" y="406" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">6</text>
+  <text x="392" y="406" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">6</text>
+  <text x="444" y="406" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">5</text>
+  <text x="496" y="406" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">5</text>
+  <text x="548" y="406" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">4</text>
+  <text x="600" y="406" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">1</text>
+  <path d="M 319 428 L 319 436 Q 319 442 325 442 L 511 442 Q 517 442 517 436 L 517 428" stroke="#d6a040" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <text x="418" y="460" text-anchor="middle" font-size="10" fill="#a0782a" filter="url(#sk)">相邻相等各自合并成一个段</text>
+
+  <path d="M 470 472 L 470 500" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="486" y="490" font-size="11.5" fill="#556" filter="url(#sk)">压缩（去相邻重复）</text>
+
+  <g filter="url(#sk)">
+    <rect x="363" y="508" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="419" y="508" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="475" y="508" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="531" y="508" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="386" y="530" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">6</text>
+  <text x="442" y="530" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">5</text>
+  <text x="498" y="530" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">4</text>
+  <text x="554" y="530" text-anchor="middle" font-size="13" fill="#333" filter="url(#sk)">1</text>
+  <text x="414" y="529" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#sk)">↘</text>
+  <text x="470" y="529" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#sk)">↘</text>
+  <text x="526" y="529" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#sk)">↘</text>
+
+  <g filter="url(#sk)">
+    <rect x="250" y="558" width="440" height="34" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="470" y="579" text-anchor="middle" font-size="12" font-weight="bold" fill="#33475e" filter="url(#sk)">压缩后 [6, 5, 4, 1] 单调递减，无拐点 → 返回 0 ✓</text>
+</svg>
