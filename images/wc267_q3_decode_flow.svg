@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="650" viewBox="0 0 560 650" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="231" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#8a94a0"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="650" fill="#fdfcf7"/>
+  <text x="280" y="24" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">解码流程：枚举对角线 → 沿线收集 → 去尾</text>
+  <path d="M 90 36 Q 280 44 470 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 开始 -->
+  <g filter="url(#sk)"><rect x="155" y="48" width="150" height="32" rx="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="230" y="68" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5f2e">开始：s, rows</text>
+  <path d="M 230 80 L 230 92" stroke="#8a94a0" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- cols -->
+  <g filter="url(#sk)"><rect x="130" y="96" width="200" height="34" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="230" y="117" text-anchor="middle" font-size="11.5" fill="#2b6e9e">cols = n / rows（n=|s|，必整除）</text>
+  <path d="M 230 130 L 230 142" stroke="#8a94a0" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- k=0 -->
+  <g filter="url(#sk)"><rect x="155" y="146" width="150" height="30" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="230" y="165" text-anchor="middle" font-size="12" fill="#2b6e9e">k = 0（对角线号）</text>
+  <path d="M 230 176 L 230 192" stroke="#8a94a0" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 外层判断 -->
+  <g filter="url(#sk)"><polygon points="154,236 230,198 306,236 230,274" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="230" y="241" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">k &lt; cols ?</text>
+  <text x="240" y="290" font-size="11" fill="#4a7a3a" font-weight="bold">是</text>
+  <path d="M 230 274 L 230 294" stroke="#8a94a0" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 起点 -->
+  <g filter="url(#sk)"><rect x="135" y="298" width="190" height="32" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="230" y="318" text-anchor="middle" font-size="12" fill="#2b6e9e">(i, j) = (0, k)（对角线起点）</text>
+  <path d="M 230 330 L 230 342" stroke="#8a94a0" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 内层判断 -->
+  <g filter="url(#sk)"><polygon points="144,388 230,346 316,388 230,430" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="230" y="384" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">i &lt; rows 且</text>
+  <text x="230" y="402" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">j &lt; cols ?</text>
+  <text x="240" y="446" font-size="11" fill="#4a7a3a" font-weight="bold">是</text>
+  <path d="M 230 430 L 230 450" stroke="#8a94a0" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 收集 -->
+  <g filter="url(#sk)"><rect x="100" y="454" width="220" height="42" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="210" y="472" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">res += s[i×cols + j]</text>
+  <text x="210" y="490" text-anchor="middle" font-size="11" fill="#2b6e9e">i++，j++（沿对角线 ↘）</text>
+
+  <!-- 收集 → 内层判断 回边 -->
+  <path d="M 100 475 C 30 475, 30 388, 140 388" stroke="#8a94a0" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="70" y="436" text-anchor="middle" font-size="10" fill="#8a94a0">循环</text>
+
+  <!-- 内层否 → k++ -->
+  <text x="330" y="380" font-size="11" fill="#b85450" font-weight="bold">否（本条走完）</text>
+  <path d="M 316 388 L 385 388 L 385 449" stroke="#8a94a0" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="345" y="453" width="80" height="32" rx="6" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.8"/></g>
+  <text x="385" y="473" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">k++</text>
+
+  <!-- k++ → 外层判断 回边 -->
+  <path d="M 425 469 C 512 469, 512 236, 310 236" stroke="#8a94a0" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="492" y="330" text-anchor="start" font-size="10" fill="#8a94a0">下一条</text>
+  <text x="492" y="344" text-anchor="start" font-size="10" fill="#8a94a0">对角线</text>
+
+  <!-- 外层否 → rstrip -->
+  <text x="142" y="228" text-anchor="end" font-size="11" fill="#b85450" font-weight="bold">否</text>
+  <path d="M 154 236 C 48 236, 48 558, 126 558" stroke="#8a94a0" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)"><rect x="130" y="540" width="200" height="36" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="230" y="562" text-anchor="middle" font-size="11.5" fill="#2b6e9e">rstrip（只删尾部空格）</text>
+  <path d="M 230 576 L 230 588" stroke="#8a94a0" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 返回 -->
+  <g filter="url(#sk)"><rect x="155" y="592" width="150" height="32" rx="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="230" y="612" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5f2e">返回 res</text>
+
+  <!-- 注意框 1（右上） -->
+  <g filter="url(#sk)"><rect x="355" y="64" width="193" height="62" rx="8" fill="#fff8e8" stroke="#c98a2b" stroke-width="1.4"/></g>
+  <text x="451" y="84" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#7a5415">⚠ 两个边界缺一不可</text>
+  <text x="451" y="101" text-anchor="middle" font-size="10.5" fill="#7a5415">只判 i&lt;rows：j≥cols 的下标会</text>
+  <text x="451" y="118" text-anchor="middle" font-size="10.5" fill="#7a5415">折叠到下一行，静默读错</text>
+  <path d="M 370 130 C 340 200, 305 280, 275 342" stroke="#c98a2b" stroke-width="1.2" fill="none" stroke-dasharray="2 4" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 注意框 2（右下） -->
+  <g filter="url(#sk)"><rect x="345" y="536" width="200" height="56" rx="8" fill="#fff8e8" stroke="#c98a2b" stroke-width="1.4"/></g>
+  <text x="445" y="558" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#7a5415">⚠ 只删尾部（rstrip）</text>
+  <text x="445" y="578" text-anchor="middle" font-size="10.5" fill="#7a5415">前导 / 中间空格是文本！</text>
+</svg>
