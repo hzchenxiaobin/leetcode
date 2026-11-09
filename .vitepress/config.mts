@@ -74,8 +74,9 @@ const solutionDir = path.resolve(root, '../solution')
 const allRanges = fs.existsSync(solutionDir)
   ? fs.readdirSync(solutionDir).filter(d => /^\d{4}-\d{4}$/.test(d)).sort()
   : []
-const perBatch = Math.ceil(allRanges.length / batchTotal)
-const myRanges = new Set(allRanges.slice(batchIndex * perBatch, (batchIndex + 1) * perBatch))
+const batchStart = Math.floor(allRanges.length * batchIndex / batchTotal)
+const batchEnd = Math.floor(allRanges.length * (batchIndex + 1) / batchTotal)
+const myRanges = new Set(allRanges.slice(batchStart, batchEnd))
 
 const batchExclude: string[] = !batching ? [] : [
   ...allRanges.filter(d => !myRanges.has(d)).map(d => `solution/${d}/**`),
