@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <!-- Title -->
+  <text x="280" y="24" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：二分最大可行峰值</text>
+  <text x="280" y="42" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每次检查 O(1)：total = mid + sideSum(index, mid) + sideSum(n−index−1, mid)</text>
+
+  <!-- start box -->
+  <rect x="170" y="56" width="220" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="74" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">初始化 lo = 1，ans = 1</text>
+  <text x="280" y="90" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">hi = maxSum − n + 1</text>
+
+  <!-- entry arrow -->
+  <path d="M 280 100 L 280 112" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop diamond 1 -->
+  <polygon points="280,114 368,148 280,182 192,148" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="146" text-anchor="middle" font-size="12" fill="#333" font-weight="bold" filter="url(#rough2)">lo ≤ hi ?</text>
+  <text x="280" y="162" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">(区间非空)</text>
+
+  <!-- no branch -->
+  <path d="M 368 148 L 428 148" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="396" y="140" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <rect x="434" y="128" width="110" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="489" y="145" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">返回 ans ★</text>
+  <text x="489" y="161" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">最大可行峰值</text>
+
+  <!-- yes branch -->
+  <path d="M 280 182 L 280 196" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="291" y="193" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- compute box -->
+  <rect x="120" y="198" width="320" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="217" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">mid = (lo + hi) / 2</text>
+  <text x="280" y="237" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">total = mid + sideSum(index, mid) + sideSum(n−index−1, mid)</text>
+
+  <path d="M 280 250 L 280 262" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop diamond 2 -->
+  <polygon points="280,264 372,300 280,336 188,300" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="299" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">total ≤ maxSum ?</text>
+  <text x="280" y="315" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">(mid 可行 ?)</text>
+
+  <!-- feasible branch -->
+  <path d="M 372 300 L 412 300" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="392" y="292" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">✓</text>
+  <rect x="414" y="272" width="118" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="473" y="290" text-anchor="middle" font-size="10.5" fill="#333" font-weight="bold" filter="url(#rough2)">ans = mid</text>
+  <text x="473" y="306" text-anchor="middle" font-size="10.5" fill="#333" font-weight="bold" filter="url(#rough2)">lo = mid + 1</text>
+  <text x="473" y="322" text-anchor="middle" font-size="9" fill="#4a7a3a" filter="url(#rough2)">可行，向右找更大</text>
+
+  <!-- infeasible branch -->
+  <path d="M 188 300 L 138 300" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="164" y="292" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">✗</text>
+  <rect x="12" y="272" width="124" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="74" y="292" text-anchor="middle" font-size="10.5" fill="#333" font-weight="bold" filter="url(#rough2)">hi = mid − 1</text>
+  <text x="74" y="310" text-anchor="middle" font-size="9" fill="#d6a040" filter="url(#rough2)">峰值太大，收缩上界</text>
+
+  <!-- loop back arrows -->
+  <path d="M 74 270 L 34 270 L 34 104 L 274 104" stroke="#888" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 486 270 L 548 270 L 548 104 L 286 104" stroke="#888" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- bottom notes -->
+  <rect x="44" y="356" width="472" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="376" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">二分方向：求「最大可行值」→ 可行时记录 ans = mid 且 lo = mid + 1（与 875 求最小方向相反）</text>
+  <text x="280" y="396" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">上界收紧：其余 n−1 个位置至少为 1 → 峰值 x ≤ maxSum − n + 1</text>
+</svg>

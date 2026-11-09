@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#4a6a8a"/>
+    </marker>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="440" fill="#fafafa"/>
+
+  <!-- Title -->
+  <text x="320" y="24" text-anchor="middle" font-size="13.5" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：单趟扫描，「先查后插」，两个 limit 复用同一棵 Trie</text>
+
+  <!-- Main flow column -->
+  <rect x="205" y="52" width="230" height="34" fill="#f2f2f2" stroke="#888" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="73" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">初始化 01-Trie（仅根节点），位宽 B = 15</text>
+
+  <path d="M 320 86 L 320 100" stroke="#4a6a8a" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="205" y="104" width="230" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="124" text-anchor="middle" font-size="10.5" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">取下一个元素 x = nums[j]</text>
+
+  <path d="M 320 136 L 320 150" stroke="#4a6a8a" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="205" y="154" width="230" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="171" text-anchor="middle" font-size="11" fill="#33507a" font-weight="bold" filter="url(#rough2)">ans += query(x, high+1)</text>
+  <text x="320" y="187" text-anchor="middle" font-size="11" fill="#33507a" font-weight="bold" filter="url(#rough2)">     − query(x, low)</text>
+
+  <path d="M 320 194 L 320 208" stroke="#4a6a8a" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="205" y="212" width="230" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="229" text-anchor="middle" font-size="10.5" fill="#2f5d24" filter="url(#rough2)">insert(x)：沿 15 位二进制路径插入</text>
+  <text x="320" y="245" text-anchor="middle" font-size="10.5" fill="#2f5d24" filter="url(#rough2)">途经每个节点 cnt++（根不计数）</text>
+
+  <path d="M 320 252 L 320 266" stroke="#4a6a8a" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <polygon points="320,268 388,300 320,332 252,300" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="305" text-anchor="middle" font-size="11" fill="#7a5a10" font-weight="bold" filter="url(#rough2)">还有元素？</text>
+
+  <!-- Yes loop -->
+  <path d="M 388 300 L 448 300 L 448 120 L 438 120" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="446" y="292" text-anchor="middle" font-size="10.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- No -->
+  <path d="M 320 332 L 320 352" stroke="#4a6a8a" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="331" y="348" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">否</text>
+
+  <rect x="255" y="356" width="130" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="379" text-anchor="middle" font-size="12" fill="#8f3a36" font-weight="bold" filter="url(#rough2)">返回 ans</text>
+
+  <!-- Left box: why query before insert -->
+  <rect x="24" y="104" width="166" height="200" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="107" y="126" text-anchor="middle" font-size="11" fill="#2f5d24" font-weight="bold" filter="url(#rough2)">为什么「先查后插」？</text>
+  <g filter="url(#rough2)" font-size="10" fill="#333">
+    <text x="107" y="148" text-anchor="middle">查询时 Trie 恰含</text>
+    <text x="107" y="164" text-anchor="middle">nums[0..j−1]，数对 (i,j)</text>
+    <text x="107" y="180" text-anchor="middle">只在处理 j 时被统计</text>
+    <text x="107" y="196" text-anchor="middle">一次，不重不漏。</text>
+    <text x="107" y="220" text-anchor="middle">两个 limit 在同一趟里</text>
+    <text x="107" y="236" text-anchor="middle">先后查询、最后插入，</text>
+    <text x="107" y="252" text-anchor="middle">Trie 只建一次，</text>
+    <text x="107" y="268" text-anchor="middle">无需清空重建。</text>
+    <text x="107" y="292" text-anchor="middle" fill="#4a7a3a">复杂度：O(n·B)</text>
+  </g>
+
+  <!-- Right box: per-bit rule of query -->
+  <rect x="466" y="104" width="152" height="250" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="542" y="126" text-anchor="middle" font-size="11" fill="#33507a" font-weight="bold" filter="url(#rough2)">query(x, L) 逐位规则</text>
+  <g filter="url(#rough2)" font-size="9.5" fill="#333">
+    <text x="542" y="146" text-anchor="middle">b 从高位到低位，</text>
+    <text x="542" y="161" text-anchor="middle">xb、lb 为 x、L 的第 b 位：</text>
+    <text x="542" y="185" text-anchor="middle" fill="#7a5a10" font-weight="bold">lb = 1：</text>
+    <text x="542" y="200" text-anchor="middle">先累加 child[xb] 子树 cnt</text>
+    <text x="542" y="215" text-anchor="middle">（该位异或取 0，已严格</text>
+    <text x="542" y="230" text-anchor="middle">更小），再下探 child[xb⊕1]</text>
+    <text x="542" y="245" text-anchor="middle">继续贴住 L 的前缀</text>
+    <text x="542" y="269" text-anchor="middle" fill="#4a7a3a" font-weight="bold">lb = 0：</text>
+    <text x="542" y="284" text-anchor="middle">只能下探 child[xb]</text>
+    <text x="542" y="299" text-anchor="middle">（该位异或须为 0），不累加</text>
+    <text x="542" y="323" text-anchor="middle">子节点不存在 → 提前返回</text>
+    <text x="542" y="338" text-anchor="middle">走完全部位：剩余子树</text>
+    <text x="542" y="348" text-anchor="middle">是 x⊕y 恰等于 L，不计入</text>
+  </g>
+</svg>
