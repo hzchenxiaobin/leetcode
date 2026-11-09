@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="400" viewBox="0 0 680 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="400" fill="#fdfcf7"/>
+  <text x="340" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：O(mn) 递推 + 第 k 大选择</text>
+  <path d="M 190 40 Q 340 50 490 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1 -->
+  <g filter="url(#sk)">
+    <rect x="45" y="62" width="380" height="56" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="235" y="86" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">初始化 P：(m+1)×(n+1) 全 0</text>
+  <text x="235" y="106" text-anchor="middle" font-size="11" fill="#555">第 0 行 / 第 0 列 = 0 哨兵，免边界特判</text>
+  <g filter="url(#sk)">
+    <path d="M 235 118 L 235 134" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- step 2 -->
+  <g filter="url(#sk)">
+    <rect x="45" y="138" width="380" height="74" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.5"/>
+  </g>
+  <text x="235" y="162" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">行优先递推：i = 1..m，j = 1..n</text>
+  <text x="235" y="182" text-anchor="middle" font-size="11.5" fill="#333">P[i][j] = P[i−1][j] ⊕ P[i][j−1] ⊕ P[i−1][j−1]</text>
+  <text x="235" y="200" text-anchor="middle" font-size="11.5" fill="#333">⊕ matrix[i−1][j−1]，顺手把 P[i][j] 收进 vals</text>
+  <g filter="url(#sk)">
+    <path d="M 235 212 L 235 228" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- step 3 -->
+  <g filter="url(#sk)">
+    <rect x="45" y="232" width="380" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="235" y="256" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6220">在 mn 个值里选第 k 大</text>
+  <text x="235" y="276" text-anchor="middle" font-size="11" fill="#555">vals 长度 = m·n，且 1 ≤ k ≤ m·n</text>
+  <g filter="url(#sk)">
+    <path d="M 235 288 L 235 304" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- step 4 -->
+  <g filter="url(#sk)">
+    <rect x="45" y="308" width="380" height="50" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="235" y="338" text-anchor="middle" font-size="13" font-weight="bold" fill="#b03a3a">返回第 k 大的目标值</text>
+
+  <!-- selection options panel -->
+  <g filter="url(#sk)">
+    <path d="M 427 258 L 448 240" stroke="#8a6220" stroke-width="1.4" stroke-dasharray="4 3" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <g filter="url(#sk)">
+    <rect x="450" y="62" width="215" height="296" rx="10" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.2"/>
+  </g>
+  <text x="557" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6220">第 k 大怎么选？</text>
+  <text x="463" y="112" text-anchor="start" font-size="11" font-weight="bold" fill="#444">① 排序后取第 k 个</text>
+  <text x="463" y="127" text-anchor="start" font-size="10.5" fill="#666">O(mn·log mn) —— 最简单</text>
+  <text x="463" y="152" text-anchor="start" font-size="11" font-weight="bold" fill="#444">② 小顶堆维护 k 个较大值</text>
+  <text x="463" y="167" text-anchor="start" font-size="10.5" fill="#666">O(mn·log k)，k ≪ mn 时更优</text>
+  <text x="463" y="192" text-anchor="start" font-size="11" font-weight="bold" fill="#444">③ 计数排序（值域 &lt; 2²⁰）</text>
+  <text x="463" y="207" text-anchor="start" font-size="10.5" fill="#666">O(mn + 2²⁰) —— 理论最优</text>
+  <text x="463" y="232" text-anchor="start" font-size="11" font-weight="bold" fill="#444">④ 快速选择 nth_element</text>
+  <text x="463" y="247" text-anchor="start" font-size="10.5" fill="#666">平均 O(mn)，无需完整排序</text>
+  <path d="M 465 268 L 650 266" stroke="#e0d0a0" stroke-width="1" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <text x="557" y="292" text-anchor="middle" font-size="10.5" fill="#555">本题 mn ≤ 10⁶，四种都轻松通过</text>
+  <text x="557" y="312" text-anchor="middle" font-size="10.5" fill="#555">推荐：C++ nth_element / Python sort</text>
+</svg>
