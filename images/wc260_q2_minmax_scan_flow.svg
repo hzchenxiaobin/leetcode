@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430" viewBox="0 0 680 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="680" height="430" fill="#fafafa"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：滚动前后缀和一次扫描，max 呈 V 形</text>
+  <path d="M 150 40 Q 340 50 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 初始化框 -->
+  <g filter="url(#sk)">
+    <rect x="48" y="60" width="288" height="62" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="192" y="82" text-anchor="middle" font-size="11.5" fill="#446688">suffix = Σ row0（右上块初值）</text>
+  <text x="192" y="100" text-anchor="middle" font-size="11.5" fill="#446688">prefix = 0（左下块初值）</text>
+  <text x="192" y="116" text-anchor="middle" font-size="11.5" fill="#446688">ans = +∞</text>
+  <path d="M 192 122 L 192 134" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 循环头 -->
+  <g filter="url(#sk)">
+    <rect x="48" y="138" width="288" height="30" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="192" y="158" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d25">遍历 c = 0 … n−1（每轮三步）</text>
+  <path d="M 192 168 L 192 180" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 步骤① -->
+  <g filter="url(#sk)">
+    <rect x="48" y="184" width="288" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="192" y="204" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">① suffix −= row0[c]</text>
+  <text x="192" y="220" text-anchor="middle" font-size="10.5" fill="#446688">先手吃掉 row0[c]，右上块左界收缩</text>
+  <path d="M 192 228 L 192 238" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 步骤②（强调） -->
+  <g filter="url(#sk)">
+    <rect x="48" y="242" width="288" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="192" y="262" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">② ans = min(ans, max(prefix, suffix))</text>
+  <text x="192" y="278" text-anchor="middle" font-size="10.5" fill="#7a5415">后手取两块较大者，先手取最小</text>
+  <path d="M 192 286 L 192 296" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 步骤③ -->
+  <g filter="url(#sk)">
+    <rect x="48" y="300" width="288" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="192" y="320" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d25">③ prefix += row1[c]</text>
+  <text x="192" y="336" text-anchor="middle" font-size="10.5" fill="#4a7a3a">row1[c] 并入左下块，供下一轮</text>
+
+  <!-- 循环回边 -->
+  <path d="M 336 322 C 356 292 356 172 338 154" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="358" y="240" font-size="9.5" fill="#4a7a3a">下一列</text>
+
+  <!-- 返回框 -->
+  <path d="M 192 344 L 192 352" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="48" y="356" width="288" height="32" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="192" y="377" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d25">返回 ans —— O(n) / O(1)</text>
+
+  <!-- 右侧：单调性折线图 -->
+  <text x="524" y="66" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">max(P, S) 先降后升（V 形）</text>
+  <path d="M 392 310 L 648 310" stroke="#555" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 392 310 L 392 84" stroke="#555" stroke-width="1.6" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="520" y="332" text-anchor="middle" font-size="11" fill="#555">转下列 c →</text>
+  <text x="384" y="94" text-anchor="end" font-size="11" fill="#555">块和</text>
+
+  <!-- S(c)：不增（蓝） -->
+  <path d="M 400 105 L 640 290" stroke="#446688" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <text x="560" y="252" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688">S(c) 右上块和：不增 ↓</text>
+
+  <!-- P(c)：不减（绿） -->
+  <path d="M 400 290 L 640 105" stroke="#4a7a3a" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <text x="560" y="152" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d25">P(c) 左下块和：不减 ↑</text>
+
+  <!-- max 包络（红虚线）与最低点 -->
+  <path d="M 400 105 L 520 197 L 640 105" stroke="#b85450" stroke-width="2.2" fill="none" stroke-dasharray="7 5" filter="url(#sk)"/>
+  <circle cx="520" cy="197" r="5" fill="#b85450" filter="url(#sk)"/>
+  <text x="505" y="188" text-anchor="end" font-size="11.5" font-weight="bold" fill="#b85450">ans ⭐</text>
+  <text x="505" y="204" text-anchor="end" font-size="10" fill="#b85450">max 的最小值</text>
+
+  <!-- 二分备注框 -->
+  <g filter="url(#sk)">
+    <rect x="372" y="348" width="292" height="54" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="518" y="370" text-anchor="middle" font-size="11" fill="#7a5415">P 不减、S 不增 → 理论上可二分交点</text>
+  <text x="518" y="390" text-anchor="middle" font-size="11" fill="#7a5415">n ≤ 5×10⁴，O(n) 扫描已足且更稳</text>
+
+  <text x="340" y="416" text-anchor="middle" font-size="11" fill="#b85450">⚠ 顺序：先减 row0[c] → 取 max → 后加 row1[c]，两块才都不含被清零的列 c</text>
+</svg>

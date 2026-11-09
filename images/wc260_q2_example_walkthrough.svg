@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="440" viewBox="0 0 680 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="440" fill="#fafafa"/>
+  <text x="340" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例演算：grid = [[2,5,4],[1,5,1]] 的逐步走查</text>
+  <path d="M 150 40 Q 340 50 530 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 左侧标注：先手 -->
+  <text x="84" y="92" text-anchor="end" font-size="11" font-weight="bold" fill="#b85450">先手</text>
+  <text x="84" y="108" text-anchor="end" font-size="10.5" fill="#b85450">c = 1</text>
+
+  <!-- 网格 2 x 3，行 y=64 / 112，列 x=90/154/218 -->
+  <!-- 先手路径格（红）：row0[0..1]、row1[1..2] -->
+  <g filter="url(#sk)">
+    <rect x="90" y="64" width="64" height="46" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="122" y="80" text-anchor="middle" font-size="10.5" fill="#b08080">2→0</text>
+  <g filter="url(#sk)">
+    <rect x="154" y="64" width="64" height="46" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="186" y="80" text-anchor="middle" font-size="10.5" fill="#b08080">5→0</text>
+  <g filter="url(#sk)">
+    <rect x="154" y="112" width="64" height="46" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="186" y="128" text-anchor="middle" font-size="10.5" fill="#b08080">5→0</text>
+  <g filter="url(#sk)">
+    <rect x="218" y="112" width="64" height="46" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="128" text-anchor="middle" font-size="10.5" fill="#b08080">1→0</text>
+
+  <!-- 右上块（蓝）：row0[2] = 4 -->
+  <g filter="url(#sk)">
+    <rect x="218" y="64" width="64" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+  </g>
+  <text x="250" y="92" text-anchor="middle" font-size="15" font-weight="bold" fill="#446688">4</text>
+  <!-- 左下块（绿）：row1[0] = 1 -->
+  <g filter="url(#sk)">
+    <rect x="90" y="112" width="64" height="46" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="122" y="140" text-anchor="middle" font-size="15" font-weight="bold" fill="#2f5d25">1</text>
+
+  <!-- 先手红路径 -->
+  <circle cx="122" cy="87" r="3.5" fill="#b85450"/>
+  <path d="M 122 87 L 176 87 Q 186 87 186 97 L 186 125 Q 186 135 196 135 L 250 135" stroke="#b85450" stroke-width="2.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+
+  <!-- 后手上路（蓝虚线）：吃右上块 4 -->
+  <path d="M 122 62 Q 186 44 250 62" stroke="#446688" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#arB)" filter="url(#sk)"/>
+  <!-- 后手下路（绿虚线）：只能拿 1 -->
+  <path d="M 122 162 Q 186 188 250 162" stroke="#4a7a3a" stroke-width="1.8" fill="none" stroke-dasharray="6 4" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="186" y="184" text-anchor="middle" font-size="10" fill="#4a7a3a">下路仅得 1</text>
+
+  <!-- 右侧说明框 -->
+  <g filter="url(#sk)">
+    <rect x="300" y="60" width="352" height="84" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="476" y="84" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">后手的最优回应（蓝上路，吃右上块）</text>
+  <text x="476" y="106" text-anchor="middle" font-size="12" fill="#446688">score(1) = max(P, S) = max(1, 4) = 4</text>
+  <text x="476" y="128" text-anchor="middle" font-size="10.5" fill="#446688">开局即转下只能拿 P = 1 &lt; 4</text>
+
+  <text x="340" y="212" text-anchor="middle" font-size="11.5" fill="#555">初始：suffix = 2+5+4 = 11，prefix = 0；每轮「先减 row0[c] → 取 max → 后加 row1[c]」</text>
+
+  <!-- 演算表 -->
+  <g filter="url(#sk)">
+    <rect x="50" y="226" width="580" height="32" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="72" y="247" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688">c</text>
+  <text x="185" y="247" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688">S(c)（右上块，减 row0[c] 后）</text>
+  <text x="320" y="247" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688">P(c)（左下块）</text>
+  <text x="445" y="247" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688">max(P, S)</text>
+  <text x="548" y="247" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688">ans（离开）</text>
+
+  <!-- 行 c=0 -->
+  <g filter="url(#sk)">
+    <rect x="50" y="260" width="580" height="40" rx="4" fill="#ffffff" stroke="#bbb" stroke-width="1.2"/>
+  </g>
+  <text x="72" y="284" text-anchor="middle" font-size="12" fill="#333">0</text>
+  <text x="185" y="284" text-anchor="middle" font-size="12" fill="#333">11−2 = 9</text>
+  <text x="320" y="284" text-anchor="middle" font-size="12" fill="#333">0</text>
+  <text x="445" y="284" text-anchor="middle" font-size="12" fill="#333">9</text>
+  <text x="548" y="284" text-anchor="middle" font-size="12" fill="#333">9</text>
+
+  <!-- 行 c=1（高亮） -->
+  <g filter="url(#sk)">
+    <rect x="50" y="300" width="580" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="72" y="324" text-anchor="middle" font-size="12" fill="#333">1</text>
+  <text x="185" y="324" text-anchor="middle" font-size="12" fill="#333">9−5 = 4</text>
+  <text x="320" y="324" text-anchor="middle" font-size="12" fill="#333">1</text>
+  <text x="445" y="324" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">4 ⭐</text>
+  <text x="548" y="324" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">4</text>
+
+  <!-- 行 c=2 -->
+  <g filter="url(#sk)">
+    <rect x="50" y="340" width="580" height="40" rx="4" fill="#ffffff" stroke="#bbb" stroke-width="1.2"/>
+  </g>
+  <text x="72" y="364" text-anchor="middle" font-size="12" fill="#333">2</text>
+  <text x="185" y="364" text-anchor="middle" font-size="12" fill="#333">4−4 = 0</text>
+  <text x="320" y="364" text-anchor="middle" font-size="12" fill="#333">1+5 = 6</text>
+  <text x="445" y="364" text-anchor="middle" font-size="12" fill="#333">6</text>
+  <text x="548" y="364" text-anchor="middle" font-size="12" fill="#333">4</text>
+
+  <!-- 结论框 -->
+  <g filter="url(#sk)">
+    <rect x="100" y="390" width="480" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="408" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d25">ans = 4：c = 1 时两块最均衡（P = 1 对 S = 4）</text>
+  <text x="340" y="426" text-anchor="middle" font-size="10.5" fill="#4a7a3a">c = 0 / c = 2 时后手分别拿 9 / 6，都更差</text>
+</svg>
