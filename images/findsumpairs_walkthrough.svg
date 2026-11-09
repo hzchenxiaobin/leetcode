@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="510" viewBox="0 0 640 510" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="510" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">示例演算：freq 增量维护，count 分解查表</text>
+  <path d="M 180 36 Q 320 44 460 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="320" y="56" text-anchor="middle" font-size="11.5" fill="#555">nums1 = [1,1,2,2,2,3] → x=1×2，x=2×3，x=3×1；count(7) = 3·freq[5] + 1·freq[4]（x=1 查 freq[6]=0）</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="70" width="100" height="30" fill="#e8f0fa" stroke="#7a94b0" stroke-width="1.3"/>
+    <rect x="125" y="70" width="165" height="30" fill="#e8f0fa" stroke="#7a94b0" stroke-width="1.3"/>
+    <rect x="290" y="70" width="165" height="30" fill="#e8f0fa" stroke="#7a94b0" stroke-width="1.3"/>
+    <rect x="455" y="70" width="160" height="30" fill="#e8f0fa" stroke="#7a94b0" stroke-width="1.3"/>
+  </g>
+  <text x="75" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">操作</text>
+  <text x="207" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">nums2 快照</text>
+  <text x="372" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">freq 快照</text>
+  <text x="535" y="90" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">count 计算 / 结果</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="100" width="100" height="42" fill="#fdfcf7" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="125" y="100" width="165" height="42" fill="#fdfcf7" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="290" y="100" width="165" height="42" fill="#fdfcf7" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="455" y="100" width="160" height="42" fill="#fdfcf7" stroke="#b9c4cf" stroke-width="1.1"/>
+  </g>
+  <text x="75" y="126" text-anchor="middle" font-size="11.5" fill="#333">init</text>
+  <text x="207" y="126" text-anchor="middle" font-size="11" fill="#333">[1,4,5,2,5,4]</text>
+  <text x="372" y="126" text-anchor="middle" font-size="11" fill="#333">{1:1, 2:1, 4:2, 5:2}</text>
+  <text x="535" y="126" text-anchor="middle" font-size="11" fill="#333">建表 O(n₂)</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="142" width="100" height="42" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="125" y="142" width="165" height="42" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="290" y="142" width="165" height="42" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="455" y="142" width="160" height="42" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="75" y="168" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">count(7)</text>
+  <text x="207" y="168" text-anchor="middle" font-size="11" fill="#2e6e2e">—（不变）</text>
+  <text x="372" y="168" text-anchor="middle" font-size="11" fill="#2e6e2e">同上</text>
+  <text x="535" y="161" text-anchor="middle" font-size="11" fill="#2e6e2e">3·freq[5] + 1·freq[4]</text>
+  <text x="535" y="178" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">= 3×2 + 2 = 8</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="184" width="100" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="125" y="184" width="165" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="290" y="184" width="165" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="455" y="184" width="160" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="75" y="210" text-anchor="middle" font-size="11.5" fill="#8a6415">add(3, 2)</text>
+  <text x="207" y="210" text-anchor="middle" font-size="11" fill="#8a6415">[1,4,5,4,5,4]</text>
+  <text x="372" y="210" text-anchor="middle" font-size="11" fill="#8a6415">{1:1, 4:3, 5:2}</text>
+  <text x="535" y="210" text-anchor="middle" font-size="11" fill="#8a6415">freq[2]−1 → freq[4]+1</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="226" width="100" height="42" fill="#eaf6ee" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="125" y="226" width="165" height="42" fill="#eaf6ee" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="290" y="226" width="165" height="42" fill="#eaf6ee" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="455" y="226" width="160" height="42" fill="#eaf6ee" stroke="#b9c4cf" stroke-width="1.1"/>
+  </g>
+  <text x="75" y="252" text-anchor="middle" font-size="11.5" fill="#2e6e2e">count(8)</text>
+  <text x="207" y="252" text-anchor="middle" font-size="11" fill="#2e6e2e">—</text>
+  <text x="372" y="252" text-anchor="middle" font-size="11" fill="#2e6e2e">同上</text>
+  <text x="535" y="252" text-anchor="middle" font-size="11" fill="#2e6e2e">freq[5] = 2</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="268" width="100" height="42" fill="#eaf6ee" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="125" y="268" width="165" height="42" fill="#eaf6ee" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="290" y="268" width="165" height="42" fill="#eaf6ee" stroke="#b9c4cf" stroke-width="1.1"/>
+    <rect x="455" y="268" width="160" height="42" fill="#eaf6ee" stroke="#b9c4cf" stroke-width="1.1"/>
+  </g>
+  <text x="75" y="294" text-anchor="middle" font-size="11.5" fill="#2e6e2e">count(4)</text>
+  <text x="207" y="294" text-anchor="middle" font-size="11" fill="#2e6e2e">—</text>
+  <text x="372" y="294" text-anchor="middle" font-size="11" fill="#2e6e2e">同上</text>
+  <text x="535" y="294" text-anchor="middle" font-size="11" fill="#2e6e2e">freq[1] = 1</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="310" width="100" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="125" y="310" width="165" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="290" y="310" width="165" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="455" y="310" width="160" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="75" y="336" text-anchor="middle" font-size="11.5" fill="#8a6415">add(0, 1)</text>
+  <text x="207" y="336" text-anchor="middle" font-size="11" fill="#8a6415">[2,4,5,4,5,4]</text>
+  <text x="372" y="336" text-anchor="middle" font-size="11" fill="#8a6415">{2:1, 4:3, 5:2}</text>
+  <text x="535" y="336" text-anchor="middle" font-size="11" fill="#8a6415">freq[1]−1 → freq[2]+1</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="352" width="100" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="125" y="352" width="165" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="290" y="352" width="165" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="455" y="352" width="160" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="75" y="378" text-anchor="middle" font-size="11.5" fill="#8a6415">add(1, 1)</text>
+  <text x="207" y="378" text-anchor="middle" font-size="11" fill="#8a6415">[2,5,5,4,5,4]</text>
+  <text x="372" y="378" text-anchor="middle" font-size="11" fill="#8a6415">{2:1, 4:2, 5:3}</text>
+  <text x="535" y="378" text-anchor="middle" font-size="11" fill="#8a6415">freq[4]−1 → freq[5]+1</text>
+
+  <g filter="url(#sk)">
+    <rect x="25" y="394" width="100" height="42" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="125" y="394" width="165" height="42" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="290" y="394" width="165" height="42" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="455" y="394" width="160" height="42" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="75" y="420" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">count(7)</text>
+  <text x="207" y="420" text-anchor="middle" font-size="11" fill="#2e6e2e">—</text>
+  <text x="372" y="420" text-anchor="middle" font-size="11" fill="#2e6e2e">同上</text>
+  <text x="535" y="413" text-anchor="middle" font-size="11" fill="#2e6e2e">3·freq[5] + 1·freq[4]</text>
+  <text x="535" y="430" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">= 3×3 + 2 = 11</text>
+
+  <text x="320" y="462" text-anchor="middle" font-size="11" fill="#555">x=1 的两项查 freq[6] = 0（贡献 0）；每次 add 只动 freq 的两个键</text>
+  <text x="320" y="482" text-anchor="middle" font-size="11" fill="#555">三次 add 的净效应：freq[5] 从 2 涨到 3，故 count(7) 从 8 变 11 —— count 全程不重扫 nums2</text>
+</svg>
