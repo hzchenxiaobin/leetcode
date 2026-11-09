@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="470" fill="#fafafa"/>
+
+  <text x="450" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：每个节点携带 26 维「颜色计数向量」，沿拓扑序传播</text>
+
+  <!-- ===== 左上：示例图与终态 dp ===== -->
+  <text x="250" y="56" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">示例：colors = "abaca"（红 = 最优路径 0→2→3→4，绿框 = 终态 dp）</text>
+
+  <g filter="url(#rough2)">
+    <circle cx="90" cy="115" r="22" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <text x="90" y="121" text-anchor="middle" font-size="15" fill="#b85450">a</text>
+    <text x="90" y="152" text-anchor="middle" font-size="10.5" fill="#888">0</text>
+
+    <circle cx="240" cy="75" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="240" y="81" text-anchor="middle" font-size="15" fill="#446688">b</text>
+    <text x="240" y="112" text-anchor="middle" font-size="10.5" fill="#888">1</text>
+
+    <circle cx="240" cy="185" r="22" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <text x="240" y="191" text-anchor="middle" font-size="15" fill="#b85450">a</text>
+    <text x="240" y="222" text-anchor="middle" font-size="10.5" fill="#888">2</text>
+
+    <circle cx="365" cy="185" r="22" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="365" y="191" text-anchor="middle" font-size="15" fill="#d6a040">c</text>
+    <text x="365" y="222" text-anchor="middle" font-size="10.5" fill="#888">3</text>
+
+    <circle cx="460" cy="185" r="22" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <text x="460" y="191" text-anchor="middle" font-size="15" fill="#b85450">a</text>
+    <text x="460" y="222" text-anchor="middle" font-size="10.5" fill="#888">4</text>
+
+    <path d="M108,103 Q170,78 212,76" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arrb)"/>
+    <path d="M106,130 Q170,162 212,179" fill="none" stroke="#b85450" stroke-width="2.4" marker-end="url(#arrr)"/>
+    <path d="M262,185 L339,185" fill="none" stroke="#b85450" stroke-width="2.4" marker-end="url(#arrr)"/>
+    <path d="M387,185 L432,185" fill="none" stroke="#b85450" stroke-width="2.4" marker-end="url(#arrr)"/>
+
+    <rect x="42" y="158" width="96" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="90" y="174" text-anchor="middle" font-size="10.5" fill="#4a7a3a">a:1 b:0 c:0</text>
+
+    <rect x="192" y="118" width="96" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="240" y="134" text-anchor="middle" font-size="10.5" fill="#4a7a3a">a:1 b:1 c:0</text>
+
+    <rect x="192" y="228" width="96" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="240" y="244" text-anchor="middle" font-size="10.5" fill="#4a7a3a">a:2 b:0 c:0</text>
+
+    <rect x="317" y="228" width="96" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="365" y="244" text-anchor="middle" font-size="10.5" fill="#4a7a3a">a:2 b:0 c:1</text>
+
+    <rect x="412" y="228" width="96" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="460" y="244" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold">a:3 b:0 c:1 ★</text>
+
+    <text x="250" y="266" text-anchor="middle" font-size="10" fill="#999">（向量只画 a / b / c 三维，实际每节点 26 维）</text>
+  </g>
+
+  <!-- ===== 左下：换色陷阱 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="272" width="445" height="182" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+    <text x="252" y="296" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5a20">为什么 26 维都要带？最大色会「换人」（colors = "abb"）</text>
+
+    <circle cx="95" cy="335" r="18" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="95" y="341" text-anchor="middle" font-size="14" fill="#b85450">a</text>
+    <circle cx="230" cy="335" r="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="230" y="341" text-anchor="middle" font-size="14" fill="#446688">b</text>
+    <circle cx="365" cy="335" r="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="365" y="341" text-anchor="middle" font-size="14" fill="#446688">b</text>
+
+    <path d="M113,335 L208,335" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arrb)"/>
+    <path d="M248,335 L343,335" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arrb)"/>
+
+    <rect x="62" y="362" width="66" height="22" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="95" y="377" text-anchor="middle" font-size="10.5" fill="#4a7a3a">a:1</text>
+    <rect x="185" y="362" width="90" height="22" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="230" y="377" text-anchor="middle" font-size="10.5" fill="#4a7a3a">a:1 b:1</text>
+    <rect x="312" y="362" width="106" height="22" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="365" y="377" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold">a:1 b:2 ✓</text>
+
+    <text x="252" y="406" text-anchor="middle" font-size="11" fill="#444">节点 1 处 a、b 并列最大；若只留 a:1、丢掉 b:1，</text>
+    <text x="252" y="426" text-anchor="middle" font-size="11" fill="#444">节点 2 只能算出 b:1 ✗ —— 真实路径 0→1→2 上 b 有 <tspan font-weight="bold" fill="#b85450">2</tspan> 个</text>
+  </g>
+
+  <!-- ===== 右侧要点 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="500" y="60" width="380" height="80" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="690" y="84" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688">状态定义</text>
+    <text x="690" y="106" text-anchor="middle" font-size="11.5" fill="#333">dp[v][c] = 以 v 结尾的所有路径中，颜色 c 的最大出现次数</text>
+    <text x="690" y="126" text-anchor="middle" font-size="11.5" fill="#333">（v ∈ [0, n)，c ∈ {a..z}，共 26 维）</text>
+
+    <rect x="500" y="152" width="380" height="94" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="690" y="176" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688">转移（按拓扑序处理 v）</text>
+    <text x="690" y="198" text-anchor="middle" font-size="11" fill="#2b4e6e" font-weight="bold">dp[v][c] = max(0, max dp[u][c]) + [colors[v] = c]</text>
+    <text x="690" y="218" text-anchor="middle" font-size="11" fill="#666">max 取遍全部前驱 u（v 无前驱时取 0）</text>
+    <text x="690" y="238" text-anchor="middle" font-size="11.5" fill="#333">答案 = 所有 dp[v][c] 的最大值</text>
+
+    <rect x="500" y="258" width="380" height="88" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="690" y="282" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">有环？</text>
+    <text x="690" y="304" text-anchor="middle" font-size="11.5" fill="#333">环上点的入度永不归零（环内边互相支撑）</text>
+    <text x="690" y="324" text-anchor="middle" font-size="11.5" fill="#333">出队数 processed &lt; n ⇒ 返回 −1</text>
+    <text x="690" y="340" text-anchor="middle" font-size="10.5" fill="#888">判环与 DP 一趟完成，无需单独跑一遍判环</text>
+
+    <rect x="500" y="358" width="380" height="90" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="690" y="382" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a">复杂度</text>
+    <text x="690" y="404" text-anchor="middle" font-size="11.5" fill="#333">每点出队一次、每边传播一次，每次 26 维</text>
+    <text x="690" y="424" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold">时间 O(26·(n+m))，空间 O(26n + m)</text>
+  </g>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 300"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="300" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">差分解法：打桩 → 一趟扫描 → 返回最早峰值年</text>
+
+  <!-- 第一趟：打桩 -->
+  <rect x="25" y="55" width="165" height="125" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="107" y="80" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">第一趟 · 打桩</text>
+  <text x="107" y="103" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">每个 logs[i]=[b,d]：</text>
+  <text x="107" y="124" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">diff[b−1950] += 1</text>
+  <text x="107" y="145" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">diff[d−1950] −= 1</text>
+  <text x="107" y="168" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">O(n)，n ≤ 100</text>
+
+  <path d="M 196 115 L 224 115" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 第二趟：扫描 -->
+  <rect x="228" y="55" width="185" height="125" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="80" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">第二趟 · 一趟扫描</text>
+  <text x="320" y="103" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">y = 1950 … 2049</text>
+  <text x="320" y="123" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">cur += diff[y−1950]</text>
+  <text x="320" y="143" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">cur 即该年人口</text>
+  <text x="320" y="163" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">cur &gt; best ⇒ ans = y</text>
+  <text x="320" y="178" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">严格 &gt; ⇒ 并列保最早</text>
+
+  <path d="M 418 115 L 446 115" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 结果 -->
+  <rect x="450" y="62" width="100" height="105" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="500" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#rough2)">返回 ans</text>
+  <text x="500" y="120" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">人口最多的最早年份</text>
+  <text x="500" y="145" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">示例 2 → 1960 ✓</text>
+
+  <!-- 易错点 -->
+  <rect x="55" y="215" width="450" height="68" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="236" text-anchor="middle" font-size="12" font-weight="bold" fill="#b27a10" filter="url(#rough2)">易错点：−1 打在 death，不是 death + 1（区间左闭右开）</text>
+  <text x="280" y="256" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">diff 开 101 格；best 初值 0 即可；更新用严格 &gt;</text>
+  <text x="280" y="274" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">扫描上界 2049：2050 人口恒为 0，答案必在 1950…2049</text>
+</svg>

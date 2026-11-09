@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 710" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="540" height="710" fill="#fafafa"/>
+
+  <text x="270" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：Kahn 一趟两得 —— 判环 + 26 维颜色 DP</text>
+
+  <!-- ===== 主流程 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="190" y="44" width="270" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="325" y="66" text-anchor="middle" font-size="11.5" fill="#333">① 建图：adj[u] 存后继 v</text>
+    <text x="325" y="84" text-anchor="middle" font-size="11.5" fill="#333">indeg[v]++，共 O(n+m)</text>
+    <path d="M 325 96 L 325 108" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <rect x="190" y="112" width="270" height="64" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="325" y="134" text-anchor="middle" font-size="11.5" fill="#333">② dp[v] ← 全 0（26 维）</text>
+    <text x="325" y="153" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">⚠️ 所有 indeg = 0 的源点入队</text>
+    <text x="325" y="170" text-anchor="middle" font-size="10.5" fill="#666">（图可不连通，多源点都要进）</text>
+    <path d="M 325 176 L 325 188" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <rect x="190" y="192" width="270" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="325" y="219" text-anchor="middle" font-size="11.5" fill="#333">③ 弹出队首 u；processed += 1</text>
+    <path d="M 325 238 L 325 250" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <rect x="190" y="254" width="270" height="64" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="325" y="276" text-anchor="middle" font-size="11.5" fill="#333">④ dp[u][colors[u]] += 1</text>
+    <text x="325" y="295" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">⚠️ 出队时才加自身色</text>
+    <text x="325" y="312" text-anchor="middle" font-size="10.5" fill="#666">（前驱已全部传完）</text>
+    <path d="M 325 318 L 325 330" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <rect x="190" y="334" width="270" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="325" y="361" text-anchor="middle" font-size="11.5" fill="#333">⑤ ans = max(ans, max(dp[u]))</text>
+    <path d="M 325 378 L 325 390" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <rect x="190" y="394" width="270" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="325" y="416" text-anchor="middle" font-size="11.5" fill="#333">⑥ 对每个后继 v：</text>
+    <text x="325" y="438" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4e6e">dp[v][c] = max(dp[v][c], dp[u][c])</text>
+    <text x="325" y="458" text-anchor="middle" font-size="11" fill="#333">c = 0..25；indeg[v] −−</text>
+    <text x="325" y="478" text-anchor="middle" font-size="11" fill="#333">减到 0 则 v 入队</text>
+    <path d="M 325 490 L 325 502" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+
+    <polygon points="325,506 400,536 325,566 250,536" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="325" y="541" text-anchor="middle" font-size="11.5" fill="#333">队列空？</text>
+    <path d="M 325 566 L 325 578" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+    <text x="333" y="577" font-size="10.5" fill="#4a7a3a" font-weight="bold">是</text>
+
+    <polygon points="325,582 425,612 325,642 225,612" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="325" y="617" text-anchor="middle" font-size="11.5" fill="#333">processed &lt; n ？</text>
+
+    <path d="M 225 612 L 184 612" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrr)"/>
+    <text x="206" y="604" font-size="10.5" fill="#b85450" font-weight="bold">是</text>
+    <rect x="36" y="588" width="142" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="107" y="610" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">返回 −1</text>
+    <text x="107" y="628" text-anchor="middle" font-size="10.5" fill="#b85450">（图中有环）</text>
+
+    <path d="M 325 642 L 325 654" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+    <text x="333" y="652" font-size="10.5" fill="#4a7a3a" font-weight="bold">否</text>
+    <rect x="190" y="658" width="270" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="325" y="685" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold">返回 ans —— 最大颜色值 ✓</text>
+
+    <!-- 否：回到 ③ -->
+    <path d="M 400 536 L 508 536 L 508 215 L 462 215" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrr)"/>
+    <text x="412" y="528" font-size="10.5" fill="#b85450" font-weight="bold">否</text>
+  </g>
+
+  <!-- ===== 左侧备忘 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="22" y="200" width="150" height="168" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="97" y="224" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold">出队即定型？</text>
+    <text x="97" y="248" text-anchor="middle" font-size="10.5" fill="#333">入度 = 尚未传播</text>
+    <text x="97" y="264" text-anchor="middle" font-size="10.5" fill="#333">的前驱边数</text>
+    <text x="97" y="282" text-anchor="middle" font-size="10.5" fill="#333">归零 ⇔ 前驱已传完</text>
+    <text x="97" y="300" text-anchor="middle" font-size="10.5" fill="#333">出队时加自身色</text>
+    <text x="97" y="318" text-anchor="middle" font-size="10.5" fill="#333">⇒ dp[u] 已是终态</text>
+    <text x="97" y="336" text-anchor="middle" font-size="10.5" fill="#333">此后无人再写它</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="22" y="380" width="150" height="136" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="97" y="404" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">判环为何可靠？</text>
+    <text x="97" y="426" text-anchor="middle" font-size="10.5" fill="#333">环上点总有一条</text>
+    <text x="97" y="442" text-anchor="middle" font-size="10.5" fill="#333">入边来自环内</text>
+    <text x="97" y="460" text-anchor="middle" font-size="10.5" fill="#333">要归零须环内前驱</text>
+    <text x="97" y="478" text-anchor="middle" font-size="10.5" fill="#333">先出队</text>
+    <text x="97" y="494" text-anchor="middle" font-size="10.5" fill="#333">⇒ 谁都不能第一个</text>
+    <text x="97" y="510" text-anchor="middle" font-size="10.5" fill="#333">出队，processed&lt;n</text>
+  </g>
+</svg>
