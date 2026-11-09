@@ -87,7 +87,7 @@ except Exception:
             continue
         fi
 
-        MESSAGE="使用${SKILL}写一下第 ${num} 场${KIND} Q${q} 的题解"
+        MESSAGE="使用${SKILL}写一下第 ${num} 场${KIND} Q${q} 的题解，只编写题解和插图，不要执行网站构建或构建验证"
         echo ">>> [第 $num 场${KIND} Q$q] 发送: $MESSAGE"
         if cannbot run "$MESSAGE"; then
             echo ">>> [第 $num 场${KIND} Q$q] 完成"
