@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="660" viewBox="0 0 660 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="abR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="660" height="660" fill="#fdfcf7"/>
+  <text x="330" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：定位候选根 → 贪心重构 → 全局验证</text>
+  <path d="M 210 40 Q 330 48 450 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 1. 特判 -->
+  <g filter="url(#sk)"><rect x="20" y="52" width="310" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="175" y="77" text-anchor="middle" font-size="12" fill="#333">特判 n = 1：直接返回 trees[0]</text>
+  <path d="M 175 92 L 175 108" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#sk)"/>
+
+  <!-- 2. 建表 -->
+  <g filter="url(#sk)"><rect x="20" y="110" width="310" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="175" y="128" text-anchor="middle" font-size="11.5" fill="#333">建 rootOf（根值 → 树）</text>
+  <text x="175" y="144" text-anchor="middle" font-size="11.5" fill="#333">收 leafVals（单节点树：根本身也是叶）</text>
+  <path d="M 175 150 L 175 166" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#sk)"/>
+
+  <!-- 3. 扫描候选 -->
+  <g filter="url(#sk)"><rect x="20" y="168" width="310" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="175" y="193" text-anchor="middle" font-size="12" fill="#333">扫描根值 ∉ leafVals 的候选树</text>
+  <path d="M 175 208 L 175 224" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#sk)"/>
+
+  <!-- 4. 菱形：候选恰一棵？ -->
+  <g filter="url(#sk)"><polygon points="175,226 285,266 175,306 65,266" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="175" y="271" text-anchor="middle" font-size="12" fill="#333">候选恰一棵？</text>
+  <path d="M 285 266 L 450 266" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#abR)" filter="url(#sk)"/>
+  <text x="368" y="258" text-anchor="middle" font-size="10.5" fill="#b85450">候选 0 棵或 ≥ 2 棵</text>
+  <g filter="url(#sk)"><rect x="455" y="246" width="150" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/></g>
+  <text x="530" y="271" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">返回 null</text>
+  <path d="M 175 306 L 175 322" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#sk)"/>
+  <text x="185" y="318" font-size="10.5" fill="#2e6e2e">恰一棵 → 记为 T*</text>
+
+  <!-- 5. DFS 贪心合并 -->
+  <g filter="url(#sk)"><rect x="20" y="324" width="310" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="175" y="346" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">DFS 贪心合并（从 T* 出发）</text>
+  <text x="175" y="366" text-anchor="middle" font-size="10.5" fill="#444">孩子是叶 ∧ 值 ∈ rootOf ∧ 未用过 → 整棵挂上</text>
+  <path d="M 175 380 L 175 396" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#sk)"/>
+  <text x="183" y="390" font-size="10" fill="#888">→ 整棵挂上，递归处理新子树的叶</text>
+
+  <!-- 6. 菱形：used == n？ -->
+  <g filter="url(#sk)"><polygon points="175,398 305,438 175,478 45,438" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="175" y="443" text-anchor="middle" font-size="12" fill="#333">全部树都用上了？</text>
+  <path d="M 305 438 L 450 438" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#abR)" filter="url(#sk)"/>
+  <text x="368" y="430" text-anchor="middle" font-size="10.5" fill="#b85450">有树始终没被吸收</text>
+  <g filter="url(#sk)"><rect x="455" y="418" width="150" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/></g>
+  <text x="530" y="443" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">返回 null</text>
+  <path d="M 175 478 L 175 494" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#sk)"/>
+  <text x="185" y="490" font-size="10.5" fill="#2e6e2e">used = n，共挂接 n − 1 次</text>
+
+  <!-- 7. 菱形：验证 -->
+  <g filter="url(#sk)"><polygon points="175,496 300,536 175,576 50,536" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/></g>
+  <text x="175" y="541" text-anchor="middle" font-size="12" fill="#333">上下界验证合法 BST？</text>
+  <path d="M 300 536 L 450 536" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#abR)" filter="url(#sk)"/>
+  <text x="378" y="528" text-anchor="middle" font-size="10.5" fill="#b85450">跨树区间被破坏</text>
+  <g filter="url(#sk)"><rect x="455" y="516" width="150" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/></g>
+  <text x="530" y="541" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">返回 null</text>
+  <path d="M 175 576 L 175 592" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#ab)" filter="url(#sk)"/>
+  <text x="185" y="588" font-size="10.5" fill="#2e6e2e">严格区间 lo &lt; val &lt; hi 全部通过</text>
+
+  <!-- 8. 返回 -->
+  <g filter="url(#sk)"><rect x="20" y="594" width="310" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="175" y="619" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">返回最终根 T*（合法 BST）</text>
+</svg>
