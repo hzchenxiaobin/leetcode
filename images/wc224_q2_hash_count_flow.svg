@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 600"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="600" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：阶段一数对计数，阶段二按乘积聚合</text>
+
+  <!-- 阶段标签 -->
+  <text x="38" y="176" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)" transform="rotate(-90 38 176)">阶段一：枚举计数</text>
+  <text x="38" y="410" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)" transform="rotate(-90 38 410)">阶段二：聚合求和</text>
+
+  <!-- 初始化 -->
+  <rect x="240" y="40" width="180" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="62" text-anchor="middle" font-size="12" fill="#2c4a6e" filter="url(#rough2)">初始化 ans = 0，cnt = {}</text>
+  <path d="M330,76 L330,88" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 阶段一：枚举数对 -->
+  <rect x="185" y="92" width="290" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="113" text-anchor="middle" font-size="12.5" fill="#2c4a6e" filter="url(#rough2)">取下一个数对 (i, j)，i &lt; j</text>
+  <text x="330" y="136" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4a6e" filter="url(#rough2)">p = nums[i] × nums[j]，cnt[p] += 1</text>
+  <path d="M330,148 L330,160" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 哈希表小图 -->
+  <path d="M475,120 C486,120 486,108 494,106" stroke="#999" stroke-width="1.3" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="498" y="52" width="152" height="108" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="574" y="73" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c4a6e" filter="url(#rough2)">cnt（乘积 → 个数）</text>
+  <text x="574" y="95" text-anchor="middle" font-size="11" fill="#2c4a6e" filter="url(#rough2)">12 → 2</text>
+  <text x="574" y="116" text-anchor="middle" font-size="11" fill="#2c4a6e" filter="url(#rough2)">10 → 2</text>
+  <text x="574" y="137" text-anchor="middle" font-size="11" fill="#2c4a6e" filter="url(#rough2)">20 → 2</text>
+  <text x="574" y="155" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">…</text>
+
+  <!-- 判断 1：数对枚举完？ -->
+  <polygon points="330,164 452,212 330,260 208,212" fill="#fdf1f2" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="206" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">所有数对</text>
+  <text x="330" y="224" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">处理完了？</text>
+  <path d="M208,212 L112,212 L112,120 L183,120" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="158" y="203" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">否：继续枚举</text>
+  <path d="M330,260 L330,274" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="341" y="272" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 阶段二：聚合 -->
+  <rect x="185" y="278" width="290" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="299" text-anchor="middle" font-size="12.5" fill="#2c4a6e" filter="url(#rough2)">取哈希表中下一个乘积 p</text>
+  <text x="330" y="322" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4a6e" filter="url(#rough2)">k = cnt[p]</text>
+  <path d="M330,334 L330,346" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断 2：k >= 2 ? -->
+  <polygon points="330,350 452,398 330,446 208,398" fill="#fdf1f2" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="403" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">k ≥ 2 ？</text>
+  <path d="M330,446 L330,470" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="341" y="463" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="225" y="474" width="210" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="330" y="502" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d25" filter="url(#rough2)">ans += 4 × k × (k − 1)</text>
+
+  <!-- 否：k <= 1 绕行并入回环 -->
+  <path d="M452,398 L560,398 L560,532 L342,532" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="506" y="390" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">否：k ≤ 1，跳过</text>
+
+  <!-- 回环：处理下一个乘积 -->
+  <path d="M330,520 L330,532 L112,532 L112,306 L183,306" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="222" y="526" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">处理下一个乘积</text>
+
+  <!-- 结束：返回 ans -->
+  <path d="M475,306 L577,306 L577,532" stroke="#666" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="594" y="417" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)" transform="rotate(90 594 417)">乘积全部处理完</text>
+  <rect x="500" y="534" width="155" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="577" y="553" text-anchor="middle" font-size="11.5" fill="#2f5d25" filter="url(#rough2)">遍历结束</text>
+  <text x="577" y="573" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d25" filter="url(#rough2)">返回 ans ✓</text>
+</svg>

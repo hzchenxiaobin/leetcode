@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 570"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="570" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：一遍扫描同步维护 maxLen 与 count</text>
+
+  <!-- 初始化 -->
+  <rect x="240" y="42" width="180" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="66" text-anchor="middle" font-size="12.5" fill="#2c4a6e" filter="url(#rough2)">初始化 maxLen = 0，count = 0</text>
+  <path d="M330,80 L330,92" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 取下一个矩形 -->
+  <rect x="195" y="98" width="270" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="119" text-anchor="middle" font-size="12.5" fill="#2c4a6e" filter="url(#rough2)">取下一个矩形 [l, w]</text>
+  <text x="330" y="139" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4a6e" filter="url(#rough2)">k = min(l, w)</text>
+  <path d="M330,150 L330,162" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断 1：k > maxLen ? -->
+  <polygon points="330,166 448,214 330,262 212,214" fill="#fdf1f2" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="219" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">k &gt; maxLen ?</text>
+
+  <!-- 是：更新并重置 -->
+  <path d="M330,262 L330,286" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="342" y="281" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">是</text>
+  <rect x="225" y="290" width="210" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="330" y="311" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">maxLen ← k</text>
+  <text x="330" y="331" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">count ← 1（重置！）</text>
+
+  <!-- 判断 1 否：右侧绕行到判断 2 -->
+  <path d="M448,214 L522,214 L522,406 L454,406" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="478" y="206" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">否</text>
+
+  <path d="M330,342 L330,354" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断 2：k == maxLen ? -->
+  <polygon points="330,358 448,406 330,454 212,406" fill="#fdf1f2" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="411" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">k == maxLen ?</text>
+
+  <!-- 是：计数 -->
+  <path d="M330,454 L330,478" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="342" y="473" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="225" y="482" width="210" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="330" y="510" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d25" filter="url(#rough2)">count += 1</text>
+
+  <!-- 否：跳过，并入左侧回环 -->
+  <path d="M212,406 L118,406" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <text x="163" y="396" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">否：k &lt; maxLen，跳过</text>
+
+  <!-- 回环：处理下一个矩形 -->
+  <path d="M330,528 L330,542 L118,542 L118,124 L188,124" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="224" y="536" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">处理下一个矩形（循环）</text>
+
+  <!-- 结束：返回 count -->
+  <path d="M465,124 L575,124 L575,506" stroke="#666" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="592" y="316" font-size="11" fill="#888" filter="url(#rough2)" transform="rotate(90 592 316)">n 个矩形全部处理完</text>
+  <rect x="500" y="510" width="150" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="575" y="529" text-anchor="middle" font-size="12" fill="#2f5d25" filter="url(#rough2)">遍历结束</text>
+  <text x="575" y="548" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d25" filter="url(#rough2)">返回 count ✓</text>
+</svg>

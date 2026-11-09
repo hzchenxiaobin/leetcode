@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 640"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="640" fill="#fafafa"/>
+  <text x="340" y="24" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">算法流程：逆向归纳 BFS —— 博弈版拓扑排序</text>
+
+  <!-- step 1 -->
+  <rect x="150" y="38" width="380" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="58" text-anchor="middle" font-size="12" fill="#2c4a6e" filter="url(#rough2)">① 解析棋盘：M / C / F 起点 + 墙集合</text>
+  <text x="340" y="76" text-anchor="middle" font-size="11" font-weight="bold" fill="#2c4a6e" filter="url(#rough2)">一维编码 pos = r·cols + c</text>
+  <path d="M340,84 L340,94" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <rect x="150" y="98" width="380" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="118" text-anchor="middle" font-size="12" fill="#2c4a6e" filter="url(#rough2)">② 预计算可达表 mouseReach / catReach</text>
+  <text x="340" y="137" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">四方向 × 跳 1..jump 格，遇墙 / 出界截断，含原地不动</text>
+  <path d="M340,148 L340,158" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="544" y="100" width="124" height="60" rx="6" fill="#fcfcfc" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="606" y="120" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">跳跃对称：能到 ⇔ 能回</text>
+  <text x="606" y="136" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">一张可达表</text>
+  <text x="606" y="152" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">= 后继表 = 前驱表</text>
+
+  <!-- step 3 -->
+  <rect x="150" y="162" width="380" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="182" text-anchor="middle" font-size="12" fill="#2c4a6e" filter="url(#rough2)">③ 枚举全部 (m, c, t)：终止态标记并入队</text>
+  <text x="340" y="201" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">非终止态记 degree = 当前玩家走法数（含原地）</text>
+  <path d="M340,212 L340,222" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 1: queue empty? -->
+  <polygon points="340,226 462,268 340,310 218,268" fill="#fdf1f2" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="273" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">队列空？</text>
+
+  <path d="M462,268 L486,268" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="474" y="258" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">空</text>
+  <rect x="490" y="244" width="176" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="578" y="264" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f5d25" filter="url(#rough2)">返回 result[m0][c0][0] == 1</text>
+  <text x="578" y="282" text-anchor="middle" font-size="10" fill="#2f5d25" filter="url(#rough2)">未解析 = 猫胜</text>
+
+  <path d="M340,310 L340,324" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="354" y="322" font-size="11" fill="#4a7a3a" filter="url(#rough2)">不空</text>
+
+  <!-- pop -->
+  <rect x="150" y="328" width="380" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="347" text-anchor="middle" font-size="12" fill="#2c4a6e" filter="url(#rough2)">弹出 (m, c, t, r)，枚举它的全部前驱</text>
+  <text x="340" y="365" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">r 为该状态已定的结果（1 鼠胜 / 2 猫胜）</text>
+  <path d="M340,374 L340,384" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 2: turn -->
+  <polygon points="340,388 462,428 340,468 218,428" fill="#eef4fb" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="426" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2c4a6e" filter="url(#rough2)">t = 0？</text>
+  <text x="340" y="444" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">弹出的是鼠回合态？</text>
+
+  <path d="M218,428 L120,428 L120,476" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="204" y="418" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">是</text>
+  <path d="M462,428 L506,428 L506,476" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="478" y="418" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- branch: t == 0 -->
+  <rect x="24" y="480" width="300" height="78" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="174" y="500" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2c4a6e" filter="url(#rough2)">是 → 前驱 = (m, c', 1)</text>
+  <text x="174" y="517" text-anchor="middle" font-size="10.5" fill="#2c4a6e" filter="url(#rough2)">猫刚从 c' 走到 c（c' ∈ catReach[c]）</text>
+  <text x="174" y="534" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">r=2 猫胜 → 前驱标 2 入队</text>
+  <text x="174" y="551" text-anchor="middle" font-size="10.5" fill="#2f5d25" filter="url(#rough2)">r=1 鼠胜 → loss++；计满 degree → 标 1 入队</text>
+
+  <!-- branch: t == 1 -->
+  <rect x="356" y="480" width="300" height="78" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="506" y="500" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2c4a6e" filter="url(#rough2)">否 → 前驱 = (m', c, 0)</text>
+  <text x="506" y="517" text-anchor="middle" font-size="10.5" fill="#2c4a6e" filter="url(#rough2)">鼠刚从 m' 跳到 m（m' ∈ mouseReach[m]）</text>
+  <text x="506" y="534" text-anchor="middle" font-size="10.5" fill="#2f5d25" filter="url(#rough2)">r=1 鼠胜 → 前驱标 1 入队</text>
+  <text x="506" y="551" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">r=2 猫胜 → loss++；计满 degree → 标 2 入队</text>
+
+  <!-- loop back -->
+  <path d="M174,558 L174,576" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M506,558 L506,576 L12,576 L12,351 L146,351" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="250" y="570" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">新标记入队 → 继续传播</text>
+
+  <!-- bottom note -->
+  <rect x="60" y="596" width="560" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="340" y="613" text-anchor="middle" font-size="11" font-weight="bold" fill="#5a4a1a" filter="url(#rough2)">degree 只对非终止态记录；「原地不动」也计一条走法</text>
+  <text x="340" y="629" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">result 已定的状态直接跳过 —— 每个状态至多入队一次</text>
+</svg>
