@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：解包 → 一次判定 → 返回</text>
+
+  <!-- 开始框 -->
+  <rect x="150" y="52" width="220" height="46" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="71" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">解包前两条边（n ≥ 3 保证存在）</text>
+  <text x="260" y="89" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">e0 = [u0, v0]，e1 = [u1, v1]</text>
+
+  <path d="M260,98 L260,118" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定菱形 -->
+  <polygon points="230,122 358,170 230,218 102,170" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="230" y="164" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">u0 == u1</text>
+  <text x="230" y="184" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">或 u0 == v1 ？</text>
+
+  <!-- 是 分支 -->
+  <path d="M358,170 L396,170" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="378" y="160" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="402" y="146" width="136" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="470" y="166" text-anchor="middle" font-size="13" font-weight="bold" fill="#2d5a2d" filter="url(#rough2)">返回 u0</text>
+  <text x="470" y="184" text-anchor="middle" font-size="10.5" fill="#2d5a2d" filter="url(#rough2)">u0 ∈ e1 ⟹ u0 是中心</text>
+
+  <!-- 否 分支 -->
+  <path d="M230,218 L230,258" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="243" y="244" font-size="12" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="145" y="262" width="170" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="230" y="282" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#rough2)">返回 v0</text>
+  <text x="230" y="300" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">u0 ∉ e1 ⟹ 中心只能是 v0</text>
+
+  <!-- 底部备注 -->
+  <rect x="85" y="326" width="390" height="28" rx="8" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="280" y="344" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">只读 4 个整数 · 至多 2 次比较 · 与 n 无关，O(1)</text>
+</svg>
