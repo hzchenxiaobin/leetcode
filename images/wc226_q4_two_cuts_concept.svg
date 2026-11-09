@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="43" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="640" height="360" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：段数固定 3 ⇒ 两刀定全局，回文判定 O(1) 查表</text>
+  <path d="M 140 40 Q 320 48 500 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- cut labels + dashed cut lines -->
+  <text x="216" y="50" text-anchor="middle" font-size="10" fill="#a05a2c">第一刀 i=0</text>
+  <text x="372" y="50" text-anchor="middle" font-size="10" fill="#a05a2c">第二刀 j=3</text>
+  <path d="M 216 54 L 216 98" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" filter="url(#sk)"/>
+  <path d="M 372 54 L 372 98" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" filter="url(#sk)"/>
+
+  <!-- string boxes: abcbdd -->
+  <g filter="url(#sk)"><rect x="168" y="58" width="44" height="36" rx="5" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="190" y="81" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b6e9e">a</text>
+  <g filter="url(#sk)"><rect x="220" y="58" width="44" height="36" rx="5" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="242" y="81" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">b</text>
+  <g filter="url(#sk)"><rect x="272" y="58" width="44" height="36" rx="5" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="294" y="81" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">c</text>
+  <g filter="url(#sk)"><rect x="324" y="58" width="44" height="36" rx="5" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="346" y="81" text-anchor="middle" font-size="15" font-weight="bold" fill="#2e6e2e">b</text>
+  <g filter="url(#sk)"><rect x="376" y="58" width="44" height="36" rx="5" fill="#fff4e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+  <text x="398" y="81" text-anchor="middle" font-size="15" font-weight="bold" fill="#a06b1a">d</text>
+  <g filter="url(#sk)"><rect x="428" y="58" width="44" height="36" rx="5" fill="#fff4e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+  <text x="450" y="81" text-anchor="middle" font-size="15" font-weight="bold" fill="#a06b1a">d</text>
+
+  <!-- segment brackets -->
+  <path d="M 168 112 L 212 112" stroke="#4a8edb" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="190" y="126" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2b6e9e">s[0..0]="a" ✓</text>
+  <path d="M 220 112 L 368 112" stroke="#4a8e4a" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="294" y="126" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">s[1..3]="bcb" ✓</text>
+  <path d="M 376 112 L 472 112" stroke="#c98a2b" stroke-width="1.6" filter="url(#sk)"/>
+  <text x="424" y="126" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#a06b1a">s[4..5]="dd" ✓</text>
+
+  <!-- recurrence box -->
+  <g filter="url(#sk)"><rect x="95" y="140" width="450" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="320" y="160" text-anchor="middle" font-size="12.5" fill="#2b4a66">建表：isPal[i][j] = ( s[i] = s[j] ) ∧ ( j−i &lt; 2 ∨ isPal[i+1][j−1] )</text>
+  <text x="320" y="178" text-anchor="middle" font-size="11" fill="#2b4a66">i 从 n−1 递减、j 从 i 递增（按长度递增），一次 O(n²)</text>
+
+  <!-- comparison -->
+  <g filter="url(#sk)"><rect x="55" y="208" width="230" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/></g>
+  <text x="170" y="230" text-anchor="middle" font-size="12" fill="#b03a3a">暴力：O(n²) 组切点 × 双指针 O(n)</text>
+  <text x="170" y="250" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">= O(n³) 超时 ✗</text>
+  <path d="M 292 236 L 326 236" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="309" y="226" text-anchor="middle" font-size="10.5" fill="#888">建表</text>
+  <g filter="url(#sk)"><rect x="332" y="208" width="253" height="56" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <text x="458" y="230" text-anchor="middle" font-size="12" fill="#2e6e2e">建表 O(n²) 一次 + 每组 O(1) 查表</text>
+  <text x="458" y="250" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e">整体 O(n²) 通过 ✓</text>
+
+  <!-- summary -->
+  <g filter="url(#sk)"><rect x="45" y="288" width="550" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/></g>
+  <text x="320" y="308" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">判定型回文题的通用范式：重复的 O(n) 回文判定 → 一次 O(n²) 建表 + O(1) 查询</text>
+  <text x="320" y="328" text-anchor="middle" font-size="11.5" fill="#7a5415">131 / 132 / 1745 / 1278 全家共用这张「回文表」</text>
+</svg>
