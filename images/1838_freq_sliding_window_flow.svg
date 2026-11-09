@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="480" viewBox="0 0 720 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="6" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="480" fill="#fdfcf7"/>
+  <text x="360" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：排序 + 双指针滑动窗口</text>
+  <text x="360" y="47" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">r 逐格右移扩张；窗口代价超预算 k 就抛掉最左元素，直到恢复合法</text>
+
+  <!-- main chain -->
+  <g filter="url(#sk)">
+    <rect x="140" y="64" width="230" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="255" y="90" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">① sort(nums) 升序排序</text>
+
+  <path d="M 255,106 L 255,120" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="140" y="120" width="230" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="255" y="146" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">② l = 0，sum = 0，ans = 0</text>
+
+  <path d="M 255,162 L 255,176" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="140" y="176" width="230" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="255" y="202" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">③ r 进窗：sum += nums[r]</text>
+
+  <!-- exit branch -->
+  <path d="M 372,197 L 416,197" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="394" y="188" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#sk)">r 用完</text>
+  <g filter="url(#sk)">
+    <rect x="420" y="174" width="268" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="554" y="201" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">r 走完 n 个元素 → 返回 ans</text>
+
+  <path d="M 255,218 L 255,232" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <polygon points="255,234 385,296 255,358 125,296" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="255" y="292" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">cost(l,r) ≤ k ?</text>
+  <text x="255" y="312" text-anchor="middle" font-size="10" fill="#7a5415" filter="url(#sk)">cost = nums[r]·(r−l+1) − sum</text>
+
+  <!-- shrink branch -->
+  <path d="M 385,296 L 420,296" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="398" y="287" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="424" y="268" width="280" height="56" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="564" y="290" text-anchor="middle" font-size="13" font-weight="bold" fill="#a04038" filter="url(#sk)">sum −= nums[l]，l++</text>
+  <text x="564" y="310" text-anchor="middle" font-size="10" fill="#a04038" filter="url(#sk)">抛掉贡献最大的最左元素</text>
+
+  <path d="M 565,324 C 630,370 480,352 396,302" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="530" y="366" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#sk)">收缩后再判定</text>
+
+  <!-- accept branch -->
+  <path d="M 255,358 L 255,370" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="272" y="366" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">是</text>
+  <g filter="url(#sk)">
+    <rect x="140" y="374" width="230" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="255" y="401" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">④ ans = max(ans, r−l+1)</text>
+
+  <!-- loop back to C -->
+  <path d="M 140,397 C 55,397 55,197 136,197" stroke="#4a7a3a" stroke-width="1.6" fill="none" stroke-dasharray="5,4" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="100" y="186" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#sk)">r++ 继续</text>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="60" y="440" width="640" height="34" rx="10" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="380" y="461" text-anchor="middle" font-size="11" fill="#7a5415" filter="url(#sk)">l 不会越过 r：单元素窗口 cost = 0 ≤ k；每个下标进出窗口各一次 ⇒ 滑窗部分 O(n)</text>
+</svg>
