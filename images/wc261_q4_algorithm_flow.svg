@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="1180" viewBox="0 0 940 1180" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="1180" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">双约束单调栈：算法流程</text>
+  <path d="M 260 42 Q 470 50 680 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 预处理 -->
+  <g filter="url(#sk)">
+    <rect x="260" y="56" width="280" height="50" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="400" y="76" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b6e9e">预处理：suffix[i] = s[i..n−1] 中 letter 个数</text>
+  <text x="400" y="94" text-anchor="middle" font-size="10.5" fill="#555">初始化空栈，cnt = 0（栈内 letter 数）</text>
+  <path d="M 400 106 L 400 124" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- 取字符 -->
+  <g filter="url(#sk)">
+    <rect x="290" y="128" width="220" height="40" rx="8" fill="#f0f0ee" stroke="#9a9a9a" stroke-width="1.3"/>
+  </g>
+  <text x="400" y="153" text-anchor="middle" font-size="11.5" fill="#444">取下一个字符 c = s[i]</text>
+  <path d="M 400 168 L 400 186" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- D1 -->
+  <g filter="url(#sk)">
+    <polygon points="400,192 520,255 400,318 280,255" fill="#e8f0fa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="248" text-anchor="middle" font-size="11.5" fill="#2b2b2b">栈非空 且</text>
+  <text x="400" y="266" text-anchor="middle" font-size="11.5" fill="#2b2b2b" font-weight="bold">top &gt; c ?</text>
+  <text x="460" y="243" font-size="11" fill="#888" font-weight="bold">否</text>
+  <path d="M 520 255 L 730 255" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="452" y="316" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 400 318 L 400 336" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- D2 -->
+  <g filter="url(#sk)">
+    <polygon points="400,306 525,370 400,434 275,370" fill="#e8f0fa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="362" text-anchor="middle" font-size="11.5" fill="#2b2b2b">长度约束：</text>
+  <text x="400" y="381" text-anchor="middle" font-size="11" fill="#2b2b2b">(size−1)+(n−i) ≥ k ?</text>
+  <text x="465" y="358" font-size="11" fill="#888" font-weight="bold">否</text>
+  <path d="M 525 370 L 730 370" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="452" y="432" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 400 434 L 400 452" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- D3 -->
+  <g filter="url(#sk)">
+    <polygon points="400,442 535,485 400,528 265,485" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="478" text-anchor="middle" font-size="11" fill="#2b2b2b">top==letter 且</text>
+  <text x="400" y="496" text-anchor="middle" font-size="11" fill="#2b2b2b">cnt+suffix[i] ≤ repetition ?</text>
+  <text x="470" y="470" font-size="11" fill="#a04038" font-weight="bold">是（告急）</text>
+  <path d="M 535 485 L 730 485" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="418" y="527" font-size="11" fill="#2e6e2e" font-weight="bold">否（可弹）</text>
+  <path d="M 400 528 L 400 546" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- 弹栈框 -->
+  <g filter="url(#sk)">
+    <rect x="290" y="550" width="220" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="571" text-anchor="middle" font-size="11.5" fill="#2e5e2e" font-weight="bold">弹出 top</text>
+  <text x="400" y="590" text-anchor="middle" font-size="10.5" fill="#555">若弹出的是 letter，则 cnt−1</text>
+  <path d="M 290 576 L 170 576 L 170 255 L 275 255" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" stroke-dasharray="6 4" filter="url(#sk)"/>
+  <text x="182" y="420" font-size="10.5" fill="#4a7a3a" transform="rotate(-90 182 420)">回到 while 判断</text>
+
+  <!-- 右侧汇流线 -->
+  <path d="M 730 255 L 730 700 L 505 700" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="745" y="480" font-size="10.5" fill="#888">弹栈循环结束</text>
+  <text x="745" y="496" font-size="10.5" fill="#888">进入入栈决策</text>
+
+  <!-- D4 -->
+  <g filter="url(#sk)">
+    <polygon points="400,640 500,700 400,760 300,700" fill="#e8f0fa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="696" text-anchor="middle" font-size="11.5" fill="#2b2b2b" font-weight="bold">size &lt; k ?</text>
+  <text x="278" y="688" font-size="11" fill="#a04038" font-weight="bold" text-anchor="end">否</text>
+  <path d="M 300 700 L 240 700 L 240 1075 L 248 1075" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="452" y="758" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 400 760 L 400 778" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- D5 -->
+  <g filter="url(#sk)">
+    <polygon points="400,784 500,830 400,876 300,830" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="836" text-anchor="middle" font-size="11.5" fill="#2b2b2b" font-weight="bold">c == letter ?</text>
+  <text x="512" y="820" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 500 830 L 560 830" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="452" y="874" font-size="11" fill="#888" font-weight="bold">否</text>
+  <path d="M 400 876 L 400 894" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- letter 入栈框 -->
+  <g filter="url(#sk)">
+    <rect x="565" y="806" width="150" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="640" y="827" text-anchor="middle" font-size="11.5" fill="#2e5e2e" font-weight="bold">入栈</text>
+  <text x="640" y="845" text-anchor="middle" font-size="10.5" fill="#555">cnt + 1</text>
+  <path d="M 715 830 L 880 830 L 880 1058" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- D6 -->
+  <g filter="url(#sk)">
+    <polygon points="400,900 555,945 400,990 245,945" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="400" y="940" text-anchor="middle" font-size="11" fill="#2b2b2b">席位检查（c ≠ letter）：</text>
+  <text x="400" y="958" text-anchor="middle" font-size="10.5" fill="#2b2b2b">min(k−size−1, suffix[i]) ≥ repetition−cnt ?</text>
+  <text x="565" y="935" font-size="11" fill="#2e6e2e" font-weight="bold">是</text>
+  <path d="M 555 945 L 615 945" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+  <text x="238" y="935" font-size="11" fill="#a04038" font-weight="bold" text-anchor="end">否</text>
+  <path d="M 245 945 L 235 945" stroke="#3a3a3a" stroke-width="1.4" fill="none"/>
+
+  <!-- 非 letter 入栈框 -->
+  <g filter="url(#sk)">
+    <rect x="620" y="920" width="180" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="710" y="941" text-anchor="middle" font-size="11.5" fill="#7a5415" font-weight="bold">入栈</text>
+  <text x="710" y="959" text-anchor="middle" font-size="10.5" fill="#555">（席位检查通过）</text>
+  <path d="M 710 970 L 710 1058" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- 跳过框 -->
+  <g filter="url(#sk)">
+    <rect x="50" y="920" width="185" height="50" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="142" y="941" text-anchor="middle" font-size="11.5" fill="#a04038" font-weight="bold">跳过 c</text>
+  <text x="142" y="959" text-anchor="middle" font-size="10.5" fill="#555">（席位留给 letter）</text>
+  <path d="M 142 970 L 142 1100 L 248 1100" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#ar)"/>
+
+  <!-- 汇合框 -->
+  <g filter="url(#sk)">
+    <rect x="250" y="1062" width="640" height="56" rx="8" fill="#f0f0ee" stroke="#9a9a9a" stroke-width="1.3"/>
+  </g>
+  <text x="570" y="1084" text-anchor="middle" font-size="11.5" fill="#444" font-weight="bold">i++，取下一个字符</text>
+  <text x="570" y="1104" text-anchor="middle" font-size="10.5" fill="#888">扫描结束后栈中内容即为答案：长度恰为 k，letter ≥ repetition</text>
+
+  <!-- 回环 -->
+  <path d="M 250 1090 L 60 1090 L 60 148 L 285 148" stroke="#9a9a9a" stroke-width="1.3" fill="none" marker-end="url(#ar)" stroke-dasharray="6 4" filter="url(#sk)"/>
+</svg>

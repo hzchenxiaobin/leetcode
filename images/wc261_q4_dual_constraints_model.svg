@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="660" viewBox="0 0 940 660" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="940" height="660" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">双约束单调栈：长度约束 + 字母约束</text>
+  <path d="M 240 42 Q 470 50 700 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 经典原型 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="58" width="395" height="118" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="82" font-size="13" font-weight="bold" fill="#2b6e9e">经典原型：字典序最小的定长子序列</text>
+  <text x="80" y="105" font-size="11" fill="#444">402. 移掉 K 位数字 / 1673. 最具竞争力的子序列：</text>
+  <text x="80" y="126" font-size="11" fill="#444">单调栈维护答案，弹栈条件只有两条 ——</text>
+  <text x="80" y="147" font-size="11" fill="#444">top &gt; c，且弹后 (size−1)+(n−i) ≥ k 仍凑得满长度</text>
+  <text x="80" y="167" font-size="10" fill="#888">（长度约束：不能为了字典序牺牲「凑满 k 个」）</text>
+
+  <!-- ===== 本题新增 ===== -->
+  <g filter="url(#sk)">
+    <rect x="475" y="58" width="405" height="118" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="495" y="82" font-size="13" font-weight="bold" fill="#a04038">本题新增：letter 数量约束</text>
+  <text x="495" y="105" font-size="11" fill="#444">子序列还必须含至少 repetition 个 letter，</text>
+  <text x="495" y="126" font-size="11" fill="#444">而栈内已有 cnt 个、后缀至多再提供 suffix[i] 个</text>
+  <text x="495" y="147" font-size="11" fill="#444">→「letter 名额」紧俏，弹栈、入栈两侧都要重新审视</text>
+  <text x="495" y="167" font-size="10" fill="#888">（suffix[i] = s[i..n−1] 中 letter 的出现次数）</text>
+
+  <!-- ===== 主视图 ===== -->
+  <text x="470" y="212" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b">一次决策的完整视角</text>
+
+  <!-- 栈 -->
+  <g filter="url(#sk)">
+    <rect x="140" y="376" width="56" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="168" y="404" text-anchor="middle" font-size="14" fill="#333">e</text>
+  <g filter="url(#sk)">
+    <rect x="140" y="332" width="56" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="168" y="360" text-anchor="middle" font-size="14" fill="#333">e</text>
+  <g filter="url(#sk)">
+    <rect x="140" y="288" width="56" height="44" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="168" y="316" text-anchor="middle" font-size="14" fill="#333">t</text>
+  <text x="100" y="347" font-size="11" fill="#4a7a3a" font-weight="bold" text-anchor="end">栈底</text>
+  <text x="112" y="402" font-size="11" fill="#888" text-anchor="end">size=3</text>
+  <text x="112" y="380" font-size="11" fill="#888" text-anchor="end">cnt=2</text>
+  <text x="204" y="282" font-size="11" fill="#b85450" font-weight="bold">← 栈顶 top（可能被弹）</text>
+  <text x="188" y="404" font-size="10" fill="#4a7a3a">cnt：栈内 letter 数</text>
+
+  <!-- 当前字符 -->
+  <g filter="url(#sk)">
+    <rect x="330" y="288" width="56" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="358" y="316" text-anchor="middle" font-size="14" fill="#333">c</text>
+  <text x="358" y="280" text-anchor="middle" font-size="11" fill="#2b6e9e">s[i]</text>
+
+  <!-- 比较箭头 -->
+  <path d="M 252 310 L 322 310" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="287" y="302" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">top &gt; c ?</text>
+
+  <!-- 后缀 -->
+  <text x="140" y="446" font-size="12" font-weight="bold" fill="#2b2b2b">后缀 s[i..n−1]</text>
+  <g filter="url(#sk)">
+    <rect x="330" y="430" width="26" height="26" rx="3" fill="#f0f0ee" stroke="#9a9a9a" stroke-width="1.2"/>
+    <rect x="358" y="430" width="26" height="26" rx="3" fill="#f0f0ee" stroke="#9a9a9a" stroke-width="1.2"/>
+    <rect x="386" y="430" width="26" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="414" y="430" width="26" height="26" rx="3" fill="#f0f0ee" stroke="#9a9a9a" stroke-width="1.2"/>
+    <rect x="442" y="430" width="26" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="470" y="430" width="26" height="26" rx="3" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="343" y="448" text-anchor="middle" font-size="12" fill="#555">o</text>
+  <text x="371" y="448" text-anchor="middle" font-size="12" fill="#555">d</text>
+  <text x="399" y="448" text-anchor="middle" font-size="12" fill="#7a5415">e</text>
+  <text x="427" y="448" text-anchor="middle" font-size="12" fill="#555">x</text>
+  <text x="455" y="448" text-anchor="middle" font-size="12" fill="#7a5415">e</text>
+  <text x="483" y="448" text-anchor="middle" font-size="12" fill="#7a5415">e</text>
+  <text x="512" y="448" font-size="11" fill="#7a5415" font-weight="bold">← suffix[i]=3</text>
+  <text x="512" y="468" font-size="10" fill="#888">后缀里 letter 还能提供 3 个</text>
+
+  <!-- ===== 弹栈约束框 ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="498" width="395" height="140" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="80" y="522" font-size="13" font-weight="bold" fill="#a04038">弹栈：允许弹掉 top 当且仅当</text>
+  <text x="80" y="545" font-size="11" fill="#444">① top &gt; c（字典序上有收益）</text>
+  <text x="80" y="566" font-size="11" fill="#444">② 长度：size−1+(n−i) ≥ k（弹后仍凑得满）</text>
+  <text x="80" y="587" font-size="11" fill="#444">③ 字母：top ≠ letter，或</text>
+  <text x="80" y="608" font-size="11" fill="#444">&#160;&#160;&#160;&#160;cnt−1+suffix[i] ≥ repetition（弹掉后 letter 仍够数）</text>
+  <text x="80" y="628" font-size="10" fill="#888">③是本题新增：letter 是稀缺名额，不能随便弹</text>
+
+  <!-- ===== 入栈约束框 ===== -->
+  <g filter="url(#sk)">
+    <rect x="475" y="498" width="405" height="140" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="495" y="522" font-size="13" font-weight="bold" fill="#7a5415">入栈：c ≠ letter 需要「席位预留」</text>
+  <text x="495" y="545" font-size="11" fill="#444">后缀够：suffix[i] ≥ repetition−cnt，且</text>
+  <text x="495" y="566" font-size="11" fill="#444">空位够：k−size−1 ≥ repetition−cnt，才入栈；</text>
+  <text x="495" y="587" font-size="11" fill="#444">否则跳过 c —— 把席位让给未来的 letter</text>
+  <text x="495" y="608" font-size="11" fill="#2e6e2e" font-weight="bold">c == letter 且 size &lt; k：一律入栈</text>
+  <text x="495" y="628" font-size="10" fill="#888">（席位预留保证有空位，弹栈的约束③兜底，不会吃亏）</text>
+</svg>
