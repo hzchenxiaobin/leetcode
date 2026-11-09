@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="560" viewBox="0 0 640 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="541" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="560" fill="#fdfcf7"/>
+  <text x="320" y="24" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：按步数 k 滚动的一维 DP</text>
+  <path d="M 190 34 Q 320 42 450 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 开始 -->
+  <g filter="url(#sk)">
+    <ellipse cx="320" cy="56" rx="36" ry="14" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="61" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">开始</text>
+  <path d="M 320 70 L 320 82" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 初始化 -->
+  <g filter="url(#sk)">
+    <rect x="170" y="84" width="300" height="38" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="108" text-anchor="middle" font-size="12.5" fill="#2b6e9e" font-family="monospace">初始化：dp[0] = 0（其余标记不可达）</text>
+  <path d="M 320 122 L 320 134" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 菱形：k < m ? -->
+  <g filter="url(#sk)">
+    <polygon points="320,138 456,180 320,222 184,180" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="185" text-anchor="middle" font-size="13" fill="#7a5415" font-weight="bold">k &lt; m ?</text>
+
+  <!-- 否分支 -->
+  <path d="M 456 180 L 498 180" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="472" y="172" text-anchor="middle" font-size="12" fill="#a04348" font-weight="bold">否</text>
+  <g filter="url(#sk)">
+    <rect x="498" y="163" width="124" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="560" y="184" text-anchor="middle" font-size="13" fill="#a04348" font-family="monospace" font-weight="bold">return max(dp)</text>
+  <path d="M 560 197 L 560 210" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <ellipse cx="560" cy="224" rx="32" ry="13" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="560" y="229" text-anchor="middle" font-size="13" fill="#2b6e9e" font-weight="bold">结束</text>
+
+  <!-- 是分支 -->
+  <path d="M 320 222 L 320 234" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="331" y="232" font-size="12" fill="#2e6e2e" font-weight="bold">是</text>
+
+  <!-- 内层循环容器 -->
+  <g filter="url(#sk)">
+    <rect x="88" y="236" width="488" height="118" rx="10" fill="#ffffff" fill-opacity="0" stroke="#9fb3c8" stroke-width="1.2" stroke-dasharray="6,4"/>
+  </g>
+  <text x="100" y="256" font-size="12" fill="#666">对每个 i = 0 .. k（dp[0..k] 全部可达）依次执行：</text>
+
+  <!-- 取左 -->
+  <g filter="url(#sk)">
+    <rect x="104" y="266" width="220" height="72" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="214" y="288" text-anchor="middle" font-size="12.5" fill="#2b6e9e" font-weight="bold">取左（左取数 +1）</text>
+  <text x="214" y="308" text-anchor="middle" font-size="12" fill="#2b6e9e" font-family="monospace">ndp[i+1] ← dp[i]</text>
+  <text x="214" y="326" text-anchor="middle" font-size="12" fill="#2b6e9e" font-family="monospace">+ mult[k] · nums[i]</text>
+
+  <!-- 取右 -->
+  <g filter="url(#sk)">
+    <rect x="344" y="266" width="220" height="72" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="454" y="288" text-anchor="middle" font-size="12.5" fill="#2e6e2e" font-weight="bold">取右（左取数不变）</text>
+  <text x="454" y="308" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">ndp[i] ← dp[i]</text>
+  <text x="454" y="326" text-anchor="middle" font-size="12" fill="#2e6e2e" font-family="monospace">+ mult[k] · nums[n−1−k+i]</text>
+
+  <!-- 滚动 -->
+  <path d="M 320 354 L 320 366" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="180" y="368" width="280" height="34" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="389" text-anchor="middle" font-size="12.5" fill="#2b6e9e" font-family="monospace">dp ← ndp（滚动进入第 k+1 步）</text>
+
+  <!-- 回路 -->
+  <path d="M 320 402 L 320 416 L 40 416 L 40 180 L 178 180" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="28" y="298" text-anchor="middle" font-size="12" fill="#666" transform="rotate(-90 28 298)">k += 1，回到外层条件</text>
+
+  <!-- 注释框 -->
+  <g filter="url(#sk)">
+    <rect x="64" y="446" width="512" height="90" rx="10" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.1"/>
+  </g>
+  <g font-size="12" fill="#7a5415">
+    <text x="320" y="470" text-anchor="middle">速记：下一个右端元素下标 = n − 1 − k + i（左取越多，右端越靠右）</text>
+    <text x="320" y="492" text-anchor="middle">自检：i = 0（全取右）→ nums[n−1−k]；i = k（全取左）→ nums[n−1]</text>
+    <text x="320" y="514" text-anchor="middle">ndp 整轮算完再整体替换 dp，杜绝就地更新的读写污染</text>
+  </g>
+</svg>

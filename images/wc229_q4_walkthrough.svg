@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="468" viewBox="0 0 640 468" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="129" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="468" fill="#fdfcf7"/>
+  <text x="320" y="20" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b">示例演算：word1="cacb"，word2="cbba" → 拼出 "abcba"</text>
+
+  <!-- 拼接串格子 -->
+  <g filter="url(#sk)">
+    <rect x="112" y="66" width="52" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="164" y="66" width="52" height="44" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="216" y="66" width="52" height="44" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="268" y="66" width="52" height="44" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="320" y="66" width="52" height="44" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="372" y="66" width="52" height="44" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="424" y="66" width="52" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="476" y="66" width="52" height="44" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <g font-size="14" fill="#333" font-family="monospace" font-weight="bold">
+    <text x="138" y="93" text-anchor="middle">c</text>
+    <text x="190" y="93" text-anchor="middle">a</text>
+    <text x="242" y="93" text-anchor="middle">c</text>
+    <text x="294" y="93" text-anchor="middle">b</text>
+    <text x="346" y="93" text-anchor="middle">c</text>
+    <text x="398" y="93" text-anchor="middle">b</text>
+    <text x="450" y="93" text-anchor="middle">b</text>
+    <text x="502" y="93" text-anchor="middle">a</text>
+  </g>
+  <g font-size="10" fill="#666" font-family="monospace">
+    <text x="138" y="122" text-anchor="middle">0</text>
+    <text x="190" y="122" text-anchor="middle">1</text>
+    <text x="242" y="122" text-anchor="middle">2</text>
+    <text x="294" y="122" text-anchor="middle">3</text>
+    <text x="346" y="122" text-anchor="middle">4</text>
+    <text x="398" y="122" text-anchor="middle">5</text>
+    <text x="450" y="122" text-anchor="middle">6</text>
+    <text x="502" y="122" text-anchor="middle">7</text>
+  </g>
+  <path d="M 190 62 Q 346 26 502 62" stroke="#b85450" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <text x="346" y="36" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">s[1] = s[7] = 'a' → dp[1][7] = 5 ★</text>
+  <path d="M 320 60 L 320 132" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none" filter="url(#sk)"/>
+  <text x="216" y="146" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">← word1</text>
+  <text x="320" y="146" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">分界 n=4</text>
+  <text x="424" y="146" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold">word2 →</text>
+
+  <!-- dp 推导 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="160" width="560" height="102" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="60" y="184" font-size="13" fill="#2b6e9e" font-weight="bold">dp[1][7]：s[1]=s[7]='a' ⇒ dp[2][6] + 2</text>
+  <text x="60" y="208" font-size="12" fill="#333">dp[2][6]：s[2]='c' ≠ s[6]='b' ⇒ max(dp[3][6], dp[2][5]) = 3</text>
+  <text x="60" y="232" font-size="13" fill="#b85450" font-weight="bold">∴ dp[1][7] = 3 + 2 = 5</text>
+  <text x="60" y="254" font-size="10.5" fill="#888">本例 dp[0][7] = LPS(s) = 5 恰等于答案 —— 但全局 LPS 不保证可跨越（见正文反例）</text>
+
+  <!-- 构造拆分 -->
+  <text x="170" y="304" text-anchor="end" font-size="11.5" fill="#666">按分界拆开：</text>
+  <g filter="url(#sk)">
+    <rect x="180" y="282" width="40" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="225" y="282" width="40" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="270" y="282" width="40" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="315" y="282" width="40" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="360" y="282" width="40" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <g font-size="13" fill="#333" font-family="monospace" font-weight="bold">
+    <text x="200" y="304" text-anchor="middle">a</text>
+    <text x="245" y="304" text-anchor="middle">b</text>
+    <text x="290" y="304" text-anchor="middle">c</text>
+    <text x="335" y="304" text-anchor="middle">b</text>
+    <text x="380" y="304" text-anchor="middle">a</text>
+  </g>
+  <g font-size="9.5" fill="#666" font-family="monospace">
+    <text x="200" y="330" text-anchor="middle">1</text>
+    <text x="245" y="330" text-anchor="middle">3</text>
+    <text x="290" y="330" text-anchor="middle">4</text>
+    <text x="335" y="330" text-anchor="middle">5</text>
+    <text x="380" y="330" text-anchor="middle">7</text>
+  </g>
+  <path d="M 267.5 278 L 267.5 322" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" fill="none" filter="url(#sk)"/>
+  <text x="430" y="298" font-size="12" fill="#333">s₁="ab" + s₂="cba"</text>
+  <text x="430" y="320" font-size="12.5" fill="#2e6e2e" font-weight="bold">= "abcba" ✓ 回文</text>
+
+  <!-- 端点对表 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="346" width="520" height="114" rx="6" fill="#ffffff" stroke="#999" stroke-width="1.3"/>
+    <rect x="60" y="346" width="520" height="22" fill="#f0f0f0" stroke="#999" stroke-width="1.3"/>
+    <rect x="61" y="386" width="518" height="19" fill="#fff8e1"/>
+    <path d="M 190 346 L 190 460" stroke="#bbb" stroke-width="1"/>
+    <path d="M 300 346 L 300 460" stroke="#bbb" stroke-width="1"/>
+    <path d="M 410 346 L 410 460" stroke="#bbb" stroke-width="1"/>
+    <path d="M 60 386 L 580 386" stroke="#bbb" stroke-width="1"/>
+    <path d="M 60 405 L 580 405" stroke="#ddd" stroke-width="1"/>
+    <path d="M 60 424 L 580 424" stroke="#ddd" stroke-width="1"/>
+    <path d="M 60 443 L 580 443" stroke="#ddd" stroke-width="1"/>
+  </g>
+  <g font-size="11" font-weight="bold" fill="#555">
+    <text x="125" y="361" text-anchor="middle">端点对 (i, j)</text>
+    <text x="245" y="361" text-anchor="middle">字符</text>
+    <text x="355" y="361" text-anchor="middle">dp[i][j]</text>
+    <text x="495" y="361" text-anchor="middle">强制端点回文</text>
+  </g>
+  <g font-size="11.5" fill="#333" font-family="monospace">
+    <text x="125" y="381" text-anchor="middle">(0, 4)</text>
+    <text x="245" y="381" text-anchor="middle">c = c</text>
+    <text x="355" y="381" text-anchor="middle">3</text>
+    <text x="495" y="381" text-anchor="middle">cac</text>
+    <text x="125" y="400" text-anchor="middle" font-weight="bold" fill="#b85450">(1, 7)</text>
+    <text x="245" y="400" text-anchor="middle" font-weight="bold" fill="#b85450">a = a</text>
+    <text x="355" y="400" text-anchor="middle" font-weight="bold" fill="#b85450">5 ★</text>
+    <text x="495" y="400" text-anchor="middle" font-weight="bold" fill="#b85450">abcba</text>
+    <text x="125" y="419" text-anchor="middle">(2, 4)</text>
+    <text x="245" y="419" text-anchor="middle">c = c</text>
+    <text x="355" y="419" text-anchor="middle">3</text>
+    <text x="495" y="419" text-anchor="middle">cbc</text>
+    <text x="125" y="438" text-anchor="middle">(3, 5)</text>
+    <text x="245" y="438" text-anchor="middle">b = b</text>
+    <text x="355" y="438" text-anchor="middle">3</text>
+    <text x="495" y="438" text-anchor="middle">bcb</text>
+    <text x="125" y="457" text-anchor="middle">(3, 6)</text>
+    <text x="245" y="457" text-anchor="middle">b = b</text>
+    <text x="355" y="457" text-anchor="middle">3</text>
+    <text x="495" y="457" text-anchor="middle">bcb</text>
+  </g>
+</svg>
