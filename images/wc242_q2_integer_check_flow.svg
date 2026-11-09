@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 600"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="600" fill="#fafafa"/>
+
+  <!-- start -->
+  <rect x="235" y="18" width="150" height="32" rx="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="310" y="39" text-anchor="middle" font-size="12" fill="#223a55" font-weight="bold" filter="url(#rough2)">开始：dist[]，hour</text>
+  <path d="M 310 50 V 68" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- P1: scale by 100 -->
+  <rect x="185" y="72" width="250" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="310" y="90" text-anchor="middle" font-size="12" fill="#8a6d1a" font-weight="bold" filter="url(#rough2)">H ← round(hour × 100)</text>
+  <text x="310" y="107" text-anchor="middle" font-size="10" fill="#665522" filter="url(#rough2)">（两位小数放大成整数，规避浮点）</text>
+  <path d="M 310 116 V 130" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- D1: impossibility check -->
+  <polygon points="310,134 425,168 310,202 195,168" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="310" y="165" text-anchor="middle" font-size="12" fill="#7a3030" filter="url(#rough2)">H ≤ 100(n−1) ?</text>
+  <text x="310" y="182" text-anchor="middle" font-size="10" fill="#7a4040" filter="url(#rough2)">（无解预判）</text>
+  <path d="M 425 168 H 488" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+  <text x="452" y="160" text-anchor="middle" font-size="10.5" fill="#7a3030" filter="url(#rough2)">是</text>
+  <rect x="492" y="148" width="105" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="544" y="165" text-anchor="middle" font-size="12" fill="#7a3030" font-weight="bold" filter="url(#rough2)">return −1</text>
+  <text x="544" y="180" text-anchor="middle" font-size="10" fill="#7a4040" filter="url(#rough2)">无解</text>
+  <path d="M 310 202 V 228" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+  <text x="320" y="220" font-size="10.5" fill="#555" filter="url(#rough2)">否</text>
+
+  <!-- P2: init -->
+  <rect x="200" y="232" width="220" height="36" rx="8" fill="#f5f5f5" stroke="#888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="310" y="255" text-anchor="middle" font-size="12" fill="#444" filter="url(#rough2)">lo = 1，hi = 10⁷，ans = −1</text>
+  <path d="M 310 268 V 284" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- D2: loop condition -->
+  <polygon points="310,288 420,322 310,356 200,322" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="310" y="327" text-anchor="middle" font-size="12.5" fill="#223a55" font-weight="bold" filter="url(#rough2)">lo ≤ hi ?</text>
+  <path d="M 420 322 H 488" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+  <text x="448" y="314" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">否</text>
+  <rect x="492" y="302" width="105" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="544" y="319" text-anchor="middle" font-size="12" fill="#2a4a1a" font-weight="bold" filter="url(#rough2)">return ans</text>
+  <text x="544" y="334" text-anchor="middle" font-size="10" fill="#3a5a2a" filter="url(#rough2)">最小可行时速</text>
+  <path d="M 310 356 V 378" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+  <text x="320" y="372" font-size="10.5" fill="#555" filter="url(#rough2)">是</text>
+
+  <!-- P3: compute mid and S -->
+  <rect x="160" y="382" width="300" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="310" y="401" text-anchor="middle" font-size="12" fill="#223a55" filter="url(#rough2)">mid = (lo + hi) / 2</text>
+  <text x="310" y="420" text-anchor="middle" font-size="11" fill="#33465e" filter="url(#rough2)">S = Σ⌈d[i]/mid⌉（前 n−1 趟，整数取整）</text>
+  <path d="M 310 430 V 444" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+
+  <!-- D3: integer feasibility check -->
+  <polygon points="310,448 445,494 310,540 175,494" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="310" y="489" text-anchor="middle" font-size="11.5" fill="#8a6d1a" filter="url(#rough2)">100·(S·mid + d[n−1])</text>
+  <text x="310" y="509" text-anchor="middle" font-size="12" fill="#8a6d1a" font-weight="bold" filter="url(#rough2)">≤ H·mid ?</text>
+
+  <!-- yes branch -->
+  <path d="M 175 494 H 164" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+  <text x="170" y="484" text-anchor="middle" font-size="10.5" fill="#2a4a1a" filter="url(#rough2)">是 ✓</text>
+  <rect x="35" y="472" width="125" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="97" y="490" text-anchor="middle" font-size="11.5" fill="#2a4a1a" font-weight="bold" filter="url(#rough2)">ans = mid</text>
+  <text x="97" y="507" text-anchor="middle" font-size="9.5" fill="#3a5a2a" filter="url(#rough2)">hi = mid − 1（向左找更小）</text>
+
+  <!-- no branch -->
+  <path d="M 445 494 H 456" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" fill="none" filter="url(#rough2)"/>
+  <text x="450" y="484" text-anchor="middle" font-size="10.5" fill="#7a3030" filter="url(#rough2)">否 ✗</text>
+  <rect x="460" y="472" width="140" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="530" y="490" text-anchor="middle" font-size="11.5" fill="#7a3030" font-weight="bold" filter="url(#rough2)">lo = mid + 1</text>
+  <text x="530" y="507" text-anchor="middle" font-size="9.5" fill="#7a4040" filter="url(#rough2)">（太慢，提速）</text>
+
+  <!-- loop back -->
+  <path d="M 97 516 V 556" stroke="#888" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <path d="M 530 516 V 556 H 22 V 322 H 194" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="280" y="576" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">两支汇合，回到「lo ≤ hi ?」继续二分</text>
+</svg>

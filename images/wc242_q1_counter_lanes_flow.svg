@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="430" fill="#fafafa"/>
+
+  <text x="300" y="24" text-anchor="middle" font-size="14.5" fill="#555" font-weight="bold" filter="url(#rough2)">双车道计数：本车道自增、对侧清零，max 即时更新</text>
+
+  <!-- start pill -->
+  <rect x="195" y="40" width="210" height="30" rx="15" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="59" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">max₁=0, max₀=0, cnt₁=0, cnt₀=0</text>
+  <path d="M 300 70 V 82" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- loop header -->
+  <rect x="210" y="84" width="180" height="30" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="103" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">for c in s</text>
+  <path d="M 300 114 V 126" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <path d="M 300 128 L 378 158 L 300 188 L 222 158 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="163" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">c == '1' ？</text>
+
+  <!-- branch arrows -->
+  <path d="M 252 170 Q 168 180 132 196" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="152" y="178" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是（'1'）</text>
+  <path d="M 348 170 Q 432 180 468 196" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="448" y="178" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold" filter="url(#rough2)">否（'0'）</text>
+
+  <!-- left lane ('1') -->
+  <rect x="48" y="198" width="180" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="138" y="215" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">cnt₁ ← cnt₁ + 1</text>
+  <text x="138" y="231" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">cnt₀ ← 0（0 段被切断）</text>
+  <path d="M 138 238 V 250" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="48" y="252" width="180" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="138" y="269" text-anchor="middle" font-size="11" fill="#8a6d1a" filter="url(#rough2)">max₁ ← max(max₁, cnt₁)</text>
+  <text x="138" y="285" text-anchor="middle" font-size="10.5" fill="#8a6d1a" filter="url(#rough2)">即时结算，无末段陷阱</text>
+
+  <!-- right lane ('0') -->
+  <rect x="372" y="198" width="180" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="462" y="215" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">cnt₀ ← cnt₀ + 1</text>
+  <text x="462" y="231" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">cnt₁ ← 0（1 段被切断）</text>
+  <path d="M 462 238 V 250" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="372" y="252" width="180" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="462" y="269" text-anchor="middle" font-size="11" fill="#8a6d1a" filter="url(#rough2)">max₀ ← max(max₀, cnt₀)</text>
+  <text x="462" y="285" text-anchor="middle" font-size="10.5" fill="#8a6d1a" filter="url(#rough2)">即时结算，无末段陷阱</text>
+
+  <!-- merge arrows -->
+  <path d="M 138 294 C 138 322, 220 336, 288 342" fill="none" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 462 294 C 462 322, 380 336, 312 342" fill="none" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <circle cx="300" cy="346" r="3.5" fill="#888" filter="url(#rough2)"/>
+
+  <!-- loop back (left) -->
+  <path d="M 294 350 C 90 376, 28 300, 28 160 C 28 110, 120 99, 206 99" fill="none" stroke="#999" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="20" y="230" transform="rotate(-90 20 230)" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">下一字符</text>
+
+  <!-- end -->
+  <path d="M 300 350 V 382" stroke="#888" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="312" y="380" font-size="10" fill="#999" filter="url(#rough2)">i = n，循环结束</text>
+  <rect x="225" y="386" width="150" height="28" rx="14" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="404" text-anchor="middle" font-size="12" fill="#2a4a1a" font-weight="bold" filter="url(#rough2)">return max₁ &gt; max₀</text>
+
+  <!-- invariant box -->
+  <rect x="420" y="326" width="172" height="92" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="506" y="344" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold" filter="url(#rough2)">不变量（处理完 c 后）</text>
+  <text x="506" y="360" text-anchor="middle" font-size="10" fill="#445" filter="url(#rough2)">cnt₁：以 c 结尾的连续 1 长</text>
+  <text x="506" y="374" text-anchor="middle" font-size="10" fill="#445" filter="url(#rough2)">（c = '0' 时为 0），cnt₀ 对称</text>
+  <text x="506" y="388" text-anchor="middle" font-size="10" fill="#445" filter="url(#rough2)">max₁ / max₀：已扫前缀中</text>
+  <text x="506" y="402" text-anchor="middle" font-size="10" fill="#445" filter="url(#rough2)">最长 1 / 0 段的长度</text>
+</svg>
