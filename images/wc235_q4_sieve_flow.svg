@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="470" fill="#fafafa"/>
+
+  <text x="260" y="20" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">算法流程：值域桶 + 逐 g 枚举在场倍数（调和级数扫描）</text>
+  <text x="260" y="38" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">总扫描量 Σ⌊V/g⌋ ≈ V·lnV ≈ 2.4×10⁶（V = 2×10⁵）；gcd 只发生在「在场合数」上</text>
+
+  <!-- ① 建桶 -->
+  <rect x="100" y="50" width="320" height="32" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="70" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">① 建桶：V = max(nums)；exist[v] ← (v ∈ nums)，O(n)</text>
+
+  <path d="M 260 82 L 260 96" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- ② 外层循环 -->
+  <rect x="175" y="98" width="170" height="30" rx="15" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="117" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">② for g = 1 … V（外层）</text>
+
+  <path d="M 260 128 L 260 142" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- ③ 内层循环 -->
+  <rect x="175" y="144" width="170" height="30" rx="15" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="163" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">③ for m = g, 2g, … ≤ V</text>
+
+  <path d="M 260 174 L 260 190" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 菱形1：exist[m]? -->
+  <polygon points="260,192 205,217 260,242 315,217" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="221" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">exist[m] ?</text>
+
+  <path d="M 260 242 L 260 252" stroke="#4a7a3a" stroke-width="1.5" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="271" y="251" font-size="9" fill="#2e6e2e" filter="url(#rough2)">是</text>
+
+  <!-- ④ 运行 gcd -->
+  <rect x="130" y="256" width="260" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="271" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">④ G ← gcd(G, m)</text>
+  <text x="260" y="284" text-anchor="middle" font-size="8.5" fill="#888" filter="url(#rough2)">（gcd(0, m) = m；G 只减不增，且始终是 g 的倍数）</text>
+
+  <path d="M 260 290 L 260 298" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 菱形2：G==g?（早停探针） -->
+  <polygon points="260,300 205,323 260,346 315,323" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="327" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">G == g ?</text>
+
+  <path d="M 260 346 L 260 364" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="272" y="359" font-size="9" fill="#666" filter="url(#rough2)">是：break / 扫完</text>
+
+  <!-- 菱形3：最终判定 -->
+  <polygon points="260,368 205,391 260,414 315,391" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="390" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">⑤ G == g ?</text>
+  <text x="260" y="403" text-anchor="middle" font-size="7.5" fill="#888" filter="url(#rough2)">（内层结束后的最终判定）</text>
+
+  <!-- ⑤ 是 → ans++ -->
+  <path d="M 315 391 L 380 391" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <rect x="384" y="376" width="108" height="30" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="438" y="395" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b27a10" filter="url(#rough2)">ans += 1</text>
+
+  <!-- ans++ 汇入返回框 -->
+  <path d="M 438 406 L 438 437 L 376 437" stroke="#888888" stroke-width="1.5" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+
+  <!-- ⑤ 否 → 下一个 g -->
+  <path d="M 205 391 L 100 391 L 100 113 L 171 113" stroke="#888888" stroke-width="1.5" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="150" y="383" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">否：g 不可达，下一个 g</text>
+
+  <!-- ② 否 → 扫完 → 返回 -->
+  <path d="M 205 98 L 205 86 L 34 86 L 34 437 L 144 437" stroke="#888888" stroke-width="1.5" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="112" y="80" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">g &gt; V（扫完）</text>
+
+  <!-- 内层回边：两个「否」共用 x=470 竖线回到 ③ -->
+  <path d="M 315 217 L 470 217" stroke="#888888" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="392" y="210" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">否：跳过，m += g</text>
+  <path d="M 315 323 L 470 323" stroke="#888888" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="392" y="316" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">否：m += g</text>
+  <path d="M 470 323 L 470 163 L 351 163" stroke="#888888" stroke-width="1.5" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="478" y="246" font-size="8.5" fill="#888" filter="url(#rough2)">回内层</text>
+
+  <!-- ⑥ 返回 -->
+  <rect x="150" y="419" width="226" height="36" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="263" y="437" text-anchor="middle" font-size="12" font-weight="bold" fill="#b27a10" filter="url(#rough2)">⑥ return ans</text>
+  <text x="263" y="451" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">ans = #{ g ≤ V : gcd(M(g)) = g }</text>
+</svg>
