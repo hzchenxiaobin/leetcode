@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="730" viewBox="0 0 880 730" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#c98a2b"/>
+    </marker>
+    <marker id="arB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a8edb"/>
+    </marker>
+  </defs>
+  <rect width="880" height="730" fill="#fdfcf7"/>
+  <text x="440" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：邻接矩阵 + 三重循环枚举三元组</text>
+  <path d="M 240 42 Q 440 50 640 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)"><ellipse cx="440" cy="82" rx="48" ry="20" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/></g>
+  <text x="440" y="88" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">开始</text>
+  <path d="M 440 102 L 440 118" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 1: preprocess -->
+  <g filter="url(#sk)">
+    <rect x="280" y="122" width="320" height="48" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="440" y="142" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">预处理</text>
+  <text x="440" y="160" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">每条边 [u,v]：adj[u][v]=adj[v][u]=1，deg[u]++，deg[v]++</text>
+  <path d="M 440 170 L 440 186" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- step 2: triple loop -->
+  <g filter="url(#sk)">
+    <rect x="280" y="190" width="320" height="48" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.5"/>
+  </g>
+  <text x="440" y="210" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">三重循环枚举（保证 u &lt; v &lt; w，不重不漏）</text>
+  <text x="440" y="228" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">for u = 1..n : for v = u+1..n : for w = v+1..n</text>
+  <path d="M 440 238 L 440 254" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1: pairwise adjacent? -->
+  <g filter="url(#sk)">
+    <polygon points="440,258 600,306 440,354 280,306" fill="#f5e0e0" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="440" y="300" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">u、v、w 两两有边？</text>
+  <text x="440" y="318" text-anchor="middle" font-size="10" fill="#b03a3a" font-family="monospace">adj[u][v] &amp; adj[u][w] &amp; adj[v][w]</text>
+
+  <!-- no branch: skip, loop back to triple loop -->
+  <path d="M 600 306 L 700 306 L 700 214 L 606 214" stroke="#c98a2b" stroke-width="1.5" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="628" y="298" font-size="11" font-weight="bold" fill="#c98a2b">否</text>
+  <text x="710" y="262" font-size="10" fill="#7a5415" text-anchor="middle">跳过</text>
+
+  <!-- yes branch -->
+  <path d="M 440 354 L 440 380" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="452" y="372" font-size="11" font-weight="bold" fill="#2e6e2e">是</text>
+
+  <!-- step 3: update answer -->
+  <g filter="url(#sk)">
+    <rect x="270" y="384" width="340" height="54" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="440" y="406" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">O(1) 更新答案（度数公式）</text>
+  <text x="440" y="426" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">ans = min(ans, deg[u]+deg[v]+deg[w] − 6)</text>
+
+  <!-- loop back: continue enumeration -->
+  <path d="M 270 411 L 140 411 L 140 214 L 274 214" stroke="#4a8edb" stroke-width="1.5" fill="none" stroke-dasharray="6 4" marker-end="url(#arB)" filter="url(#sk)"/>
+  <text x="140" y="310" font-size="10" fill="#2b6e9e" text-anchor="middle" transform="rotate(-90 140 310)">继续枚举下一个</text>
+
+  <!-- diamond 2: enumeration done? -->
+  <path d="M 440 438 L 440 462" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <polygon points="440,466 580,512 440,558 300,512" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="440" y="508" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">所有三元组</text>
+  <text x="440" y="526" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415">枚举完毕？</text>
+
+  <!-- no: back to loop -->
+  <path d="M 300 512 L 220 512 L 220 214 L 274 214" stroke="#c98a2b" stroke-width="1.5" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="286" y="504" font-size="11" font-weight="bold" fill="#c98a2b">否</text>
+
+  <!-- yes: down -->
+  <path d="M 440 558 L 440 582" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="452" y="574" font-size="11" font-weight="bold" fill="#2e6e2e">是</text>
+
+  <!-- diamond 3: ans updated? -->
+  <g filter="url(#sk)">
+    <polygon points="440,586 585,634 440,682 295,634" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.6"/>
+  </g>
+  <text x="440" y="630" text-anchor="middle" font-size="12" font-weight="bold" fill="#5a3a7a">ans 仍是 +∞ ？</text>
+  <text x="440" y="648" text-anchor="middle" font-size="10" fill="#5a3a7a">（从未被更新过）</text>
+
+  <!-- yes: return -1 -->
+  <path d="M 585 634 L 640 634" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="604" y="626" font-size="11" font-weight="bold" fill="#b85450">是</text>
+  <g filter="url(#sk)">
+    <rect x="648" y="610" width="180" height="48" rx="10" fill="#f5e0e0" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="738" y="632" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">返回 −1</text>
+  <text x="738" y="648" text-anchor="middle" font-size="10" fill="#b03a3a">图中没有连通三元组</text>
+
+  <!-- no: return ans -->
+  <path d="M 295 634 L 240 634" stroke="#4a8e4a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="272" y="626" font-size="11" font-weight="bold" fill="#2e6e2e">否</text>
+  <g filter="url(#sk)">
+    <rect x="52" y="610" width="180" height="48" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2"/>
+  </g>
+  <text x="142" y="632" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">返回 ans</text>
+  <text x="142" y="648" text-anchor="middle" font-size="10" fill="#2e6e2e">最小三元组度数</text>
+
+  <!-- complexity note -->
+  <g filter="url(#sk)">
+    <rect x="628" y="384" width="232" height="120" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="744" y="408" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">复杂度速览</text>
+  <text x="744" y="430" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">C++：O(n³)</text>
+  <text x="744" y="450" text-anchor="middle" font-size="11" fill="#444" font-family="monospace">C(400,3) ≈ 1.06×10⁷</text>
+  <text x="744" y="472" text-anchor="middle" font-size="10.5" fill="#7a5415">Python 太慢 → 改为枚举边</text>
+  <text x="744" y="490" text-anchor="middle" font-size="10.5" fill="#7a5415">+ 邻接集求公共邻居</text>
+</svg>
