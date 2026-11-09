@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="470" viewBox="0 0 720 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="720" height="470" fill="#fdfcf7"/>
+  <text x="360" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">核心模型：游标解锁 × 小顶堆 × 时间快进</text>
+  <text x="360" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">快照：示例 1 的 tasks，当前 time = 3（#0 刚执行完）</text>
+
+  <!-- 左：排序后数组 -->
+  <text x="140" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">排序后（enq, proc, #下标）</text>
+  <g filter="url(#sk)">
+    <rect x="50" y="92" width="180" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="140" y="117" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">1, 2, #0  ✓已放行</text>
+  <g filter="url(#sk)">
+    <rect x="50" y="140" width="180" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="140" y="165" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">2, 4, #1  ✓已放行</text>
+  <g filter="url(#sk)">
+    <rect x="50" y="188" width="180" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="140" y="213" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#sk)">3, 2, #2  ✓已放行</text>
+  <g filter="url(#sk)">
+    <rect x="50" y="236" width="180" height="40" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 3"/>
+  </g>
+  <text x="140" y="261" text-anchor="middle" font-size="12" fill="#a04038" filter="url(#sk)">4, 1, #3  ✗未到达</text>
+
+  <!-- 右：就绪小顶堆 -->
+  <text x="560" y="100" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">就绪小顶堆（proc, idx）</text>
+  <g filter="url(#sk)">
+    <rect x="505" y="120" width="110" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+  </g>
+  <text x="560" y="144" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">(2, #2)</text>
+  <path d="M 540,158 L 512,190" stroke="#446688" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="445" y="190" width="110" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="500" y="214" text-anchor="middle" font-size="13" fill="#2a4a6a" filter="url(#sk)">(4, #1)</text>
+  <text x="585" y="252" text-anchor="middle" font-size="10" fill="#555" filter="url(#sk)">堆顶 = proc 最短（并列下标小）</text>
+  <text x="585" y="268" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688" filter="url(#sk)">→ t=3 执行 #2</text>
+
+  <!-- 中：放行箭头 -->
+  <path d="M 232,112 C 350,108 430,118 502,132" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 232,160 C 340,148 440,140 502,140" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <path d="M 232,208 C 350,188 440,158 500,148" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="352" y="120" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">enq ≤ time ⇒ 放行入堆</text>
+
+  <!-- 拦截 -->
+  <path d="M 238,258 Q 266,258 296,268" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="254" y="246" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">ptr</text>
+  <g filter="url(#sk)">
+    <rect x="300" y="250" width="130" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="365" y="268" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#a04038" filter="url(#sk)">enq=4 ＞ time=3</text>
+  <text x="365" y="286" text-anchor="middle" font-size="9.5" fill="#a04038" filter="url(#sk)">被游标拦在堆外</text>
+
+  <!-- 左下：时间快进 -->
+  <g filter="url(#sk)">
+    <rect x="40" y="318" width="310" height="134" rx="8" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="195" y="342" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#sk)">时间快进：堆空 ⇒ 直达下一 enq</text>
+  <path d="M 110,406 Q 195,372 276,406" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arO)" filter="url(#sk)"/>
+  <text x="193" y="366" text-anchor="middle" font-size="11" font-weight="bold" fill="#d6a040" filter="url(#sk)">一步快进</text>
+  <rect x="110" y="412" width="170" height="12" fill="#fce4ec" opacity="0.6" filter="url(#sk)"/>
+  <path d="M 70,418 H 320" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <circle cx="110" cy="418" r="3.5" fill="#d6a040" filter="url(#sk)"/>
+  <circle cx="280" cy="418" r="3.5" fill="#d6a040" filter="url(#sk)"/>
+  <text x="110" y="434" text-anchor="middle" font-size="9" fill="#7a5415" filter="url(#sk)">上一任务完成</text>
+  <text x="280" y="434" text-anchor="middle" font-size="9" fill="#7a5415" filter="url(#sk)">下一任务到达</text>
+  <text x="195" y="448" text-anchor="middle" font-size="9.5" fill="#7a5415" filter="url(#sk)">空闲段内无任何事件，跳过零损失</text>
+
+  <!-- 右下：翻车点 -->
+  <g filter="url(#sk)">
+    <rect x="380" y="318" width="300" height="134" rx="8" fill="#fdf2f2" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="530" y="340" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a04038" filter="url(#sk)">✗ 两个经典翻车点</text>
+  <text x="395" y="362" font-size="10.5" fill="#a04038" filter="url(#sk)">① 一次性全部入堆 → 偷跑未到达任务</text>
+  <text x="410" y="380" font-size="9.5" fill="#8a5048" filter="url(#sk)">例 [[1,5],[10⁹,1]]：错得 [1,0]</text>
+  <text x="395" y="404" font-size="10.5" fill="#a04038" filter="url(#sk)">② 逐秒 time++ → 跨度最高 n×10⁹ ≈ 10¹⁴</text>
+  <text x="410" y="422" font-size="9.5" fill="#8a5048" filter="url(#sk)">必 TLE；事件只发生在到达/完成时刻</text>
+  <text x="395" y="444" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">✓ 对策：游标解锁 + 堆空快进</text>
+</svg>

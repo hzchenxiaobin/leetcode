@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="560" viewBox="0 0 640 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="560" fill="#fdfcf7"/>
+  <text x="320" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：计数排序 + 按价位批量购买</text>
+  <path d="M 170 44 Q 320 52 470 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- step 1: build freq -->
+  <g filter="url(#sk)">
+    <rect x="185" y="58" width="270" height="48" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="77" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">① 建频率表</text>
+  <text x="320" y="96" text-anchor="middle" font-size="11.5" fill="#2b6e9e" font-family="monospace">for c in costs: freq[c]++</text>
+
+  <path d="M 320 106 L 320 122" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <ellipse cx="320" cy="144" rx="98" ry="22" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="149" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">price = 1，ans = 0</text>
+
+  <path d="M 320 166 L 320 182" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1: price > coins? -->
+  <g filter="url(#sk)">
+    <polygon points="320,184 452,222 320,260 188,222" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="227" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">price &gt; coins ？</text>
+
+  <path d="M 452 222 L 476 222" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="461" y="213" text-anchor="middle" font-size="12" font-weight="bold" fill="#a04040">是</text>
+  <g filter="url(#sk)">
+    <rect x="480" y="200" width="150" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="555" y="219" text-anchor="middle" font-size="13" font-weight="bold" fill="#a04040">返回 ans</text>
+  <text x="555" y="235" text-anchor="middle" font-size="10.5" fill="#a04040">（此后只会更贵）</text>
+  <text x="555" y="262" text-anchor="middle" font-size="10" fill="#777">price 越过值域 10^5 时也结束</text>
+
+  <path d="M 320 260 L 320 276" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="330" y="273" font-size="12" font-weight="bold" fill="#2e6e2e">否</text>
+
+  <!-- diamond 2: freq == 0? -->
+  <g filter="url(#sk)">
+    <polygon points="320,278 436,312 320,346 204,312" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="317" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b6e9e">freq[price] = 0 ？</text>
+
+  <path d="M 204 312 L 180 312" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="192" y="303" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">是</text>
+  <g filter="url(#sk)">
+    <rect x="56" y="290" width="122" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.3"/>
+  </g>
+  <text x="117" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">跳过该价位</text>
+  <text x="117" y="324" text-anchor="middle" font-size="10" fill="#777">（这个价没货）</text>
+
+  <path d="M 320 346 L 320 362" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="330" y="359" font-size="12" font-weight="bold" fill="#7a5415">否</text>
+
+  <!-- batch purchase -->
+  <g filter="url(#sk)">
+    <rect x="172" y="364" width="296" height="74" rx="8" fill="#fef6e6" stroke="#c98a2b" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="386" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a5415">② 批量购买该价位</text>
+  <text x="320" y="406" text-anchor="middle" font-size="11.5" fill="#7a5415" font-family="monospace">can = min(freq[price], coins / price)</text>
+  <text x="320" y="426" text-anchor="middle" font-size="11.5" fill="#7a5415" font-family="monospace">ans += can，coins -= can × price</text>
+
+  <path d="M 320 438 L 320 454" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- price++ -->
+  <g filter="url(#sk)">
+    <rect x="262" y="456" width="116" height="34" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="478" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" font-family="monospace">price++</text>
+
+  <!-- skip path joins price++ -->
+  <path d="M 117 334 L 117 473 L 256 473" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- loop back to diamond 1 -->
+  <path d="M 320 490 L 320 512 L 46 512 L 46 222 L 184 222" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="56" y="372" font-size="11" fill="#777">循环</text>
+  <text x="180" y="506" font-size="10.5" fill="#777">检查下一价位</text>
+
+  <!-- complexity note -->
+  <g filter="url(#sk)">
+    <rect x="336" y="522" width="288" height="30" rx="6" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="5,4"/>
+  </g>
+  <text x="480" y="541" text-anchor="middle" font-size="10.5" fill="#777">值域 V = 10^5：建表 O(n) + 扫描 O(V)</text>
+</svg>
