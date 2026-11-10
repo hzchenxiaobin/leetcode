@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="113" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="480" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：单趟扫描，两个计数器</text>
+  <path d="M 180 38 Q 320 46 460 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="238" y="54" width="164" height="32" rx="16" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="74" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">开始：depth = 0，ans = 0</text>
+  <path d="M 320 86 L 320 100" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- read char -->
+  <g filter="url(#sk)">
+    <rect x="238" y="104" width="164" height="30" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="123" text-anchor="middle" font-size="13" fill="#2b6e9e">读取下一个字符 c</text>
+  <path d="M 320 134 L 320 148" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <polygon points="320,152 392,182 320,212 248,182" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="320" y="187" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6415">c 是 '(' ?</text>
+  <text x="402" y="174" font-size="12" font-weight="bold" fill="#2e6e2e">是</text>
+  <path d="M 392 182 L 434 182" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- action 1 -->
+  <g filter="url(#sk)">
+    <rect x="438" y="158" width="176" height="48" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="526" y="178" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">depth += 1</text>
+  <text x="526" y="196" text-anchor="middle" font-size="12" fill="#2b6e9e">ans = max(ans, depth)</text>
+
+  <text x="330" y="232" font-size="12" font-weight="bold" fill="#b85450">否</text>
+  <path d="M 320 212 L 320 238" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 2 -->
+  <polygon points="320,242 392,272 320,302 248,272" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="320" y="277" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6415">c 是 ')' ?</text>
+  <text x="402" y="264" font-size="12" font-weight="bold" fill="#2e6e2e">是</text>
+  <path d="M 392 272 L 434 272" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- action 2 -->
+  <g filter="url(#sk)">
+    <rect x="438" y="252" width="176" height="40" rx="6" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.4"/>
+  </g>
+  <text x="526" y="277" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">depth −= 1</text>
+
+  <text x="330" y="318" font-size="12" font-weight="bold" fill="#b85450">否</text>
+  <path d="M 320 302 L 320 316" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- action 3: skip -->
+  <g filter="url(#sk)">
+    <rect x="240" y="318" width="160" height="32" rx="6" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.3"/>
+  </g>
+  <text x="320" y="338" text-anchor="middle" font-size="12.5" fill="#2e6e2e">跳过（数字 / 运算符）</text>
+
+  <!-- merge rail -->
+  <path d="M 614 182 L 628 182 L 628 396 L 326 396" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 614 272 L 628 272" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 320 350 L 320 410" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 3: loop -->
+  <polygon points="320,414 398,442 320,470 242,442" fill="#ffffff" stroke="#d6a040" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="320" y="447" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6415">还有字符吗？</text>
+  <text x="152" y="432" font-size="12" font-weight="bold" fill="#2e6e2e">是（继续）</text>
+  <path d="M 242 442 L 140 442 L 140 119 L 232 119" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="408" y="432" font-size="12" font-weight="bold" fill="#b85450">否</text>
+  <path d="M 398 442 L 432 442" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- end -->
+  <g filter="url(#sk)">
+    <rect x="436" y="424" width="140" height="36" rx="16" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="506" y="446" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#b85450">返回 ans</text>
+</svg>
