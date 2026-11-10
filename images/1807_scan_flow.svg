@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="600" viewBox="0 0 660 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="660" height="600" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：单趟扫描，游标只进不退</text>
+  <path d="M 160 36 Q 330 44 500 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="330" y="56" text-anchor="middle" font-size="11" fill="#666">先 O(k) 建表；主循环里每个字符至多被处理常数次</text>
+
+  <!-- prelude: build map -->
+  <g filter="url(#sk)">
+    <rect x="105" y="72" width="250" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="230" y="93" text-anchor="middle" font-size="11.5" fill="#7a5415">map ← { key → value }，O(k) 建表</text>
+  <path d="M 230 106 L 230 121" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D1: i < n ? -->
+  <g filter="url(#sk)">
+    <polygon points="230,125 305,157 230,189 155,157" fill="#ffffff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="230" y="161" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688">i &lt; n ?</text>
+  <path d="M 307 157 L 520 157" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="388" y="149" text-anchor="middle" font-size="11" fill="#888">否</text>
+  <g filter="url(#sk)">
+    <rect x="525" y="140" width="105" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="577" y="161" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f6b26">返回 res</text>
+  <path d="M 230 189 L 230 214" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="238" y="205" font-size="11" fill="#888">是</text>
+
+  <!-- D2: s[i] == '(' ? -->
+  <g filter="url(#sk)">
+    <polygon points="230,218 312,250 230,282 148,250" fill="#ffffff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="230" y="254" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688">s[i] == '(' ?</text>
+  <path d="M 314 250 L 404 250" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="358" y="242" text-anchor="middle" font-size="11" fill="#888">否</text>
+  <g filter="url(#sk)">
+    <rect x="407" y="227" width="176" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="495" y="247" text-anchor="middle" font-size="11.5" fill="#446688">res += s[i]</text>
+  <text x="495" y="264" text-anchor="middle" font-size="11.5" fill="#446688">i += 1</text>
+  <path d="M 230 282 L 230 309" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="238" y="299" font-size="11" fill="#888">是</text>
+
+  <!-- B1: locate ')' and slice key -->
+  <g filter="url(#sk)">
+    <rect x="105" y="311" width="250" height="48" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="230" y="331" text-anchor="middle" font-size="11.5" fill="#7a5415">j ← 从 i 起找第一个 ')'</text>
+  <text x="230" y="349" text-anchor="middle" font-size="11.5" fill="#7a5415">key ← s[i+1 .. j−1]</text>
+  <path d="M 230 359 L 230 389" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- D3: key in map ? -->
+  <g filter="url(#sk)">
+    <polygon points="230,391 310,423 230,455 150,423" fill="#ffffff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="230" y="427" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688">key ∈ map ?</text>
+  <path d="M 224 453 Q 175 462 142 467" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="176" y="452" text-anchor="middle" font-size="11" fill="#2f6b26" font-weight="bold">是</text>
+  <path d="M 236 453 Q 290 462 328 467" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="288" y="452" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">否</text>
+
+  <!-- G / R -->
+  <g filter="url(#sk)">
+    <rect x="55" y="465" width="130" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="280" y="465" width="130" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="120" y="488" text-anchor="middle" font-size="11.5" fill="#2f6b26" font-weight="bold">res += value</text>
+  <text x="345" y="488" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold">res += "?"</text>
+
+  <!-- B2: skip segment -->
+  <g filter="url(#sk)">
+    <rect x="150" y="527" width="160" height="36" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="230" y="549" text-anchor="middle" font-size="11.5" fill="#7a5415">i ← j + 1（跳过整段）</text>
+  <path d="M 120 503 Q 118 528 148 538" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 345 503 Q 348 528 312 538" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- feedback channel -->
+  <path d="M 150 545 L 40 545" stroke="#446688" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <path d="M 582 250 L 620 250 L 620 583 L 44 583" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arb)" filter="url(#sk)"/>
+  <path d="M 40 583 L 40 157 L 149 157" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arb)" filter="url(#sk)"/>
+  <circle cx="40" cy="545" r="3" fill="#446688"/>
+  <circle cx="40" cy="583" r="3" fill="#446688"/>
+  <text x="330" y="574" text-anchor="middle" font-size="10.5" fill="#888">回到「i &lt; n ?」继续下一轮</text>
+</svg>
