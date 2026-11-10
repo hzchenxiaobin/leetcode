@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 548"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="548" fill="#fafafa"/>
+  <text x="360" y="22" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">变长滑动窗口：右扩 → 过量左缩 → 命中记最长</text>
+
+  <!-- 开始 -->
+  <rect x="245" y="36" width="230" height="38" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="360" y="52" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">初始化：left = 0，sum = 0</text>
+  <text x="360" y="66" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">max_len = −1（未命中哨兵）</text>
+
+  <path d="M360,74 L360,100" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 右扩 -->
+  <rect x="245" y="104" width="230" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="360" y="120" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">sum += nums[right]</text>
+  <text x="360" y="135" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">窗口右端扩一格</text>
+
+  <path d="M360,142 L360,168" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 判过量 -->
+  <polygon points="360,172 484,206 360,240 236,206" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="360" y="210" text-anchor="middle" font-size="12" fill="#8a6d1f" filter="url(#rough2)">sum &gt; target ?</text>
+
+  <path d="M236,206 L200,206" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="216" y="197" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <rect x="26" y="184" width="170" height="46" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="111" y="202" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">sum −= nums[left]</text>
+  <text x="111" y="221" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">left++（窗口左缩）</text>
+
+  <path d="M111,182 C111,140 250,140 342,170" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="175" y="145" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">缩完再判</text>
+
+  <path d="M360,240 L360,254" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="372" y="252" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 判命中 -->
+  <polygon points="360,258 484,292 360,326 236,292" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="360" y="296" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">sum == target ?</text>
+
+  <path d="M484,292 L512,292" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="494" y="283" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="516" y="268" width="182" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="607" y="286" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">max_len = max(max_len,</text>
+  <text x="607" y="304" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">right − left + 1)</text>
+
+  <path d="M360,326 L360,354" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="372" y="344" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 换右端 -->
+  <rect x="245" y="358" width="230" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="360" y="379" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">right++（换下一个右端）</text>
+
+  <path d="M360,392 L360,408" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 判越界 -->
+  <polygon points="360,412 474,444 360,476 246,444" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="360" y="448" text-anchor="middle" font-size="12" fill="#8a6d1f" filter="url(#rough2)">right &lt; n ?</text>
+
+  <path d="M246,444 L14,444 L14,123 L241,123" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="212" y="433" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">是</text>
+  <text x="100" y="433" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">继续扩窗</text>
+
+  <path d="M360,476 L360,496" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="372" y="490" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 结束 -->
+  <rect x="225" y="500" width="270" height="38" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="360" y="515" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">max_len = −1（从未命中）→ 返回 −1</text>
+  <text x="360" y="531" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">否则返回 n − max_len</text>
+</svg>

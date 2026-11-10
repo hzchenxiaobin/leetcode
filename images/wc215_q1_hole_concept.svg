@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 452"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="452" fill="#fafafa"/>
+  <text x="360" y="24" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">乱序到达、按序输出：挡路的只有 ptr 处那一个洞</text>
+  <text x="360" y="45" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">类比 TCP 接收窗口：期望序号未到齐时先缓存，连续段一旦补齐立即交付</text>
+
+  <!-- ============ 状态 ①：写入 (3, ccccc) ============ -->
+  <text x="40" y="82" font-size="12.5" fill="#333" filter="url(#rough2)">① insert(3, ccccc)：洞在 1，块 3 只能先缓存 → 返回 [ ]</text>
+
+  <rect x="40" y="92" width="64" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 3" filter="url(#rough2)"/>
+  <rect x="112" y="92" width="64" height="42" rx="4" fill="#ffffff" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="184" y="92" width="64" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="216" y="118" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">ccccc</text>
+  <rect x="256" y="92" width="64" height="42" rx="4" fill="#ffffff" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="328" y="92" width="64" height="42" rx="4" fill="#ffffff" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+
+  <text x="72" y="152" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">1</text>
+  <text x="144" y="152" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">2</text>
+  <text x="216" y="152" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">3</text>
+  <text x="288" y="152" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">4</text>
+  <text x="360" y="152" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">5</text>
+
+  <path d="M72,170 L72,140" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="72" y="188" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">ptr = 1</text>
+
+  <!-- ============ 状态 ②：写入 (1, aaaaa) ============ -->
+  <text x="40" y="212" font-size="12.5" fill="#333" filter="url(#rough2)">② insert(1, aaaaa)：洞 1 补上 → 交付 [aaaaa]，ptr 跳到 2</text>
+
+  <rect x="40" y="222" width="64" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="72" y="248" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">aaaaa</text>
+  <rect x="112" y="222" width="64" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 3" filter="url(#rough2)"/>
+  <rect x="184" y="222" width="64" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="216" y="248" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">ccccc</text>
+  <rect x="256" y="222" width="64" height="42" rx="4" fill="#ffffff" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="328" y="222" width="64" height="42" rx="4" fill="#ffffff" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+
+  <text x="72" y="282" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">1</text>
+  <text x="144" y="282" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">2</text>
+  <text x="216" y="282" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">3</text>
+  <text x="288" y="282" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">4</text>
+  <text x="360" y="282" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">5</text>
+
+  <path d="M144,300 L144,270" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="144" y="318" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">ptr → 2</text>
+
+  <!-- ============ 状态 ③：写入 (2, bbbbb) ============ -->
+  <text x="40" y="342" font-size="12.5" fill="#333" filter="url(#rough2)">③ insert(2, bbbbb)：连带唤醒缓存的块 3 → 交付 [bbbbb, ccccc]，ptr 跳到 4</text>
+
+  <rect x="40" y="352" width="64" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="378" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">aaaaa</text>
+  <rect x="112" y="352" width="64" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="144" y="378" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">bbbbb</text>
+  <rect x="184" y="352" width="64" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="216" y="378" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">ccccc</text>
+  <rect x="256" y="352" width="64" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 3" filter="url(#rough2)"/>
+  <rect x="328" y="352" width="64" height="42" rx="4" fill="#ffffff" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+
+  <text x="72" y="412" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">1</text>
+  <text x="144" y="412" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">2</text>
+  <text x="216" y="412" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">3</text>
+  <text x="288" y="412" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">4</text>
+  <text x="360" y="412" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">5</text>
+
+  <path d="M288,430 L288,400" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="288" y="446" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">ptr → 4</text>
+
+  <!-- ============ 右侧要点面板 ============ -->
+  <rect x="452" y="70" width="248" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="576" y="92" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">乱序到达是常态</text>
+  <text x="576" y="112" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">写入 slots[idKey]，O(1) 定址</text>
+
+  <rect x="452" y="140" width="248" height="54" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="576" y="162" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">洞 = ptr 处的空位</text>
+  <text x="576" y="182" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">洞未补 → 交付被拦，返回 [ ]</text>
+
+  <rect x="452" y="210" width="248" height="54" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="576" y="232" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">洞补上 → 整段交付</text>
+  <text x="576" y="252" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">从 ptr 收割最长连续已填段</text>
+
+  <rect x="452" y="280" width="248" height="72" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="576" y="302" text-anchor="middle" font-size="12" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)">ptr 只前进，不回退</text>
+  <text x="576" y="322" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">已交付前缀永不重访</text>
+  <text x="576" y="340" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">收割总代价 ≤ n → 均摊 O(1)</text>
+</svg>

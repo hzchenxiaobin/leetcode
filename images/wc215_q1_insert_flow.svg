@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 456"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="456" fill="#fafafa"/>
+  <text x="310" y="24" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">insert(idKey, value) 流程：判洞、收割、推进</text>
+
+  <!-- 开始：写入 -->
+  <rect x="170" y="48" width="220" height="36" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="71" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">写入 slots[idKey] ← value</text>
+  <path d="M280,84 L280,106" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 判断 1：idKey == ptr？ -->
+  <polygon points="280,112 380,152 280,192 180,152" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="158" text-anchor="middle" font-size="12" fill="#8a6d1f" filter="url(#rough2)">idKey == ptr？</text>
+
+  <!-- 否：返回空 -->
+  <path d="M180,152 L162,152" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="172" y="140" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="40" y="134" width="120" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="100" y="150" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">返回 [ ]</text>
+  <text x="100" y="165" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">ptr 不动</text>
+
+  <!-- 是：收割 -->
+  <path d="M280,192 L280,214" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="294" y="208" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是（洞补上了）</text>
+
+  <rect x="180" y="218" width="200" height="40" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="280" y="242" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">res ← [ ]，检查 slots[ptr]</text>
+  <path d="M280,258 L280,282" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 判断 2：循环条件 -->
+  <polygon points="280,288 380,330 280,372 180,330" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="326" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">ptr ≤ n</text>
+  <text x="280" y="344" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">且 slots[ptr] ≠ ""？</text>
+
+  <!-- 收集并推进 -->
+  <path d="M380,330 L428,330" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="402" y="320" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="432" y="304" width="118" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="491" y="324" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">res.append(slots[ptr])</text>
+  <text x="491" y="344" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">ptr ← ptr + 1</text>
+
+  <!-- 回到检查 -->
+  <path d="M552,330 L596,330 L596,238 L388,238" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <!-- 否：返回结果 -->
+  <path d="M280,372 L280,394" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="294" y="388" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="170" y="398" width="220" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="416" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">返回 res</text>
+  <text x="280" y="432" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">ptr 已停在首个空位（或 n+1）</text>
+
+  <!-- 左侧注释：为何只判 idKey==ptr -->
+  <rect x="18" y="210" width="150" height="100" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="93" y="228" text-anchor="middle" font-size="9.5" fill="#8a6d1f" filter="url(#rough2)">为何只判 idKey==ptr？</text>
+  <text x="93" y="246" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">洞不变式：调用开始时</text>
+  <text x="93" y="260" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">slots[ptr] 必为空</text>
+  <text x="93" y="274" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">⟹ idKey≠ptr 即洞未补</text>
+  <text x="93" y="288" text-anchor="middle" font-size="10" fill="#8a6d1f" filter="url(#rough2)">（见题解引理 1）</text>
+</svg>
