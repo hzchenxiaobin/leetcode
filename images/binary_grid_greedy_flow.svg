@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="500" viewBox="0 0 640 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="500" fill="#fdfcf7"/>
+  <text x="320" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：尾零化简 + 逐位置贪心冒泡</text>
+  <path d="M 170 36 Q 320 44 470 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="320" y="56" text-anchor="middle" font-size="11" fill="#888">先一维化；再从需求最高的位置 0 自上而下，每步把「最近的合格行」冒泡上来</text>
+
+  <!-- 主流程 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="68" width="230" height="46" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+    <rect x="70" y="146" width="230" height="46" rx="8" fill="#ffffff" stroke="#b0b0b0" stroke-width="1.4"/>
+    <rect x="70" y="224" width="230" height="46" rx="8" fill="#ffffff" stroke="#b0b0b0" stroke-width="1.4"/>
+    <polygon points="93,326 185,290 277,326 185,362" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="70" y="392" width="230" height="46" rx="8" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.6"/>
+    <rect x="396" y="304" width="178" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <rect x="396" y="394" width="178" height="44" rx="8" fill="#e6f4ea" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <g text-anchor="middle" font-size="11.5">
+    <text x="185" y="87" font-weight="bold" fill="#2b6e9e">预处理：从右向左数每行尾零</text>
+    <text x="185" y="103" fill="#2b6e9e">得到一维数组 tz[0..n−1]</text>
+    <text x="185" y="165" fill="#555">for p = 0 … n−1（自上而下）</text>
+    <text x="185" y="181" fill="#555">需求 req = n−1−p，逐位递减</text>
+    <text x="185" y="243" fill="#555">j 从 p 向后扫描，</text>
+    <text x="185" y="259" fill="#555">找首个满足 tz[j] ≥ req 的行 j</text>
+    <text x="185" y="320" font-weight="bold" fill="#7a5415">找到吗？</text>
+    <text x="185" y="338" font-size="10" fill="#7a5415">（j &lt; n）</text>
+    <text x="185" y="411" font-weight="bold" fill="#2e6e2e">ans += j − p（冒泡距离）</text>
+    <text x="185" y="427" fill="#2e6e2e">把行 j 上移到位置 p</text>
+    <text x="485" y="322" font-weight="bold" fill="#b85450">返回 −1：无解</text>
+    <text x="485" y="338" font-size="10.5" fill="#b85450">连最高需求都无人满足</text>
+    <text x="485" y="412" font-weight="bold" fill="#2e6e2e">n 个位置全部落位</text>
+    <text x="485" y="428" fill="#2e6e2e">返回 ans</text>
+  </g>
+
+  <!-- 主链箭头 -->
+  <g stroke="#3a3a3a" stroke-width="1.5" fill="none">
+    <path d="M 185 114 V 142" marker-end="url(#ar)"/>
+    <path d="M 185 192 V 220" marker-end="url(#ar)"/>
+    <path d="M 185 270 V 286" marker-end="url(#ar)"/>
+    <path d="M 185 362 V 388" marker-end="url(#ar)"/>
+    <path d="M 277 326 H 392" marker-end="url(#ar)"/>
+    <path d="M 300 417 H 392" marker-end="url(#ar)"/>
+    <path d="M 185 438 V 462 H 36 V 169 H 66" marker-end="url(#ar)"/>
+  </g>
+  <g font-size="11" font-weight="bold" fill="#444">
+    <text x="193" y="381">是</text>
+    <text x="310" y="318">否（扫到头）</text>
+    <text x="312" y="409" font-size="10.5">p 走完 n 个</text>
+    <text x="312" y="422" font-size="10.5">位置</text>
+    <text x="100" y="458">p+1（下一个位置）</text>
+  </g>
+
+  <text x="320" y="488" text-anchor="middle" font-size="11" fill="#999">每步选「最近的合格行」上移 —— 总冒泡距离最小（贪心，正确性证明见正文）</text>
+</svg>
