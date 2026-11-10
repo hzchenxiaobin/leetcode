@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="530" viewBox="0 0 660 530" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="71" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrBlue" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="660" height="530" fill="#fafafa"/>
+  <text x="330" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">示例演算：示例 2 —— 水位 13 与 14，指针 e 单向推进</text>
+  <path d="M 160 34 Q 330 44 500 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- info boxes -->
+  <g filter="url(#sk)">
+    <rect x="20" y="46" width="392" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="216" y="67" text-anchor="middle" font-size="10.5" fill="#2b4a6e" filter="url(#sk)">边（按 w 升序）：(1,2,5)　(2,3,9)　(0,1,10)　(3,4,13)</text>
+  <text x="216" y="86" text-anchor="middle" font-size="9.5" fill="#446688" filter="url(#sk)">指针 e 从左到右单向扫描，每条边至多 union 一次</text>
+  <g filter="url(#sk)">
+    <rect x="428" y="46" width="212" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="534" y="67" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8a6415" filter="url(#sk)">查询（按 limit 升序）</text>
+  <text x="534" y="86" text-anchor="middle" font-size="9.5" fill="#8a6415" filter="url(#sk)">(1,4,13)→j=1，(0,4,14)→j=0</text>
+
+  <!-- ================= step 1: limit = 13 ================= -->
+  <g filter="url(#sk)">
+    <rect x="20" y="108" width="620" height="170" rx="10" fill="#ffffff" stroke="#cccccc" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="34" y="131" font-size="12" font-weight="bold" fill="#8f3830" filter="url(#sk)">① 查询 (1, 4, 13)，原下标 j = 1：加边 w &lt; 13，e: 0 → 3</text>
+
+  <!-- component ellipse {0,1,2,3} -->
+  <g filter="url(#sk)">
+    <ellipse cx="240" cy="205" rx="175" ry="42" fill="none" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="7 4"/>
+  </g>
+  <text x="240" y="157" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#sk)">连通块 {0, 1, 2, 3}</text>
+
+  <!-- edges -->
+  <g filter="url(#sk)">
+    <line x1="106" y1="205" x2="174" y2="205" stroke="#4a7a3a" stroke-width="2.2"/>
+    <line x1="206" y1="205" x2="274" y2="205" stroke="#4a7a3a" stroke-width="2.2"/>
+    <line x1="306" y1="205" x2="374" y2="205" stroke="#4a7a3a" stroke-width="2.2"/>
+    <line x1="406" y1="205" x2="474" y2="205" stroke="#999999" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <g filter="url(#sk)" font-size="10.5" font-weight="bold" text-anchor="middle">
+    <text x="140" y="197" fill="#2e5a24">10</text>
+    <text x="240" y="197" fill="#2e5a24">5</text>
+    <text x="340" y="197" fill="#2e5a24">9</text>
+    <text x="440" y="197" fill="#888888">13</text>
+  </g>
+  <text x="440" y="232" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#sk)">✗ 13 ≥ 13，暂不可用</text>
+
+  <!-- nodes: query endpoints 1 and 4 -->
+  <g filter="url(#sk)">
+    <ellipse cx="90" cy="205" rx="16" ry="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="190" cy="205" rx="16" ry="16" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <ellipse cx="290" cy="205" rx="16" ry="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="390" cy="205" rx="16" ry="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="490" cy="205" rx="16" ry="16" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <g filter="url(#sk)" font-size="13" font-weight="bold" fill="#333" text-anchor="middle">
+    <text x="90" y="210">0</text>
+    <text x="190" y="210">1</text>
+    <text x="290" y="210">2</text>
+    <text x="390" y="210">3</text>
+    <text x="490" y="210">4</text>
+  </g>
+  <text x="34" y="266" font-size="11.5" font-weight="bold" fill="#8f3830" filter="url(#sk)">find(1) ≠ find(4) —— 点 4 孤立 → ans[1] = false</text>
+
+  <!-- arrow between steps -->
+  <path d="M 330 280 L 330 292" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+  <text x="342" y="289" font-size="9.5" fill="#666" filter="url(#sk)">limit 13 → 14</text>
+
+  <!-- ================= step 2: limit = 14 ================= -->
+  <g filter="url(#sk)">
+    <rect x="20" y="294" width="620" height="170" rx="10" fill="#ffffff" stroke="#cccccc" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="34" y="317" font-size="12" font-weight="bold" fill="#2e5a24" filter="url(#sk)">② 查询 (0, 4, 14)，原下标 j = 0：继续加边 w &lt; 14 → (3,4,13) 入图，e: 3 → 4</text>
+
+  <!-- component ellipse {0..4} -->
+  <g filter="url(#sk)">
+    <ellipse cx="290" cy="391" rx="228" ry="42" fill="none" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="7 4"/>
+  </g>
+  <text x="290" y="343" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#sk)">连通块 {0, 1, 2, 3, 4} —— 全图连通</text>
+
+  <!-- edges -->
+  <g filter="url(#sk)">
+    <line x1="106" y1="391" x2="174" y2="391" stroke="#4a7a3a" stroke-width="2.2"/>
+    <line x1="206" y1="391" x2="274" y2="391" stroke="#4a7a3a" stroke-width="2.2"/>
+    <line x1="306" y1="391" x2="374" y2="391" stroke="#4a7a3a" stroke-width="2.2"/>
+    <line x1="406" y1="391" x2="474" y2="391" stroke="#d6a040" stroke-width="2.4"/>
+  </g>
+  <g filter="url(#sk)" font-size="10.5" font-weight="bold" text-anchor="middle">
+    <text x="140" y="383" fill="#2e5a24">10</text>
+    <text x="240" y="383" fill="#2e5a24">5</text>
+    <text x="340" y="383" fill="#2e5a24">9</text>
+    <text x="440" y="383" fill="#8a6415">13</text>
+  </g>
+  <text x="440" y="418" text-anchor="middle" font-size="9.5" fill="#2e5a24" filter="url(#sk)">✓ 13 &lt; 14，本轮并入</text>
+
+  <!-- nodes: query endpoints 0 and 4 -->
+  <g filter="url(#sk)">
+    <ellipse cx="90" cy="391" rx="16" ry="16" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <ellipse cx="190" cy="391" rx="16" ry="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="290" cy="391" rx="16" ry="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="390" cy="391" rx="16" ry="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <ellipse cx="490" cy="391" rx="16" ry="16" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <g filter="url(#sk)" font-size="13" font-weight="bold" fill="#333" text-anchor="middle">
+    <text x="90" y="396">0</text>
+    <text x="190" y="396">1</text>
+    <text x="290" y="396">2</text>
+    <text x="390" y="396">3</text>
+    <text x="490" y="396">4</text>
+  </g>
+  <text x="34" y="452" font-size="11.5" font-weight="bold" fill="#2e5a24" filter="url(#sk)">find(0) == find(4) → ans[0] = true</text>
+
+  <!-- bottom -->
+  <g filter="url(#sk)" text-anchor="middle">
+    <text x="330" y="490" font-size="12.5" font-weight="bold" fill="#2b4a6e">按原下标还原：ans = [ans[0], ans[1]] = [true, false] ✓</text>
+    <text x="330" y="512" font-size="10.5" fill="#666">四条边各 union 恰一次；每轮查询 O(α(n)) 判连通</text>
+  </g>
+</svg>

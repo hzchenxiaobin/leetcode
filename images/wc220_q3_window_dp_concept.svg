@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrGreen" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrRed" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrBlue" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="440" fill="#fafafa"/>
+  <text x="320" y="24" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">核心观察：步长 ≤ k ⇔ 转移只依赖窗口 [i−k, i−1] 内 dp 的最大值</text>
+  <path d="M 150 34 Q 320 44 490 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Row A: forward view -->
+  <text x="58" y="100" font-size="13.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">① 正向</text>
+  <g filter="url(#sk)">
+    <rect x="170" y="76" width="50" height="38" rx="4" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="228" y="76" width="50" height="38" rx="4" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="286" y="76" width="50" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="344" y="76" width="50" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="402" y="76" width="50" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="460" y="76" width="50" height="38" rx="4" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <path d="M 311 74 C 315 54, 365 54, 367 72" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrGreen)"/>
+    <path d="M 311 74 C 305 42, 425 42, 423 72" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrGreen)"/>
+    <path d="M 311 74 C 296 34, 470 34, 481 72" stroke="#b85450" stroke-width="1.6" fill="none" stroke-dasharray="5 3" marker-end="url(#arrRed)"/>
+  </g>
+  <g filter="url(#sk)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="195" y="100">1</text>
+    <text x="253" y="100">−1</text>
+    <text x="311" y="100" font-weight="bold" fill="#2b4a6e">−2</text>
+    <text x="369" y="100">4</text>
+    <text x="427" y="100">−7</text>
+    <text x="485" y="100">3</text>
+  </g>
+  <g filter="url(#sk)" font-size="10" fill="#888" text-anchor="middle">
+    <text x="195" y="128">0</text>
+    <text x="253" y="128">1</text>
+    <text x="311" y="128">2</text>
+    <text x="369" y="128">3</text>
+    <text x="427" y="128">4</text>
+    <text x="485" y="128">5</text>
+  </g>
+  <g filter="url(#sk)" text-anchor="middle">
+    <text x="340" y="52" font-size="10" fill="#4a7a3a">跨度 1</text>
+    <text x="374" y="38" font-size="10" fill="#4a7a3a">跨度 2 = k</text>
+    <text x="466" y="28" font-size="10" fill="#b85450">跨度 3 &gt; k ✗</text>
+    <text x="573" y="90" font-size="10.5" fill="#666">从 i 一步可跳到</text>
+    <text x="573" y="108" font-size="10.5" fill="#666">[i+1, min(n−1, i+k)]</text>
+  </g>
+
+  <!-- Row B: backward / DP view -->
+  <text x="58" y="210" font-size="13.5" font-weight="bold" fill="#2e5a24" filter="url(#sk)">② 反向</text>
+  <g filter="url(#sk)">
+    <rect x="170" y="186" width="50" height="38" rx="4" fill="#f0f0f0" stroke="#999999" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="228" y="186" width="50" height="38" rx="4" fill="#f0f0f0" stroke="#999999" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="286" y="186" width="50" height="38" rx="4" fill="#f0f0f0" stroke="#999999" stroke-width="1.2" stroke-dasharray="4 3"/>
+    <rect x="344" y="186" width="50" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="402" y="186" width="50" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="460" y="186" width="50" height="38" rx="4" fill="#fff8e1" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="342" y="184" width="54" height="42" rx="5" fill="none" stroke="#4a7a3a" stroke-width="2.4"/>
+    <path d="M 344 232 L 344 242 L 452 242 L 452 232" stroke="#446688" stroke-width="1.6" fill="none"/>
+    <path d="M 369 184 C 380 154, 470 154, 483 182" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrGreen)"/>
+  </g>
+  <g filter="url(#sk)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="195" y="210" fill="#aaa">1</text>
+    <text x="253" y="210" fill="#aaa">0</text>
+    <text x="311" y="210" fill="#aaa">−1</text>
+    <text x="369" y="210" font-weight="bold" fill="#2e5a24">4</text>
+    <text x="427" y="210">−3</text>
+    <text x="485" y="210" font-weight="bold" fill="#8f3830">7</text>
+  </g>
+  <g filter="url(#sk)" font-size="10" fill="#888" text-anchor="middle">
+    <text x="195" y="258">0</text>
+    <text x="253" y="258">1</text>
+    <text x="311" y="258">2</text>
+    <text x="369" y="258">3</text>
+    <text x="427" y="258">4</text>
+    <text x="485" y="258">5</text>
+  </g>
+  <g filter="url(#sk)" text-anchor="middle">
+    <text x="398" y="258" font-size="10.5" fill="#446688">窗口 [i−k, i−1] = [3, 4]</text>
+    <text x="437" y="152" font-size="10.5" fill="#4a7a3a">+ nums[5] = 3</text>
+    <text x="573" y="196" font-size="10.5" fill="#666">i = 5：前驱 ∈ [3, 4]</text>
+    <text x="573" y="214" font-size="10.5" fill="#666">队头 dp[3] = 4 即最大</text>
+    <text x="573" y="232" font-size="10.5" fill="#666">dp[5] = 3 + 4 = 7</text>
+    <text x="320" y="296" font-size="13" font-weight="bold" fill="#2b4a6e">dp[i] = nums[i] + max{ dp[j] ： i−k ≤ j ≤ i−1 }</text>
+  </g>
+
+  <!-- bottom note -->
+  <g filter="url(#sk)">
+    <rect x="40" y="316" width="560" height="108" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk)" text-anchor="middle">
+    <text x="320" y="342" font-size="12.5" font-weight="bold" fill="#8f3830">步长 ≤ k ⇔ 转移只看长度 k 的窗口 ⇒「滑动窗口最大值」从 nums 平移到 dp</text>
+    <text x="320" y="366" font-size="11.5" fill="#8f3830">单调队列：存下标，dp 队头→队尾递减；过期出队（左）+ 弹尾入队（右），队头即窗口最大</text>
+    <text x="320" y="388" font-size="11.5" fill="#8f3830">每个下标至多入队一次、出队一次 → 查询均摊 O(1)，整体 O(n)</text>
+    <text x="320" y="410" font-size="11.5" fill="#8f3830">起点 0、终点 n−1 固定 → 无 max(0, ·) 兜底，答案 = dp[n−1]（区别于 1425 子序列版）</text>
+  </g>
+</svg>

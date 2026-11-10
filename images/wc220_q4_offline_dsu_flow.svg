@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="540" viewBox="0 0 640 540" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrBlue" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrRed" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="540" fill="#fafafa"/>
+  <text x="320" y="24" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：离线排序 → 双指针加边 → 并查集判连通</text>
+  <path d="M 170 34 Q 320 44 470 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="150" y="46" width="340" height="36" rx="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="68" text-anchor="middle" font-size="10.5" fill="#2e5a24" filter="url(#sk)">初始化：fa[i]=i，e=0；边按 w ↑、查询下标按 limit ↑ 排序</text>
+  <path d="M 320 82 L 320 96" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- for loop -->
+  <g filter="url(#sk)">
+    <rect x="145" y="100" width="350" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="123" text-anchor="middle" font-size="10.5" fill="#2b4a6e" filter="url(#sk)">for j ∈ idx（查询按 limit 升序，j 为原下标）：取 (p, q, limit)</text>
+  <path d="M 320 138 L 320 154" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- diamond 1: while condition -->
+  <g filter="url(#sk)">
+    <path d="M 320 158 L 445 197 L 320 236 L 195 197 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="193" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6415" filter="url(#sk)">还有边 且 w[e] &lt; limit ？</text>
+  <text x="320" y="210" text-anchor="middle" font-size="10" fill="#8a6415" filter="url(#sk)">（把可用边逐条并入）</text>
+
+  <!-- yes: union -->
+  <text x="450" y="190" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">是</text>
+  <path d="M 445 197 L 458 197" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrRed)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="462" y="166" width="166" height="62" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk)" text-anchor="middle">
+    <text x="545" y="186" font-size="12" font-weight="bold" fill="#8f3830">union(u[e], v[e])</text>
+    <text x="545" y="203" font-size="10.5" fill="#8f3830">e++（指针右移）</text>
+    <text x="545" y="221" font-size="10.5" fill="#8f3830">回到左侧判断继续</text>
+  </g>
+  <path d="M 545 164 C 540 126, 425 128, 352 162" stroke="#446688" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- no: answer query -->
+  <text x="330" y="252" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">否</text>
+  <path d="M 320 236 L 320 254" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="185" y="258" width="270" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="276" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5a24" filter="url(#sk)">ans[j] ← ( find(p) == find(q) )</text>
+  <text x="320" y="294" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#sk)">查询时刻：恰在所有 w &lt; limit 的边并入之后</text>
+  <path d="M 320 302 L 320 318" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- diamond 2: more queries -->
+  <g filter="url(#sk)">
+    <path d="M 320 322 L 445 361 L 320 400 L 195 361 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="357" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6415" filter="url(#sk)">还有未处理的查询？</text>
+  <text x="320" y="374" text-anchor="middle" font-size="10" fill="#8a6415" filter="url(#sk)">（limit 单调不减，继续）</text>
+
+  <!-- yes: loop back to next query -->
+  <text x="184" y="352" font-size="12" font-weight="bold" fill="#446688" filter="url(#sk)">是</text>
+  <path d="M 195 361 L 108 361 L 108 119 L 141 119" stroke="#446688" stroke-width="1.5" fill="none" stroke-dasharray="6 4" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+  <text x="96" y="250" transform="rotate(-90 96 250)" text-anchor="middle" font-size="10" fill="#666" filter="url(#sk)">取 limit 更大的下一个查询</text>
+
+  <!-- no: return -->
+  <text x="330" y="416" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">否</text>
+  <path d="M 320 400 L 320 418" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="245" y="422" width="150" height="40" rx="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="320" y="447" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5a24" filter="url(#sk)">返回 ans（原下标）</text>
+
+  <!-- bottom notes -->
+  <g filter="url(#sk)">
+    <text x="40" y="488" font-size="10.5" fill="#666">⚠ 加边条件 w[e] &lt; limit 是严格小于；答案写回原下标 ans[j]</text>
+    <text x="40" y="508" font-size="10.5" fill="#666">每条边至多 union 一次（limit 单调不减）→ 加边总代价均摊 O(E·α(n))</text>
+    <text x="40" y="528" font-size="10.5" fill="#666">瓶颈在两次排序：O(E log E + Q log Q)</text>
+  </g>
+</svg>
