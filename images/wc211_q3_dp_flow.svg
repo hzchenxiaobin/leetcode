@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/>
+    </filter>
+    <marker id="fa" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <path d="M 0 0 L 9 3.5 L 0 7 Z" fill="#446688"/>
+    </marker>
+    <marker id="oa" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <path d="M 0 0 L 9 3.5 L 0 7 Z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="660" height="470" fill="#fafafa"/>
+  <text x="330" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：排序 + 最大和不下降子序列 DP</text>
+  <path d="M 150 38 Q 330 46 510 38" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- Step 1 -->
+  <g filter="url(#r)">
+    <rect x="200" y="54" width="260" height="36" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="330" y="77" text-anchor="middle" font-size="12" fill="#2b4a6e" filter="url(#r)">① 配对 players[i] = (ageᵢ, scoreᵢ)</text>
+  <path d="M 330 90 L 330 104" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#fa)" filter="url(#r)"/>
+
+  <!-- Step 2 -->
+  <g filter="url(#r)">
+    <rect x="200" y="108" width="260" height="36" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="330" y="131" text-anchor="middle" font-size="12" fill="#2b4a6e" filter="url(#r)">② 按 (age, score) 双关键字升序排序</text>
+  <path d="M 330 144 L 330 158" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#fa)" filter="url(#r)"/>
+
+  <!-- Step 3: outer loop -->
+  <g filter="url(#r)">
+    <rect x="170" y="162" width="320" height="40" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="330" y="180" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">③ for i = 0 … n−1：dp[i] ← scoreᵢ</text>
+  <text x="330" y="196" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#r)">（单选自己成队，作为保底）</text>
+  <path d="M 330 202 L 330 216" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#fa)" filter="url(#r)"/>
+
+  <!-- Step 4: inner loop -->
+  <g filter="url(#r)">
+    <rect x="170" y="220" width="320" height="36" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="330" y="243" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#r)">④ for j = 0 … i−1：考察每个前驱 j</text>
+  <path d="M 330 256 L 330 270" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#fa)" filter="url(#r)"/>
+
+  <!-- Decision diamond -->
+  <g filter="url(#r)">
+    <path d="M 330 272 L 448 312 L 330 352 L 212 312 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="330" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6a1a" filter="url(#r)">scoreⱼ ≤ scoreᵢ ？</text>
+  <text x="330" y="326" text-anchor="middle" font-size="10.5" fill="#8a6a1a" filter="url(#r)">（同分也允许共存）</text>
+
+  <!-- No branch: skip, loop back -->
+  <path d="M 212 312 Q 130 312 130 240 Q 130 224 152 238" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#fa)" filter="url(#r)"/>
+  <text x="128" y="292" text-anchor="end" font-size="11" fill="#b85450" filter="url(#r)">否，跳过</text>
+  <text x="128" y="308" text-anchor="end" font-size="10" fill="#b85450" filter="url(#r)">（j 年纪小还分高?）</text>
+
+  <!-- Yes branch: update -->
+  <path d="M 448 312 L 486 312" stroke="#4a7a3a" stroke-width="1.8" fill="none" filter="url(#r)"/>
+  <text x="470" y="304" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#r)">是</text>
+  <g filter="url(#r)">
+    <rect x="470" y="330" width="180" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <path d="M 486 312 Q 502 318 502 330" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#fa)" filter="url(#r)"/>
+  <text x="560" y="352" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">dp[i] ← max(dp[i],</text>
+  <text x="560" y="370" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">dp[j] + scoreᵢ)</text>
+  <path d="M 650 382 Q 640 410 470 400 Q 300 392 244 262" stroke="#d6a040" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#oa)" filter="url(#r)"/>
+  <text x="540" y="416" text-anchor="middle" font-size="10" fill="#8a6a1a" filter="url(#r)">内层扫完 → 回到 ③</text>
+
+  <!-- Final: ans -->
+  <path d="M 330 352 L 330 380" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#fa)" filter="url(#r)"/>
+  <g filter="url(#r)">
+    <rect x="170" y="384" width="320" height="34" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="330" y="406" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e" filter="url(#r)">⑤ ans ← max(ans, dp[i])</text>
+  <path d="M 330 418 L 330 430" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#fa)" filter="url(#r)"/>
+  <g filter="url(#r)">
+    <rect x="240" y="434" width="180" height="30" rx="14" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="330" y="454" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#r)">return ans</text>
+
+  <!-- complexity tag -->
+  <g filter="url(#r)">
+    <rect x="40" y="54" width="100" height="60" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="90" y="78" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6a1a" filter="url(#r)">时间</text>
+  <text x="90" y="96" text-anchor="middle" font-size="12" font-family="monospace" fill="#8a6a1a" filter="url(#r)">O(n²)</text>
+</svg>

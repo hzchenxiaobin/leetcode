@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="31" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/>
+    </filter>
+    <marker id="wa" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <path d="M 0 0 L 9 3.5 L 0 7 Z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="660" height="430" fill="#fafafa"/>
+  <text x="330" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">示例演算：scores = [1,2,3,5]，ages = [8,9,10,1]</text>
+  <path d="M 110 38 Q 330 46 550 38" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- Row 0: raw players -->
+  <text x="40" y="66" font-size="12" font-weight="bold" fill="#446688" filter="url(#r)">原始球员（下标 : 年龄, 得分）</text>
+  <g filter="url(#r)" font-size="11" text-anchor="middle" font-family="monospace">
+    <rect x="60" y="76" width="120" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="120" y="96" fill="#2b4a6e">0 : (8, 1)</text>
+    <rect x="190" y="76" width="120" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="250" y="96" fill="#2b4a6e">1 : (9, 2)</text>
+    <rect x="320" y="76" width="120" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="380" y="96" fill="#2b4a6e">2 : (10, 3)</text>
+    <rect x="450" y="76" width="120" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="510" y="96" fill="#b85450" font-weight="bold">3 : (1, 5)</text>
+  </g>
+  <path d="M 330 118 Q 330 128 330 138" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#wa)" filter="url(#r)"/>
+  <text x="344" y="132" font-size="10.5" fill="#666" filter="url(#r)">按 (age, score) 排序</text>
+
+  <!-- Row 1: sorted + dp -->
+  <text x="40" y="162" font-size="12" font-weight="bold" fill="#8a6a1a" filter="url(#r)">排序后序号 i →</text>
+  <g filter="url(#r)" font-size="11" text-anchor="middle" font-family="monospace">
+    <rect x="60" y="172" width="120" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="120" y="192" fill="#b85450" font-weight="bold">i=0 (1,5)</text>
+    <rect x="190" y="172" width="120" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="250" y="192" fill="#2e6e2e">i=1 (8,1)</text>
+    <rect x="320" y="172" width="120" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="380" y="192" fill="#2e6e2e">i=2 (9,2)</text>
+    <rect x="450" y="172" width="120" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="510" y="192" fill="#2e6e2e">i=3 (10,3)</text>
+  </g>
+
+  <!-- dp row -->
+  <text x="40" y="232" font-size="12" font-weight="bold" fill="#8a6a1a" filter="url(#r)">dp[i] →</text>
+  <g filter="url(#r)" font-size="13" text-anchor="middle" font-weight="bold" font-family="monospace">
+    <rect x="60" y="212" width="120" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <text x="120" y="233" fill="#b85450">5</text>
+    <rect x="190" y="212" width="120" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="250" y="233" fill="#2e6e2e">1</text>
+    <rect x="320" y="212" width="120" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="380" y="233" fill="#2e6e2e">3</text>
+    <rect x="450" y="212" width="120" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <text x="510" y="233" fill="#2e6e2e">6</text>
+  </g>
+
+  <!-- transitions -->
+  <g filter="url(#r)" stroke="#4a7a3a" stroke-width="2.2" fill="none">
+    <path d="M 250 246 Q 294 262 374 246" marker-end="url(#wa)"/>
+    <path d="M 380 246 Q 424 262 494 246" marker-end="url(#wa)"/>
+  </g>
+  <text x="312" y="272" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#r)">1 ≤ 2 可接：dp[2]=2+dp[1]=3</text>
+  <text x="442" y="290" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#r)">2 ≤ 3 可接：dp[3]=3+dp[2]=6</text>
+  <g filter="url(#r)" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none">
+    <path d="M 130 246 Q 220 300 240 300 M 262 300 L 268 300"/>
+  </g>
+  <path d="M 150 246 Q 200 300 250 300 Q 300 300 320 280" stroke="#b85450" stroke-width="1.6" fill="none" stroke-dasharray="5 4" filter="url(#r)"/>
+  <text x="236" y="316" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#r)">5 &gt; 1、5 &gt; 2、5 &gt; 3：天才谁也接不上，dp[0]=5 孤立</text>
+
+  <!-- verdict -->
+  <g filter="url(#r)">
+    <rect x="440" y="320" width="190" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="535" y="340" text-anchor="middle" font-size="11.5" fill="#8a6a1a" filter="url(#r)">ans = max(5,1,3,6)</text>
+  <text x="535" y="358" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#r)">= 6 ✓（三名老将）</text>
+
+  <!-- bottom note -->
+  <g filter="url(#r)">
+    <rect x="40" y="366" width="370" height="52" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="56" y="386" font-size="11" font-weight="bold" fill="#2b2b2b" filter="url(#r)">读表口诀</text>
+  <text x="56" y="404" font-size="10.5" fill="#444" filter="url(#r)">dp[i] = 自己的得分 + 「前面得分 ≤ 自己」的最大 dp；接不上就单选。</text>
+  <text x="56" y="416" font-size="10.5" fill="#444" filter="url(#r)">答案不是 dp[n−1]，而是所有 dp 的最大值。</text>
+</svg>

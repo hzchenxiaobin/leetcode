@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 430" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/>
+    </filter>
+  </defs>
+  <rect width="660" height="430" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#333" filter="url(#r)">核心观察：每个 d &gt; threshold 的倍数构成一团 —— 以 d 为枢纽合并，共享倍数把团缝合</text>
+  <path d="M 60 36 Q 330 44 600 36" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+  <text x="330" y="54" text-anchor="middle" font-size="11" fill="#666" filter="url(#r)">（以 n = 12, threshold = 2 为例）</text>
+
+  <text x="40" y="76" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#r)">① d = 3：倍数 {6, 9, 12} 连成团</text>
+  <text x="395" y="76" font-size="12.5" font-weight="bold" fill="#8a6a1a" filter="url(#r)">② d = 4：倍数 {8, 12} 连成团</text>
+
+  <!-- merged component blob -->
+  <g filter="url(#r)">
+    <rect x="52" y="110" width="548" height="164" rx="40" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="7 5"/>
+  </g>
+
+  <!-- thin gray dashed clique edges -->
+  <g filter="url(#r)" stroke="#8a8a8a" stroke-width="1.2" stroke-dasharray="5 4" fill="none">
+    <path d="M 102 147 L 198 147"/>
+    <path d="M 97 161 L 315 200"/>
+    <path d="M 226 160 L 316 200"/>
+    <path d="M 548 161 L 346 200"/>
+  </g>
+
+  <!-- bold green hub edges -->
+  <g filter="url(#r)" stroke="#4a7a3a" stroke-width="2.4" fill="none">
+    <path d="M 138 200 L 96 162"/>
+    <path d="M 163 200 L 205 162"/>
+    <path d="M 168 212 L 311 212"/>
+    <path d="M 427 212 L 349 212"/>
+    <path d="M 458 200 L 549 164"/>
+  </g>
+  <text x="240" y="204" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#r)">gcd = 3</text>
+  <text x="388" y="204" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#r)">gcd = 4</text>
+
+  <!-- nodes -->
+  <g filter="url(#r)">
+    <circle cx="85" cy="150" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="215" cy="148" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="150" cy="212" r="17" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <circle cx="330" cy="212" r="18" fill="#fce4ec" stroke="#b85450" stroke-width="2.5"/>
+    <circle cx="445" cy="212" r="17" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <circle cx="560" cy="150" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#r)" font-size="13" font-weight="bold" text-anchor="middle" fill="#333">
+    <text x="85" y="155">6</text>
+    <text x="215" y="153">9</text>
+    <text x="150" y="217">3</text>
+    <text x="330" y="217">12</text>
+    <text x="445" y="217">4</text>
+    <text x="560" y="155">8</text>
+  </g>
+  <g filter="url(#r)" font-size="10" fill="#8a6a1a" text-anchor="middle">
+    <text x="150" y="243">枢纽</text>
+    <text x="445" y="243">枢纽</text>
+  </g>
+  <path d="M 330 242 L 330 233" stroke="#b85450" stroke-width="1.2" filter="url(#r)"/>
+  <text x="330" y="256" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">共享倍数！</text>
+
+  <text x="330" y="296" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">红虚线圈内 = 同一连通块 {3, 4, 6, 8, 9, 12}，12 是缝合点</text>
+  <text x="330" y="316" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#r)">绿粗边 = 实际执行的 5 次 union；灰虚线 = 团内真实边，无需逐条合并</text>
+
+  <g filter="url(#r)">
+    <rect x="40" y="334" width="604" height="80" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="60" y="356" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#r)">把建图从「点对」换到「约数」</text>
+  <text x="60" y="376" font-size="11" fill="#444" filter="url(#r)">每个 d &gt; threshold 只做 ⌊n/d⌋ − 1 次 union(d, kd)，代替团内两两 C(⌊n/d⌋, 2) 条边。</text>
+  <text x="60" y="396" font-size="11" fill="#444" filter="url(#r)">合并总次数 ≈ n·ln(n/threshold)；threshold = 0 的最坏情形也不到 10⁵ 次（n = 10⁴）。</text>
+</svg>
