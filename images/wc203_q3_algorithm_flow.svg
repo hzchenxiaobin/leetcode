@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 475"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrD" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="475" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">每步 O(1)：读邻点 → 改计数 → 回写端点 → 查 cnt[m]</text>
+  <path d="M 160 36 Q 320 44 480 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 开始 -->
+  <rect x="200" y="50" width="240" height="30" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="69" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">第 i 步（i = 1..n）：p = arr[i]</text>
+
+  <path d="M 320 80 L 320 94" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arrD)" filter="url(#rough2)"/>
+
+  <!-- 读邻点 -->
+  <rect x="160" y="98" width="320" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="119" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">读 L = len[p−1]，R = len[p+1]（0 = 该侧无组）</text>
+
+  <path d="M 320 132 L 320 146" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arrD)" filter="url(#rough2)"/>
+
+  <!-- 改计数 -->
+  <rect x="130" y="150" width="380" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="171" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#rough2)">计数：L&gt;0 → cnt[L]−−；R&gt;0 → cnt[R]−−；cnt[L+R+1]++</text>
+
+  <path d="M 320 184 L 320 198" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arrD)" filter="url(#rough2)"/>
+
+  <!-- 回写端点 -->
+  <rect x="160" y="202" width="320" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="320" y="223" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#rough2)">回写端点：len[p−L] = len[p+R] = L+R+1</text>
+
+  <path d="M 320 236 L 320 250" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arrD)" filter="url(#rough2)"/>
+
+  <!-- 判定菱形 -->
+  <polygon points="320,254 425,296 320,338 215,296" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="301" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">cnt[m] &gt; 0 ?</text>
+
+  <!-- 是分支 -->
+  <path d="M 425 296 L 452 296" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="438" y="288" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="456" y="276" width="164" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="538" y="293" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">ans = i</text>
+  <text x="538" y="310" text-anchor="middle" font-size="10" fill="#2e6e2e" filter="url(#rough2)">记住最新的步骤</text>
+
+  <!-- 否分支 -->
+  <path d="M 320 338 L 320 356" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="332" y="352" font-size="12" font-weight="bold" fill="#d6a040" filter="url(#rough2)">否</text>
+
+  <!-- 汇合 -->
+  <path d="M 538 318 Q 566 356 506 378" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arrD)" filter="url(#rough2)"/>
+
+  <rect x="140" y="360" width="360" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="320" y="377" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">进入下一步 i+1</text>
+  <text x="320" y="394" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">n 步全部结束后返回 ans（可能为 −1）</text>
+
+  <!-- 底部注意事项 -->
+  <rect x="20" y="418" width="196" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="118" y="436" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">先读后写：L=1 时 p−L = p−1，</text>
+  <text x="118" y="452" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">回写会覆盖刚读过的位置</text>
+
+  <rect x="228" y="418" width="196" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="326" y="436" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">哨兵 len[0] = len[n+1] = 0：</text>
+  <text x="326" y="452" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">p = 1 或 n 时免越界判断</text>
+
+  <rect x="436" y="418" width="184" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="528" y="436" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">不能提前退出：cnt[m] 归零</text>
+  <text x="528" y="452" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">后仍可能再次变正</text>
+</svg>

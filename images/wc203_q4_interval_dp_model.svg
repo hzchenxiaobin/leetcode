@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 460"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arB" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 z" fill="#446688"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="460" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">状态设计：dp[l][r] = 当前行是 stoneValue[l..r] 时，之后还能拿到的最大分数</text>
+  <path d="M 90 36 Q 340 44 590 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 左列：状态定义与转移 -->
+  <g filter="url(#rough2)">
+    <rect x="22" y="56" width="296" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="170" y="78" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66" filter="url(#rough2)">dp[l][r]：行 = [l, r] 时的最大后续得分</text>
+  <text x="170" y="98" text-anchor="middle" font-size="11" fill="#2b4a66" filter="url(#rough2)">边界 dp[l][l] = 0（单块结束）｜答案 dp[0][n−1]</text>
+
+  <g filter="url(#rough2)">
+    <rect x="22" y="126" width="296" height="150" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="170" y="148" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">转移：枚举切分点 k（l ≤ k &lt; r）</text>
+  <text x="170" y="172" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">左和 = pre[k+1] − pre[l]</text>
+  <text x="170" y="190" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">右和 = pre[r+1] − pre[k+1]</text>
+  <text x="170" y="214" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">左 &lt; 右： 左和 + dp[l][k]</text>
+  <text x="170" y="232" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">左 &gt; 右： 右和 + dp[k+1][r]</text>
+  <text x="170" y="250" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">左 = 右： 左和 + max(两个子问题)</text>
+  <text x="170" y="269" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">dp[l][r] = 三种贡献在所有 k 上的 max</text>
+
+  <g filter="url(#rough2)">
+    <rect x="22" y="290" width="296" height="78" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="170" y="312" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">规模账本（n ≤ 500）</text>
+  <text x="170" y="332" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">状态 ≈ n²/2 ≈ 1.25×10⁵ 个</text>
+  <text x="170" y="350" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">每状态枚举 ≤ n−1 个切分点 → O(n³) ≈ 2×10⁷</text>
+  <text x="170" y="364" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">前缀和让每步求和 O(1)，C++ 稳过</text>
+
+  <!-- 右列：dp 表依赖 -->
+  <text x="490" y="66" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#333" filter="url(#rough2)">dp 表（l 行、r 列，只填上三角）</text>
+
+  <g font-size="10" fill="#888" text-anchor="middle" filter="url(#rough2)">
+    <text x="360" y="92">r=0</text>
+    <text x="412" y="92">r=1</text>
+    <text x="464" y="92">r=2</text>
+    <text x="516" y="92">r=3</text>
+    <text x="568" y="92">r=4</text>
+  </g>
+  <g font-size="10" fill="#888" text-anchor="end" filter="url(#rough2)">
+    <text x="344" y="116">l=0</text>
+    <text x="344" y="152">l=1</text>
+    <text x="344" y="188">l=2</text>
+    <text x="344" y="224">l=3</text>
+    <text x="344" y="260">l=4</text>
+  </g>
+
+  <!-- 对角线（长度 1，全 0） -->
+  <g filter="url(#rough2)">
+    <rect x="348" y="102" width="44" height="32" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2"/>
+    <rect x="400" y="138" width="44" height="32" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2"/>
+    <rect x="452" y="174" width="44" height="32" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2"/>
+    <rect x="504" y="210" width="44" height="32" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2"/>
+    <rect x="556" y="246" width="44" height="32" rx="4" fill="#f0f0f0" stroke="#bbb" stroke-width="1.2"/>
+  </g>
+  <g font-size="11" fill="#999" text-anchor="middle" filter="url(#rough2)">
+    <text x="370" y="122">0</text>
+    <text x="422" y="158">0</text>
+    <text x="474" y="194">0</text>
+    <text x="526" y="230">0</text>
+    <text x="578" y="266">0</text>
+  </g>
+
+  <!-- 其余上三角空格 -->
+  <g filter="url(#rough2)" stroke="#e2e2e2" stroke-width="1" fill="#ffffff">
+    <rect x="400" y="102" width="44" height="32" rx="4"/>
+    <rect x="452" y="102" width="44" height="32" rx="4"/>
+    <rect x="504" y="102" width="44" height="32" rx="4"/>
+    <rect x="556" y="102" width="44" height="32" rx="4"/>
+    <rect x="452" y="138" width="44" height="32" rx="4"/>
+    <rect x="504" y="138" width="44" height="32" rx="4"/>
+    <rect x="556" y="138" width="44" height="32" rx="4"/>
+    <rect x="504" y="174" width="44" height="32" rx="4"/>
+    <rect x="556" y="174" width="44" height="32" rx="4"/>
+    <rect x="556" y="210" width="44" height="32" rx="4"/>
+  </g>
+
+  <!-- 高亮 dp[0][3] 与依赖 -->
+  <g filter="url(#rough2)">
+    <rect x="504" y="102" width="44" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="400" y="102" width="44" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <rect x="504" y="174" width="44" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <g font-size="12" font-weight="bold" text-anchor="middle" filter="url(#rough2)">
+    <text x="526" y="122" fill="#b07818">dp[0][3]</text>
+    <text x="422" y="122" fill="#2b4a66" font-size="10.5">dp[0][1]</text>
+    <text x="526" y="194" fill="#2e6e2e" font-size="10.5">dp[2][3]</text>
+  </g>
+
+  <!-- 依赖箭头 -->
+  <path d="M 502 118 L 448 118" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arB)" filter="url(#rough2)"/>
+  <path d="M 526 136 L 526 170" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arG)" filter="url(#rough2)"/>
+  <text x="475" y="110" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">同行向左</text>
+  <text x="576" y="158" text-anchor="start" font-size="10" fill="#4a7a3a" filter="url(#rough2)">同列向下</text>
+
+  <!-- 填表顺序 -->
+  <path d="M 400 300 Q 470 320 520 350 Q 560 375 580 290" stroke="#d6a040" stroke-width="1.8" fill="none" stroke-dasharray="7,4" marker-end="url(#arO)" filter="url(#rough2)"/>
+  <text x="490" y="316" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">按区间长度 len = 2 → n 逐层填</text>
+  <text x="490" y="334" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">（沿对角线一层层往右上推进）</text>
+  <text x="490" y="358" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">[l,k] 与 [k+1,r] 长度都严格小于 r−l+1，</text>
+  <text x="490" y="372" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">上一层一定已就绪 —— 无需递归与记忆化</text>
+
+  <!-- 底部结论 -->
+  <g filter="url(#rough2)">
+    <rect x="22" y="384" width="636" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="406" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66" filter="url(#rough2)">得分上界：每轮保留的都是和小的一边，行和每轮至少减半</text>
+  <text x="340" y="426" text-anchor="middle" font-size="11" fill="#2b4a66" filter="url(#rough2)">总得分 &lt; 初始总和 ≤ 500×10⁶ = 5×10⁸，int 存得下，但前缀最大值等中间量建议 long long</text>
+</svg>
