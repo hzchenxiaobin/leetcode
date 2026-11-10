@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="640" height="360" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">类设计：一张哈希表存树，一个集合记生死</text>
+  <path d="M 150 40 Q 320 48 490 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Left column: data structures ===== -->
+  <text x="170" y="62" text-anchor="middle" font-size="11.5" fill="#888" font-weight="bold" filter="url(#sk)">成员变量</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="72" width="260" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="58" y="93" font-size="12.5" fill="#33517a" font-weight="bold" filter="url(#sk)">king : string</text>
+  <text x="58" y="111" font-size="10" fill="#555" filter="url(#sk)">树的根，永远是第一顺位继承人</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="136" width="260" height="88" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="58" y="157" font-size="11.5" fill="#2f5d24" font-weight="bold" filter="url(#sk)">children : 名字 → 子女列表</text>
+  <text x="58" y="178" font-size="10.5" fill="#333" filter="url(#sk)">king → [andy, bob, catherine]</text>
+  <text x="58" y="196" font-size="10" fill="#555" filter="url(#sk)">birth 尾插 → 列表序 = 长幼序</text>
+  <text x="58" y="212" font-size="10" fill="#888" filter="url(#sk)">（兄姐永远排在弟妹前面）</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="236" width="260" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="58" y="258" font-size="12.5" fill="#9a7524" font-weight="bold" filter="url(#sk)">dead : 名字集合</text>
+  <text x="58" y="276" font-size="10" fill="#555" filter="url(#sk)">标记死亡，O(1) 查询是否已死</text>
+  <text x="58" y="292" font-size="10" fill="#555" filter="url(#sk)">重复 death 幂等，只改这一个集合</text>
+
+  <!-- ===== Right column: operations ===== -->
+  <text x="472" y="62" text-anchor="middle" font-size="11.5" fill="#888" font-weight="bold" filter="url(#sk)">三个接口</text>
+
+  <g filter="url(#sk)">
+    <rect x="330" y="72" width="285" height="52" rx="8" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="345" y="93" font-size="12" fill="#2f5d24" font-weight="bold" filter="url(#sk)">birth(parent, child)　O(1)</text>
+  <text x="345" y="111" font-size="10" fill="#555" filter="url(#sk)">children[parent].push_back(child) —— 尾插</text>
+
+  <g filter="url(#sk)">
+    <rect x="330" y="136" width="285" height="52" rx="8" fill="#ffffff" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="345" y="157" font-size="12" fill="#9a7524" font-weight="bold" filter="url(#sk)">death(name)　O(1)</text>
+  <text x="345" y="175" font-size="10" fill="#555" filter="url(#sk)">dead.insert(name) —— 只标记，不删节点</text>
+
+  <g filter="url(#sk)">
+    <rect x="330" y="200" width="285" height="102" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="345" y="222" font-size="12" fill="#33517a" font-weight="bold" filter="url(#sk)">getInheritanceOrder()　O(n)</text>
+  <text x="345" y="241" font-size="10" fill="#555" filter="url(#sk)">从 king 出发做前序 DFS</text>
+  <text x="345" y="258" font-size="10" fill="#555" filter="url(#sk)">节点在 dead 中 → 不输出，但继续深入子树</text>
+  <text x="345" y="275" font-size="10" fill="#888" filter="url(#sk)">（后代的顺位不受影响）</text>
+  <text x="345" y="293" font-size="10" fill="#555" filter="url(#sk)">n = 累计出生人数</text>
+
+  <!-- usage arrows -->
+  <path d="M 328 94 Q 304 104 302 152" stroke="#4a7a3a" stroke-width="1.4" fill="none" stroke-dasharray="4,3" marker-end="url(#ag)" filter="url(#sk)"/>
+  <path d="M 328 160 Q 304 190 302 250" stroke="#d6a040" stroke-width="1.4" fill="none" stroke-dasharray="4,3" marker-end="url(#ao)" filter="url(#sk)"/>
+
+  <!-- ===== Bottom note ===== -->
+  <g filter="url(#sk)">
+    <rect x="40" y="318" width="575" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="327" y="340" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#sk)">birth / death ≤ 10⁵ 次且均 O(1)；查询 ≤ 10 次且每次 O(n) —— 最坏约 2×10⁶ 步，稳过</text>
+</svg>
