@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="470" fill="#fafafa"/>
+
+  <text x="450" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：外层扫 i，指针 j 拉齐后推进，R_i = j − 1</text>
+
+  <!-- ===== 左侧主流程 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="52" width="420" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="74" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">① 初始化：i = 0，j = 0，ans = 0</text>
+    <text x="250" y="94" text-anchor="middle" font-size="10.5" fill="#888">j 的语义：上一行失守后的第一个位置</text>
+
+    <path d="M250,106 L250,122" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+
+    <rect x="40" y="122" width="420" height="66" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="144" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">② 拉齐：j = max(j, i)</text>
+    <text x="250" y="164" text-anchor="middle" font-size="11" fill="#333">保证 i ≤ j；单向修正，指针不回退</text>
+    <text x="250" y="182" text-anchor="middle" font-size="10.5" fill="#888">跳过的位置 j &lt; i，对当前与后续行都非法</text>
+
+    <path d="M250,188 L250,204" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+
+    <rect x="40" y="204" width="420" height="70" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="226" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">③ 推进：while j &lt; m 且 nums2[j] ≥ nums1[i]</text>
+    <text x="250" y="246" text-anchor="middle" font-size="11" fill="#333">满足就 j++，停在首个值条件失守点（或 m）</text>
+    <text x="250" y="264" text-anchor="middle" font-size="11" fill="#333">故 R_i = j − 1，且 j 全程只前进</text>
+
+    <path d="M250,274 L250,290" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+
+    <rect x="40" y="290" width="420" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="250" y="312" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040">④ 更新：若 j − 1 ≥ i</text>
+    <text x="250" y="332" text-anchor="middle" font-size="11" fill="#333">ans = max(ans, j − 1 − i)</text>
+    <text x="250" y="350" text-anchor="middle" font-size="10.5" fill="#888">R_i ≥ i ⇔ 本行有合法对，行最优 = R_i − i</text>
+
+    <path d="M250,356 L250,372" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+
+    <rect x="40" y="372" width="420" height="62" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="250" y="394" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a">⑤ i++，回到 ②</text>
+    <text x="250" y="414" text-anchor="middle" font-size="11" fill="#4a7a3a">i = n 时结束，返回 ans（含「无有效对 = 0」）</text>
+
+    <!-- 回边 -->
+    <path d="M 40 403 L 24 403 L 24 155 L 40 155" fill="none" stroke="#446688" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrb)"/>
+  </g>
+
+  <!-- ===== 右上：内层判定 ===== -->
+  <g filter="url(#rough2)">
+    <text x="665" y="58" text-anchor="middle" font-size="11.5" fill="#666">③ 的内层判定与退出</text>
+
+    <polygon points="515,150 630,105 745,150 630,195" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="630" y="142" text-anchor="middle" font-size="11" fill="#7a5a20">j &lt; m 且</text>
+    <text x="630" y="162" text-anchor="middle" font-size="11" fill="#7a5a20">nums2[j] ≥ nums1[i] ?</text>
+
+    <path d="M745,150 L790,150" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrg)"/>
+    <text x="768" y="142" text-anchor="middle" font-size="10.5" fill="#4a7a3a">是</text>
+    <rect x="794" y="128" width="96" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="842" y="147" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a">j++</text>
+    <text x="842" y="163" text-anchor="middle" font-size="9.5" fill="#888">越过满足者</text>
+    <path d="M842,128 L842,86 L630,86 L630,101" fill="none" stroke="#4a7a3a" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrg)"/>
+
+    <path d="M630,195 L630,213" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrb)"/>
+    <text x="642" y="209" font-size="10.5" fill="#b85450">否</text>
+    <rect x="540" y="217" width="180" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="630" y="237" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">退出循环</text>
+    <text x="630" y="254" text-anchor="middle" font-size="10.5" fill="#888">R_i = j − 1，交给 ④ 判定</text>
+  </g>
+
+  <!-- ===== 右下：演算面板 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="490" y="300" width="390" height="150" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+    <text x="685" y="324" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5a20">示例 1 的 j 轨迹（nums2 = [100,20,10,10,5]）</text>
+    <text x="685" y="348" text-anchor="middle" font-size="11" fill="#333">i=0: 0→1 停（20 &lt; 55）；i=1: 原地（20 &lt; 30）</text>
+    <text x="685" y="372" text-anchor="middle" font-size="11" fill="#333">i=2: 拉齐到 2，再 3→4→5 = m，R₂ = 4</text>
+    <text x="685" y="396" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">j 轨迹：0→1→2→3→4→5，全程只前进</text>
+    <text x="685" y="424" text-anchor="middle" font-size="10" fill="#888">拉齐 ≤ n 步 + 推进 ≤ m 步 ⇒ 总步数 ≤ n + m，均摊 O(1)</text>
+  </g>
+</svg>
