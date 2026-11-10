@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="470" viewBox="0 0 640 470" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="470" fill="#fafafa"/>
+  <text x="320" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">3 车道与两种移动：直行 0 代价，侧跳 1 次、可跨道越障</text>
+  <path d="M 130 38 Q 320 46 510 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="320" y="58" text-anchor="middle" font-size="11.5" fill="#666">示例 1：obstacles = [0,1,2,3,0]，最优路径共 2 次侧跳</text>
+
+  <!-- 车道标签 -->
+  <text x="52" y="114" text-anchor="end" font-size="11.5" fill="#446688">车道 1</text>
+  <text x="52" y="174" text-anchor="end" font-size="11.5" fill="#446688">车道 2</text>
+  <text x="52" y="234" text-anchor="end" font-size="11.5" fill="#446688">车道 3</text>
+  <text x="52" y="158" text-anchor="end" font-size="10" fill="#8a6415">★ 起点</text>
+
+  <!-- 车道线 -->
+  <g filter="url(#sk)">
+    <path d="M 60 110 Q 320 106 580 110" stroke="#446688" stroke-width="1.6" fill="none"/>
+    <path d="M 60 170 Q 320 166 580 170" stroke="#446688" stroke-width="1.6" fill="none"/>
+    <path d="M 60 230 Q 320 226 580 230" stroke="#446688" stroke-width="1.6" fill="none"/>
+  </g>
+
+  <!-- 点的竖虚线与编号 -->
+  <g filter="url(#sk)">
+    <path d="M 90 96 L 90 244" stroke="#bbb" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+    <path d="M 190 96 L 190 244" stroke="#bbb" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+    <path d="M 290 96 L 290 244" stroke="#bbb" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+    <path d="M 390 96 L 390 244" stroke="#bbb" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+    <path d="M 490 96 L 490 244" stroke="#bbb" stroke-width="1" stroke-dasharray="4 4" fill="none"/>
+  </g>
+  <text x="90" y="90" text-anchor="middle" font-size="11" fill="#666">点 0</text>
+  <text x="190" y="90" text-anchor="middle" font-size="11" fill="#666">点 1</text>
+  <text x="290" y="90" text-anchor="middle" font-size="11" fill="#666">点 2</text>
+  <text x="390" y="90" text-anchor="middle" font-size="11" fill="#666">点 3</text>
+  <text x="490" y="90" text-anchor="middle" font-size="11" fill="#666">点 4</text>
+
+  <!-- 障碍 -->
+  <g filter="url(#sk)">
+    <rect x="181" y="101" width="18" height="18" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <path d="M 184 104 L 196 116 M 196 104 L 184 116" stroke="#b85450" stroke-width="1.5" fill="none"/>
+    <rect x="281" y="161" width="18" height="18" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <path d="M 284 164 L 296 176 M 296 164 L 284 176" stroke="#b85450" stroke-width="1.5" fill="none"/>
+    <rect x="381" y="221" width="18" height="18" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <path d="M 384 224 L 396 236 M 396 224 L 384 236" stroke="#b85450" stroke-width="1.5" fill="none"/>
+  </g>
+
+  <!-- 青蛙路径：起点 -->
+  <g filter="url(#sk)">
+    <circle cx="90" cy="170" r="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <!-- 直行 点0→点1 车道2 -->
+  <path d="M 100 170 L 178 170" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#sk)"/>
+  <!-- 侧跳① 点1 车道2→车道3 -->
+  <path d="M 190 161 C 186 145 186 133 190 122" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)" filter="url(#sk)"/>
+  <text x="206" y="140" text-anchor="start" font-size="10.5" font-weight="bold" fill="#8f3830">侧跳① +1</text>
+  <!-- 直行 点1→点2 车道3 -->
+  <path d="M 200 110 L 278 110" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#sk)"/>
+  <!-- 越障侧跳② 点2 车道3→车道1（越过车道2障碍） -->
+  <path d="M 290 102 C 314 140 314 190 290 220" stroke="#b85450" stroke-width="2.4" fill="none" stroke-dasharray="6 4" marker-end="url(#arrR)" filter="url(#sk)"/>
+  <text x="330" y="158" text-anchor="start" font-size="10.5" font-weight="bold" fill="#8f3830">越障侧跳② +1</text>
+  <text x="330" y="172" text-anchor="start" font-size="9.5" fill="#8f3830">（1→3 不相邻，</text>
+  <text x="330" y="185" text-anchor="start" font-size="9.5" fill="#8f3830">跨过被封的车道 2）</text>
+  <!-- 直行 点2→点4 车道1 -->
+  <path d="M 300 230 L 478 230" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#sk)"/>
+
+  <!-- 终点旗 -->
+  <g filter="url(#sk)">
+    <path d="M 490 238 L 490 258" stroke="#446688" stroke-width="2" fill="none"/>
+    <path d="M 490 240 L 512 247 L 490 254 z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="505" y="270" text-anchor="middle" font-size="10" fill="#8a6415">终点：任一车道</text>
+
+  <!-- 图例 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="286" width="500" height="34" rx="8" fill="#fff" stroke="#ddd" stroke-width="1.2"/>
+  </g>
+  <path d="M 86 303 L 112 303" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#sk)"/>
+  <text x="118" y="307" text-anchor="start" font-size="10.5" fill="#333">直行 0 次</text>
+  <path d="M 190 303 L 216 303" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)" filter="url(#sk)"/>
+  <text x="222" y="307" text-anchor="start" font-size="10.5" fill="#333">侧跳 1 次</text>
+  <rect x="300" y="295" width="14" height="14" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="320" y="307" text-anchor="start" font-size="10.5" fill="#333">障碍</text>
+  <circle cx="392" cy="302" r="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="404" y="307" text-anchor="start" font-size="10.5" fill="#333">青蛙</text>
+
+  <!-- 底部结论框 -->
+  <g filter="url(#sk)">
+    <rect x="60" y="336" width="520" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="358" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6415">侧跳不要求相邻：1↔3 也只算 1 次；且能越过中间道的障碍</text>
+  <text x="320" y="380" text-anchor="middle" font-size="12" fill="#8a6415">⇒ 同一点处任意两条空闲道互达、代价 1（完全图）</text>
+
+  <g filter="url(#sk)">
+    <rect x="60" y="404" width="520" height="50" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="426" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33517a">⇒ 从最便宜的空闲道 mn 出发，所有空闲道都能降到 mn+1</text>
+  <text x="320" y="446" text-anchor="middle" font-size="11.5" fill="#33517a">这就是滚动 DP 松弛的全部：dp[j] ← min(dp[j], mn+1)</text>
+</svg>
