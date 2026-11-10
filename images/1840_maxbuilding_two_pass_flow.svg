@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="612" viewBox="0 0 940 612" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="940" height="612" fill="#fdfcf7"/>
+
+  <text x="470" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：两趟传播收紧限制，逐段取峰</text>
+  <text x="470" y="52" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">加入 (1,0) 后，整个过程只与 m 个限制点有关，与 n 的 10⁹ 规模无关（Δid＝id 差）</text>
+
+  <!-- ===== Row 1 ===== -->
+  <g filter="url(#sk)">
+    <rect x="40" y="72" width="262" height="70" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="340" y="72" width="280" height="70" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="660" y="72" width="240" height="70" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="171" y="97" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">① 加入 (1,0) 并按 id 排序</text>
+  <text x="171" y="121" text-anchor="middle" font-size="10" fill="#666" filter="url(#sk)">统一首建筑约束 ＋ 传播起点</text>
+  <text x="480" y="97" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">② 正向传播（左 → 右）</text>
+  <text x="480" y="123" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b03a3a" font-family="monospace" filter="url(#sk)">h[i] ← min(h[i], h[i-1] + Δid)</text>
+  <text x="780" y="97" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">③ 反向传播（右 → 左）</text>
+  <text x="780" y="123" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b03a3a" font-family="monospace" filter="url(#sk)">h[i] ← min(h[i], h[i+1] + Δid)</text>
+  <path d="M 302 107 H 336" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 620 107 H 656" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 780 142 V 172" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== Row 2 (snake, right to left) ===== -->
+  <g filter="url(#sk)">
+    <rect x="660" y="178" width="240" height="70" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="340" y="178" width="280" height="70" rx="10" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.5"/>
+    <rect x="40" y="178" width="262" height="70" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="780" y="203" text-anchor="middle" font-size="12" font-weight="bold" fill="#2a4a6a" filter="url(#sk)">④ 相邻段取帐篷峰</text>
+  <text x="780" y="229" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b03a3a" font-family="monospace" filter="url(#sk)">⌊(h[i]+h[i+1]+Δid) / 2⌋</text>
+  <text x="480" y="203" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#sk)">⑤ 尾段爬升到 n</text>
+  <text x="480" y="229" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b03a3a" font-family="monospace" filter="url(#sk)">h_last + (n − id_last)</text>
+  <text x="171" y="204" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">⑥ 答案 ＝ max（④, ⑤）</text>
+  <text x="171" y="228" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#sk)">段峰 ≥ 两端点，限制点无需单列</text>
+  <path d="M 658 213 H 624" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <path d="M 338 213 H 304" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- ===== meaning boxes ===== -->
+  <g filter="url(#sk)">
+    <rect x="40" y="278" width="424" height="114" rx="10" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.4"/>
+    <rect x="484" y="278" width="416" height="114" rx="10" fill="#fff8e1" stroke="#c98a2b" stroke-width="1.4"/>
+  </g>
+  <text x="60" y="302" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#sk)">正向传播在做什么？</text>
+  <text x="60" y="326" font-size="10.5" fill="#444" filter="url(#sk)">左侧限制（含 (1,0)）的“右腿”接力下压：</text>
+  <text x="60" y="347" font-size="10.5" font-weight="bold" fill="#7a5415" font-family="monospace" filter="url(#sk)">传播后 h[i] ＝ min( c[j] + id[i] − id[j] )  (j ≤ i)</text>
+  <text x="60" y="370" font-size="10" fill="#666" filter="url(#sk)">min 能“接力”：前一点的最小值 ＋ 固定步长，</text>
+  <text x="60" y="386" font-size="10" fill="#666" filter="url(#sk)">就是该限制右腿在下一点的取值</text>
+  <text x="504" y="302" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#sk)">反向传播在做什么？</text>
+  <text x="504" y="326" font-size="10.5" fill="#444" filter="url(#sk)">补上右侧限制的“左腿”——正向完全看不到它们</text>
+  <text x="504" y="347" font-size="10.5" font-weight="bold" fill="#7a5415" font-family="monospace" filter="url(#sk)">两趟之后 h[i] ＝ H(id[i])</text>
+  <text x="504" y="370" font-size="10" fill="#666" filter="url(#sk)">即下包络在限制点处的取值，</text>
+  <text x="504" y="386" font-size="10" fill="#666" filter="url(#sk)">此时每个 h[i] 都是最优天际线在该点的高度</text>
+
+  <!-- ===== warning box ===== -->
+  <g filter="url(#sk)">
+    <rect x="40" y="418" width="860" height="174" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="60" y="444" font-size="12.5" font-weight="bold" fill="#a04038" filter="url(#sk)">⚠ 只做正向传播会 WA！反例：n＝6，restrictions＝[[4,3],[6,0]]</text>
+  <text x="60" y="468" font-size="10.5" fill="#444" filter="url(#sk)">正向传播后 (4,3) 原样保留（左侧没有更紧的约束），</text>
+  <text x="60" y="486" font-size="10.5" fill="#444" filter="url(#sk)">段 (1,0)~(4,3) 的峰被误算为 ⌊(0+3+3)/2⌋＝3 ✗</text>
+  <text x="60" y="504" font-size="10.5" fill="#444" filter="url(#sk)">反向传播把 (4,3) 收紧为 (4,2)，正确的峰为 ⌊(0+2+3)/2⌋＝2 ✓</text>
+  <text x="60" y="526" font-size="10" fill="#888" filter="url(#sk)">只用正向会返回 3，真实答案只有 2。</text>
+
+  <!-- mini sketch inside warning box -->
+  <path d="M 470 560 H 880" stroke="#3a3a3a" stroke-width="1.3" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <g stroke="#e9d5d5" stroke-width="1">
+    <line x1="470" y1="536" x2="876" y2="536"/>
+    <line x1="470" y1="512" x2="876" y2="512"/>
+    <line x1="470" y1="488" x2="876" y2="488"/>
+  </g>
+  <text x="446" y="564" font-size="9" fill="#999" text-anchor="end">0</text>
+  <text x="446" y="540" font-size="9" fill="#999" text-anchor="end">1</text>
+  <text x="446" y="516" font-size="9" fill="#999" text-anchor="end">2</text>
+  <text x="446" y="492" font-size="9" fill="#999" text-anchor="end">3</text>
+  <!-- wrong: forward only, rises to (4,3) -->
+  <path d="M 492 560 L 708 488" stroke="#999" stroke-width="1.6" stroke-dasharray="6 4" fill="none" filter="url(#sk)"/>
+  <text x="718" y="486" font-size="12" fill="#888" filter="url(#sk)">✗ 以为能到 3</text>
+  <!-- true: two-pass, (4,2) -->
+  <path d="M 492 560 L 708 512 L 852 560" stroke="#4a7a3a" stroke-width="2.2" fill="none" filter="url(#sk)"/>
+  <text x="766" y="500" font-size="10.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">✓ 峰＝2</text>
+  <!-- (6,0) left leg suppression -->
+  <path d="M 852 554 Q 796 505 716 517" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="620" y="470" font-size="9.5" fill="#b03a3a" filter="url(#sk)">(6,0) 的左腿：min(3, 0+2)＝2</text>
+  <!-- dots -->
+  <g filter="url(#sk)">
+    <circle cx="492" cy="560" r="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="708" cy="488" r="3.5" fill="#fff" stroke="#999" stroke-width="1.4"/>
+    <circle cx="708" cy="512" r="4.5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <circle cx="852" cy="560" r="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="492" y="578" text-anchor="middle" font-size="9.5" fill="#2a4a6a" filter="url(#sk)">(1,0)</text>
+  <text x="708" y="578" text-anchor="middle" font-size="9.5" fill="#444" filter="url(#sk)">(4,3)→(4,2)</text>
+  <text x="852" y="578" text-anchor="middle" font-size="9.5" fill="#a04038" filter="url(#sk)">(6,0)</text>
+</svg>
