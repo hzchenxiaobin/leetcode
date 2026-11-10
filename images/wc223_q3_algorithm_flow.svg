@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 550"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="550" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：并查集建分量 → 分桶计数 → 消费式匹配</text>
+  <path d="M 100 38 Q 280 46 460 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- start -->
+  <g filter="url(#rough2)">
+    <rect x="165" y="50" width="230" height="34" rx="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="72" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">读入 source / target / allowedSwaps</text>
+  <path d="M 280 84 L 280 100" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- init dsu -->
+  <g filter="url(#rough2)">
+    <rect x="165" y="102" width="230" height="34" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="124" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">并查集初始化 parent[i] = i</text>
+  <path d="M 280 136 L 280 152" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- union edges -->
+  <g filter="url(#rough2)">
+    <rect x="155" y="154" width="250" height="34" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="176" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">对每条边 [a,b] 执行 union(a,b)</text>
+  <path d="M 407 171 L 428 171" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" fill="none" filter="url(#rough2)"/>
+  <text x="432" y="168" font-size="10" fill="#666" filter="url(#rough2)">同分量的下标</text>
+  <text x="432" y="182" font-size="10" fill="#666" filter="url(#rough2)">共享同一个根</text>
+  <path d="M 280 188 L 280 204" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- first pass: bucket counting -->
+  <g filter="url(#rough2)">
+    <rect x="140" y="206" width="280" height="34" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="228" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">第一趟：桶[find(i)][source[i]] 计数 +1</text>
+  <path d="M 138 223 L 118 223" stroke="#999" stroke-width="1.2" stroke-dasharray="4 3" fill="none" filter="url(#rough2)"/>
+  <text x="114" y="220" text-anchor="end" font-size="10" fill="#666" filter="url(#rough2)">按根分桶</text>
+  <text x="114" y="234" text-anchor="end" font-size="10" fill="#666" filter="url(#rough2)">统计 src 频率</text>
+  <path d="M 280 240 L 280 256" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="280,256 445,308 280,360 115,308" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="302" text-anchor="middle" font-size="11.5" fill="#a07820" filter="url(#rough2)">第二趟遍历 i：</text>
+  <text x="280" y="322" text-anchor="middle" font-size="11.5" fill="#a07820" filter="url(#rough2)">桶[find(i)] 中 target[i] 计数 &gt; 0 ?</text>
+
+  <!-- yes branch -->
+  <path d="M 447 308 L 457 308" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="450" y="299" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="460" y="290" width="96" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="508" y="305" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">match++</text>
+  <text x="508" y="319" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">计数 −1（消费）</text>
+
+  <!-- no branch -->
+  <path d="M 113 308 L 103 308" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="106" y="299" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="4" y="290" width="96" height="36" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="52" y="305" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">跳过</text>
+  <text x="52" y="319" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">（该值已用尽）</text>
+
+  <!-- to final -->
+  <path d="M 280 360 L 280 422" stroke="#888" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="288" y="386" font-size="10" fill="#888" filter="url(#rough2)">处理完 i 后继续下一个，</text>
+  <text x="288" y="400" font-size="10" fill="#888" filter="url(#rough2)">两趟遍历全部结束后</text>
+
+  <!-- final -->
+  <g filter="url(#rough2)">
+    <rect x="170" y="424" width="220" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="280" y="447" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">返回 n − match</text>
+  <text x="280" y="462" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">失配数 = 总数 − 匹配数</text>
+
+  <!-- note box -->
+  <g filter="url(#rough2)">
+    <rect x="55" y="490" width="450" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="280" y="510" text-anchor="middle" font-size="11" fill="#7a2828" filter="url(#rough2)">「消费」总额 = Σv min(src_cnt[v], tgt_cnt[v])，无需显式取 min</text>
+  <text x="280" y="529" text-anchor="middle" font-size="11" fill="#a07820" filter="url(#rough2)">时间 O((n+m)·α(n)) ≈ 线性，空间 O(n)</text>
+</svg>
