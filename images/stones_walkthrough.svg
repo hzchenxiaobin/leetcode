@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="336" viewBox="0 0 680 336" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#666"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="680" height="336" fill="#fdfcf7"/>
+  <text x="340" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">示例演算与贪心陷阱</text>
+
+  <!-- 例 1：(2,4,6) 状态链 -->
+  <text x="34" y="56" font-size="12.5" font-weight="bold" fill="#2b2b2b">例 1：(2, 4, 6)，a+b = 6 = c（边界情形）→ 答案 6</text>
+
+  <g filter="url(#sk)">
+    <rect x="40" y="70" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="61" y="70" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="82" y="70" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <rect x="125" y="70" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="146" y="70" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="167" y="70" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <rect x="210" y="70" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="231" y="70" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="252" y="70" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <rect x="295" y="70" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="316" y="70" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="337" y="70" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <rect x="380" y="70" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="401" y="70" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="422" y="70" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <rect x="465" y="70" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="486" y="70" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="507" y="70" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <rect x="550" y="70" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="571" y="70" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="592" y="70" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <path d="M 103 83 L 119 83" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 188 83 L 204 83" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 273 83 L 289 83" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 358 83 L 374 83" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 443 83 L 459 83" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 528 83 L 544 83" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="49.5" y="87" text-anchor="middle" font-size="11" fill="#333">2</text>
+  <text x="70.5" y="87" text-anchor="middle" font-size="11" fill="#333">4</text>
+  <text x="91.5" y="87" text-anchor="middle" font-size="11" fill="#333">6</text>
+  <text x="134.5" y="87" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="155.5" y="87" text-anchor="middle" font-size="11" fill="#333">4</text>
+  <text x="176.5" y="87" text-anchor="middle" font-size="11" fill="#333">5</text>
+  <text x="219.5" y="87" text-anchor="middle" font-size="11" fill="#333">0</text>
+  <text x="240.5" y="87" text-anchor="middle" font-size="11" fill="#333">4</text>
+  <text x="261.5" y="87" text-anchor="middle" font-size="11" fill="#333">4</text>
+  <text x="304.5" y="87" text-anchor="middle" font-size="11" fill="#333">0</text>
+  <text x="325.5" y="87" text-anchor="middle" font-size="11" fill="#333">3</text>
+  <text x="346.5" y="87" text-anchor="middle" font-size="11" fill="#333">3</text>
+  <text x="389.5" y="87" text-anchor="middle" font-size="11" fill="#333">0</text>
+  <text x="410.5" y="87" text-anchor="middle" font-size="11" fill="#333">2</text>
+  <text x="431.5" y="87" text-anchor="middle" font-size="11" fill="#333">2</text>
+  <text x="474.5" y="87" text-anchor="middle" font-size="11" fill="#333">0</text>
+  <text x="495.5" y="87" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="516.5" y="87" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="559.5" y="87" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">0</text>
+  <text x="580.5" y="87" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">0</text>
+  <text x="601.5" y="87" text-anchor="middle" font-size="11" fill="#2e6e2e" font-weight="bold">0</text>
+  <text x="111" y="108" text-anchor="middle" font-size="9" fill="#b03a3a">a,c</text>
+  <text x="196" y="108" text-anchor="middle" font-size="9" fill="#b03a3a">a,c</text>
+  <text x="281" y="108" text-anchor="middle" font-size="9" fill="#b03a3a">b,c</text>
+  <text x="366" y="108" text-anchor="middle" font-size="9" fill="#b03a3a">b,c</text>
+  <text x="451" y="108" text-anchor="middle" font-size="9" fill="#b03a3a">b,c</text>
+  <text x="536" y="108" text-anchor="middle" font-size="9" fill="#b03a3a">b,c</text>
+  <text x="636" y="87" font-size="12" font-weight="bold" fill="#2e6e2e">✓</text>
+  <text x="340" y="130" text-anchor="middle" font-size="10.5" fill="#555">前 2 回合取 (a,c)、后 4 回合取 (b,c)：两个小堆共 6 颗石子全部与 c 配对消耗</text>
+
+  <path d="M 40 144 Q 340 152 640 144" stroke="#ccc" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 例 2：贪心陷阱 (1,1,2) -->
+  <text x="34" y="172" font-size="12.5" font-weight="bold" fill="#2b2b2b">贪心陷阱：例 (1, 1, 2)，若每回合取「最小的两堆」</text>
+
+  <!-- 错误路线 -->
+  <g filter="url(#sk)">
+    <rect x="34" y="188" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="55" y="188" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="76" y="188" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <path d="M 99 201 L 132 201" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arR)"/>
+    <rect x="140" y="188" width="19" height="26" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1.3"/>
+    <rect x="161" y="188" width="19" height="26" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1.3"/>
+    <rect x="182" y="188" width="19" height="26" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="43.5" y="205" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="64.5" y="205" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="85.5" y="205" text-anchor="middle" font-size="11" fill="#333">2</text>
+  <text x="149.5" y="205" text-anchor="middle" font-size="11" fill="#999">0</text>
+  <text x="170.5" y="205" text-anchor="middle" font-size="11" fill="#999">0</text>
+  <text x="191.5" y="205" text-anchor="middle" font-size="11" fill="#b03a3a" font-weight="bold">2</text>
+  <text x="116" y="182" text-anchor="middle" font-size="9" fill="#b03a3a">取 a,b</text>
+  <text x="216" y="208" font-size="15" font-weight="bold" fill="#b03a3a">✗</text>
+  <text x="34" y="238" font-size="10.5" fill="#b03a3a">只得 1 分：a、b 同时取空，游戏被迫停止</text>
+
+  <!-- 正确路线 -->
+  <g filter="url(#sk)">
+    <rect x="360" y="188" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="381" y="188" width="19" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="402" y="188" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <path d="M 425 201 L 458 201" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <rect x="466" y="188" width="19" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="487" y="188" width="19" height="26" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1.3"/>
+    <rect x="508" y="188" width="19" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <path d="M 531 201 L 564 201" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <rect x="572" y="188" width="19" height="26" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1.3"/>
+    <rect x="593" y="188" width="19" height="26" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1.3"/>
+    <rect x="614" y="188" width="19" height="26" rx="4" fill="#f2f2f2" stroke="#bbbbbb" stroke-width="1.3"/>
+  </g>
+  <text x="369.5" y="205" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="390.5" y="205" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="411.5" y="205" text-anchor="middle" font-size="11" fill="#333">2</text>
+  <text x="475.5" y="205" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="496.5" y="205" text-anchor="middle" font-size="11" fill="#999">0</text>
+  <text x="517.5" y="205" text-anchor="middle" font-size="11" fill="#333">1</text>
+  <text x="581.5" y="205" text-anchor="middle" font-size="11" fill="#999">0</text>
+  <text x="602.5" y="205" text-anchor="middle" font-size="11" fill="#999">0</text>
+  <text x="623.5" y="205" text-anchor="middle" font-size="11" fill="#999">0</text>
+  <text x="442" y="182" text-anchor="middle" font-size="9" fill="#2b6e9e">取 b,c</text>
+  <text x="548" y="182" text-anchor="middle" font-size="9" fill="#2b6e9e">取 a,c</text>
+  <text x="646" y="182" font-size="12" font-weight="bold" fill="#2e6e2e">✓</text>
+  <text x="360" y="238" font-size="10.5" fill="#2e6e2e">得 2 分 = ⌊4/2⌋，一颗不剩</text>
+
+  <!-- 底部结论 -->
+  <g filter="url(#sk)">
+    <rect x="34" y="254" width="612" height="68" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="50" y="276" font-size="12.5" font-weight="bold" fill="#2b2b2b">贪心正确姿势：每回合取「最大的两堆」各 1 颗</text>
+  <text x="50" y="296" font-size="10.5" fill="#555">直觉：最大堆每回合必被消耗，不会越攒越多，三堆始终保持势均力敌，谁也吃不掉谁</text>
+  <text x="50" y="314" font-size="10.5" fill="#555">O(1) 公式 min(⌊sum/2⌋, sum−max) 则完全绕开模拟，一次比较直接出答案</text>
+</svg>
