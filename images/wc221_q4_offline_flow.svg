@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="540" viewBox="0 0 720 540" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="73" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="720" height="540" fill="#fafafa"/>
+  <text x="360" y="26" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">离线处理流程：查询按 mi 升序 + 双指针增量插入 Trie</text>
+  <path d="M 180 34 Q 360 42 540 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 步骤1：排序 nums -->
+  <g filter="url(#sk)"><rect x="210" y="52" width="300" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="360" y="77" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33507a" filter="url(#sk)">① nums 排序：[5,2,4,6,3] → [2,3,4,5,6]</text>
+  <path d="M 360 94 L 360 116" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 步骤2：排序 queries -->
+  <g filter="url(#sk)"><rect x="210" y="120" width="300" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <text x="360" y="145" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33507a" filter="url(#sk)">② 查询带原始下标按 mi 升序排序</text>
+  <path d="M 360 162 L 360 184" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 步骤3：双指针插入 -->
+  <g filter="url(#sk)"><rect x="150" y="188" width="420" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="360" y="209" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d24" filter="url(#sk)">③ 取出查询 (x, mi, idx)，双指针 j 前进：</text>
+  <text x="360" y="228" text-anchor="middle" font-size="12" fill="#2f5d24" filter="url(#sk)">while nums[j] ≤ mi：把 nums[j] 插入 0-1 Trie，j++</text>
+  <path d="M 360 238 L 360 262" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- 步骤4：判空 -->
+  <g filter="url(#sk)"><polygon points="360,266 470,306 360,346 250,306" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="360" y="302" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5a10" filter="url(#sk)">一个元素都没插入？</text>
+  <text x="360" y="320" text-anchor="middle" font-size="11" fill="#7a5a10" filter="url(#sk)">（即 min(nums) &gt; mi）</text>
+
+  <!-- 是 → -1 -->
+  <path d="M 250 306 L 160 306 L 160 380" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="200" y="298" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#sk)">是</text>
+  <g filter="url(#sk)"><rect x="90" y="384" width="140" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <text x="160" y="407" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8f3a36" filter="url(#sk)">ans[idx] = -1</text>
+
+  <!-- 否 → 贪心查询 -->
+  <path d="M 470 306 L 560 306 L 560 380" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="520" y="298" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">否</text>
+  <g filter="url(#sk)"><rect x="470" y="384" width="180" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="560" y="407" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5d24" filter="url(#sk)">Trie 高→低位贪心查 x</text>
+
+  <!-- 回边 -->
+  <path d="M 560 420 Q 560 470 360 470 Q 160 470 160 460 L 160 420" stroke="#8a8a8a" stroke-width="1.5" fill="none" stroke-dasharray="6 4" filter="url(#sk)"/>
+  <path d="M 160 420 L 160 422" stroke="#8a8a8a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="360" y="452" text-anchor="middle" font-size="11" fill="#888" filter="url(#sk)">处理下一个查询（mi 只增不减，j 不回退）</text>
+
+  <!-- 底部核心注解 -->
+  <g filter="url(#sk)"><rect x="60" y="478" width="600" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/></g>
+  <text x="360" y="498" text-anchor="middle" font-size="12" font-weight="bold" fill="#33507a" filter="url(#sk)">关键：mi 升序 ⇒ 候选集合恰是排序数组的前缀</text>
+  <text x="360" y="516" text-anchor="middle" font-size="11" fill="#33507a" filter="url(#sk)">前缀只增不减，每个数至多插入一次，最后按 idx 把答案写回原顺序</text>
+</svg>
