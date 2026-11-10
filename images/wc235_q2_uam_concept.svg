@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">核心观察：用户 → 时间集合 → UAM 分桶</text>
+  <text x="260" y="46" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">去重编码进集合、分布编码进桶；一次遍历归拢，一次遍历统计</text>
+
+  <!-- 左列：logs 原始日志 -->
+  <text x="75" y="76" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">logs 原始日志</text>
+  <rect x="40" y="82" width="70" height="24" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="75" y="98" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">[0,5]</text>
+  <rect x="40" y="112" width="70" height="24" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="75" y="128" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">[1,2]</text>
+  <rect x="40" y="142" width="70" height="24" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="75" y="158" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">[0,2]</text>
+  <rect x="40" y="172" width="70" height="24" rx="4" fill="#e8f0fe" stroke="#b85450" stroke-width="1.8" stroke-dasharray="5 3" filter="url(#rough2)"/>
+  <text x="75" y="188" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">[0,5]</text>
+  <text x="114" y="188" text-anchor="start" font-size="9" fill="#b85450" filter="url(#rough2)">重复!</text>
+  <rect x="40" y="202" width="70" height="24" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="75" y="218" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">[1,3]</text>
+
+  <!-- 归拢箭头 -->
+  <path d="M 116 130 L 156 130" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="136" y="120" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688" filter="url(#rough2)">归拢去重</text>
+
+  <!-- 中列：哈希表 id → 时间集合 -->
+  <text x="260" y="76" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">userTimes：id → 时间集合</text>
+  <rect x="168" y="88" width="40" height="26" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="188" y="106" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">0</text>
+  <path d="M 210 101 L 218 101" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <rect x="224" y="88" width="36" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="242" y="106" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#rough2)">2</text>
+  <rect x="264" y="88" width="36" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="282" y="106" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#rough2)">5</text>
+  <rect x="308" y="88" width="54" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="335" y="106" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">UAM=2</text>
+  <rect x="168" y="142" width="40" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="188" y="160" text-anchor="middle" font-size="12" font-weight="bold" fill="#b27a10" filter="url(#rough2)">1</text>
+  <path d="M 210 155 L 218 155" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <rect x="224" y="142" width="36" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="242" y="160" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#rough2)">2</text>
+  <rect x="264" y="142" width="36" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="282" y="160" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#rough2)">3</text>
+  <rect x="308" y="142" width="54" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="335" y="160" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">UAM=2</text>
+  <text x="260" y="192" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">两条 [0,5] 只贡献一个元素——插入即去重</text>
+
+  <!-- 右列：answer 分桶 -->
+  <text x="448" y="76" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">answer（j 从 1 起）</text>
+  <text x="452" y="104" text-anchor="middle" font-size="10" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">answer[uam−1]++</text>
+  <path d="M 364 101 C 380 101, 396 110, 407 121" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 364 155 C 380 155, 396 146, 407 135" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <rect x="386" y="112" width="24" height="30" rx="4" fill="#f0f0f0" stroke="#999999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="398" y="132" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">0</text>
+  <rect x="412" y="112" width="24" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" filter="url(#rough2)"/>
+  <text x="424" y="132" text-anchor="middle" font-size="12" font-weight="bold" fill="#b27a10" filter="url(#rough2)">2</text>
+  <rect x="438" y="112" width="24" height="30" rx="4" fill="#f0f0f0" stroke="#999999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="450" y="132" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">0</text>
+  <rect x="464" y="112" width="24" height="30" rx="4" fill="#f0f0f0" stroke="#999999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="476" y="132" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">0</text>
+  <rect x="490" y="112" width="24" height="30" rx="4" fill="#f0f0f0" stroke="#999999" stroke-width="1" filter="url(#rough2)"/>
+  <text x="502" y="132" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">0</text>
+  <text x="398" y="158" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">j=1</text>
+  <text x="424" y="158" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">j=2</text>
+  <text x="450" y="158" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">j=3</text>
+  <text x="476" y="158" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">j=4</text>
+  <text x="502" y="158" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">j=5</text>
+
+  <!-- 底部说明框 -->
+  <rect x="30" y="252" width="460" height="92" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="276" text-anchor="middle" font-size="12" font-weight="bold" fill="#b27a10" filter="url(#rough2)">三条约束 → 三个实现决策</text>
+  <text x="260" y="298" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">① ID ≤ 10^9 ⇒ 数组下标不可行，必须 dict / unordered_map</text>
+  <text x="260" y="318" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">② 同一分钟可多次操作 ⇒ 值用集合，插入即去重</text>
+  <text x="260" y="338" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">③ answer 下标从 1 起 ⇒ 落桶 answer[uam−1]++（k ≥ 最大 UAM 保不越界）</text>
+</svg>

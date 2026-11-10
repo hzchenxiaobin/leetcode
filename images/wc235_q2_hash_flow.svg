@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">算法流程：两阶段——先归拢去重，再分桶计数</text>
+  <text x="260" y="46" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">阶段一 O(n) 建表，阶段二按用户分桶；全程零分支、零特判</text>
+
+  <!-- 阶段一面板 -->
+  <rect x="30" y="64" width="215" height="172" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="137" y="88" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">阶段一：归拢（一次遍历）</text>
+  <rect x="48" y="100" width="165" height="28" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="130" y="119" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">遍历 logs，取出 (id, t)</text>
+  <path d="M 130 128 L 130 134" stroke="#4a7a3a" stroke-width="1.5" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <rect x="48" y="138" width="165" height="28" rx="4" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="130" y="157" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">userTimes[id].add(t)</text>
+  <path d="M 213 152 L 231 152 L 231 114 L 219 114" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="130" y="182" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">键不存在则自动建空集合</text>
+  <text x="130" y="200" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">重复的 t 被集合吸收，无需 if</text>
+  <text x="137" y="224" text-anchor="middle" font-size="10" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">O(n) 次均摊 O(1) 插入</text>
+
+  <!-- 面板间箭头 -->
+  <path d="M 245 150 L 290 150" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="267" y="140" text-anchor="middle" font-size="9" fill="#446688" filter="url(#rough2)">建表完成</text>
+
+  <!-- 阶段二面板 -->
+  <rect x="290" y="64" width="200" height="172" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="390" y="88" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">阶段二：统计分布</text>
+  <rect x="308" y="100" width="165" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="390" y="117" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">answer ← [0] × k</text>
+  <path d="M 390 126 L 390 132" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <rect x="308" y="136" width="165" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="390" y="153" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">遍历 userTimes 每个 (id, s)</text>
+  <path d="M 390 162 L 390 168" stroke="#446688" stroke-width="1.5" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <rect x="308" y="172" width="165" height="26" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="390" y="189" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">uam ← |s|；answer[uam−1]++</text>
+  <path d="M 473 185 L 483 185 L 483 149 L 479 149" stroke="#446688" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="390" y="210" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">k ≥ 最大 UAM ⇒ uam 必在 [1, k]</text>
+  <text x="390" y="226" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688" filter="url(#rough2)">O(用户数) 次桶更新</text>
+
+  <!-- 底部复杂度框 -->
+  <rect x="30" y="252" width="460" height="94" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="274" text-anchor="middle" font-size="12" font-weight="bold" fill="#b27a10" filter="url(#rough2)">复杂度速览</text>
+  <text x="260" y="296" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">时间 O(n + k)：n 次集合插入 + 用户数次计数 + O(k) 初始化 answer</text>
+  <text x="260" y="316" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">空间 O(n + k)：哈希表 ≤ n 个键值对 + 输出数组 k 个</text>
+  <text x="260" y="336" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">n ≤ 10^4、k ≤ 10^5 ⇒ 量级充裕，赛时重点是零 bug 而非常数优化</text>
+</svg>
