@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b0722a"/></marker>
+  </defs>
+  <rect width="620" height="480" fill="#fafafa"/>
+  <text x="310" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">核心观察：两个不等式 → 前缀和上的一个连续合法区间</text>
+  <path d="M 150 34 Q 310 42 470 34" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- panel 1: split convention -->
+  <text x="150" y="56" font-size="11" font-weight="bold" fill="#2b4a6e" filter="url(#r)">① 切点约定：(i, j) = (left 的长度, left+mid 的长度)，1 ≤ i &lt; j ≤ n−1</text>
+  <text x="74" y="54" text-anchor="middle" font-size="11" font-weight="bold" fill="#b0722a" filter="url(#r)">i=1</text>
+
+  <g filter="url(#r)"><rect x="20" y="66" width="54" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="47" y="87" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">1</text>
+  <g filter="url(#r)"><rect x="74" y="66" width="54" height="32" rx="4" fill="#fdfcf7" stroke="#bbb" stroke-width="1.2"/></g>
+  <text x="101" y="87" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#r)">2</text>
+  <g filter="url(#r)"><rect x="128" y="66" width="54" height="32" rx="4" fill="#fdfcf7" stroke="#bbb" stroke-width="1.2"/></g>
+  <text x="155" y="87" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#r)">2</text>
+  <g filter="url(#r)"><rect x="182" y="66" width="54" height="32" rx="4" fill="#fdfcf7" stroke="#bbb" stroke-width="1.2"/></g>
+  <text x="209" y="87" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#r)">2</text>
+  <g filter="url(#r)"><rect x="236" y="66" width="54" height="32" rx="4" fill="#fdfcf7" stroke="#bbb" stroke-width="1.2"/></g>
+  <text x="263" y="87" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#r)">5</text>
+  <g filter="url(#r)"><rect x="290" y="66" width="54" height="32" rx="4" fill="#fdfcf7" stroke="#bbb" stroke-width="1.2"/></g>
+  <text x="317" y="87" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#r)">0</text>
+  <text x="352" y="87" font-size="10" fill="#999" filter="url(#r)">← nums</text>
+  <path d="M 74 60 L 74 102" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="5 4" fill="none" filter="url(#r)"/>
+
+  <path d="M 74 112 L 344 112" stroke="#b0722a" stroke-width="1.8" fill="none" marker-start="url(#arrO)" marker-end="url(#arrO)" filter="url(#r)"/>
+  <text x="47" y="128" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">left 和 = 1</text>
+  <text x="209" y="128" text-anchor="middle" font-size="10.5" fill="#b0722a" filter="url(#r)">j ∈ [i+1, n−1]：定 mid 的右端</text>
+
+  <!-- panel 2: two inequalities -->
+  <g filter="url(#r)"><rect x="20" y="142" width="290" height="100" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="32" y="162" font-size="12" font-weight="bold" fill="#5a4a1a" filter="url(#r)">left 和 ≤ mid 和</text>
+  <text x="32" y="184" font-size="12" fill="#444" filter="url(#r)">P[i] ≤ P[j] − P[i]</text>
+  <text x="32" y="208" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#r)">⇒ P[j] ≥ 2·P[i]</text>
+  <text x="32" y="228" font-size="10.5" fill="#999" filter="url(#r)">j 的下界：mid 不能太短</text>
+
+  <g filter="url(#r)"><rect x="330" y="142" width="270" height="100" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="342" y="162" font-size="12" font-weight="bold" fill="#5a4a1a" filter="url(#r)">mid 和 ≤ right 和</text>
+  <text x="342" y="184" font-size="12" fill="#444" filter="url(#r)">P[j] − P[i] ≤ P[n] − P[j]</text>
+  <text x="342" y="208" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#r)">⇒ 2·P[j] ≤ P[n] + P[i]</text>
+  <text x="342" y="228" font-size="10.5" fill="#999" filter="url(#r)">j 的上界：mid 不能太长</text>
+
+  <!-- panel 3: prefix-sum array with valid interval -->
+  <text x="20" y="272" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">② 代入示例 2，i=1：需要 2 ≤ P[j] ≤ 6（上界 = 13/2 向下取整）</text>
+
+  <g filter="url(#r)"><rect x="20" y="286" width="52" height="32" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1" opacity="0.7"/></g>
+  <text x="46" y="307" text-anchor="middle" font-size="12.5" fill="#aaa" filter="url(#r)">0</text>
+  <g filter="url(#r)"><rect x="72" y="286" width="52" height="32" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1" opacity="0.7"/></g>
+  <text x="98" y="307" text-anchor="middle" font-size="12.5" fill="#aaa" filter="url(#r)">1</text>
+  <g filter="url(#r)"><rect x="124" y="286" width="52" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="150" y="307" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">3</text>
+  <text x="164" y="300" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#r)">✓</text>
+  <g filter="url(#r)"><rect x="176" y="286" width="52" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="202" y="307" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">5</text>
+  <text x="216" y="300" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#r)">✓</text>
+  <g filter="url(#r)"><rect x="228" y="286" width="52" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="254" y="307" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a36" filter="url(#r)">7</text>
+  <text x="268" y="300" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">✗</text>
+  <g filter="url(#r)"><rect x="280" y="286" width="52" height="32" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <text x="306" y="307" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a36" filter="url(#r)">12</text>
+  <text x="320" y="300" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">✗</text>
+  <g filter="url(#r)"><rect x="332" y="286" width="52" height="32" rx="4" fill="#f0ede4" stroke="#ccc" stroke-width="1" opacity="0.7"/></g>
+  <text x="358" y="307" text-anchor="middle" font-size="12.5" fill="#aaa" filter="url(#r)">12</text>
+
+  <text x="46" y="334" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">j=0</text>
+  <text x="98" y="334" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">j=1</text>
+  <text x="150" y="334" text-anchor="middle" font-size="9.5" fill="#2e6e2e" font-weight="bold" filter="url(#r)">j=2</text>
+  <text x="202" y="334" text-anchor="middle" font-size="9.5" fill="#2e6e2e" font-weight="bold" filter="url(#r)">j=3</text>
+  <text x="254" y="334" text-anchor="middle" font-size="9.5" fill="#b85450" font-weight="bold" filter="url(#r)">j=4</text>
+  <text x="306" y="334" text-anchor="middle" font-size="9.5" fill="#b85450" font-weight="bold" filter="url(#r)">j=5</text>
+  <text x="358" y="334" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">j=6</text>
+  <text x="358" y="348" text-anchor="middle" font-size="9" fill="#aaa" filter="url(#r)">right 会空</text>
+
+  <text x="400" y="296" font-size="11.5" fill="#b0722a" filter="url(#r)">候选 j ∈ [i+1, n−1] = [2, 5]</text>
+  <text x="400" y="318" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">合法 j ∈ [2, 3]</text>
+  <text x="400" y="342" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">本行贡献 2 种</text>
+
+  <!-- insight box -->
+  <g filter="url(#r)"><rect x="20" y="388" width="580" height="78" rx="8" fill="#fffdf3" stroke="#999" stroke-width="1.3" stroke-dasharray="5 3"/></g>
+  <text x="36" y="410" font-size="12.5" font-weight="bold" fill="#2b2b2b" filter="url(#r)">计数钥匙：非负 ⇒ P 单调不减</text>
+  <text x="36" y="432" font-size="11.5" fill="#444" filter="url(#r)">下界定出后缀、上界定出前缀，交集是连续区间 [lo, hi)，一减即得个数</text>
+  <text x="36" y="454" font-size="11" fill="#b85450" filter="url(#r)">⚠ 若允许负数，P 不再单调，合法 j 不再连续，二分/双指针双双失效</text>
+</svg>

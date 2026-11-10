@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 390" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b0722a"/></marker>
+  </defs>
+  <rect width="620" height="390" fill="#fafafa"/>
+  <text x="310" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：降序排序 → 逐类整块装载 → 车位用尽即停</text>
+  <path d="M 160 36 Q 310 44 460 36" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- step 1: sort -->
+  <g filter="url(#r)">
+    <rect x="190" y="48" width="240" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="310" y="70" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#r)">boxTypes ← 按 units 降序排序</text>
+
+  <path d="M 310 82 L 310 104" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+
+  <!-- decision diamond -->
+  <polygon points="310,108 415,150 310,192 205,150" fill="#fdfcf7" stroke="#446688" stroke-width="1.8" filter="url(#r)"/>
+  <text x="310" y="144" text-anchor="middle" font-size="12" fill="#333" filter="url(#r)">还有未装的类</text>
+  <text x="310" y="164" text-anchor="middle" font-size="12" fill="#333" filter="url(#r)">且车位 rem ＞ 0 ？</text>
+
+  <!-- no branch -->
+  <path d="M 205 150 Q 150 190 120 244" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+  <text x="168" y="196" font-size="12" font-weight="bold" fill="#b85450" filter="url(#r)">否</text>
+  <g filter="url(#r)">
+    <rect x="48" y="248" width="150" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="123" y="273" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">结束：return total</text>
+
+  <!-- yes branch -->
+  <path d="M 310 192 L 310 218" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+  <text x="322" y="210" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">是</text>
+
+  <!-- step: take -->
+  <g filter="url(#r)">
+    <rect x="175" y="222" width="270" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="310" y="245" text-anchor="middle" font-size="12.5" fill="#5a4a1a" filter="url(#r)">take ← min(cnt, rem)（最后一类可截断）</text>
+
+  <path d="M 310 260 L 310 284" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+
+  <!-- step: accumulate -->
+  <g filter="url(#r)">
+    <rect x="175" y="288" width="270" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="310" y="311" text-anchor="middle" font-size="12.5" fill="#5a4a1a" filter="url(#r)">total += take × units； rem −= take</text>
+
+  <!-- loop back -->
+  <path d="M 445 307 C 530 300 530 150 415 150" stroke="#4a7a3a" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#arrO)" filter="url(#r)"/>
+  <text x="540" y="232" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#r)">下一类</text>
+
+  <!-- warning note -->
+  <text x="310" y="356" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#r)">⚠ 排序键是第二列「每箱单元数」降序，不是第一列「箱子数量」——本题第一大 WA 点</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b0722a"/></marker>
+  </defs>
+  <rect width="620" height="500" fill="#fafafa"/>
+  <text x="310" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：外层枚举 i，行内定出合法区间 [lo, hi)</text>
+  <path d="M 160 34 Q 310 42 460 34" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- step 1: prefix sum -->
+  <g filter="url(#r)"><rect x="180" y="44" width="280" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <text x="320" y="67" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">预处理前缀和 P[0..n]，total = P[n]</text>
+  <path d="M 320 80 L 320 98" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+
+  <!-- loop condition -->
+  <polygon points="320,102 425,140 320,178 215,140" fill="#fdfcf7" stroke="#446688" stroke-width="1.8" filter="url(#r)"/>
+  <text x="320" y="145" text-anchor="middle" font-size="13" fill="#333" filter="url(#r)">i ≤ n−2 ？</text>
+  <text x="200" y="126" font-size="12" font-weight="bold" fill="#b85450" filter="url(#r)">否</text>
+  <path d="M 215 140 C 150 152, 105 175, 100 200" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+  <g filter="url(#r)"><ellipse cx="100" cy="230" rx="92" ry="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="100" y="235" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">返回 ans % (1e9+7)</text>
+
+  <text x="330" y="196" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">是</text>
+  <path d="M 320 178 L 320 200" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+
+  <!-- locate lo -->
+  <g filter="url(#r)"><rect x="200" y="204" width="320" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="360" y="221" text-anchor="middle" font-size="12.5" fill="#5a4a1a" filter="url(#r)">lo ← [i+1, n) 中首个 P[j] ≥ 2·P[i]</text>
+  <text x="360" y="239" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#r)">（lower_bound 二分，或双指针复用）</text>
+  <path d="M 360 246 L 360 264" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+
+  <!-- locate hi -->
+  <g filter="url(#r)"><rect x="200" y="268" width="320" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <text x="360" y="285" text-anchor="middle" font-size="12.5" fill="#5a4a1a" filter="url(#r)">hi ← [lo, n) 中首个 2·P[j] &gt; total + P[i]</text>
+  <text x="360" y="303" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#r)">（upper_bound 二分，或双指针复用）</text>
+  <path d="M 360 310 L 360 328" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+
+  <!-- decision: hi > lo -->
+  <polygon points="360,332 460,366 360,400 260,366" fill="#fdfcf7" stroke="#446688" stroke-width="1.8" filter="url(#r)"/>
+  <text x="360" y="371" text-anchor="middle" font-size="13" fill="#333" filter="url(#r)">hi &gt; lo ？</text>
+  <text x="372" y="414" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">是</text>
+  <path d="M 360 400 L 360 420" stroke="#b0722a" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#r)"/>
+
+  <!-- accumulate -->
+  <g filter="url(#r)"><rect x="210" y="424" width="300" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <text x="360" y="447" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">ans += hi − lo（合法 j 恰有 hi−lo 个）</text>
+
+  <!-- no branch merges into loop-back -->
+  <text x="238" y="388" font-size="12" font-weight="bold" fill="#b85450" filter="url(#r)">否</text>
+  <path d="M 260 366 C 150 380, 120 445, 150 474 L 352 474" stroke="#b0722a" stroke-width="2" fill="none" filter="url(#r)"/>
+
+  <!-- loop back to i -->
+  <path d="M 360 460 L 360 474 L 550 474 C 590 474, 590 168, 430 141" stroke="#4a7a3a" stroke-width="2" fill="none" stroke-dasharray="6 4" marker-end="url(#arrO)" filter="url(#r)"/>
+  <text x="578" y="312" text-anchor="end" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#r)">下一个 i</text>
+</svg>
