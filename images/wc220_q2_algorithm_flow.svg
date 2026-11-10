@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrBlue" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="420" fill="#fafafa"/>
+  <text x="320" y="24" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：变长滑动窗口（遇重复收缩左端）</text>
+  <path d="M 190 34 Q 320 44 450 34" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- start -->
+  <g filter="url(#sk)">
+    <rect x="215" y="46" width="210" height="34" rx="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="68" text-anchor="middle" font-size="12" fill="#2e5a24" filter="url(#sk)">初始化：left=0，sum=0，ans=0</text>
+  <path d="M 320 80 L 320 96" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- for loop -->
+  <g filter="url(#sk)">
+    <rect x="185" y="100" width="270" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="123" text-anchor="middle" font-size="11.5" fill="#2b4a6e" filter="url(#sk)">遍历 right = 0 … n−1，记 v = nums[right]</text>
+  <path d="M 320 138 L 320 154" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- decision diamond -->
+  <g filter="url(#sk)">
+    <path d="M 320 158 L 432 197 L 320 236 L 208 197 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="193" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6415" filter="url(#sk)">v 已在窗口中？</text>
+  <text x="320" y="210" text-anchor="middle" font-size="10.5" fill="#8a6415" filter="url(#sk)">(cnt[v] &gt; 0 ?)</text>
+
+  <!-- yes branch -->
+  <text x="442" y="188" font-size="12" font-weight="bold" fill="#b85450" filter="url(#sk)">是</text>
+  <path d="M 432 197 L 451 197" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="455" y="166" width="168" height="66" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#sk)" text-anchor="middle">
+    <text x="539" y="185" font-size="12" font-weight="bold" fill="#8f3830">移出左端</text>
+    <text x="539" y="200" font-size="10.5" fill="#8f3830">cnt[nums[left]]−−</text>
+    <text x="539" y="214" font-size="10.5" fill="#8f3830">sum −= nums[left]</text>
+    <text x="539" y="228" font-size="10.5" fill="#8f3830">left++</text>
+  </g>
+  <path d="M 539 164 C 536 126, 420 128, 356 160" stroke="#446688" stroke-width="1.5" fill="none" stroke-dasharray="5 3" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- no branch -->
+  <text x="332" y="254" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">否</text>
+  <path d="M 320 236 L 320 254" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- add to window -->
+  <g filter="url(#sk)">
+    <rect x="185" y="258" width="270" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="277" text-anchor="middle" font-size="12" fill="#2b4a6e" filter="url(#sk)">入窗：cnt[v]++，sum += v</text>
+  <text x="320" y="295" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#sk)">窗口 [left, right] 保持互异</text>
+  <path d="M 320 304 L 320 322" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+
+  <!-- update ans -->
+  <g filter="url(#sk)">
+    <rect x="185" y="326" width="270" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="350" text-anchor="middle" font-size="12" fill="#8a6415" filter="url(#sk)">ans = max(ans, sum)</text>
+
+  <!-- loop back -->
+  <path d="M 185 346 L 108 346 L 108 119 L 181 119" stroke="#446688" stroke-width="1.5" fill="none" stroke-dasharray="6 4" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+  <text x="146" y="340" font-size="10" fill="#666" text-anchor="middle" filter="url(#sk)">right++</text>
+
+  <!-- exit -->
+  <path d="M 455 346 L 545 346 L 545 360" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrBlue)" filter="url(#sk)"/>
+  <text x="500" y="338" font-size="10.5" fill="#666" text-anchor="middle" filter="url(#sk)">遍历完</text>
+  <g filter="url(#sk)">
+    <rect x="475" y="364" width="140" height="40" rx="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="545" y="388" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5a24" filter="url(#sk)">返回 ans</text>
+</svg>
