@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="620" viewBox="0 0 780 620"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="620" fill="#fafafa"/>
+  <text x="390" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心概念：等权边 + 同步红绿灯 → 耗时只由边数决定</text>
+  <path d="M 200 40 Q 390 48 580 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- Section 1: synchronized light timeline -->
+  <text x="390" y="68" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#446688" filter="url(#rough2)">① 灯色只看时刻，与在哪个节点无关（time=3, change=5 的时间轴）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="90" y="88" width="200" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="290" y="88" width="200" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="490" y="88" width="200" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="190" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">绿 [0,5)</text>
+  <text x="390" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">红 [5,10)</text>
+  <text x="590" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">绿 [10,15)</text>
+
+  <path d="M 85 132 L 695 132" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="90" y="148" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">0</text>
+  <text x="290" y="148" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">5</text>
+  <text x="490" y="148" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">10</text>
+  <text x="690" y="148" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">15</text>
+
+  <g filter="url(#rough2)">
+    <line x1="90" y1="138" x2="90" y2="156" stroke="#999" stroke-width="1"/>
+    <line x1="210" y1="138" x2="210" y2="156" stroke="#999" stroke-width="1"/>
+    <line x1="330" y1="138" x2="330" y2="156" stroke="#999" stroke-width="1"/>
+    <line x1="490" y1="138" x2="490" y2="156" stroke="#999" stroke-width="1"/>
+    <line x1="610" y1="138" x2="610" y2="156" stroke="#999" stroke-width="1"/>
+    <circle cx="90" cy="132" r="4.5" fill="#446688"/>
+    <circle cx="210" cy="132" r="4.5" fill="#4a7a3a"/>
+    <circle cx="330" cy="132" r="5.5" fill="#b85450"/>
+    <circle cx="490" cy="132" r="4.5" fill="#4a7a3a"/>
+    <circle cx="610" cy="132" r="5.5" fill="#4a7a3a"/>
+  </g>
+  <text x="90" y="172" text-anchor="middle" font-size="11" fill="#567" filter="url(#rough2)">出发（t=0 全绿）</text>
+  <text x="210" y="172" text-anchor="middle" font-size="11" fill="#3a5c2e" filter="url(#rough2)">t=3 到达·绿→走</text>
+  <text x="330" y="172" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">t=6 红！等到 10 出发</text>
+  <text x="490" y="172" text-anchor="middle" font-size="11" fill="#3a5c2e" filter="url(#rough2)">t=10 绿灯出发</text>
+  <text x="610" y="172" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">t=13 到达 ✓</text>
+
+  <text x="390" y="196" text-anchor="middle" font-size="11" fill="#567" filter="url(#rough2)">任何节点、任何时刻 t：⌊t / change⌋ 为偶 ⇒ 绿；为奇 ⇒ 红 —— 所有灯同步，判定与「在哪个节点」无关</text>
+
+  <!-- Section 2: deterministic recurrence -->
+  <text x="390" y="224" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#446688" filter="url(#rough2)">② 每一步都是确定的递推：f(k+1) = g(f(k)) + time</text>
+
+  <g filter="url(#rough2)">
+    <rect x="115" y="238" width="550" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="390" y="261" text-anchor="middle" font-size="12" fill="#2b4666" filter="url(#rough2)">g(t) = t（绿，立即走）或 (⌊t/change⌋ + 1)·change（红，等到下一绿）</text>
+  <text x="390" y="284" text-anchor="middle" font-size="11.5" fill="#567" filter="url(#rough2)">f(0) = 0；f(k+1) = g(f(k)) + time —— 递推里只有「时刻」，没有「节点」</text>
+
+  <g filter="url(#rough2)">
+    <rect x="95" y="312" width="90" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="275" y="312" width="90" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="455" y="312" width="90" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="635" y="312" width="90" height="36" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <path d="M 187 330 L 271 330" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 367 330 L 451 330" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 547 330 L 631 330" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="140" y="334" text-anchor="middle" font-size="11.5" fill="#2b4666" filter="url(#rough2)">f(0)=0</text>
+  <text x="320" y="334" text-anchor="middle" font-size="11.5" fill="#2b4666" filter="url(#rough2)">f(1)=3</text>
+  <text x="500" y="334" text-anchor="middle" font-size="11.5" fill="#2b4666" filter="url(#rough2)">f(2)=6</text>
+  <text x="680" y="334" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5c14" filter="url(#rough2)">f(3)=13</text>
+  <text x="230" y="324" text-anchor="middle" font-size="10" fill="#567" filter="url(#rough2)">绿，+3</text>
+  <text x="410" y="324" text-anchor="middle" font-size="10" fill="#567" filter="url(#rough2)">绿，+3</text>
+  <text x="590" y="324" text-anchor="middle" font-size="10" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">红，等4再+3</text>
+
+  <text x="390" y="372" text-anchor="middle" font-size="11" fill="#567" filter="url(#rough2)">边数相同的任何 walk 耗时都相同：f 只吃「边数」，不看节点序列（以上为示例 1 的实例值）</text>
+
+  <!-- Section 3: reduction to edge count -->
+  <text x="390" y="400" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#446688" filter="url(#rough2)">③ f 严格递增 → 边数序就是时间序，问题降维成「第二短边数」</text>
+
+  <g filter="url(#rough2)">
+    <rect x="55" y="414" width="220" height="70" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="305" y="414" width="220" height="70" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="555" y="414" width="180" height="70" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <path d="M 277 449 L 303 449" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 527 449 L 553 449" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="165" y="438" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">f 严格递增</text>
+  <text x="165" y="458" text-anchor="middle" font-size="11.5" fill="#2b4666" filter="url(#rough2)">f(k+1) ≥ f(k) + time</text>
+  <text x="165" y="476" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">多一条边，时间严格增加</text>
+  <text x="415" y="438" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">第二短时间 = f(第二短边数)</text>
+  <text x="415" y="458" text-anchor="middle" font-size="11.5" fill="#3a5c2e" filter="url(#rough2)">时间问题 ⇄ 边数问题</text>
+  <text x="415" y="476" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">不同边数必得不同耗时</text>
+  <text x="645" y="438" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5c14" filter="url(#rough2)">第二短边数 ∈ {L+1, L+2}</text>
+  <text x="645" y="458" text-anchor="middle" font-size="10.5" fill="#7a5c14" filter="url(#rough2)">L = 最短路边数（BFS 层级）</text>
+  <text x="645" y="476" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">L+2 必存在：路上反弹一条边</text>
+
+  <!-- warning card -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="500" width="700" height="106" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="390" y="524" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">⚠️ 规则细节就是正确性来源</text>
+  <text x="56" y="546" font-size="10.5" fill="#444" filter="url(#rough2)">· 「绿灯必须立即走、红灯必须等」= 出发时刻没有选择权 —— 每步转移 g 只由到达时刻决定，全程无决策</text>
+  <text x="56" y="568" font-size="10.5" fill="#444" filter="url(#rough2)">· 任意 walk 的耗时因此被边数唯一锁定，这是能把问题整体降维到「数边数」的根</text>
+  <text x="56" y="590" font-size="10.5" fill="#444" filter="url(#rough2)">· 漏算等灯：示例 1 的 3 条边会被算成 3×3 = 9；实际 9 + 4 = 13</text>
+</svg>

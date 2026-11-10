@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="720" viewBox="0 0 780 720"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="720" fill="#fafafa"/>
+  <text x="390" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：两层 BFS 求最短 / 次短边数，再逐步模拟红绿灯</text>
+  <path d="M 170 40 Q 390 48 610 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- start box -->
+  <g filter="url(#rough2)">
+    <rect x="90" y="56" width="320" height="50" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <path d="M 250 106 L 250 122" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="250" y="77" text-anchor="middle" font-size="11.5" fill="#2b4666" filter="url(#rough2)">建邻接表 adj；dist1[] = dist2[] = −1</text>
+  <text x="250" y="96" text-anchor="middle" font-size="11.5" fill="#2b4666" filter="url(#rough2)">dist1[1] = 0；队列 q ← (1, 0)</text>
+
+  <!-- pop box -->
+  <g filter="url(#rough2)">
+    <rect x="90" y="126" width="320" height="40" rx="6" fill="#ffffff" stroke="#666" stroke-width="1.6"/>
+    <path d="M 250 166 L 250 182" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="250" y="151" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">弹出 (u, d)；对每条边 (u, v)：nd ← d + 1</text>
+
+  <!-- diamond 1 -->
+  <g filter="url(#rough2)">
+    <polygon points="250,184 385,232 250,280 115,232" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <path d="M 387 232 L 421 232" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 250 282 L 250 298" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="250" y="228" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5c14" filter="url(#rough2)">dist1[v] == −1？</text>
+  <text x="250" y="248" text-anchor="middle" font-size="10" fill="#7a5c14" filter="url(#rough2)">（v 第一次被到达？）</text>
+  <text x="404" y="224" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">是</text>
+  <text x="260" y="296" font-size="11" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">否</text>
+
+  <!-- box A -->
+  <g filter="url(#rough2)">
+    <rect x="425" y="196" width="320" height="72" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="585" y="220" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4666" filter="url(#rough2)">dist1[v] ← nd，入队 (v, nd)</text>
+  <text x="585" y="240" text-anchor="middle" font-size="11" fill="#2b4666" filter="url(#rough2)">首次到达 = 最短边数</text>
+  <text x="585" y="258" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">队列按边数非降处理 → 首达即最短</text>
+
+  <!-- diamond 2 -->
+  <g filter="url(#rough2)">
+    <polygon points="250,300 400,350 250,400 100,350" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <path d="M 402 350 L 421 350" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 250 402 L 250 416" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="250" y="342" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">dist1[v] &lt; nd</text>
+  <text x="250" y="362" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">且 dist2[v] == −1？</text>
+  <text x="411" y="342" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">是</text>
+  <text x="260" y="414" font-size="11" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">否</text>
+
+  <!-- box B -->
+  <g filter="url(#rough2)">
+    <rect x="425" y="314" width="320" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="585" y="338" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">dist2[v] ← nd，入队 (v, nd)</text>
+  <text x="585" y="358" text-anchor="middle" font-size="11" fill="#3a5c2e" filter="url(#rough2)">第二个「严格更大」的不同值 = 次短</text>
+  <text x="585" y="376" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">设一次即定，无需更新</text>
+
+  <!-- box C -->
+  <g filter="url(#rough2)">
+    <rect x="165" y="418" width="170" height="44" rx="8" fill="#ffffff" stroke="#999" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="438" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">丢弃该转移</text>
+  <text x="250" y="455" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#rough2)">重复值（= dist1[v]）或已有次短</text>
+
+  <!-- loop back dashed paths -->
+  <g filter="url(#rough2)">
+    <path d="M 585 196 L 585 178 L 760 178" stroke="#888" stroke-width="1.3" fill="none" stroke-dasharray="5,4"/>
+    <path d="M 745 350 L 760 350" stroke="#888" stroke-width="1.3" fill="none" stroke-dasharray="5,4"/>
+    <path d="M 250 462 L 250 492 L 760 492" stroke="#888" stroke-width="1.3" fill="none" stroke-dasharray="5,4"/>
+    <path d="M 760 492 L 760 146 L 414 146" stroke="#888" stroke-width="1.3" fill="none" stroke-dasharray="5,4" marker-end="url(#arr)"/>
+  </g>
+  <text x="640" y="136" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">循环，直到队空</text>
+
+  <!-- queue-empty exit -->
+  <g filter="url(#rough2)">
+    <path d="M 88 146 L 52 146 L 52 528 L 136 528" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="56" y="338" font-size="10.5" fill="#567" filter="url(#rough2)">队空 →</text>
+  <text x="56" y="354" font-size="10.5" fill="#567" filter="url(#rough2)">跳出</text>
+
+  <!-- k box -->
+  <g filter="url(#rough2)">
+    <rect x="140" y="506" width="330" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <path d="M 305 556 L 305 572" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="305" y="527" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5c14" filter="url(#rough2)">k ← dist2[n]：第二短边数</text>
+  <text x="305" y="546" text-anchor="middle" font-size="10.5" fill="#7a5c14" filter="url(#rough2)">反弹构造保证 k ≠ −1，且 k ∈ {L+1, L+2}</text>
+
+  <!-- simulate box -->
+  <g filter="url(#rough2)">
+    <rect x="140" y="576" width="330" height="70" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <path d="M 305 646 L 305 662" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="305" y="598" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4666" filter="url(#rough2)">模拟：t ← 0；重复 k 次：</text>
+  <text x="305" y="617" text-anchor="middle" font-size="10.5" fill="#2b4666" filter="url(#rough2)">若 ⌊t / change⌋ 为奇（红灯）：t ← (⌊t/change⌋ + 1) · change</text>
+  <text x="305" y="635" text-anchor="middle" font-size="10.5" fill="#2b4666" filter="url(#rough2)">t ← t + time（走一条边）</text>
+
+  <!-- end box -->
+  <g filter="url(#rough2)">
+    <rect x="140" y="666" width="330" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="305" y="692" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5c2e" filter="url(#rough2)">返回 t —— 第二短时间 ✓</text>
+
+  <!-- note card -->
+  <g filter="url(#rough2)">
+    <rect x="505" y="418" width="240" height="60" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="625" y="438" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5c14" filter="url(#rough2)">💡 两个为什么</text>
+  <text x="517" y="456" font-size="10" fill="#444" filter="url(#rough2)">· 边数非降 → 首个「严格更大」的</text>
+  <text x="517" y="471" font-size="10" fill="#444" filter="url(#rough2)">  不同值即次短，赋值一次即可</text>
+</svg>
