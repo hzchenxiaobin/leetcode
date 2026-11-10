@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="17"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b85450"/></marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+  <text x="310" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">取模时机：取模不保序 —— max 比较在模意义下失效</text>
+  <text x="310" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#r)">题面明说「取余是在得到最大积之后执行的」：中途 % 不是风格问题，是正确性红线</text>
+
+  <!-- ===== 左：真实值比较 ===== -->
+  <g filter="url(#r)">
+    <rect x="30" y="66" width="268" height="150" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="164" y="90" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5d28" filter="url(#r)">真实值比较 ✓</text>
+  <g filter="url(#r)" font-size="10.5" fill="#333">
+    <text x="164" y="112" text-anchor="middle">某格的两个前驱积（15 列网格可构造）：</text>
+    <text x="164" y="134" text-anchor="middle" font-size="11">a = 4¹⁵ = 1073741824（15 个 4）</text>
+    <text x="164" y="154" text-anchor="middle" font-size="11">b = 4¹⁴ × 3 = 805306368（14 个 4 × 1 个 3）</text>
+    <text x="164" y="182" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f5d28">a &gt; b → dp_max 应留 a ✓</text>
+  </g>
+
+  <!-- 中间箭头 -->
+  <g filter="url(#r)">
+    <line x1="298" y1="141" x2="322" y2="141" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#ar)"/>
+  </g>
+  <text x="310" y="130" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#r)">mod M</text>
+
+  <!-- ===== 右：模意义比较 ===== -->
+  <g filter="url(#r)">
+    <rect x="322" y="66" width="268" height="150" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="456" y="90" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8c3a36" filter="url(#r)">模意义比较 ✗</text>
+  <g filter="url(#r)" font-size="10.5" fill="#333">
+    <text x="456" y="112" text-anchor="middle">mod (10⁹ + 7) 之后：</text>
+    <text x="456" y="134" text-anchor="middle" font-size="11">a ≡ 73741817（超过 M，回绕！）</text>
+    <text x="456" y="154" text-anchor="middle" font-size="11">b ≡ 805306368（未超，原样）</text>
+    <text x="456" y="182" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b03a3a">73741817 &lt; 805306368 → 误留 b ✗</text>
+  </g>
+
+  <!-- ===== 真实数轴 ===== -->
+  <text x="40" y="246" text-anchor="start" font-size="11" font-weight="bold" fill="#446688" filter="url(#r)">真实数轴（M = 10⁹ + 7，示意）</text>
+  <g filter="url(#r)">
+    <line x1="40" y1="300" x2="580" y2="300" stroke="#555" stroke-width="1.4" marker-end="url(#ar)"/>
+    <line x1="40" y1="296" x2="40" y2="304" stroke="#555" stroke-width="1.2"/>
+    <line x1="310" y1="296" x2="310" y2="304" stroke="#555" stroke-width="1.2"/>
+    <line x1="580" y1="296" x2="580" y2="304" stroke="#555" stroke-width="1.2"/>
+  </g>
+  <g filter="url(#r)" font-size="9.5" fill="#666">
+    <text x="40" y="322" text-anchor="middle">0</text>
+    <text x="310" y="322" text-anchor="middle">M</text>
+    <text x="580" y="322" text-anchor="middle">2M</text>
+  </g>
+  <g filter="url(#r)">
+    <circle cx="257" cy="300" r="4" fill="#446688"/>
+    <circle cx="330" cy="300" r="4.5" fill="#b85450"/>
+    <circle cx="60" cy="300" r="4.5" fill="none" stroke="#b85450" stroke-width="1.4" stroke-dasharray="3 2"/>
+  </g>
+  <text x="257" y="320" text-anchor="middle" font-size="10" fill="#2c4a66" filter="url(#r)">b = 8.05×10⁸</text>
+  <text x="330" y="338" text-anchor="middle" font-size="10" fill="#b03a3a" filter="url(#r)">a = 1.07×10⁹</text>
+  <text x="70" y="320" text-anchor="start" font-size="10" fill="#b03a3a" filter="url(#r)">a mod M = 73741817</text>
+  <g filter="url(#r)">
+    <path d="M 330 294 C 250 256, 130 256, 68 294" fill="none" stroke="#b85450" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#arR)"/>
+  </g>
+  <text x="199" y="280" text-anchor="middle" font-size="10" fill="#b03a3a" filter="url(#r)">回绕：减去一个 M，从 b 右侧跌到 b 左侧</text>
+
+  <!-- ===== 底部结论 ===== -->
+  <g filter="url(#r)">
+    <rect x="40" y="352" width="540" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="310" y="368" text-anchor="middle" font-size="10.5" fill="#7a5415" filter="url(#r)">正解：全程 64 位免模（|积| ≤ 4²⁹ &lt; 2⁶³，出题人把值域刚好卡进 int64）</text>
+  <text x="310" y="383" text-anchor="middle" font-size="10.5" fill="#7a5415" filter="url(#r)">终点判号（&lt; 0 → −1），最后一步才 mod (10⁹ + 7)</text>
+</svg>

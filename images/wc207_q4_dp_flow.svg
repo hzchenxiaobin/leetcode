@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="23"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#446688"/></marker>
+  </defs>
+
+  <rect width="620" height="500" fill="#fafafa"/>
+  <text x="310" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：阶段一「每点一条主连接」状压 DP → 阶段二贪心兜底</text>
+
+  <!-- ===== Panel 1: stage one ===== -->
+  <g filter="url(#r)">
+    <rect x="36" y="48" width="548" height="196" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" opacity="0.55"/>
+  </g>
+  <text x="56" y="74" font-size="12.5" font-weight="bold" fill="#2c4a66" filter="url(#r)">① 阶段一：依次处理第一组的点 i（共 m 轮），各选一条主连接</text>
+
+  <g filter="url(#r)">
+    <rect x="64" y="118" width="104" height="38" rx="8" fill="#fff" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="116" y="142" text-anchor="middle" font-size="12.5" fill="#2c4a66" font-weight="bold" font-family="monospace" filter="url(#r)">dp[mask]</text>
+
+  <g filter="url(#r)">
+    <path d="M 168 128 Q 250 108 326 106" fill="none" stroke="#446688" stroke-width="1.7" marker-end="url(#arB)"/>
+    <path d="M 168 137 L 326 137" fill="none" stroke="#446688" stroke-width="1.7" marker-end="url(#arB)"/>
+    <path d="M 168 146 Q 250 166 326 168" fill="none" stroke="#446688" stroke-width="1.7" marker-end="url(#arB)"/>
+  </g>
+  <g font-size="10" fill="#666" filter="url(#r)">
+    <text x="248" y="98" text-anchor="middle">点 i 的主连接选谁？</text>
+    <text x="248" y="120" text-anchor="middle">+cost[i][A]</text>
+    <text x="248" y="155" text-anchor="middle" dx="-6">+cost[i][B]</text>
+    <text x="248" y="190" text-anchor="middle">+cost[i][C]</text>
+  </g>
+
+  <g filter="url(#r)">
+    <rect x="330" y="92" width="118" height="30" rx="8" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="330" y="122" width="118" height="30" rx="8" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="330" y="152" width="118" height="30" rx="8" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g font-size="11.5" fill="#2c4a66" filter="url(#r)">
+    <text x="389" y="111" text-anchor="middle" font-family="monospace">ndp[mask∪{A}]</text>
+    <text x="389" y="141" text-anchor="middle" font-family="monospace">ndp[mask∪{B}]</text>
+    <text x="389" y="171" text-anchor="middle" font-family="monospace">ndp[mask∪{C}]</text>
+  </g>
+  <text x="472" y="118" font-size="9.5" fill="#888" filter="url(#r)">j 也可以是已覆盖点</text>
+  <text x="472" y="132" font-size="9.5" fill="#888" filter="url(#r)">（主连接允许撞车）</text>
+  <text x="472" y="168" font-size="9.5" fill="#888" filter="url(#r)">初始 dp[0] = 0</text>
+  <text x="472" y="182" font-size="9.5" fill="#888" filter="url(#r)">其余 = ∞</text>
+
+  <text x="56" y="228" font-size="11" fill="#7a2828" font-weight="bold" filter="url(#r)">⚠ 每轮从上一层数组读、写进全新 ndp——每个点恰贡献一条边；原地转移会漏算（§8）</text>
+
+  <!-- ===== Panel 2: stage two ===== -->
+  <g filter="url(#r)">
+    <rect x="36" y="260" width="548" height="112" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" opacity="0.6"/>
+  </g>
+  <text x="56" y="286" font-size="12.5" font-weight="bold" fill="#2f5d28" filter="url(#r)">② 阶段二：未被主连接覆盖的第二组点，各补一条最便宜的边</text>
+  <text x="56" y="312" font-size="13" fill="#2f5d28" font-weight="bold" font-family="monospace" filter="url(#r)">ans = min over mask: dp[mask] + Σ_{j ∉ mask} cheap[j]</text>
+  <text x="56" y="336" font-size="11" fill="#555" filter="url(#r)">cheap[j] = minᵢ cost[i][j]，O(mn) 预处理；主连接罩满时兜底自动为 0</text>
+  <text x="56" y="358" font-size="11" fill="#555" filter="url(#r)">例：mask = {A,B} → 补 cheap[C]；mask = {A,B,C} → 补 0</text>
+
+  <!-- ===== Panel 3: complexity ===== -->
+  <g filter="url(#r)">
+    <rect x="36" y="388" width="548" height="94" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" opacity="0.7"/>
+  </g>
+  <text x="56" y="414" font-size="12.5" font-weight="bold" fill="#7a5415" filter="url(#r)">③ 复杂度</text>
+  <text x="56" y="438" font-size="12" fill="#7a5415" font-weight="bold" font-family="monospace" filter="url(#r)">时间 O(m·n·2ⁿ) ≈ 5.9×10⁵（m,n≤12），空间 O(2ⁿ)（滚动两层）</text>
+  <text x="56" y="462" font-size="10.5" fill="#8a6a30" filter="url(#r)">对照：不做分解、逐点枚举连边子集的写法为 O(m·3ⁿ) ≈ 6.4×10⁶，慢一个量级</text>
+</svg>

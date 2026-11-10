@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 510" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="17"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/></marker>
+  </defs>
+
+  <rect width="620" height="510" fill="#fafafa"/>
+  <text x="310" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：行优先逐格填 (max, min) 双轨表，终点判号后取模</text>
+  <path d="M 170 34 Q 310 42 450 34" stroke="#2b2b2b" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- 初始化 -->
+  <g filter="url(#r)">
+    <rect x="120" y="46" width="240" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="240" y="71" text-anchor="middle" font-size="12" fill="#2c4a66" filter="url(#r)">初始化：mx[0][0] = mn[0][0] = grid[0][0]</text>
+  <g filter="url(#r)">
+    <line x1="240" y1="86" x2="240" y2="100" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- 枚举格子 -->
+  <g filter="url(#r)">
+    <rect x="120" y="100" width="240" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="240" y="123" text-anchor="middle" font-size="11.5" fill="#2c4a66" filter="url(#r)">枚举格子 (i, j)，行优先（跳过 (0,0)）</text>
+  <g filter="url(#r)">
+    <line x1="240" y1="136" x2="240" y2="150" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- 收集候选 -->
+  <g filter="url(#r)">
+    <rect x="110" y="150" width="260" height="72" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="240" y="172" text-anchor="middle" font-size="11.5" fill="#2c4a66" filter="url(#r)">g = grid[i][j]</text>
+  <text x="240" y="190" text-anchor="middle" font-size="10.5" fill="#2c4a66" filter="url(#r)">候选 ← {上.mx, 上.min, 左.mx, 左.min} × g</text>
+  <text x="240" y="208" text-anchor="middle" font-size="9.5" fill="#6a7a8a" filter="url(#r)">（前驱存在才收：首行只看左 / 首列只看上）</text>
+  <g filter="url(#r)">
+    <line x1="240" y1="222" x2="240" y2="236" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- 双轨更新 -->
+  <g filter="url(#r)">
+    <rect x="110" y="236" width="260" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="240" y="258" text-anchor="middle" font-size="11.5" fill="#2f5d28" filter="url(#r)">mx[i][j] ← max(候选)（较大者）</text>
+  <text x="240" y="276" text-anchor="middle" font-size="11.5" fill="#2f5d28" filter="url(#r)">mn[i][j] ← min(候选)（较小者）</text>
+
+  <!-- 循环回边 -->
+  <g filter="url(#r)">
+    <path d="M 110 264 L 62 264 L 62 118 L 114 118" fill="none" stroke="#999" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+  </g>
+  <text x="88" y="110" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">↻ 下一格（直到填完）</text>
+
+  <g filter="url(#r)">
+    <line x1="240" y1="292" x2="240" y2="306" stroke="#3a3a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- 终点判号 -->
+  <g filter="url(#r)">
+    <polygon points="240,306 385,352 240,398 95,352" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="240" y="348" text-anchor="middle" font-size="11" fill="#7a5415" filter="url(#r)">mx[m−1][n−1] &lt; 0 ?</text>
+  <text x="240" y="364" text-anchor="middle" font-size="9.5" fill="#a08040" filter="url(#r)">（0 算非负，走「否」）</text>
+
+  <g filter="url(#r)">
+    <line x1="385" y1="352" x2="418" y2="352" stroke="#b85450" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+  <text x="400" y="344" text-anchor="middle" font-size="11" fill="#b03a3a" filter="url(#r)">是</text>
+  <g filter="url(#r)">
+    <rect x="422" y="330" width="170" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="507" y="348" text-anchor="middle" font-size="11" fill="#8c3a36" filter="url(#r)">返回 −1</text>
+  <text x="507" y="364" text-anchor="middle" font-size="9.5" fill="#a06060" filter="url(#r)">所有路径积均为负</text>
+
+  <g filter="url(#r)">
+    <line x1="240" y1="398" x2="240" y2="412" stroke="#4a7a3a" stroke-width="1.4" marker-end="url(#arG)"/>
+  </g>
+  <text x="252" y="410" text-anchor="start" font-size="11" fill="#2f5d28" filter="url(#r)">否</text>
+  <g filter="url(#r)">
+    <rect x="110" y="412" width="260" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="240" y="432" text-anchor="middle" font-size="11" fill="#2f5d28" filter="url(#r)">返回 mx[m−1][n−1] mod (10⁹ + 7)</text>
+  <text x="240" y="448" text-anchor="middle" font-size="9.5" fill="#5a8a50" filter="url(#r)">最后一步才取模（题面要求）</text>
+
+  <!-- 取模时机警示框 -->
+  <g filter="url(#r)">
+    <rect x="410" y="46" width="190" height="200" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="505" y="70" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5415" filter="url(#r)">⚠️ 取模时机红线</text>
+  <g filter="url(#r)" font-size="10" fill="#7a5415">
+    <text x="422" y="94" text-anchor="start">全程 64 位整数，绝不中途取模</text>
+    <text x="422" y="113" text-anchor="start">|积| ≤ 4^(m+n−1) ≤ 4²⁹ &lt; 2⁶³</text>
+    <text x="422" y="132" text-anchor="start">int64 恰好装下（§4.1）</text>
+    <text x="422" y="151" text-anchor="start">取模不保序：4¹⁵ mod M = 73741817</text>
+    <text x="422" y="170" text-anchor="start">反而小于 4¹⁴×3 = 805306368</text>
+    <text x="422" y="189" text-anchor="start">→ 边 DP 边 % 会留错轨</text>
+    <text x="422" y="208" text-anchor="start" font-size="9.5" fill="#a08040">（构造反例见 §4.2 / 引理 3）</text>
+  </g>
+
+  <text x="310" y="486" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#r)">顺序关键点：行优先保证填 (i,j) 时上、左前驱已就绪；判号放最后，取模只此一步</text>
+</svg>

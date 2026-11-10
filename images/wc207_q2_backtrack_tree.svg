@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 486" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="17"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#b85450"/></marker>
+  </defs>
+
+  <rect width="720" height="486" fill="#fafafa"/>
+  <text x="360" y="22" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">示例演算：s = "aba" 的回溯决策树 —— 贪心卡死，回溯救场</text>
+  <text x="360" y="42" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#r)">节点 = 该步切出的段（框下标注切后的 seen）；一条根到叶的路径 = 一种拆分</text>
+
+  <!-- 根 -->
+  <g filter="url(#r)">
+    <rect x="318" y="54" width="84" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="360" y="72" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c4a66" filter="url(#r)">start = 0</text>
+  <text x="360" y="88" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">seen = { }</text>
+
+  <!-- 根 → 第一层 -->
+  <g filter="url(#r)">
+    <path d="M 336 96 L 146 148" fill="none" stroke="#3a3a3a" stroke-width="1.3" marker-end="url(#ar)"/>
+    <path d="M 360 96 L 360 148" fill="none" stroke="#3a3a3a" stroke-width="1.3" marker-end="url(#ar)"/>
+    <path d="M 384 96 L 568 148" fill="none" stroke="#3a3a3a" stroke-width="1.3" marker-end="url(#ar)"/>
+  </g>
+  <text x="216" y="114" text-anchor="middle" font-size="10" fill="#666" filter="url(#r)">切 "a"</text>
+  <text x="372" y="114" text-anchor="middle" font-size="10" fill="#666" filter="url(#r)">切 "ab"</text>
+  <text x="492" y="114" text-anchor="middle" font-size="10" fill="#666" filter="url(#r)">切 "aba"</text>
+
+  <!-- 第一层节点 -->
+  <g filter="url(#r)">
+    <rect x="110" y="150" width="64" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="328" y="150" width="64" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="540" y="150" width="64" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="142" y="172" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a66" filter="url(#r)">a</text>
+  <text x="142" y="188" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">seen={a}</text>
+  <text x="360" y="172" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a66" filter="url(#r)">ab</text>
+  <text x="360" y="188" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">seen={ab}</text>
+  <text x="572" y="172" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a66" filter="url(#r)">aba</text>
+  <text x="572" y="188" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">seen={aba}</text>
+
+  <!-- "a" → 第二层 -->
+  <g filter="url(#r)">
+    <path d="M 130 194 L 88 252" fill="none" stroke="#3a3a3a" stroke-width="1.3" marker-end="url(#ar)"/>
+    <path d="M 156 194 L 212 252" fill="none" stroke="#3a3a3a" stroke-width="1.3" marker-end="url(#ar)"/>
+    <path d="M 360 194 L 360 252" fill="none" stroke="#3a3a3a" stroke-width="1.3" marker-end="url(#ar)"/>
+    <path d="M 572 194 L 572 252" fill="none" stroke="#3a3a3a" stroke-width="1.3" marker-end="url(#ar)"/>
+  </g>
+  <text x="92" y="222" text-anchor="middle" font-size="10" fill="#666" filter="url(#r)">切 "b"</text>
+  <text x="196" y="222" text-anchor="middle" font-size="10" fill="#666" filter="url(#r)">切 "ba"</text>
+  <text x="372" y="222" text-anchor="middle" font-size="10" fill="#666" filter="url(#r)">切 "a"</text>
+
+  <!-- 第二层节点 -->
+  <g filter="url(#r)">
+    <rect x="52" y="254" width="64" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="184" y="254" width="64" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="328" y="254" width="64" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="84" y="276" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a66" filter="url(#r)">b</text>
+  <text x="84" y="292" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">seen={a,b}</text>
+  <text x="216" y="276" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a66" filter="url(#r)">ba</text>
+  <text x="216" y="292" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">seen={a,ba}</text>
+  <text x="360" y="276" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c4a66" filter="url(#r)">a</text>
+  <text x="360" y="292" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#r)">seen={ab,a}</text>
+
+  <!-- "aba" 分支直达叶 -->
+  <g filter="url(#r)">
+    <rect x="524" y="254" width="96" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="572" y="276" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d28" filter="url(#r)">start=3=n ✓</text>
+  <text x="572" y="292" text-anchor="middle" font-size="10" fill="#2f5d28" filter="url(#r)">1 段</text>
+
+  <!-- "b" → 死路 -->
+  <g filter="url(#r)">
+    <path d="M 84 298 L 84 338" fill="none" stroke="#b85450" stroke-width="1.4" marker-end="url(#arR)"/>
+  </g>
+  <g filter="url(#r)">
+    <rect x="48" y="340" width="72" height="44" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="84" y="362" text-anchor="middle" font-size="13" font-weight="bold" fill="#8c3a36" filter="url(#r)">a ✗</text>
+  <text x="84" y="378" text-anchor="middle" font-size="9.5" fill="#a06060" filter="url(#r)">已用，重复</text>
+  <text x="130" y="330" text-anchor="start" font-size="9.5" fill="#b03a3a" filter="url(#r)">贪心最短优先在此卡死</text>
+
+  <!-- "ba" → 叶 -->
+  <g filter="url(#r)">
+    <path d="M 216 298 L 216 338" fill="none" stroke="#4a7a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+  <g filter="url(#r)">
+    <rect x="168" y="340" width="96" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="216" y="362" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d28" filter="url(#r)">start=3=n ✓</text>
+  <text x="216" y="378" text-anchor="middle" font-size="10" fill="#2f5d28" filter="url(#r)">2 段！</text>
+
+  <!-- "ab"→"a" → 叶 -->
+  <g filter="url(#r)">
+    <path d="M 360 298 L 360 338" fill="none" stroke="#4a7a3a" stroke-width="1.4" marker-end="url(#ar)"/>
+  </g>
+  <g filter="url(#r)">
+    <rect x="312" y="340" width="96" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="360" y="362" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5d28" filter="url(#r)">start=3=n ✓</text>
+  <text x="360" y="378" text-anchor="middle" font-size="10" fill="#2f5d28" filter="url(#r)">2 段！</text>
+
+  <!-- 回溯箭头 -->
+  <g filter="url(#r)">
+    <path d="M 58 340 C 10 300, 16 230, 106 200" fill="none" stroke="#b85450" stroke-width="1.4" stroke-dasharray="6 4" marker-end="url(#arR)"/>
+  </g>
+  <text x="44" y="230" text-anchor="start" font-size="10" fill="#b03a3a" filter="url(#r)">回溯：erase("b")</text>
+  <text x="44" y="245" text-anchor="start" font-size="10" fill="#b03a3a" filter="url(#r)">改选 "ba"</text>
+
+  <!-- 汇总 -->
+  <g filter="url(#r)">
+    <rect x="100" y="408" width="520" height="54" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="360" y="430" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5415" filter="url(#r)">best = 2（['a','ba'] 或 ['ab','a']）</text>
+  <text x="360" y="450" text-anchor="middle" font-size="11" fill="#7a5415" filter="url(#r)">贪心 a → b 在死路处卡死；回溯让选择可撤销，才走出最优</text>
+
+  <text x="360" y="478" text-anchor="middle" font-size="10" fill="#888" filter="url(#r)">✓ = 切完整串（记录段数）　✗ = 子串重复（死路）　虚线红箭头 = 回溯撤销</text>
+</svg>
