@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="700" viewBox="0 0 940 700" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a8e4a"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="700" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">示例 1 演算：max-Dijkstra 的弹出顺序与关键松弛</text>
+  <path d="M 240 44 Q 470 52 700 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <text x="70" y="74" font-size="10" fill="#888">圈码 = 弹出顺序 ｜ dist = 最终瓶颈距离 ｜ 划线数字 = 改写前的暂时值</text>
+
+  <!-- ===== left grid: cols x=70,174,278 (w=96); rows y=90,162,234 (h=64) ===== -->
+  <!-- final answer path drawn under the texts -->
+  <polyline points="118,122 118,194 118,266 222,266 326,266" fill="none" stroke="#4a8e4a" stroke-width="5" stroke-opacity="0.75" stroke-linecap="round" stroke-linejoin="round" marker-mid="url(#arG)" marker-end="url(#arG)" filter="url(#sk)"/>
+
+  <!-- cells -->
+  <g filter="url(#sk)"><rect x="70" y="90" width="96" height="64" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/></g>
+  <g filter="url(#sk)"><rect x="174" y="90" width="96" height="64" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="278" y="90" width="96" height="64" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="70" y="162" width="96" height="64" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="174" y="162" width="96" height="64" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><rect x="278" y="162" width="96" height="64" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="70" y="234" width="96" height="64" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="174" y="234" width="96" height="64" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="278" y="234" width="96" height="64" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/></g>
+
+  <!-- heights + dist -->
+  <text x="118" y="124" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">1</text>
+  <text x="118" y="144" text-anchor="middle" font-size="10" fill="#446688" font-weight="bold">dist=0</text>
+  <text x="222" y="124" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">2</text>
+  <text x="222" y="144" text-anchor="middle" font-size="10" fill="#555">dist=1</text>
+  <text x="326" y="124" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">2</text>
+  <text x="326" y="144" text-anchor="middle" font-size="10" fill="#555">dist=1</text>
+
+  <text x="118" y="196" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">3</text>
+  <text x="118" y="216" text-anchor="middle" font-size="10" fill="#555">dist=2</text>
+  <text x="222" y="196" text-anchor="middle" font-size="16" font-weight="bold" fill="#b85450">8</text>
+  <text x="222" y="216" text-anchor="middle" font-size="10" fill="#555">dist=<tspan text-decoration="line-through">6</tspan>→5</text>
+  <text x="326" y="196" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">2</text>
+  <text x="326" y="216" text-anchor="middle" font-size="10" fill="#555">dist=1</text>
+
+  <text x="118" y="268" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">5</text>
+  <text x="118" y="288" text-anchor="middle" font-size="10" fill="#555">dist=2</text>
+  <text x="222" y="268" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">3</text>
+  <text x="222" y="288" text-anchor="middle" font-size="10" fill="#555">dist=2</text>
+  <text x="326" y="268" text-anchor="middle" font-size="16" font-weight="bold" fill="#333">5</text>
+  <text x="326" y="288" text-anchor="middle" font-size="10" fill="#b03a3a" font-weight="bold">dist=<tspan text-decoration="line-through">4</tspan>→2</text>
+
+  <!-- pop order badges -->
+  <g font-size="9" font-weight="bold" fill="#333">
+    <circle cx="84" cy="104" r="9" fill="#fff" stroke="#666" stroke-width="1.2" filter="url(#sk)"/><text x="84" y="107.5" text-anchor="middle">1</text>
+    <circle cx="188" cy="104" r="9" fill="#fff" stroke="#666" stroke-width="1.2" filter="url(#sk)"/><text x="188" y="107.5" text-anchor="middle">2</text>
+    <circle cx="292" cy="104" r="9" fill="#fff" stroke="#666" stroke-width="1.2" filter="url(#sk)"/><text x="292" y="107.5" text-anchor="middle">3</text>
+    <circle cx="84" cy="176" r="9" fill="#fff" stroke="#666" stroke-width="1.2" filter="url(#sk)"/><text x="84" y="179.5" text-anchor="middle">5</text>
+    <circle cx="188" cy="176" r="9" fill="#eee" stroke="#bbb" stroke-width="1.2" filter="url(#sk)"/><text x="188" y="179.5" text-anchor="middle" fill="#999">–</text>
+    <circle cx="292" cy="176" r="9" fill="#fff" stroke="#666" stroke-width="1.2" filter="url(#sk)"/><text x="292" y="179.5" text-anchor="middle">4</text>
+    <circle cx="84" cy="248" r="9" fill="#fff" stroke="#666" stroke-width="1.2" filter="url(#sk)"/><text x="84" y="251.5" text-anchor="middle">6</text>
+    <circle cx="188" cy="248" r="9" fill="#fff" stroke="#b85450" stroke-width="1.6" filter="url(#sk)"/><text x="188" y="251.5" text-anchor="middle" fill="#b85450">7</text>
+    <circle cx="292" cy="248" r="9" fill="#fff" stroke="#4a7a3a" stroke-width="1.6" filter="url(#sk)"/><text x="292" y="251.5" text-anchor="middle" fill="#2e6e2e">8</text>
+  </g>
+  <text x="222" y="180" font-size="8" fill="#999" text-anchor="middle">未弹出</text>
+
+  <!-- under-grid notes -->
+  <text x="70" y="322" font-size="10.5" fill="#2e6e2e" font-weight="bold">绿粗线 = 答案路径 1→3→5→3→5（每步边权均为 2）</text>
+  <text x="70" y="342" font-size="10" fill="#888">最终 dist 矩阵：[[0,1,1],[2,5,1],[2,2,2]]</text>
+
+  <!-- ===== right: pop sequence table ===== -->
+  <g filter="url(#sk)">
+    <rect x="420" y="80" width="490" height="470" rx="10" fill="#fffdf3" stroke="#a8a294" stroke-width="1.4"/>
+  </g>
+  <text x="440" y="108" font-size="11.5" font-weight="bold" fill="#555">弹出（键值 d）</text>
+  <text x="600" y="108" font-size="11.5" font-weight="bold" fill="#555">关键松弛</text>
+  <path d="M 435 118 Q 665 124 895 118" stroke="#c5bfb0" stroke-width="1.2" fill="none" filter="url(#sk)"/>
+
+  <!-- row highlights: row7 red, row8 green -->
+  <g filter="url(#sk)"><rect x="428" y="390" width="474" height="42" rx="6" fill="#fce4ec" stroke="#e8b5b0" stroke-width="1"/></g>
+  <g filter="url(#sk)"><rect x="428" y="436" width="474" height="42" rx="6" fill="#e6f4ea" stroke="#b5d8b0" stroke-width="1"/></g>
+
+  <g font-size="11">
+    <text x="440" y="146" font-family="monospace">1. (0,0) d=0</text><text x="600" y="146">(0,1)=1，(1,0)=2</text>
+    <text x="440" y="192" font-family="monospace">2. (0,1) d=1</text><text x="600" y="192">(0,2)=1，(1,1)=6</text>
+    <text x="440" y="238" font-family="monospace">3. (0,2) d=1</text><text x="600" y="238">(1,2)=1</text>
+    <text x="440" y="284" font-family="monospace">4. (1,2) d=1</text><text x="600" y="284">(2,2)=4（暂时值）</text>
+    <text x="440" y="330" font-family="monospace">5. (1,0) d=2</text><text x="600" y="330">(2,0)=2；(1,1) <tspan text-decoration="line-through">6</tspan>→5</text>
+    <text x="440" y="376" font-family="monospace">6. (2,0) d=2</text><text x="600" y="376">(2,1)=2</text>
+    <text x="440" y="416" font-family="monospace" fill="#b03a3a" font-weight="bold">7. (2,1) d=2</text><text x="600" y="416" fill="#b03a3a">(2,2) <tspan text-decoration="line-through">4</tspan>→2 ★ max(2,|3−5|)=2</text>
+    <text x="440" y="462" font-family="monospace" fill="#2e6e2e" font-weight="bold">8. (2,2) d=2</text><text x="600" y="462" fill="#2e6e2e" font-weight="bold">弹出终点 ⇒ 返回答案 2</text>
+  </g>
+
+  <!-- ===== bottom notes ===== -->
+  <g filter="url(#sk)">
+    <rect x="60" y="576" width="860" height="104" rx="8" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+  </g>
+  <text x="80" y="602" font-size="12" font-weight="bold" fill="#2b2b2b">两个关键点</text>
+  <text x="80" y="626" font-size="11" fill="#444">① dist 在被弹出前可被改小：(2,2) 先经 (1,2) 记为 4，直到 (2,1) 弹出后才经 max(2, |3−5|) = 2 改写为 2；</text>
+  <text x="80" y="648" font-size="11" fill="#444">② 终点判定必须放在「弹出」时 —— 弹出的键值才是最终瓶颈距离；若在入堆时返回，会错拿暂时值 4。</text>
+  <text x="80" y="670" font-size="10" fill="#888">高峰 8（红格）与四周落差均 ≥ 5，永远是被绕开的孤岛；最优路线沿左、下两边走。</text>
+</svg>
