@@ -88,11 +88,34 @@ except Exception:
         fi
 
         MESSAGE="使用${SKILL}写一下第 ${num} 场${KIND} Q${q} 的题解，只编写题解和插图，不要执行网站构建或构建验证"
-        echo ">>> [第 $num 场${KIND} Q$q] 发送: $MESSAGE"
-        if cannbot run "$MESSAGE"; then
-            echo ">>> [第 $num 场${KIND} Q$q] 完成"
-        else
-            echo ">>> [第 $num 场${KIND} Q$q] 警告: cannbot 执行失败，继续下一题" >&2
+        COMPLETED=0
+        for attempt in 1 2 3; do
+            echo ">>> [第 $num 场${KIND} Q$q] 第 $attempt/3 次尝试，发送: $MESSAGE"
+            if cannbot run "$MESSAGE"; then
+                CANNBOT_STATUS=0
+            else
+                CANNBOT_STATUS=$?
+            fi
+
+            if compgen -G "$CONTEST_DIR/$num/Q${q}.*.md" > /dev/null; then
+                echo ">>> [第 $num 场${KIND} Q$q] 完成，已确认题解文件存在"
+                COMPLETED=1
+                break
+            fi
+
+            if [ "$CANNBOT_STATUS" -ne 0 ]; then
+                echo ">>> [第 $num 场${KIND} Q$q] 警告: cannbot 执行失败（退出码 $CANNBOT_STATUS），且未生成题解" >&2
+            else
+                echo ">>> [第 $num 场${KIND} Q$q] 警告: cannbot 已退出，但未生成题解" >&2
+            fi
+            if [ "$attempt" -lt 3 ]; then
+                echo ">>> [第 $num 场${KIND} Q$q] 5 秒后重试"
+                sleep 5
+            fi
+        done
+
+        if [ "$COMPLETED" -eq 0 ]; then
+            echo ">>> [第 $num 场${KIND} Q$q] 警告: 连续 3 次均未生成题解，继续下一题" >&2
         fi
     done
 
