@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 540"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="540" fill="#fafafa"/>
+
+  <!-- Title -->
+  <text x="300" y="24" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：处理每一批订单（双堆 + 批量撮合）</text>
+  <text x="300" y="42" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">对 orders 中每条 [price, amount, type] 依次执行；左路买入、右路卖出完全对称</text>
+
+  <!-- Start box -->
+  <rect x="210" y="56" width="180" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="74" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">读入下一批订单</text>
+  <text x="300" y="90" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">[price, amount, type]</text>
+  <path d="M 300 96 L 300 106" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Type diamond -->
+  <polygon points="300,110 395,146 300,182 205,146" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="144" text-anchor="middle" font-size="12" fill="#333" font-weight="bold" filter="url(#rough2)">type = 0 ?</text>
+  <text x="300" y="160" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">（买入）</text>
+
+  <!-- Branch labels and connections -->
+  <text x="176" y="132" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold" filter="url(#rough2)">是（buy）</text>
+  <path d="M 205 146 L 140 146 L 140 166" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="424" y="132" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">否（sell）</text>
+  <path d="M 395 146 L 460 146 L 460 166" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Buy loop diamond -->
+  <polygon points="140,172 258,232 140,292 22,232" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="140" y="226" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">卖堆非空 且</text>
+  <text x="140" y="243" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">顶卖价 ≤ price ?</text>
+  <text x="154" y="304" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M 140 292 L 140 308" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Buy match box -->
+  <rect x="30" y="312" width="220" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="140" y="330" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">matched = min(amount, 顶数量)</text>
+  <text x="140" y="346" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">amount −= matched；顶 −= matched</text>
+  <text x="140" y="360" text-anchor="middle" font-size="10" fill="#446688" font-weight="bold" filter="url(#rough2)">顶耗尽则弹出</text>
+  <path d="M 250 339 L 268 339 L 268 232 L 262 232" stroke="#888" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Buy no branch -->
+  <text x="30" y="224" text-anchor="start" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <path d="M 22 232 L 12 232 L 12 406 L 26 406" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Buy push box -->
+  <rect x="30" y="384" width="220" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="140" y="404" text-anchor="middle" font-size="10.5" fill="#333" font-weight="bold" filter="url(#rough2)">剩余 amount &gt; 0 ?</text>
+  <text x="140" y="422" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#rough2)">→ 压入买堆 (price, amount)</text>
+
+  <!-- Sell loop diamond -->
+  <polygon points="460,172 578,232 460,292 342,232" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="460" y="226" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">买堆非空 且</text>
+  <text x="460" y="243" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">顶买价 ≥ price ?</text>
+  <text x="474" y="304" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M 460 292 L 460 308" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Sell match box -->
+  <rect x="350" y="312" width="220" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="460" y="330" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">matched = min(amount, 顶数量)</text>
+  <text x="460" y="346" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">amount −= matched；顶 −= matched</text>
+  <text x="460" y="360" text-anchor="middle" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">顶耗尽则弹出</text>
+  <path d="M 350 339 L 332 339 L 332 232 L 338 232" stroke="#888" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Sell no branch -->
+  <text x="570" y="224" text-anchor="end" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+  <path d="M 578 232 L 588 232 L 588 406 L 574 406" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Sell push box -->
+  <rect x="350" y="384" width="220" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="460" y="404" text-anchor="middle" font-size="10.5" fill="#333" font-weight="bold" filter="url(#rough2)">剩余 amount &gt; 0 ?</text>
+  <text x="460" y="422" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#rough2)">→ 压入卖堆 (price, amount)</text>
+
+  <!-- End box -->
+  <rect x="210" y="436" width="180" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="453" text-anchor="middle" font-size="11" fill="#333" font-weight="bold" filter="url(#rough2)">该批订单处理完毕</text>
+  <text x="300" y="469" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">取下一批，直到 orders 耗尽</text>
+  <path d="M 140 432 L 140 456 L 204 456" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 460 432 L 460 456 L 396 456" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- Final note -->
+  <rect x="70" y="496" width="460" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="516" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">全部处理完：答案 = (Σ 买堆 amount + Σ 卖堆 amount) mod (10^9 + 7)</text>
+</svg>
