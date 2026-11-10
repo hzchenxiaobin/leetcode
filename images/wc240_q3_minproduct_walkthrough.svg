@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="460" fill="#fafafa"/>
+
+  <text x="450" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例 1 演算：nums = [1,2,3,2]，逐 i 求极大窗口与候选值</text>
+
+  <!-- ===== 顶部：数组与前缀和 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="196" y="44" width="120" height="54" rx="6" fill="#e6f4ea" fill-opacity="0.5" stroke="#4a7a3a" stroke-width="1.4" stroke-dasharray="6 4"/>
+    <text x="256" y="40" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a">i=3 的窗口 W(3) = [1,3]</text>
+
+    <rect x="80" y="50" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="106" y="75" text-anchor="middle" font-size="13" fill="#446688">1</text>
+    <rect x="140" y="50" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="166" y="75" text-anchor="middle" font-size="13" fill="#446688">2</text>
+    <rect x="200" y="50" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="226" y="75" text-anchor="middle" font-size="13" fill="#446688">3</text>
+    <rect x="260" y="50" width="52" height="40" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <text x="286" y="75" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">2</text>
+
+    <text x="106" y="104" text-anchor="middle" font-size="10" fill="#888">0</text>
+    <text x="166" y="104" text-anchor="middle" font-size="10" fill="#888">1</text>
+    <text x="226" y="104" text-anchor="middle" font-size="10" fill="#888">2</text>
+    <text x="286" y="104" text-anchor="middle" font-size="10" fill="#888">3</text>
+
+    <rect x="80" y="118" width="52" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="106" y="135" text-anchor="middle" font-size="9.5" fill="#4a7a3a">pre[0]=0</text>
+    <rect x="140" y="118" width="52" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="166" y="135" text-anchor="middle" font-size="9.5" fill="#4a7a3a">pre[1]=1</text>
+    <rect x="200" y="118" width="52" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="226" y="135" text-anchor="middle" font-size="9.5" fill="#4a7a3a">pre[2]=3</text>
+    <rect x="260" y="118" width="52" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="286" y="135" text-anchor="middle" font-size="9.5" fill="#4a7a3a">pre[3]=6</text>
+    <rect x="320" y="118" width="52" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="346" y="135" text-anchor="middle" font-size="9.5" fill="#4a7a3a">pre[4]=8</text>
+
+    <path d="M346,148 Q256,180 172,148" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 3" marker-end="url(#arrr)"/>
+    <text x="256" y="184" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450">W(3) 的区间和 = pre[4] − pre[1] = 8 − 1 = 7</text>
+  </g>
+
+  <!-- ===== 中部：演算表 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="200" width="60" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="110" y="223" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">i</text>
+    <rect x="140" y="200" width="90" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="185" y="223" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">nums[i]</text>
+    <rect x="230" y="200" width="90" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="275" y="223" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">left[i]</text>
+    <rect x="320" y="200" width="90" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="365" y="223" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">right[i]</text>
+    <rect x="410" y="200" width="110" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="465" y="223" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">窗口 W(i)</text>
+    <rect x="520" y="200" width="100" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="570" y="223" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">区间和</text>
+    <rect x="620" y="200" width="200" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="720" y="223" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">候选值 = min × sum</text>
+
+    <rect x="80" y="236" width="60" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="110" y="262" text-anchor="middle" font-size="11.5" fill="#333">0</text>
+    <rect x="140" y="236" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="185" y="262" text-anchor="middle" font-size="11.5" fill="#333">1</text>
+    <rect x="230" y="236" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="275" y="262" text-anchor="middle" font-size="11.5" fill="#333">−1</text>
+    <rect x="320" y="236" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="365" y="262" text-anchor="middle" font-size="11.5" fill="#333">4</text>
+    <rect x="410" y="236" width="110" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="465" y="262" text-anchor="middle" font-size="11.5" fill="#333">[0,3]</text>
+    <rect x="520" y="236" width="100" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="570" y="262" text-anchor="middle" font-size="11.5" fill="#333">8</text>
+    <rect x="620" y="236" width="200" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="720" y="262" text-anchor="middle" font-size="11.5" fill="#333">1 × 8 = 8</text>
+
+    <rect x="80" y="278" width="60" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="110" y="304" text-anchor="middle" font-size="11.5" fill="#333">1</text>
+    <rect x="140" y="278" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="185" y="304" text-anchor="middle" font-size="11.5" fill="#333">2</text>
+    <rect x="230" y="278" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="275" y="304" text-anchor="middle" font-size="11.5" fill="#333">0</text>
+    <rect x="320" y="278" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="365" y="304" text-anchor="middle" font-size="11.5" fill="#333">3</text>
+    <rect x="410" y="278" width="110" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="465" y="304" text-anchor="middle" font-size="11.5" fill="#333">[1,2]</text>
+    <rect x="520" y="278" width="100" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="570" y="304" text-anchor="middle" font-size="11.5" fill="#333">5</text>
+    <rect x="620" y="278" width="200" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="720" y="304" text-anchor="middle" font-size="11.5" fill="#333">2 × 5 = 10</text>
+
+    <rect x="80" y="320" width="60" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="110" y="346" text-anchor="middle" font-size="11.5" fill="#333">2</text>
+    <rect x="140" y="320" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="185" y="346" text-anchor="middle" font-size="11.5" fill="#333">3</text>
+    <rect x="230" y="320" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="275" y="346" text-anchor="middle" font-size="11.5" fill="#333">1</text>
+    <rect x="320" y="320" width="90" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="365" y="346" text-anchor="middle" font-size="11.5" fill="#333">3</text>
+    <rect x="410" y="320" width="110" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="465" y="346" text-anchor="middle" font-size="11.5" fill="#333">[2,2]</text>
+    <rect x="520" y="320" width="100" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="570" y="346" text-anchor="middle" font-size="11.5" fill="#333">3</text>
+    <rect x="620" y="320" width="200" height="42" fill="#ffffff" stroke="#999" stroke-width="1"/>
+    <text x="720" y="346" text-anchor="middle" font-size="11.5" fill="#333">3 × 3 = 9</text>
+
+    <rect x="80" y="362" width="60" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="110" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333">3</text>
+    <rect x="140" y="362" width="90" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="185" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">2</text>
+    <rect x="230" y="362" width="90" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="275" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333">0</text>
+    <rect x="320" y="362" width="90" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="365" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333">4</text>
+    <rect x="410" y="362" width="110" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="465" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#4a7a3a">[1,3]</text>
+    <rect x="520" y="362" width="100" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="570" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333">7</text>
+    <rect x="620" y="362" width="200" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="720" y="388" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">2 × 7 = 14 ★</text>
+
+    <text x="450" y="424" text-anchor="middle" font-size="11" fill="#444">i=1 的窗口被右侧相等的 i=3 截断为 [1,2]；最右出现的 i=3 接管 [1,3]，贡献答案 14</text>
+    <text x="450" y="444" text-anchor="middle" font-size="11" fill="#888">最小值 1 的窗口最长（候选 8）却不是最优——窗口长 ≠ 乘积大，逐 i 比较不可省略</text>
+  </g>
+</svg>

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="470" fill="#fafafa"/>
+
+  <text x="450" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：两趟单调栈 + 前缀和，一趟统计</text>
+
+  <!-- ===== 左侧主流程 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="52" width="420" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="74" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">① 前缀和</text>
+    <text x="250" y="94" text-anchor="middle" font-size="11" fill="#333">pre[j] = nums[0..j−1] 之和（pre[0] = 0）</text>
+
+    <path d="M250,108 L250,124" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+
+    <rect x="40" y="128" width="420" height="70" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="150" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">② 正向扫描：求 left[i]</text>
+    <text x="250" y="170" text-anchor="middle" font-size="11" fill="#333">i 从 0 到 n−1，栈内下标的值严格递增</text>
+    <text x="250" y="188" text-anchor="middle" font-size="11" fill="#333">left[i] = 左侧第一个 &lt; nums[i] 的下标（栈空则 −1）</text>
+
+    <path d="M250,198 L250,214" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+
+    <rect x="40" y="222" width="420" height="70" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="244" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">③ 反向扫描：求 right[i]</text>
+    <text x="250" y="264" text-anchor="middle" font-size="11" fill="#333">i 从 n−1 到 0，栈内下标的值非降</text>
+    <text x="250" y="282" text-anchor="middle" font-size="11" fill="#333">right[i] = 右侧第一个 ≤ nums[i] 的下标（栈空则 n）</text>
+
+    <path d="M250,292 L250,308" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+
+    <rect x="40" y="316" width="420" height="70" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="250" y="338" text-anchor="middle" font-size="12" font-weight="bold" fill="#d6a040">④ 统计候选</text>
+    <text x="250" y="360" text-anchor="middle" font-size="11" fill="#333">ans = max nums[i] × (pre[right[i]] − pre[left[i]+1])</text>
+    <text x="250" y="378" text-anchor="middle" font-size="10.5" fill="#888">每个 i 恰好当一次最小值，n 个候选</text>
+
+    <path d="M250,386 L250,402" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+
+    <rect x="40" y="410" width="420" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="250" y="430" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a">⑤ 输出：ans mod (10⁹+7)</text>
+    <text x="250" y="450" text-anchor="middle" font-size="10.5" fill="#4a7a3a">先在原始值上取 max，最后一步才取模</text>
+  </g>
+
+  <!-- ===== 右侧：单调栈内层循环 ===== -->
+  <g filter="url(#rough2)">
+    <text x="680" y="58" text-anchor="middle" font-size="12" fill="#666">② 的内层循环（③ 镜像同理，弹栈条件取「&gt;」）</text>
+
+    <polygon points="505,150 600,112 695,150 600,188" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="600" y="146" text-anchor="middle" font-size="11" fill="#7a5a20">栈顶值 ≥ nums[i] ?</text>
+    <text x="600" y="164" text-anchor="middle" font-size="10" fill="#888">（栈空则视为否）</text>
+
+    <path d="M695,150 L736,150" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrb)"/>
+    <text x="716" y="142" text-anchor="middle" font-size="10.5" fill="#b85450">是</text>
+    <rect x="740" y="130" width="110" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="795" y="155" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">弹出栈顶</text>
+    <path d="M795,130 L795,100 L600,100 L600,106" fill="none" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arrb)"/>
+
+    <path d="M600,188 L600,206" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrg)"/>
+    <text x="612" y="202" font-size="10.5" fill="#4a7a3a">否</text>
+    <rect x="515" y="210" width="170" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="600" y="235" text-anchor="middle" font-size="11" fill="#4a7a3a">left[i] ← 栈顶（空则 −1）</text>
+
+    <path d="M600,250 L600,268" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arrb)"/>
+    <rect x="515" y="272" width="170" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="600" y="297" text-anchor="middle" font-size="11" fill="#446688">i 入栈 → 处理下一个 i</text>
+  </g>
+
+  <!-- ===== 右下：演算面板 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="490" y="330" width="380" height="130" rx="10" fill="#fffdf3" stroke="#9e9e9e" stroke-width="1.3" stroke-dasharray="5 3"/>
+    <text x="680" y="354" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5a20">演算：nums = [1,2,3,2] 求 left[3]</text>
+
+    <text x="680" y="378" text-anchor="middle" font-size="11" fill="#333">栈（底→顶）值：1、2、3，处理 i=3（值 2）</text>
+    <text x="680" y="400" text-anchor="middle" font-size="11" fill="#333">3 ≥ 2 <tspan fill="#b85450" font-weight="bold">弹 3</tspan>；2 ≥ 2 <tspan fill="#b85450" font-weight="bold">弹 2</tspan>；1 &lt; 2 <tspan fill="#4a7a3a" font-weight="bold">停</tspan></text>
+    <text x="680" y="424" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">left[3] = 栈顶下标 0，随后 3 入栈</text>
+    <text x="680" y="446" text-anchor="middle" font-size="10" fill="#888">每个下标至多入栈、出栈各一次，均摊 O(1)</text>
+  </g>
+</svg>
