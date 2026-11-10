@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="500" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">核心观察：mask 编码「已分配元素」+ 一步填一个「合法组」</text>
+  <text x="280" y="50" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">n ≤ 16 是状压甜区；把「选一个完整组」当作原子转移，组内约束在预处理一次查完</text>
+
+  <!-- ===== A. 数组 + mask 高亮 ===== -->
+  <text x="60" y="84" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">① mask 的第 i 位 = 1 ⟺ nums[i] 已分入某组</text>
+
+  <text x="60" y="112" font-size="10.5" fill="#888" filter="url(#rough2)">下标 i:</text>
+  <rect x="120" y="94" width="44" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="142" y="116" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="170" y="94" width="44" height="34" rx="4" fill="#ffffff" stroke="#bbb" stroke-width="1.3" stroke-dasharray="4,3" filter="url(#rough2)"/>
+  <text x="192" y="116" text-anchor="middle" font-size="13" fill="#999" filter="url(#rough2)">2</text>
+  <rect x="220" y="94" width="44" height="34" rx="4" fill="#ffffff" stroke="#bbb" stroke-width="1.3" stroke-dasharray="4,3" filter="url(#rough2)"/>
+  <text x="242" y="116" text-anchor="middle" font-size="13" fill="#999" filter="url(#rough2)">1</text>
+  <rect x="270" y="94" width="44" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="292" y="116" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">4</text>
+
+  <!-- bit string under cells -->
+  <text x="142" y="145" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">位3 = 1</text>
+  <text x="192" y="145" text-anchor="middle" font-size="10.5" fill="#bbb" filter="url(#rough2)">0</text>
+  <text x="242" y="145" text-anchor="middle" font-size="10.5" fill="#bbb" filter="url(#rough2)">0</text>
+  <text x="292" y="145" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">位0 = 1</text>
+  <text x="380" y="122" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">mask = 1001₂</text>
+  <text x="380" y="140" font-size="10" fill="#888" filter="url(#rough2)">已分配下标 {0, 3}（值 1 与 4）</text>
+
+  <text x="60" y="172" font-size="11" fill="#666" filter="url(#rough2)">dp[mask] = 把 mask 里的元素分完，已产生的最小不兼容性和</text>
+
+  <!-- ===== B. 合法组定义 ===== -->
+  <rect x="60" y="188" width="440" height="60" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="210" font-size="12" fill="#7a5415" font-weight="bold" filter="url(#rough2)">② 合法组 g：大小恰为 m = n/k，且组内值互不相同</text>
+  <text x="76" y="230" font-size="11" fill="#666" filter="url(#rough2)">代价 inc[g] = max − min（组内最大值 − 最小值）</text>
+  <text x="76" y="244" font-size="10.5" fill="#999" filter="url(#rough2)">合法组共 C(n,m) 个候选，预处理时用位掩码查重并算好 inc</text>
+
+  <!-- ===== C. 两个候选组对比 ===== -->
+  <text x="60" y="278" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">③ 从剩余元素里选一个组 g（g ∩ mask = ∅）</text>
+
+  <!-- good group {1,2} values {2,1} -->
+  <rect x="70" y="292" width="40" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="90" y="312" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">2</text>
+  <rect x="116" y="292" width="40" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="136" y="312" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="172" y="306" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">下标 {1,2}</text>
+  <text x="172" y="322" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">值互异 ✓ inc = 2−1 = 1</text>
+
+  <path d="M 280,308 L 320,308" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- bad group {0,2} values {1,1} -->
+  <rect x="340" y="292" width="40" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="360" y="312" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="386" y="292" width="40" height="30" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="406" y="312" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">1</text>
+  <text x="442" y="306" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">下标 {0,2}</text>
+  <text x="442" y="322" font-size="10.5" fill="#b85450" filter="url(#rough2)">值重复 ✗ 预处理剔除</text>
+
+  <!-- ===== D. 转移式 ===== -->
+  <rect x="60" y="344" width="440" height="54" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="366" font-size="11.5" fill="#2b4a6e" font-weight="bold" filter="url(#rough2)">④ 转移：给 mask「装上」一个合法组 g</text>
+  <text x="76" y="388" font-size="12" fill="#333" filter="url(#rough2)">dp[mask ∪ g] = min( dp[mask ∪ g],  dp[mask] + inc[g] )</text>
+
+  <!-- ===== E. 低位固定去重 ===== -->
+  <rect x="60" y="414" width="440" height="66" rx="8" fill="#ffffff" stroke="#b85450" stroke-width="1.3" stroke-dasharray="5,3" filter="url(#rough2)"/>
+  <text x="76" y="436" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">⑤ 去重关键：固定最低未选位 b = ctz(¬mask)</text>
+  <text x="76" y="454" font-size="10.5" fill="#666" filter="url(#rough2)">只枚举「包含 b」的合法组。b 是剩余元素里最小的下标，任何划分中它必属</text>
+  <text x="76" y="470" font-size="10.5" fill="#666" filter="url(#rough2)">于某组——固定其归属，同一划分不会被按 k! 种组序重复计数。</text>
+</svg>

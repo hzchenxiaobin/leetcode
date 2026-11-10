@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 620"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="620" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：预处理合法组分桶 → 低位固定状压 DP</text>
+
+  <!-- ===== 阶段零：剪枝 ===== -->
+  <rect x="60" y="52" width="440" height="58" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5,3" filter="url(#rough2)"/>
+  <text x="76" y="74" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">第 0 步 · 无解剪枝（充要）</text>
+  <text x="76" y="94" font-size="10.5" fill="#666" filter="url(#rough2)">统计各值频次，若某值出现 &gt; k 次 ⟹ 鸽笼必有一组含重复，直接返回 −1</text>
+  <text x="76" y="104" font-size="9.5" fill="#999" filter="url(#rough2)">（不剪也行，DP 会以 dp[full] = ∞ 兜底返回 −1，剪枝只是省时间）</text>
+
+  <path d="M 280,110 L 280,130" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ===== 阶段一：预处理 ===== -->
+  <rect x="60" y="134" width="440" height="120" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="76" y="158" font-size="12.5" fill="#2b4a6e" font-weight="bold" filter="url(#rough2)">阶段一 · 预处理合法组并按最低位分桶</text>
+
+  <rect x="84" y="172" width="180" height="32" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="174" y="193" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">枚举 C(n,m) 个大小 m 的下标子集</text>
+  <path d="M 264,188 L 296,188" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="300" y="172" width="180" height="32" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="390" y="187" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">seen 位掩码查组内重复值</text>
+  <text x="390" y="199" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">重复 ⟹ 整组丢弃</text>
+
+  <rect x="84" y="214" width="180" height="32" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="174" y="235" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">inc = max − min 一并算好</text>
+  <path d="M 264,230 L 296,230" stroke="#446688" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="300" y="214" width="180" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="390" y="235" text-anchor="middle" font-size="10.5" fill="#2b4a6e" font-weight="bold" filter="url(#rough2)">存入 groups[b]，b = 组最低位</text>
+
+  <path d="M 280,254 L 280,274" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ===== 阶段二：DP ===== -->
+  <rect x="60" y="278" width="440" height="252" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="76" y="302" font-size="12.5" fill="#7a5415" font-weight="bold" filter="url(#rough2)">阶段二 · 状压 DP（mask 从 0 到 2ⁿ−1 递增扫）</text>
+
+  <rect x="84" y="316" width="392" height="30" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="280" y="336" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">dp[0] = 0，其余 dp[·] = ∞；for mask = 0 … 2ⁿ−1</text>
+
+  <path d="M 280,346 L 280,364" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision diamond -->
+  <polygon points="280,368 360,394 280,420 200,394" fill="#ffffff" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="391" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">dp[mask] = ∞ ？</text>
+  <text x="280" y="403" text-anchor="middle" font-size="9.5" fill="#333" filter="url(#rough2)">rest = 0 ？</text>
+
+  <text x="368" y="390" font-size="9.5" fill="#b85450" filter="url(#rough2)">是 ⟹ 跳过</text>
+  <path d="M 280,420 L 280,442" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="290" y="436" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">否</text>
+
+  <rect x="84" y="446" width="392" height="30" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="280" y="466" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">b = ctz(¬mask)（最低未选位）——只看桶 groups[b]</text>
+
+  <path d="M 280,476 L 280,494" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="84" y="498" width="392" height="30" rx="4" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="280" y="518" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">遍历 (g, inc)：若 g &amp; mask = 0 ⟹ dp[mask ∪ g] ↓ dp[mask] + inc</text>
+
+  <path d="M 280,530 L 280,548" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ===== 输出 ===== -->
+  <rect x="60" y="552" width="440" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="572" text-anchor="middle" font-size="11.5" fill="#2e5e2e" font-weight="bold" filter="url(#rough2)">返回 dp[2ⁿ−1]；若仍为 ∞ 则返回 −1</text>
+  <text x="280" y="590" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">可达 mask 的 popcount 必为 m 的倍数，实际状态远少于 2ⁿ</text>
+</svg>
