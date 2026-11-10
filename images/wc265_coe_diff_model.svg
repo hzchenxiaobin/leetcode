@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+    <marker id="arg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/></marker>
+  </defs>
+  <rect width="640" height="480" fill="#fdfcf7"/>
+  <text x="320" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">核心观察：两条编码串「同步消费」同一条原串，只需维护差值 k</text>
+  <path d="M 110 38 Q 320 48 530 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- top example: original string with two token tilings -->
+  <text x="30" y="62" font-size="11.5" fill="#888">示例：原串 T = "leetcode"（内容无需还原，只看两边各自消费了哪一段）</text>
+
+  <!-- s1 token row -->
+  <g filter="url(#sk)">
+    <rect x="71" y="78" width="28" height="22" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="113" y="78" width="28" height="22" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="160" y="78" width="60" height="22" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="260" y="78" width="70" height="22" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="365" y="78" width="28" height="22" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <g font-size="11" fill="#2b4a6b" text-anchor="middle">
+    <text x="85" y="93" filter="url(#sk)">l</text>
+    <text x="127" y="93" filter="url(#sk)">1</text>
+    <text x="190" y="93" filter="url(#sk)">2</text>
+    <text x="295" y="93" filter="url(#sk)">3</text>
+    <text x="379" y="93" filter="url(#sk)">e</text>
+  </g>
+  <text x="38" y="93" font-size="11" font-weight="bold" fill="#446688" filter="url(#sk)">s1:</text>
+  <path d="M 85 100 L 85 120" stroke="#446688" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 127 100 L 127 120" stroke="#446688" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 163 100 L 151 120" stroke="#446688" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 217 100 L 229 120" stroke="#446688" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 263 100 L 235 120" stroke="#446688" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 327 100 L 355 120" stroke="#446688" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 379 100 L 379 120" stroke="#446688" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+
+  <!-- original string cells -->
+  <g filter="url(#sk)">
+    <rect x="64" y="122" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="106" y="122" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="148" y="122" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="190" y="122" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="232" y="122" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="274" y="122" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="316" y="122" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="358" y="122" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <g font-size="14" fill="#333" text-anchor="middle">
+    <text x="85" y="143" filter="url(#sk)">l</text>
+    <text x="127" y="143" filter="url(#sk)">e</text>
+    <text x="169" y="143" filter="url(#sk)">e</text>
+    <text x="211" y="143" filter="url(#sk)">t</text>
+    <text x="253" y="143" filter="url(#sk)">c</text>
+    <text x="295" y="143" filter="url(#sk)">o</text>
+    <text x="337" y="143" filter="url(#sk)">d</text>
+    <text x="379" y="143" filter="url(#sk)">e</text>
+  </g>
+
+  <!-- s2 token row -->
+  <g filter="url(#sk)">
+    <rect x="115" y="170" width="66" height="22" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="283" y="170" width="66" height="22" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <g font-size="11" fill="#2e6e2e" text-anchor="middle">
+    <text x="148" y="185" filter="url(#sk)">4</text>
+    <text x="316" y="185" filter="url(#sk)">4</text>
+  </g>
+  <text x="38" y="185" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">s2:</text>
+  <path d="M 121 170 L 67 158" stroke="#4a7a3a" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 175 170 L 229 158" stroke="#4a7a3a" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 289 170 L 235 158" stroke="#4a7a3a" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+  <path d="M 343 170 L 397 158" stroke="#4a7a3a" stroke-width="1" stroke-dasharray="3,2" filter="url(#sk)"/>
+
+  <!-- right annotation -->
+  <g filter="url(#sk)"><rect x="424" y="70" width="192" height="112" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.4"/></g>
+  <g font-size="10.5" fill="#555">
+    <text x="436" y="92" font-size="12" font-weight="bold" fill="#8a5f14" filter="url(#sk)">编码的本质</text>
+    <text x="436" y="114" filter="url(#sk)">字母 token：恰消费 1 个原字符，</text>
+    <text x="448" y="130" filter="url(#sk)">并「声明」其内容</text>
+    <text x="436" y="150" filter="url(#sk)">数字 token：消费 v 个原字符，</text>
+    <text x="448" y="166" filter="url(#sk)">内容完全未知</text>
+  </g>
+  <text x="232" y="212" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#sk)">s1 消费 1+1+2+3+1 = 8，s2 消费 4+4 = 8 —— 同一条原串 ⇒ 两边消费总数必须相等</text>
+
+  <!-- state definition -->
+  <g filter="url(#sk)"><rect x="30" y="222" width="580" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <g font-size="12.5" fill="#2b4a6b">
+    <text x="320" y="242" text-anchor="middle" font-weight="bold" filter="url(#sk)">状态 dfs(i, j, k)：i、j 为双指针</text>
+    <text x="320" y="260" text-anchor="middle" filter="url(#sk)">k = s1 已消费的原串字符数 − s2 已消费数（可正可负）</text>
+  </g>
+
+  <!-- three cases -->
+  <g filter="url(#sk)"><rect x="30" y="282" width="182" height="102" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <g font-size="10.5" fill="#444">
+    <text x="121" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">k = 0：齐头并进</text>
+    <text x="121" y="326" text-anchor="middle" filter="url(#sk)">双方指向同一原字符</text>
+    <text x="121" y="344" text-anchor="middle" filter="url(#sk)">双字母 → 必须相等才前进</text>
+    <text x="121" y="362" text-anchor="middle" filter="url(#sk)">涉及数字 → 产生新差值</text>
+  </g>
+  <g filter="url(#sk)"><rect x="229" y="282" width="182" height="102" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <g font-size="10.5" fill="#444">
+    <text x="320" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6b" filter="url(#sk)">k &gt; 0：s1 领先</text>
+    <text x="320" y="326" text-anchor="middle" filter="url(#sk)">s1 冻结，只有 s2 能动</text>
+    <text x="320" y="344" text-anchor="middle" filter="url(#sk)">s2 字母 → k−1</text>
+    <text x="320" y="362" text-anchor="middle" filter="url(#sk)">s2 数字（解析值 v）→ k−v</text>
+  </g>
+  <g filter="url(#sk)"><rect x="428" y="282" width="182" height="102" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <g font-size="10.5" fill="#444">
+    <text x="519" y="304" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a5f14" filter="url(#sk)">k &lt; 0：s2 领先</text>
+    <text x="519" y="326" text-anchor="middle" filter="url(#sk)">s2 冻结，只有 s1 能动</text>
+    <text x="519" y="344" text-anchor="middle" filter="url(#sk)">s1 字母 → k+1</text>
+    <text x="519" y="362" text-anchor="middle" filter="url(#sk)">s1 数字（解析值 v）→ k+v</text>
+  </g>
+
+  <!-- key insight -->
+  <g filter="url(#sk)"><rect x="30" y="398" width="580" height="72" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/></g>
+  <g font-size="10.5" fill="#555">
+    <text x="320" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a" filter="url(#sk)">为什么状态 (i, j, k) 里一个字符都不用记？</text>
+    <text x="320" y="440" text-anchor="middle" filter="url(#sk)">领先只能由数字造成 ⇒ 领先的 |k| 个原字符内容未知，追赶方用任何字母声明都不矛盾</text>
+    <text x="320" y="458" text-anchor="middle" filter="url(#sk)">两个字母声明同一位置只会发生在 k=0 双字母转移 ⇒ 当场比较一次即可</text>
+  </g>
+</svg>
