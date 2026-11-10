@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 546" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="546" fill="#fafafa"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：两个并查集 · 三遍扫描</text>
+  <path d="M 190 42 Q 320 50 450 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="200" y="58" width="240" height="34" rx="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="320" y="80" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a66">初始化 faA、faB：各 n 个独立分量</text>
+  </g>
+  <path d="M 320 92 L 320 104" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="56" y="106" width="528" height="88" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="320" y="130" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a5a10">第一遍 · 只扫类型 3（公共边）</text>
+    <text x="320" y="152" text-anchor="middle" font-size="11" fill="#333">每条 (u,v)：在 faA 与 faB 里各做一次 union（两次都执行，防短路）</text>
+    <text x="320" y="172" text-anchor="middle" font-size="11" fill="#333">任一成功 → keep++（保留）；都失败 → 两边都已连通，可删</text>
+  </g>
+  <path d="M 320 194 L 320 206" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="56" y="208" width="528" height="70" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="320" y="230" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a66">第二遍 · 类型 1（Alice 专属边）</text>
+    <text x="320" y="250" text-anchor="middle" font-size="11" fill="#333">只在 faA 里 union：成功 → keep++；失败 → 对 Alice 冗余，可删</text>
+    <text x="320" y="266" text-anchor="middle" font-size="10.5" fill="#888">扫完若 faA 分量数 &gt; 1 → Alice 无法全连通</text>
+  </g>
+  <path d="M 320 278 L 320 290" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="56" y="292" width="528" height="70" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="320" y="314" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b5a20">第二遍 · 类型 2（Bob 专属边）</text>
+    <text x="320" y="334" text-anchor="middle" font-size="11" fill="#333">只在 faB 里 union：成功 → keep++；失败 → 对 Bob 冗余，可删</text>
+    <text x="320" y="350" text-anchor="middle" font-size="10.5" fill="#888">扫完若 faB 分量数 &gt; 1 → Bob 无法全连通</text>
+  </g>
+  <path d="M 320 362 L 320 374" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <polygon points="320,378 470,430 320,482 170,430" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="320" y="424" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">faA、faB 都只剩</text>
+    <text x="320" y="442" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">1 个分量？</text>
+
+    <path d="M 474 430 L 488 430" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrR)"/>
+    <text x="482" y="423" text-anchor="middle" font-size="10.5" fill="#b85450">否</text>
+    <rect x="494" y="408" width="134" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="561" y="426" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">return −1</text>
+    <text x="561" y="444" text-anchor="middle" font-size="10" fill="#b85450">有人到不了所有点</text>
+
+    <path d="M 320 482 L 320 494" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)"/>
+    <text x="330" y="492" text-anchor="middle" font-size="10.5" fill="#4a7a3a">是</text>
+    <rect x="200" y="498" width="240" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="320" y="521" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a20">return m − keep（删除数最大）</text>
+  </g>
+</svg>
