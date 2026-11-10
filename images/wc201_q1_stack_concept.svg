@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 490" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="490" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：删除会「挤出新邻居」，栈一趟解决级联</text>
+
+  <g filter="url(#rough2)">
+    <text x="20" y="56" font-size="13" font-weight="bold" fill="#446688">① 级联效应：为什么不能只删一对</text>
+
+    <rect x="190" y="66" width="34" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="207" y="88" text-anchor="middle" font-size="14" fill="#333">a</text>
+    <rect x="232" y="66" width="34" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="249" y="88" text-anchor="middle" font-size="14" fill="#8a3a36">b</text>
+    <rect x="274" y="66" width="34" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="291" y="88" text-anchor="middle" font-size="14" fill="#8a3a36">B</text>
+    <rect x="316" y="66" width="34" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="333" y="88" text-anchor="middle" font-size="14" fill="#333">A</text>
+
+    <path d="M 240 106 Q 273 120 306 106" stroke="#b85450" stroke-width="1.5" fill="none"/>
+    <text x="273" y="134" text-anchor="middle" font-size="11.5" fill="#b85450">坏对 bB（|b − B| = 32）</text>
+
+    <path d="M 273 140 C 273 148 273 154 273 160" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <text x="284" y="155" font-size="11" fill="#555">删掉 bB</text>
+
+    <rect x="232" y="164" width="34" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="249" y="186" text-anchor="middle" font-size="14" fill="#8a3a36">a</text>
+    <rect x="274" y="164" width="34" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="291" y="186" text-anchor="middle" font-size="14" fill="#8a3a36">A</text>
+
+    <text x="273" y="216" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450">a 与 A 被挤到一起 → 新坏对！</text>
+
+    <path d="M 273 222 C 273 230 273 236 273 242" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <text x="284" y="237" font-size="11" fill="#555">再删</text>
+
+    <rect x="239" y="246" width="68" height="32" rx="4" fill="none" stroke="#888" stroke-width="1.2" stroke-dasharray="5 4"/>
+    <text x="273" y="267" text-anchor="middle" font-size="12" fill="#888">（空）</text>
+    <text x="322" y="267" font-size="11" fill="#666">空串也是合法答案</text>
+
+    <path d="M 20 292 L 620 292" stroke="#ddd" stroke-width="1" stroke-dasharray="2 5"/>
+
+    <text x="20" y="318" font-size="13" font-weight="bold" fill="#4a7a3a">② 栈视角：新字符只与栈顶比较</text>
+
+    <rect x="110" y="336" width="36" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="128" y="360" text-anchor="middle" font-size="14" fill="#2b4a66">e</text>
+    <rect x="110" y="376" width="36" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="128" y="400" text-anchor="middle" font-size="14" fill="#2b4a66">l</text>
+    <text x="100" y="360" text-anchor="end" font-size="11" fill="#446688">栈</text>
+    <text x="152" y="352" font-size="11" font-weight="bold" fill="#b85450">← 顶</text>
+
+    <ellipse cx="250" cy="354" rx="17" ry="17" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="250" y="359" text-anchor="middle" font-size="14" fill="#b07818">E</text>
+    <text x="250" y="390" text-anchor="middle" font-size="10.5" fill="#888">新来的字符</text>
+
+    <path d="M 231 354 C 205 354 185 354 152 354" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <text x="192" y="346" text-anchor="middle" font-size="10.5" fill="#555">与顶比较</text>
+
+    <rect x="330" y="332" width="288" height="46" rx="8" fill="none" stroke="#d6a040" stroke-width="1.3" stroke-dasharray="6 4"/>
+    <text x="474" y="350" text-anchor="middle" font-size="12" fill="#b07818">|e − E| = 32 ？</text>
+    <text x="474" y="368" text-anchor="middle" font-size="11" fill="#b07818">同字母异大小写 → 是坏对</text>
+
+    <path d="M 474 378 C 474 384 474 388 474 392" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="330" y="396" width="288" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="474" y="415" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">弹出 e，E 不入栈</text>
+    <text x="474" y="433" text-anchor="middle" font-size="11" fill="#8a3a36">（这对字符一起消失）</text>
+
+    <text x="110" y="458" font-size="11.5" font-weight="bold" fill="#4a7a3a">弹出后新栈顶 l 自动暴露</text>
+    <text x="110" y="476" font-size="11" fill="#555">→ 下一个字符直接与 l 比较，级联免费获得，无需回头扫描</text>
+  </g>
+</svg>
