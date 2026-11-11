@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="21" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="620" height="500" fill="#fafafa"/>
+  <text x="310" y="26" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#333" filter="url(#r)">一趟扫描流程：差分求 d，在线维护 (bestDur, bestKey)</text>
+  <path d="M 110 34 Q 310 42 510 34" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- start -->
+  <g filter="url(#r)">
+    <rect x="130" y="52" width="240" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="72" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold" fill="#2b4a6e" filter="url(#r)">bestDur ← releaseTimes[0]</text>
+  <text x="250" y="90" text-anchor="middle" font-size="10" fill="#446688" filter="url(#r)">bestKey ← keysPressed[0]（第 0 键直接作初值）</text>
+  <path d="M 250 98 L 250 112" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+
+  <!-- diamond 1: loop condition -->
+  <g filter="url(#r)">
+    <polygon points="250,118 350,152 250,186 150,152" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="148" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6a1a" filter="url(#r)">还有键 i ？</text>
+  <text x="250" y="166" text-anchor="middle" font-size="10" fill="#8a6a1a" filter="url(#r)">（1 ≤ i ≤ n−1）</text>
+
+  <!-- exit: return -->
+  <path d="M 350 152 L 428 152" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+  <text x="388" y="143" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">否</text>
+  <g filter="url(#r)">
+    <rect x="432" y="124" width="152" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="508" y="147" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#r)">返回 bestKey</text>
+  <text x="508" y="166" text-anchor="middle" font-size="9.5" fill="#2e6e2e" filter="url(#r)">（时长并列时字母最大者）</text>
+
+  <!-- yes: compute d -->
+  <path d="M 250 186 L 250 200" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+  <text x="262" y="198" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#r)">是</text>
+  <g filter="url(#r)">
+    <rect x="140" y="204" width="220" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="224" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold" fill="#2b4a6e" filter="url(#r)">d = releaseTimes[i]</text>
+  <text x="250" y="242" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold" fill="#2b4a6e" filter="url(#r)">    − releaseTimes[i−1]</text>
+  <path d="M 250 252 L 250 266" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+
+  <!-- diamond 2: compound comparison -->
+  <g filter="url(#r)">
+    <polygon points="250,272 390,312 250,352 110,312" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="304" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a1a" filter="url(#r)">d &gt; bestDur 或</text>
+  <text x="250" y="320" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a1a" filter="url(#r)">（d == bestDur 且</text>
+  <text x="250" y="336" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a1a" filter="url(#r)">keys[i] &gt; bestKey）？</text>
+
+  <!-- yes: update -->
+  <path d="M 390 312 L 424 312" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+  <text x="406" y="303" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#r)">是</text>
+  <g filter="url(#r)">
+    <rect x="428" y="284" width="164" height="60" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="510" y="305" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold" fill="#2e6e2e" filter="url(#r)">bestDur ← d</text>
+  <text x="510" y="322" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold" fill="#2e6e2e" filter="url(#r)">bestKey ← keys[i]</text>
+  <text x="510" y="338" text-anchor="middle" font-size="9" fill="#2e6e2e" filter="url(#r)">（更长覆盖；并列换键）</text>
+
+  <!-- no: skip, loop back -->
+  <path d="M 250 352 L 250 400" stroke="#8a8a8a" stroke-width="1.6" fill="none" filter="url(#r)"/>
+  <text x="262" y="372" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">否，跳过</text>
+  <path d="M 510 344 L 510 400" stroke="#8a8a8a" stroke-width="1.6" fill="none" filter="url(#r)"/>
+  <path d="M 510 400 L 66 400 L 66 152 L 146 152" stroke="#8a8a8a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <text x="289" y="422" text-anchor="middle" font-size="11" fill="#666" filter="url(#r)">i++，继续扫描</text>
+
+  <!-- bottom note -->
+  <g filter="url(#r)">
+    <rect x="40" y="440" width="566" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="60" y="462" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">唯一的高频 WA：并列分支</text>
+  <text x="60" y="478" font-size="11" fill="#444" filter="url(#r)">漏掉「并列且字母更大 → 换键」这一半 → 示例 1 错返 'b'；误写成单条件 d ≥ bestDur → 错拿“最后按的键”。</text>
+</svg>

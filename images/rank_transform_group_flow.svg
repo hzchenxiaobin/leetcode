@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="720" viewBox="0 0 940 720" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arK" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#2b2b2b"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="720" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">算法流程：按值升序，每组「重置 → 连边 → 分组 → 定秩 → 落笔」</text>
+  <path d="M 250 44 Q 470 52 690 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== main flow (left) ===== -->
+  <g filter="url(#sk)">
+    <rect x="90" y="70" width="380" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="97" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">收集：map&lt;值 v → 格子列表&gt;（遍历自动升序）</text>
+
+  <path d="M 280,114 L 280,136" fill="none" stroke="#2b2b2b" stroke-width="1.8" marker-end="url(#arK)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="90" y="140" width="380" height="44" rx="8" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.4"/>
+  </g>
+  <text x="280" y="167" text-anchor="middle" font-size="12.5" fill="#333">取最小未处理的值 v 的格子组</text>
+
+  <path d="M 280,184 L 280,206" fill="none" stroke="#2b2b2b" stroke-width="1.8" marker-end="url(#arK)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="90" y="210" width="380" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="237" text-anchor="middle" font-size="11.5" fill="#333">重置：组内每个 (i,j) 置 parent[i]=i、parent[m+j]=m+j</text>
+
+  <path d="M 280,254 L 280,276" fill="none" stroke="#2b2b2b" stroke-width="1.8" marker-end="url(#arK)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="90" y="280" width="380" height="44" rx="8" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.4"/>
+  </g>
+  <text x="280" y="307" text-anchor="middle" font-size="12.5" fill="#333">连边：每个 (i,j) 执行 union(行 i, 列 m+j)</text>
+
+  <path d="M 280,324 L 280,346" fill="none" stroke="#2b2b2b" stroke-width="1.8" marker-end="url(#arK)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="90" y="350" width="380" height="44" rx="8" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.4"/>
+  </g>
+  <text x="280" y="377" text-anchor="middle" font-size="12.5" fill="#333">分组：按 find(行 i) 的根把格子归入连通分量</text>
+
+  <path d="M 280,394 L 280,416" fill="none" stroke="#2b2b2b" stroke-width="1.8" marker-end="url(#arK)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="90" y="420" width="380" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="440" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e5a24">定秩：每分量 rank ← 1 + max(rowMax[i], colMax[j])</text>
+  <text x="280" y="457" text-anchor="middle" font-size="10" fill="#4a7a3a">（对分量内所有格子取 max，先算后写）</text>
+
+  <path d="M 280,464 L 280,486" fill="none" stroke="#2b2b2b" stroke-width="1.8" marker-end="url(#arK)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="90" y="490" width="380" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="510" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e5a24">落笔：ans[i][j] ← rank</text>
+  <text x="280" y="527" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e5a24">并更新 rowMax[i] = colMax[j] = rank</text>
+
+  <path d="M 280,534 L 280,548" fill="none" stroke="#2b2b2b" stroke-width="1.8" marker-end="url(#arK)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <ellipse cx="280" cy="590" rx="140" ry="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="596" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a3a36">还有未处理的值组？</text>
+
+  <path d="M 424,590 L 505,590 L 505,162 L 476,162" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arG)" filter="url(#sk)"/>
+  <text x="440" y="578" font-size="12" font-weight="bold" fill="#2e6e2e">是</text>
+
+  <path d="M 280,628 L 280,650" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arK)" filter="url(#sk)"/>
+  <text x="296" y="646" font-size="12" font-weight="bold" fill="#b85450">否</text>
+
+  <g filter="url(#sk)">
+    <rect x="90" y="654" width="380" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="681" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e">返回 ans</text>
+
+  <!-- ===== side notes (right) ===== -->
+  <g filter="url(#sk)">
+    <rect x="560" y="140" width="350" height="170" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="580" y="166" font-size="12" font-weight="bold" fill="#7a5415">⚠ 为什么每组要重置？</text>
+  <text x="580" y="190" font-size="11" fill="#444">同秩约束只在等值格子间成立；不同值之间</text>
+  <text x="580" y="208" font-size="11" fill="#444">是大小关系，由 rowMax / colMax 承载。若跨</text>
+  <text x="580" y="226" font-size="11" fill="#444">组共用并查集，值 2 连起来的行列会把值 3</text>
+  <text x="580" y="244" font-size="11" fill="#444">错吸进同一分量 → 同秩，</text>
+  <text x="580" y="266" font-size="11" font-weight="bold" fill="#7a2828">直接违反「3 &gt; 2 ⟹ rank(3) &gt; rank(2)」。</text>
+
+  <g filter="url(#sk)">
+    <rect x="560" y="340" width="350" height="150" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="580" y="366" font-size="12" font-weight="bold" fill="#2e5a24">✓ 分量隔离（引理 2）</text>
+  <text x="580" y="390" font-size="11" fill="#444">同一值的不同分量触达的行/列两两不交：</text>
+  <text x="580" y="408" font-size="11" fill="#444">一个分量更新 rowMax / colMax 不会抬高</text>
+  <text x="580" y="426" font-size="11" fill="#444">另一分量的下界。因此各分量「同时」取</text>
+  <text x="580" y="448" font-size="11" font-weight="bold" fill="#2e6e2e">下界互不冲突，处理顺序无关紧要。</text>
+
+  <g filter="url(#sk)">
+    <rect x="560" y="520" width="350" height="150" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="580" y="546" font-size="12" font-weight="bold" fill="#8a3a36">✗ 分量内必须「先算后写」</text>
+  <text x="580" y="570" font-size="11" fill="#444">整分量统一落秩、统一更新下界；边写边算</text>
+  <text x="580" y="588" font-size="11" fill="#444">会让同分量的后续格子读到被自己人抬高</text>
+  <text x="580" y="606" font-size="11" fill="#444">的下界——等价于退化为逐格贪心，</text>
+  <text x="580" y="628" font-size="11" font-weight="bold" fill="#8a3a36">见题解 §3.1 的翻车现场。</text>
+</svg>

@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c07a20"/>
+    </marker>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="940" height="640" fill="#fdfcf7"/>
+  <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">等值传染与行列并查集：一个连通分量，一个秩</text>
+  <path d="M 250 44 Q 470 52 690 44" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: contagion chain ===== -->
+  <text x="40" y="84" font-size="13" font-weight="bold" fill="#2b6e9e">① 等值格子会「传染」——同秩约束跨越行列传递</text>
+
+  <g filter="url(#sk)"><rect x="90" y="116" width="76" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <g filter="url(#sk)"><rect x="168" y="116" width="76" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <g filter="url(#sk)"><rect x="246" y="116" width="76" height="56" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="90" y="174" width="76" height="56" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="168" y="174" width="76" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <g filter="url(#sk)"><rect x="246" y="174" width="76" height="56" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="90" y="232" width="76" height="56" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="168" y="232" width="76" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/></g>
+  <g filter="url(#sk)"><rect x="246" y="232" width="76" height="56" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+
+  <text x="128" y="150" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">5</text>
+  <text x="206" y="150" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">5</text>
+  <text x="284" y="150" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">6</text>
+  <text x="128" y="208" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">2</text>
+  <text x="206" y="208" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">5</text>
+  <text x="284" y="208" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">8</text>
+  <text x="128" y="266" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">3</text>
+  <text x="206" y="266" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">5</text>
+  <text x="284" y="266" text-anchor="middle" font-size="15" font-weight="bold" fill="#333">9</text>
+
+  <path d="M 132,136 Q 167,124 202,136" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="167" y="122" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450">同行 → 同秩</text>
+  <path d="M 214,152 Q 228,177 214,196" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="244" y="180" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450">同列 → 同秩</text>
+  <path d="M 214,210 Q 228,235 214,254" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="244" y="238" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450">同列 → 同秩</text>
+
+  <text x="40" y="316" font-size="11.5" fill="#444">(0,0) 与 (2,1) 既不同行、也不同列，</text>
+  <text x="40" y="336" font-size="11.5" fill="#7a2828" font-weight="bold">却经由 5-链被绑成同秩！其余值互不相等，不受影响。</text>
+
+  <!-- ===== Panel 2: bipartite model ===== -->
+  <text x="490" y="84" font-size="13" font-weight="bold" fill="#2b6e9e">② 建模：行、列作节点，每个格子是一条边</text>
+
+  <path d="M 580,120 L 830,120" stroke="#d6a040" stroke-width="2.2" filter="url(#sk)"/>
+  <path d="M 576,134 L 832,186" stroke="#d6a040" stroke-width="2.2" filter="url(#sk)"/>
+  <path d="M 580,198 L 830,198" stroke="#d6a040" stroke-width="2.2" filter="url(#sk)"/>
+  <path d="M 576,266 L 832,212" stroke="#d6a040" stroke-width="2.2" filter="url(#sk)"/>
+
+  <g filter="url(#sk)"><ellipse cx="705" cy="205" rx="185" ry="118" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6 4"/></g>
+  <text x="705" y="336" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450">一个连通分量 → 同一个秩</text>
+
+  <g filter="url(#sk)"><circle cx="560" cy="120" r="21" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><circle cx="560" cy="198" r="21" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><circle cx="560" cy="276" r="21" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><circle cx="850" cy="120" r="21" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><circle cx="850" cy="198" r="21" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <g filter="url(#sk)"><circle cx="850" cy="276" r="21" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+
+  <text x="560" y="125" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">R0</text>
+  <text x="560" y="203" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">R1</text>
+  <text x="560" y="281" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">R2</text>
+  <text x="850" y="125" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5a24">C0</text>
+  <text x="850" y="203" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5a24">C1</text>
+  <text x="850" y="281" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e5a24">C2</text>
+
+  <text x="705" y="112" text-anchor="middle" font-size="10" fill="#7a5415">(0,0)</text>
+  <text x="680" y="150" text-anchor="middle" font-size="10" fill="#7a5415">(0,1)</text>
+  <text x="705" y="192" text-anchor="middle" font-size="10" fill="#7a5415">(1,1)</text>
+  <text x="680" y="232" text-anchor="middle" font-size="10" fill="#7a5415">(2,1)</text>
+  <text x="850" y="310" text-anchor="middle" font-size="10" fill="#888">C2 没有等值格子，不入分量</text>
+  <text x="490" y="316" font-size="10.5" fill="#444">组内对每个 (i,j) 执行 union(行 i, 列 m+j)，</text>
+  <text x="490" y="334" font-size="10.5" fill="#444">串起来的行、列落在同一分量 → 共用一个秩。</text>
+
+  <!-- ===== Panel 3: rank formula ===== -->
+  <g filter="url(#sk)">
+    <rect x="40" y="372" width="410" height="256" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.5"/>
+  </g>
+  <text x="60" y="398" font-size="13" font-weight="bold" fill="#2b6e9e">③ 分量的秩 = 1 + 行/列历史最大秩</text>
+  <text x="60" y="428" font-size="12" fill="#333" font-family="monospace" font-weight="bold">rank(C) = 1 + max over (i,j)∈C of</text>
+  <text x="84" y="448" font-size="12" fill="#b03a3a" font-family="monospace" font-weight="bold">max( rowMax[i], colMax[j] )</text>
+  <path d="M 60 462 Q 245 468 430 462" stroke="#4a8edb" stroke-width="1" fill="none" stroke-dasharray="4 3" filter="url(#sk)"/>
+  <text x="60" y="486" font-size="11" fill="#444">rowMax[i]：第 i 行已赋秩的最大值</text>
+  <text x="60" y="504" font-size="11" fill="#444">　　　　　（全部来自比当前值更小的格子）</text>
+  <text x="60" y="526" font-size="11" fill="#444">colMax[j]：第 j 列同理</text>
+  <text x="60" y="552" font-size="11" font-weight="bold" fill="#7a2828">「+1」：必须严格大于同行/同列</text>
+  <text x="60" y="570" font-size="11" font-weight="bold" fill="#7a2828">的所有更小元素 → 下界即最小可行秩</text>
+  <text x="60" y="606" font-size="10" fill="#888">（严格证明见题解 §5 引理 3 与定理）</text>
+
+  <!-- ===== Panel 4: same value, different ranks ===== -->
+  <g filter="url(#sk)">
+    <rect x="490" y="372" width="410" height="256" rx="10" fill="#fdf6ec" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="510" y="398" font-size="13" font-weight="bold" fill="#7a5415">④ 同值 ≠ 同秩：不连通就各取各的下界</text>
+
+  <text x="530" y="426" font-size="10.5" font-weight="bold" fill="#444">输入</text>
+  <g filter="url(#sk)"><rect x="530" y="434" width="54" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="584" y="434" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="638" y="434" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="530" y="468" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="584" y="468" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="638" y="468" width="54" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="530" y="502" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="584" y="502" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="638" y="502" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <text x="557" y="456" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">5</text>
+  <text x="611" y="456" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">4</text>
+  <text x="665" y="456" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">0</text>
+  <text x="557" y="490" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">0</text>
+  <text x="611" y="490" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">0</text>
+  <text x="665" y="490" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">5</text>
+  <text x="557" y="524" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">1</text>
+  <text x="611" y="524" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">0</text>
+  <text x="665" y="524" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">2</text>
+
+  <path d="M 706,485 L 742,485" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arR)" filter="url(#sk)"/>
+  <text x="724" y="472" text-anchor="middle" font-size="10" font-weight="bold" fill="#b85450">赋秩</text>
+
+  <text x="766" y="426" font-size="10.5" font-weight="bold" fill="#444">输出</text>
+  <g filter="url(#sk)"><rect x="766" y="434" width="54" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="820" y="434" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="874" y="434" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="766" y="468" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="820" y="468" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="874" y="468" width="54" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <g filter="url(#sk)"><rect x="766" y="502" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="820" y="502" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <g filter="url(#sk)"><rect x="874" y="502" width="54" height="34" rx="4" fill="#fcfbf8" stroke="#b8b3a8" stroke-width="1.2"/></g>
+  <text x="793" y="456" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">3</text>
+  <text x="847" y="456" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">2</text>
+  <text x="901" y="456" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">1</text>
+  <text x="793" y="490" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">1</text>
+  <text x="847" y="490" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">1</text>
+  <text x="901" y="490" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a5415">4</text>
+  <text x="793" y="524" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">2</text>
+  <text x="847" y="524" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">1</text>
+  <text x="901" y="524" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">3</text>
+
+  <text x="510" y="566" font-size="11" fill="#444">两个 5 位于 (0,0) 与 (1,2)：不同行、不同列、互不连通，</text>
+  <text x="510" y="586" font-size="11" fill="#444">(0,0) 的下界来自第 0 行/第 0 列的历史秩 → 秩 3；</text>
+  <text x="510" y="606" font-size="11" font-weight="bold" fill="#7a2828">(1,2) 的下界来自第 2 列的秩 3（那个 2）→ 秩 4。</text>
+</svg>
