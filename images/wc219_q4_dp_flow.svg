@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n2"/>
+      <feDisplacementMap in="SourceGraphic" in2="n2" scale="1.5"/>
+    </filter>
+    <marker id="arro" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="600" fill="#fafafa"/>
+  <text x="450" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：两步排序 + 一次 DP，把「旋转 / 子集 / 顺序」全部压掉</text>
+  <path d="M 190 42 Q 450 50 710 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="450" y="63" text-anchor="middle" font-size="12" fill="#567" filter="url(#rough2)">dp[i]：以排序后第 i 块为底的最大塔高 · 答案 = max(dp)</text>
+
+  <!-- pipeline -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="90" width="170" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="250" y="90" width="180" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="470" y="90" width="250" height="64" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="760" y="90" width="100" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="125" y="115" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33506e" filter="url(#rough2)">① 每块内部排序</text>
+  <text x="125" y="138" text-anchor="middle" font-size="11" fill="#567" filter="url(#rough2)">(w ≤ l ≤ h)</text>
+  <text x="340" y="115" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33506e" filter="url(#rough2)">② 整体字典序排序</text>
+  <text x="340" y="138" text-anchor="middle" font-size="11" fill="#567" filter="url(#rough2)">按 (w, l, h) 升序</text>
+  <text x="595" y="111" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a67c1e" filter="url(#rough2)">③ DP 转移（核心）</text>
+  <text x="595" y="129" text-anchor="middle" font-size="10.5" fill="#7a5a10" filter="url(#rough2)">dp[i] = h_i + max{ dp[j] }</text>
+  <text x="595" y="146" text-anchor="middle" font-size="10" fill="#7a5a10" filter="url(#rough2)">j &lt; i 且 j 三维 ≤ i</text>
+  <text x="810" y="115" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5a2a" filter="url(#rough2)">④ 答案</text>
+  <text x="810" y="138" text-anchor="middle" font-size="11" fill="#4a6a45" filter="url(#rough2)">max(dp)</text>
+  <path d="M 212 122 L 244 122" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arro)" filter="url(#rough2)"/>
+  <path d="M 432 122 L 464 122" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arro)" filter="url(#rough2)"/>
+  <path d="M 722 122 L 754 122" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arro)" filter="url(#rough2)"/>
+  <text x="125" y="170" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">O(n)</text>
+  <text x="340" y="170" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">O(n log n)</text>
+  <text x="595" y="170" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">O(n²)</text>
+  <text x="810" y="170" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">O(n)</text>
+
+  <!-- middle card: why only j < i -->
+  <rect x="40" y="195" width="820" height="168" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="450" y="220" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#a67c1e" filter="url(#rough2)">为什么 j 只看 i 之前？—— 合法塔是排序后序列的子序列</text>
+  <text x="70" y="234" font-size="10.5" fill="#567" filter="url(#rough2)">排序后的块（按 (w,l,h) 字典序，绿色 = 入塔）：</text>
+  <g filter="url(#rough2)">
+    <rect x="70" y="240" width="62" height="42" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="136" y="240" width="62" height="42" rx="5" fill="#f0f0ee" stroke="#999" stroke-width="1.2"/>
+    <rect x="202" y="240" width="62" height="42" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="268" y="240" width="62" height="42" rx="5" fill="#f0f0ee" stroke="#999" stroke-width="1.2"/>
+    <rect x="334" y="240" width="62" height="42" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="400" y="240" width="62" height="42" rx="5" fill="#f0f0ee" stroke="#999" stroke-width="1.2"/>
+  </g>
+  <text x="101" y="265" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#2f5a2a" filter="url(#rough2)">(12,23,45)</text>
+  <text x="167" y="265" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#rough2)">(18,30,60)</text>
+  <text x="233" y="265" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#2f5a2a" filter="url(#rough2)">(20,45,50)</text>
+  <text x="299" y="265" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#rough2)">(25,40,55)</text>
+  <text x="365" y="265" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#2f5a2a" filter="url(#rough2)">(37,53,95)</text>
+  <text x="431" y="265" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#rough2)">(50,60,70)</text>
+  <text x="101" y="298" text-anchor="middle" font-size="10" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">0</text>
+  <text x="167" y="298" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">1</text>
+  <text x="233" y="298" text-anchor="middle" font-size="10" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">2</text>
+  <text x="299" y="298" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">3</text>
+  <text x="365" y="298" text-anchor="middle" font-size="10" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">4</text>
+  <text x="431" y="298" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">5</text>
+  <text x="70" y="322" font-size="11" fill="#333" filter="url(#rough2)">塔自底向上三维单调不增 ⇒ 底部块字典序最大、位置最靠后</text>
+  <text x="70" y="342" font-size="11" fill="#333" filter="url(#rough2)">⇒ 合法塔 = 子序列（自顶向下取；相同三元组段内重排，§5 引理 3）</text>
+  <g filter="url(#rough2)">
+    <rect x="612" y="240" width="56" height="26" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="602" y="266" width="76" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="588" y="296" width="104" height="44" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="565" y="256" text-anchor="end" font-size="9.5" fill="#2f5a2a" filter="url(#rough2)">(12,23,45)</text>
+  <text x="565" y="284" text-anchor="end" font-size="9.5" fill="#2f5a2a" filter="url(#rough2)">(20,45,50)</text>
+  <text x="565" y="322" text-anchor="end" font-size="9.5" fill="#2f5a2a" filter="url(#rough2)">(37,53,95)</text>
+  <text x="706" y="256" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">位置 0（顶）</text>
+  <text x="706" y="284" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">位置 2</text>
+  <text x="706" y="322" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">位置 4（底）</text>
+
+  <!-- bottom left: feasibility check -->
+  <rect x="40" y="378" width="390" height="197" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="235" y="404" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450" filter="url(#rough2)">判定：j 能否叠在 i 上（j 在上）</text>
+  <text x="235" y="433" text-anchor="middle" font-size="13" font-weight="bold" fill="#333" filter="url(#rough2)">w_j ≤ w_i 且 l_j ≤ l_i 且 h_j ≤ h_i</text>
+  <text x="235" y="460" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">三维全查最稳：w 维其实由字典序自动满足，</text>
+  <text x="235" y="478" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">显式写出是防御式写法，代价只有常数</text>
+  <rect x="60" y="492" width="350" height="44" rx="6" fill="#fafafa" stroke="#b85450" stroke-width="1.2" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="235" y="509" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">⚠ 字典序小 ⇏ 可叠：(1,9,9) ≺ (2,2,2)，</text>
+  <text x="235" y="527" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">但 9 &gt; 2 —— 三维判定一个都不能省</text>
+  <text x="235" y="556" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">同理：外层排序必须是完整字典序（题解 §8 易错点 2）</text>
+
+  <!-- bottom right: pseudocode -->
+  <rect x="470" y="378" width="390" height="197" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="665" y="404" text-anchor="middle" font-size="13" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">伪代码（n ≤ 100，O(n²) 稳过）</text>
+  <text x="495" y="428" font-size="11.5" fill="#333" filter="url(#rough2)">for i = 0 .. n-1:</text>
+  <text x="495" y="449" font-size="11.5" fill="#333" filter="url(#rough2)">    dp[i] = h_i            <tspan fill="#888"># 单独成堆</tspan></text>
+  <text x="495" y="470" font-size="11.5" fill="#333" filter="url(#rough2)">    for j = 0 .. i-1:</text>
+  <text x="495" y="491" font-size="11.5" fill="#333" filter="url(#rough2)">        if j 三维 ≤ i:      <tspan fill="#888"># 逐项比较</tspan></text>
+  <text x="495" y="512" font-size="11.5" fill="#333" filter="url(#rough2)">            dp[i] = max(dp[i], dp[j] + h_i)</text>
+  <text x="495" y="538" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">return max(dp)             <tspan fill="#b85450"># 不是 dp[n-1]!</tspan></text>
+  <text x="665" y="562" text-anchor="middle" font-size="10.5" fill="#567" filter="url(#rough2)">字典序最大的块未必入塔：[[2,2,2],[1,1,100]] 的答案是 100</text>
+</svg>
