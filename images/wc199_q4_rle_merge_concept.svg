@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="500" viewBox="0 0 640 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#8a7a4a" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+  <rect width="640" height="500" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：一段的编码贡献只由段长决定</text>
+  <path d="M 150 40 Q 320 48 490 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+  <text x="320" y="62" text-anchor="middle" font-size="12" fill="#666">RLE ＝ 先切成极大同字符段，再逐段「字符＋计数」计费（单个字符不附 '1'）</text>
+
+  <text x="148" y="104" text-anchor="end" font-size="12.5" fill="#666" font-weight="bold">段长 cnt</text>
+  <text x="148" y="142" text-anchor="end" font-size="12.5" fill="#666" font-weight="bold">编码示例</text>
+  <text x="148" y="180" text-anchor="end" font-size="12.5" fill="#666" font-weight="bold">贡献 encLen</text>
+
+  <g filter="url(#sk)">
+    <rect x="160" y="84" width="96" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="268" y="84" width="96" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="376" y="84" width="96" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="484" y="84" width="96" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="160" y="122" width="96" height="30" fill="#f0f0f0" stroke="#aaaaaa" stroke-width="1.4" rx="4"/>
+    <rect x="268" y="122" width="96" height="30" fill="#f0f0f0" stroke="#aaaaaa" stroke-width="1.4" rx="4"/>
+    <rect x="376" y="122" width="96" height="30" fill="#f0f0f0" stroke="#aaaaaa" stroke-width="1.4" rx="4"/>
+    <rect x="484" y="122" width="96" height="30" fill="#f0f0f0" stroke="#aaaaaa" stroke-width="1.4" rx="4"/>
+    <rect x="160" y="160" width="96" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="268" y="160" width="96" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="376" y="160" width="96" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="484" y="160" width="96" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+  </g>
+  <text x="208" y="104" text-anchor="middle" font-size="13" fill="#333">1</text>
+  <text x="316" y="104" text-anchor="middle" font-size="13" fill="#333">2 ～ 9</text>
+  <text x="424" y="104" text-anchor="middle" font-size="13" fill="#8a6415">10 ～ 99</text>
+  <text x="532" y="104" text-anchor="middle" font-size="13" fill="#8a6415">100</text>
+  <text x="208" y="142" text-anchor="middle" font-size="13" fill="#555">a</text>
+  <text x="316" y="142" text-anchor="middle" font-size="13" fill="#555">a9</text>
+  <text x="424" y="142" text-anchor="middle" font-size="13" fill="#555">a99</text>
+  <text x="532" y="142" text-anchor="middle" font-size="13" fill="#555">a100</text>
+  <text x="208" y="180" text-anchor="middle" font-size="14" fill="#34506e" font-weight="bold">1</text>
+  <text x="316" y="180" text-anchor="middle" font-size="14" fill="#34506e" font-weight="bold">2</text>
+  <text x="424" y="180" text-anchor="middle" font-size="14" fill="#8a6415" font-weight="bold">3</text>
+  <text x="532" y="180" text-anchor="middle" font-size="14" fill="#8a6415" font-weight="bold">4</text>
+
+  <text x="320" y="216" text-anchor="middle" font-size="11.5" fill="#888">计数按十进制位数进位：跨过 10、100 各多占 1 位 ⇒ 删除把段长压回 9 / 99 时恰好省 1 位</text>
+
+  <g filter="url(#sk)">
+    <rect x="24" y="238" width="290" height="236" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="334" y="238" width="282" height="236" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+
+  <text x="169" y="264" text-anchor="middle" font-size="13.5" fill="#2e5a24" font-weight="bold">合并收益：删段间异字符</text>
+
+  <g filter="url(#sk)">
+    <rect x="82" y="280" width="30" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="118" y="280" width="30" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="154" y="280" width="30" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="190" y="280" width="30" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="226" y="280" width="30" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <text x="97" y="300" text-anchor="middle" font-size="13" fill="#333">a</text>
+  <text x="133" y="300" text-anchor="middle" font-size="13" fill="#333">a</text>
+  <text x="169" y="300" text-anchor="middle" font-size="13" fill="#8f3830">b</text>
+  <text x="205" y="300" text-anchor="middle" font-size="13" fill="#333">a</text>
+  <text x="241" y="300" text-anchor="middle" font-size="13" fill="#333">a</text>
+  <path d="M 159 279 L 179 311 M 179 279 L 159 311" stroke="#b85450" stroke-width="2" stroke-linecap="round" filter="url(#sk)"/>
+  <text x="292" y="300" text-anchor="middle" font-size="11" fill="#8f3830">删 b</text>
+
+  <path d="M 169 318 Q 169 336 169 348" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="100" y="356" width="30" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="136" y="356" width="30" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="172" y="356" width="30" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="208" y="356" width="30" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+  </g>
+  <text x="115" y="376" text-anchor="middle" font-size="13" fill="#2e5a24">a</text>
+  <text x="151" y="376" text-anchor="middle" font-size="13" fill="#2e5a24">a</text>
+  <text x="187" y="376" text-anchor="middle" font-size="13" fill="#2e5a24">a</text>
+  <text x="223" y="376" text-anchor="middle" font-size="13" fill="#2e5a24">a</text>
+  <text x="169" y="412" text-anchor="middle" font-size="12.5" fill="#2e5a24" font-weight="bold">"a2ba2"（5 位）→ "a4"（2 位）</text>
+  <text x="169" y="436" text-anchor="middle" font-size="11.5" fill="#2e5a24">一次删除省 3 位：两侧同字符段拼接成一段</text>
+  <text x="169" y="460" text-anchor="middle" font-size="11.5" fill="#4a7a3a">段的边界随删除动态合并 ⇒ 不能按原始段贪心</text>
+
+  <text x="475" y="264" text-anchor="middle" font-size="13.5" fill="#8a6415" font-weight="bold">阈值收益：压回 9 / 99</text>
+
+  <g filter="url(#sk)">
+    <rect x="347" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="373" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="399" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="425" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="451" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="477" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="503" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="529" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="555" y="280" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3"/>
+    <rect x="581" y="280" width="22" height="24" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3"/>
+  </g>
+  <text x="358" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="384" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="410" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="436" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="462" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="488" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="514" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="540" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="566" y="297" text-anchor="middle" font-size="11" fill="#8a6415">a</text>
+  <text x="592" y="297" text-anchor="middle" font-size="11" fill="#8f3830">a</text>
+  <path d="M 581 279 L 603 305 M 603 279 L 581 305" stroke="#b85450" stroke-width="1.8" stroke-linecap="round" filter="url(#sk)"/>
+
+  <text x="475" y="332" text-anchor="middle" font-size="12" fill="#8a6415">10 个 a：编码 "a10"，3 位</text>
+  <path d="M 475 342 Q 475 354 475 362" fill="none" stroke="#d6a040" stroke-width="1.6" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="475" y="384" text-anchor="middle" font-size="12" fill="#8a6415">删 1 个剩 9 个：编码 "a9"，2 位</text>
+  <text x="475" y="412" text-anchor="middle" font-size="11.5" fill="#8a6415">9 ⇄ 10、99 ⇄ 100 是仅有的两个进位点</text>
+  <text x="475" y="436" text-anchor="middle" font-size="11.5" fill="#8a6415">段长 100 压回 99 同理再省 1 位</text>
+  <text x="475" y="460" text-anchor="middle" font-size="11.5" fill="#a07820">删谁促合并、删谁跨阈值，交给 DP 统一权衡</text>
+</svg>
