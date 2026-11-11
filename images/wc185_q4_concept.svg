@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="520" viewBox="0 0 920 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#b85450" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+  <rect width="920" height="520" fill="#fafafa"/>
+  <text x="460" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">核心观察：search_cost = 严格前缀最大值的刷新次数</text>
+  <path d="M 250 38 Q 460 46 670 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== 左：算法扫描过程 ===== -->
+  <g filter="url(#sk)">
+    <rect x="26" y="58" width="540" height="350" rx="10" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="5,4"/>
+  </g>
+  <text x="296" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#555">算法扫描 [2, 1, 3, 1, 4, 2]（n = 6, m = 5）</text>
+
+  <!-- 刷新标记 -->
+  <text x="76" y="97" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#8f3830">刷新 +1</text>
+  <text x="200" y="97" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#8f3830">刷新 +1</text>
+  <text x="324" y="97" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#8f3830">刷新 +1</text>
+
+  <!-- 数组格：记录位红色，非记录位蓝色 -->
+  <g filter="url(#sk)">
+    <rect x="48" y="104" width="56" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="110" y="104" width="56" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="172" y="104" width="56" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="234" y="104" width="56" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="296" y="104" width="56" height="34" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="358" y="104" width="56" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="76" y="126" text-anchor="middle" font-size="14" font-weight="bold" fill="#8f3830">2</text>
+  <text x="138" y="126" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e">1</text>
+  <text x="200" y="126" text-anchor="middle" font-size="14" font-weight="bold" fill="#8f3830">3</text>
+  <text x="262" y="126" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e">1</text>
+  <text x="324" y="126" text-anchor="middle" font-size="14" font-weight="bold" fill="#8f3830">4</text>
+  <text x="386" y="126" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e">2</text>
+  <text x="76" y="152" text-anchor="middle" font-size="9" fill="#999">0</text>
+  <text x="138" y="152" text-anchor="middle" font-size="9" fill="#999">1</text>
+  <text x="200" y="152" text-anchor="middle" font-size="9" fill="#999">2</text>
+  <text x="262" y="152" text-anchor="middle" font-size="9" fill="#999">3</text>
+  <text x="324" y="152" text-anchor="middle" font-size="9" fill="#999">4</text>
+  <text x="386" y="152" text-anchor="middle" font-size="9" fill="#999">5</text>
+
+  <!-- curmax 轨迹 -->
+  <text x="44" y="176" font-size="11" font-weight="bold" fill="#555">curmax 的轨迹（虚线 = 取值层级）</text>
+  <g filter="url(#sk)">
+    <path d="M 40 322 L 430 322" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3" fill="none"/>
+    <path d="M 40 292 L 430 292" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3" fill="none"/>
+    <path d="M 40 262 L 430 262" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3" fill="none"/>
+    <path d="M 40 232 L 430 232" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3" fill="none"/>
+    <path d="M 40 202 L 430 202" stroke="#ddd" stroke-width="1" stroke-dasharray="4,3" fill="none"/>
+    <path d="M 76 160 L 76 258" stroke="#e8c8c4" stroke-width="1.1" stroke-dasharray="3,3" fill="none"/>
+    <path d="M 200 160 L 200 228" stroke="#e8c8c4" stroke-width="1.1" stroke-dasharray="3,3" fill="none"/>
+    <path d="M 324 160 L 324 198" stroke="#e8c8c4" stroke-width="1.1" stroke-dasharray="3,3" fill="none"/>
+    <path d="M 44 322 L 76 322 L 76 262 L 200 262 L 200 232 L 324 232 L 324 202 L 414 202"
+          stroke="#446688" stroke-width="2.4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="76" cy="262" r="4" fill="#b85450"/>
+    <circle cx="200" cy="232" r="4" fill="#b85450"/>
+    <circle cx="324" cy="202" r="4" fill="#b85450"/>
+  </g>
+  <text x="34" y="205" text-anchor="middle" font-size="9.5" fill="#888">4</text>
+  <text x="34" y="235" text-anchor="middle" font-size="9.5" fill="#888">3</text>
+  <text x="34" y="265" text-anchor="middle" font-size="9.5" fill="#888">2</text>
+  <text x="34" y="295" text-anchor="middle" font-size="9.5" fill="#888">1</text>
+  <text x="34" y="325" text-anchor="middle" font-size="9.5" fill="#888">0</text>
+  <text x="90" y="296" font-size="9.5" font-weight="bold" fill="#8f3830">0→2</text>
+  <text x="212" y="250" font-size="9.5" font-weight="bold" fill="#8f3830">2→3</text>
+  <text x="330" y="220" font-size="9.5" font-weight="bold" fill="#8f3830">3→4</text>
+
+  <text x="296" y="352" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b2b2b">search_cost = 3：位置 0、2、4 各刷新一次，其余位 ≤ curmax 不变</text>
+  <text x="296" y="376" text-anchor="middle" font-size="10.5" fill="#555">刷新值 2 &lt; 3 &lt; 4 严格递增 → 记录个数 ≤ min(n, m)</text>
+
+  <!-- ===== 右：三个事实 ===== -->
+  <g filter="url(#sk)">
+    <rect x="586" y="58" width="308" height="350" rx="10" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.3" stroke-dasharray="5,4"/>
+  </g>
+  <text x="740" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#555">从扫描中读出的三个事实</text>
+
+  <g filter="url(#sk)">
+    <rect x="600" y="94" width="280" height="88" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="600" y="192" width="280" height="88" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="600" y="290" width="280" height="88" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="740" y="116" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e">① 首元素必刷新</text>
+  <text x="740" y="138" text-anchor="middle" font-size="10.5" fill="#444">arr[0] ≥ 1 &gt; 0 = 初始 curmax</text>
+  <text x="740" y="158" text-anchor="middle" font-size="10.5" fill="#444">→ 代价至少为 1，k = 0 恒为 0</text>
+  <text x="740" y="214" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6415">② 记录值严格递增</text>
+  <text x="740" y="236" text-anchor="middle" font-size="10.5" fill="#444">每次刷新都严格超过此前全部</text>
+  <text x="740" y="256" text-anchor="middle" font-size="10.5" fill="#444">→ k ≤ min(n, m)，示例 2 因此为 0</text>
+  <text x="740" y="312" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5a24">③ 未来只由当前最大 v 决定</text>
+  <text x="740" y="334" text-anchor="middle" font-size="10.5" fill="#444">安全：x ∈ [1..v] 共 v 种，不刷新</text>
+  <text x="740" y="354" text-anchor="middle" font-size="10.5" fill="#444">刷新：x ∈ [v+1..m]，新最大 = x</text>
+
+  <!-- ===== 底部：DP 状态 ===== -->
+  <g filter="url(#sk)">
+    <rect x="26" y="420" width="868" height="84" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="250" y="462" width="96" height="26" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="412" y="462" width="96" height="26" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="574" y="462" width="96" height="26" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="460" y="448" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">计数视角：一位一位生成数组，「后面还能怎么填」只由三个量决定</text>
+  <text x="298" y="479" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a6e">已填位数 i</text>
+  <text x="460" y="479" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a6e">已用代价 j</text>
+  <text x="622" y="479" text-anchor="middle" font-size="11" font-weight="bold" fill="#2b4a6e">当前最大 v</text>
+  <text x="373" y="479" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">·</text>
+  <text x="535" y="479" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">·</text>
+  <text x="800" y="479" text-anchor="middle" font-size="12" font-weight="bold" fill="#8f3830">→ 状态 (i, j, v) 计数 DP</text>
+</svg>

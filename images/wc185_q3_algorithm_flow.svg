@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="560" viewBox="0 0 680 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#b85450" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+  <rect width="680" height="560" fill="#fafafa"/>
+  <text x="340" y="26" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：一趟扫描 — 计数器流转 + 峰值记录</text>
+  <path d="M 180 36 Q 340 44 500 36" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Step 1 -->
+  <g filter="url(#sk)">
+    <rect x="50" y="62" width="400" height="64" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="70" y="84" font-size="12.5" font-weight="bold" fill="#2b4a6e">① 初始化 — O(1)</text>
+  <text x="70" y="104" font-size="10.5" fill="#444">cnt[5] = {0}：cnt[i] = 处于 "croak"[i] 状态的在飞青蛙数</text>
+  <text x="70" y="120" font-size="10.5" fill="#444">cur = 0（在飞蛙鸣数），ans = 0（历史峰值）</text>
+
+  <path d="M 250 126 L 250 142" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- Step 2 -->
+  <g filter="url(#sk)">
+    <rect x="50" y="146" width="400" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <text x="70" y="168" font-size="12.5" font-weight="bold" fill="#2e5a24">② 读字符 ch，定下标 i — O(1)</text>
+  <text x="70" y="188" font-size="10.5" fill="#444">i ← "croak" 中的位置：c=0, r=1, o=2, a=3, k=4</text>
+  <text x="70" y="204" font-size="10.5" fill="#8f3830">若 i &gt; 0 且 cnt[i−1] = 0 → 没有青蛙能发此音 → 返回 −1</text>
+
+  <path d="M 250 210 L 250 226" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- Step 3 -->
+  <g filter="url(#sk)">
+    <rect x="50" y="230" width="400" height="78" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="70" y="252" font-size="12.5" font-weight="bold" fill="#8a6415">③ 计数转移与记账</text>
+  <text x="70" y="272" font-size="10.5" fill="#444">'c'（i=0）：cur++；ans = max(ans, cur) ← 峰值只在 'c' 刷新</text>
+  <text x="70" y="288" font-size="10.5" fill="#444">其他：cnt[i−1]−−（一只青蛙从前驱音推进到 ch）</text>
+  <text x="70" y="304" font-size="10.5" fill="#444">随后 cnt[i]++；若 i=4（'k'）：cur−−（一声完整收尾）</text>
+
+  <path d="M 250 308 L 250 324" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- Step 4 -->
+  <g filter="url(#sk)">
+    <rect x="50" y="328" width="400" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="70" y="350" font-size="12.5" font-weight="bold" fill="#2b4a6e">④ 重复 ②–③，直至扫完 n 个字符</text>
+  <text x="70" y="368" font-size="10.5" fill="#444">每个字符 O(1)，整体 O(n)</text>
+
+  <!-- 循环箭头 -->
+  <path d="M 50 352 L 38 352 Q 32 352 32 346 L 32 184 Q 32 178 38 178 L 44 178"
+        fill="none" stroke="#4a7a3a" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="24" y="268" font-size="9" fill="#4a7a3a" transform="rotate(-90 24 268)" text-anchor="middle">重复 n 次</text>
+
+  <path d="M 250 376 L 250 392" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <!-- Step 5 -->
+  <g filter="url(#sk)">
+    <ellipse cx="250" cy="424" rx="158" ry="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="250" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5a24">cur = 0 → 返回 ans（峰值）✓</text>
+  <text x="250" y="440" text-anchor="middle" font-size="11" fill="#8f3830">cur &gt; 0 → 返回 −1（有蛙鸣没收尾）</text>
+
+  <!-- 右上：两种 -1 -->
+  <path d="M 452 178 Q 468 182 472 196" fill="none" stroke="#b85450" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#arrR)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="476" y="146" width="184" height="152" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5,4"/>
+  </g>
+  <text x="568" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#8f3830">⚠ 两种 −1</text>
+  <text x="568" y="194" text-anchor="middle" font-size="10.5" fill="#444">① 中途断供："co"</text>
+  <text x="568" y="210" text-anchor="middle" font-size="9.5" fill="#888">　'o' 到来时 cnt[r]=0</text>
+  <text x="568" y="232" text-anchor="middle" font-size="10.5" fill="#444">② 末尾在飞："croakcr"</text>
+  <text x="568" y="248" text-anchor="middle" font-size="9.5" fill="#888">　扫描合法但停在 'r'</text>
+  <text x="568" y="272" text-anchor="middle" font-size="9.5" fill="#8f3830">计数相等 ≠ 合法：</text>
+  <text x="568" y="288" text-anchor="middle" font-size="9.5" fill="#8f3830">"croakkroa" 也断供</text>
+
+  <!-- 右下：不变量与界 -->
+  <g filter="url(#sk)">
+    <rect x="476" y="330" width="184" height="130" rx="8" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.3"/>
+  </g>
+  <text x="568" y="352" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">不变量与界</text>
+  <text x="568" y="374" text-anchor="middle" font-size="9.5" fill="#444">cur ≡ cnt[c]+cnt[r]+cnt[o]+cnt[a]</text>
+  <text x="568" y="390" text-anchor="middle" font-size="9.5" fill="#444">　　≡ #c − #k（前缀）</text>
+  <text x="568" y="412" text-anchor="middle" font-size="9.5" fill="#444">ans = max cur ≤ ⌊n/5⌋</text>
+  <text x="568" y="434" text-anchor="middle" font-size="9.5" fill="#444">合法串五字符计数相等</text>
+
+  <text x="340" y="505" text-anchor="middle" font-size="10" fill="#888">n ≤ 10⁵　　字符仅 c / r / o / a / k　　合法时 ans ≤ n/5 ≤ 2×10⁴</text>
+</svg>

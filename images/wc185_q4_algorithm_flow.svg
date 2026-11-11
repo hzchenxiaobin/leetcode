@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="560" viewBox="0 0 920 560" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#4a7a3a" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#b85450" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+    <marker id="arrD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#999" stroke-width="1.6" stroke-linecap="round"/>
+    </marker>
+  </defs>
+  <rect width="920" height="560" fill="#fafafa"/>
+  <text x="460" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">状态转移：不刷新乘 v，刷新用前缀和聚合</text>
+  <path d="M 250 38 Q 460 46 670 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- 源状态 -->
+  <g filter="url(#sk)">
+    <rect x="70" y="158" width="210" height="80" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="175" y="186" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b4a6e">状态 f[i][j][v]</text>
+  <text x="175" y="208" text-anchor="middle" font-size="10.5" fill="#444">已填 i 位 · 代价 j · 最大恰为 v</text>
+  <text x="175" y="226" text-anchor="middle" font-size="10" fill="#888">考虑第 i+1 位填什么 x</text>
+
+  <!-- 两条转移箭头 -->
+  <g filter="url(#sk)">
+    <path d="M 284 178 C 400 168, 500 146, 612 126" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)"/>
+    <path d="M 284 218 C 400 228, 500 252, 612 274" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)"/>
+  </g>
+  <text x="448" y="138" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e5a24">x ≤ v（v 种安全填充）</text>
+  <text x="424" y="274" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8f3830">x &gt; v（刷新，新最大 = x）</text>
+
+  <!-- 目标状态 1：不刷新 -->
+  <g filter="url(#sk)">
+    <rect x="620" y="84" width="280" height="78" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="760" y="110" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e5a24">不刷新 → (i+1, j, v) 代价不变</text>
+  <text x="760" y="132" text-anchor="middle" font-size="10.5" fill="#444">填 x ∈ [1..v]，v 种选择都不变</text>
+  <text x="760" y="152" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5a24">f'[j][v] += f[j][v] · v</text>
+
+  <!-- 目标状态 2：刷新 -->
+  <g filter="url(#sk)">
+    <rect x="620" y="240" width="280" height="78" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="760" y="266" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8f3830">刷新 → (i+1, j+1, x) 代价 +1</text>
+  <text x="760" y="288" text-anchor="middle" font-size="10.5" fill="#444">填 x ∈ [v+1..m]，新最大恰为 x</text>
+  <text x="760" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#8f3830">f'[j+1][x] += Σ f[j][v']（v' &lt; x）</text>
+
+  <!-- 前缀和聚合条 -->
+  <text x="460" y="368" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#555">刷新目标的来源是一段值域前缀 —— 行前缀和把它压成 O(1) 查表</text>
+  <g filter="url(#sk)">
+    <rect x="150" y="384" width="62" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="238" y="384" width="62" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="374" y="384" width="70" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="474" y="380" width="100" height="38" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <path d="M 150 426 Q 297 438 444 426" stroke="#b85450" stroke-width="1.3" fill="none"/>
+    <path d="M 540 378 C 570 350, 650 336, 732 322" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5,4" fill="none" marker-end="url(#arrR)"/>
+  </g>
+  <text x="181" y="404" text-anchor="middle" font-size="11.5" fill="#2b4a6e">f[j][1]</text>
+  <text x="223" y="405" text-anchor="middle" font-size="13" fill="#555">+</text>
+  <text x="269" y="404" text-anchor="middle" font-size="11.5" fill="#2b4a6e">f[j][2]</text>
+  <text x="310" y="405" text-anchor="middle" font-size="13" fill="#555">+</text>
+  <text x="336" y="405" text-anchor="middle" font-size="14" fill="#555">⋯</text>
+  <text x="358" y="405" text-anchor="middle" font-size="13" fill="#555">+</text>
+  <text x="409" y="404" text-anchor="middle" font-size="11.5" fill="#2b4a6e">f[j][x−1]</text>
+  <text x="456" y="405" text-anchor="middle" font-size="13" font-weight="bold" fill="#555">=</text>
+  <text x="524" y="404" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8f3830">P[j][x−1]</text>
+  <text x="297" y="452" text-anchor="middle" font-size="10" fill="#8f3830">所有旧最大 v' ≤ x−1 的状态，末位恰好刷新到 x</text>
+  <text x="648" y="352" text-anchor="middle" font-size="10" fill="#8f3830">查表替代逐项求和</text>
+
+  <!-- 底部：合并递推 -->
+  <g filter="url(#sk)">
+    <rect x="26" y="478" width="868" height="64" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="460" y="504" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6415">合并成一张新表的逐格递推：f[i+1][j][v] = f[i][j][v] · v + P[i][j−1][v−1]</text>
+  <text x="460" y="528" text-anchor="middle" font-size="11" fill="#555">初始 f[1][1][v] = 1（v = 1..m）　·　答案 = Σ f[n][k][v]　·　每层 O(k·m)，共 n−1 层</text>
+</svg>
