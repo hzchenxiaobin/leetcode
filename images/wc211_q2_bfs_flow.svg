@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 492" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+  <rect width="660" height="492" fill="#fdfcf7"/>
+  <text x="310" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b" filter="url(#r)">算法流程：隐式图 BFS + visited，遍历所有可达状态取最小</text>
+  <path d="M 150 36 Q 310 44 470 36" stroke="#2b2b2b" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- start -->
+  <rect x="255" y="48" width="110" height="32" rx="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#r)"/>
+  <text x="310" y="69" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">开始（s, a, b）</text>
+  <path d="M 310 80 L 310 100" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- init -->
+  <rect x="170" y="104" width="280" height="32" rx="6" fill="#ffffff" stroke="#9aa7b5" stroke-width="1.4" filter="url(#r)"/>
+  <text x="310" y="125" text-anchor="middle" font-size="12" fill="#333" filter="url(#r)">visited ← {s}，queue ← [s]，ans ← s</text>
+  <path d="M 310 136 L 310 156" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- diamond 1: queue empty? -->
+  <polygon points="310,160 397,198 310,236 223,198" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#r)"/>
+  <text x="310" y="203" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6a10" filter="url(#r)">queue 为空？</text>
+  <path d="M 397 198 L 474 198" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="434" y="188" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">是</text>
+  <rect x="478" y="182" width="112" height="32" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#r)"/>
+  <text x="534" y="203" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">返回 ans</text>
+  <text x="534" y="228" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#r)">（= 可达集合的最小串）</text>
+  <path d="M 310 236 L 310 256" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="324" y="250" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">否</text>
+
+  <!-- pop & min -->
+  <rect x="150" y="260" width="320" height="32" rx="6" fill="#ffffff" stroke="#9aa7b5" stroke-width="1.4" filter="url(#r)"/>
+  <text x="310" y="281" text-anchor="middle" font-size="12" fill="#333" filter="url(#r)">cur ← queue 出队；ans ← min(ans, cur)</text>
+  <path d="M 310 292 L 310 312" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- build successors -->
+  <rect x="128" y="316" width="364" height="48" rx="6" fill="#ffffff" stroke="#9aa7b5" stroke-width="1.4" filter="url(#r)"/>
+  <text x="310" y="335" text-anchor="middle" font-size="12" fill="#333" filter="url(#r)">构造两个后继（各 O(n)）：</text>
+  <text x="310" y="354" text-anchor="middle" font-size="12" fill="#333" filter="url(#r)">t₁ = cur 奇数位 +a (mod 10)；t₂ = cur 右移 b 位</text>
+  <path d="M 310 364 L 310 386" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- diamond 2: visited? -->
+  <polygon points="310,390 402,424 310,458 218,424" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#r)"/>
+  <text x="310" y="429" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6a10" filter="url(#r)">t 已在 visited 中？</text>
+  <text x="310" y="479" text-anchor="middle" font-size="10" fill="#999" filter="url(#r)">（对两个后继 t₁、t₂ 各判断一次）</text>
+
+  <!-- yes: discard -->
+  <path d="M 402 424 L 451 424" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="424" y="414" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">是</text>
+  <rect x="455" y="408" width="140" height="32" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#r)"/>
+  <text x="525" y="429" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#r)">丢弃（剪枝）</text>
+
+  <!-- no: mark & enqueue -->
+  <path d="M 218 424 L 172 424" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="197" y="414" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#r)">否</text>
+  <rect x="28" y="404" width="144" height="40" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#r)"/>
+  <text x="100" y="420" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">visited.add(t)</text>
+  <text x="100" y="436" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">queue 入队 t</text>
+
+  <!-- loop back -->
+  <path d="M 100 404 L 100 198 L 216 198" stroke="#999" stroke-width="1.4" stroke-dasharray="6 4" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="84" y="300" text-anchor="middle" font-size="10.5" fill="#999" transform="rotate(-90 84 300)" filter="url(#r)">继续处理下一个状态</text>
+</svg>
