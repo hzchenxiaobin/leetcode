@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 410" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="410" fill="#fafafa"/>
+
+  <text x="320" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：单调队列三步走（对每个 j 依次执行）</text>
+  <text x="320" y="41" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">队列存下标，(y − x) 从队头到队尾递减；三步顺序固定：过期 → 查询 → 入队</text>
+
+  <g filter="url(#rough2)">
+    <rect x="245" y="50" width="150" height="28" rx="14" fill="#ffffff" stroke="#999" stroke-width="1.4"/>
+    <text x="320" y="68" text-anchor="middle" font-size="11.5" fill="#555">j = 0 … n−1 依次遍历</text>
+
+    <path d="M320,78 L320,90" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="105" y="92" width="430" height="50" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="125" y="112" font-size="12" font-weight="bold" fill="#8a3a36">① 过期出队（队头 · 左端）</text>
+    <text x="125" y="130" font-size="10.5" fill="#555">while 队非空 且 x[队头] &lt; x_j − k ： pop_front()　—— x 太远的点永不复活</text>
+
+    <path d="M320,142 L320,154" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="105" y="156" width="430" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="125" y="176" font-size="12" font-weight="bold" fill="#3a5a3a">② 查询队头，计算候选</text>
+    <text x="125" y="194" font-size="10.5" fill="#555">若队非空：ans = max( ans , (y[队头] − x[队头]) + (y_j + x_j) )　—— 队头即窗口最大</text>
+
+    <path d="M320,206 L320,218" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="105" y="220" width="430" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="125" y="240" font-size="12" font-weight="bold" fill="#2b4a66">③ 入队弹尾（队尾 · 右端）</text>
+    <text x="125" y="258" font-size="10.5" fill="#555">while 队非空 且 v[队尾] ≤ v_j ： pop_back() ；再 push_back(j)　—— 旧点「更小且更早过期」</text>
+
+    <path d="M535,245 L578,245 L578,117 L542,117" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <text x="578" y="104" text-anchor="middle" font-size="10" fill="#3a3a3a">j ← j + 1</text>
+
+    <path d="M320,270 L320,286" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <text x="332" y="282" font-size="9.5" fill="#888">j = n，循环结束</text>
+
+    <rect x="250" y="288" width="140" height="28" rx="14" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="320" y="306" text-anchor="middle" font-size="12" font-weight="bold" fill="#b07818">返回 ans</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <text x="40" y="336" font-size="12" font-weight="bold" fill="#2b2b2b">队列形态：(y − x) 从队头到队尾递减</text>
+
+    <rect x="200" y="348" width="72" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <text x="236" y="368" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a5a3a">0 : 2</text>
+    <rect x="272" y="348" width="72" height="32" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.4"/>
+    <text x="308" y="368" text-anchor="middle" font-size="11" fill="#555">1 : −2</text>
+
+    <text x="236" y="398" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a">队头（窗口最大）</text>
+    <text x="308" y="398" text-anchor="middle" font-size="10.5" fill="#555">队尾</text>
+
+    <path d="M118,364 L194,364" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)"/>
+    <text x="114" y="352" text-anchor="middle" font-size="10" fill="#b85450">过期出队</text>
+
+    <path d="M498,364 L352,364" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)"/>
+    <text x="486" y="352" text-anchor="middle" font-size="10" fill="#4a7a3a">弹尾后入队</text>
+
+    <text x="550" y="386" text-anchor="middle" font-size="9.5" fill="#888">（示例 1：j=1 后的队列状态）</text>
+  </g>
+</svg>
