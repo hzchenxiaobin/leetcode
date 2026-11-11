@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="640" viewBox="0 0 700 640" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#c98a2b"/>
+    </marker>
+  </defs>
+  <rect width="700" height="640" fill="#fdfcf7"/>
+  <text x="350" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b">算法流程：单趟 BFS 沉岛 + flag —— 判定与漫灌融合</text>
+  <path d="M 90 42 Q 350 50 610 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- A : outer scan -->
+  <g filter="url(#sk)">
+    <rect x="160" y="64" width="200" height="44" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="260" y="82" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">遍历 grid2 每个格子</text>
+  <text x="260" y="99" text-anchor="middle" font-size="9.5" fill="#666" font-family="monospace">(全部遍历完 → 返回 count)</text>
+
+  <!-- A -> D1 -->
+  <g filter="url(#sk)">
+    <line x1="260" y1="108" x2="260" y2="134" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- D1 : is unsunk land? -->
+  <g filter="url(#sk)">
+    <polygon points="260,138 382,170 260,202 138,170" fill="#fdfcf7" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="260" y="174" text-anchor="middle" font-size="12" fill="#2b2b2b" font-family="monospace">grid2[i][j] == 1 ?</text>
+
+  <!-- D1 no -> next cell box -> back to A -->
+  <text x="415" y="160" text-anchor="middle" font-size="11" fill="#b03a3a">否</text>
+  <g filter="url(#sk)">
+    <path d="M 382 170 L 466 170" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <rect x="470" y="152" width="100" height="36" rx="8" fill="#f2f2f0" stroke="#999" stroke-width="1.4"/>
+    <path d="M 520 152 C 520 58, 390 46, 308 62" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="520" y="174" text-anchor="middle" font-size="11.5" fill="#444">下一格</text>
+
+  <!-- D1 yes -> B -->
+  <text x="270" y="222" text-anchor="middle" font-size="11" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <line x1="260" y1="202" x2="260" y2="232" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- B : init island -->
+  <g filter="url(#sk)">
+    <rect x="160" y="236" width="200" height="50" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/>
+  </g>
+  <text x="260" y="256" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e">flag = true</text>
+  <text x="260" y="274" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">grid2[i][j] = 0；(i,j) 入队</text>
+
+  <!-- B -> C -->
+  <g filter="url(#sk)">
+    <line x1="260" y1="286" x2="260" y2="312" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- C : BFS body -->
+  <g filter="url(#sk)">
+    <rect x="160" y="316" width="200" height="78" rx="8" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="260" y="338" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b2b2b">出队 (x,y)</text>
+  <text x="260" y="356" text-anchor="middle" font-size="10.5" fill="#444" font-family="monospace">grid1[x][y] == 0 ⇒ flag = false</text>
+  <text x="260" y="376" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b03a3a">只记账，绝不 break</text>
+
+  <!-- warning box -->
+  <g filter="url(#sk)">
+    <rect x="380" y="306" width="240" height="96" rx="8" fill="#fffdf3" stroke="#c98a2b" stroke-width="1.6" stroke-dasharray="7 4"/>
+    <path d="M 378 352 L 364 352" stroke="#c98a2b" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="500" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#b03a3a">⚠ 失配为什么不 break？</text>
+  <text x="500" y="350" text-anchor="middle" font-size="10.5" fill="#444">沉岛置 0 兼做 visited 标记；</text>
+  <text x="500" y="368" text-anchor="middle" font-size="10.5" fill="#444">中断会留下残格，被外层当</text>
+  <text x="500" y="386" text-anchor="middle" font-size="10.5" fill="#444">作新岛 → 重复计数（经典 WA）</text>
+
+  <!-- C -> D2 -->
+  <g filter="url(#sk)">
+    <line x1="260" y1="394" x2="260" y2="426" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- D2 : queue empty? -->
+  <g filter="url(#sk)">
+    <polygon points="260,430 352,462 260,494 168,462" fill="#fdfcf7" stroke="#4a8edb" stroke-width="1.6"/>
+    <path d="M 168 462 C 96 462, 96 358, 156 356" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="260" y="466" text-anchor="middle" font-size="12" fill="#2b2b2b" font-family="monospace">队列空 ?</text>
+  <text x="128" y="448" text-anchor="middle" font-size="11" fill="#b03a3a">否</text>
+  <text x="92" y="404" text-anchor="middle" font-size="10" fill="#666">继续 BFS</text>
+
+  <!-- D2 yes -> D3 -->
+  <text x="270" y="512" text-anchor="middle" font-size="11" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <line x1="260" y1="494" x2="260" y2="518" stroke="#888" stroke-width="1.6" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- D3 : flag still true? -->
+  <g filter="url(#sk)">
+    <polygon points="260,522 355,552 260,582 165,552" fill="#fdfcf7" stroke="#4a8edb" stroke-width="1.6"/>
+  </g>
+  <text x="260" y="556" text-anchor="middle" font-size="12" fill="#2b2b2b" font-family="monospace">flag 仍为 true ?</text>
+
+  <!-- D3 yes -> count++ -->
+  <text x="372" y="542" text-anchor="middle" font-size="11" fill="#2e6e2e">是</text>
+  <g filter="url(#sk)">
+    <path d="M 355 552 L 416 552" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <rect x="420" y="532" width="140" height="40" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.8"/>
+    <path d="M 560 552 C 692 548, 692 84, 364 84" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="490" y="557" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">count += 1</text>
+  <text x="648" y="320" text-anchor="middle" font-size="10" fill="#666" transform="rotate(-90 648 320)">计数后继续下一格</text>
+
+  <!-- D3 no -> skip, back to A -->
+  <text x="118" y="540" text-anchor="end" font-size="11" fill="#b03a3a">否（不计入）</text>
+  <g filter="url(#sk)">
+    <path d="M 165 552 C 40 552, 40 150, 40 118 C 40 80, 96 84, 156 84" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+</svg>
