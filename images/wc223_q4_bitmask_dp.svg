@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 410"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="410" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">替代方案：状压 DP —— 确定性上界 O(k·3ⁿ)</text>
+  <path d="M 110 38 Q 280 46 450 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- definition box -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="50" width="500" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="72" text-anchor="middle" font-size="12.5" fill="#2f4e68" filter="url(#rough2)">dp[i][j] = 用前 i 个工人完成「工作集 j」的最小最大负载</text>
+  <text x="280" y="93" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">dp[0][0] = 0，dp[0][j≠0] = +∞；答案 = dp[k][全集]</text>
+
+  <!-- big set j -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="122" width="272" height="76" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" stroke-dasharray="7 5"/>
+  </g>
+  <text x="166" y="140" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">工作集 j（n=5 位比特）</text>
+  <g filter="url(#rough2)">
+    <rect x="41" y="148" width="42" height="26" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="93" y="148" width="42" height="26" rx="4" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="145" y="148" width="42" height="26" rx="4" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="197" y="148" width="42" height="26" rx="4" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="249" y="148" width="42" height="26" rx="4" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="62" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#a07820" filter="url(#rough2)">1</text>
+  <text x="114" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">2</text>
+  <text x="166" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">4</text>
+  <text x="218" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">7</text>
+  <text x="270" y="166" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">8</text>
+  <text x="62" y="190" text-anchor="middle" font-size="9" fill="#a07820" filter="url(#rough2)">lowbit</text>
+  <text x="114" y="190" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">bit1</text>
+  <text x="166" y="190" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">bit2</text>
+  <text x="218" y="190" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">bit3</text>
+  <text x="270" y="190" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">bit4</text>
+
+  <!-- s card -->
+  <g filter="url(#rough2)">
+    <rect x="330" y="122" width="215" height="60" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="437" y="140" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">工人 i 拿走 s ⊆ j（必含 lowbit）</text>
+  <g filter="url(#rough2)">
+    <rect x="360" y="148" width="40" height="24" rx="4" fill="#fff" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="406" y="148" width="40" height="24" rx="4" fill="#fff" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="452" y="148" width="40" height="24" rx="4" fill="#fff" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="380" y="165" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">1</text>
+  <text x="426" y="165" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">2</text>
+  <text x="472" y="165" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">8</text>
+  <text x="527" y="165" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">=11</text>
+
+  <!-- j\s card -->
+  <g filter="url(#rough2)">
+    <rect x="330" y="190" width="215" height="60" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="437" y="208" text-anchor="middle" font-size="11" font-weight="bold" fill="#446688" filter="url(#rough2)">其余 j∖s 交给前 i−1 个工人</text>
+  <g filter="url(#rough2)">
+    <rect x="383" y="216" width="40" height="24" rx="4" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="429" y="216" width="40" height="24" rx="4" fill="#fff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="403" y="233" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">4</text>
+  <text x="449" y="233" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">7</text>
+  <text x="500" y="233" text-anchor="middle" font-size="10.5" fill="#2f4e68" filter="url(#rough2)">dp[i−1]</text>
+
+  <!-- arrows -->
+  <path d="M 302 152 Q 316 150 326 150" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 302 168 Q 316 200 326 216" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- formula box -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="262" width="500" height="42" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="288" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a2828" filter="url(#rough2)">dp[i][j] = min ( s ∋ lowbit(j) ) max( dp[i−1][j∖s], sum[s] )</text>
+
+  <!-- complexity box -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="314" width="500" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="333" text-anchor="middle" font-size="11.5" fill="#7a5a10" filter="url(#rough2)">每个 j 只枚举「含 lowbit」的子集：Σ_j 2^(|j|−1) = 3ⁿ/2</text>
+  <text x="280" y="352" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#7a5a10" filter="url(#rough2)">总复杂度 O(k·3ⁿ)：n=12, k=12 约 3.2×10⁶ 次转移</text>
+
+  <!-- note -->
+  <text x="280" y="384" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">为何可强制 s 含 lowbit(j)：工人集合可整体互换，负载多重集与 max 均不变（交换论证）</text>
+  <text x="280" y="401" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">sum[s] 用 lowbit 递推预处理：sum[j] = sum[j∖lowbit] + jobs[lowbit 下标]</text>
+</svg>

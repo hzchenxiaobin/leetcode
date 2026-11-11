@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">核心观察：「最小化最大值」⟹ 单调性 ⟹ 二分答案</text>
+  <path d="M 110 38 Q 280 46 450 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- transform box -->
+  <g filter="url(#rough2)">
+    <rect x="55" y="52" width="450" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="75" text-anchor="middle" font-size="12.5" fill="#2f4e68" filter="url(#rough2)">不直接构造最优分配，转而判定：check(T) = 能否把 jobs 划成 k 份，</text>
+  <text x="280" y="96" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f4e68" filter="url(#rough2)">使每份之和 ≤ T ？最小化 max ⟺ 找出使 check 成立的最小 T</text>
+
+  <!-- number line section -->
+  <text x="280" y="138" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">以 jobs=[1,2,4,7,8], k=2 为例（sum=22, max=8）</text>
+
+  <!-- infeasible / feasible zone shading -->
+  <g filter="url(#rough2)">
+    <rect x="75" y="158" width="90" height="26" rx="5" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <rect x="165" y="158" width="350" height="26" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+  </g>
+  <text x="120" y="176" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">不可行</text>
+  <text x="340" y="176" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">可行（后缀区间）</text>
+
+  <!-- axis -->
+  <path d="M 68 210 L 532 210" stroke="#555" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ticks: values 8..22, x = 75 + (v-8)*30 -->
+  <g filter="url(#rough2)">
+    <line x1="75" y1="204" x2="75" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="105" y1="204" x2="105" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="135" y1="204" x2="135" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="165" y1="204" x2="165" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="195" y1="204" x2="195" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="225" y1="204" x2="225" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="255" y1="204" x2="255" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="285" y1="204" x2="285" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="315" y1="204" x2="315" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="345" y1="204" x2="345" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="375" y1="204" x2="375" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="405" y1="204" x2="405" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="435" y1="204" x2="435" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="465" y1="204" x2="465" y2="216" stroke="#555" stroke-width="1.5"/>
+    <line x1="495" y1="204" x2="495" y2="216" stroke="#555" stroke-width="1.5"/>
+  </g>
+  <!-- tick labels -->
+  <g font-size="9" fill="#777" text-anchor="middle" filter="url(#rough2)">
+    <text x="75" y="230">8</text><text x="105" y="230">9</text><text x="135" y="230">10</text>
+    <text x="165" y="230">11</text><text x="195" y="230">12</text><text x="225" y="230">13</text>
+    <text x="255" y="230">14</text><text x="285" y="230">15</text><text x="315" y="230">16</text>
+    <text x="345" y="230">17</text><text x="375" y="230">18</text><text x="405" y="230">19</text>
+    <text x="435" y="230">20</text><text x="465" y="230">21</text><text x="495" y="230">22</text>
+  </g>
+  <!-- verdict marks -->
+  <g font-size="13" font-weight="bold" text-anchor="middle" filter="url(#rough2)">
+    <text x="75" y="199" fill="#b85450">✗</text>
+    <text x="105" y="199" fill="#b85450">✗</text>
+    <text x="135" y="199" fill="#b85450">✗</text>
+    <text x="165" y="199" fill="#2e6e2e">✓</text>
+    <text x="195" y="199" fill="#2e6e2e">✓</text>
+    <text x="255" y="199" fill="#2e6e2e">✓</text>
+    <text x="345" y="199" fill="#2e6e2e">✓</text>
+    <text x="495" y="199" fill="#2e6e2e">✓</text>
+  </g>
+  <!-- bounds labels -->
+  <text x="75" y="250" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">下界 max(jobs)</text>
+  <text x="495" y="250" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">上界 sum(jobs)</text>
+
+  <!-- answer highlight -->
+  <ellipse cx="165" cy="210" rx="15" ry="17" fill="none" stroke="#d6a040" stroke-width="2.4" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <path d="M 165 190 Q 175 168 195 156" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="245" y="150" text-anchor="middle" font-size="13" font-weight="bold" fill="#a07820" filter="url(#rough2)">答案 = 第一个 ✓ = 11</text>
+
+  <!-- monotone box -->
+  <g filter="url(#rough2)">
+    <rect x="55" y="266" width="450" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="287" text-anchor="middle" font-size="12" fill="#3a6234" filter="url(#rough2)">单调性：check(T) 成立 ⟹ 同一分配方案下 max ≤ T ≤ T′ ⟹ check(T′) 成立</text>
+  <text x="280" y="307" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a6234" filter="url(#rough2)">可行域是一条后缀 ⟹ 在值域上二分找最左边界</text>
+
+  <!-- binary search box -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="330" width="480" height="76" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="280" y="352" text-anchor="middle" font-size="12" fill="#7a5a10" filter="url(#rough2)">lo = max( max(jobs), ⌈sum/k⌉ )，hi = sum(jobs)　← 闭区间二分</text>
+  <text x="280" y="372" text-anchor="middle" font-size="12" fill="#7a5a10" filter="url(#rough2)">while lo ＜ hi: mid = ⌊(lo+hi)/2⌋</text>
+  <text x="280" y="392" text-anchor="middle" font-size="12" font-weight="bold" fill="#7a5a10" filter="url(#rough2)">check(mid) ? hi = mid : lo = mid + 1　→　返回 lo</text>
+</svg>
