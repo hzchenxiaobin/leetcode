@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="47" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="640" height="440" fill="#fdfcf7"/>
+  <text x="320" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b">算法流程：一次前缀和预处理，每查询 O(1) 区间判定</text>
+  <path d="M 130 40 Q 320 48 510 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- Phase 1 -->
+  <g filter="url(#sk)"><rect x="55" y="56" width="280" height="72" rx="10" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.6"/></g>
+  <text x="195" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e">Phase 1 · 预处理前缀和</text>
+  <text x="195" y="100" text-anchor="middle" font-size="11.5" fill="#2b6e9e">s[0] = 0</text>
+  <text x="195" y="118" text-anchor="middle" font-size="11.5" fill="#2b6e9e">s[i+1] = s[i] + candiesCount[i]</text>
+  <text x="195" y="144" text-anchor="middle" font-size="10.5" fill="#b03a3a">⚠ s 用 long long：总和可达 10¹⁰</text>
+
+  <path d="M 335 92 L 381 92" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- Phase 2 -->
+  <g filter="url(#sk)"><rect x="383" y="56" width="202" height="72" rx="10" fill="#fff4e6" stroke="#c98a2b" stroke-width="1.6"/></g>
+  <text x="484" y="78" text-anchor="middle" font-size="13" font-weight="bold" fill="#a06b1a">Phase 2 · 逐查询判定</text>
+  <text x="484" y="100" text-anchor="middle" font-size="11.5" fill="#a06b1a">for [t, d, cap] in queries:</text>
+  <text x="484" y="118" text-anchor="middle" font-size="11.5" fill="#a06b1a">两次比较 → O(1)</text>
+
+  <path d="M 484 128 L 484 140 L 430 140 L 430 148" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- query box -->
+  <g filter="url(#sk)"><rect x="350" y="152" width="160" height="30" rx="8" fill="#fdfcf7" stroke="#555" stroke-width="1.4"/></g>
+  <text x="430" y="171" text-anchor="middle" font-size="12.5" fill="#333">取出查询 [t, d, cap]</text>
+
+  <path d="M 430 182 L 430 196" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#sk)"><polygon points="430,198 566,240 430,282 294,240" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="430" y="236" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">(d+1)·cap &gt; s[t] ?</text>
+  <text x="430" y="253" text-anchor="middle" font-size="10.5" fill="#555">吃得够快吗（到得了类型 t 吗）</text>
+
+  <path d="M 294 240 L 258 240" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="276" y="232" text-anchor="middle" font-size="10.5" fill="#b03a3a">否</text>
+  <g filter="url(#sk)"><rect x="52" y="218" width="204" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/></g>
+  <text x="154" y="236" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">false —— 吃太慢</text>
+  <text x="154" y="252" text-anchor="middle" font-size="10.5" fill="#b03a3a">吃满 cap 也够不到类型 t</text>
+
+  <path d="M 430 282 L 430 300" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="440" y="296" text-anchor="start" font-size="10.5" fill="#2e6e2e">是</text>
+
+  <!-- diamond 2 -->
+  <g filter="url(#sk)"><polygon points="430,304 566,346 430,388 294,346" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.8"/></g>
+  <text x="430" y="342" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b6e9e">d+1 ≤ s[t+1] ?</text>
+  <text x="430" y="359" text-anchor="middle" font-size="10.5" fill="#555">吃得够慢吗（类型 t 还剩吗）</text>
+
+  <path d="M 294 346 L 258 346" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="276" y="338" text-anchor="middle" font-size="10.5" fill="#b03a3a">否</text>
+  <g filter="url(#sk)"><rect x="52" y="324" width="204" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.3"/></g>
+  <text x="154" y="342" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b03a3a">false —— 吃太快</text>
+  <text x="154" y="358" text-anchor="middle" font-size="10.5" fill="#b03a3a">每天 1 颗也早吃完了</text>
+
+  <path d="M 430 388 L 430 400" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#sk)"/>
+  <text x="440" y="398" text-anchor="start" font-size="10.5" fill="#2e6e2e">是</text>
+
+  <!-- true -->
+  <g filter="url(#sk)"><rect x="340" y="404" width="180" height="30" rx="8" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.6"/></g>
+  <text x="430" y="423" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e">true ✓</text>
+
+  <!-- bottom-left note -->
+  <g filter="url(#sk)"><rect x="52" y="404" width="250" height="30" rx="8" fill="#f5f5f0" stroke="#b0b0b0" stroke-width="1.2"/></g>
+  <text x="177" y="423" text-anchor="middle" font-size="10.5" fill="#888">单查询 O(1)，总复杂度 O(n + q)</text>
+</svg>
