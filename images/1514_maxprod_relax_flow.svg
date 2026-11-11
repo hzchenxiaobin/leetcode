@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="630" viewBox="0 0 640 630" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="630" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">算法流程：大根堆 + 乘积松弛 + 懒删除 + 提前终止</text>
+
+  <!-- N1 build graph -->
+  <g filter="url(#r)">
+    <rect x="140" y="46" width="260" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="270" y="71" text-anchor="middle" font-size="13" fill="#33517a" filter="url(#r)">① 建邻接表：无向边双向加入</text>
+
+  <!-- N2 init -->
+  <g filter="url(#r)">
+    <rect x="140" y="114" width="260" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="270" y="139" text-anchor="middle" font-size="13" fill="#33517a" filter="url(#r)">② prob[start] ← 1，(1.0, start) 入大根堆</text>
+
+  <!-- D1 heap empty? -->
+  <g filter="url(#r)">
+    <polygon points="190,208 270,174 350,208 270,242" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="270" y="213" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6d1a" filter="url(#r)">堆空？</text>
+
+  <!-- R1 return 0 -->
+  <g filter="url(#r)">
+    <rect x="442" y="188" width="168" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="526" y="213" text-anchor="middle" font-size="12.5" fill="#b85450" filter="url(#r)">返回 0：end 不可达</text>
+
+  <!-- N3 pop -->
+  <g filter="url(#r)">
+    <rect x="140" y="282" width="260" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="270" y="307" text-anchor="middle" font-size="13" fill="#33517a" filter="url(#r)">③ 弹出堆顶 (p, u)</text>
+
+  <!-- D2 u == end? -->
+  <g filter="url(#r)">
+    <polygon points="190,382 270,348 350,382 270,416" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="270" y="387" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6d1a" filter="url(#r)">u == end？</text>
+
+  <!-- R2 return p -->
+  <g filter="url(#r)">
+    <rect x="442" y="362" width="168" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="526" y="387" text-anchor="middle" font-size="12.5" fill="#2e6e2e" filter="url(#r)">返回 p：提前终止 ✓</text>
+
+  <!-- D3 stale record? -->
+  <g filter="url(#r)">
+    <polygon points="178,486 270,446 362,486 270,526" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="270" y="484" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6d1a" filter="url(#r)">p &lt; prob[u]？</text>
+  <text x="270" y="500" text-anchor="middle" font-size="10" fill="#a8862a" filter="url(#r)">（过期记录）</text>
+
+  <!-- N4 relax -->
+  <g filter="url(#r)">
+    <rect x="140" y="564" width="260" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="270" y="582" text-anchor="middle" font-size="12.5" fill="#33517a" filter="url(#r)">④ 对每条出边 (v, w)：</text>
+  <text x="270" y="599" text-anchor="middle" font-size="12.5" fill="#33517a" filter="url(#r)">p × w &gt; prob[v] ⇒ 更新并入堆</text>
+
+  <!-- main flow arrows -->
+  <g filter="url(#r)" stroke="#3a3a3a" stroke-width="1.8" fill="none">
+    <path d="M 270 86 L 270 110" marker-end="url(#ar)"/>
+    <path d="M 270 154 L 270 170" marker-end="url(#ar)"/>
+    <path d="M 350 208 L 438 208" marker-end="url(#ar)"/>
+    <path d="M 270 242 L 270 278" marker-end="url(#ar)"/>
+    <path d="M 350 382 L 438 382" marker-end="url(#ar)"/>
+    <path d="M 270 416 L 270 442" marker-end="url(#ar)"/>
+    <path d="M 270 526 L 270 560" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- skip (lazy delete) back to N3 -->
+  <path d="M 178 486 L 104 486 L 104 294 L 136 294" stroke="#3a3a3a" stroke-width="1.6" fill="none" filter="url(#r)" marker-end="url(#ar)"/>
+  <text x="168" y="472" text-anchor="end" font-size="11.5" fill="#666" filter="url(#r)">是</text>
+  <text x="94" y="394" transform="rotate(-90 94 394)" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">跳过（懒删除）</text>
+
+  <!-- relax done, loop back to N3 -->
+  <path d="M 140 586 L 36 586 L 36 312 L 136 312" stroke="#3a3a3a" stroke-width="1.6" fill="none" filter="url(#r)" marker-end="url(#ar)"/>
+  <text x="26" y="450" transform="rotate(-90 26 450)" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">松弛完，继续循环</text>
+
+  <!-- branch labels -->
+  <g font-size="11.5" fill="#666">
+    <text x="362" y="200" filter="url(#r)">是</text>
+    <text x="282" y="266" filter="url(#r)">否</text>
+    <text x="362" y="374" filter="url(#r)">是</text>
+    <text x="282" y="436" filter="url(#r)">否</text>
+    <text x="282" y="548" filter="url(#r)">否</text>
+  </g>
+</svg>
