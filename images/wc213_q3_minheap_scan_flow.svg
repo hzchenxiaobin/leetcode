@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 600"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="600" fill="#fafafa"/>
+  <text x="360" y="20" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">算法流程：一遍扫描 + 最小堆「梯子组」，溢出降级、砖块赤字即停</text>
+
+  <!-- 开始 -->
+  <rect x="140" y="32" width="240" height="36" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="54" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">开始：i = 0，堆空，砖 = bricks</text>
+  <path d="M 260 68 L 260 84" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 框A -->
+  <rect x="140" y="86" width="240" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="108" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">段差 d = h[i+1] − h[i]</text>
+  <path d="M 260 122 L 260 138" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形1：d <= 0 ? -->
+  <polygon points="150,176 260,142 370,176 260,210" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="181" text-anchor="middle" font-size="12" fill="#8a6d1f" filter="url(#rough2)">d ≤ 0？</text>
+  <path d="M 370 176 L 416 176" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="384" y="168" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">是</text>
+  <path d="M 260 210 L 260 228" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="222" font-size="10.5" fill="#333" filter="url(#rough2)">否</text>
+
+  <!-- 绿框：下坡免费 -->
+  <rect x="416" y="154" width="204" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="518" y="174" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">下坡 / 平坡</text>
+  <text x="518" y="192" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">免费通过，不花资源</text>
+
+  <!-- 框B -->
+  <rect x="140" y="228" width="240" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="250" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">d 入最小堆 —— 先占住梯子位</text>
+  <path d="M 260 264 L 260 282" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形2：堆大小 > ladders ? -->
+  <polygon points="150,314 260,280 370,314 260,348" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="319" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">堆大小 &gt; ladders？</text>
+  <path d="M 370 314 L 416 314" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="385" y="306" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">是</text>
+  <path d="M 260 348 L 260 392" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="372" font-size="10.5" fill="#333" filter="url(#rough2)">否</text>
+
+  <!-- 橙框：溢出降级 -->
+  <rect x="416" y="286" width="252" height="72" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="542" y="310" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">弹出堆顶 x —— 最小的 gap</text>
+  <text x="542" y="328" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">bricks −= x</text>
+  <text x="542" y="346" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">反悔：这单改用砖块付</text>
+  <path d="M 542 358 L 542 388 L 330 388 L 330 406" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形3：bricks < 0 ? -->
+  <polygon points="150,424 260,390 370,424 260,458" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="429" text-anchor="middle" font-size="12" fill="#8a6d1f" filter="url(#rough2)">bricks &lt; 0？</text>
+  <path d="M 370 424 L 416 424" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="385" y="416" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">是</text>
+  <path d="M 260 458 L 260 476" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="470" font-size="10.5" fill="#333" filter="url(#rough2)">否</text>
+
+  <!-- 红终止框 -->
+  <rect x="416" y="402" width="220" height="44" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="526" y="422" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">返回 i —— 最远建筑</text>
+  <text x="526" y="440" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">砖块赤字，止步于此 ✗</text>
+
+  <!-- 不变式小注 -->
+  <rect x="416" y="466" width="254" height="54" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="543" y="486" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">不变式：堆中恰为迄今最大的</text>
+  <text x="543" y="504" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">min(正差个数, ladders) 个 gap</text>
+
+  <!-- 循环框 -->
+  <rect x="170" y="476" width="180" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="498" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">i ← i+1，取下一段</text>
+
+  <!-- 循环回环 -->
+  <path d="M 170 494 L 90 494 L 90 104 L 136 104" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="98" y="300" font-size="10.5" fill="#999" filter="url(#rough2)">循环</text>
+
+  <!-- 绿框回程 -->
+  <path d="M 620 176 L 680 176" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 680 176 L 680 541 L 260 541 L 260 516" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="450" y="533" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#rough2)">免费段直接走下一段</text>
+
+  <!-- 循环出口 -->
+  <path d="M 260 512 L 260 556" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="272" y="540" font-size="10.5" fill="#666" filter="url(#rough2)">i 达 n−1</text>
+
+  <!-- 绿终止框 -->
+  <rect x="140" y="558" width="240" height="36" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="580" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">返回 n − 1：走完全程 ✓</text>
+</svg>
