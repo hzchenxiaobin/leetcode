@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 500"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="500" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#rough2)">Hierholzer 求欧拉路径：四步流程</text>
+
+  <!-- ============ ① 建图 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="54" width="500" height="56" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+    <circle cx="80" cy="82" r="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <text x="80" y="86" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688">①</text>
+    <text x="100" y="78" font-size="11" font-weight="bold" fill="#333">建图 + 度数统计</text>
+    <text x="100" y="96" font-size="9.5" fill="#666">每个数对 [u,v]：g[u] 尾插 v；out[u]++、in[v]++（值域 1e9，用哈希表）</text>
+  </g>
+
+  <line x1="310" y1="110" x2="310" y2="134" stroke="#446688" stroke-width="1.7" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ============ ② 决策菱形 ============ -->
+  <polygon points="310,136 455,176 310,216 165,176" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="310" y="172" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6a1a" filter="url(#rough2)">存在 out − in = 1</text>
+  <text x="310" y="190" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6a1a" filter="url(#rough2)">的顶点？</text>
+
+  <!-- fork -->
+  <g stroke="#446688" stroke-width="1.5" fill="none">
+    <line x1="310" y1="216" x2="310" y2="234" filter="url(#rough2)"/>
+    <line x1="170" y1="234" x2="450" y2="234" filter="url(#rough2)"/>
+    <line x1="170" y1="234" x2="170" y2="250" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <line x1="450" y1="234" x2="450" y2="250" marker-end="url(#arr)" filter="url(#rough2)"/>
+  </g>
+  <text x="195" y="229" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <text x="415" y="229" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- branch boxes -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="252" width="260" height="62" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="170" y="274" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5e24">起点 = 该顶点</text>
+    <text x="170" y="292" text-anchor="middle" font-size="9.5" fill="#2f5e24">半欧拉路径（唯一起点）</text>
+    <text x="170" y="306" text-anchor="middle" font-size="9.5" fill="#2f5e24">终点满足 in − out = 1</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="320" y="252" width="260" height="62" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="450" y="274" text-anchor="middle" font-size="11" font-weight="bold" fill="#8a6a1a">起点 = 任一有出边顶点</text>
+    <text x="450" y="292" text-anchor="middle" font-size="9.5" fill="#8a6a1a">欧拉回路（所有点 out = in）</text>
+    <text x="450" y="306" text-anchor="middle" font-size="9.5" fill="#8a6a1a">实现兜底：pairs[0][0]</text>
+  </g>
+
+  <!-- merge -->
+  <g stroke="#446688" stroke-width="1.5" fill="none">
+    <line x1="170" y1="314" x2="170" y2="326" filter="url(#rough2)"/>
+    <line x1="450" y1="314" x2="450" y2="326" filter="url(#rough2)"/>
+    <line x1="170" y1="326" x2="450" y2="326" filter="url(#rough2)"/>
+    <line x1="310" y1="326" x2="310" y2="338" marker-end="url(#arr)" filter="url(#rough2)"/>
+  </g>
+
+  <!-- ============ ③ 迭代 Hierholzer ============ -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="338" width="540" height="84" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+    <circle cx="60" cy="362" r="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <text x="60" y="366" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688">③</text>
+    <text x="80" y="366" font-size="11" font-weight="bold" fill="#333">迭代 Hierholzer（显式栈模拟，防 1e5 递归爆栈）</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="70" y="376" width="230" height="38" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <text x="185" y="391" text-anchor="middle" font-size="10" font-weight="bold" fill="#446688">栈顶 u 有出边</text>
+    <text x="185" y="406" text-anchor="middle" font-size="9.5" fill="#446688">v ← g[u].pop()，push v 深入</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="320" y="376" width="230" height="38" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <text x="435" y="391" text-anchor="middle" font-size="10" font-weight="bold" fill="#b85450">栈顶 u 无出边</text>
+    <text x="435" y="406" text-anchor="middle" font-size="9.5" fill="#b85450">ans 追加 u（后序），pop</text>
+  </g>
+
+  <line x1="310" y1="422" x2="310" y2="438" stroke="#446688" stroke-width="1.7" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ============ ④ 逆序 + 配对 ============ -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="440" width="540" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="310" y="458" text-anchor="middle" font-size="11" font-weight="bold" fill="#2f5e24">④ 逆序 + 配对</text>
+    <text x="310" y="474" text-anchor="middle" font-size="10" fill="#2f5e24">ans 逆序得节点路径 [v0,…,vn]，相邻配对输出（恰 n 条边，首尾自动相接）</text>
+  </g>
+</svg>
