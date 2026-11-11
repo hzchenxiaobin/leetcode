@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="440" viewBox="0 0 640 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="440" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#r)">算法流程：排序 + 逐对验证</text>
+  <text x="320" y="48" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">排序 O(n log n) 消掉重排自由度，验证 O(n) 一遍扫完，不匹配提前退出</text>
+
+  <!-- step 1: sort -->
+  <g filter="url(#r)">
+    <rect x="210" y="64" width="220" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="88" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#33517a" filter="url(#r)">① 排序 arr.sort()</text>
+  <g filter="url(#r)">
+    <path d="M 320 102 L 320 116" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- step 2: d -->
+  <g filter="url(#r)">
+    <rect x="160" y="120" width="320" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="144" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#33517a" filter="url(#r)">② 取公差候选 d = arr[1] − arr[0]（排序后 d ≥ 0）</text>
+  <g filter="url(#r)">
+    <path d="M 320 158 L 320 172" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+
+  <!-- decision diamond -->
+  <g filter="url(#r)">
+    <polygon points="320,176 452,238 320,300 188,238" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="320" y="232" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#8a6a2a" filter="url(#r)">arr[i] − arr[i−1] == d ?</text>
+  <text x="320" y="252" text-anchor="middle" font-size="11" fill="#999" filter="url(#r)">i = 2 … n−1 逐对比较</text>
+
+  <!-- no branch -->
+  <g filter="url(#r)">
+    <path d="M 452 238 L 472 238" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="458" y="230" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">否</text>
+  <g filter="url(#r)">
+    <rect x="478" y="220" width="130" height="36" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="543" y="243" text-anchor="middle" font-size="14" font-weight="bold" fill="#b85450" filter="url(#r)">return false</text>
+
+  <!-- yes branch -->
+  <g filter="url(#r)">
+    <path d="M 320 300 L 320 316" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="332" y="312" text-anchor="start" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">是：n−1 个差全相等</text>
+  <g filter="url(#r)">
+    <rect x="230" y="320" width="180" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="320" y="343" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#r)">return true</text>
+
+  <!-- notes -->
+  <g filter="url(#r)">
+    <rect x="56" y="376" width="528" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="396" text-anchor="middle" font-size="11.5" fill="#8a4a44" filter="url(#r)">提前失败：一遇到 ≠ d 的相邻差立即 return false，最坏也只需 n−1 次比较</text>
+  <text x="320" y="416" text-anchor="middle" font-size="11.5" fill="#8a4a44" filter="url(#r)">n = 2 时循环体不执行 → 直接 return true：任意两个数必成等差数列</text>
+</svg>

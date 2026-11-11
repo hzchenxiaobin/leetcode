@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="540" viewBox="0 0 640 540" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="640" height="540" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#r)">代价公式：已取走的位置是「幽灵」，不再挡路</text>
+  <text x="320" y="48" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">cost(j) = j − del_lt(j)，其中 del_lt(j) = 前方已删除位置数 = BIT.query(j)</text>
+
+  <!-- Panel A: ghost positions in 4321 step 4 -->
+  <g filter="url(#r)">
+    <rect x="56" y="62" width="528" height="170" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <text x="76" y="86" text-anchor="start" font-size="13" font-weight="bold" fill="#33517a" filter="url(#r)">"4321" 第 4 步｜'2' 名义在原下标 2，前方实际已无人</text>
+  <g filter="url(#r)">
+    <rect x="84" y="104" width="48" height="34" rx="4" fill="#eeeeee" stroke="#999" stroke-width="1.5" stroke-dasharray="5,4"/>
+    <rect x="140" y="104" width="48" height="34" rx="4" fill="#eeeeee" stroke="#999" stroke-width="1.5" stroke-dasharray="5,4"/>
+    <rect x="196" y="104" width="48" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.4"/>
+    <rect x="252" y="104" width="48" height="34" rx="4" fill="#eeeeee" stroke="#999" stroke-width="1.5" stroke-dasharray="5,4"/>
+  </g>
+  <g font-size="15" font-weight="bold" text-anchor="middle">
+    <text x="108" y="126" fill="#aaa" filter="url(#r)">4</text>
+    <text x="164" y="126" fill="#aaa" filter="url(#r)">3</text>
+    <text x="220" y="126" fill="#33517a" filter="url(#r)">2</text>
+    <text x="276" y="126" fill="#aaa" filter="url(#r)">1</text>
+  </g>
+  <g font-size="10.5" text-anchor="middle" fill="#999">
+    <text x="108" y="150" filter="url(#r)">幽灵（已入结果）</text>
+    <text x="164" y="150" filter="url(#r)">幽灵（已入结果）</text>
+    <text x="276" y="150" filter="url(#r)">幽灵（已入结果）</text>
+  </g>
+  <g font-size="10.5" text-anchor="middle" fill="#888">
+    <text x="108" y="164" filter="url(#r)">j=0</text>
+    <text x="164" y="164" filter="url(#r)">j=1</text>
+    <text x="220" y="164" filter="url(#r)">j=2</text>
+    <text x="276" y="164" filter="url(#r)">j=3</text>
+  </g>
+  <text x="76" y="196" text-anchor="start" font-size="12.5" font-weight="bold" fill="#33517a" filter="url(#r)">cost = j − del_lt(j) = 2 − 2 = 0</text>
+  <text x="76" y="218" text-anchor="start" font-size="11.5" fill="#888" filter="url(#r)">前方两个位置都是幽灵，不用越过任何数字——'2' 已等在剩余序列开头</text>
+
+  <!-- Panel B: counterexample 921 -->
+  <g filter="url(#r)">
+    <rect x="56" y="248" width="528" height="170" rx="8" fill="#ffffff" stroke="#b85450" stroke-width="1.5"/>
+  </g>
+  <text x="76" y="272" text-anchor="start" font-size="13" font-weight="bold" fill="#b85450" filter="url(#r)">反例 "921", k = 2｜朴素「j − t」会低估代价，输出不可达的串</text>
+  <g filter="url(#r)">
+    <rect x="76" y="286" width="232" height="58" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="332" y="286" width="232" height="58" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+  <text x="192" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">正确：cost = j − del_lt(j)</text>
+  <text x="192" y="328" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#r)">'1'(cost 2) → '9'(j=0, cost 0) → '2'(j=1, cost 1−1=0)</text>
+  <text x="192" y="345" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">⇒ "192"，恰好 2 次交换 ✓</text>
+  <text x="448" y="308" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#r)">朴素：cost' = j − t（漏掉 del_lt 修正）</text>
+  <text x="448" y="328" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#r)">'1'(cost 2) → '2'(j=1, 1−1=0 误判) → '9'</text>
+  <text x="448" y="345" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#r)">⇒ "129"，实际需 3 次 &gt; k ✗ 不可达</text>
+  <text x="320" y="372" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a4a44" filter="url(#r)">'2' 前方真实的 '9' 还在挡路；后方的幽灵（已删的位置 2）不能抵扣前方的代价！</text>
+  <text x="320" y="402" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#r)">del_lt(j) 只统计 j 左侧的幽灵；它与当前步数 t 无关（t = 左侧幽灵 + 右侧幽灵）</text>
+
+  <!-- Panel C: BIT mapping -->
+  <g filter="url(#r)">
+    <rect x="56" y="434" width="528" height="82" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="458" text-anchor="middle" font-size="12" font-weight="bold" fill="#a0761e" filter="url(#r)">BIT 映射（1-based）：原下标 j → BIT 位置 j + 1</text>
+  <text x="320" y="480" text-anchor="middle" font-size="11.5" fill="#a0761e" filter="url(#r)">del_lt(j) = query(j)：统计原下标 [0, j−1] 中的已删除位置数</text>
+  <text x="320" y="502" text-anchor="middle" font-size="11.5" fill="#a0761e" filter="url(#r)">初始全 0；每选中一个 j 就 add(j+1, 1)，O(log n) 完成代价查询</text>
+</svg>
