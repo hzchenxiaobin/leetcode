@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="500" viewBox="0 0 640 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="500" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#r)">evil 的 KMP 自动机（以 evil = "aab"、m = 3 为例）</text>
+  <text x="320" y="52" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">状态 j = 已匹配的 evil 前缀长度；读入 c 后 j ← δ(j, c)；j = 3 ⇒ evil 出现 ⇒ 剪枝</text>
+
+  <!-- 状态节点 -->
+  <g filter="url(#r)">
+    <circle cx="95" cy="160" r="27" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="255" cy="160" r="27" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="415" cy="160" r="27" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="565" cy="160" r="27" fill="#fce4ec" stroke="#b85450" stroke-width="2.5"/>
+  </g>
+  <g font-size="18" font-weight="bold" text-anchor="middle">
+    <text x="95" y="167" fill="#33517a" filter="url(#r)">0</text>
+    <text x="255" y="167" fill="#33517a" filter="url(#r)">1</text>
+    <text x="415" y="167" fill="#33517a" filter="url(#r)">2</text>
+    <text x="565" y="167" fill="#b85450" filter="url(#r)">3</text>
+  </g>
+
+  <!-- 前向边 -->
+  <g filter="url(#r)">
+    <path d="M 124 160 L 224 160" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+    <path d="M 284 160 L 384 160" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+    <path d="M 444 160 L 534 160" stroke="#b85450" stroke-width="2.4" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold">
+    <text x="174" y="150" fill="#2e6e2e" filter="url(#r)">a</text>
+    <text x="334" y="150" fill="#2e6e2e" filter="url(#r)">a</text>
+    <text x="489" y="150" fill="#b85450" filter="url(#r)">b</text>
+  </g>
+
+  <!-- 自环与回退边 -->
+  <g filter="url(#r)">
+    <path d="M 78 142 C 52 104, 138 104, 113 142" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 238 182 C 205 235, 132 235, 114 182" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#ar)"/>
+    <path d="M 398 142 C 372 104, 458 104, 433 142" stroke="#2e6e2e" stroke-width="1.8" fill="none" marker-end="url(#ar)"/>
+  </g>
+  <text x="95" y="100" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">非 a</text>
+  <text x="176" y="246" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">非 a</text>
+  <text x="415" y="100" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#r)">a</text>
+  <text x="415" y="84" text-anchor="middle" font-size="10" fill="#999" filter="url(#r)">"aaa" 仍以 "aa" 结尾 → 停在 2</text>
+
+  <!-- 状态含义 -->
+  <g text-anchor="middle" font-size="11" fill="#888">
+    <text x="95" y="212" filter="url(#r)">空（匹配 0 个）</text>
+    <text x="255" y="212" filter="url(#r)">已匹配 'a'</text>
+    <text x="415" y="212" filter="url(#r)">已匹配 'aa'</text>
+    <text x="565" y="212" fill="#b85450" font-weight="bold" filter="url(#r)">已匹配 'aab'！</text>
+  </g>
+  <text x="320" y="264" text-anchor="middle" font-size="11" fill="#888" filter="url(#r)">失配回退：fail = [0, 1, 0]；如状态 2 读入既非 'a' 也非 'b' → 先退到 1 → 再退到 0</text>
+
+  <!-- 演算面板 -->
+  <g filter="url(#r)">
+    <rect x="55" y="282" width="530" height="190" rx="10" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.3"/>
+  </g>
+  <text x="320" y="310" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b" filter="url(#r)">演算：把文本 t = "abaaab" 逐字符喂入</text>
+
+  <g filter="url(#r)">
+    <rect x="112" y="324" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="170" y="324" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="228" y="324" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="286" y="324" width="46" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="344" y="324" width="46" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="402" y="324" width="46" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g font-size="15" font-weight="bold" text-anchor="middle" fill="#33517a">
+    <text x="135" y="346" filter="url(#r)">a</text>
+    <text x="193" y="346" filter="url(#r)">b</text>
+    <text x="251" y="346" filter="url(#r)">a</text>
+    <text x="309" y="346" filter="url(#r)">a</text>
+    <text x="367" y="346" filter="url(#r)">a</text>
+    <text x="425" y="346" filter="url(#r)">b</text>
+  </g>
+
+  <g filter="url(#r)">
+    <rect x="112" y="372" width="46" height="26" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.5"/>
+    <rect x="170" y="372" width="46" height="26" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.5"/>
+    <rect x="228" y="372" width="46" height="26" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.5"/>
+    <rect x="286" y="372" width="46" height="26" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.5"/>
+    <rect x="344" y="372" width="46" height="26" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.5"/>
+    <rect x="402" y="372" width="46" height="26" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <g font-size="12.5" font-weight="bold" text-anchor="middle">
+    <text x="135" y="390" fill="#33517a" filter="url(#r)">1</text>
+    <text x="193" y="390" fill="#33517a" filter="url(#r)">0</text>
+    <text x="251" y="390" fill="#33517a" filter="url(#r)">1</text>
+    <text x="309" y="390" fill="#33517a" filter="url(#r)">2</text>
+    <text x="367" y="390" fill="#33517a" filter="url(#r)">2</text>
+    <text x="425" y="390" fill="#b85450" filter="url(#r)">3</text>
+  </g>
+  <text x="104" y="390" text-anchor="end" font-size="11" fill="#888" filter="url(#r)">j =</text>
+
+  <g filter="url(#r)">
+    <path d="M 286 412 L 286 418 L 448 418 L 448 412" stroke="#2e6e2e" stroke-width="1.6" fill="none"/>
+  </g>
+  <text x="367" y="436" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">"aab" 出现 → j = 3 → 剪枝</text>
+  <text x="320" y="458" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#r)">第 5 步读 'a'：顺延失败 → 沿 fail 回退后仍匹配 "aa" → 停在 2</text>
+</svg>

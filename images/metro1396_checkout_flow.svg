@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6" stroke-linecap="round" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrDown" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#d6a040" stroke-width="1.6" stroke-linecap="round" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#4a7a3a" stroke-width="1.6" stroke-linecap="round" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="400" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">算法流程：三个方法各 O(1)，出站是四步流水线</text>
+
+  <!-- 列 1：checkIn -->
+  <rect x="20" y="54" width="132" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="86" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#2a4660" filter="url(#rough2)">checkIn</text>
+  <rect x="108" y="60" width="36" height="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="9" filter="url(#rough2)"/>
+  <text x="126" y="73" text-anchor="middle" font-size="10" fill="#2f5424" filter="url(#rough2)">O(1)</text>
+
+  <path d="M 86 92 L 86 104" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="20" y="108" width="132" height="76" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="86" y="132" text-anchor="middle" font-size="11" fill="#2a4660" filter="url(#rough2)">checkIns[id] =</text>
+  <text x="86" y="150" text-anchor="middle" font-size="11" fill="#2a4660" filter="url(#rough2)">(stationName, t)</text>
+  <text x="86" y="172" text-anchor="middle" font-size="10" fill="#7a96b0" filter="url(#rough2)">一次哈希写入</text>
+
+  <text x="86" y="212" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">在途表多一条，</text>
+  <text x="86" y="228" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">行程尚未闭合</text>
+
+  <!-- 列 2：checkOut 四步 -->
+  <rect x="172" y="54" width="186" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="265" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#a07420" filter="url(#rough2)">checkOut · 四步流水线</text>
+  <rect x="312" y="60" width="36" height="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="9" filter="url(#rough2)"/>
+  <text x="330" y="73" text-anchor="middle" font-size="10" fill="#2f5424" filter="url(#rough2)">O(1)</text>
+
+  <path d="M 265 92 L 265 102" fill="none" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arrDown)" filter="url(#rough2)"/>
+
+  <rect x="172" y="106" width="186" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="186" y="126" font-size="11" fill="#8a6a20" filter="url(#rough2)">① 查在途（先读）</text>
+  <text x="186" y="144" font-size="11" fill="#8a6a20" filter="url(#rough2)">(start, tIn) ← checkIns[id]</text>
+
+  <path d="M 265 156 L 265 166" fill="none" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arrDown)" filter="url(#rough2)"/>
+
+  <rect x="172" y="170" width="186" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="186" y="190" font-size="11" fill="#8a6a20" filter="url(#rough2)">② 算时差</text>
+  <text x="186" y="208" font-size="11" fill="#8a6a20" filter="url(#rough2)">dt = t − tIn</text>
+
+  <path d="M 265 220 L 265 230" fill="none" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arrDown)" filter="url(#rough2)"/>
+
+  <rect x="172" y="234" width="186" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="8" filter="url(#rough2)"/>
+  <text x="186" y="254" font-size="11" fill="#8a6a20" filter="url(#rough2)">③ 组键累加（核心）</text>
+  <text x="186" y="272" font-size="11" fill="#8a6a20" filter="url(#rough2)">travelTimes[(start, end)]</text>
+  <text x="186" y="286" font-size="11" fill="#8a6a20" filter="url(#rough2)">+= (dt, 1)　缺省 (0,0)</text>
+
+  <path d="M 265 292 L 265 302" fill="none" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arrDown)" filter="url(#rough2)"/>
+
+  <rect x="172" y="306" width="186" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="186" y="326" font-size="11" fill="#a06058" filter="url(#rough2)">④ 删在途（后删）</text>
+  <text x="186" y="344" font-size="11" fill="#a06058" filter="url(#rough2)">erase / pop checkIns[id]</text>
+
+  <!-- 列 3：getAverageTime -->
+  <rect x="378" y="54" width="122" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="439" y="70" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5424" filter="url(#rough2)">getAverage-</text>
+  <text x="439" y="84" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5424" filter="url(#rough2)">Time</text>
+
+  <path d="M 439 92 L 439 104" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrGreen)" filter="url(#rough2)"/>
+
+  <rect x="378" y="108" width="122" height="90" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="439" y="130" text-anchor="middle" font-size="11" fill="#2f5424" filter="url(#rough2)">(total, cnt) ←</text>
+  <text x="439" y="148" text-anchor="middle" font-size="11" fill="#2f5424" filter="url(#rough2)">travelTimes[(s, e)]</text>
+  <text x="439" y="170" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5424" filter="url(#rough2)">return total / cnt</text>
+  <text x="439" y="188" text-anchor="middle" font-size="10" fill="#6a9a5a" filter="url(#rough2)">一次读 + 一次除法</text>
+
+  <text x="439" y="226" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">整数累加，只在</text>
+  <text x="439" y="242" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">此处舍入一次</text>
+
+  <!-- 底部警示 -->
+  <rect x="20" y="362" width="480" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="382" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">⚠ ①读 必须先于 ④删 —— 顺序颠倒则在途信息丢失（C++ 引用悬垂更是 UB）</text>
+</svg>
