@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="680" viewBox="0 0 560 680" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrg" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arro" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="560" height="680" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">算法流程：负梯度 + 步长失败减半</text>
+  <text x="280" y="50" text-anchor="middle" font-size="12" fill="#888" filter="url(#r)">质心起步 → 沿合力反方向走 step，走不动就把 step 减半</text>
+
+  <!-- start -->
+  <g filter="url(#r)">
+    <rect x="170" y="66" width="220" height="40" rx="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="91" text-anchor="middle" font-size="12.5" fill="#33517a" filter="url(#r)">质心 (x̄,ȳ) 出发 · step = 100</text>
+  <path d="M 280 106 L 280 130" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- compute gradient -->
+  <g filter="url(#r)">
+    <rect x="145" y="134" width="270" height="54" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <g font-size="12" fill="#33517a" text-anchor="middle">
+    <text x="280" y="156" filter="url(#r)">计算合力 g = Σ (P − pᵢ)/dᵢ</text>
+    <text x="280" y="176" filter="url(#r)">（dᵢ &lt; ε 的重合客户跳过）</text>
+  </g>
+  <path d="M 280 188 L 280 204" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- diamond 1 -->
+  <g filter="url(#r)">
+    <polygon points="280,210 352,252 280,294 208,252" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="257" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#r)">‖g‖ &lt; ε ？</text>
+  <text x="366" y="245" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#r)">是</text>
+  <path d="M 352 252 L 409 252" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#r)"/>
+
+  <!-- return box -->
+  <g filter="url(#r)">
+    <rect x="415" y="228" width="115" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g font-size="12.5" fill="#2e6e2e" text-anchor="middle" font-weight="bold">
+    <text x="472" y="249" filter="url(#r)">返回 f(P)</text>
+    <text x="472" y="267" filter="url(#r)">＝ 最优值</text>
+  </g>
+
+  <!-- no -> probe -->
+  <text x="294" y="310" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#r)">否</text>
+  <path d="M 280 294 L 280 318" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- probe box -->
+  <g filter="url(#r)">
+    <rect x="145" y="324" width="270" height="54" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <g font-size="12" fill="#33517a" text-anchor="middle">
+    <text x="280" y="346" filter="url(#r)">试探点 P′ = P − step · ĝ</text>
+    <text x="280" y="366" filter="url(#r)">（ĝ = g / ‖g‖）</text>
+  </g>
+  <path d="M 280 378 L 280 400" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- diamond 2 -->
+  <g filter="url(#r)">
+    <polygon points="280,406 360,448 280,490 200,448" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="453" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#r)">f(P′) &lt; f(P) ？</text>
+
+  <!-- yes -> accept -->
+  <text x="176" y="440" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#r)">是</text>
+  <path d="M 200 448 L 164 448" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#r)"/>
+  <g filter="url(#r)">
+    <rect x="30" y="426" width="130" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <g font-size="12.5" fill="#2e6e2e" text-anchor="middle" font-weight="bold">
+    <text x="95" y="445" filter="url(#r)">✓ 接受</text>
+    <text x="95" y="463" filter="url(#r)">P ← P′</text>
+  </g>
+  <!-- accept loop back to gradient box -->
+  <path d="M 95 426 L 95 161 L 139 161" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#r)"/>
+
+  <!-- no -> halve -->
+  <text x="294" y="506" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#r)">否</text>
+  <path d="M 280 490 L 280 512" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <g filter="url(#r)">
+    <rect x="145" y="518" width="270" height="54" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <g font-size="12" fill="#9c3d38" text-anchor="middle">
+    <text x="280" y="540" filter="url(#r)">✗ 冲过头 / 已到奇点平衡</text>
+    <text x="280" y="560" filter="url(#r)">step ← step / 2</text>
+  </g>
+  <path d="M 280 572 L 280 592" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+
+  <!-- diamond 3 -->
+  <g filter="url(#r)">
+    <polygon points="280,600 344,634 280,668 216,634" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="280" y="639" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#r)">step &lt; ε ？</text>
+
+  <!-- yes -> return -->
+  <text x="358" y="626" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#r)">是</text>
+  <path d="M 344 634 L 472 634 L 472 282" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arro)" filter="url(#r)"/>
+
+  <!-- no -> probe again -->
+  <text x="192" y="626" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#r)">否</text>
+  <path d="M 216 634 L 18 634 L 18 351 L 139 351" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#r)"/>
+</svg>
