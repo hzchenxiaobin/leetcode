@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="500" viewBox="0 0 740 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="43" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ad" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="ag" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="740" height="500" fill="#fdfcf7"/>
+  <text x="370" y="24" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：跨度统计 → 闭包扩张 → 去重排序 → 贪心选择</text>
+  <path d="M 120 38 Q 370 46 620 38" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== main pipeline ===== -->
+  <g filter="url(#sk)">
+    <rect x="125" y="50" width="250" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="74" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">① 一趟扫描：first[c] / last[c]</text>
+  <path d="M 250 88 L 250 108" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ad)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="100" y="112" width="300" height="92" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="132" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e5e24" filter="url(#sk)">② 对每个出现过的字符 c 求闭包</text>
+  <g font-size="10" text-anchor="middle" fill="#3d5c34" filter="url(#sk)">
+    <text x="250" y="150">st, en ← first[c], last[c]；k ← st</text>
+    <text x="250" y="166">d = s[k]：en ← max(en, last[d])</text>
+    <text x="250" y="182">若 first[d] &lt; st：st ← first[d]，k ← st（重扫）</text>
+    <text x="250" y="196" font-weight="bold">k &gt; en：记录候选 (st, en)</text>
+  </g>
+  <path d="M 250 204 L 250 224" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ad)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="125" y="228" width="250" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="252" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">③ 去重 + 按右端点 en 升序排序</text>
+  <path d="M 250 266 L 250 286" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ad)" filter="url(#sk)"/>
+
+  <polygon points="250,290 340,327 250,364 160,327" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#sk)"/>
+  <text x="250" y="332" text-anchor="middle" font-size="11" font-weight="bold" fill="#a87f2a" filter="url(#sk)">st &gt; lastEnd ?</text>
+
+  <path d="M 340 327 L 380 327" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ag)" filter="url(#sk)"/>
+  <text x="348" y="318" font-size="10" font-weight="bold" fill="#4a7a3a" filter="url(#sk)">是</text>
+  <g filter="url(#sk)">
+    <rect x="384" y="306" width="150" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="459" y="324" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e5e24" filter="url(#sk)">选中 s[st..en]</text>
+  <text x="459" y="340" text-anchor="middle" font-size="10" fill="#3d5c34" filter="url(#sk)">lastEnd ← en</text>
+
+  <path d="M 250 364 L 250 388" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ad)" filter="url(#sk)"/>
+  <text x="258" y="380" font-size="10" font-weight="bold" fill="#b85450" filter="url(#sk)">否</text>
+  <g filter="url(#sk)">
+    <rect x="185" y="390" width="130" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="411" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#sk)">跳过该候选</text>
+
+  <path d="M 250 424 L 250 444" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#ad)" filter="url(#sk)"/>
+  <path d="M 459 348 Q 459 430 382 460" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#ag)" filter="url(#sk)"/>
+  <g filter="url(#sk)">
+    <rect x="125" y="448" width="250" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="470" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">④ 输出全部选中子串</text>
+
+  <!-- ===== side notes ===== -->
+  <g filter="url(#sk)">
+    <rect x="560" y="50" width="152" height="100" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="574" y="72" font-size="10.5" font-weight="bold" fill="#2b4a6e" filter="url(#sk)">候选 ≤ 26 个</text>
+  <g font-size="9.5" fill="#446688" filter="url(#sk)">
+    <text x="574" y="92">闭包由「出现过的</text>
+    <text x="574" y="108">字符」派生；排序与</text>
+    <text x="574" y="124">贪心合计</text>
+    <text x="574" y="140">O(σ log σ)，σ = 26</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="560" y="170" width="152" height="110" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="574" y="192" font-size="10.5" font-weight="bold" fill="#2e5e24" filter="url(#sk)">扩张最坏 O(σ²n)</text>
+  <g font-size="9.5" fill="#4a7a3a" filter="url(#sk)">
+    <text x="574" y="212">st 每次只落到新的</text>
+    <text x="574" y="228">first 上（≤26 种），</text>
+    <text x="574" y="244">每趟 ≤ 闭包长度；</text>
+    <text x="574" y="260">而 Σ闭包长 ≤ σn，</text>
+    <text x="574" y="276">实际远小于上界</text>
+  </g>
+
+  <g filter="url(#sk)">
+    <rect x="560" y="300" width="152" height="110" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="574" y="322" font-size="10.5" font-weight="bold" fill="#a87f2a" filter="url(#sk)">st &gt; lastEnd 严格</text>
+  <g font-size="9.5" fill="#a8842a" filter="url(#sk)">
+    <text x="574" y="342">不重叠要求 j &lt; x：</text>
+    <text x="574" y="358">相邻区间 [0,2] 与</text>
+    <text x="574" y="374">[3,5] 合法，共享</text>
+    <text x="574" y="390">下标才算重叠，</text>
+    <text x="574" y="406">判断不能写成 ≥</text>
+  </g>
+</svg>
