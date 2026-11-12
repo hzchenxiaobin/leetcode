@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r"><feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="43"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+  </defs>
+
+  <rect width="620" height="420" fill="#fafafa"/>
+  <text x="310" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">算法流程：答案 = n 在 Gray 链上的位置 = 逆 Gray 码</text>
+  <text x="310" y="42" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#r)">左：查表定位 gray(i) = i⊕(i≫1)；右：闭式解码 f(n) = n ⊕ (n≫1) ⊕ (n≫2) ⊕ ⋯</text>
+
+  <!-- 左：Gray 码定位表 -->
+  <g filter="url(#r)"><rect x="42" y="56" width="278" height="300" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/></g>
+  <text x="181" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#r)">Gray 码定位表（3 位）</text>
+
+  <g font-size="10" fill="#666" filter="url(#r)">
+    <text x="66" y="98">i</text>
+    <text x="120" y="98">i 的二进制</text>
+    <text x="228" y="98">gray(i)=i⊕(i≫1)</text>
+  </g>
+  <g filter="url(#r)"><line x1="54" y1="106" x2="308" y2="106" stroke="#446688" stroke-width="1.2"/></g>
+
+  <g filter="url(#r)"><rect x="54" y="156" width="254" height="19" fill="#fff8e1"/></g>
+  <g filter="url(#r)"><rect x="54" y="200" width="254" height="19" fill="#fff8e1"/></g>
+
+  <g font-size="10.5" fill="#444" filter="url(#r)">
+    <text x="66" y="126">0</text><text x="120" y="126">000</text><text x="228" y="126">000</text>
+    <text x="66" y="148">1</text><text x="120" y="148">001</text><text x="228" y="148">001</text>
+    <text x="66" y="170" font-weight="bold">2</text><text x="120" y="170" font-weight="bold">010</text><text x="228" y="170" font-weight="bold">011</text><text x="258" y="170" font-size="9" fill="#b03a3a">← n=3</text>
+    <text x="66" y="192">3</text><text x="120" y="192">011</text><text x="228" y="192">010</text>
+    <text x="66" y="214" font-weight="bold">4</text><text x="120" y="214" font-weight="bold">100</text><text x="228" y="214" font-weight="bold">110</text><text x="258" y="214" font-size="9" fill="#b03a3a">← n=6</text>
+    <text x="66" y="236">5</text><text x="120" y="236">101</text><text x="228" y="236">111</text>
+    <text x="66" y="258">6</text><text x="120" y="258">110</text><text x="228" y="258">101</text>
+    <text x="66" y="280">7</text><text x="120" y="280">111</text><text x="228" y="280">100</text>
+  </g>
+
+  <text x="181" y="302" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#446688" filter="url(#r)">n=3 → 位置 2 → 答案 2；n=6 → 位置 4 → 答案 4</text>
+  <text x="181" y="322" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#r)">相邻两行恰好只差一位——这张表就是那条链</text>
+  <text x="181" y="340" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#r)">位置 i = 该状态到 000₂ 的最短路步数</text>
+
+  <!-- 右：闭式解码 -->
+  <g filter="url(#r)"><rect x="330" y="56" width="248" height="300" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/></g>
+  <text x="454" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#r)">闭式解码：逐位异或（n = 6）</text>
+
+  <g font-size="10" fill="#555" filter="url(#r)">
+    <text x="346" y="102">ans = 0</text>
+    <text x="346" y="126">① ans ^= 110₂ → ans=110₂=6，n→011₂</text>
+    <text x="346" y="150">② ans ^= 011₂ → ans=101₂=5，n→001₂</text>
+    <text x="346" y="174">③ ans ^= 001₂ → ans=100₂=4，n→000₂</text>
+    <text x="346" y="198">n = 0，结束（轮数 = 位数）</text>
+  </g>
+
+  <g filter="url(#r)"><rect x="346" y="210" width="216" height="30" rx="6" fill="#ffffff" stroke="#4a7a3a" stroke-width="1"/></g>
+  <text x="454" y="229" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#r)">ans = 100₂ = 4 ✓</text>
+
+  <text x="346" y="262" font-size="10" fill="#555" filter="url(#r)">f(n) = n ⊕ (n≫1) ⊕ (n≫2) ⊕ ⋯</text>
+  <text x="346" y="284" font-size="9.5" fill="#777" filter="url(#r)">递归形式：f(n) = n ⊕ f(n≫1)，f(0)=0</text>
+  <text x="346" y="302" font-size="9.5" fill="#777" filter="url(#r)">轮数 = n 的位数 ≤ 30（n &lt; 2³⁰）</text>
+  <text x="346" y="322" font-size="9.5" fill="#777" filter="url(#r)">与查表结果一致：6⊕3⊕1 = 4</text>
+  <text x="346" y="342" font-size="9.5" fill="#777" filter="url(#r)">（110₂ ⊕ 011₂ ⊕ 001₂ = 100₂）</text>
+
+  <!-- 底部横条 -->
+  <g filter="url(#r)"><rect x="42" y="372" width="536" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/></g>
+  <text x="310" y="393" text-anchor="middle" font-size="10.5" fill="#a67c1b" filter="url(#r)">镜像递归同样简洁：设最高位为 k，f(n) = 2^(k+1) − 1 − f(n − 2^k)，与逆 Gray 码完全等价（§5 推论）</text>
+</svg>
