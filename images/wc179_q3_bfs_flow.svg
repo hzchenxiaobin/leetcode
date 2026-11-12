@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 428"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#999"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="428" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">算法流程：建反图 + BFS 一趟传递「到达时刻」</text>
+
+  <!-- ① 建孩子表 -->
+  <rect x="80" y="54" width="390" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="275" y="74" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">① 建孩子表：i ≠ headID 时 children[manager[i]] ← i</text>
+  <text x="275" y="96" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">（manager[headID] = -1，必须跳过防越界）</text>
+
+  <path d="M275,106 L275,120" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 初始化 -->
+  <rect x="115" y="124" width="320" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="275" y="146" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">② ans = 0；队列 q ← (headID, 0)</text>
+
+  <path d="M275,158 L275,174" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判空菱形 -->
+  <polygon points="275,178 337,214 275,250 213,214" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="275" y="219" text-anchor="middle" font-size="13" font-weight="bold" fill="#333" filter="url(#rough2)">q 空？</text>
+
+  <!-- 空 → 返回 -->
+  <path d="M337,214 L426,214" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="368" y="205" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">空</text>
+  <rect x="430" y="195" width="98" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="479" y="219" text-anchor="middle" font-size="13" font-weight="bold" fill="#2d5a2d" filter="url(#rough2)">返回 ans</text>
+
+  <!-- 非空 → 出队 -->
+  <path d="M275,250 L275,280" stroke="#999" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="271" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">非空</text>
+  <text x="352" y="252" text-anchor="start" font-size="10.5" fill="#888" filter="url(#rough2)">t = 该员工收到消息的时刻</text>
+
+  <!-- ③④ 出队 + 扩展 -->
+  <rect x="70" y="284" width="410" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="275" y="306" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">③ 出队 (u, t)：ans = max(ans, t)</text>
+  <text x="275" y="328" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">④ 每个孩子 v 入队 (v, t + informTime[u])</text>
+
+  <!-- 循环回菱形 -->
+  <path d="M70,313 L42,313 L42,214 L209,214" stroke="#999" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 复杂度结论 -->
+  <rect x="75" y="368" width="400" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="275" y="388" text-anchor="middle" font-size="12" fill="#2d5a2d" filter="url(#rough2)">每个节点进出队各一次，每条父子边走一次</text>
+  <text x="275" y="406" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">O(n) 时间 / O(n) 空间</text>
+</svg>
