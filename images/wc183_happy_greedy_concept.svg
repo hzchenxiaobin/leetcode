@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="480" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">核心观察：每一步放「剩余最多 且 不三连」的字符</text>
+  <text x="320" y="48" text-anchor="middle" font-size="12" fill="#888" filter="url(#r)">快乐 ⟺ 任意字符连续至多 2 个 → 唯一的阻塞来源：尾部已是 "XX" 时不能再放 X</text>
+
+  <!-- A: 一步决策 -->
+  <text x="320" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b" filter="url(#r)">一步怎么决策？（以 a=1, b=1, c=7 的中途局面为例）</text>
+  <text x="78" y="124" text-anchor="middle" font-size="12" fill="#333" filter="url(#r)">结果尾部</text>
+  <g filter="url(#r)">
+    <rect x="124" y="98" width="36" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="164" y="98" width="36" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="220" y="98" width="36" height="40" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" stroke-dasharray="5,4"/>
+    <rect x="300" y="98" width="36" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="142" y="124" text-anchor="middle" font-size="14" font-weight="bold" fill="#33517a" filter="url(#r)">c</text>
+  <text x="182" y="124" text-anchor="middle" font-size="14" font-weight="bold" fill="#33517a" filter="url(#r)">c</text>
+  <text x="238" y="124" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a4a44" filter="url(#r)">c</text>
+  <text x="238" y="92" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#r)">✗ 三连</text>
+  <path d="M 262 118 L 292 118" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="318" y="124" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#r)">a</text>
+  <text x="318" y="92" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#r)">✓ 放它</text>
+  <text x="356" y="110" font-size="11.5" fill="#666" filter="url(#r)">尾部 "cc" 把 c 卡死；</text>
+  <text x="356" y="128" font-size="11.5" fill="#666" filter="url(#r)">换一个次多字符当分隔符，</text>
+  <text x="356" y="146" font-size="11.5" fill="#666" filter="url(#r)">放完立即解除阻塞</text>
+
+  <!-- B: 两个判据 -->
+  <g filter="url(#r)">
+    <rect x="24" y="192" width="288" height="100" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="168" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#r)">选谁：剩余最多的</text>
+  <text x="168" y="240" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#r)">高频字符是「瓶颈」：最需要被均匀</text>
+  <text x="168" y="258" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#r)">打散，所以优先消耗它</text>
+  <text x="168" y="280" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#r)">堆顶 = 剩余次数最大者</text>
+  <g filter="url(#r)">
+    <rect x="328" y="192" width="288" height="100" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="472" y="216" text-anchor="middle" font-size="13" font-weight="bold" fill="#a0761e" filter="url(#r)">何时不能选：三连检查</text>
+  <text x="472" y="240" text-anchor="middle" font-size="11.5" fill="#a0761e" filter="url(#r)">res 末尾两位都是 ch ⟹ ch 暂不可用</text>
+  <text x="472" y="258" text-anchor="middle" font-size="11.5" fill="#a0761e" filter="url(#r)">只看末尾两个字符，O(1) 判断</text>
+  <text x="472" y="280" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a4a44" filter="url(#r)">尾部 "XX" 是唯一的阻塞来源</text>
+
+  <!-- C: 大根堆 -->
+  <text x="320" y="318" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b" filter="url(#r)">用大根堆组织三个 (剩余数, 字符)</text>
+  <g filter="url(#r)">
+    <rect x="272" y="336" width="64" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="212" y="398" width="60" height="34" rx="6" fill="#fafafa" stroke="#446688" stroke-width="1.5"/>
+    <rect x="334" y="398" width="60" height="34" rx="6" fill="#fafafa" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <path d="M 292 372 L 248 396" stroke="#666" stroke-width="1.5" fill="none" filter="url(#r)"/>
+  <path d="M 316 372 L 358 396" stroke="#666" stroke-width="1.5" fill="none" filter="url(#r)"/>
+  <text x="304" y="360" text-anchor="middle" font-size="13" font-weight="bold" fill="#33517a" filter="url(#r)">(7, c)</text>
+  <text x="242" y="420" text-anchor="middle" font-size="12" fill="#33517a" filter="url(#r)">(1, b)</text>
+  <text x="364" y="420" text-anchor="middle" font-size="12" fill="#33517a" filter="url(#r)">(1, a)</text>
+  <path d="M 344 346 L 424 322" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#r)"/>
+  <text x="436" y="320" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">每轮弹出堆顶</text>
+  <text x="436" y="348" font-size="11.5" fill="#666" filter="url(#r)">可用 → 放 1 个，减 1 后放回</text>
+  <text x="436" y="370" font-size="11.5" fill="#666" filter="url(#r)">被阻塞 → 弹次顶放 1 个，</text>
+  <text x="436" y="388" font-size="11.5" fill="#666" filter="url(#r)">堆顶原封不动放回</text>
+  <text x="436" y="414" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">每次只放 1 个就回炉重比</text>
+  <text x="320" y="456" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#r)">配额每步都在变，放一个就可能逆转「谁最多」（如 3,3 → 2,3），逐个比较最稳妥</text>
+</svg>
