@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="400" viewBox="0 0 640 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="29" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="400" fill="#fdfcf7"/>
+  <text x="320" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b">易错点：省略分隔符 → 跨段假阳性</text>
+  <path d="M 190 42 Q 320 50 450 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#sk)"/>
+
+  <!-- ===== Panel 1: no separator (WRONG) ===== -->
+  <g filter="url(#sk)"><rect x="40" y="56" width="560" height="164" rx="10" fill="#fdf3f3" stroke="#b85450" stroke-width="1.4"/></g>
+  <text x="60" y="80" font-size="13" font-weight="bold" fill="#a03030">① 直接拼接 ""（Bug 出没）</text>
+  <text x="580" y="80" text-anchor="end" font-size="11" fill="#888" font-family="monospace">words = ["ab","cd","bc"]</text>
+
+  <!-- cells: abcdbc, x0=254, 22px each -->
+  <g filter="url(#sk)">
+    <rect x="254" y="96" width="44" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/>
+    <rect x="298" y="96" width="44" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.2"/>
+    <rect x="342" y="96" width="44" height="30" rx="4" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.2"/>
+  </g>
+  <g font-size="13" fill="#333" font-family="monospace" text-anchor="middle">
+    <text x="265" y="116">a</text><text x="287" y="116">b</text><text x="309" y="116">c</text><text x="331" y="116">d</text><text x="353" y="116">b</text><text x="375" y="116">c</text>
+  </g>
+  <!-- false match spanning boundary between ab|cd -->
+  <g filter="url(#sk)"><rect x="274" y="92" width="48" height="38" rx="3" fill="none" stroke="#b85450" stroke-width="2.5" stroke-dasharray="6 3"/></g>
+  <path d="M 298 88 L 298 134" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+  <text x="302" y="93" font-size="9.5" font-weight="bold" fill="#b85450">跨段拼出！</text>
+  <!-- own occurrence -->
+  <g filter="url(#sk)"><rect x="340" y="92" width="48" height="38" rx="3" fill="none" stroke="#4a8e4a" stroke-width="2.5"/></g>
+  <g font-size="9.5" font-weight="bold" text-anchor="middle">
+    <text x="276" y="140" fill="#2b6e9e">ab 段</text>
+    <text x="320" y="140" fill="#2e6e2e">cd 段</text>
+    <text x="364" y="140" fill="#6a4a8e">bc 段</text>
+  </g>
+  <text x="320" y="164" text-anchor="middle" font-size="11.5" fill="#a03030" font-family="monospace">find("bc") = 1（跨段假匹配） ≠ rfind("bc") = 4（自身段）</text>
+  <text x="320" y="184" text-anchor="middle" font-size="12" font-weight="bold" fill="#a03030">→ "bc" 被误判收入，但正确答案是 []  ✗</text>
+
+  <!-- ===== Panel 2: with separator (CORRECT) ===== -->
+  <g filter="url(#sk)"><rect x="40" y="236" width="560" height="158" rx="10" fill="#f2f9f4" stroke="#4a8e4a" stroke-width="1.4"/></g>
+  <text x="60" y="260" font-size="13" font-weight="bold" fill="#2e6e2e">② 用 # 分隔（正确）</text>
+  <text x="580" y="260" text-anchor="end" font-size="11" fill="#888" font-family="monospace">joined = "ab#cd#bc"</text>
+
+  <!-- cells: ab#cd#bc, x0=232, 22px each -->
+  <g filter="url(#sk)">
+    <rect x="232" y="276" width="44" height="30" rx="4" fill="#e8f0fa" stroke="#4a8edb" stroke-width="1.2"/>
+    <rect x="276" y="276" width="22" height="30" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <rect x="298" y="276" width="44" height="30" rx="4" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.2"/>
+    <rect x="342" y="276" width="22" height="30" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="1.2"/>
+    <rect x="364" y="276" width="44" height="30" rx="4" fill="#f3eaf7" stroke="#8e5db8" stroke-width="1.2"/>
+  </g>
+  <g font-size="13" fill="#333" font-family="monospace" text-anchor="middle">
+    <text x="243" y="296">a</text><text x="265" y="296">b</text><text x="287" y="296" fill="#b85450">#</text><text x="309" y="296">c</text><text x="331" y="296">d</text><text x="353" y="296" fill="#b85450">#</text><text x="375" y="296">b</text><text x="397" y="296">c</text>
+  </g>
+  <!-- failed cross-boundary attempt -->
+  <g filter="url(#sk)"><rect x="252" y="272" width="48" height="38" rx="3" fill="none" stroke="#b85450" stroke-width="2" stroke-dasharray="6 3"/></g>
+  <text x="276" y="270" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">✗</text>
+  <!-- own occurrence only -->
+  <g filter="url(#sk)"><rect x="362" y="272" width="48" height="38" rx="3" fill="none" stroke="#4a8e4a" stroke-width="2.5"/></g>
+  <text x="320" y="324" text-anchor="middle" font-size="10.5" fill="#888">b 后面是 #，匹配失败——跨段匹配被分隔符掐灭</text>
+  <text x="320" y="346" text-anchor="middle" font-size="11.5" fill="#2e6e2e" font-family="monospace">find("bc") = 6 = rfind("bc") → 仅一次出现 → 正确排除 ✓</text>
+  <text x="320" y="366" text-anchor="middle" font-size="10.5" fill="#888">分隔符取不在小写字母表中的任意字符皆可（# , 空格 …）</text>
+</svg>

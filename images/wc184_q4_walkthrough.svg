@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 416" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="416" fill="#fafafa"/>
+
+  <text x="320" y="24" text-anchor="middle" font-size="15" font-weight="bold" fill="#444">示例演算：从 (6, 6) 滚到 106494</text>
+  <text x="320" y="42" text-anchor="middle" font-size="11" fill="#888">每轮 4 次乘加 + 一次取模；Σ = aba + abc 就是该 n 的答案</text>
+
+  <!-- ============ table ============ -->
+  <rect x="64" y="58" width="322" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="85" y="77" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">n</text>
+  <text x="149" y="77" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">aba</text>
+  <text x="235" y="77" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">abc</text>
+  <text x="332" y="77" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">Σ（答案）</text>
+
+  <rect x="64" y="86" width="322" height="28" fill="#fff8e1" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="64" y="114" width="322" height="28" fill="#e6f4ea" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="64" y="142" width="322" height="28" fill="#ffffff" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="64" y="170" width="322" height="28" fill="#ffffff" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="64" y="198" width="322" height="28" fill="#ffffff" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="64" y="226" width="322" height="28" fill="#ffffff" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+  <rect x="64" y="254" width="322" height="28" fill="#e6f4ea" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+
+  <path d="M 106 58 L 106 282" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+  <path d="M 192 58 L 192 282" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+  <path d="M 278 58 L 278 282" stroke="#b8b8b8" stroke-width="1" filter="url(#rough2)"/>
+
+  <g font-size="12" fill="#333" text-anchor="middle">
+    <text x="85" y="104">1</text><text x="149" y="104">6</text><text x="235" y="104">6</text><text x="332" y="104" font-weight="bold">12</text>
+    <text x="85" y="132">2</text><text x="149" y="132">30</text><text x="235" y="132">24</text><text x="332" y="132" font-weight="bold">54</text>
+    <text x="85" y="160">3</text><text x="149" y="160">138</text><text x="235" y="160">108</text><text x="332" y="160" font-weight="bold">246</text>
+    <text x="85" y="188">4</text><text x="149" y="188">630</text><text x="235" y="188">492</text><text x="332" y="188" font-weight="bold">1122</text>
+    <text x="85" y="216">5</text><text x="149" y="216">2874</text><text x="235" y="216">2244</text><text x="332" y="216" font-weight="bold">5118</text>
+    <text x="85" y="244">6</text><text x="149" y="244">13110</text><text x="235" y="244">10236</text><text x="332" y="244" font-weight="bold">23346</text>
+    <text x="85" y="272">7</text><text x="149" y="272">59802</text><text x="235" y="272">46692</text><text x="332" y="272" font-weight="bold">106494</text>
+  </g>
+
+  <path d="M 50 96 L 50 274" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="394" y="104" font-size="10" fill="#888">← 示例 1 ✓</text>
+  <text x="394" y="132" font-size="10" fill="#888">← 示例 2 ✓</text>
+  <text x="394" y="272" font-size="10" font-weight="bold" fill="#2e6e2e">← 示例 4 ✓</text>
+
+  <text x="225" y="306" text-anchor="middle" font-size="10.5" fill="#555">每往下一行 = 执行一轮递推；两个滚动变量即可，无需 dp 表</text>
+
+  <!-- ============ box 1: one step ============ -->
+  <rect x="424" y="58" width="208" height="100" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="528" y="78" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#446688">一轮转移怎么算（n = 2 → 3）</text>
+  <text x="528" y="99" text-anchor="middle" font-size="11" fill="#333">aba ← 3·30 ＋ 2·24 = 138</text>
+  <text x="528" y="119" text-anchor="middle" font-size="11" fill="#333">abc ← 2·30 ＋ 2·24 = 108</text>
+  <text x="528" y="143" text-anchor="middle" font-size="10.5" fill="#555">Σ：54 → 246（示例 3 ✓）</text>
+
+  <!-- ============ box 2: verify all ============ -->
+  <rect x="424" y="172" width="208" height="92" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="528" y="192" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#a08020">对拍全部示例</text>
+  <text x="528" y="212" text-anchor="middle" font-size="10.5" fill="#555">n=2 → 54 ✓　n=3 → 246 ✓</text>
+  <text x="528" y="230" text-anchor="middle" font-size="10.5" fill="#555">n=7 → 106494 ✓</text>
+  <text x="528" y="248" text-anchor="middle" font-size="10.5" fill="#555">n=5000 → 30228214 ✓（4999 轮）</text>
+
+  <!-- ============ box 3: second-order ============ -->
+  <rect x="424" y="278" width="208" height="110" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="528" y="298" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e">副产品：二阶线性递推</text>
+  <text x="528" y="317" text-anchor="middle" font-size="10" fill="#555">Cayley–Hamilton（λ² − 5λ + 2 = 0）</text>
+  <text x="528" y="337" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#333">f(n) = 5·f(n−1) − 2·f(n−2)</text>
+  <text x="528" y="357" text-anchor="middle" font-size="10" fill="#555">f(1) = 12、f(2) = 54</text>
+  <text x="528" y="377" text-anchor="middle" font-size="10" fill="#555">验证：5·54 − 2·12 = 246 ✓</text>
+</svg>

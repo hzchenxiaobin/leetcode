@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 515" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="515" fill="#fafafa"/>
+
+  <text x="320" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#444">算法流程：单趟扫描——窗口找 ; + 哈希查表</text>
+  <text x="320" y="45" text-anchor="middle" font-size="11" fill="#888">快路径 O(1) ｜ 实体判定 O(7) ｜ 整体 O(n)</text>
+
+  <!-- init box -->
+  <rect x="170" y="56" width="300" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="78" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">初始化：ents = {&amp;quot; → " , &amp;apos; → ' , …} 共 6 条</text>
+  <text x="320" y="98" text-anchor="middle" font-size="10.5" fill="#555">res = [ ]，i = 0，n = len(text)</text>
+
+  <path d="M 320 114 L 320 132" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond A: i < n ? -->
+  <polygon points="240,160 320,136 400,160 320,184" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="164" text-anchor="middle" font-size="11.5" fill="#7a5415">i &lt; n ?</text>
+
+  <path d="M 400 160 L 436 160" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="418" y="152" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">否</text>
+  <rect x="438" y="138" width="140" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="508" y="165" text-anchor="middle" font-size="13" font-weight="bold" fill="#b85450">返回 join(res)</text>
+
+  <path d="M 320 184 L 320 204" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="330" y="197" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+
+  <!-- diamond B: text[i] == '&' ? -->
+  <polygon points="235,232 320,208 405,232 320,256" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="236" text-anchor="middle" font-size="11.5" fill="#7a5415">text[i] == '&amp;' ?</text>
+
+  <path d="M 235 232 L 203 232" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="219" y="224" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7a3a">否</text>
+  <rect x="48" y="210" width="152" height="44" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="124" y="228" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e">res += text[i]，i += 1</text>
+  <text x="124" y="246" text-anchor="middle" font-size="9.5" fill="#4a7a3a">（快路径 O(1)）</text>
+
+  <!-- fast-path loop back -->
+  <path d="M 124 210 L 124 160 L 236 160" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="104" y="188" font-size="9.5" fill="#4a7a3a" text-anchor="end">i 前进</text>
+
+  <path d="M 320 256 L 320 276" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="330" y="269" font-size="11" font-weight="bold" fill="#4a7a3a">是</text>
+
+  <!-- window search box -->
+  <rect x="170" y="278" width="300" height="48" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="298" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688">semi = [i+1, i+7) 内首个 ';'</text>
+  <text x="320" y="316" text-anchor="middle" font-size="9.5" fill="#555">窗口右端 min(i+7, n)；最长实体 &amp;frasl; 长 7</text>
+  <text x="480" y="300" font-size="10" fill="#999">O(7)</text>
+
+  <path d="M 320 326 L 320 346" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- diamond C: hit? -->
+  <polygon points="215,372 320,348 425,372 320,396" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="366" text-anchor="middle" font-size="10.5" fill="#7a5415">semi 找到 且</text>
+  <text x="320" y="382" text-anchor="middle" font-size="10.5" fill="#7a5415">text[i..semi] ∈ ents ?</text>
+
+  <path d="M 425 372 L 453 372" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="439" y="364" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a">命中</text>
+  <rect x="455" y="350" width="162" height="44" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="536" y="368" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e6e2e">res += 映射字符</text>
+  <text x="536" y="386" text-anchor="middle" font-size="9.5" fill="#4a7a3a">i = semi + 1（跳过整段）</text>
+
+  <path d="M 320 396 L 320 416" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="336" y="410" font-size="10.5" font-weight="bold" fill="#b85450">未命中</text>
+  <rect x="180" y="418" width="280" height="46" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="437" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450">res += '&amp;'，i += 1</text>
+  <text x="320" y="456" text-anchor="middle" font-size="9.5" fill="#888">（&amp; 按普通字符，伪实体判否只 +1）</text>
+
+  <!-- loop back: hit box & miss box merge right, up, into diamond A -->
+  <path d="M 536 394 L 536 441 L 622 441 L 622 122 L 360 122 L 360 148" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 460 441 L 536 441" stroke="#4a7a3a" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <text x="546" y="285" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#4a7a3a">回到 i &lt; n</text>
+
+  <text x="320" y="500" text-anchor="middle" font-size="10.5" fill="#b85450">⚠ 窗口上界 i+7：既保证每个 &amp; 至多比较 7 个字符（O(n)），又天然挡住 ; 更远的伪实体（&amp;ambassador;）</text>
+</svg>
