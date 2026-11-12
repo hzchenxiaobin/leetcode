@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 470" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrGray" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#999999"/>
+    </marker>
+    <marker id="arrRed" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrGreen" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="470" fill="#fafafa"/>
+
+  <text x="330" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：一次建表、多次查询——乘积哈希消除重复枚举</text>
+  <path d="M 100 42 Q 330 50 560 42" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <text x="140" y="68" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a66">A = nums1（平方侧）</text>
+    <rect x="36" y="80" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="90" y="80" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="144" y="80" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="198" y="80" width="46" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="59" y="102" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b4a66">7</text>
+    <text x="113" y="102" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b4a66">7</text>
+    <text x="167" y="102" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b4a66">8</text>
+    <text x="221" y="102" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b4a66">3</text>
+    <path d="M 59 116 C 59 124 59 140 59 146" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+    <path d="M 113 116 C 113 124 113 140 113 146" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+    <path d="M 167 116 C 167 124 167 140 167 146" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+    <path d="M 221 116 C 221 124 221 140 221 146" stroke="#3a3a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+    <rect x="36" y="150" width="46" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="90" y="150" width="46" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="144" y="150" width="46" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="198" y="150" width="46" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="59" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#b07818">49</text>
+    <text x="113" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#b07818">49</text>
+    <text x="167" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#b07818">64</text>
+    <text x="221" y="170" text-anchor="middle" font-size="13" font-weight="bold" fill="#b07818">9</text>
+    <text x="59" y="196" text-anchor="middle" font-size="10" fill="#999">→ 0</text>
+    <text x="113" y="196" text-anchor="middle" font-size="10" fill="#999">→ 0</text>
+    <text x="167" y="196" text-anchor="middle" font-size="10" fill="#999">→ 0</text>
+    <text x="221" y="196" text-anchor="middle" font-size="10" font-weight="bold" fill="#b85450">→ 1</text>
+    <text x="252" y="172" font-size="10.5" fill="#888">每个 x 独立查询，O(n)</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <text x="506" y="68" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5a3a">B = nums2（乘积侧）</text>
+    <rect x="402" y="80" width="46" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="456" y="80" width="46" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="510" y="80" width="46" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="564" y="80" width="46" height="34" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="425" y="102" text-anchor="middle" font-size="15" font-weight="bold" fill="#3a5a3a">1</text>
+    <text x="479" y="102" text-anchor="middle" font-size="15" font-weight="bold" fill="#3a5a3a">2</text>
+    <text x="533" y="102" text-anchor="middle" font-size="15" font-weight="bold" fill="#3a5a3a">9</text>
+    <text x="587" y="102" text-anchor="middle" font-size="15" font-weight="bold" fill="#3a5a3a">7</text>
+    <path d="M 505 118 C 492 152 452 190 438 216" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrGreen)"/>
+    <text x="552" y="158" text-anchor="middle" font-size="10.5" fill="#4a7a3a">建表：C(m,2) 个乘积</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 59 202 C 76 226 120 246 158 256" stroke="#999999" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#arrGray)"/>
+    <path d="M 113 202 C 128 228 148 264 160 290" stroke="#999999" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#arrGray)"/>
+    <path d="M 167 202 C 176 232 174 274 170 322" stroke="#999999" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#arrGray)"/>
+    <path d="M 221 202 C 246 228 262 248 286 272" stroke="#b85450" stroke-width="2.2" fill="none" marker-end="url(#arrRed)"/>
+    <text x="198" y="204" text-anchor="end" font-size="10.5" font-weight="bold" fill="#b85450">3²=9 命中！</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="170" y="225" width="320" height="145" rx="10" fill="#ffffff" stroke="#aab8c8" stroke-width="1.6"/>
+    <text x="330" y="248" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">cntB：乘积 → 下标对数</text>
+    <rect x="195" y="258" width="86" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="295" y="258" width="86" height="36" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <rect x="395" y="258" width="86" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="195" y="302" width="86" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="295" y="302" width="86" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="395" y="302" width="86" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="238" y="274" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5a3a">2 : 1</text>
+    <text x="238" y="289" text-anchor="middle" font-size="9" fill="#999">1·2</text>
+    <text x="338" y="274" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#b85450">9 : 1</text>
+    <text x="338" y="289" text-anchor="middle" font-size="9" fill="#999">1·9</text>
+    <text x="438" y="274" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5a3a">7 : 1</text>
+    <text x="438" y="289" text-anchor="middle" font-size="9" fill="#999">1·7</text>
+    <text x="238" y="318" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5a3a">18 : 1</text>
+    <text x="238" y="333" text-anchor="middle" font-size="9" fill="#999">2·9</text>
+    <text x="338" y="318" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5a3a">14 : 1</text>
+    <text x="338" y="333" text-anchor="middle" font-size="9" fill="#999">2·7</text>
+    <text x="438" y="318" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#3a5a3a">63 : 1</text>
+    <text x="438" y="333" text-anchor="middle" font-size="9" fill="#999">9·7</text>
+    <text x="330" y="360" text-anchor="middle" font-size="10" fill="#999">每个下标对 (j,k)，j &lt; k，恰好贡献一次</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="130" y="390" width="400" height="58" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="330" y="407" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5a3a">类型 1 = cntB[49]+cntB[49]+cntB[64]+cntB[9]</text>
+    <text x="330" y="427" text-anchor="middle" font-size="12" font-weight="bold" fill="#3a5a3a">= 0 + 0 + 0 + 1 = 1（只有 3² = 9 命中）</text>
+  </g>
+
+  <text x="330" y="465" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">类型 2：交换 A、B 角色再跑一遍，两类相加即答案</text>
+</svg>
