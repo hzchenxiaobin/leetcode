@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="620" height="480" viewBox="0 0 620 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="33" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="620" height="480" fill="#fafafa"/>
+  <text x="310" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：逐行直方图 + 枚举右端点向左扫</text>
+  <text x="310" y="48" text-anchor="middle" font-size="12" fill="#666" filter="url(#sk)">主解 O(mn²)：m = n = 150 时内层约 1.7×10⁶ 步，轻松通过</text>
+
+  <!-- left flow -->
+  <rect x="30" y="68" width="240" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="150" y="93" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33517a" filter="url(#sk)">遍历底边行 i = 0 … m−1</text>
+  <path d="M 150 108 L 150 122" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#sk)"/>
+
+  <rect x="30" y="126" width="240" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="150" y="150" text-anchor="middle" font-size="12" font-weight="bold" fill="#33517a" filter="url(#sk)">滚动更新直方图</text>
+  <text x="150" y="170" text-anchor="middle" font-size="11.5" fill="#33517a" filter="url(#sk)">h[j] ← mat[i][j] ? h[j]+1 : 0</text>
+  <path d="M 150 184 L 150 198" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#sk)"/>
+
+  <rect x="30" y="202" width="240" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="150" y="227" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">枚举右端点 r = 0 … n−1</text>
+  <path d="M 150 242 L 150 256" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#sk)"/>
+
+  <rect x="30" y="260" width="240" height="92" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="150" y="282" text-anchor="middle" font-size="11.5" fill="#8a6520" filter="url(#sk)">mn ← h[r]（以 h[r] 起步）</text>
+  <text x="150" y="302" text-anchor="middle" font-size="11.5" fill="#8a6520" filter="url(#sk)">向左扫 l = r … 0：</text>
+  <text x="150" y="322" text-anchor="middle" font-size="11.5" fill="#8a6520" filter="url(#sk)">mn ← min(mn, h[l]) = min(h[l..r])</text>
+  <text x="150" y="342" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6520" filter="url(#sk)">ans += mn（区间 [l,r] 的贡献）</text>
+
+  <path d="M 270 306 L 284 306 L 284 222 L 274 222" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#sk)"/>
+  <text x="290" y="268" font-size="10.5" fill="#4a7a3a" filter="url(#sk)">r++</text>
+
+  <path d="M 150 352 L 150 366" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#sk)"/>
+  <rect x="30" y="370" width="240" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="150" y="395" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">返回 ans</text>
+  <text x="150" y="423" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#sk)">每处理完一行，回到顶部继续滚动</text>
+
+  <!-- right demo panel -->
+  <rect x="320" y="68" width="270" height="344" rx="10" fill="#ffffff" stroke="#c8c8c8" stroke-width="1.2" filter="url(#sk)"/>
+  <text x="455" y="88" text-anchor="middle" font-size="12" font-weight="bold" fill="#333" filter="url(#sk)">以底边行 i = 2（h = [3,2,0]）演示 r = 1</text>
+  <text x="433" y="212" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">向左扫（运行 min）</text>
+  <path d="M 470 194 L 400 194" stroke="#b85450" stroke-width="2.5" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <text x="479" y="234" text-anchor="end" font-size="11" font-weight="bold" fill="#b85450" filter="url(#sk)">r=1</text>
+  <line x1="345" y1="310" x2="565" y2="310" stroke="#8a7a66" stroke-width="3" filter="url(#sk)"/>
+  <rect x="369" y="202" width="48" height="108" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#sk)"/>
+  <rect x="431" y="238" width="48" height="72" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" filter="url(#sk)"/>
+  <g font-size="13" fill="#33517a" font-weight="bold" filter="url(#sk)">
+    <text x="393" y="230" text-anchor="middle">3</text>
+    <text x="455" y="266" text-anchor="middle">2</text>
+  </g>
+  <g font-size="9.5" fill="#999" filter="url(#sk)">
+    <text x="517" y="302" text-anchor="middle">0</text>
+    <text x="393" y="326" text-anchor="middle">j=0</text>
+    <text x="455" y="326" text-anchor="middle">j=1</text>
+    <text x="517" y="326" text-anchor="middle">j=2</text>
+  </g>
+  <rect x="332" y="336" width="246" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="455" y="356" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#sk)">l = 1：mn = h[1] = 2 → 贡献 2</text>
+  <text x="455" y="374" text-anchor="middle" font-size="11.5" fill="#2e6e2e" filter="url(#sk)">l = 0：mn = min(2, 3) = 2 → 贡献 2</text>
+  <text x="455" y="393" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">该 r 合计 = 4</text>
+
+  <!-- banner -->
+  <rect x="20" y="428" width="580" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#sk)"/>
+  <text x="310" y="447" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6520" filter="url(#sk)">每对 (l, r) 恰访问一次，mn 始终 = min(h[l..r]) —— 不重不漏（证明见 §5）</text>
+  <text x="310" y="466" text-anchor="middle" font-size="11.5" fill="#8a6520" filter="url(#sk)">每行 Σ(r+1) = n(n+1)/2 步，总计 O(mn²)</text>
+</svg>
