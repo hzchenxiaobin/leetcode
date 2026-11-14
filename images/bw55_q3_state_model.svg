@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="37"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">双状态模型：子序列末尾落在偶位还是奇位</text>
+
+  <!-- even 状态 -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="90" width="180" height="90" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" rx="12"/>
+  </g>
+  <text x="160" y="120" text-anchor="middle" font-size="14" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">even（末位 = 偶位）</text>
+  <text x="160" y="142" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">末项被「加」的子序列</text>
+  <text x="160" y="162" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">交替和的最大值</text>
+
+  <!-- odd 状态 -->
+  <g filter="url(#rough2)">
+    <rect x="310" y="90" width="180" height="90" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="12"/>
+  </g>
+  <text x="400" y="120" text-anchor="middle" font-size="14" fill="#8a6a1a" font-weight="bold" filter="url(#rough2)">odd（末位 = 奇位）</text>
+  <text x="400" y="142" text-anchor="middle" font-size="12" fill="#8a6a1a" filter="url(#rough2)">末项被「减」的子序列</text>
+  <text x="400" y="162" text-anchor="middle" font-size="12" fill="#8a6a1a" filter="url(#rough2)">交替和的最大值</text>
+
+  <!-- 转移箭头 even <-> odd -->
+  <path d="M 210 184 C 240 224 330 224 360 184" stroke="#d6a040" stroke-width="2.2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="285" y="228" text-anchor="middle" font-size="12.5" fill="#8a6a1a" font-weight="bold" filter="url(#rough2)">选 x 作奇位：odd ← even − x</text>
+  <path d="M 360 86 C 330 46 240 46 210 86" stroke="#446688" stroke-width="2.2" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="285" y="42" text-anchor="middle" font-size="12.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">选 x 作偶位：even ← max(odd + x, x)</text>
+
+  <!-- 自环：不选 -->
+  <path d="M 70 135 C 34 132 36 96 78 96" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="52" y="172" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">不选 x</text>
+  <path d="M 490 135 C 526 132 524 96 482 96" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="508" y="172" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">不选 x</text>
+
+  <!-- 单开 -->
+  <text x="52" y="240" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">单元素子序列 [x]：</text>
+  <path d="M 116 246 C 140 240 150 190 155 184" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="52" y="258" font-size="11" fill="#4a7a3a" filter="url(#rough2)">只能作为偶位结尾进入 even</text>
+
+  <!-- 关键性质 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="290" width="460" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="280" y="310" text-anchor="middle" font-size="12.5" fill="#2f5226" font-weight="bold" filter="url(#rough2)">元素全为正 → 最优子序列长度必为奇数（末项在偶位被加）</text>
+  <text x="280" y="328" text-anchor="middle" font-size="11.5" fill="#2f5226" filter="url(#rough2)">把偶数长最优解的末项（被减）删掉，交替和严格变大，矛盾。</text>
+
+  <!-- 答案 -->
+  <g filter="url(#rough2)">
+    <rect x="150" y="348" width="260" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="280" y="373" text-anchor="middle" font-size="13" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">答案 = 扫描结束时的 even</text>
+  <path d="M 160 182 L 200 348" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrB)" stroke-dasharray="5 4" filter="url(#rough2)"/>
+</svg>

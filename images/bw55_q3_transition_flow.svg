@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="41"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">状态转移：新元素 x 的三种选择</text>
+
+  <!-- 三个选择盒 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="60" width="150" height="76" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+    <rect x="205" y="60" width="150" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+    <rect x="370" y="60" width="150" height="76" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="115" y="86" text-anchor="middle" font-size="12.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">不选 x</text>
+  <text x="115" y="108" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">even、odd 原样保留</text>
+  <text x="115" y="126" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">max 中天然包含</text>
+  <text x="280" y="86" text-anchor="middle" font-size="12.5" fill="#8a6a1a" font-weight="bold" filter="url(#rough2)">选 x 作偶位</text>
+  <text x="280" y="108" text-anchor="middle" font-size="12" fill="#8a6a1a" filter="url(#rough2)">接奇位结尾 or 单开</text>
+  <text x="280" y="126" text-anchor="middle" font-size="12" fill="#8a6a1a" filter="url(#rough2)">odd + x 或 x</text>
+  <text x="445" y="86" text-anchor="middle" font-size="12.5" fill="#a0392f" font-weight="bold" filter="url(#rough2)">选 x 作奇位</text>
+  <text x="445" y="108" text-anchor="middle" font-size="12" fill="#a0392f" filter="url(#rough2)">只能接偶位结尾</text>
+  <text x="445" y="126" text-anchor="middle" font-size="12" fill="#a0392f" filter="url(#rough2)">even − x</text>
+
+  <!-- 汇合到转移公式 -->
+  <path d="M 115 140 C 150 190 220 200 268 212" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 140 L 280 208" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 445 140 C 410 190 340 200 292 212" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 转移公式 -->
+  <g filter="url(#rough2)">
+    <rect x="90" y="216" width="380" height="56" fill="#fff" stroke="#bbb" stroke-width="1.4" rx="10"/>
+  </g>
+  <text x="280" y="240" text-anchor="middle" font-size="14" fill="#333" font-weight="bold" filter="url(#rough2)">even' = max(even, odd + x, x)</text>
+  <text x="280" y="262" text-anchor="middle" font-size="14" fill="#333" font-weight="bold" filter="url(#rough2)">odd'  = max(odd, even − x)</text>
+
+  <!-- 同时更新警告 -->
+  <g filter="url(#rough2)">
+    <rect x="90" y="292" width="380" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="280" y="310" text-anchor="middle" font-size="12" fill="#a0392f" font-weight="bold" filter="url(#rough2)">⚠ even 与 odd 相互引用：必须同时更新（临时变量/元组赋值）</text>
+  <text x="280" y="328" text-anchor="middle" font-size="11.5" fill="#a0392f" filter="url(#rough2)">先更新其中一个会让另一个读到被覆盖的旧值</text>
+
+  <!-- 底部 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="352" width="480" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8"/>
+  </g>
+  <text x="280" y="375" text-anchor="middle" font-size="12" fill="#2f5226" font-weight="bold" filter="url(#rough2)">初值 even = 0（空子序列）、odd = −∞（尚不可行）；逐元素滚动，答案取 even。</text>
+</svg>
