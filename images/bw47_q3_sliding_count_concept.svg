@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="17"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：固定左端点 i，右端点右移一步只需 cnt 增量 +1</text>
+
+  <!-- 字符串格子 s = aabcb -->
+  <text x="60" y="76" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">s =</text>
+  <g filter="url(#rough2)">
+    <rect x="90" y="56" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="134" y="56" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="178" y="56" width="44" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="222" y="56" width="44" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="266" y="56" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g font-size="13" text-anchor="middle" font-weight="bold" filter="url(#rough2)">
+    <text x="112" y="79" fill="#3a4a66">a</text><text x="156" y="79" fill="#3a4a66">a</text><text x="200" y="79" fill="#2f5226">b</text><text x="244" y="79" fill="#8a6a20">c</text><text x="288" y="79" fill="#3a4a66">b</text>
+  </g>
+  <g font-size="10" text-anchor="middle" fill="#999" filter="url(#rough2)">
+    <text x="112" y="104">0</text><text x="156" y="104">1</text><text x="200" y="104">2</text><text x="244" y="104">3</text><text x="288" y="104">4</text>
+  </g>
+
+  <!-- 子串框选 i=0, j=3 -->
+  <rect x="86" y="46" width="180" height="56" fill="none" stroke="#b85450" stroke-width="2.2" rx="6" filter="url(#rough2)"/>
+  <text x="176" y="40" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">子串 s[0..3] = "aabc"（i 固定，j 刚右移到 3）</text>
+
+  <!-- cnt 数组 -->
+  <text x="360" y="70" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">cnt[26]：</text>
+  <g filter="url(#rough2)">
+    <rect x="360" y="80" width="44" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <rect x="410" y="80" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <rect x="460" y="80" width="44" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+  </g>
+  <g font-size="12" text-anchor="middle" font-weight="bold" filter="url(#rough2)">
+    <text x="382" y="100" fill="#3a4a66">a:2</text><text x="432" y="100" fill="#2f5226">b:1</text><text x="482" y="100" fill="#8a6a20">c:1</text>
+  </g>
+  <path d="M 270 66 Q 320 80 352 92" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="316" y="60" font-size="10.5" fill="#b85450" filter="url(#rough2)">j=3 时 cnt['c'] += 1</text>
+
+  <!-- 增量维护说明 -->
+  <rect x="40" y="130" width="250" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="154" font-size="12" fill="#2f5226" font-weight="bold" filter="url(#rough2)">j 从 i 走到 n−1：</text>
+  <text x="56" y="176" font-size="11.5" fill="#2f5226" filter="url(#rough2)">每步只做 cnt[s[j]] += 1，</text>
+  <text x="56" y="196" font-size="11.5" fill="#2f5226" filter="url(#rough2)">子串 [i, j] 的计数由 [i, j−1]</text>
+  <text x="56" y="216" font-size="11.5" fill="#2f5226" filter="url(#rough2)">的计数增量得到，避免重算。</text>
+
+  <rect x="310" y="130" width="210" height="96" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="326" y="154" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">每个子串的美丽值：</text>
+  <text x="326" y="176" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">mx = max(cnt)（出现最多）</text>
+  <text x="326" y="196" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">mn = min(非零 cnt)（最少）</text>
+  <text x="326" y="216" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">beauty = mx − mn，累加进答案</text>
+
+  <!-- 复杂度对比 -->
+  <rect x="40" y="246" width="480" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="268" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">朴素做法：每个子串重新数一遍字符，O(n² · n) = O(n³) ≈ 1.25×10⁸（n=500）偏慢；</text>
+  <text x="56" y="288" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">增量计数 + 每步扫 26 个字母求 mx/mn → O(n² · 26) ≈ 6.5×10⁶，轻松通过。</text>
+
+  <!-- 覆盖所有子串说明 -->
+  <rect x="40" y="312" width="480" height="54" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="334" font-size="11.5" fill="#b85450" filter="url(#rough2)">为什么 (i, j) 二重循环恰好覆盖每个子串恰一次：子串由其左右端点唯一确定，</text>
+  <text x="56" y="354" font-size="11.5" fill="#b85450" filter="url(#rough2)">n(n+1)/2 个 (i, j) 对与子串一一对应，单字符子串 beauty = 0 不影响总和。</text>
+</svg>
