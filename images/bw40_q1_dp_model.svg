@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="350" viewBox="0 0 680 350" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="6" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="350" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">核心观察：f[i] = 以 i 结尾的「word 连续重复段」的最大长度</text>
+  <text x="340" y="52" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">sequence = a b a b c，word = ab：结尾对齐匹配时 f[i] = f[i−m] + 1，答案取全局最大</text>
+
+  <!-- sequence cells with indices -->
+  <g font-size="12" text-anchor="middle" fill="#999" filter="url(#r)">
+    <text x="200" y="86">0</text><text x="256" y="86">1</text><text x="312" y="86">2</text><text x="368" y="86">3</text><text x="424" y="86">4</text>
+  </g>
+  <g filter="url(#r)">
+    <rect x="174" y="94" width="52" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="230" y="94" width="52" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="286" y="94" width="52" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="342" y="94" width="52" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="398" y="94" width="52" height="48" rx="4" fill="#f3f3f3" stroke="#bbb" stroke-width="1.4"/>
+  </g>
+  <g font-size="16" font-weight="bold" text-anchor="middle" filter="url(#r)">
+    <text x="200" y="124" fill="#4a7a3a">a</text>
+    <text x="256" y="124" fill="#4a7a3a">b</text>
+    <text x="312" y="124" fill="#4a7a3a">a</text>
+    <text x="368" y="124" fill="#4a7a3a">b</text>
+    <text x="424" y="124" fill="#aaa">c</text>
+  </g>
+
+  <!-- f row -->
+  <g font-size="12.5" text-anchor="middle" fill="#555" filter="url(#r)">
+    <text x="140" y="176">f（次数）</text>
+  </g>
+  <g filter="url(#r)">
+    <rect x="174" y="156" width="52" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="230" y="156" width="52" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="286" y="156" width="52" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="342" y="156" width="52" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <rect x="398" y="156" width="52" height="36" rx="4" fill="#f3f3f3" stroke="#bbb" stroke-width="1.4"/>
+  </g>
+  <g font-size="14" font-weight="bold" text-anchor="middle" filter="url(#r)">
+    <text x="200" y="180" fill="#446688">1</text>
+    <text x="256" y="180" fill="#446688">0</text>
+    <text x="312" y="180" fill="#446688">1</text>
+    <text x="368" y="180" fill="#a67c1e">2</text>
+    <text x="424" y="180" fill="#aaa">0</text>
+  </g>
+
+  <!-- transfer arrow -->
+  <path d="M 312 148 Q 340 132 366 148" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <text x="340" y="128" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#r)">f[3] = f[1] + 1</text>
+
+  <!-- note -->
+  <g filter="url(#r)">
+    <rect x="80" y="230" width="520" height="98" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <g font-size="13" fill="#7a5b1e" filter="url(#r)">
+    <text x="100" y="258">f 的下标是「前缀长度」i（1..n）：s[i−m .. i−1] == word 时才有转移。</text>
+    <text x="100" y="284">注意 f 记的是「重复次数」而非长度：word^k 的结尾对齐处 f = k。</text>
+    <text x="100" y="310">数据小（n ≤ 100）时直接枚举 k 用 find 判定也完全够用，DP 是更系统的写法。</text>
+  </g>
+</svg>

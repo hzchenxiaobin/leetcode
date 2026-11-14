@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="340" viewBox="0 0 680 340" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="15" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="340" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">上界剪枝：为什么只需搜到 U = max(F + a + b, x) + a</text>
+  <text x="340" y="52" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">F = max(forbidden)；超过 U 之后每个状态都不再可能是「最短路上的必经点」</text>
+
+  <!-- number line -->
+  <path d="M 60 150 L 640 150" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <g filter="url(#r)">
+    <circle cx="100" cy="150" r="7" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="300" cy="150" r="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="430" cy="150" r="7" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <circle cx="560" cy="150" r="7" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <g font-size="13" text-anchor="middle" filter="url(#r)">
+    <text x="100" y="132" fill="#446688">0（起点）</text>
+    <text x="300" y="132" fill="#4a7a3a">x（家）</text>
+    <text x="430" y="132" fill="#b85450">F（禁区右端）</text>
+    <text x="560" y="132" fill="#a67c1e">U（搜索边界）</text>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#888" filter="url(#r)">
+    <text x="300" y="176">F ≤ x 时也可交换，总之 U ≥ x 且 U ≥ F + a + b</text>
+  </g>
+
+  <!-- reasoning box -->
+  <g filter="url(#r)">
+    <rect x="70" y="205" width="560" height="118" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <g font-size="13" fill="#7a5b1e" filter="url(#r)">
+    <text x="90" y="232">① 绕过禁区：要跨过位置 F 附近的障碍，最多「前跳到 F+b 之后，后跳 a−b 折返」即可绕开，</text>
+    <text x="106" y="252">绕行中转点不超过 F + a + b；再留一次前跳余量到 U = F + a + b + a。</text>
+    <text x="90" y="278">② 更远的位置 p &gt; U 只能靠「前跳×若干 + 后跳」的净推进产生，而任何「先跳远再折返」的</text>
+    <text x="106" y="298">方案都能改成「先在中转带内调整，再一跳落到目标」，步数不会更多。</text>
+    <text x="90" y="318">③ 因此最短路只经过 [0, U]，在此范围 BFS 状态数 O(U)，不会漏解。</text>
+  </g>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="400" viewBox="0 0 680 400" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="36" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="400" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">O(n log n) 的 LIS：贪心 + 二分的 tails 数组</text>
+  <text x="340" y="52" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">tails[k] = 所有长度为 k+1 的上升子序列中，最小的结尾值；读入 2,1,1,5,6,2,3,1 的演化</text>
+
+  <!-- steps -->
+  <g font-size="13" fill="#555" filter="url(#r)">
+    <text x="90" y="100">读 2</text>
+    <text x="90" y="146">读 1</text>
+    <text x="90" y="192">读 1</text>
+    <text x="90" y="238">读 5</text>
+    <text x="90" y="284">读 6</text>
+    <text x="90" y="330">读 2 / 3 / 1</text>
+  </g>
+
+  <g filter="url(#r)">
+    <rect x="150" y="80" width="60" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="150" y="126" width="60" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="150" y="172" width="60" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="150" y="218" width="60" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="150" y="264" width="60" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="150" y="310" width="60" height="36" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <g font-size="14" font-weight="bold" text-anchor="middle" filter="url(#r)">
+    <text x="180" y="103" fill="#33517a">[2]</text>
+    <text x="180" y="149" fill="#a67c1e">[1]</text>
+    <text x="180" y="195" fill="#a67c1e">[1]</text>
+    <text x="180" y="241" fill="#33517a">[1,5]</text>
+    <text x="180" y="287" fill="#3a5c2c">[1,5,6]</text>
+    <text x="180" y="333" fill="#3a5c2c">[1,2,3]</text>
+  </g>
+  <g font-size="12.5" fill="#888" filter="url(#r)">
+    <text x="250" y="103">tails 末尾追加</text>
+    <text x="250" y="149">更小值替换：2 → 1（结尾更小，未来更可能接上）</text>
+    <text x="250" y="195">相等不替换：严格上升要求 lower_bound</text>
+    <text x="250" y="241">比末尾大 → 追加，长度 2</text>
+    <text x="250" y="287">再追加，长度 3 = lis(6) = 3</text>
+    <text x="250" y="333">后面照旧；最终 tails 长度 3</text>
+  </g>
+
+  <g filter="url(#r)">
+    <rect x="60" y="356" width="560" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="379" text-anchor="middle" font-size="13" fill="#33517a" filter="url(#r)">lower_bound 找「第一个 ≥ x」的位置：lis[i] = pos + 1；相等的元素不能延长严格上升段</text>
+</svg>

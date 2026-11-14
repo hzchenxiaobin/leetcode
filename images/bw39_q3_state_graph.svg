@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="360" viewBox="0 0 680 360" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="360" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">核心观察：把「位置 × 上一步方向」当作图上的节点做 BFS</text>
+  <text x="340" y="52" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">只记位置不够 —— 同一位置「刚向前跳到」与「刚向后跳到」的后续可达集合不同</text>
+
+  <!-- two rows of positions -->
+  <g font-size="12.5" font-weight="bold" fill="#555" filter="url(#r)">
+    <text x="120" y="108">方向 = 前跳（可再前跳 / 可后跳）</text>
+    <text x="120" y="238">方向 = 后跳（只可前跳）</text>
+  </g>
+  <g filter="url(#r)">
+    <rect x="150" y="118" width="64" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="330" y="118" width="64" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="510" y="118" width="64" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="150" y="248" width="64" height="46" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="330" y="248" width="64" height="46" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="510" y="248" width="64" height="46" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <g font-size="13" text-anchor="middle" filter="url(#r)">
+    <text x="182" y="146" fill="#446688">(p, →)</text>
+    <text x="362" y="146" fill="#446688">(p+a, →)</text>
+    <text x="542" y="146" fill="#446688">(p+2a, →)</text>
+    <text x="182" y="276" fill="#4a7a3a">(p+a−b, ←)</text>
+    <text x="362" y="276" fill="#4a7a3a">(p+2a−b, ←)</text>
+    <text x="542" y="276" fill="#4a7a3a">(p+3a−b, ←)</text>
+  </g>
+
+  <!-- forward arrows -->
+  <path d="M 220 141 L 322 141" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <path d="M 400 141 L 502 141" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <text x="262" y="132" text-anchor="middle" font-size="12" fill="#446688" filter="url(#r)">前跳 +a</text>
+  <text x="442" y="132" text-anchor="middle" font-size="12" fill="#446688" filter="url(#r)">前跳 +a</text>
+
+  <!-- down arrow (backward jump) -->
+  <path d="M 362 168 L 362 242" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <text x="392" y="208" font-size="12" fill="#4a7a3a" filter="url(#r)">后跳 −b（随后不许再后跳）</text>
+
+  <!-- bottom row forward arrows -->
+  <path d="M 220 271 L 322 271" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <path d="M 400 271 L 502 271" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+
+  <!-- forbidden note -->
+  <g filter="url(#r)">
+    <rect x="560" y="238" width="100" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="610" y="261" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#r)">forbidden 点</text>
+  <text x="610" y="279" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#r)">两行都不能进</text>
+
+  <text x="340" y="340" text-anchor="middle" font-size="13" fill="#3a5c2c" filter="url(#r)">visited[pos][0/1] 各自独立标记，队列存 (位置, 方向, 步数)，首次到 x 即最少步数</text>
+</svg>

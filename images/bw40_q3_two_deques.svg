@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="380" viewBox="0 0 680 380" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="12" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="380" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">核心设计：两个双端队列 L / R，L 比 R 至多多一个元素</text>
+  <text x="340" y="52" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">中点永远落在 L 的尾部 —— pushMiddle / popMiddle 就变成 O(1) 的队尾操作</text>
+
+  <!-- queue as 8 cells -->
+  <g font-size="12" text-anchor="middle" fill="#999" filter="url(#r)">
+    <text x="205" y="92">1</text><text x="261" y="92">2</text><text x="317" y="92">3</text><text x="373" y="92">4</text><text x="429" y="92">5</text><text x="485" y="92">6</text>
+  </g>
+  <g filter="url(#r)">
+    <rect x="179" y="100" width="52" height="48" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="235" y="100" width="52" height="48" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="291" y="100" width="52" height="48" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="347" y="100" width="52" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="403" y="100" width="52" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="459" y="100" width="52" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <g font-size="15" font-weight="bold" text-anchor="middle" filter="url(#r)">
+    <text x="205" y="130" fill="#33517a">1</text>
+    <text x="261" y="130" fill="#33517a">2</text>
+    <text x="317" y="130" fill="#33517a">3</text>
+    <text x="373" y="130" fill="#3a5c2c">4</text>
+    <text x="429" y="130" fill="#3a5c2c">5</text>
+    <text x="485" y="130" fill="#3a5c2c">6</text>
+  </g>
+  <!-- brackets -->
+  <path d="M 181 158 L 181 168 L 341 168 L 341 158" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <path d="M 343 158 L 343 168 L 509 168 L 509 158" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <text x="260" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#33517a" filter="url(#r)">L = [1,2,3]（前半）</text>
+  <text x="426" y="190" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5c2c" filter="url(#r)">R = [4,5,6]（后半）</text>
+
+  <!-- middle pointer -->
+  <path d="M 317 152 L 317 152" stroke="none"/>
+  <circle cx="317" cy="100" r="9" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#r)"/>
+  <text x="317" y="228" text-anchor="middle" font-size="13" font-weight="bold" fill="#a67c1e" filter="url(#r)">popMiddle 删 L 尾 = 3（偶数长度取靠前者）</text>
+  <path d="M 317 210 L 317 178" stroke="#d6a040" stroke-width="1.8" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+
+  <!-- operations mapping -->
+  <g filter="url(#r)">
+    <rect x="60" y="252" width="560" height="106" rx="10" fill="#f6f8f4" stroke="#8aa07c" stroke-width="1.6"/>
+  </g>
+  <g font-size="13" fill="#444" filter="url(#r)">
+    <text x="80" y="280">pushFront → L 头插入；pushBack → R 尾插入（随后 rebalance）</text>
+    <text x="80" y="306">pushMiddle → 若 |L| &gt; |R| 先搬 L 尾到 R 头，再把 val 接到 L 尾（新元素恰在正中）</text>
+    <text x="80" y="332">popFront/popMiddle 从 L 端弹出，popBack 从 R 尾弹出；空判：L、R 同时空返回 −1</text>
+  </g>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="330" viewBox="0 0 680 330" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="680" height="330" fill="#fafafa"/>
+  <text x="340" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#r)">两种解法对照：逐 k 试探 vs 结尾对齐 DP</text>
+  <text x="340" y="52" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#r)">同一个单调性撑起两条路——word^k 出现 ⇒ word^(k−1) 必出现</text>
+
+  <!-- left: brute -->
+  <g filter="url(#r)">
+    <rect x="50" y="80" width="280" height="200" rx="12" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="190" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#33517a" filter="url(#r)">解法一：逐 k 试探（暴力）</text>
+  <g font-size="12.5" fill="#33517a" filter="url(#r)">
+    <text x="70" y="138">k = 1：构造 word，find 一次</text>
+    <text x="70" y="164">k = 2：构造 word·word，再 find</text>
+    <text x="70" y="190">…直到某次 find 失败即停</text>
+    <text x="70" y="222">每轮都从 sequence 头搜到尾，</text>
+    <text x="70" y="244">O(n/m) 轮 × O(n·m) 比较</text>
+    <text x="70" y="268">n ≤ 100 下绰绰有余</text>
+  </g>
+
+  <!-- right: dp -->
+  <g filter="url(#r)">
+    <rect x="350" y="80" width="280" height="200" rx="12" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="490" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#3a5c2c" filter="url(#r)">解法二：结尾对齐 DP</text>
+  <g font-size="12.5" fill="#3a5c2c" filter="url(#r)">
+    <text x="370" y="138">f[i]：以 i 结尾的重复段计数</text>
+    <text x="370" y="164">末段匹配 ⇒ f[i] = f[i−m] + 1</text>
+    <text x="370" y="190">一遍扫描，无重复搜索</text>
+    <text x="370" y="222">O(n·m)：每处一次 m 长比较</text>
+    <text x="370" y="244">滚动哈希 / Z 函数可压到 O(n)</text>
+    <text x="370" y="268">是更大规模下的正确姿势</text>
+  </g>
+
+  <!-- arrow -->
+  <path d="M 336 180 L 346 180" stroke="#3a3a3a" stroke-width="2" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <path d="M 344 180 L 336 180" stroke="none"/>
+
+  <g filter="url(#r)">
+    <rect x="50" y="292" width="580" height="28" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="340" y="311" text-anchor="middle" font-size="12.5" fill="#7a5b1e" filter="url(#r)">共性：单调性保证「最大的 k」可以贪心逼近——这正是最大重复值定义的深层结构</text>
+</svg>
