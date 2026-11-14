@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="23"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">好分割：左右两段「不同字母数」恰好相等</text>
+
+  <!-- 字符串格子 aacaba -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="60" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="132" y="60" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="184" y="60" width="52" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="236" y="60" width="52" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="288" y="60" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="340" y="60" width="52" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="18" fill="#333" text-anchor="middle">
+    <text x="106" y="88">a</text><text x="158" y="88">a</text><text x="210" y="88">c</text>
+    <text x="262" y="88">a</text><text x="314" y="88">b</text><text x="366" y="88">a</text>
+  </g>
+
+  <!-- 分割线 i=3：aac | aba -->
+  <path d="M 236 52 L 236 116" stroke="#b85450" stroke-width="3" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="236" y="140" font-size="13" fill="#b85450" filter="url(#rough2)" text-anchor="middle" font-weight="bold">i = 3 是好分割</text>
+
+  <!-- 左右集合 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="170" width="180" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+    <rect x="300" y="170" width="180" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="170" y="196">左半 aac</text>
+    <text x="170" y="222">不同字母 {a, c}</text>
+    <text x="170" y="244" fill="#b85450" font-weight="bold">distinct = 2</text>
+    <text x="390" y="196">右半 aba</text>
+    <text x="390" y="222">不同字母 {a, b}</text>
+    <text x="390" y="244" fill="#b85450" font-weight="bold">distinct = 2</text>
+  </g>
+  <path d="M 236 130 C 200 150, 190 158, 178 168" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 262 130 C 300 150, 310 158, 322 168" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 滑动：右往左挪一格 -->
+  <text x="280" y="286" font-size="13" fill="#4a7a3a" font-weight="bold" text-anchor="middle" filter="url(#rough2)">分割点从左往右推：左计数 +1 或不变；右计数 −1 或不变</text>
+  <text x="280" y="308" font-size="13" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">预统计 suffix 不同数，再一遍前缀扫描即可 O(n·26)</text>
+
+  <rect x="70" y="326" width="420" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="350" font-size="13" fill="#2d5a22" text-anchor="middle" filter="url(#rough2)" font-weight="bold">aacaba 共 5 个分割点，其中 2 个好分割（i = 3, 4）</text>
+</svg>
