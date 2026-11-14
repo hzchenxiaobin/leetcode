@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="53"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">状态压缩：每种余数的个数打包进一个 64 位整数</text>
+
+  <!-- 观察一/二 -->
+  <rect x="30" y="48" width="250" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="155" y="70" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">观察 1：只有 groups[i] mod B 参与判定</text>
+  <text x="155" y="92" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">观察 2：余 0 的组前置 → 全部开心，直接计入</text>
+  <rect x="300" y="48" width="250" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="425" y="70" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">观察 3：余数种类 ≤ 8，每种个数 ≤ 30</text>
+  <text x="425" y="92" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">→ 5 位 × 8 = 40 位装进一个整数 state</text>
+
+  <!-- 打包示意 -->
+  <text x="280" y="136" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">state 的位域布局（从低位到高位，每个余数占 5 个二进制位）</text>
+  <g filter="url(#rough2)">
+    <rect x="30"  y="150" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="96"  y="150" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="162" y="150" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="228" y="150" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="294" y="150" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="360" y="150" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="426" y="150" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="492" y="150" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#666" text-anchor="middle">
+    <text x="60"  y="166">余 1</text>
+    <text x="126" y="166">余 2</text>
+    <text x="192" y="166">余 3</text>
+    <text x="258" y="166">余 4</text>
+    <text x="324" y="166">余 5</text>
+    <text x="390" y="166">余 6</text>
+    <text x="456" y="166">余 7</text>
+    <text x="522" y="166">余 8</text>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#2b4a66" text-anchor="middle" font-weight="bold">
+    <text x="60"  y="186">4</text>
+    <text x="126" y="186">4</text>
+    <text x="192" y="186">4</text>
+    <text x="258" y="186">4</text>
+    <text x="324" y="186">3</text>
+    <text x="390" y="186">3</text>
+    <text x="456" y="186">3</text>
+    <text x="522" y="186">3</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#999" text-anchor="middle">
+    <text x="60"  y="208">bit 4..0</text>
+    <text x="126" y="208">bit 9..5</text>
+    <text x="192" y="208">bit 14..10</text>
+    <text x="258" y="208">bit 19..15</text>
+    <text x="324" y="208">bit 24..20</text>
+    <text x="390" y="208">bit 29..25</text>
+    <text x="456" y="208">bit 34..30</text>
+    <text x="522" y="208">bit 39..35</text>
+  </g>
+
+  <!-- 位运算说明 -->
+  <rect x="30" y="224" width="250" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="155" y="241" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">读个数：(state &gt;&gt; (r×5)) &amp; 31</text>
+  <text x="155" y="259" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">拿走一个：state − (1LL &lt;&lt; (r×5))</text>
+  <rect x="300" y="224" width="250" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="425" y="241" text-anchor="middle" font-size="12" fill="#8a3a34" filter="url(#rough2)">同余数的组彼此可互换</text>
+  <text x="425" y="259" text-anchor="middle" font-size="12" fill="#8a3a34" filter="url(#rough2)">→ 状态是「计数向量」而非 2³⁰ 子集</text>
+
+  <!-- 状态数分析 -->
+  <path d="M 280 268 L 280 286" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="60" y="290" width="460" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="290" y="306" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">状态数 = ∏(cnt[r]+1)，最坏 30 组均摊到 8 种余数：</text>
+  <text x="290" y="323" text-anchor="middle" font-size="13" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)">5⁴ × 4⁴ = 160000 个状态，每个转移 ≤ 8 种 → 轻松通过</text>
+
+  <rect x="60" y="340" width="460" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="290" y="361" text-anchor="middle" font-size="12" fill="#2b4a66" filter="url(#rough2)">Bonus：前缀余数 = (total − Σ r·cnt_r) mod B，由 state 唯一确定 → 记忆化键只需 state</text>
+</svg>

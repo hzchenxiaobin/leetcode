@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">记忆化 DFS：枚举「下一组放哪种余数」</text>
+
+  <!-- 根节点 -->
+  <ellipse cx="280" cy="90" rx="150" ry="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#2d5a22" text-anchor="middle">
+    <text x="280" y="82" font-weight="bold">state = {余1: 2, 余2: 2}</text>
+    <text x="280" y="100">开局余数 used = 0 → 本组开心 +1</text>
+  </g>
+
+  <!-- 转移箭头 -->
+  <path d="M 200 122 C 150 150, 120 160, 110 172" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 360 122 C 410 150, 440 160, 450 172" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="130" y="152" font-size="12" fill="#446688" filter="url(#rough2)">放余数 1</text>
+  <text x="392" y="152" font-size="12" fill="#446688" filter="url(#rough2)">放余数 2</text>
+
+  <!-- 子节点 A -->
+  <ellipse cx="110" cy="212" rx="120" ry="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#2b4a66" text-anchor="middle">
+    <text x="110" y="205">{余1: 1, 余2: 2}</text>
+    <text x="110" y="223">used = 1 → 不开心 +0</text>
+  </g>
+  <!-- 子节点 B -->
+  <ellipse cx="450" cy="212" rx="120" ry="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#2b4a66" text-anchor="middle">
+    <text x="450" y="205">{余1: 2, 余2: 1}</text>
+    <text x="450" y="223">used = 2 → 不开心 +0</text>
+  </g>
+
+  <!-- 孙节点示例 -->
+  <path d="M 110 250 C 110 272, 170 278, 236 284" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 450 250 C 450 274, 390 278, 330 284" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="120" y="272" font-size="12" fill="#446688" filter="url(#rough2)">放余数 2</text>
+  <text x="396" y="272" font-size="12" fill="#446688" filter="url(#rough2)">放余数 1</text>
+
+  <ellipse cx="283" cy="310" rx="130" ry="36" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#7a5c1e" text-anchor="middle">
+    <text x="283" y="304">{余1: 1, 余2: 1}，used = 0</text>
+    <text x="283" y="322">下一组又开心 +1 …如此递归</text>
+  </g>
+
+  <!-- 底部公式 -->
+  <rect x="60" y="352" width="460" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="290" y="369" text-anchor="middle" font-size="12" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">dfs(state) = max_r dfs(state − e_r) + [used(state) = 0]，键只需 state</text>
+</svg>

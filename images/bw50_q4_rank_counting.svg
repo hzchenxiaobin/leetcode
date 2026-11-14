@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="181"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">排名计数：固定前缀，在位置 i 枚举更小的字符</text>
+
+  <!-- 前缀固定 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="70" width="120" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+    <rect x="180" y="70" width="64" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="8"/>
+    <rect x="254" y="70" width="250" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle">
+    <text x="110" y="90" fill="#2d5a22" font-weight="bold">前缀 s[0..i)</text>
+    <text x="110" y="106" fill="#2d5a22">（保持不变）</text>
+    <text x="212" y="90" fill="#7a5c1e" font-weight="bold">位置 i</text>
+    <text x="212" y="106" fill="#7a5c1e">放 d &lt; s[i]</text>
+    <text x="379" y="96" fill="#2b4a66">后缀：剩余字符任意排列</text>
+  </g>
+
+  <!-- 每个更小字符的贡献 -->
+  <path d="M 212 114 L 212 140" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="60" y="144" width="440" height="66" fill="#fafafa" stroke="#d6a040" stroke-width="1.5" stroke-dasharray="6,4" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="280" y="170" font-weight="bold">字符 d 的贡献 = (n−1−i)! × cnt[d] × inv(∏ cnt[c]!)</text>
+    <text x="280" y="196">固定前缀 + 位置 i 放 d 后，剩余 t = n−1−i 位是「去掉一个 d 的多重集」的任意排列</text>
+  </g>
+
+  <!-- 求和公式 -->
+  <path d="M 280 210 L 280 232" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="60" y="238" width="440" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="15" fill="#2d5a22" text-anchor="middle" font-weight="bold">
+    <text x="280" y="262">答案 = Σ fact[n−1−i] × smaller × invF</text>
+    <text x="280" y="284" font-size="12" font-weight="normal">smaller = 后缀中比 s[i] 小的字符总数（对 d 求和的合并结果）</text>
+  </g>
+
+  <!-- 逆元滚动维护 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="308" width="212" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <rect x="288" y="308" width="212" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#7a5c1e" text-anchor="middle">
+    <text x="166" y="328" font-weight="bold">invF = inv(∏ cnt[c]!)</text>
+    <text x="166" y="346">初始：逐字母连乘 inv_fact[cnt[c]]</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#2b4a66" text-anchor="middle">
+    <text x="394" y="328" font-weight="bold">消费 s[i] 后：invF ×= cnt[s[i]]</text>
+    <text x="394" y="346">（分母除以 cnt[s[i]]，一次乘法搞定）</text>
+  </g>
+</svg>

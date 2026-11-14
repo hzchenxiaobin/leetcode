@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="17"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：切分 → 取短 → 双端匹配 → 判定</text>
+
+  <!-- 步骤 1 -->
+  <rect x="40" y="52" width="200" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="140" y="77" text-anchor="middle" font-size="13" fill="#2b4a66" filter="url(#rough2)">① 按空格切分成单词序列</text>
+
+  <path d="M 140 92 L 140 112" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="40" y="116" width="200" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="140" y="141" text-anchor="middle" font-size="13" fill="#2b4a66" filter="url(#rough2)">② 交换使 w1 为较短一方</text>
+
+  <path d="M 140 156 L 140 176" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 双指针 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="180" width="200" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="140" y="202" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">③ i：从左匹配最长公共前缀</text>
+  <text x="140" y="222" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">④ j：从右匹配最长公共后缀</text>
+
+  <path d="M 240 208 L 300 208" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定菱形 -->
+  <polygon points="370,168 460,208 370,248 280,208" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="370" y="203" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">i + j ≥</text>
+  <text x="370" y="221" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)" font-weight="bold">|w1| ？</text>
+
+  <!-- True / False -->
+  <path d="M 460 208 L 490 208 L 490 140 L 508 140" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 460 208 L 490 208 L 490 280 L 508 280" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="466" y="128" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <text x="466" y="272" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">否</text>
+
+  <rect x="380" y="120" width="120" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="440" y="145" text-anchor="middle" font-size="15" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">true（相似）</text>
+  <rect x="380" y="260" width="120" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="440" y="285" text-anchor="middle" font-size="15" fill="#8a3a34" font-weight="bold" filter="url(#rough2)">false（不相似）</text>
+
+  <!-- 底部要点 -->
+  <rect x="40" y="322" width="480" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="340" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">单词级模型：必须在词的边界插入（"Frog cool" 与 "Frogs are cool" 不相似）</text>
+  <text x="280" y="357" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">复杂度 O(|s1| + |s2|)：一次切分 + 两端各扫一遍</text>
+</svg>
