@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="420" viewBox="0 0 640 420" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="420" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#r)">示例 1 演算：m=2, n=3，内向×1、外向×2 → 240</text>
+
+  <!-- grid -->
+  <text x="203" y="72" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#r)">第 1 行 [内, 空, 外]</text>
+  <g filter="url(#r)">
+    <rect x="95" y="80" width="72" height="56" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="167" y="80" width="72" height="56" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+    <rect x="239" y="80" width="72" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="95" y="136" width="72" height="56" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+    <rect x="167" y="136" width="72" height="56" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+    <rect x="239" y="136" width="72" height="56" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <path d="M 241 136 L 309 136" stroke="#b85450" stroke-width="3" fill="none"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold">
+    <text x="131" y="102" fill="#2e6e2e" filter="url(#r)">内</text>
+    <text x="131" y="122" fill="#2e6e2e" font-size="11" filter="url(#r)">120</text>
+    <text x="203" y="102" fill="#999" filter="url(#r)">空</text>
+    <text x="275" y="102" fill="#a0761e" filter="url(#r)">外</text>
+    <text x="275" y="122" fill="#a0761e" font-size="11" filter="url(#r)">60</text>
+    <text x="131" y="158" fill="#999" filter="url(#r)">空</text>
+    <text x="203" y="158" fill="#999" filter="url(#r)">空</text>
+    <text x="275" y="158" fill="#a0761e" filter="url(#r)">外</text>
+    <text x="275" y="178" fill="#a0761e" font-size="11" filter="url(#r)">60</text>
+  </g>
+  <text x="203" y="212" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#r)">第 2 行 [空, 空, 外]</text>
+  <text x="325" y="128" text-anchor="start" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">外-外边</text>
+  <text x="325" y="146" text-anchor="start" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">cross = +40</text>
+
+  <!-- right side computation -->
+  <g font-size="12.5" fill="#444">
+    <text x="392" y="96" filter="url(#r)">rowScore(第1行) = 120 + 40 = 160</text>
+    <text x="392" y="116" font-size="11" fill="#999" filter="url(#r)">（内向与外向隔一格，不相邻）</text>
+    <text x="392" y="144" filter="url(#r)">rowScore(第2行) = 40</text>
+    <text x="392" y="172" filter="url(#r)">cross = 第 3 列 外-外边 = +40</text>
+  </g>
+  <text x="392" y="202" font-size="15" font-weight="bold" fill="#33517a" filter="url(#r)">总分 = 160 + 40 + 40 = 240 ✓</text>
+
+  <!-- verify box -->
+  <g filter="url(#r)">
+    <rect x="56" y="240" width="528" height="78" rx="10" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.3"/>
+  </g>
+  <text x="320" y="268" text-anchor="middle" font-size="12" fill="#555" filter="url(#r)">逐人验证：内向 120 − 0×30 = 120；外向(第3列上) 40 + 1×20 = 60；外向(第3列下) 40 + 1×20 = 60</text>
+  <text x="320" y="296" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#r)">合计 120 + 60 + 60 = 240 ✓ 与「点权 + 边权」分解结果一致</text>
+
+  <!-- observation box -->
+  <g filter="url(#r)">
+    <rect x="56" y="332" width="528" height="64" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="320" y="356" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#r)">观察：两个外向紧贴（同列相邻）各得 +20，比分开摆多 40 分</text>
+  <text x="320" y="380" text-anchor="middle" font-size="12" fill="#2e6e2e" filter="url(#r)">内向独占角落无邻居、零损失 —— 但内向被内向包围时净边际为 −120，故「不必放满」</text>
+</svg>

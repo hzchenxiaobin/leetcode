@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="445" viewBox="0 0 640 445" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="37" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="445" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#r)">按行转移：rowScore 管水平边，cross 管垂直边</text>
+
+  <!-- horizontal edge on prev row -->
+  <g filter="url(#r)">
+    <path d="M 310 62 Q 346 46 382 62" stroke="#2e6e2e" stroke-width="2" fill="none"/>
+  </g>
+  <text x="346" y="42" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e6e2e" filter="url(#r)">+40 → 计入 rowScore</text>
+
+  <!-- prev row -->
+  <g filter="url(#r)">
+    <rect x="130" y="64" width="72" height="52" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="202" y="64" width="72" height="52" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+    <rect x="274" y="64" width="72" height="52" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="346" y="64" width="72" height="52" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="418" y="64" width="72" height="52" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold">
+    <text x="166" y="94" fill="#2e6e2e" filter="url(#r)">内</text>
+    <text x="238" y="94" fill="#999" filter="url(#r)">空</text>
+    <text x="310" y="94" fill="#a0761e" filter="url(#r)">外</text>
+    <text x="382" y="94" fill="#a0761e" filter="url(#r)">外</text>
+    <text x="454" y="94" fill="#999" filter="url(#r)">空</text>
+  </g>
+  <text x="118" y="94" text-anchor="end" font-size="12" font-weight="bold" fill="#446688" filter="url(#r)">第 r 行</text>
+  <text x="118" y="110" text-anchor="end" font-size="11" fill="#888" filter="url(#r)">(prev)</text>
+
+  <!-- vertical edges -->
+  <g stroke="#ccc" stroke-width="1.5" stroke-dasharray="4 4" fill="none" filter="url(#r)">
+    <path d="M 166 118 L 166 166"/>
+    <path d="M 238 118 L 238 166"/>
+    <path d="M 310 118 L 310 166"/>
+    <path d="M 454 118 L 454 166"/>
+  </g>
+  <g filter="url(#r)">
+    <path d="M 382 118 L 382 166" stroke="#b85450" stroke-width="3" fill="none"/>
+  </g>
+  <text x="368" y="146" text-anchor="end" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">外-内</text>
+  <text x="368" y="162" text-anchor="end" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#r)">−10</text>
+  <g font-size="11.5" fill="#999" text-anchor="middle">
+    <text x="166" y="144" filter="url(#r)">✗</text>
+    <text x="238" y="144" filter="url(#r)">✗</text>
+    <text x="310" y="144" filter="url(#r)">✗</text>
+    <text x="454" y="144" filter="url(#r)">✗</text>
+  </g>
+  <g font-size="12.5" fill="#b85450" font-weight="bold">
+    <text x="496" y="136" filter="url(#r)">cross[prev][cur]</text>
+    <text x="496" y="156" filter="url(#r)">= +20 + (−30) = −10</text>
+  </g>
+
+  <!-- cur row -->
+  <g filter="url(#r)">
+    <rect x="130" y="168" width="72" height="52" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+    <rect x="202" y="168" width="72" height="52" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="274" y="168" width="72" height="52" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+    <rect x="346" y="168" width="72" height="52" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="418" y="168" width="72" height="52" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold">
+    <text x="166" y="198" fill="#999" filter="url(#r)">空</text>
+    <text x="238" y="198" fill="#a0761e" filter="url(#r)">外</text>
+    <text x="310" y="198" fill="#999" filter="url(#r)">空</text>
+    <text x="382" y="198" fill="#2e6e2e" filter="url(#r)">内</text>
+    <text x="454" y="198" fill="#a0761e" filter="url(#r)">外</text>
+  </g>
+  <text x="118" y="198" text-anchor="end" font-size="12" font-weight="bold" fill="#446688" filter="url(#r)">第 r+1 行</text>
+  <text x="118" y="214" text-anchor="end" font-size="11" fill="#888" filter="url(#r)">(cur)</text>
+
+  <!-- transition formula -->
+  <g filter="url(#r)">
+    <rect x="56" y="244" width="528" height="66" rx="10" fill="#ffffff" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="320" y="270" text-anchor="middle" font-size="13" font-weight="bold" fill="#33517a" filter="url(#r)">f[r+1][cur][i−cntI(cur)][e−cntE(cur)] ←</text>
+  <text x="320" y="296" text-anchor="middle" font-size="13" fill="#444" filter="url(#r)">f[r][prev][i][e] + rowScore[cur] + cross[prev][cur]</text>
+
+  <!-- notes -->
+  <g filter="url(#r)">
+    <rect x="56" y="328" width="270" height="64" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="191" y="352" text-anchor="middle" font-size="11.5" fill="#7a5a10" filter="url(#r)">① 每条边恰好结算一次：水平边只在 rowScore，</text>
+  <text x="191" y="374" text-anchor="middle" font-size="11.5" fill="#7a5a10" filter="url(#r)">垂直边只在 cross（同列双非空才算）</text>
+
+  <g filter="url(#r)">
+    <rect x="314" y="328" width="270" height="64" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="449" y="352" text-anchor="middle" font-size="11.5" fill="#33517a" filter="url(#r)">② 人数同步扣减：cur 用掉 cntI(cur) 个内向、</text>
+  <text x="449" y="374" text-anchor="middle" font-size="11.5" fill="#33517a" filter="url(#r)">cntE(cur) 个外向，剩余 (i−cntI, e−cntE)</text>
+
+  <text x="320" y="420" text-anchor="middle" font-size="12" fill="#888" filter="url(#r)">初始：虚拟第 0 行全空，f[0][0][I][E] = 0；答案 = 所有终态的最大值（全空保底 0）</text>
+</svg>

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="500" viewBox="0 0 640 500" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+  </defs>
+  <rect width="640" height="500" fill="#fafafa"/>
+  <text x="320" y="28" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#r)">核心观察：总分 = Σ 点权 + Σ 边权</text>
+  <text x="320" y="48" text-anchor="middle" font-size="12" fill="#888" filter="url(#r)">把「每人按邻居数调整」改写成「每条边独立结算」—— 一条边的贡献只依赖两端的人格</text>
+
+  <!-- left: naive per-person -->
+  <text x="190" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#446688" filter="url(#r)">原始算法：逐人数邻居</text>
+  <g filter="url(#r)">
+    <rect x="134" y="88" width="56" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="190" y="88" width="56" height="48" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+    <rect x="134" y="136" width="56" height="48" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="190" y="136" width="56" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g text-anchor="middle" font-size="14" font-weight="bold">
+    <text x="162" y="116" fill="#2e6e2e" filter="url(#r)">内</text>
+    <text x="218" y="116" fill="#999" filter="url(#r)">空</text>
+    <text x="162" y="164" fill="#a0761e" filter="url(#r)">外</text>
+    <text x="218" y="164" fill="#2e6e2e" filter="url(#r)">内</text>
+  </g>
+  <g text-anchor="middle" font-size="12" fill="#555">
+    <text x="190" y="216" filter="url(#r)">内(左上)：120 − 1×30 = 90</text>
+    <text x="190" y="238" filter="url(#r)">外(左下)：40 + 2×20 = 80</text>
+    <text x="190" y="260" filter="url(#r)">内(右下)：120 − 1×30 = 90</text>
+  </g>
+  <text x="190" y="288" text-anchor="middle" font-size="14" font-weight="bold" fill="#33517a" filter="url(#r)">合计 = 260</text>
+
+  <!-- right: point + edge decomposition -->
+  <text x="460" y="76" text-anchor="middle" font-size="13" font-weight="bold" fill="#4a7a3a" filter="url(#r)">分解算法：点权 + 边权</text>
+  <g filter="url(#r)">
+    <rect x="404" y="88" width="56" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="460" y="88" width="56" height="48" rx="4" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.5"/>
+    <rect x="404" y="136" width="56" height="48" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="460" y="136" width="56" height="48" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <path d="M 406 136 L 458 136" stroke="#b85450" stroke-width="2.5" fill="none"/>
+    <path d="M 460 138 L 460 182" stroke="#b85450" stroke-width="2.5" fill="none"/>
+  </g>
+  <g text-anchor="middle" font-size="13" font-weight="bold">
+    <text x="432" y="110" fill="#2e6e2e" filter="url(#r)">内</text>
+    <text x="432" y="128" fill="#2e6e2e" font-size="11" filter="url(#r)">+120</text>
+    <text x="488" y="110" fill="#999" filter="url(#r)">空</text>
+    <text x="432" y="158" fill="#a0761e" filter="url(#r)">外</text>
+    <text x="432" y="176" fill="#a0761e" font-size="11" filter="url(#r)">+40</text>
+    <text x="488" y="158" fill="#2e6e2e" filter="url(#r)">内</text>
+    <text x="488" y="176" fill="#2e6e2e" font-size="11" filter="url(#r)">+120</text>
+  </g>
+  <text x="392" y="126" text-anchor="end" font-size="12" font-weight="bold" fill="#b85450" filter="url(#r)">−10</text>
+  <text x="524" y="164" text-anchor="start" font-size="12" font-weight="bold" fill="#b85450" filter="url(#r)">−10</text>
+  <g text-anchor="middle" font-size="12" fill="#555">
+    <text x="460" y="216" filter="url(#r)">点权和：120 + 40 + 120 = 280</text>
+    <text x="460" y="238" filter="url(#r)">边权和：(−10) + (−10) = −20</text>
+  </g>
+  <text x="460" y="266" text-anchor="middle" font-size="13" fill="#555" filter="url(#r)">合计 = 280 − 20 = 260</text>
+  <text x="460" y="288" text-anchor="middle" font-size="14" font-weight="bold" fill="#4a7a3a" filter="url(#r)">与左边逐人算法一致 ✓</text>
+
+  <!-- edge weight table -->
+  <g filter="url(#r)">
+    <rect x="110" y="310" width="420" height="111" rx="6" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.3"/>
+    <path d="M 300 310 L 300 421" stroke="#d8d8c8" stroke-width="1.2" fill="none"/>
+    <path d="M 420 310 L 420 421" stroke="#d8d8c8" stroke-width="1.2" fill="none"/>
+    <path d="M 110 340 L 530 340" stroke="#d8d8c8" stroke-width="1.2" fill="none"/>
+    <path d="M 110 367 L 530 367" stroke="#d8d8c8" stroke-width="1.2" fill="none"/>
+    <path d="M 110 394 L 530 394" stroke="#d8d8c8" stroke-width="1.2" fill="none"/>
+  </g>
+  <g text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688">
+    <text x="205" y="330" filter="url(#r)">相邻对</text>
+    <text x="360" y="330" filter="url(#r)">两端各结算</text>
+    <text x="475" y="330" filter="url(#r)">边权合计</text>
+  </g>
+  <g text-anchor="middle" font-size="12.5" fill="#444">
+    <text x="205" y="359" filter="url(#r)">内 − 内</text>
+    <text x="360" y="359" filter="url(#r)">−30 和 −30</text>
+    <text x="205" y="386" filter="url(#r)">内 − 外</text>
+    <text x="360" y="386" filter="url(#r)">−30 和 +20</text>
+    <text x="205" y="413" filter="url(#r)">外 − 外</text>
+    <text x="360" y="413" filter="url(#r)">+20 和 +20</text>
+  </g>
+  <g text-anchor="middle" font-size="13" font-weight="bold">
+    <text x="475" y="359" fill="#33517a" filter="url(#r)">−60</text>
+    <text x="475" y="386" fill="#b85450" filter="url(#r)">−10</text>
+    <text x="475" y="413" fill="#2e6e2e" filter="url(#r)">+40</text>
+  </g>
+
+  <!-- insight box -->
+  <g filter="url(#r)">
+    <rect x="56" y="432" width="528" height="58" rx="10" fill="#ffffff" stroke="#b8b8a8" stroke-width="1.3"/>
+  </g>
+  <text x="320" y="456" text-anchor="middle" font-size="12" fill="#555" filter="url(#r)">① 每人幸福感 = 初始分 + Σ 对邻居的调整 → 把调整分摊到两人之间的「边」上</text>
+  <text x="320" y="478" text-anchor="middle" font-size="12" fill="#555" filter="url(#r)">② 边权只看两端人格 ⇒ 行内水平边、行间垂直边可分开 O(1) 结算</text>
+</svg>

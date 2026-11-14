@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="440" fill="#fafafa"/>
+  <text x="330" y="22" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">判定流程：两条不变量逐项验收</text>
+  <text x="330" y="40" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">一次 O(n) 计数 + 三个常数级检查</text>
+
+  <!-- 起点框 -->
+  <rect x="170" y="54" width="160" height="32" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="250" y="74" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">输入 word1、word2</text>
+
+  <path d="M250,86 L250,100" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 1：长度 -->
+  <polygon points="250,102 382,130 250,158 118,130" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="250" y="135" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">长度相等？</text>
+
+  <path d="M382,130 L466,130" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="426" y="122" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="470" y="113" width="172" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="556" y="134" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">false：操作不改变长度</text>
+
+  <path d="M250,158 L250,172" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="264" y="168" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 处理框：计数 -->
+  <rect x="140" y="174" width="220" height="32" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="250" y="194" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">统计 26 桶计数 c1、c2</text>
+
+  <path d="M250,206 L250,220" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 2：字符集合 -->
+  <polygon points="250,222 382,250 250,278 118,250" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="250" y="244" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">字符集合相同？</text>
+  <text x="250" y="260" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">(c1[i]&gt;0) == (c2[i]&gt;0)</text>
+
+  <path d="M382,250 L466,250" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="426" y="242" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="470" y="233" width="172" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="556" y="254" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">false：字符类造不出、删不掉</text>
+
+  <path d="M250,278 L250,292" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="264" y="288" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 菱形 3：频次多重集 -->
+  <polygon points="250,294 382,322 250,350 118,322" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="250" y="316" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">频次多重集相同？</text>
+  <text x="250" y="332" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">sort(c1) == sort(c2)</text>
+
+  <path d="M382,322 L466,322" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="426" y="314" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="470" y="305" width="172" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="556" y="326" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">false：频次只能互换不能增删</text>
+
+  <path d="M250,350 L250,364" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="264" y="360" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 终点框 -->
+  <rect x="185" y="366" width="130" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="250" y="388" text-anchor="middle" font-size="13" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">true √</text>
+
+  <!-- 右下注记 -->
+  <rect x="470" y="366" width="172" height="56" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="556" y="386" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">长度检查是 O(1) 早退习惯</text>
+  <text x="556" y="404" text-anchor="middle" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">频次总和相等已蕴含长度相等</text>
+</svg>
