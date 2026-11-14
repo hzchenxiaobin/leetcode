@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="51"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="107"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">窗口滑过全部 1，前缀和 O(1) 算中位代价</text>
+
+  <!-- b 序列 -->
+  <text x="280" y="58" font-size="13" fill="#888" text-anchor="middle" filter="url(#rough2)">b 序列（pos_j − j）：b₁ b₂ b₃ b₄ b₅ b₆ b₇</text>
+  <g filter="url(#rough2)" font-size="14" text-anchor="middle">
+    <rect x="110" y="68" width="50" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="160" y="68" width="50" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="210" y="68" width="50" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="260" y="68" width="50" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="310" y="68" width="50" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="360" y="68" width="50" height="36" fill="#eee" stroke="#aaa" stroke-width="1" rx="4"/>
+    <rect x="410" y="68" width="50" height="36" fill="#eee" stroke="#aaa" stroke-width="1" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#555" text-anchor="middle">
+    <text x="135" y="91">b₁</text><text x="185" y="91">b₂</text>
+    <text x="235" y="91">b₃</text><text x="285" y="91">b₄</text>
+    <text x="335" y="91">b₅</text><text x="385" y="91">b₆</text><text x="435" y="91">b₇</text>
+  </g>
+  <text x="185" y="124" font-size="11" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">窗口 1（k=3）</text>
+  <text x="335" y="124" font-size="11" fill="#d6a040" text-anchor="middle" filter="url(#rough2)">窗口 2（右滑一格）</text>
+
+  <!-- 中位标记 -->
+  <path d="M 235 136 L 235 152" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="235" y="172" font-size="11" fill="#b85450" text-anchor="middle" filter="url(#rough2)">c = 窗口内中位</text>
+
+  <!-- 前缀和公式 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="188" width="460" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#446688" text-anchor="middle">
+    <text x="280" y="214">左部 = b[c]·(c−i+1) − (pre[c+1] − pre[i])</text>
+    <text x="280" y="240">右部 = (pre[i+k] − pre[c+1]) − b[c]·(i+k−1−c)</text>
+    <text x="280" y="266">pre 为 b 的前缀和，两个式子都是 O(1)</text>
+  </g>
+
+  <!-- 收尾 -->
+  <g filter="url(#rough2)">
+    <rect x="90" y="290" width="380" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="310" font-size="13" fill="#2d5a22" text-anchor="middle" filter="url(#rough2)">答案 = min{ 左部 + 右部 ： 所有窗口 }，整体 O(n)</text>
+</svg>

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="37"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="73"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">开始时刻 = max(厨师空闲时刻, 顾客到达时刻)</text>
+
+  <!-- 时间轴 -->
+  <path d="M 60 220 L 510 220" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#888" text-anchor="middle">
+    <text x="110" y="244">t=5</text><text x="180" y="244">t=7</text>
+    <text x="250" y="244">t=10</text><text x="330" y="244">t=11</text>
+    <text x="440" y="244">t=20</text>
+  </g>
+
+  <!-- 顾客1 到达5 做2 -->
+  <g filter="url(#rough2)">
+    <line x1="110" y1="220" x2="110" y2="96" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <rect x="110" y="96" width="70" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6"/>
+    <text x="145" y="114" font-size="12" fill="#2d5a22" text-anchor="middle">顾客1 做2</text>
+  </g>
+  <text x="145" y="88" font-size="11" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">到达即开始，等 2</text>
+
+  <!-- 顾客2 到达5 等7-5, 做7-11 -->
+  <g filter="url(#rough2)">
+    <line x1="180" y1="220" x2="180" y2="146" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <rect x="180" y="146" width="150" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="6"/>
+    <text x="255" y="164" font-size="12" fill="#b85450" text-anchor="middle">顾客2 等(7→11) 做4</text>
+  </g>
+  <text x="255" y="138" font-size="11" fill="#b85450" text-anchor="middle" filter="url(#rough2)">厨师忙，等 2 格才开工</text>
+
+  <!-- 顾客3 到达10 等11-10 做11-14 -->
+  <g filter="url(#rough2)">
+    <line x1="250" y1="220" x2="250" y2="196" stroke="#b85450" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <rect x="330" y="196" width="60" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="6"/>
+    <text x="360" y="214" font-size="12" fill="#b85450" text-anchor="middle">顾客3 做3</text>
+  </g>
+  <text x="360" y="188" font-size="11" fill="#b85450" text-anchor="middle" filter="url(#rough2)">10 到达，11 才开工</text>
+
+  <!-- 顾客4 到达20 即做 -->
+  <g filter="url(#rough2)">
+    <line x1="440" y1="220" x2="440" y2="96" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <rect x="440" y="96" width="50" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6"/>
+    <text x="465" y="114" font-size="12" fill="#2d5a22" text-anchor="middle">做1</text>
+  </g>
+  <text x="465" y="88" font-size="11" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">厨师已闲，立即做</text>
+
+  <!-- 空闲间隔示意 -->
+  <path d="M 390 220 C 405 236, 425 236, 438 224" fill="none" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="412" y="256" font-size="11" fill="#d6a040" text-anchor="middle" filter="url(#rough2)">厨师空闲 14→20</text>
+
+  <!-- 公式 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="272" width="440" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#446688" text-anchor="middle">
+    <text x="280" y="294">start = max(freeAt, arrival)；finish = start + time</text>
+    <text x="280" y="316">wait = finish − arrival；freeAt ← finish（滚动一个变量）</text>
+  </g>
+</svg>
