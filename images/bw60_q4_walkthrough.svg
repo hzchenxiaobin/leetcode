@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="59"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">示例 1 演算：nums = [1,2,3,4]（答案 6）</text>
+
+  <!-- 第一步：计数 -->
+  <text x="150" y="62" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">第一步：值计数</text>
+  <g filter="url(#rough2)">
+    <rect x="40" y="76" width="230" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#33506e">
+    <text x="155" y="102" text-anchor="middle">cnt[1] = 1</text>
+    <text x="155" y="124" text-anchor="middle">cnt[2] = 1，mask(2) = {2}</text>
+    <text x="155" y="146" text-anchor="middle">cnt[3] = 1，mask(3) = {3}</text>
+    <text x="155" y="166" text-anchor="middle" fill="#8a3a34">cnt[4]：4 = 2² → 弃用</text>
+  </g>
+
+  <!-- 第二步：背包 -->
+  <text x="420" y="62" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">第二步：背包（只用 2 和 3）</text>
+  <g filter="url(#rough2)">
+    <rect x="300" y="76" width="230" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#2d5a22">
+    <text x="415" y="102" text-anchor="middle">初始 f[∅] = 1</text>
+    <text x="415" y="124" text-anchor="middle">拼入 2：f[{2}] += 1×1 = 1</text>
+    <text x="415" y="146" text-anchor="middle">拼入 3：f[{3}] += 1，f[{2,3}] += 1</text>
+    <text x="415" y="166" text-anchor="middle">Σ f[S≠∅] = 3</text>
+  </g>
+
+  <!-- 三个非 1 子集 -->
+  <text x="280" y="200" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">第三步：枚举「非 1 部分」的 3 种组合，各乘 1 的幂次</text>
+  <g filter="url(#rough2)">
+    <rect x="40" y="216" width="160" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="200" y="216" width="160" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="360" y="216" width="160" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle">
+    <text x="120" y="240" fill="#7a5c1e" font-weight="bold">非 1 部分 = {2}</text>
+    <text x="120" y="260" fill="#7a5c1e">1 可选可不选 ×2</text>
+    <text x="120" y="280" fill="#7a5c1e">→ [2]、[1,2] 共 2 个</text>
+    <text x="280" y="240" fill="#7a5c1e" font-weight="bold">非 1 部分 = {3}</text>
+    <text x="280" y="260" fill="#7a5c1e">×2</text>
+    <text x="280" y="280" fill="#7a5c1e">→ [3]、[1,3] 共 2 个</text>
+    <text x="440" y="240" fill="#7a5c1e" font-weight="bold">非 1 部分 = {2,3}</text>
+    <text x="440" y="260" fill="#7a5c1e">×2</text>
+    <text x="440" y="280" fill="#7a5c1e">→ [2,3]、[1,2,3] 共 2 个</text>
+  </g>
+
+  <!-- 结论 -->
+  <rect x="40" y="304" width="480" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="330" font-size="14" fill="#2d5a22" font-weight="bold" text-anchor="middle" filter="url(#rough2)">总计 3 × 2¹ = 6 ✓（与官方答案一致）</text>
+
+  <rect x="40" y="354" width="480" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="377" font-size="11.5" fill="#8a3a34" text-anchor="middle" filter="url(#rough2)">对照示例 2：[4,2,3,15] 中 4 弃用；15 = 3×5 → {3,5}，得 {2}、{3}、{2,3}、{15}、{2,15} 共 5 个</text>
+</svg>

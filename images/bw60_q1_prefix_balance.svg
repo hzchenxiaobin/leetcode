@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="51"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">核心恒等式：左和 = 右和 ⇔ 2×左和 + nums[i] = 总和</text>
+
+  <!-- 数组示意 -->
+  <text x="280" y="66" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">下标 i 左边的和 left 与右边的和 total − left − nums[i]</text>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="86" width="52" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="124" y="86" width="52" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="178" y="86" width="52" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="232" y="86" width="52" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="4"/>
+    <rect x="286" y="86" width="52" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="96" y="113">2</text><text x="150" y="113">3</text><text x="204" y="113">−1</text>
+    <text x="258" y="113" fill="#8a3a34" font-weight="bold">8</text><text x="312" y="113">4</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#666" text-anchor="middle">
+    <text x="96" y="146">i=0</text><text x="150" y="146">i=1</text><text x="204" y="146">i=2</text>
+    <text x="258" y="146" fill="#8a3a34">i=3</text><text x="312" y="146">i=4</text>
+  </g>
+
+  <!-- 左和 / 右和标注 -->
+  <path d="M 70 158 C 70 172, 232 172, 232 160" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="150" y="190" font-size="12.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)" text-anchor="middle">left = 2+3+(−1) = 4</text>
+
+  <path d="M 338 158 C 338 176, 300 176, 296 162" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="420" y="190" font-size="12.5" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)" text-anchor="middle">right = 4（只有 i=4 一项）</text>
+
+  <!-- 恒等式 -->
+  <rect x="60" y="212" width="440" height="64" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13.5" fill="#33506e">
+    <text x="280" y="238" text-anchor="middle" font-weight="bold">left == total − left − nums[i]</text>
+    <text x="280" y="262" text-anchor="middle">⇔ 扫描到 i 时只需 O(1) 判断，无需重复求和</text>
+  </g>
+
+  <!-- 单趟扫描流程 -->
+  <text x="280" y="304" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">单趟扫描流程</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="316" width="128" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <rect x="216" y="316" width="128" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="372" y="316" width="128" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle">
+    <text x="124" y="335" fill="#2d5a22" font-weight="bold">① 先求 total</text>
+    <text x="124" y="352" fill="#2d5a22">left = 0</text>
+    <text x="280" y="335" fill="#7a5c1e" font-weight="bold">② 逐个下标判断</text>
+    <text x="280" y="352" fill="#7a5c1e">成立立即返回 i</text>
+    <text x="436" y="335" fill="#8a3a34" font-weight="bold">③ left += nums[i]</text>
+    <text x="436" y="352" fill="#8a3a34">扫完仍无 → −1</text>
+  </g>
+  <path d="M 188 337 L 212 337" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <path d="M 344 337 L 368 337" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+</svg>

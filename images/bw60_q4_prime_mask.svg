@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="57"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：30 以内只有 10 个质数 ⇒ 每个数一个 10 位掩码</text>
+
+  <!-- 质数表 -->
+  <text x="280" y="60" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">质数表（下标 0..9 ↔ 掩码第 0..9 位）</text>
+  <g filter="url(#rough2)">
+    <rect x="46" y="72" width="468" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#33506e" text-anchor="middle">
+    <text x="82" y="95">2</text><text x="128" y="95">3</text><text x="174" y="95">5</text><text x="220" y="95">7</text>
+    <text x="266" y="95">11</text><text x="312" y="95">13</text><text x="358" y="95">17</text><text x="404" y="95">19</text>
+    <text x="450" y="95">23</text><text x="496" y="95">29</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10.5" fill="#8aa3c0" text-anchor="middle">
+    <text x="82" y="120">bit0</text><text x="128" y="120">bit1</text><text x="174" y="120">bit2</text><text x="220" y="120">bit3</text>
+    <text x="266" y="120">bit4</text><text x="312" y="120">bit5</text><text x="358" y="120">bit6</text><text x="404" y="120">bit7</text>
+    <text x="450" y="120">bit8</text><text x="496" y="120">bit9</text>
+  </g>
+
+  <!-- 好数 / 坏数 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="142" width="240" height="108" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="156" y="166" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)" text-anchor="middle">可用数（无平方因子，v ≠ 1）</text>
+  <g filter="url(#rough2)" font-size="11.5" fill="#2d5a22">
+    <text x="156" y="190" text-anchor="middle">6 = 2×3 → {bit0,bit1}</text>
+    <text x="156" y="210" text-anchor="middle">30 = 2×3×5 → {bit0,bit1,bit2}</text>
+    <text x="156" y="230" text-anchor="middle">29 → {bit9}；共 18 种可用值</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="292" y="142" width="240" height="108" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="412" y="166" font-size="13" fill="#8a3a34" font-weight="bold" filter="url(#rough2)" text-anchor="middle">永不可用（含平方因子）</text>
+  <g filter="url(#rough2)" font-size="11.5" fill="#8a3a34">
+    <text x="412" y="190" text-anchor="middle">4 = 2²：同一质数出现两次</text>
+    <text x="412" y="210" text-anchor="middle">8、9、12、16、18、20、24、25、27</text>
+    <text x="412" y="230" text-anchor="middle">选进子集乘积必有重复质数 → 直接跳过</text>
+  </g>
+
+  <!-- 好子集条件 -->
+  <rect x="36" y="266" width="496" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e">
+    <text x="284" y="290" text-anchor="middle" font-weight="bold">好子集 ⇔ 所选数的掩码按位或起来不冲突（两两 AND 为空）且非空</text>
+    <text x="284" y="312" text-anchor="middle">子集按「删除下标」计 → 值相同的多份拷贝是不同的选择</text>
+  </g>
+
+  <!-- 1 的特殊性 -->
+  <rect x="36" y="342" width="496" height="62" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#33506e">
+    <text x="284" y="366" text-anchor="middle" font-weight="bold">数字 1 的特殊性：乘任何数不改变质数集合</text>
+    <text x="284" y="388" text-anchor="middle">先不管 1 做背包，最后答案 × 2^(cnt[1]) —— 每个 1 选或不选都合法</text>
+  </g>
+</svg>

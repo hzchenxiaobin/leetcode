@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="47"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">状态设计：dp[i][L] = 前 i 位、最后一段长 L 的方案数</text>
+
+  <!-- 切分示意 -->
+  <text x="280" y="64" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">一次切分 = 把 num 划成若干段，每段无前导零且非递减</text>
+  <g filter="url(#rough2)">
+    <rect x="70" y="80" width="60" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <rect x="132" y="80" width="90" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <rect x="224" y="80" width="90" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+    <rect x="316" y="80" width="90" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="4"/>
+    <rect x="408" y="80" width="90" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="100" y="104">9</text>
+    <text x="177" y="104">9</text>
+    <text x="269" y="104">9</text>
+    <text x="361" y="104">9</text>
+    <text x="453" y="104">9</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#666" text-anchor="middle">
+    <text x="100" y="134">段1</text><text x="177" y="134">段2</text><text x="269" y="134">段3</text>
+    <text x="361" y="134">段4</text><text x="453" y="134">段5</text>
+  </g>
+
+  <!-- 转移示意 -->
+  <text x="280" y="168" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">转移：枚举最后一段长度 L，看前一段（倒数第二段）长 P</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="184" width="180" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="6"/>
+    <rect x="320" y="184" width="180" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6"/>
+  </g>
+  <text x="150" y="209" font-size="13" fill="#33506e" text-anchor="middle" filter="url(#rough2)">前一段：num[i−L−P .. i−L)</text>
+  <text x="410" y="209" font-size="13" fill="#2d5a22" text-anchor="middle" filter="url(#rough2)">最后一段：num[i−L .. i)</text>
+  <path d="M 242 204 C 268 204, 280 204, 316 204" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="280" y="196" font-size="11.5" fill="#446688" filter="url(#rough2)" text-anchor="middle">衔接条件</text>
+
+  <!-- 三种情形 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="244" width="162" height="70" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <rect x="199" y="244" width="162" height="70" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="362" y="244" width="162" height="70" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" text-anchor="middle">
+    <text x="117" y="268" fill="#2d5a22" font-weight="bold">P &lt; L</text>
+    <text x="117" y="290" fill="#2d5a22">位数少 ⇒ 数值必小</text>
+    <text x="117" y="306" fill="#2d5a22">直接累加（不用比较）</text>
+    <text x="280" y="268" fill="#7a5c1e" font-weight="bold">P = L（等长）</text>
+    <text x="280" y="290" fill="#7a5c1e">位数相同 ⇒ 比字符串</text>
+    <text x="280" y="306" fill="#7a5c1e">用 LCP 判大小，O(1)</text>
+    <text x="443" y="268" fill="#8a3a34" font-weight="bold">P &gt; L</text>
+    <text x="443" y="290" fill="#8a3a34">位数多 ⇒ 数值必大</text>
+    <text x="443" y="306" fill="#8a3a34">违反非递减，跳过</text>
+  </g>
+
+  <!-- 前缀和优化 -->
+  <rect x="36" y="332" width="488" height="72" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#33506e">
+    <text x="280" y="356" text-anchor="middle" font-weight="bold">前缀和优化：pre[i][L] = dp[i][1] + … + dp[i][L]</text>
+    <text x="280" y="378" text-anchor="middle">「所有 P &lt; L」= pre[i−L][L−1]；「P = L」= pre[i−L][L] − pre[i−L][L−1]</text>
+    <text x="280" y="396" text-anchor="middle">总复杂度 O(n²)：dp 共 n² 个状态，每个 O(1) 转移</text>
+  </g>
+</svg>

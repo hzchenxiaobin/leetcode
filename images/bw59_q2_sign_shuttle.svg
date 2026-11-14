@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="43"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：负号可以沿网格「搬运」到任意位置</text>
+
+  <!-- 左：一次操作 -->
+  <text x="140" y="62" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">一次操作 = 同时翻转相邻两格符号</text>
+  <g filter="url(#rough2)">
+    <rect x="52" y="82" width="58" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="112" y="82" width="58" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="52" y="152" width="58" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="112" y="152" width="58" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="81" y="107">−</text><text x="141" y="107">−</text>
+    <text x="81" y="177">+</text><text x="141" y="177">−</text>
+  </g>
+  <path d="M 141 128 C 141 136, 141 140, 141 148" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="176" y="136" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">负号</text>
+  <text x="176" y="150" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">右移一格</text>
+
+  <!-- 左下：负号搬运 -->
+  <text x="140" y="222" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">反复操作 ⇒ 负号在网格中自由移动</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e">
+    <text x="140" y="248" text-anchor="middle">两个负号相遇 → 相互湮灭（变 +、+）</text>
+    <text x="140" y="270" text-anchor="middle">一个负号遇到 0 → 藏进 0 里（和不变）</text>
+    <text x="140" y="292" text-anchor="middle">奇数个负号 → 至少剩一个，扣 2×最小绝对值</text>
+  </g>
+
+  <!-- 右：不变量 -->
+  <text x="420" y="62" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">贪心决策（按负数个数）</text>
+  <g filter="url(#rough2)">
+    <rect x="312" y="78" width="216" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <rect x="312" y="150" width="216" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="312" y="222" width="216" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5">
+    <text x="420" y="102" text-anchor="middle" fill="#2d5a22" font-weight="bold">负数个数为偶数</text>
+    <text x="420" y="124" text-anchor="middle" fill="#2d5a22">全部两两配对消除 → Σ|x|</text>
+    <text x="420" y="174" text-anchor="middle" fill="#7a5c1e" font-weight="bold">负数个数为奇数 + 存在 0</text>
+    <text x="420" y="196" text-anchor="middle" fill="#7a5c1e">负号塞给 0 → 仍是 Σ|x|</text>
+    <text x="420" y="246" text-anchor="middle" fill="#8a3a34" font-weight="bold">负数个数为奇数 + 无 0</text>
+    <text x="420" y="268" text-anchor="middle" fill="#8a3a34">必剩一个负号 → Σ|x| − 2·min|x|</text>
+  </g>
+
+  <!-- 底部结论 -->
+  <rect x="60" y="314" width="440" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="340" text-anchor="middle" font-size="14" fill="#33506e" font-weight="bold" filter="url(#rough2)">不变量：|matrix[i][j]| 的多重集永远不变</text>
+  <text x="280" y="364" text-anchor="middle" font-size="12.5" fill="#33506e" filter="url(#rough2)">能变的只有「符号分布」——于是问题退化为负号个数奇偶性的讨论</text>
+</svg>

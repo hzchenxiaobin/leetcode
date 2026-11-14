@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="54"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">演算走查：逐格扫描（行主序），两个组的完整探测</text>
+
+  <!-- 网格 -->
+  <text x="170" y="60" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">land（3×3，示例 1）</text>
+  <g filter="url(#rough2)" stroke="#c3d2e4" stroke-width="1">
+    <line x1="60" y1="76" x2="284" y2="76"/><line x1="60" y1="132" x2="284" y2="132"/>
+    <line x1="60" y1="188" x2="284" y2="188"/><line x1="60" y1="244" x2="284" y2="244"/>
+    <line x1="60" y1="76" x2="60" y2="244"/><line x1="134" y1="76" x2="134" y2="244"/>
+    <line x1="209" y1="76" x2="209" y2="244"/><line x1="284" y1="76" x2="284" y2="244"/>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="61" y="77" width="72" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="210" y="133" width="73" height="110" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="97" y="109">1</text>
+    <text x="246" y="165">1 1</text><text x="246" y="221">1 1</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#999" text-anchor="middle">
+    <text x="171" y="109">0</text><text x="97" y="165">0</text><text x="171" y="165">0</text>
+    <text x="97" y="221">0</text><text x="171" y="221">0</text>
+  </g>
+  <!-- 探测箭头 -->
+  <path d="M 108 140 C 120 158, 232 190, 244 208" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="150" y="188" font-size="11" fill="#4a7a3a" filter="url(#rough2)">组A探完后继续扫</text>
+  <path d="M 276 200 C 292 196, 300 190, 306 182" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="272" y="232" font-size="11" fill="#7a5c1e" filter="url(#rough2)">右下角</text>
+
+  <!-- 右：扫描记录 -->
+  <text x="440" y="60" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">扫描事件流</text>
+  <g filter="url(#rough2)">
+    <rect x="330" y="76" width="220" height="168" fill="#f9f9f9" stroke="#bbb" stroke-width="1.2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="344" y="102">(0,0)：1，上/左出界 → 左上角</text>
+    <text x="358" y="122">↓ 探底 r2=0；→ 探边 c2=0</text>
+    <text x="344" y="142">→ 记录 [0,0,0,0]（组A）</text>
+    <text x="344" y="166">(0,1)(0,2)(1,0)：0，跳过</text>
+    <text x="344" y="190">(1,1)：1，上(0,1)=0 左(1,0)=0 → 左上角</text>
+    <text x="358" y="210">↓ 探底 r2=2；→ 探边 c2=2</text>
+    <text x="344" y="230">→ 记录 [1,1,2,2]（组B）</text>
+  </g>
+  <rect x="330" y="258" width="220" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="440" y="283" font-size="12.5" fill="#2d5a22" font-weight="bold" text-anchor="middle" filter="url(#rough2)">其余格：非 1 或非左上角 → 跳过</text>
+
+  <!-- 底部：易错点 -->
+  <rect x="50" y="316" width="470" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="285" y="340" font-size="13" fill="#8a3a34" font-weight="bold" filter="url(#rough2)" text-anchor="middle">易错点：为什么「下方探测」只需看第一列？</text>
+  <g filter="url(#rough2)" font-size="12" fill="#8a3a34">
+    <text x="285" y="362" text-anchor="middle">矩形保证：组内每行都同样宽，左上角正下方的连续 1 恰好到底边</text>
+    <text x="285" y="382" text-anchor="middle">若输入不保证矩形（一般连通块题），本做法失效，必须 DFS/BFS</text>
+    <text x="285" y="398" text-anchor="middle">读题时确认「农场组都是矩形」这句话是算法前提，不是废话</text>
+  </g>
+</svg>

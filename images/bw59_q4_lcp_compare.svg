@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="48"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">LCP 预处理：等长段比较从 O(L) 降到 O(1)</text>
+
+  <!-- 上：问题 -->
+  <rect x="36" y="52" width="488" height="84" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="76" font-size="13.5" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)" text-anchor="middle">比较两段 A = num[a..a+L) 与 B = num[b..b+L)（等长 L 位）</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e">
+    <text x="280" y="100" text-anchor="middle">若逐位比较最坏 O(L)，总复杂度退化到 O(n³)（n = 3500 时约 4×10¹⁰）</text>
+    <text x="280" y="122" text-anchor="middle">观察：A 与 B 的关系完全由「后缀 num[a..] 与 num[b..] 的最长公共前缀」决定</text>
+  </g>
+
+  <!-- 中：LCP 定义与递推 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="156" width="232" height="110" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+    <rect x="292" y="156" width="232" height="110" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="152" y="182" font-size="13.5" fill="#33506e" font-weight="bold" filter="url(#rough2)" text-anchor="middle">lcp[i][j] 的定义</text>
+  <g filter="url(#rough2)" font-size="12" fill="#33506e">
+    <text x="152" y="208" text-anchor="middle">num[i..] 与 num[j..] 的</text>
+    <text x="152" y="228" text-anchor="middle">最长公共前缀长度</text>
+    <text x="152" y="252" text-anchor="middle">（i &lt; j）</text>
+  </g>
+  <text x="408" y="182" font-size="13.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)" text-anchor="middle">O(1) 递推</text>
+  <g filter="url(#rough2)" font-size="12" fill="#2d5a22">
+    <text x="408" y="208" text-anchor="middle">num[i]==num[j]：</text>
+    <text x="408" y="228" text-anchor="middle">lcp[i][j] = lcp[i+1][j+1] + 1</text>
+    <text x="408" y="252" text-anchor="middle">否则 = 0（倒序二维循环）</text>
+  </g>
+
+  <!-- 下：判定 -->
+  <rect x="36" y="284" width="488" height="100" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="308" font-size="13.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)" text-anchor="middle">判定 A ≤ B（允许相等，因非递减）</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#2d5a22">
+    <text x="280" y="332" text-anchor="middle">k = lcp[a][b]：若 k ≥ L，两段完全相同 → 相等，可衔接</text>
+    <text x="280" y="354" text-anchor="middle">若 k &lt; L 且 num[a+k] &lt; num[b+k] → A &lt; B，可衔接</text>
+    <text x="280" y="376" text-anchor="middle">若 k &lt; L 且 num[a+k] &gt; num[b+k] → A &gt; B，违反非递减</text>
+  </g>
+</svg>

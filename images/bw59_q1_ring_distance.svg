@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="41"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">圆环上的两个方向：顺时针 d 步 vs 逆时针 26−d 步</text>
+
+  <!-- 左：圆盘示意（word = "bza" 的 a → b） -->
+  <text x="150" y="62" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">打字机圆盘（指针初始在 a）</text>
+  <circle cx="150" cy="200" r="96" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+
+  <!-- 盘上字母（只标注关键几个） -->
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="150" y="122" font-weight="bold" fill="#b85450">a</text>
+    <text x="206" y="132">b</text>
+    <text x="246" y="172">c</text>
+    <text x="246" y="238">…</text>
+    <text x="150" y="292">n</text>
+    <text x="54" y="238">…</text>
+    <text x="54" y="172">y</text>
+    <text x="94" y="132">z</text>
+  </g>
+
+  <!-- 指针：指向 a -->
+  <line x1="150" y1="200" x2="150" y2="128" stroke="#b85450" stroke-width="2.5" filter="url(#rough2)"/>
+  <circle cx="150" cy="200" r="5" fill="#b85450" filter="url(#rough2)"/>
+  <text x="164" y="150" font-size="12" fill="#b85450" filter="url(#rough2)">指针</text>
+
+  <!-- 顺时针弧：a → b → c（短） -->
+  <path d="M 158 116 A 96 96 0 0 1 214 128" fill="none" stroke="#4a7a3a" stroke-width="3" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="196" y="100" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">顺时针 3 步（d=3）</text>
+
+  <!-- 逆时针弧：a → z → y（长） -->
+  <path d="M 142 116 A 96 96 0 0 0 86 128" fill="none" stroke="#d6a040" stroke-width="3" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="44" y="100" font-size="12.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">逆时针 23 步（26−d）</text>
+
+  <!-- 右：公式与说明 -->
+  <text x="420" y="66" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">两方向取短者</text>
+  <rect x="318" y="82" width="206" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="421" y="107" text-anchor="middle" font-size="15" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">cost(a,b) = min(d, 26−d)</text>
+  <text x="421" y="127" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">其中 d = |a−b|（字母下标差）</text>
+
+  <rect x="318" y="152" width="206" height="74" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e">
+    <text x="421" y="176" text-anchor="middle">每个字母移动耗时 + 键入耗时 1 秒</text>
+    <text x="421" y="196" text-anchor="middle">答案 = len(word) + Σ 移动步数</text>
+    <text x="421" y="216" text-anchor="middle">（首字符从 'a' 出发）</text>
+  </g>
+
+  <rect x="318" y="240" width="206" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#8a3a34">
+    <text x="421" y="262" text-anchor="middle">例：a→z 只需逆时针 1 步</text>
+    <text x="421" y="282" text-anchor="middle">d=25，但 min(25,1)=1</text>
+  </g>
+
+  <rect x="60" y="326" width="440" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="348" text-anchor="middle" font-size="13.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">环上两点的最短转动 = 两条弧中较短的一条</text>
+  <text x="280" y="368" text-anchor="middle" font-size="12.5" fill="#2d5a22" filter="url(#rough2)">贪心逐字符处理即可：每步独立取最小，无后效性</text>
+</svg>
