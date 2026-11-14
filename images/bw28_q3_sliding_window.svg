@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="293"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">元素全为正 → 滑动窗口求「每个右端点的最短命中段」</text>
+
+<!-- 窗口示意 -->
+  <text x="60" y="64" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">a = [3, 2, 2, 4, 3]，target = 3</text>
+  <g filter="url(#rough2)">
+    <rect x="90" y="76" width="60" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="5"/>
+    <rect x="150" y="76" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="5"/>
+    <rect x="210" y="76" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="5"/>
+    <rect x="270" y="76" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="5"/>
+    <rect x="330" y="76" width="60" height="40" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="5"/>
+  </g>
+  <text y="102" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)"><tspan x="120">3</tspan><tspan x="180">2</tspan><tspan x="240">2</tspan><tspan x="300">4</tspan><tspan x="360">3</tspan></text>
+
+  <!-- 括线 window [1..2] sum=4 > 3 → 收缩 -->
+  <path d="M 150 124 Q 240 142 330 124" fill="none" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="240" y="148" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">窗口 [2,2,4] 和 = 8 &gt; 3 → 左端收缩</text>
+
+  <!-- 三条规则 -->
+  <rect x="55" y="168" width="150" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="130" y="190" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">sum &gt; target</text>
+  <text x="130" y="210" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">left++（吐出最左）</text>
+
+  <rect x="215" y="168" width="150" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="190" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">sum == target</text>
+  <text x="290" y="210" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">记长度 right−left+1</text>
+
+  <rect x="375" y="168" width="150" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="450" y="190" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">sum &lt; target</text>
+  <text x="450" y="210" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">right++（继续吃）</text>
+
+  <!-- 递推公式 -->
+  <rect x="55" y="248" width="480" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="295" y="270" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">f[right] = min( f[right−1], 当前窗口命中 ? 长度 : ∞ )</text>
+  <text x="295" y="292" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">f 是「到 right 为止的历史最短」——这一步 min 正是把内部任意位置的最短段都纳入比较</text>
+
+  <text x="60" y="334" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">右端固定时最短段唯一（缩到不能再缩），且正元素保证窗口和单调 → 每个右端点 O(1) 摊还</text>
+  <text x="60" y="356" font-size="11" fill="#555" filter="url(#rough2)">若元素可能为 0 或负数，滑窗失效，需改用前缀和 + 哈希表记录每个前缀和最早/最晚出现位置</text>
+</svg>

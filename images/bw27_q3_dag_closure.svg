@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">先修链是 DAG：查询 (u,v) 问的就是「u 可达 v？」</text>
+
+  <!-- 链 0→1→2→3→4→5 -->
+  <g filter="url(#rough2)">
+    <circle cx="80" cy="120" r="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="180" cy="120" r="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="280" cy="120" r="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="380" cy="120" r="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="480" cy="120" r="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <path d="M 104 120 L 152 120" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 204 120 L 252 120" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 304 120 L 352 120" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 404 120 L 452 120" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <text y="125" font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)"><tspan x="80">0</tspan><tspan x="180">1</tspan><tspan x="280">2</tspan><tspan x="380">3</tspan><tspan x="480">4</tspan></text>
+
+  <!-- 直接边 vs 间接可达 -->
+  <text x="80" y="170" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold" filter="url(#rough2)">直接先修</text>
+  <text x="280" y="170" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">间接先修（传递得出）</text>
+
+  <!-- 虚线跨越 -->
+  <path d="M 88 96 Q 230 40 372 96" fill="none" stroke="#b85450" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="230" y="52" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">0 →2 间接先修（沿链传递）</text>
+
+  <!-- 查询解释 -->
+  <rect x="55" y="196" width="460" height="64" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="72" y="220" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">查询 queries[j] = [u, v] ⇔ 图上是否存在路径 u ⟶ v</text>
+  <text x="72" y="244" font-size="11.5" fill="#555" filter="url(#rough2)">10^4 次查询不能每次都跑一遍搜索 → 预处理出全部可达关系，查询 O(1)</text>
+
+  <!-- 规模 -->
+  <rect x="55" y="278" width="460" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="72" y="298" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">n ≤ 100 正是提示：n^3 = 10^6 的 Floyd 闭包轻松跑完</text>
+  <text x="72" y="314" font-size="11" fill="#555" filter="url(#rough2)">若是 n ≤ 10^5 就得换成拓扑序 DP + bitset 之类的高维套路</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 350" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="233"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="350" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">两种设计：直接改矩阵 vs 记历史、查询时逆序回放</text>
+
+  <!-- 左：暴力改矩阵 -->
+  <text x="60" y="62" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">方案 A：update 直接涂格子</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="74" width="42" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="102" y="74" width="42" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+    <rect x="144" y="74" width="42" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="60" y="106" width="42" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+    <rect x="102" y="106" width="42" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+    <rect x="144" y="106" width="42" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+    <rect x="60" y="138" width="42" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="102" y="138" width="42" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="144" y="138" width="42" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+  </g>
+  <text x="123" y="192" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">update O(rows×cols) = 10^4</text>
+  <text x="123" y="210" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">500 次操作 = 5×10^6，能过但难看</text>
+
+  <!-- 右：历史法 -->
+  <text x="330" y="62" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">方案 B：update 只记一笔「日记」</text>
+  <g filter="url(#rough2)">
+    <rect x="330" y="74" width="80" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="5"/>
+    <rect x="418" y="74" width="80" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="5"/>
+  </g>
+  <text y="96" font-size="11" fill="#333" text-anchor="middle" filter="url(#rough2)"><tspan x="370">①(0,0,3,2,5)</tspan><tspan x="458">②(3,0,3,2,10)</tspan></text>
+  <path d="M 330 96 Q 300 96 296 96" fill="none" stroke="#666" stroke-width="1.4" filter="url(#rough2)"/>
+
+  <rect x="330" y="122" width="168" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="414" y="144" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">getValue(row,col)：从最新日记往前翻</text>
+  <text x="414" y="164" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">第一条覆盖 (row,col) 的记录就是现值</text>
+
+  <path d="M 414 190 Q 414 210 380 218" fill="none" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 底部对比 -->
+  <rect x="55" y="238" width="230" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="70" y="260" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">方案 A 复杂度：</text>
+  <text x="70" y="280" font-size="11" fill="#555" filter="url(#rough2)">update O(RC)，getValue O(1)；</text>
+  <text x="70" y="294" filter="url(#rough2)" font-size="11" fill="#555">瓶颈在更新</text>
+
+  <rect x="305" y="238" width="230" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="260" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">方案 B 复杂度：</text>
+  <text x="320" y="280" font-size="11" fill="#555" filter="url(#rough2)">update O(1)，getValue O(更新次数)；</text>
+  <text x="320" y="294" filter="url(#rough2)" font-size="11" fill="#555">≤ 500 笔 → 翻历史至多 500 步</text>
+
+  <text x="60" y="330" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">两种都能 AC；B 的「惰性求值」思想在操作次数受限的设计题里是通用武器</text>
+</svg>

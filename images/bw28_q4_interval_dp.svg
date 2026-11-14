@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="331"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">区间 DP：排序后每组房子在数轴上连续，逐段分配邮筒</text>
+
+  <!-- 排序房子 -->
+  <text x="60" y="62" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">排序后 houses = 1, 4, 8, 10, 20（k = 3）</text>
+  <g filter="url(#rough2)">
+    <rect x="90" y="74" width="80" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="5"/>
+    <rect x="170" y="74" width="80" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="5"/>
+    <rect x="250" y="74" width="80" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="5"/>
+    <rect x="330" y="74" width="80" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+    <rect x="410" y="74" width="80" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+  </g>
+  <text y="100" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)"><tspan x="130">1</tspan><tspan x="210">4</tspan><tspan x="290">8</tspan><tspan x="370">10</tspan><tspan x="450">20</tspan></text>
+  <text x="130" y="134" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">组 1（邮筒@2.5）</text>
+  <text x="290" y="134" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">组 2（@8）</text>
+  <text x="410" y="134" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">组 3（@10 与 @20 之间）</text>
+
+  <!-- 连续性说明 -->
+  <rect x="55" y="152" width="480" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="295" y="174" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">关键定理：存在最优方案，每栋房子都由「坐标上最近的一组连续房子」中的邮筒服务</text>
+  <text x="295" y="194" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">于是只需决定「在哪里切分成 k 个连续段」，不必考虑交错的分组</text>
+
+  <!-- DP 定义 -->
+  <rect x="55" y="220" width="230" height="80" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="70" y="242" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">dp[m][i] = 前 i 小的 i 栋房子</text>
+  <text x="70" y="262" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">用 m 个邮筒的最小总距离</text>
+  <text x="70" y="284" font-size="11" fill="#555" filter="url(#rough2)">初始 dp[m][0] = 0</text>
+
+  <rect x="305" y="220" width="230" height="80" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="242" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">转移：枚举最后一段起点 j</text>
+  <text x="320" y="262" font-size="11.5" fill="#333" filter="url(#rough2)">dp[m][i] = min dp[m−1][j] + cost[j][i−1]</text>
+  <text x="320" y="284" font-size="11" fill="#555" filter="url(#rough2)">cost[j][i−1]：houses[j..i−1] 共筒代价</text>
+
+  <!-- cost 递推 -->
+  <rect x="55" y="314" width="480" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="295" y="334" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">cost 的两头夹递推：cost[i][j] = cost[i+1][j−1] + (houses[j] − houses[i])</text>
+  <text x="295" y="354" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">最外一对房子到中位数的距离，恰好等于两端点之差（见右下引理）</text>
+</svg>
