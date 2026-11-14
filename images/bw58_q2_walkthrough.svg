@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="127"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例 1：rMove=4, cMove=3, color=B —— 竖直向上是好线段</text>
+
+  <!-- 8x8 棋盘（只画关键 5x6 区域，其余省略框） -->
+  <!-- 列 3 竖线：B 在 (0,3)，W×3，落子在 (4,3) -->
+  <g filter="url(#rough2)">
+    <!-- 网格底 -->
+    <rect x="170" y="50" width="260" height="300" fill="#fff" stroke="#bbb" stroke-width="1.3" rx="8"/>
+    <!-- (0,3) B -->
+    <circle cx="300" cy="80" r="17" fill="#446688"/>
+    <!-- (1,3) (2,3) (3,3) W -->
+    <circle cx="300" cy="130" r="17" fill="#fff" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="300" cy="180" r="17" fill="#fff" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="300" cy="230" r="17" fill="#fff" stroke="#446688" stroke-width="1.6"/>
+    <!-- (4,3) 落子 -->
+    <rect x="278" y="258" width="44" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4" rx="6"/>
+    <circle cx="300" cy="280" r="15" fill="#446688"/>
+  </g>
+
+  <!-- 标注 -->
+  <text x="342" y="85" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">端点 B（0,3）</text>
+  <text x="342" y="184" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">中间全 W ×3（cnt=3）</text>
+  <text x="342" y="284" font-size="11.5" fill="#8a6a1f" font-weight="bold" filter="url(#rough2)">落子格 → 涂 B</text>
+
+  <!-- 线段括注 -->
+  <path d="M 262 70 L 240 70 L 240 280 L 262 280" stroke="#4a7a3a" stroke-width="2" fill="none" filter="url(#rough2)"/>
+  <text x="150" y="178" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">长 5 ≥ 3</text>
+  <text x="128" y="196" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">合法 ✓</text>
+
+  <!-- 失败方向示意 -->
+  <g filter="url(#rough2)">
+    <!-- (5,3) B：正下方首格己方 -->
+    <circle cx="300" cy="330" r="15" fill="#446688"/>
+    <!-- (4,2) B：左侧首格己方 -->
+    <circle cx="230" cy="280" r="15" fill="#446688"/>
+  </g>
+  <path d="M 300 296 L 300 312" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="340" y="334" font-size="11" fill="#b85450" filter="url(#rough2)">cnt=0 → 长度 2，失败</text>
+  <path d="M 282 280 L 248 280" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="150" y="322" font-size="11" fill="#b85450" filter="url(#rough2)">同样 cnt=0 失败</text>
+
+  <!-- 底部规则复述 -->
+  <rect x="40" y="372" width="480" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="395" text-anchor="middle" font-size="11.5" fill="#2f5226" font-weight="bold" filter="url(#rough2)">判定式：cnt ≥ 1 且 下一格在界内且 == color → 该方向找到好线段</text>
+</svg>
