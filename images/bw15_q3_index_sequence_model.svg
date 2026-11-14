@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 360"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="360" fill="#fafafa"/>
+  <text x="330" y="32" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">组合 ↔ 递增下标序列："abc" 取 2 个的全部组合</text>
+
+  <!-- 字符行 -->
+  <g text-anchor="middle">
+    <rect x="230" y="56" width="44" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+    <text x="252" y="85" font-size="16" fill="#333" filter="url(#rough2)">a</text>
+    <rect x="280" y="56" width="44" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+    <text x="302" y="85" font-size="16" fill="#333" filter="url(#rough2)">b</text>
+    <rect x="330" y="56" width="44" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+    <text x="352" y="85" font-size="16" fill="#333" filter="url(#rough2)">c</text>
+  </g>
+  <g font-size="11" fill="#888" text-anchor="middle">
+    <text x="252" y="112" filter="url(#rough2)">0</text>
+    <text x="302" y="112" filter="url(#rough2)">1</text>
+    <text x="352" y="112" filter="url(#rough2)">2</text>
+  </g>
+  <text x="180" y="82" font-size="13" fill="#666" filter="url(#rough2)">characters：</text>
+  <text x="180" y="104" font-size="11" fill="#888" filter="url(#rough2)">n = 3, k = 2</text>
+
+  <!-- 三个组合（按字典序） -->
+  <g>
+    <rect x="60" y="150" width="80" height="40" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+    <text x="100" y="176" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">(0,1)</text>
+    <text x="100" y="206" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">"ab"</text>
+
+    <line x1="140" y1="170" x2="176" y2="170" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+    <rect x="178" y="150" width="80" height="40" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+    <text x="218" y="176" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">(0,2)</text>
+    <text x="218" y="206" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">"ac"</text>
+
+    <line x1="258" y1="170" x2="294" y2="170" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+    <rect x="296" y="150" width="80" height="40" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+    <text x="336" y="176" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">(1,2)</text>
+    <text x="336" y="206" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">"bc"（最后）</text>
+  </g>
+  <text x="240" y="238" font-size="12" fill="#666" filter="url(#rough2)">字符有序且互异 ⇒ 组合的字典序 = 下标序列的字典序</text>
+
+  <!-- 上限规则框 -->
+  <rect x="410" y="150" width="230" height="110" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="525" y="176" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">位置 p 的上限 = n−k+p</text>
+  <text x="525" y="198" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">n=3,k=2：位置 0 上限 1，位置 1 上限 2</text>
+  <text x="525" y="220" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">idx[p] 顶满（= 上限）则不能增大</text>
+  <text x="525" y="242" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">(1,2) 两位置全顶满 → 耗尽</text>
+
+  <!-- 推进示例 -->
+  <rect x="60" y="272" width="580" height="72" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="350" y="296" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">推进 (0,1)→(0,2)：最右可增位 p=1（idx[1]=1 &lt; 上限 2），idx[1]++ 得 2</text>
+  <text x="350" y="318" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">推进 (0,2)→(1,2)：p=1 顶满，退到 p=0（0 &lt; 1），idx[0]++ 后回填 idx[1]=idx[0]+1</text>
+  <text x="350" y="338" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">与"下一个排列"同一套路：从右找可动位置，增大后把后缀重排成最小</text>
+</svg>

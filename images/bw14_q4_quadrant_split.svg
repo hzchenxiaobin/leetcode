@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="47"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="420" fill="#fafafa"/>
+  <text x="320" y="34" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">四分矩形 + 无船剪枝：一次询问淘汰一整块</text>
+
+  <!-- 父矩形 -->
+  <rect x="90" y="80" width="380" height="290" rx="4" fill="#e8f0fe" fill-opacity="0.5" stroke="#446688" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="280" y="70" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">当前矩形 R（hasShips(R) = true，至少一艘船）</text>
+
+  <!-- 中线 -->
+  <line x1="280" y1="80" x2="280" y2="370" stroke="#888" stroke-width="1.6" stroke-dasharray="7 5" filter="url(#rough2)"/>
+  <line x1="90" y1="225" x2="470" y2="225" stroke="#888" stroke-width="1.6" stroke-dasharray="7 5" filter="url(#rough2)"/>
+
+  <!-- 左上象限：无船 -->
+  <rect x="92" y="82" width="186" height="141" fill="#fce4ec" fill-opacity="0.55" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="185" y="150" text-anchor="middle" font-size="14" fill="#b85450" filter="url(#rough2)">问一次：无船 ✗</text>
+  <text x="185" y="172" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">整块出局，不再细分</text>
+  <g stroke="#b85450" stroke-width="2">
+    <line x1="165" y1="112" x2="205" y2="128" filter="url(#rough2)"/>
+    <line x1="205" y1="112" x2="165" y2="128" filter="url(#rough2)"/>
+  </g>
+
+  <!-- 右上象限：有船 -->
+  <rect x="282" y="82" width="186" height="141" fill="#e6f4ea" fill-opacity="0.6" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="375" y="126" text-anchor="middle" font-size="14" fill="#4a7a3a" filter="url(#rough2)">有船 ✓ → 递归四分</text>
+  <circle cx="330" cy="160" r="7" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="400" cy="190" r="7" fill="#4a7a3a" filter="url(#rough2)"/>
+
+  <!-- 左下象限：无船 -->
+  <rect x="92" y="227" width="186" height="141" fill="#fce4ec" fill-opacity="0.55" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="185" y="292" text-anchor="middle" font-size="14" fill="#b85450" filter="url(#rough2)">问一次：无船 ✗</text>
+  <g stroke="#b85450" stroke-width="2">
+    <line x1="165" y1="258" x2="205" y2="274" filter="url(#rough2)"/>
+    <line x1="205" y1="258" x2="165" y2="274" filter="url(#rough2)"/>
+  </g>
+
+  <!-- 右下象限：有船 -->
+  <rect x="282" y="227" width="186" height="141" fill="#e6f4ea" fill-opacity="0.6" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="375" y="270" text-anchor="middle" font-size="14" fill="#4a7a3a" filter="url(#rough2)">有船 ✓ → 递归四分</text>
+  <circle cx="350" cy="300" r="7" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="420" cy="340" r="7" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="300" cy="350" r="7" fill="#4a7a3a" filter="url(#rough2)"/>
+
+  <!-- 剪枝说明 -->
+  <rect x="494" y="90" width="130" height="120" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="559" y="114" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">剪枝的力量：</text>
+  <text x="559" y="134" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">无船象限一次</text>
+  <text x="559" y="152" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">询问全部排除，</text>
+  <text x="559" y="170" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">递归树只在</text>
+  <text x="559" y="188" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">有船分支生长</text>
+
+  <text x="90" y="402" font-size="13" fill="#666" filter="url(#rough2)">基例：单格 + hasShips 为真 → 恰 1 艘（每格至多一艘）；象限互不相交，船各归一属，四者求和即父矩形船数。</text>
+</svg>
