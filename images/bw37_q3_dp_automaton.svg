@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="61"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">状态机 DP：每个点的三种动作</text>
+
+  <!-- 状态 0 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="90" width="170" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" rx="12"/>
+  </g>
+  <text x="145" y="118" text-anchor="middle" font-size="14.5" fill="#446688" font-weight="bold" filter="url(#rough2)">状态 0</text>
+  <text x="145" y="140" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">无开口线段（j 段已完成）</text>
+
+  <!-- 状态 1 -->
+  <g filter="url(#rough2)">
+    <rect x="330" y="90" width="170" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="12"/>
+  </g>
+  <text x="415" y="118" text-anchor="middle" font-size="14.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">状态 1</text>
+  <text x="415" y="140" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">有开口线段（左端点已放）</text>
+
+  <!-- 转移箭头 -->
+  <path d="M 232 108 C 270 96, 290 96, 326 106" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="279" y="88" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">开新段</text>
+
+  <path d="M 326 140 C 290 154, 270 154, 232 144" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="279" y="172" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">收尾（j+1 段）</text>
+
+  <path d="M 145 160 C 145 190, 145 200, 145 214" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="90" y="192" font-size="12" fill="#446688" filter="url(#rough2)">空过</text>
+
+  <path d="M 415 160 C 415 200, 415 212, 415 226 C 415 244, 380 246, 356 246" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="452" y="196" font-size="12" fill="#2d5a22" filter="url(#rough2)">延续开段</text>
+
+  <!-- 收尾后立刻开新段 -->
+  <path d="M 326 150 C 260 210, 240 230, 176 212" fill="none" stroke="#d6a040" stroke-width="2.4" stroke-dasharray="6,4" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="236" y="238" font-size="12.5" fill="#b8860b" filter="url(#rough2)">收尾后立刻开新段（共端点！）</text>
+
+  <!-- 公式 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="266" width="440" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#7a5a10">
+    <text x="280" y="290" text-anchor="middle">dp[i][j][0] = dp[i−1][j][0] + dp[i−1][j−1][1]</text>
+    <text x="280" y="312" text-anchor="middle">dp[i][j][1] = dp[i−1][j][0] + dp[i−1][j][1] + dp[i−1][j−1][1]</text>
+    <text x="280" y="340" text-anchor="middle" font-size="12.5" fill="#b85450">第三项「收尾后立刻开新段」漏掉 → n=4,k=2 算出 3 ≠ 5</text>
+  </g>
+</svg>

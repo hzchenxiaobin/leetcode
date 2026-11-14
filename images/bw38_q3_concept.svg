@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="107"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">按失配位贡献：左侧选择 × 右侧选择</text>
+
+  <!-- s 的子串 A -->
+  <text x="60" y="76" font-size="13" fill="#888" filter="url(#rough2)">s 的子串 A：</text>
+  <g filter="url(#rough2)">
+    <rect x="140" y="86" width="70" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="210" y="86" width="44" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="2.6" rx="4"/>
+    <rect x="254" y="86" width="70" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="16" fill="#333" text-anchor="middle">
+    <text x="175" y="112">…相等</text>
+    <text x="232" y="112" fill="#b85450" font-weight="bold">s[i]</text>
+    <text x="289" y="112">相等…</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#4a7a3a">
+    <text x="175" y="142" text-anchor="middle">左侧公共后缀</text>
+    <text x="289" y="142" text-anchor="middle" fill="#446688">右侧公共前缀</text>
+  </g>
+
+  <!-- t 的子串 B -->
+  <text x="60" y="176" font-size="13" fill="#888" filter="url(#rough2)">t 的子串 B：</text>
+  <g filter="url(#rough2)">
+    <rect x="140" y="186" width="70" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="210" y="186" width="44" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="2.6" rx="4"/>
+    <rect x="254" y="186" width="70" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="16" fill="#333" text-anchor="middle">
+    <text x="175" y="212">…相等</text>
+    <text x="232" y="212" fill="#b85450" font-weight="bold">t[j]</text>
+    <text x="289" y="212">相等…</text>
+  </g>
+
+  <!-- 失配连接 -->
+  <g filter="url(#rough2)">
+    <path d="M 232 128 C 238 140, 238 168, 232 184" fill="none" stroke="#b85450" stroke-width="2.2" stroke-dasharray="5,4"/>
+  </g>
+  <text x="256" y="160" font-size="12" fill="#b85450" filter="url(#rough2)">s[i] ≠ t[j]</text>
+
+  <!-- 计数说明 -->
+  <g filter="url(#rough2)">
+    <rect x="370" y="86" width="170" height="142" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5a10">
+    <text x="455" y="112" text-anchor="middle">左端取法：</text>
+    <text x="455" y="132" text-anchor="middle">0..pre[i][j] 共 pre+1</text>
+    <text x="455" y="160" text-anchor="middle">右端取法：</text>
+    <text x="455" y="180" text-anchor="middle">0..suf[i+1][j+1]</text>
+    <text x="455" y="200" text-anchor="middle">共 suf+1</text>
+    <text x="455" y="222" text-anchor="middle" fill="#b8860b" font-weight="bold">贡献 = (pre+1)(suf+1)</text>
+  </g>
+
+  <!-- 求和公式 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="256" width="440" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="280" text-anchor="middle" font-size="13.5" fill="#446688" filter="url(#rough2)">答案 = Σ (pre[i][j]+1) · (suf[i+1][j+1]+1)</text>
+  <text x="280" y="302" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">（对所有 s[i] ≠ t[j] 的位置对求和）</text>
+
+  <text x="280" y="348" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#rough2)">每对 (A,B) 的失配位唯一 ⇒ 不同 (i,j) 的计数不重不漏</text>
+</svg>

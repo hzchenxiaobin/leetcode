@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="71"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">全局仿射 tag：真实值 ≡ base·mul + add</text>
+
+  <!-- 三个盒子：base -> [×mul] -> [+add] -> 真实值 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="130" width="110" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="10"/>
+  </g>
+  <text x="95" y="154" text-anchor="middle" font-size="14" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">base</text>
+  <text x="95" y="174" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">（append 时刻折算）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="200" y="130" width="120" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="10"/>
+  </g>
+  <text x="260" y="154" text-anchor="middle" font-size="14" fill="#b8860b" font-weight="bold" filter="url(#rough2)">× mul</text>
+  <text x="260" y="174" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">乘法缩放</text>
+
+  <g filter="url(#rough2)">
+    <rect x="390" y="130" width="120" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="10"/>
+  </g>
+  <text x="450" y="154" text-anchor="middle" font-size="14" fill="#b8860b" font-weight="bold" filter="url(#rough2)">+ add</text>
+  <text x="450" y="174" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">加法平移</text>
+
+  <path d="M 150 158 L 196 158" fill="none" stroke="#446688" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 158 L 386 158" fill="none" stroke="#446688" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 真实值 -->
+  <g filter="url(#rough2)">
+    <rect x="430" y="236" width="110" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" rx="10"/>
+  </g>
+  <text x="485" y="260" text-anchor="middle" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">真实值</text>
+  <text x="485" y="280" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">getIndex 读它</text>
+  <path d="M 500 186 C 500 204, 496 220, 490 232" fill="none" stroke="#446688" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 逆变换（append 用） -->
+  <path d="M 470 240 C 420 216, 350 200, 296 192" fill="none" stroke="#b85450" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M 280 186 C 230 176, 180 168, 156 160" fill="none" stroke="#b85450" stroke-width="2.2" stroke-dasharray="6,4" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="330" y="230" font-size="12" fill="#b85450" filter="url(#rough2)">逆变换：−add、×mul⁻¹</text>
+  <text x="132" y="110" font-size="12.5" fill="#b85450" filter="url(#rough2)">append(val) 用红路折算</text>
+
+  <!-- tag 更新规则 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="236" width="330" height="88" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#8b3a34">
+    <text x="205" y="262" text-anchor="middle">tag 复合规则（都是仿射）：</text>
+    <text x="205" y="286" text-anchor="middle">addAll(inc)：add += inc</text>
+    <text x="205" y="308" text-anchor="middle">multAll(m)：mul ×= m，add ×= m（add 也放大！）</text>
+  </g>
+
+  <text x="280" y="72" text-anchor="middle" font-size="13" fill="#888" filter="url(#rough2)">多次全局加乘的复合仍是仿射 —— 两个数就够存全部历史</text>
+  <text x="280" y="92" text-anchor="middle" font-size="13" fill="#888" filter="url(#rough2)">mul⁻¹ 用费马小定理：mul^(p−2) mod p（p = 10⁹+7 素数）</text>
+</svg>

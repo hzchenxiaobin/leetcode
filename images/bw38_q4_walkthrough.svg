@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="139"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">示例 1 演算：cnt 表 + 滚动数组逐列演化</text>
+
+  <!-- cnt 表 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="52" width="230" height="130" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <line x1="40" y1="84" x2="270" y2="84" stroke="#c3d0e4" stroke-width="1.2"/>
+    <line x1="40" y1="116" x2="270" y2="116" stroke="#c3d0e4" stroke-width="1.2"/>
+    <line x1="40" y1="148" x2="270" y2="148" stroke="#c3d0e4" stroke-width="1.2"/>
+    <line x1="90" y1="52" x2="90" y2="182" stroke="#c3d0e4" stroke-width="1.2"/>
+    <line x1="145" y1="52" x2="145" y2="182" stroke="#c3d0e4" stroke-width="1.2"/>
+    <line x1="200" y1="52" x2="200" y2="182" stroke="#c3d0e4" stroke-width="1.2"/>
+    <line x1="255" y1="52" x2="255" y2="182" stroke="#c3d0e4" stroke-width="1.2"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#446688" text-anchor="middle">
+    <text x="65" y="74" font-weight="bold">cnt</text><text x="117" y="74">列0</text><text x="172" y="74">列1</text><text x="227" y="74">列2</text><text x="262" y="74">列3</text>
+    <text x="65" y="106">a</text><text x="117" y="106">1</text><text x="172" y="106">1</text><text x="227" y="106">0</text><text x="262" y="106">2</text>
+    <text x="65" y="138">b</text><text x="117" y="138">1</text><text x="172" y="138">1</text><text x="227" y="138">1</text><text x="262" y="138">1</text>
+    <text x="65" y="170">c</text><text x="117" y="170">1</text><text x="172" y="170">1</text><text x="227" y="170">2</text><text x="262" y="170">0</text>
+  </g>
+  <text x="155" y="204" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">target = "aba"（m = 3，L = 4）</text>
+
+  <!-- 滚动数组演化 -->
+  <g filter="url(#rough2)">
+    <rect x="310" y="52" width="220" height="180" fill="#f0f0f0" stroke="#999" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#555">
+    <text x="326" y="78">初始   f = [1, 0, 0, 0]</text>
+    <text x="326" y="106">过列0  f = [1, 1, 0, 0]</text>
+    <text x="326" y="134">过列1  f = [1, 2, 1, 0]</text>
+    <text x="326" y="162">过列2  f = [1, 2, 3, 0]</text>
+    <text x="326" y="190" fill="#b85450" font-weight="bold">过列3  f = [1, ·, ·, 6]</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="420" y="176" width="76" height="22" fill="none" stroke="#b85450" stroke-width="2" rx="5"/>
+  </g>
+  <text x="458" y="250" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">答案 f[3] = 6 ✓</text>
+
+  <!-- 关键步骤说明 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="266" width="490" height="112" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#2d5a22">
+    <text x="56" y="290">列1（b:1）倒序：i=3 用 a → 0；i=2 用 b → f[2] += f[1]·1 = 1</text>
+    <text x="56" y="310">（此时 f[1] 还是上一列的旧值）；i=1 用 a → f[1] += f[0]·1 = 2</text>
+    <text x="56" y="336">列3（a:2）倒序：i=3 用 a → f[3] += f[2]·2 = 3×2 = 6</text>
+    <text x="56" y="362">f[2]=3 即前缀 "ab" 的三条列序列 (0,1)、(0,2)、(1,2)，各乘 2 个 'a' → 6</text>
+  </g>
+</svg>
