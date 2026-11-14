@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="71"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">10 个座位只有 3 个可行块：A / B / C（示例 1 第 1 行）</text>
+
+  <!-- 座位行 -->
+  <g filter="url(#rough2)" font-size="12" fill="#666" text-anchor="middle">
+    <text x="46" y="86">行</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="70" y="66" width="44" height="44" fill="#eeeeee" stroke="#999" stroke-width="1.2" rx="4"/>
+    <rect x="118" y="66" width="44" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="166" y="66" width="44" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="214" y="66" width="44" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="262" y="66" width="44" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="310" y="66" width="44" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="358" y="66" width="44" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="406" y="66" width="44" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+    <rect x="454" y="66" width="44" height="44" fill="#eeeeee" stroke="#999" stroke-width="1.2" rx="4"/>
+    <rect x="502" y="66" width="44" height="44" fill="#eeeeee" stroke="#999" stroke-width="1.2" rx="4"/>
+  </g>
+  <!-- 座位号 -->
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="92" y="92">1</text>
+    <text x="140" y="92">2</text>
+    <text x="188" y="92">3</text>
+    <text x="236" y="92">4</text>
+    <text x="284" y="92">5</text>
+    <text x="332" y="92">6</text>
+    <text x="380" y="92">7</text>
+    <text x="428" y="92">8</text>
+    <text x="476" y="92">9</text>
+    <text x="524" y="92">10</text>
+  </g>
+  <!-- 预约标记 -->
+  <g filter="url(#rough2)" font-size="15" fill="#b85450" text-anchor="middle" font-weight="bold">
+    <text x="140" y="105">✗</text>
+    <text x="188" y="105">✗</text>
+    <text x="428" y="105">✗</text>
+  </g>
+
+  <!-- 块标注 -->
+  <g filter="url(#rough2)">
+    <path d="M 118 122 C 118 132, 220 132, 236 122" fill="none" stroke="#d6a040" stroke-width="1.6"/>
+    <path d="M 214 122 C 214 136, 358 136, 358 122" fill="none" stroke="#4a7a3a" stroke-width="1.8"/>
+    <path d="M 310 122 C 310 132, 448 132, 450 122" fill="none" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle">
+    <text x="177" y="150" fill="#d6a040" font-weight="bold">A = 2..5（被 2、3 破坏）</text>
+    <text x="286" y="168" fill="#2d5a22" font-weight="bold">B = 4..7（全空 ✓）</text>
+    <text x="400" y="150" fill="#2b4a6b" font-weight="bold">C = 6..9（被 8 破坏）</text>
+  </g>
+
+  <!-- 结论 -->
+  <rect x="36" y="196" width="488" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13" fill="#2d5a22">
+    <text x="280" y="218" text-anchor="middle" font-weight="bold">每行最多 2 组：只有 {A, C} 互不重叠，能同时坐下 2 个家庭</text>
+    <text x="280" y="238" text-anchor="middle">A 与 C 都不可用时才考虑 B；三者都不空 → 该行 0 组</text>
+  </g>
+
+  <rect x="36" y="262" width="488" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e">
+    <text x="280" y="283" text-anchor="middle" font-weight="bold">n 高达 10⁹ → 不能开 n 行数组！</text>
+    <text x="280" y="303" text-anchor="middle">用哈希表只存「块内有预约」的行；其余 (n − 有预约行数) 行每行贡献 2 组</text>
+  </g>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">桶计数：升序取一遍、降序取一遍，循环到取空</text>
+
+  <!-- 计数桶 -->
+  <text x="150" y="64" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">26 个计数桶（s = "aaaabbbbcccc"）</text>
+  <g filter="url(#rough2)">
+    <rect x="62" y="78" width="56" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="122" y="78" width="56" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="182" y="78" width="56" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="4"/>
+    <rect x="242" y="78" width="56" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="90" y="103">a:4</text>
+    <text x="150" y="103">b:4</text>
+    <text x="210" y="103" font-weight="bold" fill="#b85450">c:4</text>
+    <text x="270" y="103">…</text>
+  </g>
+  <text x="150" y="146" font-size="12" fill="#7a5c1e" filter="url(#rough2)" text-anchor="middle">其余 23 个桶计数为 0，直接跳过</text>
+
+  <!-- 升取 / 降取 -->
+  <g filter="url(#rough2)">
+    <rect x="330" y="74" width="200" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <text x="430" y="94" text-anchor="middle" font-size="14" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">升序扫描：a → b → c</text>
+  <text x="430" y="112" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">每桶各取 1 个（若非空）</text>
+  <g filter="url(#rough2)">
+    <rect x="330" y="128" width="200" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <text x="430" y="148" text-anchor="middle" font-size="14" fill="#8a3833" font-weight="bold" filter="url(#rough2)">降序扫描：c → b → a</text>
+  <text x="430" y="166" text-anchor="middle" font-size="12" fill="#8a3833" filter="url(#rough2)">每桶各取 1 个（若非空）</text>
+  <path d="M 430 118 C 430 120, 430 122, 430 124" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 282 172 C 350 176, 380 150, 326 128" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 结果演示 -->
+  <text x="280" y="212" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">每轮产出一小段：abc + cba = abccba</text>
+  <g filter="url(#rough2)">
+    <rect x="70" y="226" width="200" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="278" y="226" width="200" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="170" y="250">第一轮：abccba</text>
+    <text x="378" y="250">第二轮：abccba</text>
+  </g>
+  <path d="M 272 245 L 276 245" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+
+  <rect x="70" y="284" width="420" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="310" text-anchor="middle" font-size="14" fill="#7a5c1e" filter="url(#rough2)">总结果 "abccbaabccba" —— 4 个 a、4 个 b、4 个 c 恰好各取 2 轮</text>
+</svg>

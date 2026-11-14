@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="59"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="320" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">后序合成流程：孩子信息就绪后 O(1) 判定父节点</text>
+
+  <!-- 流程 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="52" width="180" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="126" y="72" text-anchor="middle" font-size="13" fill="#2b4a6b" font-weight="bold" filter="url(#rough2)">① 递归左孩子</text>
+  <text x="126" y="90" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">得 (lb, ls, lmn, lmx)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="36" y="120" width="180" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="126" y="140" text-anchor="middle" font-size="13" fill="#2b4a6b" font-weight="bold" filter="url(#rough2)">② 递归右孩子</text>
+  <text x="126" y="158" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">得 (rb, rs, rmn, rmx)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="36" y="188" width="180" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="126" y="208" text-anchor="middle" font-size="13" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)">③ 三条件判定</text>
+  <text x="126" y="226" text-anchor="middle" font-size="11.5" fill="#7a5c1e" filter="url(#rough2)">lb &amp; rb &amp; lmx&lt;val&lt;rmn</text>
+
+  <path d="M 126 98 L 126 114" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 126 166 L 126 182" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定分支 -->
+  <g filter="url(#rough2)">
+    <rect x="280" y="104" width="110" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#2d5a22" text-anchor="middle">
+    <text x="335" y="126" font-weight="bold">合法 →</text>
+    <text x="335" y="146">sum 累计并更新 ans</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="280" y="188" width="110" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#8a3833" text-anchor="middle">
+    <text x="335" y="210" font-weight="bold">非法 →</text>
+    <text x="335" y="230">isBST=false 上传</text>
+  </g>
+  <path d="M 216 160 C 250 146, 260 136, 272 130" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 216 210 C 246 210, 252 212, 272 214" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 上传四元组 -->
+  <g filter="url(#rough2)">
+    <rect x="424" y="140" width="120" height="70" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#2b4a6b" text-anchor="middle">
+    <text x="484" y="164" font-weight="bold">④ 返回四元组</text>
+    <text x="484" y="184">合法: (1, sum, min, max)</text>
+    <text x="484" y="202">非法: (0, ·, ·, ·)</text>
+  </g>
+  <path d="M 390 132 C 410 140, 414 148, 420 158" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 390 216 C 410 208, 414 200, 420 192" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="36" y="256" width="488" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="277" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">为什么 min/max 必须传？</text>
+  <text x="280" y="296" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">父节点要和「整棵左子树的最大值 / 整棵右子树的最小值」比，不只是和直接孩子比</text>
+</svg>

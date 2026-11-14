@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="83"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">Collatz 权重：大问题化小问题，记忆化只算一次</text>
+
+  <!-- 链示例 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="70" y="80">3</text>
+    <text x="140" y="80">10</text>
+    <text x="210" y="80">5</text>
+    <text x="280" y="80">16</text>
+    <text x="350" y="80">8</text>
+    <text x="420" y="80">4</text>
+    <text x="490" y="80">2</text>
+  </g>
+  <g filter="url(#rough2)">
+    <ellipse cx="70" cy="76" rx="22" ry="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <ellipse cx="140" cy="76" rx="22" ry="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <ellipse cx="210" cy="76" rx="22" ry="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <ellipse cx="280" cy="76" rx="22" ry="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <ellipse cx="350" cy="76" rx="22" ry="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <ellipse cx="420" cy="76" rx="22" ry="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <ellipse cx="490" cy="76" rx="22" ry="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 92 76 L 116 76" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M 162 76 L 186 76" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M 232 76 L 256 76" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M 302 76 L 326 76" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M 372 76 L 396 76" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+    <path d="M 442 76 L 466 76" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+  </g>
+  <text x="280" y="122" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">power(3) = 7：奇数 → 3x+1，偶数 → x/2，走到 1 为止</text>
+
+  <!-- 记忆化 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="150" width="220" height="90" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#2b4a6b">
+    <text x="160" y="174" text-anchor="middle" font-weight="bold">memo 数组（下标 = 数值）</text>
+    <text x="160" y="196" text-anchor="middle">memo[x] 算过就直接返回</text>
+    <text x="160" y="216" text-anchor="middle">途中跨过 &gt; 1000 的值不存</text>
+    <text x="160" y="234" text-anchor="middle">（如 3→10，10 也缓存）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="300" y="150" width="220" height="90" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#2d5a22">
+    <text x="410" y="174" text-anchor="middle" font-weight="bold">递归与递推都可行</text>
+    <text x="410" y="196" text-anchor="middle">递推: x 从小到大, 依赖的</text>
+    <text x="410" y="216" text-anchor="middle">x/2 已算好, 但 3x+1 的目标</text>
+    <text x="410" y="234" text-anchor="middle">更大 → 递归 + 备忘更省心</text>
+  </g>
+
+  <rect x="50" y="262" width="470" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e">
+    <text x="285" y="284" text-anchor="middle" font-weight="bold">求得权重后按 (power, 数值) 双关键字排序，取第 k 个</text>
+    <text x="285" y="306" text-anchor="middle">区间至多 1000 个数；也可用 nth_element 免排序 O(m)</text>
+  </g>
+</svg>
