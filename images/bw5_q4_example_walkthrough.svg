@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="53"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">示例演算：分层过程与环检测</text>
+
+  <!-- 例 1：逐层 -->
+  <text x="46" y="62" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">例 1：relations = [[1,3],[2,3]]，初始入度 1:0  2:0  3:2</text>
+
+  <rect x="46" y="78" width="468" height="64" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="60" y="104" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">第 1 学期</text>
+  <text x="160" y="104" font-size="13" fill="#2d5a22" filter="url(#rough2)">队里 {1, 2}，全部出队 taken=2</text>
+  <text x="160" y="128" font-size="13" fill="#2d5a22" filter="url(#rough2)">后继 3 的入度 2 → 1 → 0，3 入队</text>
+
+  <rect x="46" y="152" width="468" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="60" y="178" font-size="13" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)">第 2 学期</text>
+  <text x="160" y="178" font-size="13" fill="#7a5c1e" filter="url(#rough2)">队里 {3}，出队 taken=3</text>
+  <text x="160" y="202" font-size="13" fill="#7a5c1e" filter="url(#rough2)">无后继；队列空，taken == n → 输出 2</text>
+
+  <!-- 例 2：环 -->
+  <text x="46" y="248" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">例 2：relations = [[1,2],[2,3],[3,1]]（3 门课互相依赖）</text>
+
+  <g filter="url(#rough2)">
+    <circle cx="150" cy="330" r="20" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <circle cx="270" cy="330" r="20" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <circle cx="210" cy="268" r="20" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#7a2e2a" text-anchor="middle">
+    <text x="150" y="335">1</text><text x="270" y="335">2</text><text x="210" y="273">3</text>
+  </g>
+  <path d="M 172 322 L 190 286" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 228 286 L 248 322" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 248 338 C 232 352, 188 352, 172 338" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="210" y="374" text-anchor="middle" font-size="12" fill="#7a2e2a" filter="url(#rough2)">三者的入度始终是 1，永远不归零</text>
+
+  <rect x="330" y="268" width="200" height="72" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="430" y="294" text-anchor="middle" font-size="13" fill="#7a2e2a" filter="url(#rough2)">初始队列即为空，循环不执行</text>
+  <text x="430" y="318" text-anchor="middle" font-size="13" fill="#7a2e2a" font-weight="bold" filter="url(#rough2)">taken = 0 ≠ 3 → 输出 −1</text>
+
+  <rect x="46" y="388" width="468" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="405" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">提示：taken 计数即可完成环检测，无需另跑一次 DFS</text>
+</svg>

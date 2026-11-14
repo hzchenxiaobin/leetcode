@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="59"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">编码表：按长度分桶，桶内从 0 重新数起</text>
+
+  <!-- 桶结构 -->
+  <g filter="url(#rough2)">
+    <rect x="40"  y="52" width="480" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="40"  y="96" width="480" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <rect x="40"  y="140" width="480" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6"/>
+    <rect x="40"  y="184" width="480" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="52" y="77">长度 0：num 0</text>
+    <text x="150" y="77">编码 ""（空串）</text>
+    <text x="52" y="121">长度 1：num 1..2</text>
+    <text x="180" y="121">编码 "0"、"1"</text>
+    <text x="52" y="165">长度 2：num 3..6</text>
+    <text x="180" y="165">编码 "00"、"01"、"10"、"11"</text>
+    <text x="52" y="209">长度 3：num 7..14</text>
+    <text x="180" y="209">编码 "000" … "111"（从 0 计数）</text>
+  </g>
+  <!-- 长度公式标注 -->
+  <path d="M 470 72 C 510 72, 520 120, 500 150" fill="none" stroke="#888" stroke-width="1.5" stroke-dasharray="4 4" filter="url(#rough2)"/>
+  <text x="470" y="240" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">长度 L 的桶覆盖 num ∈ [2^L − 1, 2^(L+1) − 2]</text>
+
+  <!-- 23 定位 -->
+  <text x="46" y="282" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">定位 num = 23：找它落在哪个桶</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="60" y="310">L=3：7..14 ✗　L=4：15..30 ✓ → 长度 4，桶内序号 = 23 − 15 = 8</text>
+    <text x="60" y="336">8 的 4 位二进制 = 1000 → encode(23) = "1000"</text>
+  </g>
+
+  <!-- 一行核心 -->
+  <rect x="60" y="352" width="440" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="375" text-anchor="middle" font-size="14" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">一步到位：encode(num) = (num+1) 的二进制去掉最高位</text>
+</svg>

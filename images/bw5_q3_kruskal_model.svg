@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="31"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">Kruskal：边按权升序，贪心选「不成环」的边</text>
+
+  <!-- 左：原图（3 城市示例） -->
+  <text x="140" y="60" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">排序后的边表</text>
+  <g filter="url(#rough2)">
+    <rect x="40" y="76" width="200" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="40" y="118" width="200" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="40" y="160" width="200" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="140" y="100">(2,3) 权 1 → 选（连通 2、3）</text>
+    <text x="140" y="142">(1,2) 权 5 → 选（连通 1 与 {2,3}）</text>
+    <text x="140" y="184">(1,3) 权 6 → 弃（1、3 已同分量，成环）</text>
+  </g>
+  <path d="M 40 210 C 24 238, 24 262, 60 274" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="34" y="252" font-size="12" fill="#446688" filter="url(#rough2)">已选 n−1 条即停</text>
+
+  <!-- 右：并查集示意 -->
+  <text x="412" y="60" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">并查集（森林）</text>
+  <!-- 分量 {2,3} -->
+  <g filter="url(#rough2)">
+    <circle cx="376" cy="100" r="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <circle cx="450" cy="100" r="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <path d="M 394 100 L 428 100" fill="none" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="376" y="105">2</text><text x="450" y="105">3</text>
+  </g>
+  <text x="412" y="142" font-size="12" fill="#4a7a3a" filter="url(#rough2)" text-anchor="middle">选 (2,3) 后：{2,3} 与 {1} 两个分量</text>
+
+  <!-- 分量 {1,2,3} -->
+  <g filter="url(#rough2)">
+    <circle cx="352" cy="190" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="412" cy="190" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="472" cy="190" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <path d="M 370 190 L 392 190" fill="none" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <path d="M 432 190 L 452 190" fill="none" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13" fill="#2d5a22" text-anchor="middle" font-weight="bold">
+    <text x="352" y="195">1</text><text x="412" y="195">2</text><text x="472" y="195">3</text>
+  </g>
+  <text x="412" y="232" font-size="12" fill="#4a7a3a" filter="url(#rough2)" text-anchor="middle">选 (1,2) 后：全部并入一个分量</text>
+
+  <!-- 结论 -->
+  <rect x="70" y="270" width="420" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="297" text-anchor="middle" font-size="14" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">最小成本 = 1 + 5 = 6（恰好 n−1 = 2 条边）</text>
+
+  <rect x="70" y="326" width="420" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="351" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">「同一分量的边必成环」正是 MST 贪心安全性的钥匙</text>
+</svg>
