@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="#b85450" stroke-width="1.6"/>
+    </marker>
+  </defs>
+  <rect width="560" height="360" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">clamp 最近点：圆心相对矩形的三类位置</text>
+
+  <!-- 三块小图 -->
+  <!-- 1. 圆心在矩形内 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="56" width="120" height="90" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="100" cy="101" r="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <circle cx="100" cy="101" r="3.5" fill="#b85450"/>
+  </g>
+  <text x="100" y="170" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">① 圆心在矩形内</text>
+  <text x="100" y="188" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">clamp 后距离 0 → 重叠</text>
+
+  <!-- 2. 圆心在边带 -->
+  <g filter="url(#rough2)">
+    <rect x="300" y="76" width="90" height="70" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="232" cy="111" r="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <circle cx="232" cy="111" r="3.5" fill="#b85450"/>
+    <circle cx="300" cy="111" r="3.5" fill="#d6a040"/>
+    <line x1="232" y1="111" x2="300" y2="111" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 3"/>
+  </g>
+  <text x="300" y="170" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② 圆心在边带（x 维越界）</text>
+  <text x="300" y="188" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">nx = x1，ny = yc：最近点在左边上</text>
+
+  <!-- 3. 圆心在角域 -->
+  <g filter="url(#rough2)">
+    <rect x="120" y="212" width="100" height="70" rx="3" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="66" cy="200" r="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <circle cx="66" cy="200" r="3.5" fill="#b85450"/>
+    <circle cx="120" cy="212" r="3.5" fill="#d6a040"/>
+    <line x1="66" y1="200" x2="120" y2="212" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 3"/>
+  </g>
+  <text x="170" y="300" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ 圆心在角域（两维都越界）</text>
+  <text x="170" y="318" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">最近点是矩形的角 (x1, y1)</text>
+
+  <!-- 统一公式 -->
+  <g filter="url(#rough2)">
+    <rect x="290" y="220" width="240" height="92" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <g font-size="13" text-anchor="middle" filter="url(#rough2)">
+    <text x="410" y="250" fill="#8a6d1a">nx = clamp(xc, x1, x2)</text>
+    <text x="410" y="274" fill="#8a6d1a">ny = clamp(yc, y1, y2)</text>
+    <text x="410" y="298" fill="#b85450">重叠 ⇔ dx² + dy² ≤ r²</text>
+  </g>
+  <path d="M 232 196 C 250 216, 268 228, 286 236" fill="none" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="280" y="344" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">分类讨论与 clamp 写法完全等价：三类位置一条公式通吃</text>
+</svg>

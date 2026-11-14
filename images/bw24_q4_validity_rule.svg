@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+  <rect width="560" height="320" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">段合法性：段首非零 + 数值 ≤ k，越界即停</text>
+
+  <!-- 规则 1：前导零 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="56" width="230" height="102" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <g text-anchor="middle" font-size="13" filter="url(#rough2)">
+    <text x="155" y="82" fill="#b85450" font-weight="bold">规则 1：无前导零</text>
+    <text x="155" y="110">✗ "0"、"020"、"00"</text>
+    <text x="155" y="138">✓ "7"、"1000"、"20"</text>
+  </g>
+
+  <!-- 规则 2：数值 -->
+  <g filter="url(#rough2)">
+    <rect x="290" y="56" width="230" height="102" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <g text-anchor="middle" font-size="13" filter="url(#rough2)">
+    <text x="405" y="82" fill="#4a7a3a" font-weight="bold">规则 2：val ≤ k</text>
+    <text x="405" y="110">k = 2000：✗ "2001"，✓ "2000"</text>
+    <text x="405" y="138">k = 30：✗ "2020"，✓ "20"</text>
+  </g>
+
+  <!-- 增量累计与 break -->
+  <g filter="url(#rough2)" font-size="12.5">
+    <rect x="40" y="190" width="480" height="74" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <g font-size="13" text-anchor="middle" filter="url(#rough2)">
+    <text x="280" y="216" fill="#446688">val = val × 10 + s[j]：从段首逐位延伸</text>
+    <text x="280" y="244" fill="#b85450">val &gt; k 即 break —— 无前导零保证 val ≥ 1，只会越拉越大</text>
+  </g>
+
+  <!-- 窗口示意 -->
+  <g filter="url(#rough2)" font-size="11">
+    <rect x="90" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="112" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="134" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="156" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="178" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="200" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="222" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="244" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="266" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="288" y="286" width="20" height="20" rx="3" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="310" y="286" width="20" height="20" rx="3" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="380" y="301" font-size="12" fill="#b85450" filter="url(#rough2)">第 11 位起必越界：窗口 ≤ 11</text>
+</svg>
