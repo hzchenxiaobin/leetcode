@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="88"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">剪枝关键：同值下标列表「用过即清空」，防 O(n²) 边爆炸</text>
+
+  <!-- 值 23 的下标链 -->
+  <text x="150" y="60" text-anchor="middle" font-size="14" fill="#b85450" font-weight="bold" filter="url(#rough2)">pos[23] = [5, 6, 7, 8, 9, …]（很长）</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="30" y="74" width="44" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="74" y="74" width="44" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="118" y="74" width="44" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="162" y="74" width="44" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="206" y="74" width="44" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <text x="52" y="95">5</text><text x="96" y="95">6</text><text x="140" y="95">7</text>
+    <text x="184" y="95">8</text><text x="228" y="95">9</text>
+  </g>
+  <text x="278" y="95" font-size="14" fill="#b85450" filter="url(#rough2)">…</text>
+  <path d="M 52 112 L 52 150" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="120" y="140" font-size="12" fill="#446688" filter="url(#rough2)">第一次弹出某个值为 23 的点</text>
+
+  <!-- 一次性访问 + 清空 -->
+  <rect x="30" y="154" width="360" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="210" y="178" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">把 [5,6,7,8,9,…] 里所有未访问点一次性入队并标 dist</text>
+  <text x="210" y="198" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">随后 pos[23].clear() —— 值 23 的门「用一次就焊死」</text>
+  <text x="210" y="214" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">之后再弹出任何 23 点：列表已空，O(1) 跳过</text>
+
+  <!-- 清空后的列表 -->
+  <rect x="410" y="154" width="120" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="470" y="182" text-anchor="middle" font-size="13" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)">pos[23]</text>
+  <text x="470" y="204" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">[ ] 已清空</text>
+
+  <!-- 对比：为什么不清坏 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="240" width="245" height="112" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+    <rect x="285" y="240" width="245" height="112" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="152" y="264" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">不清空的后果</text>
+  <text x="152" y="286" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">全部 n 个值相同：</text>
+  <text x="152" y="304" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">每个点出队都扫整张下标表</text>
+  <text x="152" y="322" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">总扫描量 n × n = O(n²)</text>
+  <text x="152" y="342" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">n = 5×10⁴ 时约 25 亿步，超时</text>
+
+  <text x="407" y="264" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">清空之后</text>
+  <text x="407" y="286" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">每个下标至多被「扫」一次</text>
+  <text x="407" y="304" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">（被扫时就被标上 dist）</text>
+  <text x="407" y="322" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">总扫描量 = O(n)</text>
+  <text x="407" y="342" text-anchor="middle" font-size="12" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">BFS 总复杂度 O(n)，实测毫秒级</text>
+</svg>
