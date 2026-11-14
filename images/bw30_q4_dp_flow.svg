@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="34" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">
+    自底向上：i 从 1 到 n，内层枚举平方数
+  </text>
+
+  <!-- 外层循环 -->
+  <rect x="60" y="62" width="180" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="150" y="84" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">for i = 1 .. n</text>
+  <text x="150" y="102" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">（win[0]=false 已定）</text>
+
+  <!-- 内层枚举平方数 -->
+  <rect x="300" y="56" width="190" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="395" y="78" text-anchor="middle" font-size="13" fill="#2f5a24" filter="url(#rough2)">for j：j·j ≤ i</text>
+  <text x="395" y="98" text-anchor="middle" font-size="13" fill="#2f5a24" filter="url(#rough2)">考察 win[i − j·j]</text>
+
+  <!-- 判定 -->
+  <polygon points="240,160 310,192 240,224 170,192" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="240" y="188" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">win[i−j²]</text>
+  <text x="240" y="206" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">== false ?</text>
+
+  <!-- 设 true -->
+  <rect x="90" y="248" width="150" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="165" y="266" text-anchor="middle" font-size="13" fill="#2f5a24" filter="url(#rough2)">win[i] = true</text>
+  <text x="165" y="284" text-anchor="middle" font-size="12" fill="#2f5a24" filter="url(#rough2)">break（早停）</text>
+
+  <!-- 全部是 W -->
+  <rect x="300" y="248" width="170" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="385" y="266" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">win[i] = false</text>
+  <text x="385" y="284" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">（所有后继必胜）</text>
+
+  <!-- 连线 -->
+  <g filter="url(#rough2)">
+    <path d="M 240 110 C 240 128, 240 140, 240 156" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 300 106 C 340 122, 330 140, 300 172" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+    <path d="M 240 224 C 220 236, 200 240, 190 246" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+    <text x="186" y="238" font-size="11" fill="#2f5a24">是</text>
+    <path d="M 310 200 C 340 216, 360 228, 376 244" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+    <text x="352" y="220" font-size="11" fill="#b85450">否</text>
+    <path d="M 90 270 C 60 200, 70 130, 96 104" stroke="#446688" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- 底部规模说明 -->
+  <rect x="60" y="310" width="400" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="336" text-anchor="middle" font-size="14" fill="#8a6a1a" filter="url(#rough2)">
+    状态 n 个 × 每个至多 √n 个平方数 = O(n√n)
+  </text>
+</svg>

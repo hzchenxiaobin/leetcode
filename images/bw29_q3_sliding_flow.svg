@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="34" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">
+    滑动窗口：右端进、超限则左端收缩
+  </text>
+
+  <!-- 流程：right 前进 -->
+  <rect x="60" y="66" width="170" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="145" y="88" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">right 右移一步</text>
+  <text x="145" y="106" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">zeros += (进 0 ?)</text>
+
+  <!-- 菱形判断 -->
+  <polygon points="330,58 400,92 330,126 260,92" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="88" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">zeros</text>
+  <text x="330" y="106" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">&gt; 1 ?</text>
+
+  <!-- 收缩 -->
+  <rect x="70" y="168" width="180" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="160" y="190" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">left 右移收缩</text>
+  <text x="160" y="208" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">zeros −= (出 0 ?)</text>
+
+  <!-- 更新答案 -->
+  <rect x="330" y="168" width="170" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="415" y="190" text-anchor="middle" font-size="13" fill="#2f5a24" filter="url(#rough2)">best = max(best,</text>
+  <text x="415" y="208" text-anchor="middle" font-size="13" fill="#2f5a24" filter="url(#rough2)">right − left + 1)</text>
+
+  <!-- 返回 -->
+  <ellipse cx="260" cy="300" rx="120" ry="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="306" text-anchor="middle" font-size="14" fill="#446688" filter="url(#rough2)">返回 best − 1</text>
+
+  <!-- 连线 -->
+  <g filter="url(#rough2)">
+    <path d="M 230 92 L 256 92" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 330 126 C 300 142, 260 150, 220 164" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)"/>
+    <text x="240" y="144" font-size="11" fill="#b85450">是</text>
+    <path d="M 400 92 C 440 106, 440 140, 420 164" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+    <text x="444" y="132" font-size="11" fill="#2f5a24">否</text>
+    <path d="M 160 220 C 150 252, 180 276, 208 288" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)"/>
+    <text x="132" y="256" font-size="11" fill="#b85450">压回 ≤1</text>
+    <path d="M 415 220 C 400 252, 360 274, 340 288" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+    <path d="M 70 194 C 30 150, 40 96, 58 84" stroke="#446688" stroke-width="1.6" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- 关键点标注 -->
+  <text x="260" y="348" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">
+    left 只进不退 ⇒ 每个元素至多进出窗口一次 ⇒ 总代价 O(n)
+  </text>
+</svg>

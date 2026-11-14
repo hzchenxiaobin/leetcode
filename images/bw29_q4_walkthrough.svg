@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="32" text-anchor="middle" font-size="18" fill="#333" filter="url(#rough2)">
+    示例 1 关键路径：n=4, 关系 2→1, 3→1, 1→4, k=2
+  </text>
+
+  <!-- 状态 0 -->
+  <g filter="url(#rough2)">
+    <ellipse cx="86" cy="80" rx="52" ry="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="86" y="76" text-anchor="middle" font-size="13" fill="#2f5a24" filter="url(#rough2)">mask = ∅</text>
+  <text x="86" y="94" text-anchor="middle" font-size="12" fill="#2f5a24" filter="url(#rough2)">dp = 0</text>
+
+  <!-- 状态 {2,3} -->
+  <g filter="url(#rough2)">
+    <ellipse cx="252" cy="80" rx="58" ry="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="252" y="76" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">{2, 3}</text>
+  <text x="252" y="94" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">dp = 1</text>
+
+  <!-- 状态 {1,2,3} -->
+  <g filter="url(#rough2)">
+    <ellipse cx="418" cy="80" rx="58" ry="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="418" y="76" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">{1, 2, 3}</text>
+  <text x="418" y="94" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">dp = 2</text>
+
+  <!-- 状态 {1,2,3,4} -->
+  <g filter="url(#rough2)">
+    <ellipse cx="418" cy="196" rx="70" ry="28" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+  </g>
+  <text x="418" y="192" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">{1, 2, 3, 4}</text>
+  <text x="418" y="210" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">dp = 3 ✓答案</text>
+
+  <!-- 转移箭头 -->
+  <g filter="url(#rough2)">
+    <path d="M 138 80 L 190 80" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 310 80 L 356 80" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 418 106 L 418 164" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12">
+    <text x="164" y="68" text-anchor="middle" fill="#666">学期1 修{2,3}</text>
+    <text x="333" y="68" text-anchor="middle" fill="#666">学期2 修{1}</text>
+    <text x="446" y="140" fill="#666">学期3 修{4}</text>
+  </g>
+
+  <!-- 分支说明 -->
+  <g filter="url(#rough2)" font-size="12">
+    <rect x="60" y="150" width="260" height="40" fill="#f2f2f2" stroke="#bbb" stroke-width="1.3" rx="8"/>
+    <text x="190" y="175" text-anchor="middle" fill="#666">∅ 的 avail = {2,3}（1 有先修，4 被锁）</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12">
+    <rect x="60" y="204" width="260" height="40" fill="#f2f2f2" stroke="#bbb" stroke-width="1.3" rx="8"/>
+    <text x="190" y="229" text-anchor="middle" fill="#666">{2,3} 的 avail = {1}（4 还差 1）</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12">
+    <rect x="60" y="258" width="260" height="40" fill="#f2f2f2" stroke="#bbb" stroke-width="1.3" rx="8"/>
+    <text x="190" y="283" text-anchor="middle" fill="#666">{1,2,3} 的 avail = {4}（最后一门）</text>
+  </g>
+
+  <!-- k 的作用 -->
+  <rect x="352" y="258" width="148" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="426" y="282" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">若 k = 1：</text>
+  <text x="426" y="302" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">每学期一门 → 答案 4</text>
+</svg>
