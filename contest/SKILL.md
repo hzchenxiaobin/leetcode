@@ -34,7 +34,7 @@ description: 用于在 leetcode/contest 下编写 LeetCode 周赛题解。规定
 
 ## 2. 目录组织
 
-所有周赛题解**必须写在** `leetcode/contest/` **下**，按"周赛场次号 → 题目"一级组织：
+所有周赛/双周赛题解**必须写在** `leetcode/contest/` **下**，按「场次号 → 题目」一级组织（周赛纯数字目录、双周赛 `bw` 前缀目录）：
 
 ```
 leetcode/
