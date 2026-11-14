@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="380" fill="#fafafa"/>
+
+  <text x="260" y="34" text-anchor="middle" font-size="18" fill="#333" filter="url(#rough2)">
+    示例演算：hats = [[3,5,1],[3,5]] 的 DP 表
+  </text>
+
+  <!-- 表头 -->
+  <g filter="url(#rough2)" font-size="13" fill="#666">
+    <rect x="70" y="56" width="380" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="120" y="76" text-anchor="middle">处理到</text>
+    <text x="210" y="76" text-anchor="middle">dp[∅]</text>
+    <text x="290" y="76" text-anchor="middle">dp[{0}]</text>
+    <text x="370" y="76" text-anchor="middle">dp[{0,1}]</text>
+  </g>
+
+  <!-- 初始行 -->
+  <g filter="url(#rough2)" font-size="14">
+    <rect x="70" y="90" width="50" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="120" y="90" width="90" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="210" y="90" width="80" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="290" y="90" width="80" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="95" y="111" text-anchor="middle" fill="#446688">初始</text>
+    <text x="165" y="111" text-anchor="middle" fill="#2f5a24" font-weight="bold">1</text>
+    <text x="250" y="111" text-anchor="middle" fill="#999">0</text>
+    <text x="330" y="111" text-anchor="middle" fill="#999">0</text>
+  </g>
+
+  <!-- 帽 1 行 -->
+  <g filter="url(#rough2)" font-size="14">
+    <rect x="70" y="126" width="50" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4"/>
+    <rect x="120" y="126" width="90" height="32" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="210" y="126" width="80" height="32" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="290" y="126" width="80" height="32" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="95" y="147" text-anchor="middle" fill="#2f5a24">帽 1</text>
+    <text x="165" y="147" text-anchor="middle" fill="#333">1</text>
+    <text x="250" y="147" text-anchor="middle" fill="#2f5a24" font-weight="bold">1</text>
+    <text x="330" y="147" text-anchor="middle" fill="#999">0</text>
+  </g>
+  <text x="408" y="140" font-size="12" fill="#666" filter="url(#rough2)">只有 0 号喜欢</text>
+  <text x="408" y="156" font-size="12" fill="#666" filter="url(#rough2)">{0} ← ∅</text>
+
+  <!-- 帽 2,4 行（无人喜欢） -->
+  <g filter="url(#rough2)" font-size="14">
+    <rect x="70" y="162" width="50" height="32" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="120" y="162" width="90" height="32" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="210" y="162" width="80" height="32" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="290" y="162" width="80" height="32" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="95" y="183" text-anchor="middle" fill="#777">帽 2,4</text>
+    <text x="165" y="183" text-anchor="middle" fill="#333">1</text>
+    <text x="250" y="183" text-anchor="middle" fill="#333">1</text>
+    <text x="330" y="183" text-anchor="middle" fill="#999">0</text>
+  </g>
+  <text x="408" y="176" font-size="12" fill="#666" filter="url(#rough2)">无人喜欢，</text>
+  <text x="408" y="192" font-size="12" fill="#666" filter="url(#rough2)">整轮不变</text>
+
+  <!-- 帽 3 行 -->
+  <g filter="url(#rough2)" font-size="14">
+    <rect x="70" y="198" width="50" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4"/>
+    <rect x="120" y="198" width="90" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="210" y="198" width="80" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="290" y="198" width="80" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="95" y="219" text-anchor="middle" fill="#2f5a24">帽 3</text>
+    <text x="165" y="219" text-anchor="middle" fill="#8a6a1a">1</text>
+    <text x="250" y="219" text-anchor="middle" fill="#8a6a1a">1+1=2</text>
+    <text x="330" y="219" text-anchor="middle" fill="#8a6a1a">0+1=1</text>
+  </g>
+  <text x="408" y="206" font-size="12" fill="#666" filter="url(#rough2)">0、1 号都喜欢：</text>
+  <text x="408" y="222" font-size="12" fill="#666" filter="url(#rough2)">{0}←∅、{1}←∅、</text>
+  <text x="408" y="238" font-size="12" fill="#666" filter="url(#rough2)">{0,1}←{0}旧=1</text>
+
+  <!-- 帽 5 行 -->
+  <g filter="url(#rough2)" font-size="14">
+    <rect x="70" y="234" width="50" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4"/>
+    <rect x="120" y="234" width="90" height="32" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="210" y="234" width="80" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="290" y="234" width="80" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="4"/>
+    <text x="95" y="255" text-anchor="middle" fill="#2f5a24">帽 5</text>
+    <text x="165" y="255" text-anchor="middle" fill="#333">1</text>
+    <text x="250" y="255" text-anchor="middle" fill="#8a6a1a">2+1=3</text>
+    <text x="330" y="255" text-anchor="middle" fill="#b85450" font-weight="bold">1+1+2=4</text>
+  </g>
+  <text x="408" y="250" font-size="12" fill="#666" filter="url(#rough2)">{0,1} 终值 =</text>
+  <text x="408" y="266" font-size="12" fill="#666" filter="url(#rough2)">旧 1 + {1}旧 1 + {0}旧 2</text>
+
+  <!-- 结论 -->
+  <rect x="90" y="290" width="340" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10"
+        filter="url(#rough2)"/>
+  <text x="260" y="315" text-anchor="middle" font-size="15" fill="#b85450" filter="url(#rough2)">
+    答案 = dp[{0,1}] 终值 = 4 ✓
+  </text>
+
+  <text x="260" y="354" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">
+    (1,3)、(1,5)、(3,5)、(5,3) —— 与示例 2 的四个方案一一对应
+  </text>
+</svg>

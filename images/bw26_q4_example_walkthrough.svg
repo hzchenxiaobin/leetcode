@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="400" fill="#fafafa"/>
+
+  <text x="260" y="34" text-anchor="middle" font-size="18" fill="#333" filter="url(#rough2)">
+    示例演算：cost = [4,3,2,5,6,7,2,5,5]，target = 9
+  </text>
+
+  <!-- f 表 -->
+  <g filter="url(#rough2)" font-size="13" fill="#666">
+    <rect x="50" y="56" width="200" height="28" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="150" y="75" text-anchor="middle">f 表（成本 t → 最大位数）</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13">
+    <rect x="50" y="86" width="40" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="90" y="86" width="40" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="130" y="86" width="40" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="170" y="86" width="40" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <rect x="210" y="86" width="40" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="4"/>
+    <text x="70" y="104" text-anchor="middle" fill="#446688">t=0</text>
+    <text x="110" y="104" text-anchor="middle" fill="#446688">2</text>
+    <text x="150" y="104" text-anchor="middle" fill="#446688">3</text>
+    <text x="190" y="104" text-anchor="middle" fill="#446688">7</text>
+    <text x="230" y="104" text-anchor="middle" fill="#b85450" font-weight="bold">9</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13">
+    <rect x="50" y="114" width="40" height="26" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="90" y="114" width="40" height="26" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="130" y="114" width="40" height="26" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="170" y="114" width="40" height="26" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <rect x="210" y="114" width="40" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="4"/>
+    <text x="70" y="132" text-anchor="middle" fill="#333">0</text>
+    <text x="110" y="132" text-anchor="middle" fill="#333">1</text>
+    <text x="150" y="132" text-anchor="middle" fill="#333">1</text>
+    <text x="190" y="132" text-anchor="middle" fill="#333">3</text>
+    <text x="230" y="132" text-anchor="middle" fill="#2f5a24" font-weight="bold">4</text>
+  </g>
+  <text x="290" y="104" font-size="13" fill="#666" filter="url(#rough2)">↑ 用到的格子：</text>
+  <text x="290" y="124" font-size="13" fill="#666" filter="url(#rough2)">f[9]=4（4 位），</text>
+  <text x="290" y="144" font-size="13" fill="#666" filter="url(#rough2)">f[7]=3、f[5]=2、f[3]=1、f[0]=0</text>
+
+  <!-- 重建步骤 -->
+  <g filter="url(#rough2)" font-size="13">
+    <rect x="50" y="174" width="440" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="74" y="192" fill="#446688">第 1 位</text>
+    <text x="180" y="192" fill="#333">t=9,L=4：d=9(成本5)→f[4]≠3✗；d=8✗；</text>
+    <text x="180" y="208" fill="#2f5a24" font-weight="bold">d=7(成本2)→f[7]=3 ✓ 写 7</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13">
+    <rect x="50" y="218" width="440" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="74" y="236" fill="#446688">第 2 位</text>
+    <text x="180" y="236" fill="#333">t=7,L=3：d=9→f[2]≠2✗；d=8✗；</text>
+    <text x="180" y="252" fill="#2f5a24" font-weight="bold">d=7→f[5]=2 ✓ 写 7</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13">
+    <rect x="50" y="262" width="440" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="74" y="280" fill="#446688">第 3 位</text>
+    <text x="180" y="280" fill="#333">t=5,L=2：d=9→f[0]≠1✗；d=8✗；</text>
+    <text x="180" y="296" fill="#2f5a24" font-weight="bold">d=7→f[3]=1 ✓ 写 7</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13">
+    <rect x="50" y="306" width="440" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="74" y="324" fill="#446688">第 4 位</text>
+    <text x="180" y="324" fill="#333">t=3,L=1：d=9,8,7,6,5,4 成本超或 f[t−c]≠0；</text>
+    <text x="180" y="340" fill="#2f5a24" font-weight="bold">d=3 成本2→f[1]=−1✗；d=2 成本3→f[0]=0 ✓ 写 2</text>
+  </g>
+
+  <!-- 结果 -->
+  <rect x="130" y="360" width="260" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"
+        filter="url(#rough2)"/>
+  <text x="260" y="383" text-anchor="middle" font-size="15" fill="#2f5a24" font-weight="bold"
+        filter="url(#rough2)">
+    ans = "7772" ✓（成本 2+2+2+3 = 9）
+  </text>
+</svg>

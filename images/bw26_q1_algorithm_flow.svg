@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="340" fill="#fafafa"/>
+
+  <text x="260" y="34" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">
+    一趟扫描：延长当前游程，或重置
+  </text>
+
+  <!-- 初始 -->
+  <rect x="180" y="56" width="160" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"
+        filter="url(#rough2)"/>
+  <text x="260" y="80" text-anchor="middle" font-size="14" fill="#446688" filter="url(#rough2)">
+    best = run = 1
+  </text>
+
+  <path d="M 260 94 L 260 118" stroke="#446688" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形：相邻字符比较 -->
+  <polygon points="260,120 352,158 260,196 168,158" fill="#fff8e1" stroke="#d6a040"
+           stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="164" text-anchor="middle" font-size="14" fill="#8a6a1a" filter="url(#rough2)">
+    s[i] == s[i-1] ?
+  </text>
+
+  <!-- 左：是 -->
+  <path d="M 168 158 L 110 158" stroke="#4a7a3a" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="138" y="148" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="12" y="140" width="96" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"
+        filter="url(#rough2)"/>
+  <text x="60" y="163" text-anchor="middle" font-size="13" fill="#2f5a24" filter="url(#rough2)">run += 1</text>
+
+  <!-- 右：否 -->
+  <path d="M 352 158 L 410 158" stroke="#b85450" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="382" y="148" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="412" y="140" width="96" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"
+        filter="url(#rough2)"/>
+  <text x="460" y="163" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">run = 1</text>
+
+  <!-- 汇合更新 best -->
+  <path d="M 60 176 C 60 206, 150 214, 236 216" stroke="#4a7a3a" stroke-width="1.6" fill="none"
+        filter="url(#rough2)"/>
+  <path d="M 460 176 C 460 206, 370 214, 284 216" stroke="#b85450" stroke-width="1.6" fill="none"
+        filter="url(#rough2)"/>
+
+  <rect x="180" y="218" width="160" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"
+        filter="url(#rough2)"/>
+  <text x="260" y="241" text-anchor="middle" font-size="14" fill="#446688" filter="url(#rough2)">
+    best = max(best, run)
+  </text>
+
+  <!-- 循环 -->
+  <path d="M 340 236 C 420 236, 440 158, 354 157" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="452" y="200" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">i++，继续</text>
+
+  <path d="M 180 236 C 120 236, 90 262, 90 278" stroke="#446688" stroke-width="1.6" fill="none"
+        filter="url(#rough2)"/>
+  <text x="130" y="264" font-size="12" fill="#666" filter="url(#rough2)">扫描完</text>
+
+  <!-- 返回 -->
+  <rect x="140" y="270" width="240" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"
+        filter="url(#rough2)"/>
+  <text x="260" y="295" text-anchor="middle" font-size="15" fill="#2f5a24" filter="url(#rough2)">
+    返回 best（O(n) / O(1)）
+  </text>
+</svg>

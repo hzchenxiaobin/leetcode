@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="400" fill="#fafafa"/>
+
+  <text x="260" y="34" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">
+    贪心重建：每步保住位数的最大数位
+  </text>
+
+  <!-- 起始状态 -->
+  <rect x="150" y="58" width="220" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"
+        filter="url(#rough2)"/>
+  <text x="260" y="82" text-anchor="middle" font-size="14" fill="#446688" filter="url(#rough2)">
+    t = target，L = f[target] 位
+  </text>
+
+  <path d="M 260 96 L 260 120" stroke="#446688" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形：L == 0? -->
+  <polygon points="260,122 336,154 260,186 184,154" fill="#fff8e1" stroke="#d6a040"
+           stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="159" text-anchor="middle" font-size="14" fill="#8a6a1a" filter="url(#rough2)">
+    还要写 L 位？
+  </text>
+
+  <path d="M 184 154 L 120 154" stroke="#4a7a3a" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="152" y="144" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">否</text>
+  <rect x="36" y="138" width="84" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"
+        filter="url(#rough2)"/>
+  <text x="78" y="159" text-anchor="middle" font-size="13" fill="#2f5a24" filter="url(#rough2)">返回 ans</text>
+
+  <path d="M 260 186 L 260 210" stroke="#446688" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="286" y="202" font-size="13" fill="#446688" filter="url(#rough2)">是</text>
+
+  <!-- d 从 9 到 1 -->
+  <rect x="140" y="212" width="240" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"
+        filter="url(#rough2)"/>
+  <text x="260" y="236" text-anchor="middle" font-size="14" fill="#446688" filter="url(#rough2)">
+    试 d = 9, 8, …, 1（从大到小）
+  </text>
+
+  <path d="M 260 250 L 260 272" stroke="#446688" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形：可行？ -->
+  <polygon points="260,274 352,308 260,342 168,308" fill="#fff8e1" stroke="#d6a040"
+           stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="304" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">
+    cost[d-1] ≤ t 且
+  </text>
+  <text x="260" y="322" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">
+    f[t−cost] == L−1 ?
+  </text>
+
+  <!-- 右：是 → 写 d -->
+  <path d="M 352 308 L 414 308" stroke="#4a7a3a" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="384" y="298" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="416" y="288" width="92" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"
+        filter="url(#rough2)"/>
+  <text x="462" y="304" text-anchor="middle" font-size="12" fill="#2f5a24" filter="url(#rough2)">ans += d</text>
+  <text x="462" y="320" text-anchor="middle" font-size="12" fill="#2f5a24" filter="url(#rough2)">t -= c, L−−</text>
+
+  <!-- 下：否 → 试更小的 d -->
+  <path d="M 260 342 C 260 366, 200 368, 160 362" stroke="#b85450" stroke-width="2" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="216" y="384" font-size="12" fill="#b85450" filter="url(#rough2)">否 → 换更小的 d 再试</text>
+
+  <!-- 回环到起点 -->
+  <path d="M 462 288 C 462 120, 380 78, 374 77" stroke="#4a7a3a" stroke-width="1.6" fill="none"
+        stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="470" y="180" font-size="12" fill="#4a7a3a" filter="url(#rough2)">写下一位</text>
+</svg>

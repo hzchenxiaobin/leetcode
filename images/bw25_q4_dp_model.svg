@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="380" fill="#fafafa"/>
+
+  <text x="260" y="34" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">
+    状态设计：帽子做阶段，人集合做状态
+  </text>
+
+  <!-- 两个维度对比 -->
+  <g filter="url(#rough2)" font-size="14">
+    <rect x="30" y="56" width="200" height="120" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+    <text x="130" y="82" text-anchor="middle" fill="#b85450" font-weight="bold">错误维度</text>
+    <text x="130" y="108" text-anchor="middle" fill="#8a5a55">状态 = 帽子集合</text>
+    <text x="130" y="132" text-anchor="middle" fill="#8a5a55">2⁴⁰ ≈ 10¹² 个状态</text>
+    <text x="130" y="156" text-anchor="middle" fill="#8a5a55">空间直接爆炸</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="14">
+    <rect x="290" y="56" width="200" height="120" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+    <text x="390" y="82" text-anchor="middle" fill="#2f5a24" font-weight="bold">正确维度</text>
+    <text x="390" y="108" text-anchor="middle" fill="#2f5a24">状态 = 人集合 mask</text>
+    <text x="390" y="132" text-anchor="middle" fill="#2f5a24">2¹⁰ = 1024 个状态</text>
+    <text x="390" y="156" text-anchor="middle" fill="#2f5a24">阶段 = 帽子 1..40</text>
+  </g>
+
+  <!-- 帽子阶段轴 -->
+  <text x="60" y="216" font-size="14" fill="#666" filter="url(#rough2)">帽子阶段 h：</text>
+  <g filter="url(#rough2)" font-size="13">
+    <rect x="44" y="230" width="36" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="62" y="250" text-anchor="middle" fill="#446688">1</text>
+    <rect x="84" y="230" width="36" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="102" y="250" text-anchor="middle" fill="#446688">2</text>
+    <rect x="124" y="230" width="36" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="142" y="250" text-anchor="middle" fill="#446688">3</text>
+    <rect x="164" y="230" width="36" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="4"/>
+    <text x="182" y="250" text-anchor="middle" fill="#8a6a1a">…</text>
+    <rect x="204" y="230" width="36" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="222" y="250" text-anchor="middle" fill="#446688">h</text>
+    <rect x="244" y="230" width="36" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="4"/>
+    <text x="262" y="250" text-anchor="middle" fill="#8a6a1a">…</text>
+    <rect x="284" y="230" width="36" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="302" y="250" text-anchor="middle" fill="#446688">40</text>
+  </g>
+  <text x="60" y="286" font-size="13" fill="#666" filter="url(#rough2)">
+    每顶帽子两种决策：不给任何人 / 给恰好一个喜欢它的人
+  </text>
+
+  <!-- mask 状态演示 -->
+  <text x="360" y="216" font-size="14" fill="#666" filter="url(#rough2)">mask（人集合）：</text>
+  <g filter="url(#rough2)" font-size="13">
+    <circle cx="352" cy="252" r="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="352" y="257" text-anchor="middle" fill="#8a6a1a">0号</text>
+    <circle cx="404" cy="252" r="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="404" y="257" text-anchor="middle" fill="#2f5a24">1号</text>
+    <circle cx="456" cy="252" r="20" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="456" y="257" text-anchor="middle" fill="#8a6a1a">2号</text>
+  </g>
+  <text x="404" y="296" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">
+    例：mask = {0} 表示 0 号已戴帽
+  </text>
+
+  <!-- 底部转移说明 -->
+  <rect x="50" y="312" width="420" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"
+        filter="url(#rough2)"/>
+  <text x="260" y="334" text-anchor="middle" font-size="14" fill="#8a6a1a" filter="url(#rough2)">
+    dp[mask]：只用已处理过的帽子，恰好 mask 中的人已戴帽的方案数
+  </text>
+  <text x="260" y="356" text-anchor="middle" font-size="13" fill="#8a6a1a" filter="url(#rough2)">
+    初始 dp[∅]=1，答案 dp[全集]，复杂度 O(40 · 2ⁿ · n)
+  </text>
+</svg>

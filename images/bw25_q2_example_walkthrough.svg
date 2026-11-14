@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="340" fill="#fafafa"/>
+
+  <text x="260" y="34" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">
+    示例演算：三个代表输入
+  </text>
+
+  <!-- 案例 1：123456 -->
+  <g filter="url(#rough2)">
+    <rect x="24" y="56" width="472" height="76" fill="none" stroke="#446688" stroke-width="1.4"
+          stroke-dasharray="6 4" rx="10"/>
+  </g>
+  <text x="44" y="80" font-size="14" fill="#446688" filter="url(#rough2)">num = 123456</text>
+  <g filter="url(#rough2)" font-size="14">
+    <text x="44" y="106" fill="#d6a040">a：首个非 9 位是 1 → 923456</text>
+    <text x="44" y="124" fill="#446688">b：首位是 1，首个非 0/1 位是 2 → 103456</text>
+    <text x="480" y="106" text-anchor="end" fill="#2f5a24" font-weight="bold">差 = 820000</text>
+  </g>
+
+  <!-- 案例 2：10000 -->
+  <g filter="url(#rough2)">
+    <rect x="24" y="144" width="472" height="76" fill="none" stroke="#4a7a3a" stroke-width="1.4"
+          stroke-dasharray="6 4" rx="10"/>
+  </g>
+  <text x="44" y="168" font-size="14" fill="#4a7a3a" filter="url(#rough2)">num = 10000</text>
+  <g filter="url(#rough2)" font-size="14">
+    <text x="44" y="194" fill="#d6a040">a：首个非 9 位是 1 → 90000</text>
+    <text x="44" y="212" fill="#446688">b：首位是 1，后面全是 0（跳过），b 保持 10000</text>
+    <text x="480" y="194" text-anchor="end" fill="#2f5a24" font-weight="bold">差 = 80000</text>
+  </g>
+
+  <!-- 案例 3：555 -->
+  <g filter="url(#rough2)">
+    <rect x="24" y="232" width="472" height="76" fill="none" stroke="#b85450" stroke-width="1.4"
+          stroke-dasharray="6 4" rx="10"/>
+  </g>
+  <text x="44" y="256" font-size="14" fill="#b85450" filter="url(#rough2)">num = 555</text>
+  <g filter="url(#rough2)" font-size="14">
+    <text x="44" y="282" fill="#d6a040">a：首个非 9 位是 5 → 999</text>
+    <text x="44" y="300" fill="#446688">b：首位 5 ≠ 1，全部 5 换 1 → 111</text>
+    <text x="480" y="282" text-anchor="end" fill="#2f5a24" font-weight="bold">差 = 888</text>
+  </g>
+
+  <!-- 底部要点 -->
+  <rect x="70" y="288" width="0" height="0" fill="none" filter="url(#rough2)"/>
+  <text x="260" y="330" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">
+    全 9 输入 a 不变；全 1/0 输入 b 不变 —— 两个「保持原数」分支都要覆盖
+  </text>
+</svg>
