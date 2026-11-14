@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">区间 → 数轴 → 差分数组：+1 打头、−1 收尾</text>
+
+  <!-- 上：数轴区间 -->
+  <text x="196" y="66" font-size="14" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">ranges = [[1,2],[3,4],[5,6]]，问 [2,5] 是否全覆盖</text>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.5">
+    <path d="M 60 130 L 340 130"/>
+    <path d="M 60 124 L 60 136"/><path d="M 110 124 L 110 136"/><path d="M 160 124 L 160 136"/>
+    <path d="M 210 124 L 210 136"/><path d="M 260 124 L 260 136"/><path d="M 310 124 L 310 136"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="60" y="154">1</text><text x="110" y="154">2</text><text x="160" y="154">3</text>
+    <text x="210" y="154">4</text><text x="260" y="154">5</text><text x="310" y="154">6</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="60" y="102" width="50" height="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="160" y="102" width="50" height="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <rect x="260" y="102" width="50" height="18" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6"/>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 110 76 L 110 96" stroke="#b85450" stroke-width="2.5"/>
+    <path d="M 260 76 L 260 96" stroke="#b85450" stroke-width="2.5"/>
+    <path d="M 110 80 L 260 80" stroke="#b85450" stroke-width="2" stroke-dasharray="6 4"/>
+  </g>
+  <text x="185" y="72" font-size="13" fill="#b85450" text-anchor="middle" filter="url(#rough2)">询问区间 [left, right] = [2, 5]</text>
+
+  <!-- 下：差分数组 -->
+  <text x="196" y="192" font-size="14" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">差分数组 diff：区间 [s,e] → diff[s]+=1，diff[e+1]−=1</text>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <rect x="60" y="208" width="50" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="85" y="230">+1</text>
+    <rect x="110" y="208" width="50" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/><text x="135" y="230">−1</text>
+    <rect x="160" y="208" width="50" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="185" y="230">+1</text>
+    <rect x="210" y="208" width="50" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/><text x="235" y="230">−1</text>
+    <rect x="260" y="208" width="50" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="285" y="230">+1</text>
+    <rect x="310" y="208" width="50" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/><text x="335" y="230">−1</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#666" text-anchor="middle">
+    <text x="85" y="258">diff[1]</text><text x="135" y="258">diff[2]</text><text x="185" y="258">diff[3]</text>
+    <text x="235" y="258">diff[4]</text><text x="285" y="258">diff[5]</text><text x="335" y="258">diff[6]</text>
+  </g>
+  <path d="M 196 266 Q 196 282, 196 296" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <rect x="60" y="300" width="300" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <text x="210" y="318">前缀和：x=1..6 的覆盖次数 = 1,1,1,1,1,1</text>
+    <text x="210" y="334" fill="#2d5a22" font-weight="bold">[2,5] 内处处 ≥ 1 → true ✓</text>
+  </g>
+
+  <!-- 右侧要点 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="386" y="192" width="156" height="148" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <text x="464" y="216" text-anchor="middle" font-weight="bold" fill="#7a5c1e">要点</text>
+    <text x="464" y="240" text-anchor="middle" font-size="12">值域只有 1..50，</text>
+    <text x="464" y="258" text-anchor="middle" font-size="12">数组开 52 即可（含 e+1=51）</text>
+    <text x="464" y="284" text-anchor="middle" font-size="12">覆盖次数 = 差分的</text>
+    <text x="464" y="302" text-anchor="middle" font-size="12">前缀和，一次扫描出全部</text>
+    <text x="464" y="328" text-anchor="middle" font-size="12" fill="#8a3a36">区间不相交也能判：与排序无关</text>
+  </g>
+</svg>

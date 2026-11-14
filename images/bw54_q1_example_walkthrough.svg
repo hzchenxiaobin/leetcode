@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">示例演算：两个官方例子与一个「缺一格」的反例</text>
+
+  <!-- 例 1 -->
+  <text x="70" y="64" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">例 1：ranges = [[1,2],[3,4],[5,6]]，问 [2,5]</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="60" y="80" width="60" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="90" y="103">1..2</text>
+    <rect x="120" y="80" width="60" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/><text x="150" y="103">3..4</text>
+    <rect x="180" y="80" width="60" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/><text x="210" y="103">5..6</text>
+    <rect x="360" y="80" width="160" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+    <text x="440" y="103" fill="#2d5a22" font-weight="bold">2,3,4,5 全被盖 → true</text>
+  </g>
+
+  <!-- 例 2 -->
+  <text x="70" y="152" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">例 2：ranges = [[1,10],[10,20]]，问 [21,21]</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="60" y="168" width="120" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="120" y="191">1..10</text>
+    <rect x="180" y="168" width="200" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/><text x="280" y="191">10..20</text>
+    <rect x="420" y="168" width="110" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+    <text x="475" y="191" fill="#8a3a36" font-weight="bold">21 没被盖 → false</text>
+  </g>
+  <text x="280" y="228" font-size="12" fill="#666" text-anchor="middle" filter="url(#rough2)">注意 10 被两个区间同时覆盖，重复覆盖不影响判定（只看「是否 ≥ 1 次」）</text>
+
+  <!-- 反例 -->
+  <text x="70" y="262" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">反例：ranges = [[1,3],[5,6]]，问 [2,5]</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="60" y="278" width="90" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="105" y="301">1..3</text>
+    <rect x="150" y="278" width="40" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/><text x="170" y="301">4?</text>
+    <rect x="190" y="278" width="90" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/><text x="235" y="301">5..6</text>
+    <rect x="360" y="278" width="170" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+    <text x="445" y="301" fill="#8a3a36" font-weight="bold">缺口 4 → false</text>
+  </g>
+  <text x="280" y="332" font-size="12" fill="#666" text-anchor="middle" filter="url(#rough2)">常见坑：区间相邻 ≠ 覆盖连续，必须逐点（或前缀和）确认</text>
+</svg>

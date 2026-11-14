@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="83"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">配对问题 = 完全二分图最小权匹配 → 状压 DP</text>
+
+  <!-- 左：二分图 -->
+  <text x="150" y="58" font-size="14" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">nums1 的每个位置连向 nums2 全部位置</text>
+  <g filter="url(#rough2)">
+    <circle cx="80" cy="100" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <circle cx="80" cy="160" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <circle cx="80" cy="220" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <circle cx="220" cy="100" r="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <circle cx="220" cy="160" r="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <circle cx="220" cy="220" r="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <g filter="url(#rough2)" stroke="#c9c9c9" stroke-width="1.2">
+    <path d="M 97 100 L 203 100"/><path d="M 97 100 L 203 160"/><path d="M 97 100 L 203 220"/>
+    <path d="M 97 160 L 203 100"/><path d="M 97 160 L 203 160"/><path d="M 97 160 L 203 220"/>
+    <path d="M 97 220 L 203 100"/><path d="M 97 220 L 203 160"/><path d="M 97 220 L 203 220"/>
+  </g>
+  <g filter="url(#rough2)" stroke="#b85450" stroke-width="2.5" fill="none">
+    <path d="M 97 100 L 203 160"/><path d="M 97 160 L 203 220"/><path d="M 97 220 L 203 100"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="80" y="105">a₀</text><text x="80" y="165">a₁</text><text x="80" y="225">a₂</text>
+    <text x="220" y="105">b₀</text><text x="220" y="165">b₁</text><text x="220" y="225">b₂</text>
+  </g>
+  <text x="150" y="266" font-size="13" fill="#8a3a36" text-anchor="middle" filter="url(#rough2)">一组完美匹配（红边），代价 = Σ (aᵢ XOR b_σ(i))</text>
+  <text x="150" y="286" font-size="13" fill="#666" text-anchor="middle" filter="url(#rough2)">n 个位置的排列共 n! 种 → 暴力爆炸</text>
+
+  <!-- 右：状态设计 -->
+  <text x="432" y="58" font-size="14" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">状态：dp[mask]</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="330" y="76" width="204" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <text x="432" y="98" text-anchor="middle">mask 是 nums2 的下标集合：</text>
+    <text x="432" y="118" text-anchor="middle">前 k = popcount(mask) 个 nums1</text>
+    <text x="432" y="138" text-anchor="middle">已与这些下标配对完毕</text>
+
+    <rect x="330" y="164" width="204" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10"/>
+    <text x="432" y="186" text-anchor="middle" font-weight="bold" fill="#33507a">dp[mask] = 上述前提下的</text>
+    <text x="432" y="206" text-anchor="middle" font-weight="bold" fill="#33507a">最小异或总和</text>
+    <text x="432" y="230" text-anchor="middle" fill="#666" font-size="12">（“前 k 个”是关键设计：</text>
+    <text x="432" y="248" text-anchor="middle" fill="#666" font-size="12">不必记录是哪 k 个 nums1）</text>
+  </g>
+  <rect x="330" y="272" width="204" height="72" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="432" y="294" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">答案 = dp[全 1 掩码]</text>
+  <text x="432" y="314" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">状态数 2ⁿ，n ≤ 14 → 至多 16384</text>
+  <text x="432" y="332" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">n! 在 n=14 时 ≈ 8.7×10¹⁰</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="149"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">栈式折叠：每层括号一个「帧」，遇右括号整体折叠</text>
+
+  <!-- 表达式条 -->
+  <text x="280" y="58" font-size="14" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">expression = ( 0 &amp; 0 ) &amp; ( 0 &amp; 0 &amp; 0 )</text>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="60" y="70" width="36" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="78" y="93">(</text>
+    <rect x="96" y="70" width="36" height="36" fill="#fafafa" stroke="#bbb" rx="4"/><text x="114" y="93">0</text>
+    <rect x="132" y="70" width="36" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/><text x="150" y="93">&amp;</text>
+    <rect x="168" y="70" width="36" height="36" fill="#fafafa" stroke="#bbb" rx="4"/><text x="186" y="93">0</text>
+    <rect x="204" y="70" width="36" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="222" y="93">)</text>
+    <rect x="240" y="70" width="36" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/><text x="258" y="93">&amp;</text>
+    <rect x="276" y="70" width="36" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="294" y="93">(</text>
+    <rect x="312" y="70" width="36" height="36" fill="#fafafa" stroke="#bbb" rx="4"/><text x="330" y="93">0</text>
+    <rect x="348" y="70" width="36" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/><text x="366" y="93">&amp;</text>
+    <rect x="384" y="70" width="36" height="36" fill="#fafafa" stroke="#bbb" rx="4"/><text x="402" y="93">0</text>
+    <rect x="420" y="70" width="36" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/><text x="438" y="93">&amp;</text>
+    <rect x="456" y="70" width="36" height="36" fill="#fafafa" stroke="#bbb" rx="4"/><text x="474" y="93">0</text>
+    <rect x="492" y="70" width="36" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/><text x="510" y="93">)</text>
+  </g>
+
+  <!-- 折叠步骤 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="50" y="140" width="470" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <text x="285" y="162" text-anchor="middle">① 左括号 (0&amp;0) 折叠成叶子结点 t₁ = (f₀=0, f₁=2)</text>
+    <text x="285" y="182" text-anchor="middle" fill="#666" font-size="12">0&amp;0 值为 0（f₀=0）；变 1 要么两侧都改数字（2 次），要么改符为 | 再改一个数字（1+1=2）</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="50" y="204" width="470" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <text x="285" y="226" text-anchor="middle">② 右括号 (0&amp;0&amp;0) 同理折叠成 t₂ = (f₀=0, f₁=2)</text>
+    <text x="285" y="246" text-anchor="middle" fill="#666" font-size="12">三项 &amp; 链左结合：(0&amp;0)&amp;0，f₁ = min(2+1, 1+min(2,1)) = 2（改一次符 + 一个 1）</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="50" y="268" width="470" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <text x="285" y="290" text-anchor="middle">③ 顶层 t₁ &amp; t₂：f₀ = min(0, 0) = 0，f₁ = min(2+2, 1+min(2,2)) = 3</text>
+    <text x="285" y="310" text-anchor="middle" fill="#666" font-size="12">原值为 0，翻成 1 的最少操作 = f₁ = 3，与官方答案一致 ✓</text>
+  </g>
+
+  <!-- 最优方案框 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="50" y="340" width="470" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+    <text x="285" y="360" text-anchor="middle" fill="#8a3a36" font-weight="bold">最优方案（3 次）：把 (0&amp;0) 变 1（改一个数字 + 改内部 &amp; 为 |，共 2 次）再改外层 &amp; 为 |（1 次）</text>
+    <text x="285" y="380" text-anchor="middle" font-size="12" fill="#8a3a36">例如 (1|0)|(0&amp;0&amp;0) = 1|0 = 1，共改 3 个字符 ✓</text>
+  </g>
+</svg>
