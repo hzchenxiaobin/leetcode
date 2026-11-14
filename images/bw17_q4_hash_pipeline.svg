@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 350"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="116"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="350" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">滚动哈希流水线：预处理 O(n)，任意子串哈希 O(1)</text>
+
+  <!-- 步骤 1 -->
+  <rect x="60" y="64" width="150" height="74" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="135" y="92" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">① 预处理</text>
+  <text x="135" y="114" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">h[i+1] = h[i]·B + cᵢ</text>
+  <text x="135" y="130" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">pw[i] = Bⁱ（取模）</text>
+
+  <path d="M 214 100 L 248 100" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="252" y="64" width="180" height="74" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="342" y="92" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">② O(1) 取子串哈希</text>
+  <text x="342" y="114" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">H(l,r) = h[r+1] − h[l]·pw[r−l+1]</text>
+  <text x="342" y="130" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">（结果对大素数取模）</text>
+
+  <path d="M 436 100 L 470 100" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="474" y="64" width="130" height="74" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="539" y="92" text-anchor="middle" font-size="13" fill="#8a6a20" filter="url(#rough2)">③ 集合去重</text>
+  <text x="539" y="114" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">key = a·Bⁿ + b</text>
+  <text x="539" y="130" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">seen.add(key)</text>
+
+  <!-- 双哈希警示 -->
+  <rect x="60" y="168" width="544" height="60" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="332" y="192" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">单模哈希理论上可能碰撞：构造攻击可使不同串同哈希</text>
+  <text x="332" y="214" text-anchor="middle" font-size="12.5" fill="#b85450" filter="url(#rough2)">稳妥做法：双底数 / 双模数，或命中后再 O(len) 逐字复核</text>
+
+  <!-- 滑动剪枝 -->
+  <rect x="60" y="248" width="544" height="58" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="332" y="272" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">小优化：同 len 下相邻两个中心的 key 若相同，跳过插入</text>
+  <text x="332" y="294" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">（"aaaa" 内部大量连续命中，能省不少 set 操作；复杂度不变）</text>
+
+  <text x="320" y="334" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">本题 n ≤ 2000：O(n²) 枚举 + O(1) 哈希判定已绰绰有余</text>
+</svg>

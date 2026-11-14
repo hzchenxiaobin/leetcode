@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="109"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="340" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">每个格子的两步转移（以非 S 非 X 的 (r,c) 为例）</text>
+
+  <!-- 菱形：能否继续 -->
+  <path d="M 200 90 L 260 120 L 200 150 L 140 120 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="115" text-anchor="middle" font-size="12.5" fill="#8a6a20" filter="url(#rough2)">三个后继里</text>
+  <text x="200" y="133" text-anchor="middle" font-size="12.5" fill="#8a6a20" filter="url(#rough2)">有可达 E 的吗？</text>
+
+  <!-- 无路 -->
+  <path d="M 130 150 C 90 172, 74 188, 64 210" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="52" y="152" font-size="12" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="30" y="216" width="120" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="90" y="234" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">f=−1, g=0</text>
+  <text x="90" y="251" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">（死格，永不复活）</text>
+
+  <!-- 有路 -->
+  <path d="M 270 120 C 320 120, 350 120, 386 120" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="300" y="112" font-size="12" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="390" y="88" width="216" height="66" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="498" y="114" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">best = max(三个后继的 f)</text>
+  <text x="498" y="138" text-anchor="middle" font-size="12.5" fill="#446688" filter="url(#rough2)">f[r][c] = best + 格子得分</text>
+
+  <path d="M 498 158 C 498 186, 498 200, 498 216" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="390" y="220" width="216" height="66" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="498" y="246" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">g[r][c] = Σ g[后继]</text>
+  <text x="498" y="270" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">（只加 f == best 的后继，取模）</text>
+
+  <!-- 底部说明 -->
+  <rect x="150" y="300" width="460" height="32" rx="8" fill="#fafafa" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="380" y="321" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">枚举顺序 r 从 n−1 到 0、c 从 n−1 到 0，先行后列均可</text>
+</svg>

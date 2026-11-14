@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340"
+     font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="106"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="340" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="19" fill="#333" filter="url(#rough2)">DFS 视角：maxDep 与 sum 的双 «刷新» 规则</text>
+
+  <!-- 左：递归到更深处 -->
+  <rect x="50" y="60" width="300" height="250" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="200" y="88" text-anchor="middle" font-size="14" fill="#446688" filter="url(#rough2)">情况 A：dep &gt; maxDep（首访更深层）</text>
+  <rect x="80" y="106" width="240" height="40" rx="6" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="200" y="131" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">maxDep ← dep，sum ← node.val</text>
+  <text x="200" y="170" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">旧层的累计全部作废：</text>
+  <text x="200" y="190" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">更深处哪怕只有 1 个节点，</text>
+  <text x="200" y="210" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">答案也只算这一层。</text>
+  <text x="200" y="244" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">（刷成「新纪录」）</text>
+  <text x="200" y="278" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">例：先走左链到 4（dep 3），sum=4；</text>
+  <text x="200" y="296" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">发现 7 时 dep=3 不刷新，只累加。</text>
+
+  <!-- 右：同层再来 -->
+  <rect x="380" y="60" width="230" height="250" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="495" y="88" text-anchor="middle" font-size="14" fill="#4a7a3a" filter="url(#rough2)">情况 B：dep == maxDep</text>
+  <rect x="400" y="106" width="190" height="40" rx="6" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="495" y="131" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">sum += node.val</text>
+  <text x="495" y="170" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">同层的兄弟陆续到访，</text>
+  <text x="495" y="190" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">累计值不断增厚：</text>
+  <text x="495" y="210" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">4 → 4+5 → 4+5+6 → …</text>
+  <text x="495" y="244" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">（「同层求和」）</text>
+  <text x="495" y="278" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">dep &lt; maxDep 的旧层节点：</text>
+  <text x="495" y="296" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">两个分支都不触发，零贡献。</text>
+
+  <text x="320" y="328" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#rough2)">一次遍历同时维护两个量，等价于「先求最大深度、再求该层和」两遍扫描。</text>
+</svg>
