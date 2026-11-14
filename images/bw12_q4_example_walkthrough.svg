@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例演算：[1,3,4,1,5] 的关键 dp 项</text>
+
+  <g filter="url(#rough2)">
+    <rect x="26" y="44" width="508" height="46" fill="#fff" stroke="#666" stroke-width="1.3" rx="8"/>
+    <rect x="26" y="90" width="508" height="46" fill="#fff" stroke="#666" stroke-width="1.3" rx="8"/>
+    <rect x="26" y="136" width="508" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="26" y="182" width="508" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10.5">
+    <text x="40" y="64" fill="#333">区间 [0,2]：内容 [1,3,4]，端点 1≠4</text>
+    <text x="480" y="64" fill="#777">分割族 → dp = 3</text>
+    <text x="40" y="110" fill="#333">区间 [1,2]：内容 [3,4]，端点不等</text>
+    <text x="480" y="110" fill="#777">dp = 2</text>
+    <text x="40" y="156" fill="#8a6a20" font-weight="bold">区间 [0,3]：内容 [1,3,4,1]，端点 1 = 1 ✓</text>
+    <text x="480" y="156" fill="#8a6a20" font-weight="bold">dp = 2</text>
+    <text x="40" y="202" fill="#3a5a30" font-weight="bold">区间 [0,4]：内容 [1,3,4,1,5]，端点 1≠5</text>
+    <text x="480" y="202" fill="#3a5a30" font-weight="bold">dp = 3 ✓</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="26" y="236" width="508" height="36" fill="#fff" stroke="#666" stroke-width="1.2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10.5">
+    <text x="40" y="258" fill="#333">[0,3] 命中相等端点族：候选 dp[1][2] = 2 &lt; 分割族最优 4 → 两端 1 「搭车」内部 [3,4] 的 2 步方案</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="26" y="280" width="508" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10.5">
+    <text x="40" y="302" fill="#3a4a66">[0,4] 经分界 k=3：dp[0][3] + dp[4][4] = 2 + 1 = 3 ← 对应「删 [4]，删 [1,3,1]，删 [5]」</text>
+  </g>
+  <text x="280" y="330" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">两族候选在每个区间取 min；按长度递增枚举保证子区间先算好</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 350" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="23"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="350" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：每枚硬币把概率质量「留守」或「右移」</text>
+
+  <text x="60" y="66" font-size="12" fill="#333" font-weight="bold">处理完前 i 枚：正面数轴上的概率分布</text>
+
+  <g filter="url(#rough2)">
+    <rect x="100" y="80" width="56" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <rect x="180" y="80" width="56" height="40" fill="#fff" stroke="#666" stroke-width="1.2" rx="4"/>
+    <rect x="260" y="80" width="56" height="40" fill="#fff" stroke="#666" stroke-width="1.2" rx="4"/>
+    <rect x="340" y="80" width="56" height="40" fill="#fff" stroke="#666" stroke-width="1.2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" font-weight="bold">
+    <text x="128" y="105" fill="#3a4a66">dp[j]</text>
+    <text x="208" y="105" fill="#999">dp[j+1]</text>
+    <text x="288" y="105" fill="#999">dp[j+2]</text>
+    <text x="368" y="105" fill="#999">…</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10" text-anchor="middle" fill="#888">
+    <text x="128" y="132">j 个正面</text>
+    <text x="208" y="132">j+1 个正面</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 128 152 C 128 176, 128 176, 128 196" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)" fill="none"/>
+    <path d="M 128 152 C 200 176, 276 176, 286 196" stroke="#d6a040" stroke-width="2" marker-end="url(#arrO)" fill="none"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <text x="100" y="186" fill="#3a5a30" font-weight="bold">反面 ×(1−p)</text>
+    <text x="100" y="200" fill="#777" font-size="10">留守原位</text>
+    <text x="380" y="186" fill="#8a6a20" font-weight="bold">正面 ×p</text>
+    <text x="380" y="200" fill="#777" font-size="10">右移一位叠加</text>
+  </g>
+
+  <text x="60" y="240" font-size="12" fill="#333" font-weight="bold">第 i+1 枚硬币（正面率 p）的作用：</text>
+  <rect x="44" y="250" width="472" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="269" text-anchor="middle" font-size="12.5" fill="#3a4a66" font-weight="bold">dp′[j] = dp[j]·(1−p) + dp[j−1]·p</text>
+  <text x="280" y="288" text-anchor="middle" font-size="10.5" fill="#777">= 乘 (1−p) 留在 j 格 + 把 j−1 格整体右移一格乘 p 叠上来（一维卷积）</text>
+
+  <text x="60" y="320" font-size="10.5" fill="#b85450" filter="url(#rough2)">⚠ 各枚概率不同 → 不是二项分布，别套 C(n,t)·pᵗ(1−p)ⁿ⁻ᵗ</text>
+  <text x="60" y="338" font-size="10.5" fill="#777" filter="url(#rough2)">初始 dp[0]=1（零枚硬币零正面），答案 dp[target]，容差 10⁻⁵</text>
+</svg>

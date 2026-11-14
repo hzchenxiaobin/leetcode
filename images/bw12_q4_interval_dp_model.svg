@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 350" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="350" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：区间 DP 的两族转移，缺一不可</text>
+  <text x="280" y="44" text-anchor="middle" font-size="10.5" fill="#888">dp[i][j] = 删空 arr[i..j] 的最少步数；dp[i][i] = 1</text>
+
+  <g filter="url(#rough2)">
+    <rect x="46" y="66" width="222" height="106" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11">
+    <text x="60" y="88" fill="#3a4a66" font-weight="bold">（A）分割族</text>
+    <text x="60" y="112" fill="#333">dp[i][j] ← min dp[i][k] + dp[k+1][j]</text>
+    <text x="60" y="136" fill="#777">左右两半各自删空，步数相加</text>
+    <text x="60" y="158" fill="#b85450">只用它：[1,3,1] 得 3，正解 1</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="292" y="66" width="222" height="106" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11">
+    <text x="306" y="88" fill="#3a5a30" font-weight="bold">（B）相等端点族（arr[i]=arr[j]）</text>
+    <text x="306" y="112" fill="#333">dp[i][j] ← dp[i+1][j−1]</text>
+    <text x="306" y="136" fill="#777">两端留到最后一步，随中间末段一起删</text>
+    <text x="306" y="158" fill="#b85450">只用它：[1,2,1,1,3,1] 得 3，正解 2</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 268 119 L 292 119" stroke="#666" stroke-width="1.8" marker-end="url(#arr)" fill="none"/>
+  </g>
+  <text x="280" y="106" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#rough2)">取 min</text>
+
+  <g filter="url(#rough2)">
+    <rect x="46" y="190" width="468" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <text x="280" y="212" fill="#8a6a20" font-weight="bold">反例 [1,2,1,1,3,1]：先删 [1,2,1] 再删 [1,3,1] = 2 步</text>
+    <text x="280" y="232" fill="#8a6a20">端点相等的候选是 dp(interior)=[2,1,1,3] 的答案 3；</text>
+    <text x="280" y="250" fill="#8a6a20">而分割族在 k=2 处给出 dp[0][2] + dp[3][5] = 1 + 1 = 2 ← 真最优</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle">
+    <text x="280" y="290" fill="#555">实测：只用（B）的变体在 n ≤ 7、字母表 {1,2,3} 的全部 3279 个数组中错了 18 个</text>
+    <text x="280" y="308" fill="#777">两族取 min 后：穷举 9840 个数组（n ≤ 8）+ 4000 组随机对拍，0 失配</text>
+    <text x="280" y="330" fill="#999">（转移公式细节见下图：末步双侧扩展的构造）</text>
+  </g>
+</svg>

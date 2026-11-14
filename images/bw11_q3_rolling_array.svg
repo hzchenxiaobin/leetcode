@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="29"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">滚动数组：为何 j 必须从大到小倒序更新</text>
+
+  <text x="60" y="64" font-size="12" fill="#333" font-weight="bold">一维数组复用两层（同 01 背包）：</text>
+  <g filter="url(#rough2)">
+    <rect x="90" y="76" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="170" y="76" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="250" y="76" width="60" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="330" y="76" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="410" y="76" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" font-weight="bold">
+    <text x="120" y="100" fill="#3a4a66">dp[j−1]</text>
+    <text x="200" y="100" fill="#3a4a66">dp[j]</text>
+    <text x="280" y="100" fill="#8a6a20">dp[j+1]</text>
+    <text x="360" y="100" fill="#3a4a66">…</text>
+    <text x="440" y="100" fill="#3a4a66">dp[t]</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 500 96 L 100 96" stroke="#b85450" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arrR)" fill="none"/>
+  </g>
+  <text x="300" y="118" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">j：target → 0 倒序扫描</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="150" width="230" height="88" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <rect x="320" y="150" width="200" height="88" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10.5">
+    <text x="72" y="170" fill="#3a5a30" font-weight="bold">✓ 倒序：更新 dp[j] 时读到的是</text>
+    <text x="72" y="186" fill="#3a5a30" font-weight="bold">　 上一层的旧 dp[j−1]</text>
+    <text x="72" y="204" fill="#777">dp[j] = dp[j]·(1−p) + dp[j−1]·p</text>
+    <text x="72" y="222" fill="#777">每枚硬币恰好作用一次，正确</text>
+    <text x="332" y="170" fill="#8a3a36" font-weight="bold">✗ 正序：dp[j−1] 已被本枚</text>
+    <text x="332" y="186" fill="#8a3a36" font-weight="bold">　 硬币的转移污染</text>
+    <text x="332" y="204" fill="#777">同一枚硬币被算两次</text>
+    <text x="332" y="222" fill="#777">结果系统性偏大</text>
+  </g>
+
+  <text x="60" y="264" font-size="10.5" fill="#777" filter="url(#rough2)">数组只开到 target+1：正面数超过 target 的状态对答案无贡献，直接截断省空间</text>
+  <text x="60" y="282" font-size="10.5" fill="#777" filter="url(#rough2)">j−1 越界（j=0）时正面项为 0 ——「不可能」被边界天然编码掉</text>
+  <text x="60" y="310" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">💡 等价逆序视角：从最后一枚往前，状态 =「剩余硬币中还需凑出的正面数」，转移对称</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 350" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="350" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：相等端点「留到最后一步」的构造</text>
+
+  <text x="46" y="62" font-size="12" fill="#333" font-weight="bold">区间 [i..j]，两端同为 x，中间是内部区间的方案：</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="76" width="52" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="120" y="76" width="76" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="204" y="76" width="76" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="4"/>
+    <rect x="288" y="76" width="76" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="372" y="76" width="52" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" font-weight="bold">
+    <text x="86" y="100" fill="#8a3a36">x</text>
+    <text x="158" y="100" fill="#3a4a66">…</text>
+    <text x="242" y="100" fill="#8a6a20">B</text>
+    <text x="326" y="100" fill="#3a4a66">…</text>
+    <text x="398" y="100" fill="#8a3a36">x</text>
+  </g>
+  <g filter="url(#rough2)" font-size="9.5" text-anchor="middle" fill="#777">
+    <text x="86" y="124">arr[i]</text>
+    <text x="398" y="124">arr[j]</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="204" y="128" width="76" height="20" fill="none"/>
+    <path d="M 242 124 L 242 158" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arr)" fill="none"/>
+  </g>
+  <text x="242" y="174" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">内部方案的最后一步删的回文段 B</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 242 182 L 242 202" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" fill="none"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="206" width="52" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="120" y="206" width="76" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="204" y="206" width="76" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="4"/>
+    <rect x="288" y="206" width="76" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="372" y="206" width="52" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" font-weight="bold">
+    <text x="86" y="230" fill="#3a5a30">x</text>
+    <text x="158" y="230" fill="#3a5a30">…</text>
+    <text x="242" y="230" fill="#3a5a30">B</text>
+    <text x="326" y="230" fill="#3a5a30">…</text>
+    <text x="398" y="230" fill="#3a5a30">x</text>
+  </g>
+  <text x="280" y="262" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">此时 B 是当前剩余的全部内部元素 → 两端恰好紧贴 B 的左右</text>
+
+  <g filter="url(#rough2)">
+    <rect x="120" y="272" width="304" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8"/>
+    <path d="M 124 289 L 116 289" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arrG)" fill="none"/>
+    <path d="M 420 289 L 428 289" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arrG)" fill="none"/>
+  </g>
+  <text x="280" y="293" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">把删除块从 B 扩成 x B x —— 仍是回文！步数不变</text>
+
+  <text x="60" y="330" font-size="10.5" fill="#777" filter="url(#rough2)">dp[i][j] ≤ dp[i+1][j−1]（j≥i+2）；j = i+1 时 [x,x] 本身是回文，dp = 1</text>
+  <text x="60" y="346" font-size="10.5" fill="#b85450" filter="url(#rough2)">注意：是「扩展末步」，不是「先花一步删两端再删中间」（那样会多 1 步）</text>
+</svg>

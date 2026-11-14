@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="67"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="540" height="330" fill="#fafafa"/>
+  <text x="270" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：副本同时更新，稳定即停</text>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="46" width="240" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="270" y="64" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">nxt = arr 的副本（昨日快照）</text>
+  <text x="270" y="80" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">改动全部落在 nxt，arr 全程只读</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 270 88 L 270 108" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" fill="none"/>
+    <rect x="120" y="110" width="300" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="270" y="128" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">for i = 1 … n−2（内部元素）</text>
+  <text x="270" y="144" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">谷：arr[i]&lt;两邻 → nxt[i]=arr[i]+1；峰：&gt;两邻 → −1</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 270 150 L 270 170" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" fill="none"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 230 196 C 180 196, 180 258, 208 262" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <path d="M 310 196 C 370 196, 380 176, 386 152" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <rect x="150" y="180" width="240" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <rect x="120" y="256" width="240" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <text x="270" y="197" fill="#8a6a20" font-weight="bold">今天有任何变动吗？</text>
+    <text x="270" y="215" fill="#777" font-size="10">changed 标记</text>
+    <text x="240" y="277" fill="#8a3a36" font-weight="bold">是：arr = nxt，进入明天</text>
+    <text x="240" y="292" fill="#777" font-size="10">（回环到顶部）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="392" y="216" width="130" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 390 200 L 424 214" stroke="#3a5a30" stroke-width="1.5" marker-end="url(#arr)" fill="none"/>
+  </g>
+  <text x="457" y="234" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">否：返回 arr</text>
+  <text x="457" y="250" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">（首个稳定日）</text>
+
+  <text x="60" y="316" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">💡 收敛保票：势能 V=Σ|相邻差| 每个变动日至少降 1，V ≤ 99×99 → 天数有硬上界，不会死循环</text>
+</svg>
