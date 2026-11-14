@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：游程分解，每个游程独立计数</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">只含单一字母的子串 ⟺ 整段落在某个极大同字母段（游程）内部</text>
+
+  <text x="40" y="82" font-size="12" fill="#333" font-weight="bold">s =</text>
+
+  <g filter="url(#rough2)">
+    <rect x="80" y="62" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="128" y="62" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="176" y="62" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="224" y="62" width="46" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="272" y="62" width="46" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" font-weight="bold">
+    <text x="103" y="84" fill="#3a4a66">a</text>
+    <text x="151" y="84" fill="#3a4a66">a</text>
+    <text x="199" y="84" fill="#3a4a66">a</text>
+    <text x="247" y="84" fill="#3a5a30">b</text>
+    <text x="295" y="84" fill="#8a6a20">a</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 82 104 L 82 114 L 220 114 L 220 104" stroke="#446688" stroke-width="1.6" fill="none"/>
+    <path d="M 226 104 L 226 114 L 268 114 L 268 104" stroke="#4a7a3a" stroke-width="1.6" fill="none"/>
+    <path d="M 274 104 L 274 114 L 316 114 L 316 104" stroke="#d6a040" stroke-width="1.6" fill="none"/>
+  </g>
+  <g filter="url(#rough2)" text-anchor="middle" font-size="10.5">
+    <text x="151" y="130" fill="#3a4a66" font-weight="bold">游程 aaa，L = 3</text>
+    <text x="247" y="130" fill="#3a5a30" font-weight="bold">L = 1</text>
+    <text x="295" y="130" fill="#8a6a20" font-weight="bold">L = 1</text>
+  </g>
+
+  <rect x="40" y="150" width="290" height="118" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="185" y="172" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">游程 aaa 内部的全部子串（6 个）</text>
+  <g filter="url(#rough2)" font-size="11" fill="#444" text-anchor="middle">
+    <text x="185" y="194">长度 1：a, a, a —— 3 个</text>
+    <text x="185" y="212">长度 2：aa, aa —— 2 个</text>
+    <text x="185" y="230">长度 3：aaa —— 1 个</text>
+    <text x="185" y="252" font-weight="bold" fill="#3a4a66">3 + 2 + 1 = L(L+1)/2 = 6</text>
+  </g>
+
+  <rect x="348" y="150" width="184" height="118" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="440" y="172" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">每个长度 L 的游程贡献</text>
+  <g filter="url(#rough2)" font-size="12" fill="#444" text-anchor="middle">
+    <text x="440" y="198" font-weight="bold">L(L+1)/2 个子串</text>
+    <text x="440" y="222">aaa → 3·4/2 = 6</text>
+    <text x="440" y="240">b → 1，a → 1</text>
+    <text x="440" y="258" font-weight="bold" fill="#8a6a20">合计 = 6+1+1 = 8</text>
+  </g>
+
+  <path d="M 330 208 L 344 208" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="288" width="492" height="72" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="286" y="310" text-anchor="middle" font-size="12" fill="#3a5a30" font-weight="bold">一次扫描实现：run = 以 i 结尾的游程长度，ans += run</text>
+  <text x="286" y="330" text-anchor="middle" font-size="10.5" fill="#555">s[i] == s[i-1] 时 run+1，否则 run 归 1；Σ run = Σ L(L+1)/2</text>
+  <text x="286" y="348" text-anchor="middle" font-size="10.5" fill="#555">例：a a a b a → run = 1,2,3,1,1 → 1+2+3+1+1 = 8</text>
+
+  <text x="280" y="384" text-anchor="middle" font-size="10" fill="#999">⚠ 跨越游程边界的子串（如 "aab"）含两种字母，不合法，故各游程独立计数、直接求和</text>
+</svg>
