@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="107"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：种子入队，按位扩展，越上界即止</text>
+
+  <rect x="140" y="46" width="280" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="64" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">若 low == 0：结果先放入 0（不扩展）</text>
+  <text x="280" y="80" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">队列 = [1, 2, …, 9]</text>
+
+  <line x1="280" y1="84" x2="280" y2="104" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="170" y="106" width="220" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="128" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold">队首 cur 出队</text>
+
+  <line x1="280" y1="140" x2="280" y2="160" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,162 356,196 280,230 204,196" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="200" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">cur &gt; high ?</text>
+
+  <line x1="356" y1="196" x2="430" y2="196" stroke="#666" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="370" y="186" font-size="11.5" fill="#b85450" font-weight="bold">是</text>
+  <rect x="432" y="178" width="120" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="492" y="200" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">跳过（不收不扩）</text>
+
+  <line x1="280" y1="230" x2="280" y2="252" stroke="#666" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="290" y="248" font-size="11.5" fill="#4a7a3a" font-weight="bold">否</text>
+
+  <polygon points="280,254 350,284 280,314 210,284" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="288" text-anchor="middle" font-size="11.5" fill="#333" font-weight="bold">cur ≥ low ?</text>
+
+  <line x1="350" y1="284" x2="420" y2="284" stroke="#666" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="364" y="274" font-size="11.5" fill="#4a7a3a" font-weight="bold">是</text>
+  <rect x="422" y="266" width="130" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="487" y="288" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold">res 收集 cur</text>
+
+  <line x1="280" y1="314" x2="280" y2="334" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="290" y="330" font-size="11" fill="#555">否（但 cur 仍要扩展！）</text>
+
+  <rect x="120" y="336" width="330" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="285" y="356" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">last = cur % 10</text>
+  <text x="285" y="374" text-anchor="middle" font-size="11.5" fill="#555">last≥1 且 10·cur+last−1 ≤ high → 入队</text>
+
+  <rect x="120" y="388" width="330" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="285" y="410" text-anchor="middle" font-size="11.5" fill="#555">last≤8 且 10·cur+last+1 ≤ high → 入队</text>
+
+  <text x="30" y="64" font-size="11.5" fill="#555">0 绝不能入队：</text>
+  <text x="30" y="82" font-size="11.5" fill="#555">01 = 1 与种子重复</text>
+  <text x="30" y="100" font-size="11.5" fill="#555">且破坏出队有序性</text>
+
+  <text x="30" y="200" font-size="11.5" fill="#555">上界剪枝保证终止</text>
+  <text x="30" y="288" font-size="11.5" fill="#555">下界不剪！</text>
+  <text x="30" y="306" font-size="11.5" fill="#555">小于 low 的数是</text>
+  <text x="30" y="324" font-size="11.5" fill="#555">更高位结果的</text>
+  <text x="30" y="342" font-size="11.5" fill="#555">唯一来源</text>
+
+  <text x="470" y="424" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">出队顺序天然递增</text>
+</svg>

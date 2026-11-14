@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="127"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：按区间长度递推 LPS，再做删除数判定</text>
+
+  <rect x="160" y="48" width="240" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="72" text-anchor="middle" font-size="12.5" fill="#3a4a66" font-weight="bold">dp[i][i] = 1（所有单字符）</text>
+
+  <line x1="280" y1="86" x2="280" y2="108" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="110" width="260" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="134" text-anchor="middle" font-size="12.5" fill="#3a4a66" font-weight="bold">枚举区间长度 len = 2 … n</text>
+
+  <line x1="280" y1="148" x2="280" y2="170" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="172" width="260" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="196" text-anchor="middle" font-size="12.5" fill="#3a4a66" font-weight="bold">枚举左端 i（j = i + len − 1）</text>
+
+  <line x1="280" y1="210" x2="280" y2="232" stroke="#666" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,234 358,270 280,306 202,270" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="266" text-anchor="middle" font-size="12" fill="#333" font-weight="bold">s[i] == s[j] ?</text>
+  <text x="280" y="284" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">（len=2 时取 2）</text>
+
+  <line x1="358" y1="270" x2="420" y2="270" stroke="#666" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="372" y="260" font-size="11.5" fill="#4a7a3a" font-weight="bold">是</text>
+  <rect x="422" y="250" width="130" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="487" y="268" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">dp = dp[i+1][j−1]+2</text>
+  <text x="487" y="284" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">首尾配对</text>
+
+  <line x1="202" y1="270" x2="140" y2="270" stroke="#666" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="160" y="260" font-size="11.5" fill="#b85450" font-weight="bold">否</text>
+  <rect x="8" y="250" width="130" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="73" y="268" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">dp = max(去左, 去右)</text>
+  <text x="73" y="284" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">max(dp[i+1][j], dp[i][j−1])</text>
+
+  <path d="M 73 292 Q 73 330 190 330 L 260 330 Q 280 330 280 316" fill="none" stroke="#666" stroke-width="1.3" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="160" y="348" font-size="10.5" fill="#999" filter="url(#rough2)">依赖的区间长度更小，len 从小到大保证先算好</text>
+
+  <rect x="150" y="360" width="260" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="384" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">返回 n − dp[0][n−1] ≤ k</text>
+
+  <text x="30" y="72" font-size="11.5" fill="#555">len 从小到大是关键：</text>
+  <text x="30" y="90" font-size="11.5" fill="#555">len−2 / len−1 的区间</text>
+  <text x="30" y="108" font-size="11.5" fill="#555">必须先算出来</text>
+
+  <text x="440" y="380" font-size="11" fill="#555" filter="url(#rough2)">n² 个状态</text>
+  <text x="440" y="398" font-size="11" fill="#555" filter="url(#rough2)">O(1) 转移</text>
+  <text x="440" y="416" font-size="11" fill="#555" filter="url(#rough2)">≈ 5×10⁵ 状态</text>
+
+  <text x="30" y="424" font-size="11" fill="#999">bw10 Q4 · 验证回文串 III</text>
+</svg>

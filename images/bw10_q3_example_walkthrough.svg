@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="109"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例演算：low = 0, high = 21 的逐层生成与筛选</text>
+
+  <!-- 层 0 -->
+  <rect x="40" y="44" width="480" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="56" y="66" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">特殊</text>
+  <text x="150" y="66" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">0（low=0，直接进结果，不扩展）</text>
+  <text x="480" y="66" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">✓ 收集</text>
+
+  <!-- 层 1 -->
+  <rect x="40" y="82" width="480" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="56" y="104" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">1 位</text>
+  <text x="150" y="104" font-size="11.5" fill="#333" filter="url(#rough2)">1, 2, 3, 4, 5, 6, 7, 8, 9</text>
+  <text x="480" y="104" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">✓ 全收集</text>
+
+  <!-- 层 2 -->
+  <rect x="40" y="120" width="480" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="56" y="142" font-size="11.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">2 位</text>
+  <text x="150" y="142" font-size="11.5" fill="#333" filter="url(#rough2)">10, 12, 21, <tspan fill="#b85450">23</tspan>, <tspan fill="#b85450">32</tspan>, …（21 之后 > 21 的全部剪掉）</text>
+  <text x="480" y="142" font-size="11" fill="#d6a040" font-weight="bold" filter="url(#rough2)">收集 10, 12, 21</text>
+
+  <!-- 层 3+ -->
+  <rect x="40" y="158" width="480" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="56" y="180" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">3 位+</text>
+  <text x="150" y="180" font-size="11.5" fill="#555" filter="url(#rough2)">最小三位步进数 101 > 21 → 队列排空，结束</text>
+  <text x="480" y="180" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">无</text>
+
+  <!-- 结果 -->
+  <rect x="40" y="206" width="480" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="56" y="226" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">输出（升序）：</text>
+  <text x="140" y="226" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">[0,1,2,3,4,5,6,7,8,9,10,12,21]</text>
+  <text x="140" y="244" font-size="11" fill="#555" filter="url(#rough2)">与官方示例一致 ✓</text>
+
+  <!-- 示例 2 -->
+  <text x="40" y="284" font-size="12.5" fill="#333" font-weight="bold">示例 2：low = 10, high = 15</text>
+
+  <rect x="40" y="294" width="480" height="32" fill="#ffffff" stroke="#cccccc" stroke-width="1" filter="url(#rough2)"/>
+  <text x="56" y="315" font-size="11.5" fill="#555" filter="url(#rough2)">1 位层：1..9 都 &lt; 10 → 不收集，但仍然向下扩展</text>
+
+  <rect x="40" y="328" width="480" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="4" filter="url(#rough2)"/>
+  <text x="56" y="349" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">2 位层：10 ✓、12 ✓ 收集；21 &gt; 15 剪枝 → 输出 [10,12] ✓</text>
+
+  <rect x="40" y="378" width="480" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="56" y="398" font-size="11.5" fill="#d6a040" font-weight="bold" filter="url(#rough2)">关键细节：下界不剪！</text>
+  <text x="56" y="418" font-size="11" fill="#555" filter="url(#rough2)">小于 low 的数是更高位步进数的必经前缀（10 从 1 长出来），</text>
+  <text x="56" y="434" font-size="11" fill="#555" filter="url(#rough2)">只有超过 high 才停止扩展。</text>
+</svg>

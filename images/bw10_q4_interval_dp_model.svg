@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="113"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arro" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：删除至多 k 个 ⟺ 保留 ≥ n−k 的回文子序列</text>
+
+  <!-- 字符串格子 s = abcdeca -->
+  <text x="60" y="66" font-size="12" fill="#333" font-weight="bold">s = "abcdeca"（n = 7）：</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="76" width="40" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="100" y="76" width="40" height="36" fill="#ffffff" stroke="#cccccc" stroke-width="1.2" rx="4"/>
+    <rect x="140" y="76" width="40" height="36" fill="#ffffff" stroke="#cccccc" stroke-width="1.2" rx="4"/>
+    <rect x="180" y="76" width="40" height="36" fill="#ffffff" stroke="#cccccc" stroke-width="1.2" rx="4"/>
+    <rect x="220" y="76" width="40" height="36" fill="#ffffff" stroke="#cccccc" stroke-width="1.2" rx="4"/>
+    <rect x="260" y="76" width="40" height="36" fill="#ffffff" stroke="#cccccc" stroke-width="1.2" rx="4"/>
+    <rect x="300" y="76" width="40" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+  </g>
+  <text y="99" font-size="13" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)"><tspan x="80">a</tspan><tspan x="120">b</tspan><tspan x="160">c</tspan><tspan x="200">d</tspan><tspan x="240">e</tspan><tspan x="280">c</tspan><tspan x="320">a</tspan></text>
+  <text x="80" y="130" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold" filter="url(#rough2)">i</text>
+  <text x="320" y="130" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold" filter="url(#rough2)">j</text>
+
+  <!-- 转移 1 -->
+  <rect x="380" y="70" width="170" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="465" y="90" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">s[i] == s[j]：</text>
+  <text x="465" y="112" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">dp[i][j] = dp[i+1][j−1] + 2</text>
+  <path d="M 340 94 L 376 94" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 转移 2 -->
+  <rect x="60" y="160" width="490" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="76" y="182" font-size="11.5" fill="#333" filter="url(#rough2)"><tspan fill="#b85450" font-weight="bold">s[i] != s[j]：</tspan>两端不能同时保留，至少删一头</text>
+  <text x="76" y="202" font-size="11.5" fill="#555" filter="url(#rough2)">dp[i][j] = max(dp[i+1][j], dp[i][j−1])  （去左端 / 去右端）</text>
+
+  <!-- 删除/保留图 -->
+  <text x="60" y="248" font-size="12.5" fill="#333" font-weight="bold">等价刻画：</text>
+  <rect x="60" y="258" width="230" height="120" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="76" y="280" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">删除视角：</text>
+  <text x="76" y="300" font-size="11" fill="#555" filter="url(#rough2)">删掉若干字符，</text>
+  <text x="76" y="318" font-size="11" fill="#555" filter="url(#rough2)">剩下的是回文</text>
+  <text x="76" y="344" font-size="11" fill="#555" filter="url(#rough2)">b、e 两个「钉子户」</text>
+  <text x="76" y="362" font-size="11" fill="#555" filter="url(#rough2)">各破坏一对首尾</text>
+
+  <path d="M 295 318 L 335 318" fill="none" stroke="#666" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="302" y="306" font-size="10.5" fill="#666" filter="url(#rough2)">⟺</text>
+
+  <rect x="340" y="258" width="210" height="120" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="356" y="280" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">保留视角：</text>
+  <text x="356" y="300" font-size="11" fill="#555" filter="url(#rough2)">保留一个回文子序列，</text>
+  <text x="356" y="318" font-size="11" fill="#555" filter="url(#rough2)">长度 ≥ n − k</text>
+  <text x="356" y="344" font-size="11" fill="#4a7a3a" filter="url(#rough2)">"a _ c d _ c a"</text>
+  <text x="356" y="362" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">→ "acdca"，长 5</text>
+
+  <rect x="60" y="392" width="490" height="20" fill="#ffffff" stroke="none" filter="url(#rough2)"/>
+  <text x="60" y="406" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">最少删除数 = n − LPS(s) = 7 − 5 = 2 ≤ k = 2 → true</text>
+</svg>
