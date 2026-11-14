@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="30" text-anchor="middle" font-size="18" fill="#333" filter="url(#rough2)">
+    dp[i][f]：位于 i、剩油 f，停在 finish 的路径数
+  </text>
+
+  <!-- dp 表 -->
+  <g filter="url(#rough2)" text-anchor="middle" font-size="12">
+    <rect x="60"  y="70" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="118" y="70" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="176" y="70" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="234" y="70" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="60"  y="104" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="118" y="104" width="58" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="4"/>
+    <rect x="176" y="104" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="234" y="104" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="60"  y="138" width="58" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="118" y="138" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="176" y="138" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="234" y="138" width="58" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <text x="89"  y="91" fill="#446688">f=3</text>
+    <text x="147" y="91" fill="#446688">f=2</text>
+    <text x="205" y="91" fill="#446688">f=1</text>
+    <text x="263" y="91" fill="#446688">f=0</text>
+    <text x="40" y="91" fill="#666">城市 0</text>
+    <text x="40" y="125" fill="#666">城市 1</text>
+    <text x="40" y="159" fill="#666">城市 2</text>
+    <text x="147" y="125" fill="#8a6a1a" font-weight="bold">dp[i][f]</text>
+    <text x="89" y="159" fill="#2f5a24">dp[j][f−c]</text>
+  </g>
+
+  <!-- 转移箭头 -->
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)">
+    <path d="M 150 112 C 130 116, 118 124, 106 136"/>
+  </g>
+  <text x="96" y="120" font-size="11" fill="#446688" filter="url(#rough2)">到 j 耗 c</text>
+
+  <!-- 自身基项 -->
+  <path d="M 156 110 C 168 96, 186 94, 190 102" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="196" y="100" font-size="11" fill="#b85450" filter="url(#rough2)">i==finish 记 1</text>
+
+  <!-- 公式 -->
+  <rect x="70" y="192" width="380" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="218" text-anchor="middle" font-size="14" fill="#2f5a24" filter="url(#rough2)">
+    dp[i][f] = [i == finish]
+  </text>
+  <text x="260" y="242" text-anchor="middle" font-size="14" fill="#2f5a24" filter="url(#rough2)">
+    + Σ (j≠i, |loc[i]−loc[j]| ≤ f) dp[j][f − |loc[i]−loc[j]|]
+  </text>
+
+  <text x="260" y="284" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">
+    状态 n×(fuel+1) ≈ 100×201，每状态枚举 n 个城市
+  </text>
+  <text x="260" y="306" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">
+    时间 O(n²·fuel) ≈ 2×10⁶，空间 O(n·fuel)
+  </text>
+
+  <text x="260" y="336" text-anchor="middle" font-size="12" fill="#999" filter="url(#rough2)">
+    答案 = dp[start][fuel]（耗油 ≤ fuel 的全部路径，mod 1e9+7）
+  </text>
+</svg>

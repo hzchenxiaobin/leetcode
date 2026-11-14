@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="30" text-anchor="middle" font-size="18" fill="#333" filter="url(#rough2)">
+    搜索树：每步耗油 ≥ 1，fuel 逐层递减（示例 2）
+  </text>
+
+  <!-- 第 0 层 -->
+  <g filter="url(#rough2)">
+    <ellipse cx="240" cy="76" rx="46" ry="24" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5"/>
+    <text x="240" y="82" text-anchor="middle" font-size="14" fill="#8a6a1a">(1, 6)</text>
+    <text x="308" y="76" font-size="12" fill="#666">start</text>
+  </g>
+
+  <!-- 第 1 层 -->
+  <g filter="url(#rough2)">
+    <ellipse cx="140" cy="152" rx="44" ry="24" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="140" y="158" text-anchor="middle" font-size="13" fill="#446688">(0, 5) ★</text>
+    <ellipse cx="350" cy="152" rx="44" ry="24" fill="#f2f2f2" stroke="#999" stroke-width="1.8"/>
+    <text x="350" y="158" text-anchor="middle" font-size="13" fill="#666">(2, 4)</text>
+  </g>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)">
+    <path d="M 208 92 C 184 112, 168 126, 156 138"/>
+    <path d="M 274 92 C 300 112, 322 126, 336 138"/>
+  </g>
+  <text x="150" y="112" font-size="11" fill="#666" filter="url(#rough2)">耗 1</text>
+  <text x="336" y="112" font-size="11" fill="#666" filter="url(#rough2)">耗 2</text>
+
+  <!-- 第 2 层 -->
+  <g filter="url(#rough2)">
+    <ellipse cx="80" cy="228" rx="44" ry="24" fill="#f2f2f2" stroke="#999" stroke-width="1.8"/>
+    <text x="80" y="234" text-anchor="middle" font-size="13" fill="#666">(1, 4)</text>
+    <ellipse cx="210" cy="228" rx="44" ry="24" fill="#f2f2f2" stroke="#999" stroke-width="1.8"/>
+    <text x="210" y="234" text-anchor="middle" font-size="13" fill="#666">(2, 3)</text>
+    <ellipse cx="340" cy="228" rx="44" ry="24" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="340" y="234" text-anchor="middle" font-size="13" fill="#446688">(0, 3) ★</text>
+    <ellipse cx="452" cy="228" rx="44" ry="24" fill="#f2f2f2" stroke="#999" stroke-width="1.8"/>
+    <text x="452" y="234" text-anchor="middle" font-size="13" fill="#666">(1, 2)</text>
+  </g>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)">
+    <path d="M 116 174 C 98 192, 88 202, 82 210"/>
+    <path d="M 162 174 C 186 192, 198 202, 206 210"/>
+    <path d="M 338 174 C 322 190, 330 200, 338 210"/>
+    <path d="M 380 174 C 408 194, 430 202, 442 212"/>
+  </g>
+
+  <text x="44" y="272" font-size="12" fill="#b85450" filter="url(#rough2)">★ = 位于 finish(0)：
+  </text>
+  <text x="64" y="290" font-size="12" fill="#b85450" filter="url(#rough2)">此处计 1 条，但树继续生长
+  </text>
+
+  <rect x="290" y="278" width="210" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="395" y="300" text-anchor="middle" font-size="12" fill="#2f5a24" filter="url(#rough2)">位置互不相同 → 耗油 ≥ 1</text>
+  <text x="395" y="320" text-anchor="middle" font-size="12" fill="#2f5a24" filter="url(#rough2)">f 每层严格减 → 状态无环可记忆化</text>
+
+  <text x="200" y="344" font-size="12" fill="#999" filter="url(#rough2)">同一 (城市, 剩油) 只算一次 → dp 表填满即答案</text>
+</svg>
