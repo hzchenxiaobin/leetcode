@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="32" text-anchor="middle" font-size="18" fill="#333" filter="url(#rough2)">查询流程：先查后压，离开弹栈</text>
+
+  <!-- 进入 -->
+  <rect x="40" y="58" width="120" height="48" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="100" y="88" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">进入节点 u</text>
+
+  <path d="M160,82 L200,82" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 查询 -->
+  <rect x="202" y="50" width="200" height="64" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="302" y="74" text-anchor="middle" font-size="12.5" fill="#7a5a20" filter="url(#rough2)">① 询问：遍历 cop[nums[u]]，</text>
+  <text x="302" y="92" text-anchor="middle" font-size="12.5" fill="#7a5a20" filter="url(#rough2)">取非空栈顶里深度最大者 → ans[u]</text>
+  <text x="302" y="108" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">此刻栈里只有真祖先（先查！）</text>
+
+  <path d="M402,82 L442,82" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 压栈 -->
+  <rect x="444" y="50" width="66" height="64" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="477" y="76" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">② st[</text>
+  <text x="477" y="92" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">nums[u]]</text>
+  <text x="477" y="108" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">.push</text>
+
+  <path d="M477,114 Q477,142 477,156" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 递归子树 -->
+  <rect x="300" y="160" width="210" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="405" y="183" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">③ 递归处理 u 的每个孩子 v</text>
+  <text x="405" y="202" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">（v ≠ 父节点，不走回头路）</text>
+
+  <path d="M300,188 L260,188" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 弹栈 -->
+  <rect x="60" y="160" width="200" height="56" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="160" y="183" text-anchor="middle" font-size="12.5" fill="#b85450" filter="url(#rough2)">④ 离开 u：st[nums[u]].pop()</text>
+  <text x="160" y="202" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">恢复现场，兄弟子树不受污染</text>
+
+  <!-- 底部要点 -->
+  <rect x="40" y="248" width="440" height="88" rx="12" fill="#ffffff" stroke="#bbb" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="60" y="274" font-size="12.5" fill="#333" filter="url(#rough2)">· 顺序①→② 是正确性命门：自己不是自己的祖先</text>
+  <text x="60" y="296" font-size="12.5" fill="#333" filter="url(#rough2)">· 栈内 (depth, node) 按深度递增，栈顶 = 该值在路径上的最近者</text>
+  <text x="60" y="318" font-size="12.5" fill="#333" filter="url(#rough2)">· n 达 10⁵ 时用迭代 DFS，链状树不爆栈</text>
+</svg>

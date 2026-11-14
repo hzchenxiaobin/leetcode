@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="32" text-anchor="middle" font-size="18" fill="#333" filter="url(#rough2)">前缀和折线：|子数组和| = |两个前缀点之差|</text>
+  <text x="260" y="52" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">nums = [2, −5, 1, −4, 3, −2]</text>
+
+  <!-- 坐标轴 -->
+  <line x1="50" y1="180" x2="470" y2="180" stroke="#999" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="478" y="184" font-size="12" fill="#777" filter="url(#rough2)">pre</text>
+  <text x="62" y="172" font-size="11" fill="#777" filter="url(#rough2)">pre₀=0</text>
+
+  <!-- 折线：i=0..6, x=60+60i, y=180-12*pre -->
+  <polyline points="60,180 120,156 180,216 240,204 300,252 360,216 420,240"
+            fill="none" stroke="#446688" stroke-width="2.2" filter="url(#rough2)"/>
+  <circle cx="60" cy="180" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <circle cx="120" cy="156" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <circle cx="180" cy="216" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <circle cx="240" cy="204" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <circle cx="300" cy="252" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <circle cx="360" cy="216" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <circle cx="420" cy="240" r="4.5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+
+  <!-- 最大下降：pre1=2 → pre4=−6，落差 8 -->
+  <path d="M120,156 L300,252" stroke="#b85450" stroke-width="2" stroke-dasharray="7 5" filter="url(#rough2)"/>
+  <path d="M128,150 Q214,180 292,246" fill="none" stroke="#b85450" stroke-width="1.4" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <rect x="128" y="96" width="204" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="230" y="114" text-anchor="middle" font-size="12.5" fill="#b85450" filter="url(#rough2)">最大下降 mx − pre = 2 − (−6) = 8</text>
+  <text x="230" y="130" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">对应子数组 [−5, 1, −4]，和为 −8</text>
+
+  <!-- 最大上升：pre4=−6 → pre5=−3，升幅 3 -->
+  <path d="M300,252 L360,216" stroke="#4a7a3a" stroke-width="2" stroke-dasharray="7 5" filter="url(#rough2)"/>
+  <rect x="290" y="286" width="196" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="388" y="304" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">最大上升 pre − mn = −3 − (−6) = 3</text>
+  <text x="388" y="320" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">对应最大子段和（子数组 [3]）</text>
+
+  <!-- 底部结论 -->
+  <rect x="110" y="316" width="160" height="36" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="190" y="339" text-anchor="middle" font-size="13.5" fill="#333" filter="url(#rough2)">答案 = max(3, 8) = 8</text>
+  <text x="60" y="339" font-size="12" fill="#777" filter="url(#rough2)">两遍 Kadane 的几何意义</text>
+</svg>
