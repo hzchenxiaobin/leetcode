@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 3 L 0 6 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：把「哪些车已被占用」压进一个整数</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">总代价与分配顺序无关 ⇒ 规定工人按 0,1,…,N−1 次序取车（WLOG）⇒ mask 唯一确定下一个工人</text>
+
+  <!-- 左：一次部分分配 -->
+  <text x="70" y="72" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">工人</text>
+  <text x="230" y="60" text-anchor="middle" font-size="12" fill="#d6a040" font-weight="bold" filter="url(#rough2)">车辆（M 辆）</text>
+
+  <g filter="url(#rough2)">
+    <circle cx="70" cy="106" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="70" cy="162" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <circle cx="70" cy="218" r="17" fill="#fff8e1" stroke="#d6a040" stroke-width="2" stroke-dasharray="4 3"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle" font-weight="bold">
+    <text x="70" y="110" fill="#3a4a66">w0</text>
+    <text x="70" y="166" fill="#3a4a66">w1</text>
+    <text x="70" y="222" fill="#8a6a20">w2</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <circle cx="230" cy="86" r="15" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <circle cx="230" cy="128" r="15" fill="#fff" stroke="#999" stroke-width="1.4"/>
+    <circle cx="230" cy="170" r="15" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <circle cx="230" cy="212" r="15" fill="#fff" stroke="#999" stroke-width="1.4"/>
+    <circle cx="230" cy="254" r="15" fill="#fff" stroke="#999" stroke-width="1.4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle" font-weight="bold">
+    <text x="230" y="90" fill="#3a5a30">b0</text>
+    <text x="230" y="132" fill="#888">b1</text>
+    <text x="230" y="174" fill="#3a5a30">b2</text>
+    <text x="230" y="216" fill="#888">b3</text>
+    <text x="230" y="258" fill="#888">b4</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 87 106 L 215 90" stroke="#4a7a3a" stroke-width="2" fill="none"/>
+    <path d="M 87 162 L 215 168" stroke="#4a7a3a" stroke-width="2" fill="none"/>
+    <path d="M 87 214 L 215 130" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" fill="none"/>
+    <path d="M 87 212 L 215 210" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" fill="none"/>
+    <path d="M 87 224 L 215 250" stroke="#b85450" stroke-width="1.4" stroke-dasharray="4 3" fill="none"/>
+  </g>
+  <text x="150" y="82" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">w0→b0 ✓</text>
+  <text x="150" y="150" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">w1→b2 ✓</text>
+  <text x="120" y="250" font-size="10" fill="#b85450" filter="url(#rough2)">w2 尚未分配：把它指向空闲的 {b1, b3, b4}</text>
+  <text x="120" y="266" font-size="10" fill="#b85450" filter="url(#rough2)">一一尝试（DP 三种延伸都会松弛一遍）</text>
+
+  <!-- 右：mask 位表示 -->
+  <text x="420" y="72" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">mask 的每一位 = 一辆车</text>
+
+  <g filter="url(#rough2)">
+    <rect x="308" y="84" width="40" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="352" y="84" width="40" height="38" fill="#fff" stroke="#999" stroke-width="1.4" rx="4"/>
+    <rect x="396" y="84" width="40" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="440" y="84" width="40" height="38" fill="#fff" stroke="#999" stroke-width="1.4" rx="4"/>
+    <rect x="484" y="84" width="40" height="38" fill="#fff" stroke="#999" stroke-width="1.4" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" font-weight="bold">
+    <text x="328" y="108" fill="#3a5a30">1</text>
+    <text x="372" y="108" fill="#999">0</text>
+    <text x="416" y="108" fill="#3a5a30">1</text>
+    <text x="460" y="108" fill="#999">0</text>
+    <text x="504" y="108" fill="#999">0</text>
+  </g>
+  <g filter="url(#rough2)" font-size="9" text-anchor="middle" fill="#888">
+    <text x="328" y="136">b0</text>
+    <text x="372" y="136">b1</text>
+    <text x="416" y="136">b2</text>
+    <text x="460" y="136">b3</text>
+    <text x="504" y="136">b4</text>
+  </g>
+  <text x="416" y="158" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">mask = 00101₂ = 5，popcount = 2</text>
+
+  <rect x="300" y="170" width="232" height="84" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="416" y="190" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">已占用 {b0, b2} ⇒ 已分配 w0, w1</text>
+  <text x="416" y="208" text-anchor="middle" font-size="10.5" fill="#3a4a66">下一个工人下标 = popcount(mask) = 2</text>
+  <text x="416" y="226" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">dp[mask] = 前两位工人用 {b0,b2} 的最小总距离</text>
+  <text x="416" y="244" text-anchor="middle" font-size="10" fill="#888">工人的顺序信息被 popcount 免费编码</text>
+
+  <!-- 底部：转移方程 -->
+  <rect x="40" y="286" width="480" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="308" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold">对每个空闲的 j（mask 第 j 位为 0）：dp[mask | (1&lt;&lt;j)] ← min(自身, dp[mask] + dist(w[popcount(mask)], b_j))</text>
+  <text x="280" y="330" text-anchor="middle" font-size="10.5" fill="#555">初始 dp[0] = 0；答案 = min{ dp[mask] : popcount(mask) = N }（N &lt; M 时不必用完全部的车）</text>
+  <text x="280" y="350" text-anchor="middle" font-size="10.5" fill="#555">状态 2^M ≤ 1024 × 每状态 M ≤ 10 个转移 ≈ 10⁴ 步，远优于暴力枚举 10! ≈ 3.6×10⁶ 个排列</text>
+</svg>
