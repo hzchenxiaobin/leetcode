@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="47"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">增量维护旋转值：r' = map(d) · p + r</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">状态 (v, r, p)：v = 当前数，r = rot(v)，p = 10^len(v)；每步 O(1)，无需回读 v 的数位</text>
+
+  <rect x="30" y="70" width="150" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="105" y="92" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">v = 1</text>
+  <text x="105" y="112" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">r = rot(1) = 1</text>
+  <text x="105" y="132" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">p = 10¹ = 10</text>
+  <text x="105" y="150" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">1 = 1 相同，不计</text>
+
+  <path d="M 184 110 L 204 110" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="194" y="98" text-anchor="middle" font-size="9.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">追加 6</text>
+
+  <rect x="208" y="70" width="150" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="283" y="92" text-anchor="middle" font-size="11.5" fill="#2a5a20" font-weight="bold" filter="url(#rough2)">v = 16</text>
+  <text x="283" y="112" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">r = map(6)·10 + 1 = 91</text>
+  <text x="283" y="132" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">p = 10² = 100</text>
+  <text x="283" y="150" text-anchor="middle" font-size="9" fill="#2a5a20" font-weight="bold" filter="url(#rough2)">91 ≠ 16 → 计 1 个 ✓</text>
+
+  <path d="M 362 110 L 382 110" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="372" y="98" text-anchor="middle" font-size="9.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">追加 0</text>
+
+  <rect x="386" y="70" width="150" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="461" y="92" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">v = 160</text>
+  <text x="461" y="112" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">r = map(0)·100 + 91 = 91</text>
+  <text x="461" y="132" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">p = 10³ = 1000</text>
+  <text x="461" y="150" text-anchor="middle" font-size="9" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">91 ≠ 160 → 计 1 个 ✓</text>
+
+  <rect x="40" y="174" width="480" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="196" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">公式为什么对？把 v 的数位记为 d₁d₂…d_k（高位在前）</text>
+  <text x="280" y="216" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">rot(v) 的数位是 map(d_k)…map(d₁)；v' = v·10 + d 的数位是 d₁…d_k d</text>
+  <text x="280" y="236" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">rot(v') 的数位是 map(d) map(d_k)…map(d₁) = 把 map(d) 拼在 rot(v) 前面</text>
+  <text x="280" y="256" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">数值上「把 x 拼在 k 位数前」= x·10^k + 原数，故 r' = map(d)·p + r</text>
+
+  <rect x="40" y="282" width="230" height="94" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="155" y="304" text-anchor="middle" font-size="11" fill="#2a5a20" font-weight="bold" filter="url(#rough2)">验证 16：数位 (1)(6)</text>
+  <text x="155" y="324" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">倒序 (6)(1) → 映射 (9)(1)</text>
+  <text x="155" y="344" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">= 9·10 + 1 = 91 = map(6)·p + r</text>
+  <text x="155" y="364" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">与状态框的 r 一致 ✓</text>
+
+  <rect x="290" y="282" width="230" height="94" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="405" y="304" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">验证 160：数位 (1)(6)(0)</text>
+  <text x="405" y="324" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">倒序 (0)(6)(1) → 映射 (0)(9)(1)</text>
+  <text x="405" y="344" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">数值 091 = 91，前导零自动消失</text>
+  <text x="405" y="364" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">map(0)·p = 0，拼接公式天然处理</text>
+</svg>
