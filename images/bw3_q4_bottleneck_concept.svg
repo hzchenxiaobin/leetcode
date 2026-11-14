@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="19"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="420" fill="#fafafa"/>
+
+  <text x="310" y="24" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">路径得分 = 路径上最小格值（瓶颈）：这是「最大化最小值」问题</text>
+
+  <g filter="url(#rough2)">
+    <rect x="66" y="52" width="56" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="126" y="52" width="56" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="186" y="52" width="56" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="66" y="100" width="56" height="44" fill="#fff" stroke="#bbb" stroke-width="1.2" rx="4"/>
+    <rect x="126" y="100" width="56" height="44" fill="#fff" stroke="#bbb" stroke-width="1.2" rx="4"/>
+    <rect x="186" y="100" width="56" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="66" y="148" width="56" height="44" fill="#fff" stroke="#bbb" stroke-width="1.2" rx="4"/>
+    <rect x="126" y="148" width="56" height="44" fill="#fff" stroke="#bbb" stroke-width="1.2" rx="4"/>
+    <rect x="186" y="148" width="56" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" text-anchor="middle" font-weight="bold" fill="#333">
+    <text x="94" y="79">5</text><text x="154" y="79">4</text><text x="214" y="79">5</text>
+    <text x="94" y="127">1</text><text x="154" y="127">2</text><text x="214" y="127">6</text>
+    <text x="94" y="175">7</text><text x="154" y="175">4</text><text x="214" y="175">6</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 103 74 L 143 74" stroke="#4a7a3a" stroke-width="2.2" fill="none" marker-end="url(#arrG)"/>
+    <path d="M 163 74 L 205 74" stroke="#4a7a3a" stroke-width="2.2" fill="none" marker-end="url(#arrG)"/>
+    <path d="M 214 84 L 214 114" stroke="#4a7a3a" stroke-width="2.2" fill="none" marker-end="url(#arrG)"/>
+    <path d="M 214 132 L 214 162" stroke="#4a7a3a" stroke-width="2.2" fill="none" marker-end="url(#arrG)"/>
+    <path d="M 154 84 L 154 114" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrR)"/>
+    <path d="M 154 132 L 154 162" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrR)"/>
+    <path d="M 160 170 L 186 170" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrR)"/>
+  </g>
+
+  <text x="154" y="216" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">绿：5→4→5→6→6，得分 min = 4（最优）</text>
+  <text x="154" y="234" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">红：5→4→2→4→6，得分仅 2（撞上小格）</text>
+
+  <rect x="290" y="52" width="290" height="104" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="435" y="76" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">视角一：二分阈值 x</text>
+  <text x="435" y="96" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">check(x)：只允许走值 ≥ x 的格子，BFS 判两角连通</text>
+  <text x="435" y="116" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">x 越大越难通过 → 谓词单调，可二分最大可行 x</text>
+  <text x="435" y="136" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">可行 ⟺ 存在得分 ≥ x 的路径</text>
+
+  <rect x="290" y="168" width="290" height="104" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="435" y="192" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">视角二：最大瓶颈路（Dijkstra 变体）</text>
+  <text x="435" y="212" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">best[v] = 起点到 v 的所有路径中最大的「瓶颈」</text>
+  <text x="435" y="232" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">松弛：nd = min(best[u], grid[v])，取大者更新</text>
+  <text x="435" y="252" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">大根堆每次弹 best 最大的格子，终点弹出即答案</text>
+
+  <rect x="290" y="284" width="290" height="84" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="435" y="306" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">「不重复访问格子」并不束缚算法</text>
+  <text x="435" y="326" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">带环的走法删去环后，路径最小值不减</text>
+  <text x="435" y="346" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">→ BFS / 并查集这类无路径记忆的方法同样正确</text>
+
+  <text x="310" y="398" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">答案必是矩阵中某个格子的值，且 ≥ min(grid[0][0], grid[R−1][C−1])（两个角必在路径上）</text>
+</svg>
