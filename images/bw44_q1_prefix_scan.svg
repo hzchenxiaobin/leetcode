@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+  <text x="260" y="28" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">一遍扫描的滚动状态（gain = [-5,1,5,0,-7]）</text>
+
+  <!-- 流程 -->
+  <rect x="40" y="52" width="130" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="105" y="77" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">cur = 0, best = 0</text>
+  <path d="M170,72 L206,72" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="208" y="52" width="140" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="278" y="77" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">cur += gain[i]</text>
+  <path d="M348,72 L384,72" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="386" y="52" width="120" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="446" y="77" text-anchor="middle" font-size="13" fill="#8a6d3b" filter="url(#rough2)">best = max(best, cur)</text>
+  <path d="M446,94 Q446,128 278,128 Q110,128 105,94" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="276" y="146" text-anchor="middle" font-size="12" fill="#777" filter="url(#rough2)">对每个 i 重复（无需保存海拔数组）</text>
+
+  <!-- 逐行演算表：i = 起点,0,1,2,3,4,5 -->
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle">
+    <rect x="60" y="172" width="90" height="30" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <text x="105" y="192" fill="#555">步 i</text>
+    <rect x="150" y="172" width="50" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/><text x="175" y="192" fill="#446688">start</text>
+    <rect x="200" y="172" width="50" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/><text x="225" y="192" fill="#446688">0</text>
+    <rect x="250" y="172" width="50" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/><text x="275" y="192" fill="#446688">1</text>
+    <rect x="300" y="172" width="50" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/><text x="325" y="192" fill="#446688">2</text>
+    <rect x="350" y="172" width="50" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/><text x="375" y="192" fill="#446688">3</text>
+    <rect x="400" y="172" width="50" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/><text x="425" y="192" fill="#446688">4</text>
+
+    <rect x="60" y="204" width="90" height="30" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <text x="105" y="224" fill="#555">gain[i]</text>
+    <rect x="150" y="204" width="50" height="30" rx="4" fill="#fff" stroke="#bbb"/><text x="175" y="224" fill="#777">—</text>
+    <rect x="200" y="204" width="50" height="30" rx="4" fill="#fff" stroke="#bbb"/><text x="225" y="224" fill="#b85450">−5</text>
+    <rect x="250" y="204" width="50" height="30" rx="4" fill="#fff" stroke="#bbb"/><text x="275" y="224" fill="#4a7a3a">1</text>
+    <rect x="300" y="204" width="50" height="30" rx="4" fill="#fff" stroke="#bbb"/><text x="325" y="224" fill="#4a7a3a">5</text>
+    <rect x="350" y="204" width="50" height="30" rx="4" fill="#fff" stroke="#bbb"/><text x="375" y="224" fill="#777">0</text>
+    <rect x="400" y="204" width="50" height="30" rx="4" fill="#fff" stroke="#bbb"/><text x="425" y="224" fill="#b85450">−7</text>
+
+    <rect x="60" y="236" width="90" height="30" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <text x="105" y="256" fill="#555">cur（海拔）</text>
+    <rect x="150" y="236" width="50" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/><text x="175" y="256" fill="#4a7a3a">0</text>
+    <rect x="200" y="236" width="50" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/><text x="225" y="256" fill="#4a7a3a">−5</text>
+    <rect x="250" y="236" width="50" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/><text x="275" y="256" fill="#4a7a3a">−4</text>
+    <rect x="300" y="236" width="50" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/><text x="325" y="256" fill="#8a6d3b">1</text>
+    <rect x="350" y="236" width="50" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/><text x="375" y="256" fill="#8a6d3b">1</text>
+    <rect x="400" y="236" width="50" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/><text x="425" y="256" fill="#4a7a3a">−6</text>
+
+    <rect x="60" y="268" width="90" height="30" rx="4" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <text x="105" y="288" fill="#555">best</text>
+    <rect x="150" y="268" width="50" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/><text x="175" y="288" fill="#8a6d3b">0</text>
+    <rect x="200" y="268" width="50" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/><text x="225" y="288" fill="#8a6d3b">0</text>
+    <rect x="250" y="268" width="50" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/><text x="275" y="288" fill="#8a6d3b">0</text>
+    <rect x="300" y="268" width="50" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/><text x="325" y="288" fill="#8a6d3b">1</text>
+    <rect x="350" y="268" width="50" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/><text x="375" y="288" fill="#8a6d3b">1</text>
+    <rect x="400" y="268" width="50" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/><text x="425" y="288" fill="#8a6d3b">1</text>
+  </g>
+
+  <rect x="150" y="316" width="300" height="36" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="300" y="340" text-anchor="middle" font-size="14" fill="#4a7a3a" filter="url(#rough2)">返回 best = 1（保持到最后）✓</text>
+</svg>

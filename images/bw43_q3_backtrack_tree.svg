@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+  <text x="260" y="28" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">回溯流程：在第一个空位上「从大到小」试值</text>
+
+  <rect x="150" y="46" width="220" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="71" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">pos = 序列中最靠左的空位</text>
+  <path d="M260,86 L260,106" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="108" width="260" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="133" text-anchor="middle" font-size="13" fill="#8a6d3b" filter="url(#rough2)">v 从 n 递减到 2：要求 v 未用、pos+v 在界内且为空</text>
+  <path d="M260,148 L260,168" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="260,170 330,198 260,226 190,198" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="260" y="203" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">可以放 ?</text>
+
+  <path d="M330,198 L418,198" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="366" y="188" text-anchor="middle" font-size="12" fill="#777" filter="url(#rough2)">否：换下一个更小的 v</text>
+  <path d="M418,204 Q418,120 396,126" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5,4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M260,228 L260,248" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <text x="278" y="242" font-size="12" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="70" y="250" width="190" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="165" y="269" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">放 v 到 pos 与 pos+v，递归下一空位</text>
+  <text x="165" y="286" text-anchor="middle" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">成功 → 立即层层返回</text>
+
+  <rect x="290" y="250" width="190" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="385" y="269" text-anchor="middle" font-size="12.5" fill="#b85450" filter="url(#rough2)">失败 → 撤销两处放置（回溯），</text>
+  <text x="385" y="286" text-anchor="middle" font-size="12.5" fill="#b85450" filter="url(#rough2)">继续尝试更小的 v</text>
+  <path d="M260,272 L292,272" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M290,282 L262,282" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="4,4" filter="url(#rough2)"/>
+
+  <rect x="150" y="308" width="220" height="38" rx="8" fill="#f0f0f0" stroke="#999" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="333" text-anchor="middle" font-size="13" fill="#555" filter="url(#rough2)">所有 v ≥ 2 都失败？最后把 1 单独放 pos</text>
+</svg>
