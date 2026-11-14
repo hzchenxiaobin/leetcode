@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：逐格填 min(剩余行和, 剩余列和)，一步清零一侧</text>
+
+  <!-- 矩阵框架 -->
+  <text x="150" y="70" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">正在填格 (i=0, j=0)</text>
+  <g filter="url(#rough2)">
+    <rect x="150" y="86" width="60" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="4"/>
+    <rect x="210" y="86" width="60" height="44" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" rx="4"/>
+    <rect x="150" y="130" width="60" height="44" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" rx="4"/>
+    <rect x="210" y="130" width="60" height="44" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle">
+    <text x="180" y="113" fill="#b8860b" font-weight="bold">v=3</text>
+    <text x="240" y="113" fill="#999">?</text>
+    <text x="180" y="157" fill="#999">?</text>
+    <text x="240" y="157" fill="#999">?</text>
+  </g>
+
+  <!-- rs 列 -->
+  <text x="118" y="103" font-size="13" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">rs₀=3</text>
+  <text x="118" y="147" font-size="13" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">rs₁=8</text>
+  <path d="M 138 100 L 146 105" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="104" y="88" font-size="11" fill="#b85450" text-anchor="middle" filter="url(#rough2)">3 → 0</text>
+
+  <!-- cs 行 -->
+  <text x="180" y="198" font-size="13" fill="#4a7a3a" font-weight="bold" text-anchor="middle" filter="url(#rough2)">cs₀=4</text>
+  <text x="240" y="198" font-size="13" fill="#4a7a3a" font-weight="bold" text-anchor="middle" filter="url(#rough2)">cs₁=7</text>
+  <path d="M 190 182 L 194 174" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="222" y="186" font-size="11" fill="#b85450" filter="url(#rough2)">4 → 1</text>
+
+  <!-- 右侧：公式与不变量 -->
+  <g filter="url(#rough2)">
+    <rect x="320" y="66" width="220" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="430" y="92" font-weight="bold" fill="#446688">v = min(rs_i, cs_j)</text>
+    <text x="430" y="118">填入后两侧同时减 v</text>
+    <text x="430" y="142" fill="#b8860b">较小的一侧恰好归零</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="320" y="170" width="220" height="104" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="430" y="196" font-weight="bold" fill="#2d5a22">两个不变量</text>
+    <text x="430" y="220">A：Σ剩余行和 = Σ剩余列和</text>
+    <text x="430" y="242">B：所有剩余量恒非负</text>
+    <text x="430" y="264">⇒ 扫完一行该行必然归零</text>
+  </g>
+
+  <!-- 底部：贪心 vs 网络流 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="296" width="460" height="82" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="320">本题的可行流视角：源 → 行（cap=rowSum）→ 列（cap=∞）→ 汇（cap=colSum）</text>
+    <text x="280" y="344">贪心 = 完全二分图上最朴素的增广：每次把一行的余量全部推给它能吸收的列</text>
+    <text x="280" y="368" font-weight="bold" fill="#b8860b">遍历顺序随意——正确性只依赖不变量，O(mn) 一遍扫完</text>
+  </g>
+</svg>

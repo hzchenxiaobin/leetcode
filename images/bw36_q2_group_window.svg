@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="79"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：按姓名分组 + 组内排序 + 长度 3 窗口</text>
+
+  <!-- 左：原始记录 -->
+  <text x="110" y="66" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">原始记录（无序）</text>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <rect x="30" y="80" width="150" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="4"/>
+    <text x="105" y="100">("bob", "21:30")</text>
+    <rect x="30" y="116" width="150" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="4"/>
+    <text x="105" y="136">("alice", "12:01")</text>
+    <rect x="30" y="152" width="150" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="4"/>
+    <text x="105" y="172">("bob", "21:00")</text>
+    <rect x="30" y="188" width="150" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="4"/>
+    <text x="105" y="208">("alice", "18:00")</text>
+    <rect x="30" y="224" width="150" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="4"/>
+    <text x="105" y="244">("bob", "21:20")</text>
+  </g>
+
+  <!-- 中：哈希分组 -->
+  <g filter="url(#rough2)">
+    <rect x="215" y="130" width="110" height="70" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="270" y="158" font-weight="bold" fill="#4a7a3a">哈希表分组</text>
+    <text x="270" y="180">by[name]</text>
+  </g>
+  <path d="M 184 150 C 198 150, 200 158, 213 162" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 184 190 C 200 190, 200 178, 213 172" fill="none" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 右：两组时间轴 -->
+  <text x="450" y="66" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">组内排序成时间轴</text>
+
+  <!-- bob -->
+  <text x="360" y="112" font-size="12.5" fill="#446688" font-weight="bold" filter="url(#rough2)">bob:</text>
+  <line x1="400" y1="108" x2="530" y2="108" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#333" text-anchor="middle">
+    <circle cx="425" cy="108" r="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="458" cy="108" r="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="491" cy="108" r="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="524" cy="108" r="6" fill="#f0f0f0" stroke="#999" stroke-width="1.2"/>
+    <text x="425" y="94">21:00</text>
+    <text x="458" y="94">21:20</text>
+    <text x="491" y="94">21:30</text>
+    <text x="524" y="94">23:00</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 418 128 L 498 128" fill="none" stroke="#4a7a3a" stroke-width="2.2"/>
+    <path d="M 418 128 L 418 121" stroke="#4a7a3a" stroke-width="2.2"/>
+    <path d="M 498 128 L 498 121" stroke="#4a7a3a" stroke-width="2.2"/>
+  </g>
+  <text x="458" y="146" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">t[2]−t[0]=30 ≤ 60 → 警告!</text>
+
+  <!-- alice -->
+  <text x="360" y="196" font-size="12.5" fill="#b8860b" font-weight="bold" filter="url(#rough2)">alice:</text>
+  <line x1="400" y1="192" x2="530" y2="192" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#333" text-anchor="middle">
+    <circle cx="425" cy="192" r="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <circle cx="470" cy="192" r="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <circle cx="515" cy="192" r="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="425" y="178">12:00</text>
+    <text x="470" y="178">12:01</text>
+    <text x="515" y="178">18:00</text>
+  </g>
+  <text x="468" y="228" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">任何窗口差均 &gt; 60 → 无警告</text>
+
+  <!-- 底部要点 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="266" width="460" height="92" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="290">三元组是否落在一小时内，只需看排序后「连续三个」：</text>
+    <text x="280" y="314">存在某三元组跨度 ≤ 60 ⇔ 存在 i 使 t[i+2] − t[i] ≤ 60</text>
+    <text x="280" y="345" font-weight="bold" fill="#b8860b">每人从 O(k³) 枚举降到一趟 O(k) 扫描</text>
+  </g>
+</svg>

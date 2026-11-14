@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：每个请求的四步处理</text>
+
+  <!-- 输入 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="60" width="170" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="115" y="83" font-weight="bold" fill="#446688">请求 i 到达</text>
+    <text x="115" y="104">t = arrival[i]，w = load[i]</text>
+  </g>
+  <path d="M 200 88 L 236 88" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 1 释放 -->
+  <g filter="url(#rough2)">
+    <rect x="238" y="56" width="150" height="64" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="313" y="80" font-weight="bold" fill="#2d5a22">① 释放</text>
+    <text x="313" y="100">弹出忙堆中</text>
+    <text x="313" y="114">结束时间 ≤ t 的服务器</text>
+  </g>
+  <path d="M 313 120 L 313 148" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定空闲 -->
+  <g filter="url(#rough2)">
+    <polygon points="313,150 373,178 313,206 253,178" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+  </g>
+  <text x="313" y="183" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">free 空？</text>
+  <path d="M 253 178 L 150 178 L 150 210" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="200" y="170" font-size="11.5" fill="#888" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="90" y="212" width="120" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="150" y="238" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">舍弃请求</text>
+  <path d="M 313 206 L 313 234" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="325" y="224" font-size="11.5" fill="#888" filter="url(#rough2)">否</text>
+
+  <!-- 步骤 3 选择 -->
+  <g filter="url(#rough2)">
+    <rect x="238" y="236" width="150" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="313" y="260" font-weight="bold" fill="#b8860b">② 选服务器</text>
+    <text x="313" y="280">it = free.lower_bound(i%k)</text>
+    <text x="313" y="296">到 end 则回绕 begin()</text>
+    <text x="313" y="312" fill="#b8860b">s = *it</text>
+  </g>
+  <path d="M 313 312 L 313 340" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4 记录 -->
+  <g filter="url(#rough2)">
+    <rect x="238" y="342" width="150" height="64" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="313" y="366" font-weight="bold" fill="#446688">③ 记账</text>
+    <text x="313" y="386">cnt[s]++</text>
+    <text x="313" y="402">busy 压入 (t+w, s)</text>
+  </g>
+
+  <!-- 右侧：数据结构 -->
+  <g filter="url(#rough2)">
+    <rect x="410" y="236" width="130" height="170" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="475" y="260" font-weight="bold" fill="#b8860b">两个数据结构</text>
+    <text x="475" y="288">free：有序集合</text>
+    <text x="475" y="306">（空闲编号）</text>
+    <text x="475" y="336">busy：小根堆</text>
+    <text x="475" y="354">（结束时间, 编号）</text>
+    <text x="475" y="386" fill="#4a7a3a">每台服务器同一</text>
+    <text x="475" y="400" fill="#4a7a3a">时刻只一个任务</text>
+  </g>
+
+  <!-- 循环回边 -->
+  <path d="M 475 236 C 475 200, 200 130, 112 118" fill="none" stroke="#446688" stroke-width="1.6" stroke-dasharray="6,4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="440" y="212" font-size="11.5" fill="#888" filter="url(#rough2)">处理下一个请求</text>
+</svg>

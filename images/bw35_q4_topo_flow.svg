@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="67"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：边框建图 + Kahn 拓扑排序</text>
+
+  <!-- 步骤 1 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="60" width="220" height="72" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="150" y="86" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">① 求每种颜色 c 的边框</text>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="150" y="108">扫描网格一遍，更新</text>
+    <text x="150" y="124">minR/maxR/minC/maxC</text>
+  </g>
+  <path d="M 260 96 L 296 96" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <g filter="url(#rough2)">
+    <rect x="298" y="60" width="222" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="409" y="86" text-anchor="middle" font-size="13" fill="#b8860b" font-weight="bold" filter="url(#rough2)">② 扫边框内部建依赖边</text>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="409" y="108">对每种颜色 b、B(b) 内每格：</text>
+    <text x="409" y="124">a ≠ b 则建边 b→a（去重 + 入度）</text>
+  </g>
+  <path d="M 409 132 L 409 160" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3：Kahn -->
+  <g filter="url(#rough2)">
+    <rect x="150" y="162" width="260" height="92" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="188" text-anchor="middle" font-size="13" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">③ Kahn 拓扑排序</text>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="280" y="210">入度 0 的颜色入队 → 弹出 b</text>
+    <text x="280" y="228">→ 对 b 指向的每个 a 减入度</text>
+    <text x="280" y="246">→ 减为 0 则入队，直到队空</text>
+  </g>
+  <path d="M 280 254 L 280 282" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4：判定 -->
+  <g filter="url(#rough2)">
+    <polygon points="280,284 356,316 280,348 204,316" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="4"/>
+  </g>
+  <text x="280" y="321" text-anchor="middle" font-size="13.5" fill="#333" filter="url(#rough2)">done == present ?</text>
+  <path d="M 356 316 L 420 316" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="382" y="308" font-size="11.5" fill="#888" filter="url(#rough2)">是</text>
+  <path d="M 280 348 L 280 368" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="364" font-size="11.5" fill="#888" filter="url(#rough2)">否</text>
+
+  <g filter="url(#rough2)">
+    <rect x="422" y="300" width="110" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <text x="477" y="322" text-anchor="middle" font-size="14" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">true ✓</text>
+  <g filter="url(#rough2)">
+    <rect x="224" y="368" width="112" height="28" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <text x="280" y="388" text-anchor="middle" font-size="14" fill="#b85450" font-weight="bold" filter="url(#rough2)">false ×</text>
+
+  <!-- 右下侧补充：present 释义 -->
+  <g filter="url(#rough2)" font-size="11.5" fill="#888" text-anchor="middle">
+    <text x="452" y="372">present = 出现过的颜色数</text>
+    <text x="452" y="390">（未出现颜色不打印不建边）</text>
+  </g>
+</svg>
