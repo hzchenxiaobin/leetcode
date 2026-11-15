@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="47"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">流程：求子树和 → 枚举块数 c → 计数判定</text>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="44" width="260" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" rx="8"/>
+  </g>
+  <text x="280" y="66" text-anchor="middle" font-size="12.5" fill="#1a2b45" filter="url(#rough2)">① 迭代 DFS：order（父先于子）+ 逆序累加得 sum[]</text>
+
+  <path d="M 280 80 L 280 102" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="106" width="260" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" rx="8"/>
+  </g>
+  <text x="280" y="128" text-anchor="middle" font-size="12.5" fill="#1a2b45" filter="url(#rough2)">② S = sum[0]，mx = max(nums)</text>
+
+  <path d="M 280 142 L 280 164" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="140" y="168" width="280" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="9"/>
+  </g>
+  <text x="280" y="188" text-anchor="middle" font-size="12.5" fill="#7a5a14" font-weight="bold" filter="url(#rough2)">③ for c = n downto 1（块数从大到小）</text>
+  <text x="280" y="207" text-anchor="middle" font-size="11.5" fill="#7a5a14" filter="url(#rough2)">首个可行的 c 直接给出最大删边数 c − 1</text>
+
+  <path d="M 420 191 L 470 191 L 470 240 L 425 240" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="478" y="230" font-size="11" fill="#446688" filter="url(#rough2)">S % c</text>
+  <text x="478" y="244" font-size="11" fill="#446688" filter="url(#rough2)">≠ 0 跳过</text>
+
+  <g filter="url(#rough2)">
+    <rect x="140" y="222" width="280" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="280" y="244" text-anchor="middle" font-size="12" fill="#1d3a17" filter="url(#rough2)">④ t = S / c；若 t &lt; mx 直接剪枝跳过</text>
+
+  <path d="M 280 258 L 280 280" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="120" y="284" width="320" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" rx="9"/>
+  </g>
+  <text x="280" y="309" text-anchor="middle" font-size="12.5" fill="#1a2b45" filter="url(#rough2)">⑤ K = #{ u ≠ root : sum[u] % t == 0 }</text>
+
+  <path d="M 280 326 L 280 348" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="298" y="342" font-size="11.5" fill="#b85450" filter="url(#rough2)">K == c − 1 ?</text>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="352" width="130" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="9"/>
+  </g>
+  <text x="215" y="375" text-anchor="middle" font-size="12.5" fill="#1d3a17" font-weight="bold" filter="url(#rough2)">是 → 返回 c−1</text>
+
+  <path d="M 120 370 L 96 370 L 96 240 L 138 240" stroke="#888" stroke-width="1.4" fill="none" stroke-dasharray="4 3" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="66" y="310" font-size="11" fill="#888" filter="url(#rough2)">否 →</text>
+  <text x="62" y="326" font-size="11" fill="#888" filter="url(#rough2)">换 c</text>
+
+  <g filter="url(#rough2)">
+    <rect x="310" y="392" width="200" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="9"/>
+  </g>
+  <text x="410" y="415" text-anchor="middle" font-size="11.5" fill="#7a2f2b" filter="url(#rough2)">全程 O(n · d(S))，S ≤ 10⁶</text>
+</svg>

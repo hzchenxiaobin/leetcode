@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 460"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="179"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="460" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">nums = [2,4,0,9,6]：双栈逐轮走查</text>
+
+  <g filter="url(#rough2)" font-size="12" fill="#446688" font-weight="bold">
+    <text x="60" y="54">i, x</text>
+    <text x="180" y="54">结算（栈 2）</text>
+    <text x="360" y="54">转移（栈 1 → 逆序 → 栈 2）</text>
+  </g>
+  <path d="M 40 62 L 520 62" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="60" y="88">0, 2</text>
+    <text x="180" y="88">—</text>
+    <text x="360" y="88">—　s1=[2]　s2=[]</text>
+  </g>
+  <path d="M 40 98 L 520 98" stroke="#dce4ee" stroke-width="1" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="60" y="124">1, 4</text>
+    <text x="180" y="124">—</text>
+    <text x="360" y="124">弹 2 → s1=[4]　s2=[2]</text>
+  </g>
+  <path d="M 40 134 L 520 134" stroke="#dce4ee" stroke-width="1" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="60" y="160">2, 0</text>
+    <text x="180" y="160">—</text>
+    <text x="360" y="160">0 不弹任何栈　s1=[4,0]　s2=[2]</text>
+  </g>
+  <path d="M 40 170 L 520 170" stroke="#dce4ee" stroke-width="1" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="60" y="196">3, 9</text>
+    <text x="180" y="196" fill="#b85450" font-weight="bold">弹 2 → ans[0]=9</text>
+    <text x="360" y="196">弹 0、4，逆序压入 → s1=[9]　s2=[4,0]</text>
+  </g>
+  <path d="M 40 206 L 520 206" stroke="#dce4ee" stroke-width="1" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="60" y="232">4, 6</text>
+    <text x="180" y="232" fill="#b85450" font-weight="bold">弹 0 → ans[2]=6</text>
+    <text x="360" y="232">不动　s1=[9,6]　s2=[]</text>
+  </g>
+  <text x="260" y="232" font-size="12" fill="#b85450" filter="url(#rough2)">弹 4 → ans[1]=6</text>
+
+  <g filter="url(#rough2)">
+    <rect x="90" y="252" width="380" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="278" text-anchor="middle" font-size="13.5" fill="#1d3a17" font-weight="bold" filter="url(#rough2)">ans = [9, 6, 6, −1, −1] ✓</text>
+
+  <g filter="url(#rough2)">
+    <rect x="50" y="306" width="500" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="300" y="330">逆序压入的秘密：i=3 时栈 1 依次弹出 0、4（值递增），</text>
+    <text x="300" y="354">若顺序压入 s2=[0,4]，x=6 会被栈顶 4 挡住 → 2 的第二大漏判</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="50" y="386" width="500" height="58" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#7a2f2b" text-anchor="middle">
+    <text x="300" y="410">对照反例 [4,2,5,3]：5 到达时弹出 2、4，逆序压成 s2=[4,2]；</text>
+    <text x="300" y="434">随后 3 弹出 2 记 ans[1]=3 —— 顺序压入则此题必错</text>
+  </g>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="67"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="151"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">示例 1：四个查询词的逐位比对走查</text>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#446688" font-weight="bold">
+    <text x="80" y="58">查询词</text>
+    <text x="250" y="58" text-anchor="middle">最优对照（字典词）</text>
+    <text x="455" y="58" text-anchor="middle">不同位数 → 判定</text>
+  </g>
+  <path d="M 55 66 L 520 66" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="80" y="94">"word"</text>
+    <text x="250" y="94" text-anchor="middle">wood：w ✓ o ✓ r✗ d ✓</text>
+    <text x="455" y="94" text-anchor="middle" fill="#1d3a17" font-weight="bold">1 ≤ 2 → 收入</text>
+  </g>
+  <path d="M 55 104 L 520 104" stroke="#c9d4e4" stroke-width="1" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="80" y="132">"note"</text>
+    <text x="250" y="132" text-anchor="middle">joke：n✗ o ✓ t✗ e ✓</text>
+    <text x="455" y="132" text-anchor="middle" fill="#1d3a17" font-weight="bold">2 ≤ 2 → 收入</text>
+  </g>
+  <path d="M 55 142 L 520 142" stroke="#c9d4e4" stroke-width="1" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="80" y="170">"ants"</text>
+    <text x="250" y="170" text-anchor="middle">wood：a✗ n✗ t✗ s✗（最少也 4 处）</text>
+    <text x="455" y="170" text-anchor="middle" fill="#b85450" font-weight="bold">4 &gt; 2 → 剔除</text>
+  </g>
+  <path d="M 55 180 L 520 180" stroke="#c9d4e4" stroke-width="1" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="80" y="208">"wood"</text>
+    <text x="250" y="208" text-anchor="middle">wood：全 ✓（字典原词）</text>
+    <text x="455" y="208" text-anchor="middle" fill="#1d3a17" font-weight="bold">0 ≤ 2 → 收入</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="228" width="440" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#1d3a17" text-anchor="middle">
+    <text x="280" y="252">输出（按 queries 原顺序）：</text>
+    <text x="280" y="274">["word", "note", "wood"]</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="300" width="440" height="104" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="280" y="324">工程细节：</text>
+    <text x="280" y="346">· diff 计到 3 就提前 break（止损）</text>
+    <text x="280" y="368">· 命中一个字典词即换下一个查询（存在性判定）</text>
+    <text x="280" y="390">· 总量 100 × 100 × 100 = 10⁶ 次比较，暴力即正解</text>
+  </g>
+</svg>
