@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 330" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="330" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">DP 状态与转移：返回 (cnt, sum) 二元组</text>
+
+  <!-- 状态框 -->
+  <rect x="46" y="46" width="240" height="62" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="166" y="68" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">state = (pos, prev2, prev1,</text>
+  <text x="166" y="86" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">tight, started)</text>
+  <text x="166" y="102" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">tight 只用于约束上限，不记忆</text>
+
+  <path d="M290,78 L322,78" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <rect x="326" y="46" width="150" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="401" y="70" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">枚举 d = 0 .. hi</text>
+  <text x="401" y="90" text-anchor="middle" font-size="10" fill="#d6a040" filter="url(#rough2)">hi = tight ? N[pos] : 9</text>
+
+  <!-- 三条分支 -->
+  <path d="M260,112 L260,140" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <rect x="30" y="146" width="146" height="58" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="103" y="166" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">!started 且 d == 0</text>
+  <text x="103" y="184" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">前导零：状态不变</text>
+  <text x="103" y="198" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">不结算、不推进</text>
+
+  <rect x="188" y="146" width="146" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="261" y="166" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">!started 且 d != 0</text>
+  <text x="261" y="184" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">首位：prev2 = NONE</text>
+  <text x="261" y="198" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">prev1 = d，不结算</text>
+
+  <rect x="346" y="146" width="146" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="419" y="166" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">started</text>
+  <text x="419" y="184" text-anchor="middle" font-size="10" fill="#d6a040" filter="url(#rough2)">结算 prev1（若 prev2 存在）</text>
+  <text x="419" y="198" text-anchor="middle" font-size="10" fill="#d6a040" filter="url(#rough2)">新 prev2 = 旧 prev1</text>
+
+  <!-- 合并 -->
+  <path d="M260,208 L260,232" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <rect x="96" y="236" width="330" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="261" y="256" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">cnt += sub.cnt ；sum += sub.sum + add × sub.cnt</text>
+  <text x="261" y="274" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">add 个贡献要乘以子问题的方案数</text>
+
+  <path d="M260,284 L260,304" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <text x="260" y="324" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">F(N) = dfs(0,NONE,NONE,true,false).sum ⇒ 答案 = F(num2) − F(num1−1)</text>
+</svg>
