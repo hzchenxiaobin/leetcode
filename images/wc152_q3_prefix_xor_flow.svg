@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">前缀异或：一个整数装下 26 个字母的奇偶性</text>
+  <text x="280" y="49" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">异或既是「合并」也是「差分」，于是每个查询 O(1)</text>
+
+  <rect x="30" y="66" width="286" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="88" font-size="12" fill="#2c4a6b" font-weight="bold" filter="url(#rough2)">① 掩码：第 c 位 = 字符 c 的计数奇偶</text>
+  <text x="46" y="108" font-size="10.5" fill="#555" filter="url(#rough2)">bit c = 1 表示出现了奇数次（0 ≤ c &lt; 26）</text>
+
+  <path d="M 173 126 L 173 148" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="150" width="286" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="172" font-size="12" fill="#2c4a6b" font-weight="bold" filter="url(#rough2)">② 前缀：pre[i+1] = pre[i] ^ (1 &lt;&lt; bit)</text>
+  <text x="46" y="192" font-size="10.5" fill="#555" filter="url(#rough2)">pre[0] = 0；同一字母第二次出现会抵消</text>
+
+  <path d="M 173 210 L 173 232" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="234" width="286" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="256" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 区间：mask = pre[r+1] ^ pre[l]</text>
+  <text x="46" y="276" font-size="10.5" fill="#555" filter="url(#rough2)">l 之前的部分被异或两次，自动抵消</text>
+
+  <path d="M 173 294 L 173 316" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="318" width="286" height="72" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="342" font-size="12" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 判据：odd = popcount(mask)</text>
+  <text x="46" y="362" font-size="10.5" fill="#666" filter="url(#rough2)">odd // 2 ≤ k，等价于 odd ≤ 2k + 1</text>
+  <text x="46" y="380" font-size="10" fill="#888" filter="url(#rough2)">预处理 O(n)，之后每个查询 O(1)</text>
+
+  <rect x="336" y="66" width="196" height="324" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="434" y="90" text-anchor="middle" font-size="11.5" fill="#3a6a2c" font-weight="bold" filter="url(#rough2)">s = "abcda" 的抵消过程</text>
+
+  <text x="350" y="118" font-size="10.5" fill="#555" filter="url(#rough2)">a → bit0 = 1</text>
+  <text x="350" y="140" font-size="10.5" fill="#555" filter="url(#rough2)">b → bit1 = 2</text>
+  <text x="350" y="162" font-size="10.5" fill="#555" filter="url(#rough2)">c → bit2 = 4</text>
+  <text x="350" y="184" font-size="10.5" fill="#555" filter="url(#rough2)">d → bit3 = 8</text>
+
+  <path d="M 434 198 L 434 214" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="350" y="236" font-size="10.5" fill="#555" filter="url(#rough2)">整串 [0,4]：</text>
+  <text x="350" y="256" font-size="10.5" fill="#555" filter="url(#rough2)">1 ^ 2 ^ 4 ^ 8 ^ 1</text>
+  <text x="350" y="276" font-size="10.5" fill="#555" filter="url(#rough2)">= 2 ^ 4 ^ 8 = 0b1110</text>
+
+  <rect x="348" y="290" width="172" height="88" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="360" y="312" font-size="10.5" fill="#3a6a2c" filter="url(#rough2)">两个 a 各贡献 bit0，</text>
+  <text x="360" y="330" font-size="10.5" fill="#3a6a2c" filter="url(#rough2)">异或后 bit0 变 0</text>
+  <text x="360" y="352" font-size="10.5" fill="#b85450" filter="url(#rough2)">剩下 b c d 三个奇数位</text>
+  <text x="360" y="370" font-size="10.5" fill="#b85450" filter="url(#rough2)">odd = 3 → 需 1 次替换</text>
+</svg>

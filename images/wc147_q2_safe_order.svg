@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 452" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="452" fill="#fafafa"/>
+
+  <text x="330" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">固定顺序 L → U → D → R：对任意起终点都不会踩空</text>
+  <text x="330" y="50" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">每段只输出「该方向上的差值」条指令，差值为 0 的那一段自然为空</text>
+
+  <g filter="url(#rough2)">
+    <rect x="44" y="70" width="122" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <rect x="194" y="70" width="122" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <rect x="344" y="70" width="122" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="494" y="70" width="122" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <g text-anchor="middle" filter="url(#rough2)">
+    <text x="105" y="90" font-size="12" fill="#33445c" font-weight="bold">① L 左移</text>
+    <text x="105" y="107" font-size="9.5" fill="#556">条数 c − nc　先做</text>
+    <text x="255" y="90" font-size="12" fill="#3a5a30" font-weight="bold">② U 上移</text>
+    <text x="255" y="107" font-size="9.5" fill="#556">条数 r − nr</text>
+    <text x="405" y="90" font-size="12" fill="#8a6a20" font-weight="bold">③ D 下移</text>
+    <text x="405" y="107" font-size="9.5" fill="#556">条数 nr − r</text>
+    <text x="555" y="90" font-size="12" fill="#8a3a36" font-weight="bold">④ R 右移</text>
+    <text x="555" y="107" font-size="9.5" fill="#556">条数 nc − c　最后做</text>
+  </g>
+
+  <g stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)">
+    <path d="M 168 94 L 190 94" marker-end="url(#arr)"/>
+    <path d="M 318 94 L 340 94" marker-end="url(#arr)"/>
+    <path d="M 468 94 L 490 94" marker-end="url(#arr)"/>
+  </g>
+
+  <text x="330" y="140" text-anchor="middle" font-size="10.5" fill="#555" font-weight="bold" filter="url(#rough2)">逐步验证：每走完一个阶段，脚下一定还是字母格</text>
+
+  <rect x="24" y="150" width="612" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <g font-size="10" fill="#33445c" font-weight="bold" filter="url(#rough2)">
+    <text x="36" y="170">阶段</text>
+    <text x="104" y="170">阶段结束时的落脚点</text>
+    <text x="368" y="170">为什么仍在板上</text>
+  </g>
+
+  <g font-size="9.5" fill="#444" filter="url(#rough2)">
+    <rect x="24" y="180" width="612" height="50" fill="#ffffff" stroke="#dcdcdc" stroke-width="1"/>
+    <text x="36" y="200" fill="#33445c" font-weight="bold">① L 之后</text>
+    <text x="104" y="200">(r, nc)；若 r = 5，则 c = 0</text>
+    <text x="368" y="200">第 5 行唯一格是 (5, 0)，L 只把列变小</text>
+    <text x="36" y="220" fill="#888">先水平</text>
+    <text x="104" y="220" fill="#888">这保证了「进第 5 行时列已对齐」</text>
+    <text x="368" y="220" fill="#888">不可能出现 (5, nc&gt;0) 的中间态</text>
+
+    <rect x="24" y="230" width="612" height="50" fill="#f7f9fb" stroke="#dcdcdc" stroke-width="1"/>
+    <text x="36" y="250" fill="#3a5a30" font-weight="bold">② U 之后</text>
+    <text x="104" y="250">(nr, nc)，其中 nr ≤ 4</text>
+    <text x="368" y="250">只有在 nr &lt; r 时才上移，落点必在前 5 行</text>
+    <text x="36" y="270" fill="#888">竖直优先</text>
+    <text x="104" y="270" fill="#888">从 (5, 0) 出发也能安全离开第 5 行</text>
+    <text x="368" y="270" fill="#888">前 5 行每行 5 格，不会越界</text>
+
+    <rect x="24" y="280" width="612" height="50" fill="#ffffff" stroke="#dcdcdc" stroke-width="1"/>
+    <text x="36" y="300" fill="#8a6a20" font-weight="bold">③ D 之后</text>
+    <text x="104" y="300">(nr, nc)；只有 nr = 5 时要求 nc = 0</text>
+    <text x="368" y="300">目标是 'z' 时必有 nc = 0，而 ① 已对齐列</text>
+    <text x="36" y="320" fill="#888">下移在左移后</text>
+    <text x="104" y="320" fill="#888">所以 D 永远沿第 0 列进入第 5 行</text>
+    <text x="368" y="320" fill="#888">落点只能是 (5, 0)，正是 'z'</text>
+
+    <rect x="24" y="330" width="612" height="50" fill="#f7f9fb" stroke="#dcdcdc" stroke-width="1"/>
+    <text x="36" y="350" fill="#8a3a36" font-weight="bold">④ R 之后</text>
+    <text x="104" y="350">(nr, nc)；只有 nc &gt; c 时才移动</text>
+    <text x="368" y="350">nr = 5 意味着目标是 'z'，此时 nc = 0</text>
+    <text x="36" y="370" fill="#888">右移在最后</text>
+    <text x="104" y="370" fill="#888">故 U 一定先于 R，从 z 出发不会先右移</text>
+    <text x="368" y="370" fill="#888">R 段必然发生在第 0..4 行内</text>
+  </g>
+
+  <rect x="24" y="390" width="612" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="40" y="410" font-size="10" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">结论：L 在 D 之前（进第 5 行前列已对齐）、U 在 R 之前（离第 5 行前先抬起来）</text>
+  <text x="40" y="428" font-size="10" fill="#3a5a30" filter="url(#rough2)">于是代码里不需要任何 if 特判 'z'，一个顺序通吃全部 26 × 26 种起终点组合</text>
+</svg>

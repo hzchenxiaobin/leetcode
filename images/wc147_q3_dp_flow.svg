@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="400" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="300" y="28" text-anchor="middle" font-size="15.5" fill="#333" font-weight="bold">算法流程：两遍 DP 定边，再逐个右下角试边长</text>
+  <text filter="url(#rough2)" x="300" y="48" text-anchor="middle" font-size="11" fill="#777">预处理把「连续 1 有多长」变成查表，判定一次正方形只要 O(1)</text>
+
+  <!-- 六个步骤框 -->
+  <rect filter="url(#rough2)" x="60" y="68" width="250" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  <text filter="url(#rough2)" x="74" y="86" font-size="11.8" fill="#2f4a66" font-weight="bold">① 预处理 left 与 up</text>
+  <text filter="url(#rough2)" x="74" y="102" font-size="10.2" fill="#4a6a86">left 向左数、up 向上数连续 1</text>
+
+  <rect filter="url(#rough2)" x="60" y="124" width="250" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  <text filter="url(#rough2)" x="74" y="142" font-size="11.8" fill="#2f4a66" font-weight="bold">② 枚举右下角 (i, j)</text>
+  <text filter="url(#rough2)" x="74" y="158" font-size="10.2" fill="#4a6a86">mn 个候选，值为 0 的格子可跳过</text>
+
+  <rect filter="url(#rough2)" x="60" y="180" width="250" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  <text filter="url(#rough2)" x="74" y="198" font-size="11.8" fill="#7a5a10" font-weight="bold">③ 定初始边长 s</text>
+  <text filter="url(#rough2)" x="74" y="214" font-size="10.2" fill="#8a6a20">s = min(left[i][j], up[i][j]) 起步</text>
+
+  <rect filter="url(#rough2)" x="60" y="236" width="250" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  <text filter="url(#rough2)" x="74" y="254" font-size="11.8" fill="#7a5a10" font-weight="bold">④ 用另外两条边验证</text>
+  <text filter="url(#rough2)" x="74" y="270" font-size="10.2" fill="#8a6a20">顶行与左列的两个量也要 ≥ s</text>
+
+  <rect filter="url(#rough2)" x="60" y="292" width="250" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  <text filter="url(#rough2)" x="74" y="310" font-size="11.8" fill="#3a5a30" font-weight="bold">⑤ 通过就更新并跳出</text>
+  <text filter="url(#rough2)" x="74" y="326" font-size="10.2" fill="#4a7a3a">best = max(best, s)，不再试更小的 s</text>
+
+  <rect filter="url(#rough2)" x="60" y="348" width="250" height="42" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+  <text filter="url(#rough2)" x="74" y="366" font-size="11.8" fill="#8a3a36" font-weight="bold">⑥ 返回 best × best</text>
+  <text filter="url(#rough2)" x="74" y="382" font-size="10.2" fill="#a05a56">一个合法的边框都没有时 best = 0</text>
+
+  <!-- 竖直箭头 -->
+  <path filter="url(#rough2)" d="M 185 110 L 185 121" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  <path filter="url(#rough2)" d="M 185 166 L 185 177" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  <path filter="url(#rough2)" d="M 185 222 L 185 233" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  <path filter="url(#rough2)" d="M 185 278 L 185 289" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  <path filter="url(#rough2)" d="M 185 334 L 185 345" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+
+  <!-- 右侧注解 -->
+  <text filter="url(#rough2)" x="332" y="88" font-size="10.8" fill="#555">代价 O(mn)，两次线性扫描</text>
+  <text filter="url(#rough2)" x="332" y="144" font-size="10.8" fill="#555">循环体里只有查表和比较</text>
+  <text filter="url(#rough2)" x="332" y="200" font-size="10.8" fill="#555">s 不会超过两边各自已有长度</text>
+  <text filter="url(#rough2)" x="332" y="256" font-size="10.8" fill="#555">left[i−s+1][j] ≥ s 管上边</text>
+  <text filter="url(#rough2)" x="332" y="272" font-size="10.8" fill="#555">up[i][j−s+1] ≥ s 管左边</text>
+  <text filter="url(#rough2)" x="332" y="312" font-size="10.8" fill="#555">从大到小试，第一次成功即最优</text>
+  <text filter="url(#rough2)" x="332" y="368" font-size="10.8" fill="#555">总时间 O(mn · min(m, n))</text>
+</svg>

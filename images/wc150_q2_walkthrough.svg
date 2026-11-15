@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+  <text x="290" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例 1 演算：root = [1, 7, 0, 7, −8, null, null]</text>
+  <text x="290" y="45" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">层号升序扫描，只有「严格大于」才更新答案</text>
+
+  <!-- 表头 -->
+  <rect x="40" y="62" width="500" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="75" y="82" text-anchor="middle" font-size="11" fill="#2f4360" filter="url(#rough2)">层号</text>
+  <text x="200" y="82" text-anchor="middle" font-size="11" fill="#2f4360" filter="url(#rough2)">本层节点（入队顺序）</text>
+  <text x="340" y="82" text-anchor="middle" font-size="11" fill="#2f4360" filter="url(#rough2)">层和</text>
+  <text x="465" y="82" text-anchor="middle" font-size="11" fill="#2f4360" filter="url(#rough2)">best / ans</text>
+
+  <!-- 第 1 行 -->
+  <rect x="40" y="92" width="500" height="40" fill="#ffffff" stroke="#dcdcdc" stroke-width="1.1" filter="url(#rough2)"/>
+  <text x="75" y="117" text-anchor="middle" font-size="12" fill="#444" filter="url(#rough2)">1</text>
+  <text x="200" y="117" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">[1]</text>
+  <text x="340" y="117" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">1</text>
+  <text x="465" y="117" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">best = 1，ans = 1</text>
+
+  <!-- 第 2 行（命中最优层） -->
+  <rect x="40" y="132" width="500" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="75" y="157" text-anchor="middle" font-size="12" fill="#3a5a30" filter="url(#rough2)">2</text>
+  <text x="200" y="157" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">[7, 0]</text>
+  <text x="340" y="157" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">7</text>
+  <text x="465" y="157" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">7 &gt; 1 → best = 7，ans = 2</text>
+
+  <!-- 第 3 行 -->
+  <rect x="40" y="172" width="500" height="40" fill="#ffffff" stroke="#dcdcdc" stroke-width="1.1" filter="url(#rough2)"/>
+  <text x="75" y="197" text-anchor="middle" font-size="12" fill="#444" filter="url(#rough2)">3</text>
+  <text x="200" y="197" text-anchor="middle" font-size="11" fill="#444" filter="url(#rough2)">[7, −8]</text>
+  <text x="340" y="197" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">−1</text>
+  <text x="465" y="197" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">−1 &lt; 7 → 不更新</text>
+
+  <!-- 结论 -->
+  <path d="M 290 212 L 290 228" stroke="#888" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="88" y="230" width="404" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="256" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">第 3 层出队后 queue 为空 ⇒ 返回 ans = 2</text>
+
+  <!-- 示例 2 -->
+  <rect x="40" y="288" width="500" height="62" fill="#ffffff" stroke="#c8c8c8" stroke-width="1.3" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="308" font-size="10.5" fill="#444" font-weight="bold" filter="url(#rough2)">示例 2：989 | 10250 | 98693+(−89388)=9305 | −32127</text>
+  <text x="56" y="326" font-size="10" fill="#777" filter="url(#rough2)">四层层和依次为 989、10250、9305、−32127，最大在 2 层</text>
+  <text x="56" y="342" font-size="10" fill="#b85450" filter="url(#rough2)">⇒ 返回 2（注意第 3 层被负数拉低，只看「和」不看「节点数」）</text>
+
+  <text x="290" y="378" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">并列示例 [0,0,0]：三层都是 0，第一层先写入，答案恒为 1</text>
+</svg>

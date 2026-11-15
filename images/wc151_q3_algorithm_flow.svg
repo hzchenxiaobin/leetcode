@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arro" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="640" height="430" fill="#fafafa"/>
+  <text x="320" y="28" font-size="14.5" fill="#333" font-weight="bold" text-anchor="middle" filter="url(#rough2)">两遍扫描：先记前缀和的最后位置，再一次性跳过零和区间</text>
+  <text x="320" y="48" font-size="10.5" fill="#888" text-anchor="middle" filter="url(#rough2)">全程不真的删除节点，只重接 next 指针</text>
+  <rect x="28" y="72" width="312" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="42" y="93" font-size="11.5" fill="#2f4a66" font-weight="bold" filter="url(#rough2)">① 建哑结点，统一前缀和口径</text>
+  <text x="42" y="112" font-size="9.8" fill="#555" filter="url(#rough2)">dummy = ListNode(0, head)，s = 0</text>
+  <text x="42" y="129" font-size="9.8" fill="#555" filter="url(#rough2)">原头节点也可能被删，有人兜底就不用特判</text>
+  <rect x="28" y="158" width="312" height="74" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="42" y="179" font-size="11.5" fill="#7a5c18" font-weight="bold" filter="url(#rough2)">② 第一遍：扫全表，记「最后位置」</text>
+  <text x="42" y="198" font-size="9.8" fill="#555" filter="url(#rough2)">for p in dummy … null:  s += p.val</text>
+  <text x="42" y="215" font-size="9.8" fill="#555" filter="url(#rough2)">last[s] = p（同一数值覆盖写，留下末次）</text>
+  <rect x="28" y="252" width="312" height="74" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="42" y="273" font-size="11.5" fill="#2f5e22" font-weight="bold" filter="url(#rough2)">③ 第二遍：按表跳指针，批量删除</text>
+  <text x="42" y="292" font-size="9.8" fill="#555" filter="url(#rough2)">s 重新从 0 累加，p.next = last[s].next</text>
+  <text x="42" y="309" font-size="9.8" fill="#555" filter="url(#rough2)">被跳过的整段之和恒为 0，然后 p 前进</text>
+  <rect x="28" y="346" width="312" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="42" y="367" font-size="11.5" fill="#8a3b38" font-weight="bold" filter="url(#rough2)">④ 返回 dummy.next</text>
+  <text x="42" y="386" font-size="9.8" fill="#555" filter="url(#rough2)">head 自身可能就是零和段的一部分</text>
+  <path d="M 184 138 L 184 155" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 184 232 L 184 249" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 184 326 L 184 343" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="360" y="72" width="252" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="9" filter="url(#rough2)"/>
+  <text x="372" y="92" font-size="10.8" fill="#2f5e22" font-weight="bold" filter="url(#rough2)">为什么跳一次就够</text>
+  <text x="372" y="110" font-size="9.6" fill="#555" filter="url(#rough2)">每段被跳过的区间 [p+1, last[s]]</text>
+  <text x="372" y="126" font-size="9.6" fill="#555" filter="url(#rough2)">节点值之和恰为 0；各段互不重叠，</text>
+  <text x="372" y="142" font-size="9.6" fill="#555" filter="url(#rough2)">所以一趟走到底即得终态</text>
+  <rect x="360" y="186" width="252" height="104" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="9" filter="url(#rough2)"/>
+  <text x="372" y="206" font-size="10.8" fill="#8a3b38" font-weight="bold" filter="url(#rough2)">⚠ 必须存「最后一次」</text>
+  <text x="372" y="224" font-size="9.6" fill="#555" filter="url(#rough2)">若只存首次出现，跳转会指回前面：</text>
+  <text x="372" y="240" font-size="9.6" fill="#555" filter="url(#rough2)">输入 [1, −1, 1] 时下标 2 指回下标 1，</text>
+  <text x="372" y="256" font-size="9.6" fill="#555" filter="url(#rough2)">于是成环：死循环 / 超出时间限制</text>
+  <rect x="360" y="308" width="252" height="94" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="9" filter="url(#rough2)"/>
+  <text x="372" y="328" font-size="10.8" fill="#2f4a66" font-weight="bold" filter="url(#rough2)">复杂度</text>
+  <text x="372" y="346" font-size="9.6" fill="#555" filter="url(#rough2)">时间 O(n)：两趟线性扫描</text>
+  <text x="372" y="362" font-size="9.6" fill="#555" filter="url(#rough2)">空间 O(n)：last 表至多 n+1 项</text>
+  <text x="372" y="378" font-size="9.6" fill="#555" filter="url(#rough2)">只改 next，不动 val</text>
+  <text x="28" y="424" font-size="10.5" fill="#888" filter="url(#rough2)">指针只向右单调推进：跳转目标永远不在当前位置左边，因此不存在回退与递归。</text>
+</svg>

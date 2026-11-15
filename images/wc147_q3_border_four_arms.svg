@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="420" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="300" y="28" text-anchor="middle" font-size="15.5" fill="#333" font-weight="bold">右下角 (i,j) 固定、边长 s 固定：四条边要分别验证</text>
+  <text filter="url(#rough2)" x="300" y="48" text-anchor="middle" font-size="11" fill="#777">内部格子填 0 也不影响合法性，只有边框上的连续 1 才作数</text>
+
+  <!-- 内部 -->
+  <rect filter="url(#rough2)" x="180" y="85" width="220" height="220" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+  <text filter="url(#rough2)" x="290" y="172" text-anchor="middle" font-size="13.5" fill="#4a7a3a" font-weight="bold">内部随便填</text>
+  <text filter="url(#rough2)" x="290" y="194" text-anchor="middle" font-size="11" fill="#5c7a4a">中间是 0 也没关系</text>
+
+  <!-- 四条边（蓝色带） -->
+  <rect filter="url(#rough2)" x="180" y="85" width="220" height="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  <rect filter="url(#rough2)" x="180" y="289" width="220" height="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  <rect filter="url(#rough2)" x="180" y="85" width="16" height="220" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  <rect filter="url(#rough2)" x="384" y="85" width="16" height="220" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+
+  <!-- 扫描方向箭头 -->
+  <path filter="url(#rough2)" d="M 392 297 L 196 297" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <path filter="url(#rough2)" d="M 392 297 L 392 101" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <path filter="url(#rough2)" d="M 392 93 L 196 93" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  <path filter="url(#rough2)" d="M 188 297 L 188 101" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+
+  <!-- 角点 -->
+  <circle filter="url(#rough2)" cx="188" cy="93" r="4.5" fill="#d6a040" stroke="#8a6a20" stroke-width="1"/>
+  <circle filter="url(#rough2)" cx="392" cy="93" r="4.5" fill="#d6a040" stroke="#8a6a20" stroke-width="1"/>
+  <circle filter="url(#rough2)" cx="392" cy="297" r="4.5" fill="#d6a040" stroke="#8a6a20" stroke-width="1"/>
+  <circle filter="url(#rough2)" cx="188" cy="297" r="4.5" fill="#d6a040" stroke="#8a6a20" stroke-width="1"/>
+
+  <!-- 四个条件 -->
+  <text filter="url(#rough2)" x="290" y="72" text-anchor="middle" font-size="11.2" fill="#3a4a66" font-weight="bold">上边：left[i−s+1][j] ≥ s</text>
+  <text filter="url(#rough2)" x="410" y="182" font-size="11.2" fill="#3a4a66" font-weight="bold">右边：</text>
+  <text filter="url(#rough2)" x="410" y="200" font-size="11.2" fill="#3a4a66">up[i][j] ≥ s</text>
+  <text filter="url(#rough2)" x="170" y="182" text-anchor="end" font-size="11.2" fill="#3a4a66" font-weight="bold">左边：</text>
+  <text filter="url(#rough2)" x="170" y="200" text-anchor="end" font-size="11.2" fill="#3a4a66">up[i][j−s+1] ≥ s</text>
+  <text filter="url(#rough2)" x="290" y="332" text-anchor="middle" font-size="11.2" fill="#3a4a66" font-weight="bold">下边：left[i][j] ≥ s</text>
+  <text filter="url(#rough2)" x="404" y="300" font-size="10.5" fill="#8a6a20">(i, j)</text>
+
+  <!-- 说明框 -->
+  <rect filter="url(#rough2)" x="60" y="352" width="480" height="54" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  <text filter="url(#rough2)" x="300" y="374" text-anchor="middle" font-size="11.4" fill="#7a5a10">四个量都不小于 s ⟺ 这个正方形的四条边全是 1</text>
+  <text filter="url(#rough2)" x="300" y="394" text-anchor="middle" font-size="11.4" fill="#7a5a10">s 从 min(left, up) 往下试，第一次通过就是该角的最大边长</text>
+</svg>

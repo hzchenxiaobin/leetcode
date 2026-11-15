@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 372" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="372" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">两条独立的失效规则：命中任一即「可能无效」</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">规则之间是逻辑「或」，输出顺序任意，重复的交易要逐条保留</text>
+
+  <rect x="38" y="66" width="222" height="112" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="54" y="90" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">规则 A：金额超限</text>
+  <text x="54" y="112" font-size="10.5" fill="#555" filter="url(#rough2)">amount &gt; 1000 即无效</text>
+  <text x="54" y="132" font-size="10.5" fill="#555" filter="url(#rough2)">例：alice,50,1200,mtv</text>
+  <text x="54" y="154" font-size="10" fill="#888" filter="url(#rough2)">与时间、城市、姓名都无关</text>
+  <text x="54" y="170" font-size="10" fill="#888" filter="url(#rough2)">单笔即可判定，O(1)</text>
+
+  <rect x="300" y="66" width="222" height="112" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="316" y="90" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">规则 B：同名 + 异城 + 近时间</text>
+  <text x="316" y="112" font-size="10.5" fill="#555" filter="url(#rough2)">同名、城市不同、|Δt| ≤ 60 分钟</text>
+  <text x="316" y="132" font-size="10.5" fill="#555" filter="url(#rough2)">alice,20,800,mtv 与</text>
+  <text x="316" y="148" font-size="10.5" fill="#555" filter="url(#rough2)">alice,50,100,beijing</text>
+  <text x="316" y="168" font-size="10" fill="#888" filter="url(#rough2)">|20 − 50| = 30 ≤ 60 → 两条都无效</text>
+
+  <path d="M 150 184 Q 170 212 214 222" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 410 184 Q 390 212 346 222" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <ellipse cx="280" cy="240" rx="92" ry="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="245" text-anchor="middle" font-size="12" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">可能无效（OR）</text>
+
+  <rect x="40" y="288" width="480" height="64" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="56" y="310" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">规则 B 的双向性正是难点</text>
+  <text x="56" y="330" font-size="10" fill="#555" filter="url(#rough2)">判断第 i 笔时，要看「是否存在 j：同名、异城、时间相近」，是一个存在性问题；</text>
+  <text x="56" y="346" font-size="10" fill="#555" filter="url(#rough2)">一旦命中，i 与 j 同时被标为无效，所以答案为「可能无效」而非「确定无效」。</text>
+</svg>

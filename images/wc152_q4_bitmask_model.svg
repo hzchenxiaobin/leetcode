@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 476" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="476" fill="#fafafa"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：合法谜底 = 「首字母命中」+「掩码是谜面的子集」</text>
+  <text x="320" y="52" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">去重后一个单词只是一个 26 位整数，而谜面固定只有 7 位</text>
+
+  <rect x="30" y="72" width="275" height="148" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="96" font-size="12" fill="#2c4a6b" font-weight="bold" filter="url(#rough2)">① 单词 → 掩码（先去重）</text>
+  <text x="46" y="118" font-size="11" fill="#555" filter="url(#rough2)">word = "access" → {a, c, e, s}</text>
+  <text x="46" y="138" font-size="10.5" fill="#555" filter="url(#rough2)">重复的 c、s 只算一次 → 26 位中亮 4 位</text>
+  <text x="46" y="158" font-size="10.5" fill="#555" filter="url(#rough2)">掩码唯一确定字母集合，与顺序、长度无关</text>
+  <text x="46" y="180" font-size="10.5" fill="#8a5a20" filter="url(#rough2)">"aaaa" 与 "a" 得到同一个掩码，可合并计数</text>
+  <text x="46" y="202" font-size="10" fill="#888" filter="url(#rough2)">⇒ 10^5 个单词被压成一张「掩码 → 个数」表</text>
+
+  <rect x="335" y="72" width="275" height="148" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="351" y="96" font-size="12" fill="#3a6a2c" font-weight="bold" filter="url(#rough2)">② 谜面 → 掩码（7 位互不相同）</text>
+  <text x="351" y="118" font-size="11" fill="#555" filter="url(#rough2)">puzzle = "actresz" → {a,c,t,r,e,s,z}</text>
+  <text x="351" y="138" font-size="10.5" fill="#555" filter="url(#rough2)">首字母 a 单独拎出来：first = 1 &lt;&lt; 0</text>
+  <text x="351" y="158" font-size="10.5" fill="#555" filter="url(#rough2)">剩下 6 个字母是「可选位」，共 2^6 = 64 种组合</text>
+  <text x="351" y="180" font-size="10.5" fill="#8a5a20" filter="url(#rough2)">谜面字母不重复 ⇒ 掩码恰好 7 位，无需容错</text>
+  <text x="351" y="202" font-size="10" fill="#888" filter="url(#rough2)">⇒ 每个谜面只需查 64 次表，与单词数无关</text>
+
+  <path d="M 168 220 L 168 246" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 472 220 L 472 246" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="248" width="580" height="98" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="272" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 把两条题意直接翻译成位运算</text>
+  <text x="46" y="296" font-size="11" fill="#555" filter="url(#rough2)">含首字母：(maskW &amp; first) ≠ 0        字母全在谜面里：(maskW &amp; ~maskP) == 0</text>
+  <text x="46" y="320" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">合起来就是一句话：first ∈ maskW ⊆ maskP</text>
+  <text x="46" y="338" font-size="10" fill="#888" filter="url(#rough2)">子集关系保证了「字母都在谜面里」，首字母条件单独补上「必须含 a」这一条</text>
+
+  <path d="M 320 346 L 320 370" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="374" width="580" height="82" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="398" font-size="12" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 关键剪枝：不同字母数 &gt; 7 的单词永远不可能是谜底</text>
+  <text x="46" y="420" font-size="10.5" fill="#555" filter="url(#rough2)">因为谜面只有 7 个字母，7 位掩码装不下 8 位 → 建表时直接跳过，表更小、查表更快</text>
+  <text x="46" y="442" font-size="10.5" fill="#555" filter="url(#rough2)">这是本题唯一的「规模压缩」：单词数 10^5 只贡献右侧这张哈希表，谜面数 10^4 只贡献 64 次查表</text>
+</svg>

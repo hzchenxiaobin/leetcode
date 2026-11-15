@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 386" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="386" fill="#fafafa"/>
+
+  <text x="290" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">二分：定位第一个严格大于 t 的位置 pos</text>
+  <text x="290" y="45" text-anchor="middle" font-size="10.5" fill="#888">freq 升序，m = 8，本例 t = 3（绿格 ≤ t，橙格 &gt; t）</text>
+
+  <g filter="url(#rough2)" font-size="9" fill="#888" text-anchor="middle">
+    <text x="78" y="64">0</text>
+    <text x="134" y="64">1</text>
+    <text x="190" y="64">2</text>
+    <text x="246" y="64">3</text>
+    <text x="302" y="64">4</text>
+    <text x="358" y="64">5</text>
+    <text x="414" y="64">6</text>
+    <text x="470" y="64">7</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="50" y="70" width="56" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="5"/>
+    <rect x="106" y="70" width="56" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="5"/>
+    <rect x="162" y="70" width="56" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="5"/>
+    <rect x="218" y="70" width="56" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="5"/>
+    <rect x="274" y="70" width="56" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="5"/>
+    <rect x="330" y="70" width="56" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <rect x="386" y="70" width="56" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <rect x="442" y="70" width="56" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="78" y="95">1</text>
+    <text x="134" y="95">2</text>
+    <text x="190" y="95">2</text>
+    <text x="246" y="95">3</text>
+    <text x="302" y="95">5</text>
+    <text x="358" y="95">6</text>
+    <text x="414" y="95">6</text>
+    <text x="470" y="95">8</text>
+  </g>
+
+  <path d="M 274 118 L 274 70" stroke="#b85450" stroke-width="1.6" stroke-dasharray="4 3" fill="none" filter="url(#rough2)"/>
+  <text x="274" y="134" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold">pos = 4（第一个 &gt; 3）</text>
+
+  <text x="78" y="152" text-anchor="middle" font-size="9.5" fill="#4a7a3a">freq[i] ≤ t 的前缀，共 pos 个</text>
+  <text x="414" y="152" text-anchor="middle" font-size="9.5" fill="#8a6a20">严格大于 t 的后缀，共 m − pos = 4 个</text>
+
+  <rect x="24" y="166" width="532" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="40" y="188" font-size="10.5" fill="#3a4a66">不变式：0 ≤ lo ≤ pos ≤ hi ≤ m，即 pos 始终落在区间 [lo, hi] 内</text>
+
+  <path d="M 290 202 L 290 216" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="220" width="256" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="40" y="238" font-size="10.5" fill="#3a5a30" font-weight="bold">freq[mid] ≤ t ⇒ lo = mid + 1</text>
+    <text x="40" y="254" font-size="9.5" fill="#555">mid 及其左侧都不可能是 pos</text>
+
+    <rect x="300" y="220" width="256" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+    <text x="316" y="238" font-size="10.5" fill="#8a3a36" font-weight="bold">freq[mid] &gt; t ⇒ hi = mid</text>
+    <text x="316" y="254" font-size="9.5" fill="#555">mid 可能就是 pos，不能取 mid − 1</text>
+  </g>
+
+  <path d="M 290 264 L 290 278" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="24" y="282" width="532" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="40" y="305" font-size="10.5" fill="#8a6a20">循环到 lo == hi 即停，此时 lo 就是 pos，答案 = m − lo = 8 − 4 = 4</text>
+
+  <rect x="24" y="330" width="532" height="42" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="40" y="348" font-size="10" fill="#555">C++：int pos = upper_bound(freq.begin(), freq.end(), t) - freq.begin();</text>
+  <text x="40" y="364" font-size="10" fill="#555">8 个元素最多 3 轮收缩；m ≤ 2000 时每查询 11 次比较。</text>
+</svg>

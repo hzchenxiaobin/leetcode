@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="340" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">get 内部的二分：找最后一个 stamp ≤ snap_id</text>
+  <text x="300" y="50" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">his[0] = [(0,5), (1,6), (3,9)]，查询 snap_id = 2</text>
+
+  <text x="363" y="74" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">snap_id = 2</text>
+  <path d="M 363 80 L 363 166" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5 4" fill="none" filter="url(#rough2)"/>
+
+  <rect x="119" y="90" width="110" height="48" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="174" y="110" text-anchor="middle" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">stamp = 0</text>
+  <text x="174" y="129" text-anchor="middle" font-size="11.5" fill="#333" font-weight="bold" filter="url(#rough2)">val = 5</text>
+
+  <rect x="245" y="90" width="110" height="48" rx="7" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="300" y="110" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">stamp = 1</text>
+  <text x="300" y="129" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">val = 6</text>
+
+  <rect x="371" y="90" width="110" height="48" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="426" y="110" text-anchor="middle" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">stamp = 3</text>
+  <text x="426" y="129" text-anchor="middle" font-size="11.5" fill="#3a5a30" filter="url(#rough2)">val = 9</text>
+
+  <text x="174" y="158" text-anchor="middle" font-size="9" fill="#777" filter="url(#rough2)">i = 0</text>
+  <text x="300" y="158" text-anchor="middle" font-size="9" fill="#8a3a36" filter="url(#rough2)">i = 1 ← 答案</text>
+  <text x="426" y="158" text-anchor="middle" font-size="9" fill="#777" filter="url(#rough2)">i = 2</text>
+
+  <path d="M 300 170 L 300 180" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="300" y="194" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">stamp 3 &gt; 2，属于「这次查询之后」的写入，不能取</text>
+
+  <rect x="60" y="204" width="480" height="80" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="76" y="226" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">二分过程（lo, hi, mid, ans 均为链上的下标）</text>
+  <text x="76" y="246" font-size="9.5" fill="#555" filter="url(#rough2)">lo=0, hi=2 → mid=1：stamp 1 ≤ 2 ⇒ ans=1，lo=2</text>
+  <text x="76" y="263" font-size="9.5" fill="#555" filter="url(#rough2)">lo=2, hi=2 → mid=2：stamp 3 &gt; 2 ⇒ hi=1</text>
+  <text x="76" y="280" font-size="9.5" fill="#555" filter="url(#rough2)">lo=3 &gt; hi=1，循环结束 ⇒ 返回 h[ans].val = 6</text>
+
+  <text x="300" y="308" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">每次 get 只做 O(log 写入次数) 次比较，历史版本一个都不动</text>
+  <text x="300" y="328" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">若 ans 始终为 −1：该下标从未被写过 ⇒ 返回初始值 0</text>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 500" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="500" fill="#fafafa"/>
+
+  <text x="310" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：一趟建表 + 每个谜面枚举 64 个子集</text>
+  <text x="310" y="52" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">总代价 = 所有单词长度之和 + 64 × 谜面数</text>
+
+  <rect x="26" y="64" width="270" height="104" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="42" y="88" font-size="12" fill="#2c4a6b" font-weight="bold" filter="url(#rough2)">① 建表：遍历 words</text>
+  <text x="42" y="110" font-size="10.5" fill="#555" filter="url(#rough2)">mask = 每个字符的 1 &lt;&lt; (c − 'a') 之或</text>
+  <text x="42" y="130" font-size="10.5" fill="#555" filter="url(#rough2)">if popcount(mask) &gt; 7 → 丢弃</text>
+  <text x="42" y="150" font-size="10.5" fill="#555" filter="url(#rough2)">freq[mask] += 1</text>
+
+  <rect x="324" y="64" width="270" height="104" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="340" y="88" font-size="12" fill="#3a6a2c" font-weight="bold" filter="url(#rough2)">② 遍历每个谜面 p</text>
+  <text x="340" y="110" font-size="10.5" fill="#555" filter="url(#rough2)">first = 1 &lt;&lt; (p[0] − 'a')</text>
+  <text x="340" y="130" font-size="10.5" fill="#555" filter="url(#rough2)">rest[0..5] = p[1..6] 对应的位</text>
+  <text x="340" y="150" font-size="10.5" fill="#555" filter="url(#rough2)">答案初始化 cnt = 0</text>
+
+  <path d="M 296 116 L 320 116" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 459 168 L 459 194" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="470" y="186" font-size="10" fill="#999" filter="url(#rough2)">对 6 个可选位做子集枚举</text>
+
+  <rect x="324" y="196" width="270" height="126" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="340" y="220" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 枚举 s = 0 .. 63</text>
+  <text x="340" y="242" font-size="10.5" fill="#555" filter="url(#rough2)">mask = first</text>
+  <text x="340" y="264" font-size="10" fill="#555" filter="url(#rough2)">for i in 0..5: if (s&gt;&gt;i)&amp;1: mask |= rest[i]</text>
+  <text x="340" y="286" font-size="10.5" fill="#555" filter="url(#rough2)">cnt += freq.get(mask, 0)</text>
+  <text x="340" y="308" font-size="10" fill="#b85450" filter="url(#rough2)">子集里始终带着 first ⇒ 首字母条件自动满足</text>
+
+  <path d="M 320 259 L 298 259" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="26" y="196" width="270" height="126" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="42" y="220" font-size="12" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 记录答案</text>
+  <text x="42" y="242" font-size="10.5" fill="#555" filter="url(#rough2)">ans[i] = cnt</text>
+  <text x="42" y="264" font-size="10.5" fill="#555" filter="url(#rough2)">每个谜面独立处理，互不影响</text>
+  <text x="42" y="288" font-size="10.5" fill="#555" filter="url(#rough2)">64 次查表 + 64 次位或，常数极小</text>
+  <text x="42" y="310" font-size="10" fill="#888" filter="url(#rough2)">同一 mask 上可能压着多个单词，直接相乘</text>
+
+  <rect x="26" y="348" width="568" height="132" fill="#f4f4f2" stroke="#777" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="42" y="372" font-size="12" fill="#444" font-weight="bold" filter="url(#rough2)">③ 的展开：p = "actresz"，first = a，6 个可选位 c t r e s z</text>
+
+  <rect x="42" y="386" width="34" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="59" y="403" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">c</text>
+  <rect x="86" y="386" width="34" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="103" y="403" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">t</text>
+  <rect x="130" y="386" width="34" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="147" y="403" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">r</text>
+  <rect x="174" y="386" width="34" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="191" y="403" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">e</text>
+  <rect x="218" y="386" width="34" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="235" y="403" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">s</text>
+  <rect x="262" y="386" width="34" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="279" y="403" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">z</text>
+
+  <text x="316" y="403" font-size="10.5" fill="#555" filter="url(#rough2)">加不加由 s 的 6 个二进制位决定，s 从 0 数到 63</text>
+
+  <text x="46" y="436" font-size="10.5" fill="#555" filter="url(#rough2)">s = 0 → {a}    s = 1 → {a, c}    s = 2 → {a, t}</text>
+  <text x="46" y="458" font-size="10.5" fill="#555" filter="url(#rough2)">s = 3 → {a, c, t}    s = 63 → 全部 7 个字母    …… 共 64 种</text>
+  <text x="392" y="436" font-size="10.5" fill="#b85450" filter="url(#rough2)">每个子集恰好生成一个掩码</text>
+  <text x="392" y="458" font-size="10.5" fill="#b85450" filter="url(#rough2)">无重复、无遗漏 ⇒ 直接求和即可</text>
+</svg>

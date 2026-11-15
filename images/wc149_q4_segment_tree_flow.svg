@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa" filter="url(#rough2)"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">线段树 + 摩尔投票对：O(log n) 取候选</text>
+  <text x="280" y="45" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">每个结点存该区间的 (cand, k)，父结点由左右儿子 merge 得到</text>
+
+  <g font-size="11" text-anchor="middle">
+    <rect x="205" y="60" width="150" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+    <text x="280" y="81" fill="#8a3a36" filter="url(#rough2)">[0,6)  (1,2)</text>
+
+    <rect x="105" y="126" width="150" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+    <text x="180" y="147" fill="#3a4a66" filter="url(#rough2)">[0,3)  (1,1)</text>
+    <rect x="325" y="126" width="150" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+    <text x="400" y="147" fill="#3a4a66" filter="url(#rough2)">[3,6)  (1,1)</text>
+
+    <rect x="83" y="196" width="84" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+    <text x="125" y="216" fill="#3a5a30" filter="url(#rough2)">[0,2) (1,2)</text>
+    <rect x="193" y="196" width="84" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+    <text x="235" y="216" fill="#3a5a30" filter="url(#rough2)">[2,3) (2,1)</text>
+    <rect x="303" y="196" width="84" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+    <text x="345" y="216" fill="#3a5a30" filter="url(#rough2)">[3,4) (2,1)</text>
+    <rect x="413" y="196" width="84" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+    <text x="455" y="216" fill="#3a5a30" filter="url(#rough2)">[4,6) (1,2)</text>
+  </g>
+
+  <g stroke="#888" stroke-width="1.3" fill="none">
+    <path d="M 258 92 L 196 126" filter="url(#rough2)"/>
+    <path d="M 302 92 L 364 126" filter="url(#rough2)"/>
+    <path d="M 158 158 L 132 196" filter="url(#rough2)"/>
+    <path d="M 202 158 L 228 196" filter="url(#rough2)"/>
+    <path d="M 378 158 L 352 196" filter="url(#rough2)"/>
+    <path d="M 422 158 L 448 196" filter="url(#rough2)"/>
+  </g>
+
+  <text x="30" y="216" font-size="10" fill="#999" filter="url(#rough2)">叶子</text>
+  <text x="30" y="86" font-size="10" fill="#999" filter="url(#rough2)">根</text>
+
+  <text x="280" y="252" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">例：arr = [1,1,2,2,1,1]，merge 规则决定每层的 (cand,k)</text>
+
+  <rect x="24" y="268" width="248" height="112" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="40" y="288" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">查询：拆分 + 合并</text>
+  <text x="40" y="308" font-size="10" fill="#555" filter="url(#rough2)">把 [left,right] 拆成 O(log n) 个整结点</text>
+  <text x="40" y="326" font-size="10" fill="#555" filter="url(#rough2)">按数组下标从小到大依次 merge：</text>
+  <text x="40" y="344" font-size="10" fill="#3a4a66" filter="url(#rough2)">(c,k) ← merge((c,k), 结点)</text>
+  <text x="40" y="362" font-size="10" fill="#555" filter="url(#rough2)">右半段的结点要先与右累加器合并</text>
+
+  <rect x="288" y="268" width="248" height="112" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="304" y="288" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">校验：候选还不够，必须计数</text>
+  <text x="304" y="308" font-size="10" fill="#555" filter="url(#rough2)">pos[cand] = cand 的全部出现下标</text>
+  <text x="304" y="326" font-size="10" fill="#555" filter="url(#rough2)">cnt = upper_bound(pos, right)</text>
+  <text x="320" y="342" font-size="10" fill="#555" filter="url(#rough2)">− lower_bound(pos, left)</text>
+  <text x="304" y="362" font-size="10" fill="#3a5a30" filter="url(#rough2)">返回 cnt ≥ threshold ? cand : −1</text>
+
+  <text x="280" y="404" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">候选只是「可能」，计数才是判定；两者相乘即为 O(log n) 一次询问</text>
+</svg>

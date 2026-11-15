@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">自底向上填表：i 从右往左，m 顺序无关</text>
+  <text x="280" y="42" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每个状态只依赖 i 更大的状态，所以按 i 递减的顺序递推即可</text>
+
+  <rect x="50" y="58" width="460" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="79" text-anchor="middle" font-size="10.5" fill="#2f4460" filter="url(#rough2)">外层：i 从 n−1 递减到 0（后缀越来越长）</text>
+
+  <path d="M 280 90 L 280 106" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="50" y="108" width="460" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="129" text-anchor="middle" font-size="10.5" fill="#2f4460" filter="url(#rough2)">内层：m 从 1 到 n（同一行内互不依赖，顺序随意）</text>
+
+  <path d="M 280 140 L 280 156" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,158 380,192 280,226 180,192" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="196" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">2M ≥ n − i ?</text>
+
+  <path d="M 380 192 L 418 192" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="399" y="184" text-anchor="middle" font-size="9" fill="#666" filter="url(#rough2)">是</text>
+
+  <rect x="418" y="166" width="122" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <g font-size="10" fill="#3a5a30" text-anchor="middle" filter="url(#rough2)">
+    <text x="479" y="186" font-weight="bold">一次全拿</text>
+    <text x="479" y="206">dp[i][m] = S[i]</text>
+  </g>
+
+  <path d="M 280 226 L 280 240" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="294" y="240" font-size="9" fill="#666" filter="url(#rough2)">否</text>
+
+  <rect x="40" y="242" width="480" height="62" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <g text-anchor="middle" filter="url(#rough2)">
+    <text x="280" y="262" font-size="10.5" fill="#2f4460" font-weight="bold">枚举 x = 1 .. min(2M, n − i)，取最大</text>
+    <text x="280" y="282" font-size="10.5" fill="#2f4460">dp[i][m] = max ( S[i] − dp[i + x][max(m, x)] )</text>
+    <text x="280" y="297" font-size="9" fill="#446688">（x 超过剩余堆数时只取到 n − i）</text>
+  </g>
+
+  <path d="M 280 304 L 280 322" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="88" y="324" width="384" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g font-size="11" fill="#8a3a36" text-anchor="middle" filter="url(#rough2)">
+    <text x="280" y="344" font-weight="bold">答案：dp[0][1]</text>
+    <text x="280" y="362" font-size="10">Alice 从第 0 堆、初始 M = 1 出发能拿到的最大石子数</text>
+  </g>
+
+  <text x="280" y="390" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">状态数 O(n²)，每状态最多 2M 次转移 → 总时间 O(n³)，n ≤ 100 时仅约 10⁶</text>
+</svg>

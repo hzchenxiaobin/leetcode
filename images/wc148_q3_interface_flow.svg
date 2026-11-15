@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="440" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">三个接口的分工：写入 O(1)、编号 O(1)、查询 O(log)</text>
+  <text x="310" y="50" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">snap() 不复制数组，只递增计数器；历史全部沉在下标自己的链里</text>
+
+  <rect x="24" y="66" width="180" height="32" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="114" y="87" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">set(index, val)</text>
+  <rect x="24" y="110" width="180" height="40" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="36" y="128" font-size="9.5" fill="#333" filter="url(#rough2)">① stamp = snap_cnt</text>
+  <text x="36" y="143" font-size="9" fill="#777" filter="url(#rough2)">（即下一个快照的编号）</text>
+  <rect x="24" y="158" width="180" height="40" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="36" y="176" font-size="9.5" fill="#333" filter="url(#rough2)">② 链尾 stamp 相同？</text>
+  <text x="36" y="191" font-size="9" fill="#777" filter="url(#rough2)">→ 覆盖最后一个版本</text>
+  <rect x="24" y="206" width="180" height="40" rx="6" fill="#ffffff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="36" y="224" font-size="9.5" fill="#333" filter="url(#rough2)">③ 否则追加 (stamp, val)</text>
+  <text x="36" y="239" font-size="9" fill="#777" filter="url(#rough2)">旧版本一个都不删</text>
+  <text x="114" y="268" text-anchor="middle" font-size="10" fill="#3a4a66" filter="url(#rough2)">代价 O(1)</text>
+
+  <rect x="222" y="66" width="180" height="32" rx="7" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="312" y="87" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">snap()</text>
+  <rect x="222" y="110" width="180" height="40" rx="6" fill="#ffffff" stroke="#d6a040" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="234" y="128" font-size="9.5" fill="#333" filter="url(#rough2)">① 先返回当前 snap_cnt</text>
+  <text x="234" y="143" font-size="9" fill="#777" filter="url(#rough2)">② 再 snap_cnt += 1</text>
+  <rect x="222" y="158" width="180" height="40" rx="6" fill="#ffffff" stroke="#d6a040" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="234" y="176" font-size="9.5" fill="#333" filter="url(#rough2)">只动一个整数</text>
+  <text x="234" y="191" font-size="9" fill="#777" filter="url(#rough2)">不触碰任何 his[index]</text>
+  <rect x="222" y="206" width="180" height="40" rx="6" fill="#ffffff" stroke="#d6a040" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="234" y="224" font-size="9.5" fill="#333" filter="url(#rough2)">快照号 = 调用次数 − 1</text>
+  <text x="234" y="239" font-size="9" fill="#777" filter="url(#rough2)">与题目定义一一对应</text>
+  <text x="312" y="268" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">代价 O(1)</text>
+
+  <rect x="420" y="66" width="180" height="32" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="510" y="87" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">get(index, snap_id)</text>
+  <rect x="420" y="110" width="180" height="40" rx="6" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="432" y="128" font-size="9.5" fill="#333" filter="url(#rough2)">① 取出 his[index]</text>
+  <text x="432" y="143" font-size="9" fill="#777" filter="url(#rough2)">② 二分找 stamp ≤ snap_id</text>
+  <rect x="420" y="158" width="180" height="40" rx="6" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="432" y="176" font-size="9.5" fill="#333" filter="url(#rough2)">③ 取最后一个版本的值</text>
+  <text x="432" y="191" font-size="9" fill="#777" filter="url(#rough2)">④ 没有版本 ⇒ 返回 0</text>
+  <rect x="420" y="206" width="180" height="40" rx="6" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="432" y="224" font-size="9.5" fill="#333" filter="url(#rough2)">不看「快照存了什么」</text>
+  <text x="432" y="239" font-size="9" fill="#777" filter="url(#rough2)">只看该下标自己的历史</text>
+  <text x="510" y="268" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">代价 O(log 写入次数)</text>
+
+  <path d="M 210 100 L 218 100" stroke="#888" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 408 100 L 416 100" stroke="#888" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="24" y="286" width="556" height="70" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="40" y="308" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">为什么 stamp 用「已 snap 次数」而不是「刚返回的 snap_id」？</text>
+  <text x="40" y="328" font-size="9.5" fill="#555" filter="url(#rough2)">两次 snap 之间的 set 都属于「下一个快照」，此时 stamp 恰好等于那个快照的编号</text>
+  <text x="40" y="346" font-size="9.5" fill="#555" filter="url(#rough2)">于是 stamp ≤ snap_id 就等价于「这次写入发生在取该快照之前」，语义没有歧义</text>
+
+  <rect x="24" y="370" width="556" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="40" y="390" font-size="10" fill="#3a5a30" filter="url(#rough2)">总时间 O(q log q)（q 为调用次数），空间 O(length + set 次数)</text>
+  <text x="40" y="408" font-size="10" fill="#3a5a30" filter="url(#rough2)">对比暴力「每次 snap 复制整份数组」，length 已从复杂度里彻底消失</text>
+
+  <text x="310" y="436" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">同一快照区间内对同一 index 多次 set：覆盖即可，链上 stamp 不重复</text>
+</svg>
