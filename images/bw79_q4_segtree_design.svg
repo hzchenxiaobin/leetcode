@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 390"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="390" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">线段树二合一：每节点维护 (剩余和 sum, 剩余最大 max)</text>
+
+  <!-- 树结构 -->
+  <g filter="url(#rough2)">
+    <rect x="200" y="52" width="160" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="6"/>
+    <rect x="76" y="140" width="150" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="330" y="140" width="150" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="60" y="228" width="130" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <rect x="210" y="228" width="130" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="280" y="70">根 [0, n−1]</text>
+    <text x="280" y="88">sum / max</text>
+    <text x="151" y="158">左孩子 [0, mid]</text>
+    <text x="151" y="176">sum / max</text>
+    <text x="405" y="158">右孩子 [mid+1, n−1]</text>
+    <text x="405" y="176">sum / max</text>
+    <text x="125" y="246">…</text>
+    <text x="125" y="262">排 l：剩余 rem[l]</text>
+    <text x="275" y="246">…</text>
+    <text x="275" y="262">排 r：剩余 rem[r]</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 250 96 C 200 112, 170 122, 155 136" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)"/>
+    <path d="M 310 96 C 360 112, 386 122, 402 136" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)"/>
+    <path d="M 110 184 C 100 202, 96 212, 92 224" fill="none" stroke="#446688" stroke-width="1.2" marker-end="url(#arr)"/>
+    <path d="M 190 184 C 200 202, 204 212, 208 224" fill="none" stroke="#446688" stroke-width="1.2" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- 用途注释 -->
+  <g filter="url(#rough2)">
+    <rect x="20" y="292" width="250" height="80" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <rect x="290" y="292" width="250" height="80" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="145" y="316" text-anchor="middle" font-weight="bold" fill="#d6a040">gather 用 max：</text>
+    <text x="145" y="338" text-anchor="middle">在 [0, maxRow] 里找最左的</text>
+    <text x="145" y="358" text-anchor="middle">「剩余 ≥ k」的排（树上二分）</text>
+    <text x="415" y="316" text-anchor="middle" font-weight="bold" fill="#b85450">scatter 用 sum：</text>
+    <text x="415" y="338" text-anchor="middle">查询 [0, maxRow] 剩余总数</text>
+    <text x="415" y="358" text-anchor="middle">&lt; k → 直接返回 false</text>
+  </g>
+</svg>

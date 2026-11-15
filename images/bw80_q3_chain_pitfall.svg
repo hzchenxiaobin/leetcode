@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="163"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">映射不传递：每个字符至多替换一次</text>
+
+  <!-- 映射链 -->
+  <g filter="url(#rough2)">
+    <rect x="120" y="52" width="70" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="250" y="52" width="70" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="380" y="52" width="70" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="17" fill="#333" text-anchor="middle">
+    <text x="155" y="79">e</text><text x="285" y="79">3</text><text x="415" y="79">8</text>
+  </g>
+  <path d="M 192 74 L 246 74" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 322 74 L 376 74" fill="none" stroke="#446688" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="219" y="62" font-size="11.5" fill="#446688" filter="url(#rough2)" text-anchor="middle">映射 ①</text>
+  <text x="349" y="62" font-size="11.5" fill="#b85450" filter="url(#rough2)" text-anchor="middle">映射 ②</text>
+  <g filter="url(#rough2)">
+    <rect x="150" y="110" width="270" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="285" y="132" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)" text-anchor="middle">①+② ≠ e→8！替换过的字符不能再替换</text>
+
+  <!-- 左例: false -->
+  <text x="150" y="180" font-size="14" fill="#b85450" font-weight="bold" filter="url(#rough2)" text-anchor="middle">s = "88"，sub = "ee" → false</text>
+  <g filter="url(#rough2)" font-size="14" text-anchor="middle">
+    <rect x="110" y="196" width="44" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="154" y="196" width="44" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <text x="132" y="221">8</text><text x="176" y="221">8</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="132" y="254">第一位：8 ∉ {e,3} ✗</text>
+    <text x="176" y="272">（e 只能变 e 或 3）</text>
+  </g>
+
+  <!-- 右例: true -->
+  <text x="420" y="180" font-size="14" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)" text-anchor="middle">s = "3e"，sub = "ee" → true</text>
+  <g filter="url(#rough2)" font-size="14" text-anchor="middle">
+    <rect x="380" y="196" width="44" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="424" y="196" width="44" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <text x="402" y="221">3</text><text x="446" y="221">e</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="402" y="254">第一位 e→3（用映射①）</text>
+    <text x="446" y="272">第二位 e 不替换，保留 e</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="298" width="420" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="280" y="318" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">同一字符的不同出现互相独立：可以第一位替换、第二位保留，</text>
+  <text x="280" y="337" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">这正是官方示例 1 中 "leet" → "l3e7" 的情形</text>
+</svg>

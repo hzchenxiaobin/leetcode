@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="131"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">一次扫描：分类打标记 + 相邻查重</text>
+
+  <!-- 字符流 -->
+  <g filter="url(#rough2)" font-size="16" text-anchor="middle" fill="#333">
+    <rect x="60" y="52" width="40" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="100" y="52" width="40" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="140" y="52" width="40" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="180" y="52" width="40" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="80" y="78">I</text><text x="120" y="78">l</text><text x="160" y="78">o</text><text x="200" y="78">…</text>
+  </g>
+  <text x="290" y="78" font-size="13" fill="#888" filter="url(#rough2)" text-anchor="middle">逐个字符扫描</text>
+
+  <!-- 相邻查重分支 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="130" width="230" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <text x="175" y="154" font-size="13" fill="#333" filter="url(#rough2)" text-anchor="middle">s[i] == s[i−1] ？</text>
+  <text x="175" y="174" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)" text-anchor="middle">是 → 立即返回 false</text>
+
+  <!-- 分类打标分支 -->
+  <g filter="url(#rough2)">
+    <rect x="330" y="130" width="200" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <text x="430" y="154" font-size="13" fill="#333" filter="url(#rough2)" text-anchor="middle">否则给四类标记之一点亮：</text>
+  <text x="430" y="174" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)" text-anchor="middle">lower / upper / digit / special</text>
+
+  <path d="M 110 96 C 110 110, 130 118, 150 126" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <path d="M 190 96 C 230 110, 300 118, 380 126" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 终检 -->
+  <g filter="url(#rough2)">
+    <rect x="110" y="230" width="340" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <text x="280" y="256" font-size="14" fill="#333" filter="url(#rough2)" text-anchor="middle">扫完且长度 ≥ 8：</text>
+  <text x="280" y="282" font-size="14" fill="#333" filter="url(#rough2)" text-anchor="middle">四个标记全亮 → true，否则 false</text>
+  <path d="M 430 188 C 420 204, 400 214, 380 226" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 175 188 C 185 204, 200 214, 214 226" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 底部提醒 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="330" width="440" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="280" y="353" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">易错：长度检查放最前面；相邻查重用「当前与前一个」比较即可</text>
+</svg>

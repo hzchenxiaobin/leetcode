@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="173"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">滑动窗口：右端扩张，左端收缩，按 r 结尾计数</text>
+
+  <!-- 窗口示意 -->
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle">
+    <rect x="100" y="56" width="52" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="152" y="56" width="52" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="204" y="56" width="52" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="256" y="56" width="52" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="308" y="56" width="52" height="44" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+    <rect x="360" y="56" width="52" height="44" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="126" y="81">nums[l]</text><text x="178" y="81">…</text><text x="230" y="81">…</text>
+    <text x="282" y="81" fill="#d6a040" font-weight="bold">nums[r]</text>
+    <text x="334" y="81">…</text><text x="386" y="81">…</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#4a7a3a" text-anchor="middle">
+    <text x="126" y="120">↑ l（左指针）</text>
+    <text x="282" y="120" fill="#d6a040">↑ r（右指针）</text>
+  </g>
+
+  <!-- 流程 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="150" width="230" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <rect x="300" y="150" width="230" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+    <rect x="60" y="240" width="230" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <rect x="300" y="240" width="230" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="175" y="174">① r 右移一格：sum += nums[r]</text>
+    <text x="175" y="196" fill="#888">（枚举每个右端点）</text>
+    <text x="415" y="174">② while sum × len ≥ k：</text>
+    <text x="415" y="196" fill="#b85450" font-weight="bold">sum −= nums[l]，l 右移</text>
+    <text x="175" y="264">③ 此时 [l, r] 是「以 r 结尾的</text>
+    <text x="175" y="286">最短合法窗口」</text>
+    <text x="415" y="264">④ ans += r − l + 1</text>
+    <text x="415" y="286" fill="#4a7a3a" font-weight="bold">（l..r 每个起点都合法）</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 292 178 L 298 178" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <path d="M 415 206 C 415 224, 330 228, 260 238" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <path d="M 292 268 L 298 268" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <path d="M 100 300 C 40 318, 34 170, 68 152" stroke="#888" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="120" y="326" font-size="12" fill="#888" filter="url(#rough2)">r++ 后回到 ①</text>
+
+  <!-- 底注 -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="342" width="420" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="280" y="360" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">l 单调不回退 → 两指针各走 O(n) 步；</text>
+  <text x="280" y="380" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">计数不重不漏：每个子数组恰在其右端点处被计入一次</text>
+</svg>

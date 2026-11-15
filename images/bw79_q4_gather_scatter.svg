@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">两种订票模式：gather 连座 vs scatter 拼座</text>
+  <text x="280" y="52" font-size="13" fill="#888" filter="url(#rough2)" text-anchor="middle">每排座位从左往右填 → 每排空位永远是后缀 [已用数, m)</text>
+
+  <!-- gather -->
+  <text x="140" y="82" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">gather(4, 0)：要 4 个连座</text>
+  <g filter="url(#rough2)">
+    <rect x="40" y="96" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="80" y="96" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="120" y="96" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="160" y="96" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="200" y="96" width="40" height="36" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="60" y="118">0</text><text x="100" y="118">1</text><text x="140" y="118">2</text>
+    <text x="180" y="118">3</text><text x="220" y="118">4</text>
+  </g>
+  <text x="140" y="152" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)" text-anchor="middle">第 0 排剩余 5 ≥ 4 → 坐 [0,3]，返回 [0, 0]</text>
+  <text x="140" y="172" font-size="12.5" fill="#888" filter="url(#rough2)" text-anchor="middle">找「最左的排」靠区间 max 树上二分</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="188" width="40" height="36" fill="#b85450" opacity="0.8" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="80" y="188" width="40" height="36" fill="#b85450" opacity="0.8" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="120" y="188" width="40" height="36" fill="#b85450" opacity="0.8" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="160" y="188" width="40" height="36" fill="#b85450" opacity="0.8" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="200" y="188" width="40" height="36" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+  </g>
+  <text x="140" y="242" font-size="12.5" fill="#888" filter="url(#rough2)" text-anchor="middle">订完后：该排剩余 1（阴影 = 已占）</text>
+
+  <path d="M 280 120 C 300 120, 300 120, 310 120" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- scatter -->
+  <text x="420" y="82" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">scatter(5, 1)：5 人可拆开坐</text>
+  <g filter="url(#rough2)">
+    <rect x="330" y="96" width="40" height="36" fill="#b85450" opacity="0.8" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="370" y="96" width="40" height="36" fill="#b85450" opacity="0.8" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="410" y="96" width="40" height="36" fill="#b85450" opacity="0.8" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="450" y="96" width="40" height="36" fill="#b85450" opacity="0.8" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="490" y="96" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="350" y="118">0</text><text x="390" y="118">1</text><text x="430" y="118">2</text>
+    <text x="470" y="118">3</text><text x="510" y="118">4</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="330" y="188" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="370" y="188" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="410" y="188" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="450" y="188" width="40" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="490" y="188" width="40" height="36" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+  </g>
+  <text x="420" y="152" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)" text-anchor="middle">第 0 排剩 1 座先坐满（座位 4）</text>
+  <text x="420" y="172" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)" text-anchor="middle">剩下 4 人坐第 1 排 [0,3]</text>
+  <text x="420" y="242" font-size="12.5" fill="#888" filter="url(#rough2)" text-anchor="middle">「够不够」靠区间 sum；从 lo 排起逐排填</text>
+
+  <!-- 底部说明 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="290" width="440" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="280" y="314" text-anchor="middle">gather：只动「一排」，剩余 ≥ k 才行，答案 = [排号, 该排已用数]</text>
+    <text x="280" y="336" text-anchor="middle">scatter：可跨排拼凑，只要 [0, maxRow] 剩余总数 ≥ k 就 true</text>
+    <text x="280" y="358" text-anchor="middle" fill="#b85450" font-weight="bold">关键不变量：每排的空位永远是后缀 → 记录「每排已用数」即可！</text>
+  </g>
+</svg>
