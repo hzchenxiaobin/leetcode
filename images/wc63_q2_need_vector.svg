@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 340" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="340" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：题面被压成一个 26 维需求向量</text>
+  <text x="300" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">只保留「每个字母要几个」，字母顺序、大小写、数字与空格全部丢弃</text>
+
+  <rect x="26" y="64" width="210" height="104" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="131" y="86" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">licensePlate</text>
+  <text x="131" y="110" text-anchor="middle" font-size="15" font-weight="bold" fill="#446688" filter="url(#rough2)">“1s3 PSt”</text>
+  <text x="131" y="132" text-anchor="middle" font-size="10" fill="#5a6b88" filter="url(#rough2)">数字 1、3 与空格 → 丢弃</text>
+  <text x="131" y="152" text-anchor="middle" font-size="10" fill="#5a6b88" filter="url(#rough2)">大写 S、P → 统一成小写</text>
+
+  <path d="M 238 116 L 298 116" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="268" y="106" text-anchor="middle" font-size="9.5" fill="#668" filter="url(#rough2)">一次遍历</text>
+
+  <rect x="306" y="64" width="268" height="104" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="440" y="86" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">need[26]：只有 3 个字母非零</text>
+
+  <rect x="326" y="94" width="48" height="40" rx="5" fill="#fdf0d0" stroke="#b8860b" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="350" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">s</text>
+  <text x="350" y="127" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">2</text>
+
+  <rect x="392" y="94" width="48" height="40" rx="5" fill="#fdf0d0" stroke="#b8860b" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="416" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">p</text>
+  <text x="416" y="127" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">1</text>
+
+  <rect x="458" y="94" width="48" height="40" rx="5" fill="#fdf0d0" stroke="#b8860b" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="482" y="112" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">t</text>
+  <text x="482" y="127" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">1</text>
+
+  <text x="440" y="152" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">其余 23 个字母的配额恒为 0</text>
+
+  <text x="300" y="196" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#555" filter="url(#rough2)">判定：逐字母配额比较（引理 1）</text>
+
+  <rect x="26" y="206" width="548" height="42" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="300" y="233" text-anchor="middle" font-size="11" fill="#7a3a3a" filter="url(#rough2)">step：cnt(s,p,t) = (1,1,1)，need = (2,1,1)，缺 1 个 s → 不是补全词</text>
+
+  <rect x="26" y="256" width="548" height="42" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="300" y="283" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">steps：cnt(s,p,t) = (2,1,1) ≥ need = (2,1,1) → 是补全词，best ← steps</text>
+
+  <text x="300" y="320" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">注意：比较是「带次数的包含」，用 set 会丢掉次数信息；26 位定长数组最快</text>
+</svg>

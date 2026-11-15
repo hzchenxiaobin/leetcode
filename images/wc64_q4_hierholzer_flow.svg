@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 412" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="740" height="412" fill="#fafafa"/>
+
+  <text x="370" y="32" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">Hierholzer：DFS 后序记录，逆序即欧拉回路</text>
+  <text x="370" y="54" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">每条边恰好走一次，答案长度固定为 k^n + n − 1（下界可证）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="86" width="180" height="70" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="280" y="86" width="180" height="70" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="520" y="86" width="180" height="70" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="130" y="112" font-size="12.5" font-weight="bold" fill="#2f4a6b">① 建 de Bruijn 图</text>
+    <text x="130" y="132" font-size="11" fill="#3a4a66">节点：n−1 位数字串</text>
+    <text x="130" y="149" font-size="11" fill="#3a4a66">边：node + d（d &lt; k）</text>
+
+    <text x="370" y="112" font-size="12.5" font-weight="bold" fill="#3d6b2e">② 从 0…0 出发 DFS</text>
+    <text x="370" y="132" font-size="11" fill="#3f5f30">每条边只走一次</text>
+    <text x="370" y="149" font-size="11" fill="#3f5f30">无路可走就回溯</text>
+
+    <text x="610" y="112" font-size="12.5" font-weight="bold" fill="#7a5a18">③ 回溯时记录</text>
+    <text x="610" y="132" font-size="11" fill="#7a5a18">刚走那条边的数字 d</text>
+    <text x="610" y="149" font-size="11" fill="#7a5a18">得到「逆序」边序列</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 224,121 L 274,121" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)"/>
+    <path d="M 464,121 L 514,121" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)"/>
+    <path d="M 610,160 L 610,212" fill="none" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)"/>
+    <path d="M 516,251 L 466,251" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="520" y="216" width="180" height="70" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="280" y="216" width="180" height="70" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="610" y="242" font-size="12.5" font-weight="bold" fill="#8c3a35">④ 后序序列逆序</text>
+    <text x="610" y="262" font-size="11" fill="#8c3a35">还原成欧拉回路正向边序</text>
+    <text x="610" y="279" font-size="11" fill="#8c3a35">每条边贡献一位数字</text>
+
+    <text x="370" y="242" font-size="12.5" font-weight="bold" fill="#3d6b2e">⑤ 答案 = 起点 + 数字串</text>
+    <text x="370" y="262" font-size="11" fill="#3f5f30">起点取 0…0（n−1 位）</text>
+    <text x="370" y="279" font-size="11" fill="#3f5f30">总长 k^n + n − 1</text>
+  </g>
+
+  <rect x="40" y="312" width="660" height="82" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="370" y="336" text-anchor="middle" font-size="11.8" fill="#2f4a6b" filter="url(#rough2)">为什么「后序 + 逆序」能还原回路：DFS 先钻到底，回溯时才把走过的边记下来，</text>
+  <text x="370" y="358" text-anchor="middle" font-size="11.8" fill="#2f4a6b" filter="url(#rough2)">最后记下的边恰是最先出发的边。把序列倒过来，就是一条从起点出发、覆盖所有边的正向回路。</text>
+  <text x="370" y="380" text-anchor="middle" font-size="11.5" fill="#7a5a18" filter="url(#rough2)">例：边序 00 → 01 → 11 → 10，后序追加 10, 11, 01, 00，逆序还原 00, 01, 11, 10</text>
+</svg>

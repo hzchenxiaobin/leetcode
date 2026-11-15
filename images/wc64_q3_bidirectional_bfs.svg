@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">双向 BFS：两端同时扩张，谁的前沿小就扩谁</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">从 0000 与 target 各自 BFS；两条搜索树「接上」的那条路就是最短路</text>
+
+  <rect x="24" y="74" width="180" height="150" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="114" y="96" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">A 侧：从 0000 正向</text>
+  <text x="114" y="118" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">已扩 dA = 3 层</text>
+  <text x="114" y="140" text-anchor="middle" font-size="9.5" fill="#556" filter="url(#rough2)">visitedA 记录距离 0…3</text>
+  <text x="114" y="160" text-anchor="middle" font-size="9.5" fill="#556" filter="url(#rough2)">前沿 = 第 3 层节点</text>
+  <text x="114" y="180" text-anchor="middle" font-size="9.5" fill="#556" filter="url(#rough2)">每层最大 10000 个</text>
+  <text x="114" y="204" text-anchor="middle" font-size="9" fill="#778" filter="url(#rough2)">deadend 节点不进入</text>
+
+  <rect x="356" y="74" width="180" height="150" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="446" y="96" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">B 侧：从 target 反向</text>
+  <text x="446" y="118" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">已扩 dB = 2 层</text>
+  <text x="446" y="140" text-anchor="middle" font-size="9.5" fill="#556" filter="url(#rough2)">visitedB 记录距离 0…2</text>
+  <text x="446" y="160" text-anchor="middle" font-size="9.5" fill="#556" filter="url(#rough2)">前沿 = 第 2 层节点</text>
+  <text x="446" y="180" text-anchor="middle" font-size="9.5" fill="#556" filter="url(#rough2)">图无向，反向同样合法</text>
+  <text x="446" y="204" text-anchor="middle" font-size="9" fill="#778" filter="url(#rough2)">不许走 deadend 节点</text>
+
+  <path d="M 206 132 L 252 132" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 354 132 L 308 132" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <circle cx="280" cy="132" r="24" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="280" y="127" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">meet</text>
+  <text x="280" y="143" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">v</text>
+
+  <rect x="74" y="244" width="412" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="268" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">best = min(best, dA + 1 + dB)</text>
+  <text x="280" y="290" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">v 由 A 侧第 dA+1 层生成，且 v 已在 visitedB 中（距离 dB）</text>
+
+  <rect x="20" y="318" width="124" height="58" fill="#ffffff" stroke="#446688" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="82" y="338" text-anchor="middle" font-size="10" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 初始化</text>
+  <text x="82" y="356" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">两集合各含起点</text>
+  <text x="82" y="370" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">深度都记为 0</text>
+
+  <rect x="156" y="318" width="124" height="58" fill="#ffffff" stroke="#446688" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="218" y="338" text-anchor="middle" font-size="10" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">② 扩较小一侧</text>
+  <text x="218" y="356" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">整层扩张，深度 +1</text>
+  <text x="218" y="370" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">8 个邻居去掉 dead</text>
+
+  <rect x="292" y="318" width="124" height="58" fill="#ffffff" stroke="#446688" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="354" y="338" text-anchor="middle" font-size="10" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">③ 相遇则记账</text>
+  <text x="354" y="356" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">新节点在对侧集合</text>
+  <text x="354" y="370" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">就更新 best</text>
+
+  <rect x="428" y="318" width="124" height="58" fill="#ffffff" stroke="#446688" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="490" y="338" text-anchor="middle" font-size="10" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">④ 终止</text>
+  <text x="490" y="356" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">dA + dB ≥ best</text>
+  <text x="490" y="370" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">或某侧前沿为空</text>
+
+  <text x="280" y="404" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">为何能提前停：任何长度 L ≤ dA+dB 的路径，必穿过任一侧的已访问集</text>
+</svg>

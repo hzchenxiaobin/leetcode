@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">信号传播 = 单源最短路：答案取最大的 dist</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10.5" fill="#888">有向边 (u, v, w) 表示 u 的信号经过 w 时间到达 v；节点收到信号的时间就是 k 到它的最短路</text>
+
+  <!-- graph edges -->
+  <path d="M 168 118 L 268 86" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 170 140 L 268 182" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 360 200 L 440 200" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="214" y="92" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">1</text>
+  <text x="212" y="176" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">1</text>
+  <text x="400" y="192" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">1</text>
+
+  <!-- nodes -->
+  <g filter="url(#rough2)" text-anchor="middle" font-size="13">
+    <circle cx="150" cy="128" r="22" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="150" y="133" fill="#8a3a36">2</text>
+    <circle cx="300" cy="76" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="300" y="81" fill="#3a4a66">1</text>
+    <circle cx="300" cy="200" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="300" y="205" fill="#3a4a66">3</text>
+    <circle cx="470" cy="200" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="470" y="205" fill="#3a4a66">4</text>
+  </g>
+
+  <text x="150" y="164" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">源点 k=2</text>
+
+  <!-- dist badges -->
+  <g filter="url(#rough2)" text-anchor="middle" font-size="11">
+    <rect x="352" y="52" width="76" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="390" y="69" fill="#3a5a30">d[1] = 1</text>
+    <rect x="196" y="94" width="76" height="26" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="234" y="111" fill="#8a6a20">d[2] = 0</text>
+    <rect x="352" y="222" width="76" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="390" y="239" fill="#3a5a30">d[3] = 1</text>
+    <rect x="470" y="236" width="76" height="26" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="508" y="253" fill="#8a3a36">d[4] = 2</text>
+  </g>
+
+  <text x="120" y="238" font-size="10.5" fill="#555" filter="url(#rough2)">最长的那条最短路决定「全部收到」的时刻：</text>
+  <text x="120" y="258" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">答案 = max v d[v] = 2</text>
+
+  <rect x="60" y="286" width="440" height="76" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="306" font-size="10.5" fill="#3a4a66" font-weight="bold">两条关键性质</text>
+  <text x="76" y="326" font-size="10" fill="#555">① 边权非负 (0 ≤ w ≤ 100)，Dijkstra 的「贪心确定最短路」成立；</text>
+  <text x="76" y="344" font-size="10" fill="#555">② 若某点 d[v] = ∞，信号永远到不了它，直接返回 −1（不再取 max）。</text>
+
+  <text x="280" y="384" text-anchor="middle" font-size="10" fill="#999">「所有节点都收到信号」⇔ 每个点从 k 都可达 ⇔ 没有 INF</text>
+</svg>

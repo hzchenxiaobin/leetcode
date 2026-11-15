@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">状态设计：按步数 k 同步推进两条路径</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">同一步数让两条路径「并行」行走，天然避免枚举先后次序</text>
+
+  <rect x="30" y="60" width="500" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="80" font-size="11" fill="#3a4a66">dp[k][r₁][r₂]：走了 k 步，A、B 分别在第 r₁、r₂ 行时的最大樱桃数</text>
+  <text x="46" y="99" font-size="10.5" fill="#666">列坐标由 c = k − r 直接得到，不必单独立维度：k = r₁+c₁ = r₂+c₂</text>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle">
+    <rect x="32" y="126" width="112" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="88" y="151" fill="#3a5a30">(r₁−1, r₂−1)</text>
+    <rect x="152" y="126" width="112" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="208" y="151" fill="#3a5a30">(r₁−1, r₂)</text>
+    <rect x="272" y="126" width="112" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="328" y="151" fill="#3a5a30">(r₁, r₂−1)</text>
+    <rect x="392" y="126" width="112" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="448" y="151" fill="#3a5a30">(r₁, r₂)</text>
+  </g>
+  <text x="280" y="118" text-anchor="middle" font-size="10.5" fill="#666">上一层 dp[k−1][·][·] 的四种前驱组合（A 走一步 × B 走一步）</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 88 166 L 88 184" stroke="#999" stroke-width="1.2" fill="none"/>
+    <path d="M 208 166 L 208 184" stroke="#999" stroke-width="1.2" fill="none"/>
+    <path d="M 328 166 L 328 184" stroke="#999" stroke-width="1.2" fill="none"/>
+    <path d="M 448 166 L 448 184" stroke="#999" stroke-width="1.2" fill="none"/>
+    <path d="M 88 184 L 448 184" stroke="#999" stroke-width="1.2" fill="none"/>
+    <path d="M 268 184 L 268 200" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="470" y="188" font-size="10.5" fill="#8a3a36">取 max</text>
+
+  <rect x="60" y="200" width="440" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="221" text-anchor="middle" font-size="10.5" fill="#8a3a36">dp[k][r₁][r₂] ← max(四种前驱)</text>
+
+  <path d="M 280 232 L 280 248" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="250" width="500" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="270" font-size="10.5" fill="#8a6a20">加上本步收益：grid[r₁][c₁] + (r₁ = r₂ ? 0 : grid[r₂][c₂])</text>
+  <text x="46" y="290" font-size="10.5" fill="#666">r₁ = r₂ 时两条路径踩同一格，樱桃只能算一次；否则两格都计入</text>
+
+  <rect x="30" y="314" width="500" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="334" font-size="10.5" fill="#3a5a30">荆棘处理：cell = −1 的状态整体置 −∞，不可达；行列越界同理</text>
+  <text x="46" y="354" font-size="10.5" fill="#3a5a30">k = 2n−2 时 dp[n−1][n−1] 即答案；若为 −∞ 说明不存在通路，返回 0</text>
+
+  <text x="280" y="390" text-anchor="middle" font-size="10" fill="#999">层数 2n−1、每层 r₁、r₂ 各至多 n 种取值 ⇒ 时间 O(n³)、空间 O(n²)</text>
+</svg>

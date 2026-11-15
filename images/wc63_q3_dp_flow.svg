@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+  <text x="260" y="30" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">算法流程：行内配对 + 跨行累积</text>
+  <text x="260" y="52" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">cnt[j][k] 就是「此前有多少行在这两列上同时为 1」</text>
+  <rect x="50" y="66" width="230" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <rect x="50" y="126" width="230" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <rect x="50" y="186" width="230" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <rect x="50" y="246" width="230" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="165" y="90" text-anchor="middle" font-size="13" fill="#2a4660" filter="url(#rough2)">① 逐行扫描 i = 0 … R−1</text>
+  <text x="165" y="150" text-anchor="middle" font-size="13" fill="#2a4660" filter="url(#rough2)">② 收集本行 1 的列号 ones</text>
+  <text x="165" y="210" text-anchor="middle" font-size="13" fill="#8a6a20" filter="url(#rough2)">③ 枚举 ones 中每对 j&amp;lt;k</text>
+  <text x="165" y="270" text-anchor="middle" font-size="13" fill="#8a2f28" filter="url(#rough2)">④ ans += cnt[j][k]</text>
+  <text x="165" y="288" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">再令 cnt[j][k] += 1</text>
+  <path d="M 165 106 L 165 124" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 165 166 L 165 184" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 165 226 L 165 244" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 165 298 L 165 322 L 27 322 L 27 86 L 48 86" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="96" y="338" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">处理下一行（回到 ①）</text>
+  <rect x="296" y="66" width="196" height="232" fill="#f7f7f7" stroke="#aaa" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="394" y="88" text-anchor="middle" font-size="12" fill="#333" font-weight="bold" filter="url(#rough2)">为什么这样数不重不漏</text>
+  <text x="394" y="116" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">第 i 行新出现的矩形，</text>
+  <text x="394" y="136" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">必须借本行的一条边，</text>
+  <text x="394" y="156" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">另一条边只能来自旧行，</text>
+  <text x="394" y="176" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">共 cnt[j][k] 种选法；</text>
+  <text x="394" y="196" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">先累加再自增，新行</text>
+  <text x="394" y="216" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">就不会和自己配对。</text>
+  <rect x="306" y="240" width="176" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="394" y="259" text-anchor="middle" font-size="11" fill="#2f5424" font-weight="bold" filter="url(#rough2)">C(x+1, 2) − C(x, 2) = x</text>
+  <text x="394" y="276" text-anchor="middle" font-size="9" fill="#4a7a3a" filter="url(#rough2)">自增前后恰好差 x 个矩形</text>
+  <text x="260" y="316" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">含 0 格的列对 cnt 恒为 0，故只枚举本行 1 之间的列对</text>
+  <text x="260" y="336" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">时间 O(Σ kᵢ²)，kᵢ 是第 i 行 1 的个数</text>
+</svg>

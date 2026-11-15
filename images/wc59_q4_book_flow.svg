@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 9 4 L 0 9 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="430" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">book(s, e) 的线性流程：先查双重，再写入交点</text>
+
+  <rect x="190" y="46" width="220" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="68" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">新请求 I = [s, e)</text>
+
+  <path d="M 300 80 L 300 100" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="100" width="270" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="136" y="122" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">∃ 段 (a, b) ∈ doubles 满足</text>
+  <text x="136" y="141" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">max(s, a) &lt; min(e, b) （半开区间相交）？</text>
+
+  <path d="M 390 128 L 418 128" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="400" y="120" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <rect x="420" y="100" width="158" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="499" y="124" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">返回 false</text>
+  <text x="499" y="142" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">不改动任何结构</text>
+
+  <path d="M 255 156 L 255 184" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="243" y="176" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">否</text>
+
+  <rect x="90" y="184" width="420" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="106" y="205" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">对每个 single (a, b) 求交段 [l, r) = [max(s,a), min(e,b))</text>
+  <text x="106" y="226" font-size="10" fill="#555" filter="url(#rough2)">若 l &lt; r 则把 [l, r) 追加进 doubles（这段被覆盖 2 次）</text>
+
+  <path d="M 300 242 L 300 268" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="268" width="300" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="290" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">singles.append([s, e))</text>
+
+  <path d="M 300 302 L 300 328" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="190" y="328" width="220" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="350" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">返回 true</text>
+
+  <text x="300" y="390" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">⚠ 顺序不可交换：全部冲突检查通过之前，绝不写入 doubles / singles</text>
+  <text x="300" y="410" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">单次 book 为 O(|singles| + |doubles|) = O(m)，m 为已接受的预订数</text>
+</svg>

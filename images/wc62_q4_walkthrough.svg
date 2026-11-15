@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="400" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例演算：words = ["apple", "apply", "app", "apple"]</text>
+  <text x="300" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">三个查询：f("app","le") = 3　　f("app","y") = 1　　f("app","p") = 2</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="60" width="520" height="26" rx="4" fill="#eef2f7" stroke="#446688" stroke-width="1.4"/>
+    <rect x="40" y="86" width="520" height="28" rx="4" fill="#f8fbf9" stroke="#9ab0a0" stroke-width="1.1"/>
+    <rect x="40" y="114" width="520" height="28" rx="4" fill="#fdf6f6" stroke="#c9a0a0" stroke-width="1.1"/>
+    <rect x="40" y="142" width="520" height="28" rx="4" fill="#fdf6f6" stroke="#c9a0a0" stroke-width="1.1"/>
+    <rect x="40" y="170" width="520" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" fill="#333">
+    <text x="56" y="78">下标 i</text>
+    <text x="120" y="78">词 w</text>
+    <text x="240" y="78">以 "app" 开头？</text>
+    <text x="380" y="78">以 "le" 结尾？</text>
+    <text x="500" y="78">命中</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11.5" fill="#333">
+    <text x="62" y="105">0</text>
+    <text x="120" y="105" font-family="Menlo, ui-monospace, monospace">apple</text>
+    <text x="262" y="105" fill="#3a6a30">✓</text>
+    <text x="404" y="105" fill="#3a6a30">✓</text>
+    <text x="506" y="105" fill="#3a6a30">是 → 0</text>
+
+    <text x="62" y="133">1</text>
+    <text x="120" y="133" font-family="Menlo, ui-monospace, monospace">apply</text>
+    <text x="262" y="133" fill="#3a6a30">✓</text>
+    <text x="404" y="133" fill="#b85450">✗</text>
+    <text x="506" y="133" fill="#b85450">否</text>
+
+    <text x="62" y="161">2</text>
+    <text x="120" y="161" font-family="Menlo, ui-monospace, monospace">app</text>
+    <text x="262" y="161" fill="#3a6a30">✓</text>
+    <text x="404" y="161" fill="#b85450">✗</text>
+    <text x="506" y="161" fill="#b85450">否</text>
+
+    <text x="62" y="190" font-weight="bold">3</text>
+    <text x="120" y="190" font-family="Menlo, ui-monospace, monospace" font-weight="bold">apple</text>
+    <text x="262" y="190" fill="#3a6a30" font-weight="bold">✓</text>
+    <text x="404" y="190" fill="#3a6a30" font-weight="bold">✓</text>
+    <text x="506" y="190" fill="#1f3f18" font-weight="bold">是 → 3</text>
+  </g>
+
+  <path d="M 452 228 L 452 204" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="462" y="224" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">答案取最大下标</text>
+
+  <rect x="40" y="232" width="520" height="112" rx="10" fill="#f7f9fc" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="56" y="256" font-size="10.5" fill="#333" filter="url(#rough2)">Trie 里发生了什么：键 le{apple 在 i = 0 与 i = 3 各插入一次，</text>
+  <text x="56" y="280" font-size="10.5" fill="#333" filter="url(#rough2)">该结点 weight 先写 0、后覆盖为 3 —— 覆盖写天然保证「最大下标」。</text>
+  <text x="56" y="306" font-size="10.5" fill="#333" filter="url(#rough2)">另外两个查询：走 y{app 落到 y{apply（i = 1）；走 p{app 落到 p{app（i = 2）。</text>
+  <text x="56" y="330" font-size="10.5" fill="#8a5a20" filter="url(#rough2)">注意 i = 0 与 i = 3 是同一个词 apple，重复词也必须返回较大的下标。</text>
+
+  <text x="300" y="382" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">枚举全部词是 O(N·L)；Trie 把每次查询摊到 O(L)，这就是从 10⁸ 到 1.4×10⁵ 的差距</text>
+</svg>

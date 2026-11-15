@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 366" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="366" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14" fill="#444" font-weight="bold">示例 1 演算：times = [[2,1,1],[2,3,1],[3,4,1]]，n = 4，k = 2</text>
+  <text x="280" y="45" text-anchor="middle" font-size="10" fill="#888">每轮弹出堆中距离最小的节点，把它当作「最短路已确定」，再松弛出边</text>
+
+  <!-- header -->
+  <g filter="url(#rough2)">
+    <rect x="20" y="60" width="52" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="76" y="60" width="96" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="176" y="60" width="178" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="358" y="60" width="182" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g font-size="10.5" fill="#3a4a66" text-anchor="middle" filter="url(#rough2)">
+    <text x="46" y="77">步骤</text>
+    <text x="124" y="77">出堆 (d, u)</text>
+    <text x="265" y="77">dist[1..4]</text>
+    <text x="449" y="77">本轮动作</text>
+  </g>
+
+  <!-- rows -->
+  <g filter="url(#rough2)">
+    <rect x="20" y="90" width="520" height="30" rx="6" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="20" y="122" width="520" height="30" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <rect x="20" y="154" width="520" height="30" rx="6" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <rect x="20" y="186" width="520" height="30" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="20" y="218" width="520" height="30" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.4"/>
+  </g>
+
+  <g font-size="9.5" fill="#444" text-anchor="middle" filter="url(#rough2)">
+    <text x="46" y="109">初始</text>
+    <text x="124" y="109">堆 {(0, 2)}</text>
+    <text x="265" y="109">[∞, 0, ∞, ∞]</text>
+    <text x="449" y="109">只有源点 2 已知</text>
+
+    <text x="46" y="141">第 1 轮</text>
+    <text x="124" y="141">(0, 2)</text>
+    <text x="265" y="141">[∞, 0, ∞, ∞]</text>
+    <text x="449" y="141">松弛 2→1、2→3</text>
+
+    <text x="46" y="173">第 2 轮</text>
+    <text x="124" y="173">(1, 1)</text>
+    <text x="265" y="173">[1, 0, 1, ∞]</text>
+    <text x="449" y="173">1 无出边，空转</text>
+
+    <text x="46" y="205">第 3 轮</text>
+    <text x="124" y="205">(1, 3)</text>
+    <text x="265" y="205">[1, 0, 1, ∞]</text>
+    <text x="449" y="205">松弛 3→4，d₄ = 2</text>
+
+    <text x="46" y="237">第 4 轮</text>
+    <text x="124" y="237">(2, 4)</text>
+    <text x="265" y="237">[1, 0, 1, 2]</text>
+    <text x="449" y="237">无出边，堆空结束</text>
+  </g>
+
+  <g font-size="9.5" fill="#555" filter="url(#rough2)">
+    <text x="24" y="262">第 1 轮把 dist[1] 与 dist[3] 同时更新为 1，堆中并列 (1,1)、(1,3) 时按节点号先弹出 1；</text>
+    <text x="24" y="278">先弹 1 还是先弹 3 不影响结果，因为 3 的 dist 已经是 1，不会再被 1 改进。</text>
+  </g>
+
+  <rect x="60" y="292" width="440" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="76" y="312" font-size="11" fill="#3a5a30" font-weight="bold">结果</text>
+  <text x="76" y="330" font-size="10" fill="#555">dist = [1, 0, 1, 2]，全部有限 ⇒ 答案 = max{1, 0, 1, 2} = 2</text>
+
+  <text x="280" y="360" text-anchor="middle" font-size="9.5" fill="#999">若 k = 4：只有 4 自己能收到信号 ⇒ 存在 INF ⇒ 返回 −1</text>
+</svg>

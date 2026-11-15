@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="420" fill="#fafafa"/>
+
+  <text x="290" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：用分隔符把「后缀」与「整词」拼成一个键</text>
+  <text x="290" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">查询 f(pref, suff) 只需看键 suff + '{' + pref —— 二维条件降级为一维前缀</text>
+
+  <text x="60" y="70" font-size="11" fill="#446688" filter="url(#rough2)">w = "apple"（下标 3）派生出 6 个键，j 是后缀起点：</text>
+
+  <g filter="url(#rough2)" font-size="10.5" fill="#999" text-anchor="end">
+    <text x="52" y="99">j=0</text>
+    <text x="52" y="135">j=1</text>
+    <text x="52" y="171">j=2</text>
+    <text x="52" y="207">j=3</text>
+    <text x="52" y="243">j=4</text>
+    <text x="52" y="279">j=5</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="80" width="240" height="28" rx="4" fill="#f2f5fa" stroke="#446688" stroke-width="1.3"/>
+    <rect x="60" y="116" width="240" height="28" rx="4" fill="#f2f5fa" stroke="#446688" stroke-width="1.3"/>
+    <rect x="60" y="152" width="240" height="28" rx="4" fill="#f2f5fa" stroke="#446688" stroke-width="1.3"/>
+    <rect x="60" y="188" width="240" height="28" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.4"/>
+    <rect x="60" y="224" width="240" height="28" rx="4" fill="#f2f5fa" stroke="#446688" stroke-width="1.3"/>
+    <rect x="60" y="260" width="240" height="28" rx="4" fill="#f2f5fa" stroke="#446688" stroke-width="1.3"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12.5" font-family="Menlo, ui-monospace, monospace">
+    <text x="72" y="99" fill="#2f4f28">apple{apple</text>
+    <text x="72" y="135" fill="#2f4f28">pple{apple</text>
+    <text x="72" y="171" fill="#2f4f28">ple{apple</text>
+    <text x="72" y="207" fill="#1f3f18" font-weight="bold">le{apple</text>
+    <text x="72" y="243" fill="#2f4f28">e{apple</text>
+    <text x="72" y="279" fill="#2f4f28">{apple</text>
+  </g>
+
+  <rect x="330" y="112" width="220" height="86" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="344" y="134" font-size="11" fill="#8a5a20" filter="url(#rough2)">查询 f(pref="ap", suff="le")</text>
+  <text x="344" y="158" font-size="12" fill="#8a3a36" font-family="Menlo, ui-monospace, monospace" filter="url(#rough2)">键 = "le" + "{" + "ap"</text>
+  <text x="344" y="178" font-size="12" fill="#8a3a36" font-family="Menlo, ui-monospace, monospace" filter="url(#rough2)">　 = le{ap</text>
+  <text x="344" y="194" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">是 le{apple 的前缀 → 3</text>
+
+  <path d="M 330 168 L 306 200" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="298" width="520" height="104" rx="10" fill="#f7f9fc" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="46" y="322" font-size="10" fill="#333" filter="url(#rough2)">为什么不会错配：小写字母里没有 '{'，它是唯一分隔符，键中第一个 '{' 恰在后缀之后。</text>
+  <text x="46" y="346" font-size="10" fill="#333" filter="url(#rough2)">于是「查询键是某存储键的前缀」⟺「后缀与 suff 相同」且「整词以 pref 开头」。</text>
+  <text x="46" y="370" font-size="10" fill="#333" filter="url(#rough2)">后缀要「完全相等」而非「以 suff 开头」——这正是只插后缀、不插前缀的原因。</text>
+  <text x="46" y="392" font-size="10" fill="#8a3a36" filter="url(#rough2)">j = L 的空后缀键 {apple 让「任意前缀 + 任意后缀」的查询也有落点，不必特判。</text>
+</svg>

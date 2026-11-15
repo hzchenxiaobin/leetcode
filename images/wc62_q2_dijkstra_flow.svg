@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">Dijkstra + 小根堆：一次扫描求全部最短路</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10.5" fill="#888">堆里存 (距离, 节点) 二元组，每次只扩展「当前最近」的未定节点</text>
+
+  <rect x="130" y="62" width="280" height="42" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="144" y="80" font-size="10.5" fill="#3a4a66" font-weight="bold">① 初始化</text>
+  <text x="144" y="96" font-size="10" fill="#555">dist[k] = 0，其余 = ∞；堆 ← {(0, k)}</text>
+
+  <path d="M 270 104 L 270 116" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="270,118 400,150 270,182 140,150" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="270" y="155" text-anchor="middle" font-size="11" fill="#8a6a20">堆非空？</text>
+
+  <path d="M 270 182 L 270 198" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="284" y="196" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="130" y="200" width="280" height="40" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="144" y="217" font-size="10.5" fill="#3a5a30" font-weight="bold">② 弹出最小 (d, u)</text>
+  <text x="144" y="232" font-size="10" fill="#555">若 d &gt; dist[u]，说明是过期项，直接丢弃</text>
+
+  <path d="M 270 240 L 270 252" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="254" width="280" height="46" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="144" y="271" font-size="10.5" fill="#8a3a36" font-weight="bold">③ 松弛所有出边 u → v (权 w)</text>
+  <text x="144" y="288" font-size="10" fill="#555">若 d + w &lt; dist[v]：更新 dist[v] 并把 (d+w, v) 入堆</text>
+
+  <path d="M 130 277 L 88 277 L 88 150 L 136 150" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="94" y="200" font-size="10" fill="#888" filter="url(#rough2)">回到堆</text>
+
+  <path d="M 400 150 L 460 150 L 460 300 L 420 300 L 420 334" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="412" y="142" font-size="10" fill="#b85450" filter="url(#rough2)">否（堆空）</text>
+
+  <rect x="300" y="336" width="236" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="314" y="355" font-size="10.5" fill="#3a4a66" font-weight="bold">④ 汇总</text>
+  <text x="314" y="371" font-size="9.5" fill="#555">任一 dist 为 ∞ → 返回 −1</text>
+  <text x="314" y="385" font-size="9.5" fill="#555">否则返回 max dist[v]</text>
+
+  <text x="130" y="360" font-size="10" fill="#555" filter="url(#rough2)">每条边最多入堆一次</text>
+  <text x="130" y="378" font-size="10" fill="#555" filter="url(#rough2)">时间 O(m log m)</text>
+  <text x="130" y="396" font-size="10" fill="#555" filter="url(#rough2)">空间 O(n + m)</text>
+
+  <text x="280" y="414" text-anchor="middle" font-size="10" fill="#999">m = times.length ≤ 6000，边界权 0 也不影响正确性（非负即可）</text>
+</svg>

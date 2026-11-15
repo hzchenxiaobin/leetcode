@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="380" fill="#fafafa"/>
+
+  <text x="310" y="30" text-anchor="middle" font-size="16" fill="#444" font-weight="bold">状态转移：每个桶只有「取」与「不取」两种去向</text>
+  <text x="310" y="52" text-anchor="middle" font-size="11" fill="#888">两路候选都来自更早的状态，因此一遍从左到右扫描即可定案</text>
+
+  <rect x="55" y="82" width="205" height="70" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="157" y="108" text-anchor="middle" font-size="13" fill="#8a6a20" font-weight="bold">取走数值 v</text>
+  <text x="157" y="130" text-anchor="middle" font-size="11" fill="#666">f[v−2] + v × cnt[v]</text>
+  <text x="157" y="146" text-anchor="middle" font-size="9" fill="#aaa">（v−1 被连带删除，故只能接 v−2）</text>
+
+  <rect x="360" y="82" width="205" height="70" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="462" y="108" text-anchor="middle" font-size="13" fill="#3a4a66" font-weight="bold">放弃数值 v</text>
+  <text x="462" y="130" text-anchor="middle" font-size="11" fill="#666">f[v−1]</text>
+  <text x="462" y="146" text-anchor="middle" font-size="9" fill="#aaa">（一分不得，但保留前面全部战果）</text>
+
+  <path d="M 157 156 L 157 182 L 258 182 L 258 208" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 462 156 L 462 182 L 362 182 L 362 208" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="210" y="212" width="200" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="10" filter="url(#rough2)"/>
+  <text x="310" y="236" text-anchor="middle" font-size="12" fill="#3a5a30" font-weight="bold">f[v] = max(两路候选)</text>
+  <text x="310" y="258" text-anchor="middle" font-size="10" fill="#557">取两者较大值，贪心地丢掉较差分支</text>
+
+  <text x="310" y="296" text-anchor="middle" font-size="11" fill="#666">实现时甚至不需要数组：两个滚动变量记录 f[v−2] 与 f[v−1]</text>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <rect x="110" y="308" width="110" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6"/>
+    <rect x="255" y="308" width="110" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="6"/>
+    <rect x="400" y="308" width="110" height="36" fill="#ffffff" stroke="#8a8a8a" stroke-width="1.6" rx="6"/>
+    <text x="165" y="331" fill="#3a4a66">prev2 = f[v−2]</text>
+    <text x="310" y="331" fill="#7a2f2b">prev1 = f[v−1]</text>
+    <text x="455" y="331" fill="#666">cur = f[v]</text>
+  </g>
+
+  <path d="M 225 326 L 250 326" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <path d="M 370 326 L 395 326" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="310" y="362" text-anchor="middle" font-size="10" fill="#999">每轮结束整体左移：prev2 ← prev1，prev1 ← cur，空间 O(1)</text>
+</svg>

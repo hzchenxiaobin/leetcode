@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 450" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="450" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#444" filter="url(#rough2)">区间 DP：按区间长度从小到大转移</text>
+  <text x="290" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">f[i][j] = s[i..j] 的不同非空回文子序列个数，空区间记 0</text>
+
+  <g filter="url(#rough2)">
+    <rect x="140" y="62" width="300" height="44" rx="9" fill="#f7f9fc" stroke="#d5dde8" stroke-width="1.6"/>
+    <text x="290" y="80" text-anchor="middle" font-size="10.5" fill="#556">基态：f[i][i] = 1，空区间 f = 0</text>
+    <text x="290" y="97" text-anchor="middle" font-size="10.5" fill="#556">每个状态只依赖更短的区间</text>
+
+    <path d="M 290 108 L 290 118" fill="none" stroke="#666" stroke-width="1.5" marker-end="url(#arr)"/>
+
+    <polygon points="290,120 404,158 290,196 176,158" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="290" y="163" text-anchor="middle" font-size="11" fill="#8a6a20">s[i] == s[j] ?</text>
+
+    <path d="M 176 158 L 100 158 L 100 204" fill="none" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)"/>
+    <text x="140" y="150" text-anchor="middle" font-size="12" fill="#b85450">≠</text>
+
+    <path d="M 404 158 L 470 158 L 470 204" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)"/>
+    <text x="440" y="150" text-anchor="middle" font-size="12" fill="#4a7a3a">=</text>
+
+    <rect x="12" y="208" width="176" height="100" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.7"/>
+    <text x="100" y="230" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8a3a36">端点不同：容斥</text>
+    <text x="100" y="256" text-anchor="middle" font-size="10" fill="#555">f[i+1][j] + f[i][j-1]</text>
+    <text x="100" y="278" text-anchor="middle" font-size="10" fill="#555">− f[i+1][j-1]</text>
+    <text x="100" y="298" text-anchor="middle" font-size="9" fill="#888">并集减去交集</text>
+
+    <rect x="204" y="208" width="356" height="172" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7"/>
+    <text x="382" y="230" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#3a5a30">端点相同 s[i] = s[j] = c：按 c 在内部的个数分三支</text>
+    <text x="220" y="258" font-size="10" fill="#555">a &gt; b（内部无 c）  →  2·f[i+1][j-1] + 2</text>
+    <text x="220" y="286" font-size="10" fill="#555">a == b（内部一个 c）  →  2·f[i+1][j-1] + 1</text>
+    <text x="220" y="314" font-size="10" fill="#555">a &lt; b（内部 ≥2 个 c）  →  2·f[i+1][j-1] − f[a+1][b-1]</text>
+    <text x="220" y="344" font-size="9.5" fill="#777">a = next[i][c]：i 之后第一个 c</text>
+    <text x="220" y="362" font-size="9.5" fill="#777">b = prev[j][c]：j 之前最后一个 c</text>
+
+    <rect x="12" y="394" width="548" height="42" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="286" y="412" text-anchor="middle" font-size="9.5" fill="#8a6a20">填表顺序：len = 2 → n，内层左端点 i 从 0 到 n−len</text>
+    <text x="286" y="428" text-anchor="middle" font-size="9.5" fill="#8a6a20">答案 f[0][n-1]；减法后写 (v % MOD + MOD) % MOD 防负</text>
+  </g>
+</svg>

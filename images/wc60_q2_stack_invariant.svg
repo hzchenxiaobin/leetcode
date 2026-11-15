@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrL" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="14" fill="#333" font-weight="bold">稳定态的形状：左段全向左、右段全向右</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10" fill="#888">栈里永远不会出现「左边向右、右边向左」这种相向的相邻对</text>
+
+  <path d="M 143 88 L 62 88" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrL)" filter="url(#rough2)"/>
+  <path d="M 200 88 L 368 88" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="100" width="54" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="83" y="126" text-anchor="middle" font-size="13" fill="#3a4a66">−7</text>
+  <rect x="116" y="100" width="54" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="143" y="126" text-anchor="middle" font-size="13" fill="#3a4a66">−3</text>
+
+  <path d="M 176 82 L 176 158" stroke="#b85450" stroke-width="1.3" stroke-dasharray="5 4" fill="none" filter="url(#rough2)"/>
+
+  <rect x="196" y="100" width="54" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="223" y="126" text-anchor="middle" font-size="13" fill="#3a5a30">2</text>
+  <rect x="256" y="100" width="54" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="283" y="126" text-anchor="middle" font-size="13" fill="#3a5a30">5</text>
+  <rect x="316" y="100" width="54" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="343" y="126" text-anchor="middle" font-size="13" fill="#3a5a30">9</text>
+
+  <text x="110" y="176" text-anchor="middle" font-size="10" fill="#446688">左段：全部向左</text>
+  <text x="283" y="176" text-anchor="middle" font-size="10" fill="#4a7a3a">右段：全部向右</text>
+
+  <rect x="36" y="192" width="488" height="58" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="52" y="215" font-size="10.5" fill="#8a6a20">稳定性从何而来：段内同向、交界处「左负右正」背向而行，任意相邻两星都在远离。</text>
+  <text x="52" y="236" font-size="10.5" fill="#8a6a20">因此栈里只需检查「栈顶是否为正」即可判定唯一可能的碰撞。</text>
+
+  <rect x="36" y="264" width="238" height="86" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="52" y="286" font-size="11" fill="#3a5a30" font-weight="bold">a &gt; 0（向右）</text>
+  <text x="52" y="307" font-size="9.5" fill="#555">与栈顶同向 → 不相撞</text>
+  <text x="52" y="325" font-size="9.5" fill="#555">与栈顶背向 → 更不相撞</text>
+  <text x="52" y="343" font-size="9.5" fill="#4a7a3a">⇒ 直接 push(a)</text>
+
+  <rect x="286" y="264" width="238" height="86" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="302" y="286" font-size="11" fill="#8a3a36" font-weight="bold">a &lt; 0（向左）</text>
+  <text x="302" y="307" font-size="9.5" fill="#555">仅当栈顶 &gt; 0 时才是相向</text>
+  <text x="302" y="325" font-size="9.5" fill="#555">⇒ 进入 while 连续搏斗</text>
+  <text x="302" y="343" font-size="9.5" fill="#b85450">直到栈顶 ≤ 0 或 a 爆炸</text>
+
+  <text x="280" y="372" text-anchor="middle" font-size="10" fill="#999">不变式成立 ⇒ 只需与栈顶比较，不必回头扫描整个栈</text>
+  <text x="280" y="390" text-anchor="middle" font-size="10" fill="#999">这也是 O(n) 的来源：每颗行星最多入栈一次、出栈一次</text>
+</svg>
