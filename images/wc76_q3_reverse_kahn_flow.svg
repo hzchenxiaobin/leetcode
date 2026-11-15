@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">反向拓扑剥离（Kahn 变体）：O(n + m)</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">把「所有出边都安全」逐个归约成「出边计数器清零」</text>
+
+  <rect x="70" y="66" width="420" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="88" y="85" font-size="11" fill="#3a4a66" font-weight="bold">① 建反图 + 出度</text>
+  <text x="88" y="101" font-size="10.5" fill="#555">对每条 u → v：radj[v].push(u)；deg[u] = len(graph[u])</text>
+
+  <path d="M 280 110 L 280 128" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="130" width="420" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="88" y="149" font-size="11" fill="#3a5a30" font-weight="bold">② 初始化队列</text>
+  <text x="88" y="165" font-size="10.5" fill="#555">所有 deg[u] == 0 的终端节点入队，它们天然安全</text>
+
+  <path d="M 280 174 L 280 192" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="194" width="420" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="88" y="213" font-size="11" fill="#8a6a20" font-weight="bold">③ 出队 u，标记 safe[u] = true</text>
+  <text x="88" y="229" font-size="10.5" fill="#555">对 radj[u] 中每个前驱 p：deg[p] -= 1（删掉边 p → u）</text>
+  <text x="88" y="245" font-size="10.5" fill="#555">若 deg[p] 减到 0，说明 p 的全部出边都安全 → p 入队</text>
+
+  <path d="M 280 254 L 280 272" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="274" width="420" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="88" y="293" font-size="11" fill="#3a4a66" font-weight="bold">④ 循环直到队列为空</text>
+  <text x="88" y="309" font-size="10.5" fill="#555">从未入队、deg 仍大于 0 的节点，正是一个环或能走到环</text>
+
+  <path d="M 280 318 L 280 336" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="338" width="420" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="88" y="357" font-size="11" fill="#3a5a30" font-weight="bold">⑤ 按编号升序收集 safe[u] == true 的节点</text>
+  <text x="88" y="373" font-size="10.5" fill="#555">出队顺序是拓扑序，不是升序，必须再扫一遍 0…n−1</text>
+
+  <text x="280" y="410" text-anchor="middle" font-size="10" fill="#999">每个节点最多入队一次，每条边最多被反向遍历一次 → 线性时间</text>
+  <text x="280" y="428" text-anchor="middle" font-size="10" fill="#999">图中存在自环时 deg[u] 含自环，u 永远清不到 0，自动被判为不安全</text>
+</svg>

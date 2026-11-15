@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：把「删砖」倒放成「加砖」，并查集才用得上</text>
+  <text x="320" y="49" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">稳定砖块 ⇔ 与天花板连通；删除会撕裂连通块，合并只会拼接连通块</text>
+
+  <text x="34" y="96" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">正向</text>
+
+  <rect x="60" y="76" width="150" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="135" y="96" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">① 消除 (r, c) 的砖块</text>
+  <text x="135" y="112" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">网格里少一块</text>
+
+  <path d="M 214 99 L 244 99" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="250" y="76" width="150" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="325" y="96" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">② 从顶部重算 BFS</text>
+  <text x="325" y="112" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">重新求出稳定集合</text>
+
+  <path d="M 404 99 L 434 99" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="440" y="76" width="150" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="515" y="96" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">③ 移除失去稳定的砖</text>
+  <text x="515" y="112" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">差值 = 本次掉落数</text>
+
+  <text x="320" y="144" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">删除是「不可逆」操作：并查集只支持合并，无法拆分连通块</text>
+  <text x="320" y="162" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">最坏 H × mn ≈ 4×10⁴ × 4×10⁴ = 1.6×10⁹ 次访问 → 超时</text>
+
+  <path d="M 320 174 L 320 196" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="356" y="190" font-size="10" fill="#b85450" font-weight="bold" filter="url(#rough2)">整条时间轴倒放</text>
+
+  <text x="34" y="240" font-size="11.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">逆向</text>
+
+  <rect x="60" y="212" width="150" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="135" y="232" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">① 预删全部 hit 位置</text>
+  <text x="135" y="248" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">得到最终局面</text>
+
+  <path d="M 214 235 L 244 235" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="250" y="212" width="150" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="325" y="232" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">② 一次性建并查集</text>
+  <text x="325" y="248" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">第 0 行接虚拟天花板</text>
+
+  <path d="M 404 235 L 434 235" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="440" y="212" width="150" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="515" y="232" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">③ 倒序把砖加回去</text>
+  <text x="515" y="248" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">只合并，不拆分</text>
+
+  <text x="320" y="284" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">每加一块砖，稳定砖块总数只可能变大：新增量 = 本次被「救活」的砖数</text>
+  <text x="320" y="302" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">总代价 O((mn + H)·α(mn))，4×10⁴ 级别轻松通过</text>
+
+  <rect x="44" y="318" width="552" height="62" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="340" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">第 i 次消除的掉落数 = max(0, after − before − 1)</text>
+  <text x="320" y="360" text-anchor="middle" font-size="9.8" fill="#555" filter="url(#rough2)">before / after = 恢复前 / 后与天花板连通的砖数；减 1 是扣掉被恢复的这块砖本身</text>
+  <text x="320" y="376" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">取 max(0, ·) 兜住「这块砖早已掉落，恢复它并不会救活任何砖」的情形</text>
+</svg>

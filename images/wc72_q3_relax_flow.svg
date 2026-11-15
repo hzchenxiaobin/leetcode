@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="700" height="430" fill="#fafafa"/>
+  <text x="350" y="30" text-anchor="middle" font-size="15" fill="#333" font-weight="normal" filter="url(#rough2)">逐轮松弛：k+1 轮 Bellman–Ford，每轮只读上一层的 dist</text>
+  <text x="350" y="51" text-anchor="middle" font-size="10.5" fill="#888" font-weight="normal" filter="url(#rough2)">滚动数组 dist[] 复用同一份空间，用快照保证「一层只走一条边」</text>
+  <rect x="56" y="62" width="356" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="70" y="84" text-anchor="start" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">初始化</text>
+  <text x="70" y="104" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">dist[src] = 0，其余 = ∞</text>
+  <rect x="56" y="134" width="356" height="56" rx="10" fill="#eef2f8" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="70" y="156" text-anchor="start" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">循环 t = 1 … k+1</text>
+  <text x="70" y="176" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">k 站中转 ⇔ 至多 k+1 条边</text>
+  <rect x="56" y="206" width="356" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="70" y="228" text-anchor="start" font-size="12" fill="#d6a040" font-weight="bold" filter="url(#rough2)">快照（关键）</text>
+  <text x="70" y="248" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">cur = dist，本轮只读 cur</text>
+  <rect x="56" y="278" width="356" height="56" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="70" y="300" text-anchor="start" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">松弛全部边</text>
+  <text x="70" y="320" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">dist[v] = min(dist[v], cur[u] + w)</text>
+  <rect x="56" y="350" width="356" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="70" y="372" text-anchor="start" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">结束</text>
+  <text x="70" y="392" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">返回 dist[dst]，仍为 ∞ 则 −1</text>
+  <path d="M234,118 L234,134" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M234,190 L234,206" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M234,262 L234,278" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M234,334 L234,350" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="430" y="96" width="236" height="300" rx="12" fill="#fafafa" stroke="#446688" stroke-width="1.4" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="548" y="122" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">两个必须遵守的细节</text>
+  <text x="446" y="150" text-anchor="start" font-size="10.5" fill="#446688" font-weight="normal" filter="url(#rough2)">① 轮数 = k + 1</text>
+  <text x="446" y="168" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">k 是「中转站」数，</text>
+  <text x="446" y="186" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">路径边数比它多 1；</text>
+  <text x="446" y="204" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">只跑 k 轮会漏掉直飞终点。</text>
+  <text x="446" y="240" text-anchor="start" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">② 不能就地更新</text>
+  <text x="446" y="262" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">若用刚更新的 dist[u] 去松弛，</text>
+  <text x="446" y="280" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">同一轮里会连续走多条边，</text>
+  <text x="446" y="298" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">可能把 3 条边的路径算进 2 条边的层，</text>
+  <text x="446" y="316" text-anchor="start" font-size="10.5" fill="#444" font-weight="normal" filter="url(#rough2)">答案偏小 —— 这是最常见的 WA。</text>
+  <text x="446" y="356" text-anchor="start" font-size="10.5" fill="#4a7a3a" font-weight="normal" filter="url(#rough2)">写法：nxt = dist 再写 nxt，</text>
+  <text x="446" y="374" text-anchor="start" font-size="10.5" fill="#4a7a3a" font-weight="normal" filter="url(#rough2)">或令 cur 为只读副本。</text>
+</svg>

@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="400" fill="#fafafa"/>
+
+  <text x="360" y="30" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">核心观察：给每个字符一个「名次键」，问题退化成计数排序</text>
+  <text x="360" y="50" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">合法排列 ⟺ 结果按 key 非降序；key 相同的字符彼此不受约束</text>
+
+  <!-- order 序列：c b a -->
+  <text x="56" y="92" font-size="12" fill="#3a4a66" filter="url(#rough2)">order =</text>
+  <rect x="126" y="72" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="150" y="96" text-anchor="middle" font-size="16" fill="#334" filter="url(#rough2)">c</text>
+  <rect x="182" y="72" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="206" y="96" text-anchor="middle" font-size="16" fill="#334" filter="url(#rough2)">b</text>
+  <rect x="238" y="72" width="48" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="262" y="96" text-anchor="middle" font-size="16" fill="#334" filter="url(#rough2)">a</text>
+  <text x="150" y="126" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">名次 0</text>
+  <text x="206" y="126" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">名次 1</text>
+  <text x="262" y="126" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">名次 2</text>
+
+  <!-- 键函数说明 -->
+  <path d="M292,90 L326,90" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="336" y="82" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">key(ch) = ch 在 order 中的下标</text>
+  <text x="336" y="102" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">不在 order 中 → key = 26（记为 ∞）</text>
+  <text x="336" y="122" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">下标越小，越早输出</text>
+
+  <!-- 四个桶 -->
+  <rect x="104" y="150" width="110" height="102" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="159" y="172" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">名次 0</text>
+  <text x="159" y="214" text-anchor="middle" font-size="24" fill="#b85450" filter="url(#rough2)">c</text>
+  <text x="159" y="240" text-anchor="middle" font-size="10" fill="#a0605c" filter="url(#rough2)">freq = 1</text>
+
+  <rect x="238" y="150" width="110" height="102" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="293" y="172" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">名次 1</text>
+  <text x="293" y="214" text-anchor="middle" font-size="24" fill="#446688" filter="url(#rough2)">b</text>
+  <text x="293" y="240" text-anchor="middle" font-size="10" fill="#5a6a86" filter="url(#rough2)">freq = 1</text>
+
+  <rect x="372" y="150" width="110" height="102" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="427" y="172" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">名次 2</text>
+  <text x="427" y="214" text-anchor="middle" font-size="24" fill="#4a7a3a" filter="url(#rough2)">a</text>
+  <text x="427" y="240" text-anchor="middle" font-size="10" fill="#5a7a4a" filter="url(#rough2)">freq = 1</text>
+
+  <rect x="506" y="150" width="110" height="102" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="561" y="172" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">名次 ∞</text>
+  <text x="561" y="214" text-anchor="middle" font-size="24" fill="#8a6d1f" filter="url(#rough2)">d</text>
+  <text x="561" y="240" text-anchor="middle" font-size="10" fill="#a0822a" filter="url(#rough2)">freq = 1</text>
+
+  <!-- 拼接 -->
+  <path d="M159,252 L159,272" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M293,252 L293,272" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M427,252 L427,272" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M561,252 L561,272" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="104" y="286" font-size="11" fill="#555" filter="url(#rough2)">按名次升序拼接（每个桶重复 freq 次）：</text>
+  <rect x="104" y="296" width="48" height="40" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="128" y="322" text-anchor="middle" font-size="16" fill="#334" filter="url(#rough2)">c</text>
+  <rect x="158" y="296" width="48" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="182" y="322" text-anchor="middle" font-size="16" fill="#334" filter="url(#rough2)">b</text>
+  <rect x="212" y="296" width="48" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="236" y="322" text-anchor="middle" font-size="16" fill="#334" filter="url(#rough2)">a</text>
+  <rect x="266" y="296" width="48" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="290" y="322" text-anchor="middle" font-size="16" fill="#334" filter="url(#rough2)">d</text>
+
+  <text x="336" y="306" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">同为 ∞ 的字符之间没有顺序要求，</text>
+  <text x="336" y="324" font-size="10.5" fill="#8a6d1f" filter="url(#rough2)">放末尾即可（任意位置都合法）</text>
+
+  <text x="360" y="378" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">桶数 ≤ 26，一次计数 + 一次按名次取出，时间 O(|order| + |s|)，额外空间 O(26)</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#666" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="420" fill="#fafafa"/>
+
+  <text x="360" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">等价视角：预处理「下一个出现位置」</text>
+  <text x="360" y="49" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">查询单词时不再逐格扫描 s，而是一步跳到该字符的最早位置</text>
+
+  <text x="56" y="92" font-size="11" fill="#3a4a66" filter="url(#rough2)">s =</text>
+  <rect x="96" y="70" width="56" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="124" y="93" text-anchor="middle" font-size="13" fill="#3a4a66" filter="url(#rough2)">a</text>
+  <rect x="160" y="70" width="56" height="34" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="188" y="93" text-anchor="middle" font-size="13" fill="#777" filter="url(#rough2)">b</text>
+  <rect x="224" y="70" width="56" height="34" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="252" y="93" text-anchor="middle" font-size="13" fill="#777" filter="url(#rough2)">c</text>
+  <rect x="288" y="70" width="56" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="316" y="93" text-anchor="middle" font-size="13" fill="#3a4a66" filter="url(#rough2)">a</text>
+
+  <text x="124" y="118" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">0</text>
+  <text x="188" y="118" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">1</text>
+  <text x="252" y="118" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">2</text>
+  <text x="316" y="118" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">3</text>
+
+  <text x="392" y="86" font-size="11" fill="#8a6a20" filter="url(#rough2)">单词 w = "aa"，n = 4</text>
+  <text x="392" y="106" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">只有 a 参与跳转，b、c 被直接跳过</text>
+
+  <rect x="60" y="134" width="600" height="42" fill="#fdf2f4" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="80" y="160" font-size="10.5" fill="#8a3b38" filter="url(#rough2)">第 1 步：t = 0，nxt[0]['a'] = 0，用掉下标 0，t ← 1</text>
+
+  <rect x="60" y="184" width="600" height="42" fill="#f1f8f2" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="80" y="210" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">第 2 步：t = 1，nxt[1]['a'] = 3，用掉下标 3，t ← 4，走完 → 命中</text>
+
+  <rect x="60" y="244" width="600" height="88" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.3" rx="10" filter="url(#rough2)"/>
+  <text x="80" y="268" font-size="10.5" fill="#444" filter="url(#rough2)">nxt[t][c] = min { j ≥ t : s[j] = c }，不存在时记作 n</text>
+  <text x="80" y="292" font-size="10.5" fill="#444" filter="url(#rough2)">对每个单词：t = 0；对每个字符 ch：t = nxt[t][ch] + 1</text>
+  <text x="80" y="316" font-size="10.5" fill="#444" filter="url(#rough2)">若某步 nxt[t][ch] = n（字符已不存在）则失败；走完全部字符即命中</text>
+
+  <rect x="140" y="346" width="440" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="14" filter="url(#rough2)"/>
+  <text x="360" y="367" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">预处理 O(26n)，单次查询 O(|w|)，总复杂度与分桶同阶</text>
+
+  <text x="360" y="402" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">代价：额外 26n 个整数（n = 5×10⁴ 时约 5 MB），渐进复杂度并没有更低</text>
+</svg>

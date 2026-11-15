@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 580"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="580" fill="#fafafa"/>
+
+  <text x="340" y="28" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">BFS 交替染色：外层遍历分量，内层传播异色约束</text>
+  <text x="340" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">时间 O(n + m)，空间 O(n)；发现同色边立即短路返回</text>
+
+  <!-- S1 外层循环 -->
+  <rect x="180" y="64" width="320" height="34" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="86" text-anchor="middle" font-size="12" fill="#3a5a30" filter="url(#rough2)">for s = 0 … n−1（枚举连通分量）</text>
+  <path d="M340,98 L340,112" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D1 是否已染色 -->
+  <polygon points="340,116 440,150 340,184 240,150" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="155" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">color[s] = −1 ?</text>
+
+  <!-- D1 否：跳过，回到外层 -->
+  <path d="M240,150 L140,150 L140,81 L176,81" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="196" y="141" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">否（已染）</text>
+
+  <!-- D1 是 -->
+  <path d="M340,184 L340,202" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="354" y="200" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- S2 固定起点颜色 -->
+  <rect x="200" y="206" width="280" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="228" text-anchor="middle" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">color[s] ← 0，s 入队</text>
+  <path d="M340,240 L340,258" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D2 队列非空 -->
+  <polygon points="340,262 450,300 340,338 230,300" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="306" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">队列非空 ?</text>
+
+  <!-- D2 否：return true -->
+  <path d="M450,300 L484,300" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="468" y="291" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">否</text>
+  <rect x="488" y="278" width="152" height="44" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="564" y="306" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">return true</text>
+
+  <!-- D2 是 -->
+  <path d="M340,338 L340,358" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="354" y="356" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <!-- S3 出队 -->
+  <rect x="160" y="362" width="360" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="384" text-anchor="middle" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">u ← pop()；遍历 v ∈ graph[u]</text>
+  <path d="M340,396 L340,414" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D3 同色判定 -->
+  <polygon points="340,418 460,458 340,498 220,458" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="452" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">color[v] == color[u] ?</text>
+  <text x="340" y="470" text-anchor="middle" font-size="9.5" fill="#a0822a" filter="url(#rough2)">（同色即冲突）</text>
+
+  <!-- D3 是：return false -->
+  <path d="M460,458 L494,458" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="478" y="449" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">是</text>
+  <rect x="498" y="436" width="152" height="44" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="574" y="464" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">return false</text>
+
+  <!-- D3 否 -->
+  <path d="M340,498 L340,510" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="354" y="509" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">否</text>
+
+  <!-- S4 染色入队 -->
+  <rect x="170" y="512" width="340" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="340" y="534" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">若 v 未染色：color[v] ← color[u] ^ 1，v 入队</text>
+
+  <!-- 回边 -->
+  <path d="M170,529 L90,529 L90,300 L226,300" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="78" y="430" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)" transform="rotate(-90 78 430)">回到队列检查</text>
+
+  <text x="340" y="566" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">注：u 的邻居全部检查完后回到「队列非空」判定；任一处冲突都立即返回 false</text>
+</svg>

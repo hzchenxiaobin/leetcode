@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14.5" fill="#444" font-weight="bold" filter="url(#rough2)">核心转化：得分区间 → 差分数组</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每个元素对答案的贡献，只是 k 轴上「一段区间 +1」</text>
+
+  <rect x="44" y="60" width="472" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="60" y="82" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">k ≤ j：位置 = j − k，得分 ⟺ k ≤ j − v ⟹ k ∈ [0, j − v]</text>
+  <text x="60" y="104" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">k &gt; j：位置 = j − k + n，得分 ⟺ k ≤ j + n − v ⟹ k ∈ [j + 1, j + n − v]</text>
+  <text x="60" y="128" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">两段都不跨过 n − 1，可直接差分，无需环形处理</text>
+
+  <text x="44" y="172" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">示例：n = 5，元素 j = 2（nums[2] = 1）→ 得分区间 [0, 1] ∪ [3, 4]</text>
+
+  <text x="94" y="214" text-anchor="end" font-size="10.5" fill="#446688" filter="url(#rough2)">diff</text>
+
+  <g filter="url(#rough2)">
+    <rect x="104" y="190" width="58" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4"/>
+    <rect x="170" y="190" width="58" height="38" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+    <rect x="236" y="190" width="58" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="4"/>
+    <rect x="302" y="190" width="58" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4"/>
+    <rect x="368" y="190" width="58" height="38" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+    <rect x="434" y="190" width="58" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" fill="#333">
+    <text x="133" y="215">+1</text>
+    <text x="199" y="215">0</text>
+    <text x="265" y="215">−1</text>
+    <text x="331" y="215">+1</text>
+    <text x="397" y="215">0</text>
+    <text x="463" y="215">−1</text>
+  </g>
+  <g filter="url(#rough2)" font-size="8.5" text-anchor="middle" fill="#888">
+    <text x="133" y="242">k = 0</text>
+    <text x="199" y="242">1</text>
+    <text x="265" y="242">2</text>
+    <text x="331" y="242">3</text>
+    <text x="397" y="242">4</text>
+    <text x="463" y="242">5</text>
+  </g>
+
+  <path d="M 300 250 L 300 280" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="310" y="272" font-size="10.5" fill="#666" filter="url(#rough2)">前缀和</text>
+
+  <text x="94" y="310" text-anchor="end" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">score</text>
+
+  <g filter="url(#rough2)">
+    <rect x="104" y="288" width="58" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="4"/>
+    <rect x="170" y="288" width="58" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="4"/>
+    <rect x="236" y="288" width="58" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="4"/>
+    <rect x="302" y="288" width="58" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="4"/>
+    <rect x="368" y="288" width="58" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" fill="#333">
+    <text x="133" y="313">1</text>
+    <text x="199" y="313">1</text>
+    <text x="265" y="313">0</text>
+    <text x="331" y="313">1</text>
+    <text x="397" y="313">1</text>
+  </g>
+
+  <text x="44" y="352" font-size="10.5" fill="#555" filter="url(#rough2)">该元素在 k = 0, 1, 3, 4 各贡献 1 分；k = 2 时位置 0 &lt; 1，不得分。</text>
+
+  <rect x="44" y="368" width="472" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="60" y="390" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">把 n 个元素的 diff 叠加，一次前缀和得到全部 score[0 .. n−1]；</text>
+  <text x="60" y="412" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">再取「分数最大且下标最小」的 k 作为答案。</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例 1 走查：graph = [[1,2],[2,3],[5],[0],[5],[],[]]</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888">初始出度 deg = [2, 2, 1, 1, 1, 0, 0]，队列取 {5, 6}</text>
+
+  <!-- 表头 -->
+  <rect x="34" y="62" width="492" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="62" y="83" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">步骤</text>
+  <text x="128" y="83" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">出队 u</text>
+  <text x="228" y="83" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">前驱 radj[u]</text>
+  <text x="400" y="83" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">deg 变化 / 新入队</text>
+
+  <!-- 数据行 -->
+  <rect x="34" y="94" width="492" height="34" fill="#ffffff" stroke="#b9c6d8" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <text x="62" y="116" text-anchor="middle" font-size="10" fill="#555">初始</text>
+  <text x="128" y="116" text-anchor="middle" font-size="10" fill="#999">—</text>
+  <text x="228" y="116" text-anchor="middle" font-size="10" fill="#999">—</text>
+  <text x="400" y="116" text-anchor="middle" font-size="9.5" fill="#555">入队 {5, 6}（两个终端节点）</text>
+
+  <rect x="34" y="128" width="492" height="34" fill="#ffffff" stroke="#b9c6d8" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <text x="62" y="150" text-anchor="middle" font-size="10" fill="#555">①</text>
+  <text x="128" y="150" text-anchor="middle" font-size="11" fill="#3a5a30">5</text>
+  <text x="228" y="150" text-anchor="middle" font-size="10" fill="#555">2, 4</text>
+  <text x="400" y="150" text-anchor="middle" font-size="9.5" fill="#555">deg[2] = 0 ✓，deg[4] = 0 ✓ → 入队 {2, 4}</text>
+
+  <rect x="34" y="162" width="492" height="34" fill="#ffffff" stroke="#b9c6d8" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <text x="62" y="184" text-anchor="middle" font-size="10" fill="#555">②</text>
+  <text x="128" y="184" text-anchor="middle" font-size="11" fill="#3a5a30">6</text>
+  <text x="228" y="184" text-anchor="middle" font-size="10" fill="#999">空</text>
+  <text x="400" y="184" text-anchor="middle" font-size="9.5" fill="#555">没有前驱，什么也不做</text>
+
+  <rect x="34" y="196" width="492" height="34" fill="#ffffff" stroke="#b9c6d8" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <text x="62" y="218" text-anchor="middle" font-size="10" fill="#555">③</text>
+  <text x="128" y="218" text-anchor="middle" font-size="11" fill="#3a5a30">2</text>
+  <text x="228" y="218" text-anchor="middle" font-size="10" fill="#555">0, 1</text>
+  <text x="400" y="218" text-anchor="middle" font-size="9.5" fill="#555">deg[0]: 2→1，deg[1]: 2→1，都不为 0</text>
+
+  <rect x="34" y="230" width="492" height="34" fill="#ffffff" stroke="#b9c6d8" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <text x="62" y="252" text-anchor="middle" font-size="10" fill="#555">④</text>
+  <text x="128" y="252" text-anchor="middle" font-size="11" fill="#3a5a30">4</text>
+  <text x="228" y="252" text-anchor="middle" font-size="10" fill="#999">空</text>
+  <text x="400" y="252" text-anchor="middle" font-size="9.5" fill="#555">没有前驱，什么也不做</text>
+
+  <rect x="34" y="264" width="492" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <text x="62" y="286" text-anchor="middle" font-size="10" fill="#8a3a36">结束</text>
+  <text x="128" y="286" text-anchor="middle" font-size="10" fill="#8a3a36">队列空</text>
+  <text x="228" y="286" text-anchor="middle" font-size="10" fill="#999">—</text>
+  <text x="400" y="286" text-anchor="middle" font-size="9.5" fill="#8a3a36">残留 0, 1, 3（deg 仍为 1）→ 不安全</text>
+
+  <rect x="34" y="312" width="492" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="330" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">安全集合 = {2, 4, 5, 6}</text>
+  <text x="280" y="346" text-anchor="middle" font-size="10" fill="#555">升序扫描后输出 [2, 4, 5, 6]，与官方答案一致</text>
+
+  <text x="280" y="378" text-anchor="middle" font-size="10" fill="#999">0 → 1 → 3 → 0 构成环，三个点的 deg 互相「顶着」永远清不了零</text>
+</svg>

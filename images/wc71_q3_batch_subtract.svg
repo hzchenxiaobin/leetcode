@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="330" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">整批减：一次取模代替多次减法</text>
+  <text x="310" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">以 tx = 13, ty = 4 为例：x 要连续减 4 三次，才能降到小于 4</text>
+
+  <text x="120" y="80" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">tx = 13</text>
+  <text x="250" y="80" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">13 − 4</text>
+  <text x="380" y="80" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">13 − 2·4</text>
+  <text x="510" y="80" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">13 − 3·4</text>
+
+  <rect x="88" y="88" width="64" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="120" y="111" text-anchor="middle" font-size="13" fill="#334" filter="url(#rough2)">13</text>
+  <rect x="218" y="88" width="64" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="250" y="111" text-anchor="middle" font-size="13" fill="#8a6a20" filter="url(#rough2)">9</text>
+  <rect x="348" y="88" width="64" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="380" y="111" text-anchor="middle" font-size="13" fill="#8a6a20" filter="url(#rough2)">5</text>
+  <rect x="478" y="88" width="64" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6" filter="url(#rough2)"/>
+  <text x="510" y="111" text-anchor="middle" font-size="13" fill="#3a5a30" filter="url(#rough2)">1</text>
+
+  <path d="M 152 105 L 212 105" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 282 105 L 342 105" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 412 105 L 472 105" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="182" y="99" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">−4</text>
+  <text x="312" y="99" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">−4</text>
+  <text x="442" y="99" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">−4</text>
+
+  <text x="310" y="150" text-anchor="middle" font-size="11" fill="#334" filter="url(#rough2)">3 次减法 ⇔ 1 次取模：13 mod 4 = 1，步数 k = ⌊13 / 4⌋ = 3</text>
+
+  <rect x="60" y="172" width="500" height="92" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="194" font-size="10.5" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">为什么可以整批减（而不是逐步减）</text>
+  <text x="76" y="216" font-size="10" fill="#555" filter="url(#rough2)">· 循环只在「两个坐标都还严格大于起点」时进行，此时前驱唯一</text>
+  <text x="76" y="236" font-size="10" fill="#555" filter="url(#rough2)">· 若取模把坐标压到起点以下，说明这条倒推链已断 → 判 false</text>
+  <text x="76" y="256" font-size="10" fill="#555" filter="url(#rough2)">· 取模得 0 也落进同一个不可达分支，不会被误判为 true</text>
+
+  <text x="310" y="292" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">整体退化为欧几里得算法：每轮较大坐标取模，总步数 O(log max)</text>
+  <text x="310" y="314" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">1e9 量级的目标也只需几十轮</text>
+</svg>
