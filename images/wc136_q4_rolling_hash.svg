@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">滚动哈希：前缀哈希 + 区间公式</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">两次乘法一次减法就能拿到任意子串的哈希，且可加双模数抗碰撞</text>
+
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" font-weight="bold">
+    <rect x="86" y="70" width="42" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="128" y="70" width="42" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="170" y="70" width="42" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="212" y="70" width="42" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="254" y="70" width="42" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="296" y="70" width="42" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="107" y="95" fill="#3a4a66">b</text>
+    <text x="149" y="95" fill="#3a4a66">a</text>
+    <text x="191" y="95" fill="#3a4a66">n</text>
+    <text x="233" y="95" fill="#3a4a66">a</text>
+    <text x="275" y="95" fill="#3a4a66">n</text>
+    <text x="317" y="95" fill="#3a4a66">a</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10" text-anchor="middle" fill="#888">
+    <text x="107" y="122">0</text><text x="149" y="122">1</text><text x="191" y="122">2</text>
+    <text x="233" y="122">3</text><text x="275" y="122">4</text><text x="317" y="122">5</text>
+  </g>
+
+  <rect x="150" y="136" width="128" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)" opacity="0.75"/>
+  <text x="214" y="156" text-anchor="middle" font-size="10" fill="#3a5a30">窗口长度 L = 3</text>
+
+  <rect x="40" y="184" width="252" height="112" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="54" y="204" font-size="11" fill="#8a6a20" font-weight="bold">前缀哈希</text>
+  <text x="54" y="226" font-size="10" fill="#555">h[i+1] = (h[i]·B + s[i]) mod M</text>
+  <text x="54" y="248" font-size="10" fill="#555">p[k] = Bᵏ mod M</text>
+  <text x="54" y="270" font-size="10" fill="#555">hash(l, r) = h[r] − h[l]·p[r−l]</text>
+  <text x="54" y="290" font-size="10" fill="#888">（用两套 (B, M) 做双哈希）</text>
+
+  <path d="M 300 240 L 330 240" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="336" y="184" width="196" height="112" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="350" y="204" font-size="11" fill="#3a5a30" font-weight="bold">去重表</text>
+  <text x="350" y="226" font-size="10" fill="#555">key = h1·M2 + h2</text>
+  <text x="350" y="248" font-size="10" fill="#555">map[key] = 首个起点</text>
+  <text x="350" y="270" font-size="10" fill="#555">命中后再 s.compare(i, L,</text>
+  <text x="350" y="286" font-size="10" fill="#555">　　　s, j, L) == 0 确认</text>
+
+  <text x="280" y="326" text-anchor="middle" font-size="10" fill="#999">为什么要逐字符确认：彻底排除哈希碰撞带来的假阳性，正确性不依赖「哈希无碰撞」这一概率假设的一部分</text>
+  <text x="280" y="348" text-anchor="middle" font-size="10" fill="#999">双模数（10⁹+7 / 10⁹+9）+ 不同底数，碰撞概率可忽略；按长度二分后又只保留最长者</text>
+</svg>

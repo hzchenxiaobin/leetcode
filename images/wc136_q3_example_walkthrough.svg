@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例 1 演算：arr = [1,15,7,9,2,5,10]，k = 3</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">每列取「最后一段」的最优切法，答案 dp[7] = 84</text>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle" fill="#444">
+    <text x="70" y="76">i</text><text x="70" y="96">dp[i]</text>
+    <text x="130" y="76">1</text><text x="190" y="76">2</text><text x="250" y="76">3</text>
+    <text x="310" y="76">4</text><text x="370" y="76">5</text><text x="430" y="76">6</text><text x="490" y="76">7</text>
+    <text x="70" y="131" font-weight="bold">dp:</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle" font-weight="bold">
+    <rect x="108" y="106" width="44" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="168" y="106" width="44" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="228" y="106" width="44" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="288" y="106" width="44" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="348" y="106" width="44" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="408" y="106" width="44" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="468" y="106" width="44" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="2.4" rx="4"/>
+    <text x="130" y="131" fill="#3a5a30">1</text>
+    <text x="190" y="131" fill="#3a5a30">30</text>
+    <text x="250" y="131" fill="#3a5a30">45</text>
+    <text x="310" y="131" fill="#3a4a66">54</text>
+    <text x="370" y="131" fill="#3a4a66">63</text>
+    <text x="430" y="131" fill="#8a6a20">72</text>
+    <text x="490" y="131" fill="#8a3a36">84</text>
+  </g>
+
+  <text x="280" y="166" text-anchor="middle" font-size="11" fill="#444">最优分段：[1,15,7] → 15,15,15；[9] → 9；[2,5,10] → 10,10,10</text>
+  <text x="280" y="184" text-anchor="middle" font-size="11" fill="#444">得分 45 + 9 + 30 = 84（与示例输出一致）</text>
+
+  <rect x="40" y="206" width="240" height="128" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="54" y="226" font-size="11" fill="#3a4a66" font-weight="bold">关键几步</text>
+  <text x="54" y="248" font-size="10" fill="#555">dp[1] = max = 1</text>
+  <text x="54" y="268" font-size="10" fill="#555">dp[2] = dp[0] + max(1,15)·2 = 30</text>
+  <text x="54" y="288" font-size="10" fill="#555">dp[3] = dp[0] + max(1,15,7)·3 = 45</text>
+  <text x="54" y="308" font-size="10" fill="#555">dp[4] = dp[3] + 9·1 = 54</text>
+  <text x="54" y="326" font-size="10" fill="#888">（每步取所有 j ≤ 3 中的最大）</text>
+
+  <rect x="300" y="206" width="230" height="128" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="314" y="226" font-size="11" fill="#8a6a20" font-weight="bold">尾部三步</text>
+  <text x="314" y="248" font-size="10" fill="#555">dp[5]：dp[4]+2 = 56</text>
+  <text x="314" y="266" font-size="10" fill="#555">　　　dp[3]+max(9,2)·2 = 63</text>
+  <text x="314" y="284" font-size="10" fill="#555">　　　dp[2]+max(7,9,2)·3 = 57</text>
+  <text x="314" y="302" font-size="10" fill="#555">→ 取 63</text>
+  <text x="314" y="322" font-size="10" fill="#8a6a20">dp[6] = 72，dp[7] = 84</text>
+
+  <text x="280" y="360" text-anchor="middle" font-size="10" fill="#999">每一段独立贡献「段内最大值 × 段长」，故只需知道前缀最优 dp[i−j] 与段内最大值</text>
+  <text x="280" y="382" text-anchor="middle" font-size="10" fill="#999">递推方向单一，无需二维状态，也不必关心分段的具体位置</text>
+</svg>

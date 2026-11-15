@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例 1：起点被两块封锁格子卡在角落</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">blocked = [[0,1],[1,0]]，source = (0,0)，target = (0,2)</text>
+
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle">
+    <rect x="110" y="80" width="58" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" rx="4"/>
+    <rect x="168" y="80" width="58" height="58" fill="#b85450" stroke="#8a3a36" stroke-width="2.2" rx="4"/>
+    <rect x="226" y="80" width="58" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="4"/>
+    <rect x="110" y="138" width="58" height="58" fill="#b85450" stroke="#8a3a36" stroke-width="2.2" rx="4"/>
+    <rect x="168" y="138" width="58" height="58" fill="#ffffff" stroke="#aaa" stroke-width="1" rx="4"/>
+    <rect x="226" y="138" width="58" height="58" fill="#ffffff" stroke="#aaa" stroke-width="1" rx="4"/>
+    <rect x="110" y="196" width="58" height="58" fill="#ffffff" stroke="#aaa" stroke-width="1" rx="4"/>
+    <rect x="168" y="196" width="58" height="58" fill="#ffffff" stroke="#aaa" stroke-width="1" rx="4"/>
+    <rect x="226" y="196" width="58" height="58" fill="#ffffff" stroke="#aaa" stroke-width="1" rx="4"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" font-weight="bold">
+    <text x="139" y="115" fill="#446688">S</text>
+    <text x="197" y="115" fill="#ffffff">✕</text>
+    <text x="255" y="115" fill="#4a7a3a">T</text>
+    <text x="139" y="173" fill="#ffffff">✕</text>
+    <text x="197" y="173" fill="#bbb">·</text>
+    <text x="255" y="173" fill="#bbb">·</text>
+    <text x="139" y="231" fill="#bbb">·</text>
+    <text x="197" y="231" fill="#bbb">·</text>
+    <text x="255" y="231" fill="#bbb">·</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10" fill="#888" text-anchor="middle">
+    <text x="139" y="72">col 0</text><text x="197" y="72">col 1</text><text x="255" y="72">col 2</text>
+    <text x="98" y="115" text-anchor="end">row 0</text>
+    <text x="98" y="173" text-anchor="end">row 1</text>
+    <text x="98" y="231" text-anchor="end">row 2</text>
+  </g>
+
+  <path d="M 139 138 L 139 128" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M 168 109 L 150 109" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M 139 196 L 139 190" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M 110 109 L 96 109" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+
+  <rect x="330" y="80" width="200" height="176" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="344" y="102" font-size="11" fill="#8a3a36" font-weight="bold">四个方向全堵死</text>
+  <text x="344" y="126" font-size="10" fill="#555">上：y = −1 出界</text>
+  <text x="344" y="146" font-size="10" fill="#555">下：(1,0) 被封锁</text>
+  <text x="344" y="166" font-size="10" fill="#555">右：(0,1) 被封锁</text>
+  <text x="344" y="186" font-size="10" fill="#555">左：x = −1 出界</text>
+  <text x="344" y="214" font-size="10" fill="#8a3a36">BFS 只能访问 1 个格子</text>
+  <text x="344" y="234" font-size="10" fill="#8a3a36">队列立刻空 → false</text>
+
+  <text x="280" y="286" text-anchor="middle" font-size="10" fill="#999">本例 limit = 2·1/2 = 1：访问数 1 不超过 limit，说明“没越过上界”，区域确实是封闭的</text>
+  <text x="280" y="308" text-anchor="middle" font-size="10" fill="#999">反过来，只要能访问超过 limit 个格子，就一定没被围住（引理 1）</text>
+  <text x="280" y="336" text-anchor="middle" font-size="10" fill="#999">示例 2：blocked 为空 → limit = 0，BFS 弹出起点后立刻判定“未被围住”，两侧都通过 → true</text>
+</svg>

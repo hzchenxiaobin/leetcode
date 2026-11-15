@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#444">按长度排序 + 删字符找前身</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">dp[w] = max(dp[w 删一个字符]) + 1，答案取全局最大</text>
+
+  <g filter="url(#rough2)" font-size="11.5" text-anchor="middle">
+    <rect x="40" y="70" width="120" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="100" y="93" fill="#3a4a66">"a" dp=1</text>
+    <rect x="180" y="70" width="120" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="240" y="93" fill="#3a4a66">"b" dp=1</text>
+    <rect x="320" y="70" width="120" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="380" y="93" fill="#3a5a30">"ba" dp=2</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11.5" text-anchor="middle">
+    <rect x="40" y="150" width="130" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="105" y="173" fill="#3a5a30">"bca" dp=3</text>
+    <rect x="190" y="150" width="130" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="255" y="173" fill="#3a5a30">"bda" dp=3</text>
+    <rect x="340" y="150" width="150" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8"/>
+    <text x="415" y="173" fill="#8a6a20">"bdca" dp=4</text>
+  </g>
+
+  <path d="M 100 106 L 105 148" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 380 106 L 262 148" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 240 106 L 118 148" stroke="#aaa" stroke-width="1.2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 255 186 L 405 186" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="212" width="300" height="112" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="54" y="232" font-size="11" fill="#8a6a20" font-weight="bold">删字符枚举前身</text>
+  <text x="54" y="254" font-size="10" fill="#555">"bdca" 删 1 个字符得到：</text>
+  <text x="54" y="274" font-size="10" fill="#555">dca, bca, bda, bdc</text>
+  <text x="54" y="294" font-size="10" fill="#555">其中 "bda" 在 dp 表里 dp=3</text>
+  <text x="54" y="314" font-size="10" fill="#8a6a20">→ dp["bdca"] = 3 + 1 = 4</text>
+
+  <rect x="356" y="212" width="164" height="112" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="370" y="232" font-size="11" fill="#3a4a66" font-weight="bold">为什么按长度排序</text>
+  <text x="370" y="254" font-size="10" fill="#555">前身一定更短，</text>
+  <text x="370" y="272" font-size="10" fill="#555">排序后处理 w 时，</text>
+  <text x="370" y="290" font-size="10" fill="#555">它的所有前身都已</text>
+  <text x="370" y="308" font-size="10" fill="#555">算好 dp 值。</text>
+
+  <text x="280" y="350" text-anchor="middle" font-size="10" fill="#999">复杂度：每个词枚举 |w| 种删法，每次哈希查表 O(1)，总计 O(Σ|w|²)，本题 ≤ 16×1000×16</text>
+  <text x="280" y="370" text-anchor="middle" font-size="10" fill="#999">示例 2 的链为 xb → xbc → cxbc → pcxbc → pcxbcf，长度 5</text>
+</svg>

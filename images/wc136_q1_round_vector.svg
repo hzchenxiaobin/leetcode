@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">执行完一整轮后，只需看两个量：位移 d 与朝向</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">机器人重复执行指令串，故一轮的结果就是「一轮变换」</text>
+
+  <path d="M 60 240 L 300 240" stroke="#ddd" stroke-width="1" fill="none" filter="url(#rough2)"/>
+  <path d="M 180 320 L 180 80" stroke="#ddd" stroke-width="1" fill="none" filter="url(#rough2)"/>
+  <circle cx="180" cy="240" r="4" fill="#333" filter="url(#rough2)"/>
+  <text x="186" y="258" font-size="10" fill="#888">(0,0)</text>
+
+  <path d="M 180 240 L 180 130" stroke="#446688" stroke-width="2.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="188" y="126" font-size="10.5" fill="#446688">一轮位移 d</text>
+
+  <g filter="url(#rough2)" font-size="11" fill="#555">
+    <text x="70" y="86">北</text>
+    <text x="258" y="86">东</text>
+    <text x="70" y="322">南</text>
+    <text x="258" y="322">西</text>
+  </g>
+
+  <text x="196" y="196" font-size="14" fill="#b85450" font-weight="bold">↑</text>
+  <text x="204" y="204" font-size="10" fill="#8a3a36">初始朝向：北</text>
+
+  <rect x="330" y="66" width="200" height="152" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="344" y="86" font-size="11" fill="#3a5a30" font-weight="bold">朝向转了 k·90°</text>
+  <text x="344" y="108" font-size="10" fill="#555">k = 0：方向仍朝北</text>
+  <text x="344" y="128" font-size="10" fill="#555">　→ 每轮位移 d 累加，逃逸</text>
+  <text x="344" y="150" font-size="10" fill="#555">k ≠ 0：最多 4 轮回到原点</text>
+  <text x="344" y="170" font-size="10" fill="#555">　→ 永远在有限区域打转</text>
+  <text x="344" y="196" font-size="10" fill="#4a7a3a">判据：d == 0 或 k ≠ 0</text>
+
+  <rect x="330" y="232" width="200" height="106" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="344" y="252" font-size="11" fill="#8a3a36" font-weight="bold">反例：instructions = "GG"</text>
+  <text x="344" y="274" font-size="10" fill="#555">k = 0 且 d = (0,2) ≠ 0</text>
+  <text x="344" y="294" font-size="10" fill="#555">每轮都往北挪 2 格</text>
+  <text x="344" y="316" font-size="10" fill="#8a3a36">→ 无限远，返回 false</text>
+
+  <text x="280" y="356" text-anchor="middle" font-size="10" fill="#999">"GGLLGG"：k = 2（转 180°）、d = (0,0) → 原地折返，返回 true</text>
+</svg>

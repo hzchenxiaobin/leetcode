@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="420" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：先收敛分量，再判边界，最后统一染色</text>
+
+  <rect x="120" y="52" width="280" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="72" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">1. 记 old = grid[row][col]</text>
+  <text x="260" y="89" text-anchor="middle" font-size="10" fill="#555">初始化 visited 与显式栈</text>
+
+  <path d="M 260 98 L 260 122" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="100" y="124" width="320" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="144" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">2. DFS/BFS 收集连通分量 comp</text>
+  <text x="260" y="162" text-anchor="middle" font-size="10" fill="#555">仅当邻居在界内、未访问且颜色 == old 才扩散</text>
+  <text x="260" y="176" text-anchor="middle" font-size="10" fill="#888">不同分量的同色格子不会被收进来</text>
+
+  <path d="M 260 180 L 260 204" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="96" y="206" width="328" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="226" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">3. 对 comp 里每个格子判“是否边界”</text>
+  <text x="260" y="244" text-anchor="middle" font-size="10" fill="#555">在最外圈（行 0/m−1 或列 0/n−1）</text>
+  <text x="260" y="260" text-anchor="middle" font-size="10" fill="#555">或 4-邻格颜色 != old → 边界，存入 border_cells</text>
+
+  <path d="M 260 268 L 260 292" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="294" width="280" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="314" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">4. 统一涂色：grid[x][y] = color</text>
+  <text x="260" y="332" text-anchor="middle" font-size="10" fill="#555">只遍历 border_cells，内部格子原样保留</text>
+  <text x="260" y="346" text-anchor="middle" font-size="10" fill="#888">两阶段是关键，染色不能与判定穿插</text>
+
+  <text x="260" y="382" text-anchor="middle" font-size="10" fill="#999">复杂度：每个格子至多入栈一次，四邻检查 O(1)</text>
+  <text x="260" y="400" text-anchor="middle" font-size="10" fill="#999">时间 O(mn)，空间 O(mn)（visited + 栈）</text>
+</svg>

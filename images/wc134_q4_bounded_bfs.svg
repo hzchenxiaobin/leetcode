@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="430" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">有限步 BFS：越过上界就算“没被围住”</text>
+  <text x="260" y="44" text-anchor="middle" font-size="11" fill="#888">对 source 和 target 各做一次，两次都“能出去”才返回 true</text>
+
+  <rect x="110" y="60" width="300" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="80" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">limit = m·(m−1)/2，seen = {start}</text>
+  <text x="260" y="98" text-anchor="middle" font-size="10" fill="#555">把封锁格子放进哈希集合，O(1) 判墙</text>
+
+  <path d="M 260 108 L 260 130" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="96" y="132" width="328" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="152" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">弹出栈顶 (x, y)</text>
+  <text x="260" y="169" text-anchor="middle" font-size="10" fill="#555">先判：是否等于 target？是 → 直接 true</text>
+
+  <path d="M 260 178 L 260 200" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="96" y="202" width="328" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="222" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">再判：|seen| &gt; limit ？是 → true</text>
+  <text x="260" y="239" text-anchor="middle" font-size="10" fill="#555">说明没被围住（能一直往外扩到边界）</text>
+
+  <path d="M 260 248 L 260 270" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="86" y="272" width="348" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="292" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">把 4 个合法邻格（界内、非墙、未访问）压栈</text>
+  <text x="260" y="310" text-anchor="middle" font-size="10" fill="#555">网格固定 10⁶ × 10⁶，出界即丢弃</text>
+
+  <path d="M 260 324 L 260 344" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="346" width="280" height="42" fill="#f0f0f0" stroke="#aaa" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="366" text-anchor="middle" font-size="11" fill="#555" font-weight="bold">栈空 → 区域封闭 → false</text>
+  <text x="260" y="382" text-anchor="middle" font-size="10" fill="#888">此时可达集被封锁格子完全包住</text>
+
+  <text x="260" y="414" text-anchor="middle" font-size="10" fill="#999">两次 BFS 的规模都 ≤ limit+1 ≈ 2 万，时间 O(m²)、空间 O(m²)</text>
+</svg>

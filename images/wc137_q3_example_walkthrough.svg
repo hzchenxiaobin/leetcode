@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#444">示例 1：words = ["a","b","ba","bca","bda","bdca"]</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">长度 1 → 2 → 3 → 4，逐层把前身延长一格</text>
+
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" font-weight="bold">
+    <rect x="50" y="80" width="70" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="85" y="107" fill="#3a4a66">a</text>
+    <rect x="150" y="80" width="70" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="185" y="107" fill="#3a4a66">b</text>
+    <rect x="250" y="80" width="90" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="295" y="107" fill="#3a5a30">ba</text>
+    <rect x="370" y="80" width="90" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="415" y="107" fill="#3a5a30">bca</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" font-weight="bold">
+    <rect x="250" y="180" width="90" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <text x="295" y="207" fill="#8a6a20">bda</text>
+    <rect x="370" y="180" width="110" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <text x="425" y="207" fill="#8a6a20">bdca</text>
+  </g>
+
+  <path d="M 185 122 L 270 178" stroke="#aaa" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 295 122 L 300 178" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 415 122 L 420 178" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 340 201 L 366 201" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="252" width="480" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="272" font-size="11" fill="#3a5a30" font-weight="bold">最长链：a → ba → bda → bdca（长度 4）</text>
+  <text x="56" y="294" font-size="10" fill="#555">"a" 是 "ba" 的前身（插 b）；"ba" → "bda"（插 d）；"bda" → "bdca"（插 c）</text>
+  <text x="56" y="314" font-size="10" fill="#555">另一条同长链：b → ba → bca → …（"bca" 之后没有长度 4 的后继）</text>
+  <text x="56" y="334" font-size="10" fill="#8a6a20">答案 4；dp 值：a=1, b=1, ba=2, bca=3, bda=3, bdca=4</text>
+
+  <text x="280" y="370" text-anchor="middle" font-size="10" fill="#999">关键：链的相邻两项长度必须相差 1（每次只插入一个字符），故按长度分层处理天然有序</text>
+</svg>
