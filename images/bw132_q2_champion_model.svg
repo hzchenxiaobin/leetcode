@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="71"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+  <text x="310" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">核心：只需一轮扫描，维护「擂主」与「其连胜数」</text>
+
+  <!-- 技能数组 -->
+  <g filter="url(#rough2)" font-size="11" fill="#777" text-anchor="middle">
+    <text x="100" y="48">0</text>
+    <text x="200" y="48">1</text>
+    <text x="300" y="48">2</text>
+    <text x="400" y="48">3</text>
+    <text x="500" y="48">4</text>
+  </g>
+  <g filter="url(#rough2)" font-size="17" fill="#333" text-anchor="middle">
+    <rect x="70" y="56" width="60" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="170" y="56" width="60" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="270" y="56" width="60" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="370" y="56" width="60" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="470" y="56" width="60" height="44" fill="#f0f0f0" stroke="#999" stroke-width="1.5" stroke-dasharray="5 4" rx="4"/>
+    <text x="100" y="85">4</text>
+    <text x="200" y="85">2</text>
+    <text x="300" y="85">6</text>
+    <text x="400" y="85">3</text>
+    <text x="500" y="85" fill="#999">9</text>
+  </g>
+
+  <!-- 事件与连胜数 -->
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <text x="100" y="126" fill="#446688">起点</text>
+    <text x="200" y="126" fill="#446688">4 &gt; 2 卫冕</text>
+    <text x="300" y="126" fill="#b85450">6 &gt; 4 换擂主</text>
+    <text x="400" y="126" fill="#2d5a22">6 &gt; 3 卫冕</text>
+    <text x="500" y="126" fill="#999">未访问</text>
+    <text x="100" y="148" fill="#666">wins = 0</text>
+    <text x="200" y="148" fill="#666">wins = 1</text>
+    <text x="300" y="148" fill="#666">wins = 1</text>
+    <text x="400" y="148" fill="#2d5a22">wins = 2 = k</text>
+    <text x="500" y="148" fill="#999">k 已达成</text>
+  </g>
+
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.6" fill="none">
+    <path d="M 70 172 L 540 172" marker-end="url(#arr)"/>
+  </g>
+  <text x="305" y="166" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">按 i = 1, 2, … 的顺序依次挑战擂主</text>
+
+  <!-- 关键规则 -->
+  <rect x="40" y="192" width="540" height="96" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#a06c10">
+    <text x="56" y="216">i = 1：4 &gt; 2，擂主 0 卫冕，wins 0 → 1</text>
+    <text x="56" y="238">i = 2：6 &gt; 4，擂主换成 2，wins 重置为 1（挑战者刚赢的那场算 1 场）</text>
+    <text x="56" y="260">i = 3：6 &gt; 3，wins 1 → 2 达到 k = 2，立即返回玩家 2</text>
+    <text x="56" y="282">i = 4 根本没被访问：答案在扫描途中就已确定</text>
+  </g>
+
+  <text x="310" y="322" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">一轮扫描结束后擂主必是全局最大值（技能值 9），此后它永远赢</text>
+  <text x="310" y="348" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">所以 k ≥ n 时答案就是最大值的下标；k 较小时扫描途中一定命中</text>
+  <text x="310" y="378" text-anchor="middle" font-size="12" fill="#777" filter="url(#rough2)">无需真的模拟队列轮转：挑战者顺序恒为 1, 2, …, n − 1</text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="93"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+  <text x="310" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">实现细节：j 必须从 k 倒序枚举到 0</text>
+
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle">
+    <rect x="90" y="72" width="130" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="90" y="138" width="130" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6"/>
+    <rect x="90" y="204" width="130" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="155" y="98" fill="#333">先算 j = 2</text>
+    <text x="155" y="164" fill="#333">再算 j = 1</text>
+    <text x="155" y="230" fill="#333">最后 j = 0</text>
+  </g>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.8" fill="none">
+    <path d="M 155 114 L 155 134" marker-end="url(#arr)"/>
+    <path d="M 155 180 L 155 200" marker-end="url(#arr)"/>
+  </g>
+  <text x="155" y="266" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">同一元素内的更新顺序</text>
+
+  <g filter="url(#rough2)" font-size="11" fill="#333">
+    <text x="262" y="86">算 j = 2 时，top1[1] 还是「上一个元素」的状态</text>
+    <text x="262" y="110" fill="#777">所以 j−1 层不会被当前元素污染</text>
+    <text x="262" y="152">算 j = 1 时同理，与 j = 0 互不影响</text>
+    <text x="262" y="176" fill="#777">每个 nums[i] 只让状态前进一步</text>
+    <text x="262" y="218">j = 0 只读自身的 f[x][0]，无跨值依赖</text>
+    <text x="262" y="242" fill="#777">初值 1 表示「只选当前元素」</text>
+  </g>
+
+  <rect x="60" y="286" width="500" height="62" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="310" font-size="11" fill="#8a2f2c" filter="url(#rough2)">若正序（j = 0 → k）：j = 1 先被当前元素更新，</text>
+  <text x="76" y="332" font-size="11" fill="#8a2f2c" filter="url(#rough2)">j = 2 又用刚更新过的 j = 1 → 同一个 nums[i] 被前进两次，长度虚高</text>
+
+  <text x="310" y="380" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">倒序枚举即可保证「一个元素只前进一步」，答案才正确</text>
+</svg>

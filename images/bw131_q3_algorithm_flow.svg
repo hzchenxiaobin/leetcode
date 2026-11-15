@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="45"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="440" fill="#fafafa"/>
+  <text x="310" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">单次操作：先撤旧颜色，再上新颜色，全程只改 O(1) 个计数</text>
+
+  <rect x="180" y="52" width="260" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="80" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">读入 [ball, color]</text>
+
+  <polygon points="310,116 452,154 310,192 168,154" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="310" y="150" text-anchor="middle" font-size="12" fill="#a06c10" filter="url(#rough2)">球 ball 之前染色了吗</text>
+  <text x="310" y="168" text-anchor="middle" font-size="11" fill="#a06c10" filter="url(#rough2)">（ballColor 中存在？）</text>
+
+  <!-- 是：左侧撤旧 -->
+  <rect x="30" y="228" width="228" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#8a2f2c" text-anchor="middle">
+    <text x="144" y="252">colorCnt[旧颜色] − 1</text>
+    <text x="144" y="276">若减到 0：删除该颜色</text>
+    <text x="144" y="300">distinct − 1</text>
+  </g>
+
+  <!-- 否：右侧跳过 -->
+  <rect x="380" y="236" width="210" height="60" fill="#f0f0f0" stroke="#999" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="485" y="262" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">旧颜色无需处理</text>
+  <text x="485" y="282" text-anchor="middle" font-size="11" fill="#777" filter="url(#rough2)">球此前没有颜色</text>
+
+  <g filter="url(#rough2)" stroke="#b85450" stroke-width="1.8" fill="none">
+    <path d="M 168 154 L 120 154 L 120 224" marker-end="url(#arrR)"/>
+    <path d="M 452 154 L 500 154 L 500 232" marker-end="url(#arr)"/>
+  </g>
+  <text x="100" y="212" font-size="12" fill="#b85450" filter="url(#rough2)">是</text>
+  <text x="512" y="212" font-size="12" fill="#446688" filter="url(#rough2)">否</text>
+
+  <rect x="170" y="336" width="280" height="62" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#2d5a22" text-anchor="middle">
+    <text x="310" y="360">colorCnt[新颜色] + 1</text>
+    <text x="310" y="384">若此前为 0：distinct + 1</text>
+  </g>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.8" fill="none">
+    <path d="M 144 314 L 144 366 L 166 366" marker-end="url(#arr)"/>
+    <path d="M 485 296 L 485 366 L 454 366" marker-end="url(#arr)"/>
+  </g>
+
+  <text x="310" y="422" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">ballColor[ball] = color；把当前 distinct 记入答案</text>
+</svg>

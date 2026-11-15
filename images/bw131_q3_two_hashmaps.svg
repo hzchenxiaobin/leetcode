@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="41"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+  <text x="310" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">核心：两张哈希表互逆维护，另用一个计数器记颜色数</text>
+
+  <!-- ballColor -->
+  <rect x="30" y="66" width="220" height="180" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="140" y="94" text-anchor="middle" font-size="13" fill="#2f4c6b" font-weight="bold" filter="url(#rough2)">ballColor：球 → 颜色</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="140" y="128">球 1 → 颜色 3</text>
+    <text x="140" y="160">球 2 → 颜色 5</text>
+    <text x="140" y="192">球 3 → 颜色 4</text>
+    <text x="140" y="224" fill="#777">球 4 未染色</text>
+  </g>
+
+  <!-- colorCnt -->
+  <rect x="370" y="66" width="220" height="180" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="480" y="94" text-anchor="middle" font-size="13" fill="#a06c10" font-weight="bold" filter="url(#rough2)">colorCnt：颜色 → 球数</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="480" y="128">颜色 3 → 1 个球</text>
+    <text x="480" y="160">颜色 5 → 1 个球</text>
+    <text x="480" y="192">颜色 4 → 1 个球</text>
+    <text x="480" y="224" fill="#777">计数为 0 即删除</text>
+  </g>
+
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.8" fill="none">
+    <path d="M 254 150 L 366 150" marker-end="url(#arr)"/>
+  </g>
+  <text x="310" y="140" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">改色时同步</text>
+
+  <!-- distinct -->
+  <rect x="60" y="272" width="500" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="310" y="298" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">distinct = colorCnt 的条目数</text>
+  <text x="310" y="318" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">旧颜色计数清零 → distinct − 1；新颜色首次出现 → distinct + 1</text>
+
+  <text x="310" y="362" text-anchor="middle" font-size="12" fill="#777" filter="url(#rough2)">limit 可达 10⁹，但只有 queries 里的球会染色 → 只能哈希表，不能开数组</text>
+  <text x="310" y="386" text-anchor="middle" font-size="12" fill="#777" filter="url(#rough2)">颜色同理：y 也可能很大</text>
+</svg>

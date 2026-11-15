@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="21"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+  <text x="290" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：值域只有 50，用计数数组代替哈希表</text>
+
+  <!-- 计数数组：下标 = 数值 -->
+  <g filter="url(#rough2)" font-size="11" fill="#777" text-anchor="middle">
+    <text x="67" y="64">1</text>
+    <text x="119" y="64">2</text>
+    <text x="171" y="64">3</text>
+    <text x="223" y="64">4</text>
+    <text x="275" y="64">5</text>
+  </g>
+  <g filter="url(#rough2)" text-anchor="middle" font-size="14" fill="#333">
+    <rect x="44" y="72" width="46" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="96" y="72" width="46" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="148" y="72" width="46" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="200" y="72" width="46" height="38" fill="#f0f0f0" stroke="#999" stroke-width="1.5" rx="4"/>
+    <rect x="252" y="72" width="46" height="38" fill="#f0f0f0" stroke="#999" stroke-width="1.5" rx="4"/>
+    <text x="67" y="97">2</text>
+    <text x="119" y="97">1</text>
+    <text x="171" y="97">1</text>
+    <text x="223" y="97">0</text>
+    <text x="275" y="97">0</text>
+  </g>
+  <text x="44" y="132" font-size="12" fill="#666" filter="url(#rough2)">cnt[数值]：出现次数</text>
+
+  <!-- 右侧解释 -->
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="330" y="82">cnt[1] = 2 ⇒ 数字 1 出现两次</text>
+    <text x="330" y="106" fill="#2d5a22" font-weight="bold">ans = 0 XOR 1 = 1</text>
+    <text x="330" y="130" fill="#777">cnt[2] = 1 ⇒ 只出现一次，跳过</text>
+  </g>
+
+  <!-- 结论说明 -->
+  <g filter="url(#rough2)" font-size="12" fill="#b85450">
+    <text x="44" y="172">题面保证每个数字只出现 1 次或 2 次，</text>
+    <text x="44" y="194">所以 cnt[v] == 2 就是「v 出现两次」的充要条件。</text>
+  </g>
+
+  <!-- 流程 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="235" width="140" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <rect x="200" y="235" width="192" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="422" y="235" width="128" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="100" y="260">遍历 nums 的每个 x</text>
+    <text x="100" y="280" fill="#666">一次线性扫描</text>
+    <text x="296" y="260">cnt[x] += 1</text>
+    <text x="296" y="280">若 cnt[x] == 2，则 ans ^= x</text>
+    <text x="486" y="262">返回 ans</text>
+    <text x="486" y="282" fill="#666">（无重复则为 0）</text>
+  </g>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.8" fill="none">
+    <path d="M 172 264 L 196 264" marker-end="url(#arr)"/>
+    <path d="M 394 264 L 418 264" marker-end="url(#arr)"/>
+  </g>
+
+  <text x="290" y="345" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">时间 O(n)，空间 O(50)；异或满足交换律，与顺序无关</text>
+</svg>

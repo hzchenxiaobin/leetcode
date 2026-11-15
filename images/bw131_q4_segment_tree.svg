@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="53"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="440" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">数据结构：把段长挂在「右端点」，线段树维护前缀最大值</text>
+
+  <!-- ① 数轴与段长 -->
+  <text x="40" y="62" font-size="12" fill="#333" filter="url(#rough2)">① 每个边界 b 记录它到前一个边界的距离 gap[b]（右端点归属）</text>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="2" fill="none">
+    <path d="M 60 118 L 520 118"/>
+  </g>
+  <g filter="url(#rough2)" stroke="#b85450" stroke-width="3" fill="none">
+    <path d="M 150 100 L 150 132"/>
+    <path d="M 330 100 L 330 132"/>
+    <path d="M 460 100 L 460 132"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#555" text-anchor="middle">
+    <text x="60" y="150">0</text>
+    <text x="150" y="150" fill="#b85450">2</text>
+    <text x="330" y="150" fill="#b85450">7</text>
+    <text x="460" y="150" fill="#b85450">9</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#446688" text-anchor="middle">
+    <text x="105" y="96">2</text>
+    <text x="240" y="96">5</text>
+    <text x="395" y="96">2</text>
+  </g>
+
+  <!-- ② 段长数组按右端点索引 -->
+  <text x="40" y="188" font-size="12" fill="#333" filter="url(#rough2)">② 数组 gap 以右端点作下标，插入新障碍 x 只改两处</text>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <rect x="120" y="204" width="120" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="260" y="204" width="120" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="400" y="204" width="120" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="180" y="228">gap[2] = 2</text>
+    <text x="320" y="228">gap[7] = 5</text>
+    <text x="460" y="228">gap[9] = 2</text>
+  </g>
+  <text x="532" y="228" font-size="11" fill="#777" filter="url(#rough2)">← 插入 x 时</text>
+
+  <!-- ③ 线段树 -->
+  <text x="40" y="272" font-size="12" fill="#333" filter="url(#rough2)">③ 线段树区间最大值：前缀 max 就是「[0, p] 内最大的段长」</text>
+  <g filter="url(#rough2)" font-size="11" fill="#333" text-anchor="middle">
+    <rect x="120" y="288" width="100" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="250" y="288" width="100" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="380" y="288" width="100" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="170" y="312">2</text>
+    <text x="300" y="312">5</text>
+    <text x="430" y="312">2</text>
+  </g>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.6" fill="none">
+    <path d="M 170 328 L 260 354" marker-end="url(#arr)"/>
+    <path d="M 300 328 L 310 354" marker-end="url(#arr)"/>
+    <path d="M 430 328 L 350 354" marker-end="url(#arr)"/>
+  </g>
+  <rect x="230" y="358" width="170" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="315" y="383" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">区间 max = 5</text>
+
+  <text x="320" y="424" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">查询：max( x − p , 前缀 max ) ≥ sz；每次插入/查询 O(log M)，M 为位置上限</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="51"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：障碍物把 [0, x] 切成若干段，能放下 ⟺ 某段长度 ≥ sz</text>
+  <text x="320" y="58" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">示例状态：x = 2 与 x = 7 处各有一个障碍物，查询 [2, x = 10, sz = 5]</text>
+
+  <!-- 可放置的物块 -->
+  <rect x="140" y="112" width="225" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="252" y="134" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">sz = 5 的物块（两端刚好接触）</text>
+
+  <!-- 数轴 -->
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="2" fill="none">
+    <path d="M 50 190 L 600 190"/>
+    <path d="M 50 184 L 50 196"/>
+    <path d="M 500 184 L 500 196"/>
+  </g>
+  <text x="50" y="212" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">0</text>
+  <text x="500" y="212" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">x = 10</text>
+
+  <!-- 障碍物 -->
+  <g filter="url(#rough2)" stroke="#b85450" stroke-width="3" fill="none">
+    <path d="M 140 112 L 140 196"/>
+    <path d="M 365 112 L 365 196"/>
+  </g>
+  <text x="140" y="230" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">障碍物 2</text>
+  <text x="365" y="230" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">障碍物 7</text>
+
+  <!-- 段长标注 -->
+  <g filter="url(#rough2)" font-size="12" fill="#446688" text-anchor="middle">
+    <text x="95" y="176">段长 2</text>
+    <text x="252" y="176">段长 5</text>
+    <text x="432" y="176">尾段 3</text>
+  </g>
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.4" fill="none">
+    <path d="M 55 172 L 135 172" marker-end="url(#arr)"/>
+    <path d="M 145 172 L 360 172" marker-end="url(#arr)"/>
+    <path d="M 370 172 L 495 172" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- 结论 -->
+  <rect x="40" y="252" width="560" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="320" y="280" text-anchor="middle" font-size="13" fill="#a06c10" filter="url(#rough2)">允许刚好接触 ⇒ 长度为 sz 的物块能放进长度 L 的段 ⟺ sz ≤ L</text>
+
+  <rect x="40" y="308" width="560" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="320" y="336" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">判定式：max（各段长度，含尾段 x − p）≥ sz</text>
+
+  <text x="320" y="382" text-anchor="middle" font-size="12" fill="#777" filter="url(#rough2)">障碍物只增不减，位置互不相同 → 用有序集合维护边界，插入时只影响相邻两段</text>
+</svg>
