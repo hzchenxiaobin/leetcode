@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">状态 dp[day][city]：第 day 天结束时停在 city 的最大点数</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">第 0 天只能「停在起点」（起点可任选）⇒ dp[0][c] = stayScore[0][c]</text>
+
+  <rect x="60" y="66" width="180" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="150" y="86" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">第 day-1 天结束</text>
+  <text x="150" y="104" text-anchor="middle" font-size="10.5" fill="#555">停在城市 c，得分 dp[c]</text>
+
+  <path d="M 240 82 L 306 82" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="272" y="74" text-anchor="middle" font-size="9.5" fill="#4a7a3a">留在 c</text>
+
+  <path d="M 240 102 L 306 140" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="258" y="128" font-size="9.5" fill="#b85450">去 d ≠ c</text>
+
+  <rect x="310" y="60" width="220" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="420" y="85" text-anchor="middle" font-size="10.5" fill="#3a5a30">ndp[c] = max(ndp[c], dp[c] + stayScore[day][c])</text>
+
+  <rect x="310" y="112" width="220" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="420" y="137" text-anchor="middle" font-size="10.5" fill="#8a6a20">ndp[d] = max(ndp[d], dp[c] + travelScore[c][d])</text>
+
+  <rect x="60" y="176" width="470" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="295" y="197" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">为什么第 0 天不能 travel？</text>
+  <text x="295" y="217" text-anchor="middle" font-size="10.5" fill="#555">题面「停留在前一天所在的城市」——第 0 天没有前一天，人就在起点，只能算 stayScore[0][起点]</text>
+
+  <rect x="60" y="242" width="470" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="295" y="262" text-anchor="middle" font-size="10.5" fill="#3a4a66">注意 travelScore[c][c] = 0，所以「原地不动」若按 travel 算得 0 分，永远劣于 stay（stayScore ≥ 1）</text>
+  <text x="295" y="280" text-anchor="middle" font-size="10" fill="#888">因此实现里可以先把 stay 写进 ndp，再对所有 c, d 做 travel 松弛，不必特判 c == d</text>
+
+  <text x="280" y="316" text-anchor="middle" font-size="10.5" fill="#666">答案 = max over c of dp[k-1][c]：最后一天停在哪座城市都行</text>
+  <text x="280" y="338" text-anchor="middle" font-size="10" fill="#888">每天转移 O(n²)，k 天共 O(k·n²) = 200 × 200 × 200 = 8×10⁶</text>
+</svg>

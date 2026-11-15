@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">分组 DP + 前缀和：把「一段长度取 1..c」变成滑动窗口求和</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">dp[s] = 处理完当前段后，各段长度之和恰为 s 的方案数（s 只算到 k−1）</text>
+
+  <rect x="40" y="62" width="480" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="82" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">朴素转移：ndp[s] = Σ_{t=1..c} dp[s−t]</text>
+  <text x="280" y="100" text-anchor="middle" font-size="10" fill="#555">每段直接枚举 t 与 s 是 O(k·c)，c 可能很大（n 到 5×10^5）</text>
+
+  <path d="M 280 108 L 280 126" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="130" width="480" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="150" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">前缀和：pre[j] = dp[0] + dp[1] + … + dp[j−1]</text>
+  <text x="280" y="168" text-anchor="middle" font-size="10" fill="#555">则 ndp[s] = pre[s] − pre[max(0, s−c)]，单点是 O(1)</text>
+
+  <text x="280" y="196" text-anchor="middle" font-size="10" fill="#666">以 c = 2 为例，s = 5 时的窗口：</text>
+
+  <rect x="146" y="206" width="34" height="30" fill="#fafafa" stroke="#cccccc" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="163" y="226" text-anchor="middle" font-size="10" fill="#888">s=2</text>
+  <rect x="184" y="206" width="34" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4" filter="url(#rough2)"/>
+  <text x="201" y="226" text-anchor="middle" font-size="10" fill="#3a5a30">s=3</text>
+  <rect x="222" y="206" width="34" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4" filter="url(#rough2)"/>
+  <text x="239" y="226" text-anchor="middle" font-size="10" fill="#3a5a30">s=4</text>
+  <rect x="260" y="206" width="34" height="30" fill="#fafafa" stroke="#cccccc" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="277" y="226" text-anchor="middle" font-size="10" fill="#888">s=5</text>
+  <rect x="298" y="206" width="34" height="30" fill="#fafafa" stroke="#cccccc" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="315" y="226" text-anchor="middle" font-size="10" fill="#888">s=6</text>
+  <rect x="336" y="206" width="34" height="30" fill="#fafafa" stroke="#cccccc" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="353" y="226" text-anchor="middle" font-size="10" fill="#888">s=7</text>
+
+  <text x="470" y="222" text-anchor="middle" font-size="10" fill="#4a7a3a">绿色即窗口</text>
+  <text x="470" y="238" text-anchor="middle" font-size="9.5" fill="#888">长度恰为 c</text>
+
+  <text x="280" y="258" text-anchor="middle" font-size="10" fill="#666">窗口右端随 s 递增，所以整段扫描时用「前缀和相减」而不是逐个加</text>
+
+  <rect x="40" y="272" width="480" height="50" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="292" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold">复杂度：O(段数 × k)，并且段数 ≥ k 时直接返回总数</text>
+  <text x="280" y="311" text-anchor="middle" font-size="10" fill="#555">所以真正跑 DP 时段数 &lt; k ≤ 2000，总量约 4×10^6，与 n = 5×10^5 无关</text>
+
+  <text x="280" y="344" text-anchor="middle" font-size="10" fill="#888">边界：s 从 1 开始（每段至少 1 个字符）；s ≥ k 的项属于合法串，不进 dp</text>
+  <text x="280" y="362" text-anchor="middle" font-size="10" fill="#888">最终 bad = Σ_{s=1..k−1} dp[s]，答案 = (Π c_i − bad) mod 1e9+7</text>
+</svg>

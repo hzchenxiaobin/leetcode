@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 364" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="364" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">正难则反：总数 − 「原串长度不足 k」的方案数</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">word = "aabbccdd" 切成 4 段，每段长度 2（各段可独立取 1 或 2 个字符）</text>
+
+  <rect x="36" y="62" width="230" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="151" y="84" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">全部原串（无长度限制）</text>
+  <text x="151" y="107" text-anchor="middle" font-size="11" fill="#3a4a66">Π c_i = 2 × 2 × 2 × 2 = 16</text>
+  <text x="151" y="130" text-anchor="middle" font-size="9.5" fill="#888">每段长度可独立取 1..c_i</text>
+
+  <rect x="294" y="62" width="230" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="409" y="84" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold">要排除的「短串」</text>
+  <text x="409" y="107" text-anchor="middle" font-size="11" fill="#8a3a36">Σ s_i ≤ k − 1，s_i ∈ [1, c_i]</text>
+  <text x="409" y="130" text-anchor="middle" font-size="9.5" fill="#888">k = 7 时即总长 ≤ 6</text>
+
+  <path d="M 280 150 L 280 168" stroke="#b85450" stroke-width="1.9" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="36" y="174" width="488" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="200" text-anchor="middle" font-size="12" fill="#3a5a30" font-weight="bold">答案 = Π c_i − #{Σ s_i ≤ k−1} = 16 − 11 = 5</text>
+
+  <rect x="36" y="230" width="488" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="250" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold">两个可以直接剪枝的极端情况</text>
+  <text x="280" y="270" text-anchor="middle" font-size="10" fill="#555">n &lt; k：连最长的原串（长度 n）都不够 k ⇒ 答案 0　|　段数 m ≥ k：任何原串都够长 ⇒ 答案 Π c_i</text>
+
+  <rect x="36" y="294" width="488" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="314" text-anchor="middle" font-size="10.5" fill="#3a4a66">为什么「短串」好数：只需按段依次决定 s_i，一旦累加和超过 k−1 就不必再管</text>
+  <text x="280" y="334" text-anchor="middle" font-size="10" fill="#3a4a66">所以把状态设成「已用长度 s」就够，s 只需枚举到 k−1（k ≤ 2000）</text>
+</svg>

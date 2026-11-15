@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 356" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="356" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">状态设计：处理到 source 第 i 位，已匹配 pattern 前 j 位</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">dp[j] = 该状态下能获得的最大删除次数（i 用滚动数组隐去）</text>
+
+  <rect x="176" y="60" width="208" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="80" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">dp[j] 可达</text>
+  <text x="280" y="98" text-anchor="middle" font-size="10.5" fill="#555">i 从 0 扫到 n-1，每一步三选一</text>
+
+  <path d="M 232 106 L 128 138" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 106 L 280 138" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 328 106 L 434 138" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="142" width="176" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="118" y="162" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">① 保留作填充</text>
+  <text x="118" y="182" text-anchor="middle" font-size="10" fill="#555">该字符不属于 pattern</text>
+  <text x="118" y="200" text-anchor="middle" font-size="10" fill="#555">ndp[j] ← max(ndp[j], dp[j])</text>
+  <text x="118" y="218" text-anchor="middle" font-size="9.5" fill="#888">不消耗 pattern，也不加分</text>
+
+  <rect x="222" y="142" width="176" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="310" y="162" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold">② 作为匹配字符</text>
+  <text x="310" y="182" text-anchor="middle" font-size="10" fill="#555">要求 source[i] == pattern[j]</text>
+  <text x="310" y="200" text-anchor="middle" font-size="10" fill="#555">ndp[j+1] ← max(…, dp[j])</text>
+  <text x="310" y="218" text-anchor="middle" font-size="9.5" fill="#888">pattern 的匹配指针右移一位</text>
+
+  <rect x="414" y="142" width="122" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="475" y="162" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold">③ 删除</text>
+  <text x="475" y="182" text-anchor="middle" font-size="10" fill="#555">要求 i ∈ targetIndices</text>
+  <text x="475" y="200" text-anchor="middle" font-size="10" fill="#555">ndp[j] ← dp[j] + 1</text>
+  <text x="475" y="218" text-anchor="middle" font-size="9.5" fill="#888">答案计数 +1</text>
+
+  <path d="M 280 232 L 280 252" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="72" y="256" width="416" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="276" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">三种选择取 max，整体替换 dp ← ndp</text>
+  <text x="280" y="294" text-anchor="middle" font-size="10.5" fill="#555">唯一合法终态是 dp[m]：source 全部处理完且 pattern 全部匹配</text>
+
+  <text x="280" y="330" text-anchor="middle" font-size="10" fill="#888">关键不变量：任意时刻 dp[j] 对应的 kept 序列一定以 pattern[0..j-1] 为子序列</text>
+  <text x="280" y="346" text-anchor="middle" font-size="10" fill="#888">因此「删除后 pattern 仍是子序列」这一约束被自动满足，无需显式检查</text>
+</svg>

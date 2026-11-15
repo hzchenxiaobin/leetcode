@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 384" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="384" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：一维滚动数组按天推进</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">空间从 O(k·n) 压到 O(n)，时间仍是 O(k·n²)</text>
+
+  <rect x="76" y="62" width="408" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="82" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">初始化 dp[c] = stayScore[0][c]（c = 0..n-1）</text>
+  <text x="280" y="100" text-anchor="middle" font-size="10" fill="#555">起点任意，所以每座城市都可以作为第 0 天的停留点</text>
+
+  <path d="M 280 108 L 280 126" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="76" y="130" width="408" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="149" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">for day = 1 .. k-1</text>
+  <text x="280" y="166" text-anchor="middle" font-size="10" fill="#555">ndp[d] = dp[d] + stayScore[day][d]（先处理「留在原地」）</text>
+
+  <path d="M 280 174 L 280 192" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="196" width="480" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="216" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">双重循环松弛「换城市」</text>
+  <text x="280" y="236" text-anchor="middle" font-size="10" fill="#555">for c: for d: ndp[d] = max(ndp[d], dp[c] + travelScore[c][d])</text>
+  <text x="280" y="252" text-anchor="middle" font-size="9.5" fill="#888">包含 d == c 也无所谓（travelScore[c][c] = 0 &lt; stayScore，不会覆盖更优解）</text>
+
+  <path d="M 280 256 L 280 274" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="76" y="278" width="408" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="297" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">dp ← ndp，进入下一天</text>
+  <text x="280" y="314" text-anchor="middle" font-size="10" fill="#555">循环结束后返回 max(dp)</text>
+
+  <text x="280" y="348" text-anchor="middle" font-size="10" fill="#888">关键点：dp 的一维下标是「城市」，天数靠外层循环推进，不需要二维表</text>
+  <text x="280" y="368" text-anchor="middle" font-size="10" fill="#888">每轮 ndp 全部由上一轮的 dp 推出，所以不能用原地更新（必须另开数组）</text>
+</svg>

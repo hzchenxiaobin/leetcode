@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 356" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="356" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例 2：n = 3，k = 2</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888">stayScore = [[3,4,2],[2,1,2]]　travelScore = [[0,2,1],[2,0,4],[3,2,0]]</text>
+
+  <rect x="30" y="62" width="240" height="120" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="150" y="82" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">第 0 天：只能 stay</text>
+  <text x="150" y="104" text-anchor="middle" font-size="10.5" fill="#555">dp[0] = stay[0][0] = 3</text>
+  <text x="150" y="124" text-anchor="middle" font-size="10.5" fill="#555">dp[1] = stay[0][1] = 4</text>
+  <text x="150" y="144" text-anchor="middle" font-size="10.5" fill="#555">dp[2] = stay[0][2] = 2</text>
+  <text x="150" y="168" text-anchor="middle" font-size="9.5" fill="#888">起点可任选，故三城都可作起点</text>
+
+  <rect x="290" y="62" width="240" height="120" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="410" y="82" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">第 1 天：stay 或 travel</text>
+  <text x="410" y="104" text-anchor="middle" font-size="10" fill="#555">ndp[0] = max(3+2, 4+2, 2+3) = 6</text>
+  <text x="410" y="124" text-anchor="middle" font-size="10" fill="#555">ndp[1] = max(3+2, 4+1, 2+2) = 5</text>
+  <text x="410" y="144" text-anchor="middle" font-size="10" fill="#555">ndp[2] = max(3+1, 4+4, 2+2) = 8</text>
+  <text x="410" y="168" text-anchor="middle" font-size="9.5" fill="#888">每个 d 取「所有来源 c」的最大值</text>
+
+  <rect x="30" y="194" width="500" height="62" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="215" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">最优路径：起点城市 1 → 第 0 天停在 1（+4）→ 第 1 天前往 2（+4）= 8</text>
+  <text x="280" y="236" text-anchor="middle" font-size="10.5" fill="#555">对应 dp[0][1] = 4 与 travelScore[1][2] = 4，与示例解释完全一致</text>
+  <text x="280" y="250" text-anchor="middle" font-size="9.5" fill="#888">注意 ndp[2] 的候选里 dp[1] + travel[1][2] = 4 + 4 = 8 最大，而不是 dp[2] + stay[1][2] = 2 + 2 = 4</text>
+
+  <rect x="30" y="268" width="500" height="62" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="289" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold">反例提醒：若允许第 0 天 travel，就能「起点 0 → 第 0 天去 2（+1）→ 第 1 天再回 0（+3）」</text>
+  <text x="280" y="308" text-anchor="middle" font-size="10.5" fill="#8a3a36">这类白拿点数的路径是错的，因为第 0 天没有「前一天所在的城市」可离开</text>
+  <text x="280" y="325" text-anchor="middle" font-size="9.5" fill="#888">本实现把 dp[0][c] 固定为 stayScore[0][c]，天然排除该情况</text>
+
+  <text x="280" y="348" text-anchor="middle" font-size="10" fill="#888">答案 = max(ndp) = 8</text>
+</svg>

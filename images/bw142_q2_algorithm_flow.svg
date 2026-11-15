@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 392" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="392" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">三遍扫描：找新父节点 → 建新树 → 反序累加子树大小</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">全部用迭代写法，避免 n = 10^5 时递归爆栈</text>
+
+  <rect x="56" y="62" width="448" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="82" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">第一遍：在原树上做 enter / exit 事件的 DFS</text>
+  <text x="280" y="102" text-anchor="middle" font-size="10" fill="#555">进入 u 时 newParent[u] = last[s[u]]，随后 last[s[u]] = u；退出时恢复</text>
+
+  <path d="M 280 118 L 280 134" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="138" width="448" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="158" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">第二遍：确定每个节点的最终父节点并建新树</text>
+  <text x="280" y="178" text-anchor="middle" font-size="10" fill="#555">p = (newParent[u] == -1) ? parent[u] : newParent[u]；把 u 挂到 p 下</text>
+
+  <path d="M 280 194 L 280 210" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="214" width="448" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="234" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">第三遍：对新树求先序 order[]，再把 order 倒着扫</text>
+  <text x="280" y="254" text-anchor="middle" font-size="10" fill="#555">size[] 初始全 1，倒序时 size[父] += size[子]（子节点此时已算完）</text>
+
+  <path d="M 280 270 L 280 286" stroke="#666" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="290" width="448" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="316" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">返回 size[0..n-1]</text>
+
+  <text x="280" y="352" text-anchor="middle" font-size="10" fill="#888">为什么要「同时」修改？题目规定所有节点基于原树一次性重连，</text>
+  <text x="280" y="370" text-anchor="middle" font-size="10" fill="#888">因此祖先关系必须取原树意义上的最近同字符祖先，不能在改动后的树上递推</text>
+  <text x="280" y="386" text-anchor="middle" font-size="9.5" fill="#aaa">总复杂度 O(n)：三遍都是线性扫描</text>
+</svg>
