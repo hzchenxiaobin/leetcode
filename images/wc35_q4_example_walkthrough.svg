@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 424" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="424" fill="#fafafa"/>
+
+  <text x="320" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例 2 走查：&lt;DIV&gt;…&lt;![CDATA[&lt;div&gt;]&gt;]]&gt;…&lt;/DIV&gt;</text>
+  <text x="320" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">cdata 先被整段吃掉，剩下的 ] 和 &gt; 才落到文本分支</text>
+
+  <g filter="url(#rough2)">
+    <rect x="28" y="60" width="584" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="46" y="80" font-size="10.5" fill="#3a4a66" font-weight="bold">步</text>
+    <text x="90" y="80" font-size="10.5" fill="#3a4a66" font-weight="bold">i</text>
+    <text x="132" y="80" font-size="10.5" fill="#3a4a66" font-weight="bold">片段</text>
+    <text x="368" y="80" font-size="10.5" fill="#3a4a66" font-weight="bold">动作</text>
+    <text x="582" y="80" font-size="10.5" fill="#3a4a66" font-weight="bold">栈</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="28" y="98" width="584" height="42" fill="#ffffff" stroke="#bbb" stroke-width="1.2" rx="6"/>
+    <text x="50" y="124" font-size="10" fill="#555">1</text>
+    <text x="90" y="124" font-size="10" fill="#555">0</text>
+    <text x="132" y="124" font-size="10" fill="#333">&lt;DIV&gt;</text>
+    <text x="368" y="124" font-size="9.5" fill="#555">起始标签，名字 DIV 合法 → 入栈</text>
+    <text x="582" y="124" font-size="9.5" fill="#3a5a30">[DIV]</text>
+
+    <rect x="28" y="148" width="584" height="42" fill="#f7fbff" stroke="#bbb" stroke-width="1.2" rx="6"/>
+    <text x="50" y="174" font-size="10" fill="#555">2</text>
+    <text x="90" y="174" font-size="10" fill="#555">5</text>
+    <text x="132" y="174" font-size="10" fill="#333">&gt;&gt;  ![cdata[]]</text>
+    <text x="368" y="174" font-size="9.5" fill="#555">文本，&gt; 不触发解析 → 跳到 20</text>
+    <text x="582" y="174" font-size="9.5" fill="#3a5a30">[DIV]</text>
+
+    <rect x="28" y="198" width="584" height="42" fill="#ffffff" stroke="#bbb" stroke-width="1.2" rx="6"/>
+    <text x="50" y="224" font-size="10" fill="#555">3</text>
+    <text x="90" y="224" font-size="10" fill="#555">20</text>
+    <text x="132" y="224" font-size="10" fill="#333">&lt;![CDATA[&lt;div&gt;]&gt;]]&gt;</text>
+    <text x="368" y="224" font-size="9.5" fill="#8a6a20">首个 ]]&gt; 在下标 36 → i = 39</text>
+    <text x="582" y="224" font-size="9.5" fill="#3a5a30">[DIV]</text>
+
+    <rect x="28" y="248" width="584" height="42" fill="#f7fbff" stroke="#bbb" stroke-width="1.2" rx="6"/>
+    <text x="50" y="274" font-size="10" fill="#555">4</text>
+    <text x="90" y="274" font-size="10" fill="#555">39</text>
+    <text x="132" y="274" font-size="10" fill="#333">]]&gt;&gt;]</text>
+    <text x="368" y="274" font-size="9.5" fill="#555">文本 → 下一个 &lt; 在下标 44</text>
+    <text x="582" y="274" font-size="9.5" fill="#3a5a30">[DIV]</text>
+
+    <rect x="28" y="298" width="584" height="42" fill="#ffffff" stroke="#bbb" stroke-width="1.2" rx="6"/>
+    <text x="50" y="324" font-size="10" fill="#555">5</text>
+    <text x="90" y="324" font-size="10" fill="#555">44</text>
+    <text x="132" y="324" font-size="10" fill="#333">&lt;/DIV&gt;</text>
+    <text x="368" y="324" font-size="9.5" fill="#8a3a36">与栈顶同名 → 弹栈，i = 50 = n</text>
+    <text x="582" y="324" font-size="9.5" fill="#8a3a36">[]</text>
+
+    <rect x="28" y="348" width="584" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="6"/>
+    <text x="50" y="373" font-size="10" fill="#8a3a36">结</text>
+    <text x="90" y="373" font-size="10" fill="#8a3a36">50</text>
+    <text x="132" y="373" font-size="10" fill="#8a3a36">串已耗尽</text>
+    <text x="368" y="373" font-size="9.5" fill="#8a3a36">栈空 且 i == n → 返回 true</text>
+    <text x="582" y="373" font-size="9.5" fill="#8a3a36">[] ✓</text>
+  </g>
+
+  <text x="320" y="408" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">对照示例 3：扫描到 &lt;/A&gt; 时栈顶是 B，名字不符 → 立即 false</text>
+</svg>

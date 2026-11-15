@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="430" fill="#fafafa"/>
+
+  <text x="390" y="26" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">为什么要「快照 size」：队列里同时躺着两层</text>
+  <text x="390" y="46" text-anchor="middle" font-size="11" fill="#777777" filter="url(#rough2)">以示例 2 的第 2 轮为例：q 从「全是本层」变成「混着两层」，再到「全是下一层」</text>
+
+  <!-- ===== 起点 ===== -->
+  <text x="46" y="100" font-size="11.5" font-weight="bold" fill="#446688" filter="url(#rough2)">起点</text>
+  <text x="46" y="116" font-size="9.5" fill="#999999" filter="url(#rough2)">第 2 轮</text>
+  <g filter="url(#rough2)">
+    <rect x="110" y="78" width="56" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="180" y="78" width="56" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="138" y="104" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">9</text>
+  <text x="208" y="104" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">20</text>
+  <text x="110" y="70" font-size="9.5" fill="#446688" filter="url(#rough2)">队头</text>
+  <text x="252" y="104" font-size="11.5" fill="#444444" filter="url(#rough2)">q = &lt;9, 20&gt;，size 快照 = 2（本层宽度）</text>
+
+  <line x1="173" y1="124" x2="173" y2="156" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="184" y="145" font-size="10" fill="#888888" filter="url(#rough2)">弹出 9（无子节点）</text>
+
+  <!-- ===== 中途 ===== -->
+  <text x="46" y="200" font-size="11.5" font-weight="bold" fill="#a07820" filter="url(#rough2)">中途</text>
+  <text x="46" y="216" font-size="9.5" fill="#999999" filter="url(#rough2)">已弹 1 个</text>
+  <g filter="url(#rough2)">
+    <rect x="110" y="178" width="56" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="180" y="178" width="56" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="250" y="178" width="56" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="138" y="204" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">20</text>
+  <text x="208" y="204" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">15</text>
+  <text x="278" y="204" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">7</text>
+  <path d="M 110 224 C 138 240, 166 240, 166 224" fill="none" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="138" y="252" text-anchor="middle" font-size="9.5" fill="#446688" filter="url(#rough2)">本层，还要弹</text>
+  <path d="M 180 224 C 243 242, 306 242, 306 224" fill="none" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="243" y="258" text-anchor="middle" font-size="9.5" fill="#a07820" filter="url(#rough2)">下一层，本轮不弹</text>
+  <text x="340" y="194" font-size="11" fill="#444444" filter="url(#rough2)">q = &lt;20, 15, 7&gt;：蓝 = 本层，橙 = 下一层</text>
+  <text x="340" y="216" font-size="10.5" fill="#888888" filter="url(#rough2)">「本轮还剩 1 个」这件事只记在 size 里，不在队列里</text>
+
+  <line x1="173" y1="262" x2="173" y2="294" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="184" y="284" font-size="10" fill="#888888" filter="url(#rough2)">再弹 20，把 15、7 入队 → 本轮结束</text>
+
+  <!-- ===== 结束 ===== -->
+  <text x="46" y="310" font-size="11.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">结束</text>
+  <g filter="url(#rough2)">
+    <rect x="110" y="288" width="56" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="180" y="288" width="56" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="138" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">15</text>
+  <text x="208" y="314" text-anchor="middle" font-size="14" font-weight="bold" fill="#333" filter="url(#rough2)">7</text>
+  <text x="252" y="306" font-size="11.5" fill="#444444" filter="url(#rough2)">q = &lt;15, 7&gt; 恰好是第 3 层的全部节点</text>
+  <text x="252" y="326" font-size="11.5" fill="#2e6e2e" filter="url(#rough2)">ans ← [3.00, 14.50]，下一轮 size 再快照为 2</text>
+
+  <!-- ===== 底部说明 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="110" y="348" width="600" height="62" rx="10" fill="#f7f7f2" stroke="#999999" stroke-width="1.3"/>
+  </g>
+  <text x="410" y="372" text-anchor="middle" font-size="10.8" fill="#333" filter="url(#rough2)">快照 size 的全部意义：内层循环只弹 size 次，新入队的子节点不会被误算进本层</text>
+  <text x="410" y="394" text-anchor="middle" font-size="10.8" fill="#b85450" filter="url(#rough2)">若循环条件写成实时的 q.size()，中途这一步的 size 会变成 3 → 层宽错乱、顺带死循环</text>
+</svg>

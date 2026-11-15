@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect x="-6" y="-6" width="572" height="412" fill="#fafafa" filter="url(#rough2)"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">双指针夹逼：a 从 0 上升，b 从 ⌊√c⌋ 下降</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">只需考察 a ≤ b 的三角形区域（解关于 a、b 对称）</text>
+
+  <g font-size="11" text-anchor="middle">
+    <rect x="70" y="66" width="420" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+    <text x="280" y="86" fill="#3a4a66" filter="url(#rough2)">候选值域 0 … ⌊√c⌋，共约 √c 个候选值</text>
+  </g>
+
+  <g>
+    <path d="M 80 130 L 480 130" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <text x="80" y="118" font-size="11" fill="#3a4a66" filter="url(#rough2)">a 指针：和偏小就右移 a →</text>
+    <path d="M 480 168 L 80 168" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+    <text x="480" y="188" text-anchor="end" font-size="11" fill="#8a6a20" filter="url(#rough2)">← b 指针：和偏大就左移 b</text>
+  </g>
+
+  <g font-size="10.5" text-anchor="middle">
+    <rect x="70" y="202" width="130" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+    <text x="135" y="220" fill="#3a5a30" filter="url(#rough2)">a² + b² = c</text>
+    <text x="135" y="236" fill="#3a5a30" filter="url(#rough2)">→ 立刻返回 true</text>
+    <rect x="215" y="202" width="130" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+    <text x="280" y="220" fill="#3a4a66" filter="url(#rough2)">a² + b² &lt; c</text>
+    <text x="280" y="236" fill="#3a4a66" filter="url(#rough2)">→ a++（把和抬上去）</text>
+    <rect x="360" y="202" width="130" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+    <text x="425" y="220" fill="#8a6a20" filter="url(#rough2)">a² + b² &gt; c</text>
+    <text x="425" y="236" fill="#8a6a20" filter="url(#rough2)">→ b−−（把和压下来）</text>
+  </g>
+
+  <rect x="40" y="256" width="480" height="92" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="276" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">单调性：这是能“夹逼”的根本原因</text>
+  <text x="56" y="298" font-size="10.5" fill="#555" filter="url(#rough2)">固定 b 时 a²+b² 关于 a 严格递增；固定 a 时关于 b 也严格递增。</text>
+  <text x="56" y="318" font-size="10.5" fill="#555" filter="url(#rough2)">于是当前和对不上时，只有唯一一个方向可能藏解：</text>
+  <text x="56" y="338" font-size="10.5" fill="#555" filter="url(#rough2)">小了就去更大的 a，大了就去更小的 b，绝不回头 → 每条指针单向走完全程。</text>
+
+  <text x="280" y="378" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">总步数 ≤ 2⌊√c⌋+1；c ≤ 2³¹−1 时 ⌊√c⌋ ≤ 46340，至多 92681 步</text>
+</svg>

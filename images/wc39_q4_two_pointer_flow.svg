@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">双指针 + 颜色计数：O(N log N)</text>
+  <text x="280" y="42" text-anchor="middle" font-size="10.5" fill="#888">右端扩张到「覆盖全部 k 个列表」，再尽量左移收缩</text>
+
+  <rect x="150" y="58" width="260" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="78" text-anchor="middle" font-size="10.5" fill="#3a4a66">① 归并排序 A；left = right = 0，cnt 全 0</text>
+
+  <path d="M 280 90 L 280 108" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="112" width="260" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="132" text-anchor="middle" font-size="10.5" fill="#3a5a30">② 加入 A[right]：cnt[L]++，0→1 时 have++</text>
+
+  <path d="M 280 144 L 280 162" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,164 400,196 280,228 160,196" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="200" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">have == k ?</text>
+
+  <path d="M 280 228 L 280 246" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="288" y="242" font-size="10" fill="#b85450">是</text>
+
+  <rect x="150" y="250" width="260" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="270" text-anchor="middle" font-size="10.5" fill="#8a3a36">③ 更新 best：更短，或等长但左端点更小</text>
+
+  <path d="M 280 282 L 280 300" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="304" width="260" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="324" text-anchor="middle" font-size="10.5" fill="#3a5a30">④ 移出 A[left]：cnt--，归零则 have--，left++</text>
+
+  <path d="M 150 320 L 100 320 L 100 196 L 154 196" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="106" y="270" font-size="9.5" fill="#4a7a3a">回到 ③</text>
+
+  <path d="M 400 196 L 470 196 L 470 372 L 414 372" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="424" y="188" font-size="10" fill="#446688">否</text>
+
+  <rect x="150" y="356" width="260" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="376" text-anchor="middle" font-size="10.5" fill="#3a4a66">⑤ right++；越界则结束，否则回到 ②</text>
+
+  <text x="280" y="408" text-anchor="middle" font-size="9.5" fill="#999">③④ 的 while 循环每轮至少移出一个元素，总移动次数 ≤ N</text>
+</svg>

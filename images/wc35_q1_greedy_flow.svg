@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 1 1 L 8 4.5 L 1 8" fill="none" stroke="#666" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="600" fill="#fafafa"/>
+
+  <text x="400" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：从左到右扫描，能种就种，种完跳过 2 格</text>
+
+  <!-- 起点 -->
+  <g filter="url(#rough2)">
+    <rect x="318" y="56" width="164" height="38" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="400" y="80" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">i = 0，cnt = 0</text>
+  <line x1="400" y1="94" x2="400" y2="112" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D1：i < m ? -->
+  <polygon points="400,114 500,150 400,186 300,150" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="155" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a5a10" filter="url(#rough2)">i &lt; m ?</text>
+
+  <!-- D1 否 → 出口 -->
+  <line x1="500" y1="150" x2="592" y2="150" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="545" y="142" text-anchor="middle" font-size="11.5" fill="#8f3a36" filter="url(#rough2)">否（扫完）</text>
+  <g filter="url(#rough2)">
+    <rect x="594" y="126" width="180" height="48" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="684" y="146" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8f3a36" filter="url(#rough2)">return cnt ≥ n</text>
+  <text x="684" y="164" text-anchor="middle" font-size="10.5" fill="#8f3a36" filter="url(#rough2)">（够不够就是答案）</text>
+
+  <!-- D1 是 → D2 -->
+  <line x1="400" y1="186" x2="400" y2="226" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="412" y="210" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- D2：可种？ -->
+  <polygon points="400,228 566,268 400,308 234,268" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">第 i 格可种？</text>
+  <text x="400" y="282" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">bed[i−1], bed[i], bed[i+1] 全为 0</text>
+
+  <!-- D2 是 → 种花框 -->
+  <path d="M 234 268 L 150 268 L 150 336" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="158" y="260" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="52" y="338" width="248" height="74" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="176" y="360" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">种下：bed[i] = 1，cnt += 1</text>
+  <text x="176" y="380" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">i += 2（i+1 必被堵死）</text>
+  <text x="176" y="400" text-anchor="middle" font-size="10.5" fill="#8f3a36" filter="url(#rough2)">若此刻 cnt ≥ n 可立即 return true</text>
+
+  <!-- D2 否 → i += 1 -->
+  <line x1="566" y1="268" x2="640" y2="268" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="596" y="260" text-anchor="middle" font-size="11.5" fill="#8f3a36" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="642" y="240" width="132" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="708" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a5a10" filter="url(#rough2)">i += 1</text>
+  <text x="708" y="282" text-anchor="middle" font-size="10.5" fill="#8a5a10" filter="url(#rough2)">本格种不了，看下一格</text>
+
+  <!-- 回边：两路汇合后回到 D1 -->
+  <path d="M 176 412 L 176 446 L 400 446" stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <path d="M 708 296 L 708 446 L 400 446" stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <path d="M 176 446 L 24 446 L 24 150 L 292 150" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="32" y="300" font-size="11" fill="#666" filter="url(#rough2)">继续扫描</text>
+
+  <!-- 底部要点 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="482" width="720" height="96" rx="10" fill="#fdfcf7" stroke="#999" stroke-width="1.2" stroke-dasharray="5 3"/>
+  </g>
+  <text x="58" y="506" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">关键点 1：判定时看三格——左邻、自己、右邻；越界位置按「空」处理（等价于在两端各垫一个 0）。</text>
+  <text x="58" y="530" font-size="12" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">关键点 2：种下后把 bed[i] 写回 1，于是 i+2 处的判定天然看到这朵花，无需额外变量。</text>
+  <text x="58" y="554" font-size="12" fill="#8f3a36" filter="url(#rough2)">关键点 3：能种就种 ⇒ 每片零段都取到容量上限；种在更靠右的位置只会封死更多格，绝不变优。</text>
+  <text x="58" y="574" font-size="11" fill="#666" filter="url(#rough2)">总时间 O(m)，只需一趟；一旦 cnt ≥ n 立刻返回，n = 0 也可在开头直接返回 true。</text>
+</svg>

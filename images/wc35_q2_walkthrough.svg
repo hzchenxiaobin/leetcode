@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa" filter="url(#rough2)"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">示例 2 演算：root = [1, 2, 3, null, 4]</text>
+
+  <!-- 树 -->
+  <path d="M 150 78 L 100 128" stroke="#666" stroke-width="1.5" filter="url(#rough2)"/>
+  <path d="M 150 78 L 208 128" stroke="#666" stroke-width="1.5" filter="url(#rough2)"/>
+  <path d="M 100 162 L 130 190" stroke="#666" stroke-width="1.5" filter="url(#rough2)"/>
+
+  <circle cx="150" cy="62" r="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="150" y="67" text-anchor="middle" font-size="14" fill="#3a4a66" filter="url(#rough2)">1</text>
+
+  <circle cx="100" cy="146" r="18" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="100" y="151" text-anchor="middle" font-size="14" fill="#3a5a30" filter="url(#rough2)">2</text>
+
+  <circle cx="208" cy="146" r="18" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="208" y="151" text-anchor="middle" font-size="14" fill="#8a3a36" filter="url(#rough2)">3</text>
+
+  <circle cx="138" cy="208" r="18" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="138" y="213" text-anchor="middle" font-size="14" fill="#8a6a20" filter="url(#rough2)">4</text>
+
+  <rect x="46" y="166" width="34" height="26" fill="none" stroke="#b85450" stroke-width="1.3" stroke-dasharray="4 3" rx="4" filter="url(#rough2)"/>
+  <text x="63" y="184" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">∅</text>
+  <text x="64" y="212" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">缺失的左孩子</text>
+
+  <text x="150" y="252" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#rough2)">2 有右孩子 4，但没有左孩子</text>
+
+  <!-- 右侧：逐步拼接 -->
+  <rect x="272" y="44" width="268" height="284" fill="#ffffff" stroke="#888" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="288" y="66" font-size="11" fill="#444" font-weight="bold" filter="url(#rough2)">按前序拼字符串</text>
+
+  <text x="288" y="92" font-size="10" fill="#555" filter="url(#rough2)">① 访问 1：有左右孩子 → 写 "1" + (…)(…)</text>
+  <text x="288" y="108" font-size="10" fill="#8a3a36" filter="url(#rough2)">    out = 1(</text>
+
+  <text x="288" y="134" font-size="10" fill="#555" filter="url(#rough2)">② 访问 2：左空右非空 → 先补一对空括号</text>
+  <text x="288" y="150" font-size="10" fill="#8a3a36" filter="url(#rough2)">    out = 1(2()(</text>
+
+  <text x="288" y="176" font-size="10" fill="#555" filter="url(#rough2)">③ 访问 4：叶子 → 只写值，不加括号</text>
+  <text x="288" y="192" font-size="10" fill="#8a3a36" filter="url(#rough2)">    out = 1(2()(4)</text>
+
+  <text x="288" y="218" font-size="10" fill="#555" filter="url(#rough2)">④ 回退到 1，访问右孩子 3（叶子）</text>
+  <text x="288" y="234" font-size="10" fill="#8a3a36" filter="url(#rough2)">    out = 1(2()(4))(3)</text>
+
+  <path d="M 288 250 L 288 262" stroke="#999" stroke-width="1.2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="300" y="260" font-size="9.5" fill="#888" filter="url(#rough2)">闭合所有未完成的括号</text>
+
+  <text x="288" y="292" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">答案：1(2()(4))(3)</text>
+  <text x="288" y="312" font-size="9.5" fill="#777" filter="url(#rough2)">关键差别只在这对 ()：它替 2 的空左孩子占位</text>
+
+  <!-- 底部对照 -->
+  <rect x="40" y="340" width="480" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="56" y="358" font-size="10" fill="#8a6a20" filter="url(#rough2)">对照示例 1（[1,2,3,4]，左孩子存在）：省略空括号后得 1(2(4))(3)</text>
+  <text x="56" y="374" font-size="10" fill="#8a6a20" filter="url(#rough2)">同一棵树若写成 1(2(4)())(3()()) 就是「不省略」的冗余版本</text>
+</svg>

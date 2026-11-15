@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888888"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="470" fill="#fafafa"/>
+
+  <text x="250" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#333" filter="url(#rough2)">算法流程：外层按层、内层弹 size 个</text>
+  <path d="M 120 38 Q 250 45 380 38" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <!-- ① 初始化 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="54" width="300" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="78" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">① ans ← []，q ← &lt;root&gt;</text>
+  <line x1="250" y1="92" x2="250" y2="106" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 判断 q 非空 -->
+  <polygon points="250,108 358,140 250,172 142,140" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="250" y="145" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a07820" filter="url(#rough2)">q 非空？</text>
+
+  <line x1="250" y1="172" x2="250" y2="186" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="263" y="183" font-size="11" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- ③ 快照 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="188" width="300" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="250" y="213" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">② size ← q.size()；sum ← 0</text>
+  <line x1="250" y1="228" x2="250" y2="242" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ 内层循环容器 -->
+  <g filter="url(#rough2)">
+    <rect x="88" y="244" width="324" height="106" rx="10" fill="#f4f7fd" stroke="#446688" stroke-width="1.5" stroke-dasharray="6 4"/>
+  </g>
+  <text x="250" y="266" text-anchor="middle" font-size="12" font-weight="bold" fill="#446688" filter="url(#rough2)">③ 内层循环：重复 size 次</text>
+  <text x="250" y="292" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">p ← 出队；sum ← sum + p.val</text>
+  <text x="250" y="314" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">p.left 非空 → 入队；p.right 非空 → 入队</text>
+  <text x="250" y="336" text-anchor="middle" font-size="10" fill="#888888" filter="url(#rough2)">子节点本轮入队，但本轮不会再被弹出</text>
+
+  <line x1="250" y1="350" x2="250" y2="362" stroke="#888888" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ⑤ 记账 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="364" width="300" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+  </g>
+  <text x="250" y="390" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">④ ans ← ans ∪ {sum / size}</text>
+
+  <!-- 回边：回到 ② -->
+  <path d="M 88 385 C 24 385, 24 140, 138 140" fill="none" stroke="#999999" stroke-width="1.4"
+        stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="46" y="250" text-anchor="middle" font-size="9.5" fill="#999999" filter="url(#rough2)">回到 ②</text>
+  <text x="46" y="264" text-anchor="middle" font-size="9.5" fill="#999999" filter="url(#rough2)">下一层</text>
+
+  <!-- 否 分支 -->
+  <line x1="358" y1="140" x2="428" y2="140" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="393" y="132" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="432" y="120" width="150" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="507" y="145" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a2828" filter="url(#rough2)">return ans</text>
+
+  <!-- 右侧要点面板 -->
+  <g filter="url(#rough2)">
+    <rect x="424" y="182" width="336" height="250" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="592" y="208" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">五个容易踩的点</text>
+  <text x="442" y="234" font-size="10.5" fill="#333" filter="url(#rough2)">① size 先存成变量，循环条件里别再求 q.size()</text>
+  <text x="442" y="258" font-size="10.5" fill="#333" filter="url(#rough2)">② 除数是快照 size，不是循环跑完时的队列长度</text>
+  <text x="442" y="282" font-size="10.5" fill="#333" filter="url(#rough2)">③ sum 要 64 位：最坏 1e4 × 2^31 ≈ 2e13</text>
+  <text x="442" y="306" font-size="10.5" fill="#333" filter="url(#rough2)">④ 空子节点不要入队，否则 size 统计失真</text>
+  <text x="442" y="330" font-size="10.5" fill="#333" filter="url(#rough2)">⑤ 每轮只弹 size 个 → 队列左端总是本层尾巴</text>
+  <path d="M 442 344 H 742" stroke="#c9d6e8" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="442" y="366" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">时间 O(n)：每个节点入队一次、出队一次</text>
+  <text x="442" y="388" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">空间 O(w)：w 为最宽层节点数，w ≤ n</text>
+  <text x="442" y="410" font-size="10.5" fill="#a07820" filter="url(#rough2)">输出 O(h)：h 为树高，即层数</text>
+</svg>

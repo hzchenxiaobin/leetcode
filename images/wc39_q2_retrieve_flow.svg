@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 560"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="560" fill="#fafafa"/>
+  <text x="320" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：有序容器 + 前缀二分，只扫命中的那一段</text>
+
+  <!-- put -->
+  <rect x="60" y="52" width="400" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="78" text-anchor="middle" font-size="11.5" fill="#2f5a24" filter="url(#rough2)">put(id, ts)：store[ts].push_back(id)　←　map 自动按时间戳排序</text>
+  <path d="M260,94 V114" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- retrieve entry -->
+  <rect x="60" y="116" width="400" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="142" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">retrieve(start, end, granularity)</text>
+  <path d="M260,158 V178" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 1 -->
+  <rect x="60" y="180" width="400" height="42" rx="8" fill="#fafafa" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="206" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">① ℓ ← 粒度表[granularity] ∈ {4, 7, 10, 13, 16, 19}</text>
+  <path d="M260,222 V242" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 2 -->
+  <rect x="60" y="244" width="400" height="42" rx="8" fill="#fafafa" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="270" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">② lo ← start[0:ℓ)，hi ← end[0:ℓ)（两端截到同一精度）</text>
+  <path d="M260,286 V306" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- step 3 -->
+  <rect x="60" y="308" width="400" height="42" rx="8" fill="#fafafa" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="334" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">③ it ← lower_bound(lo)：首个键 ≥ lo 的位置</text>
+  <path d="M260,350 V370" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定菱形 -->
+  <polygon points="260,372 424,412 260,452 96,412" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="404" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">it ≠ end 且</text>
+  <text x="260" y="426" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6d1f" filter="url(#rough2)">prefix(it) ≤ hi ?</text>
+
+  <!-- 是：收集 -->
+  <path d="M424,412 H452" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="436" y="404" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="454" y="382" width="166" height="60" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="537" y="406" text-anchor="middle" font-size="11" fill="#2f5a24" filter="url(#rough2)">收集该桶全部 id</text>
+  <text x="537" y="426" text-anchor="middle" font-size="11" fill="#2f5a24" filter="url(#rough2)">it++ 继续</text>
+
+  <!-- 回边 -->
+  <path d="M537,382 V362 H230 V376" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 否：返回 -->
+  <path d="M260,452 V476" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="272" y="472" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="120" y="478" width="280" height="40" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="260" y="504" text-anchor="middle" font-size="12.5" fill="#b85450" filter="url(#rough2)">返回 res（顺序任意）</text>
+
+  <text x="320" y="544" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">单次查询 O(log m + 命中桶数 + 输出长度)，不命中的整段被直接跳过</text>
+</svg>

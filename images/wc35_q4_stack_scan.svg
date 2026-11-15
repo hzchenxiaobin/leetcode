@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 476" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="476" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">单遍扫描 + 栈：四类片段，判断顺序自上而下</text>
+  <text x="310" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">第一个匹配的分支即执行；执行后 i 严格增大，永不回退</text>
+
+  <g filter="url(#rough2)">
+    <rect x="176" y="62" width="268" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="310" y="84" text-anchor="middle" font-size="11" fill="#8a6a20">i = 0，栈空；要求 code[0] == '&lt;' 且 i &lt; n</text>
+  </g>
+
+  <path d="M 310 98 L 310 112" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="38" y="116" width="230" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="52" y="138" font-size="11" fill="#3a4a66" font-weight="bold">① 以 &lt;![CDATA[ 开头</text>
+    <text x="52" y="156" font-size="10" fill="#555">栈空 ⇒ 直接 false</text>
+    <text x="52" y="171" font-size="10" fill="#555">跳到第一个 ]]&gt; 之后，内部不解析</text>
+
+    <rect x="288" y="116" width="294" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="304" y="138" font-size="10.5" fill="#3a5a30" font-weight="bold">i = find("]]&gt;", i + 9) + 3</text>
+    <text x="304" y="156" font-size="10" fill="#555">找不到 ]]&gt; ⇒ false（cdata 未闭合）</text>
+    <text x="304" y="171" font-size="10" fill="#555">示例 2 的 &lt;div&gt;]&gt; 因此是黑盒内容</text>
+  </g>
+
+  <path d="M 310 182 L 310 196" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="38" y="200" width="230" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="52" y="222" font-size="11" fill="#3a4a66" font-weight="bold">② 以 &lt;/ 开头（结束标签）</text>
+    <text x="52" y="240" font-size="10" fill="#555">名字 = 到下一个 &gt; 为止的全部字符</text>
+    <text x="52" y="255" font-size="10" fill="#555">栈空或栈顶不同名 ⇒ false</text>
+
+    <rect x="288" y="200" width="294" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="304" y="222" font-size="10.5" fill="#3a5a30" font-weight="bold">pop()；若弹后为空，要求 i == n</text>
+    <text x="304" y="240" font-size="10" fill="#555">这就排除了 &lt;A&gt;&lt;/A&gt;x 与双根</text>
+    <text x="304" y="255" font-size="10" fill="#555">名字非法（空 / 小写 / 超 9）也 false</text>
+  </g>
+
+  <path d="M 310 266 L 310 280" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="38" y="284" width="230" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="52" y="306" font-size="11" fill="#3a4a66" font-weight="bold">③ 以 &lt; 开头（起始标签）</text>
+    <text x="52" y="324" font-size="10" fill="#555">名字非法 ⇒ false</text>
+    <text x="52" y="338" font-size="10" fill="#555">否则 push(名字)</text>
+
+    <rect x="288" y="284" width="294" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="304" y="306" font-size="10.5" fill="#3a5a30" font-weight="bold">允许任意深度嵌套</text>
+    <text x="304" y="324" font-size="10" fill="#555">没有 &gt; 就 false（规则 6：&lt; 未匹配）</text>
+    <text x="304" y="338" font-size="10" fill="#555">&lt;A/&gt; 的名字是 "A/"，含 / 故非法</text>
+  </g>
+
+  <path d="M 310 344 L 310 358" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="38" y="362" width="230" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="52" y="384" font-size="11" fill="#3a4a66" font-weight="bold">④ 其他：普通文本</text>
+    <text x="52" y="402" font-size="10" fill="#555">栈空 ⇒ false；否则跳到下一个 &lt;</text>
+
+    <rect x="288" y="362" width="294" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="304" y="384" font-size="10.5" fill="#3a5a30" font-weight="bold">i = find('&lt;', i)（无则 n）</text>
+    <text x="304" y="402" font-size="10" fill="#555">&gt; 、] 、! 在文本里都是普通字符</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="430" width="320" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="310" y="451" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">终止：栈为空 且 i == n ⇒ true，否则 false</text>
+  </g>
+</svg>

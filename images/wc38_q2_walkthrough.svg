@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例 1 逐门走查：4 门课，最终修完 3 门</text>
+  <text x="310" y="46" text-anchor="middle" font-size="10.5" fill="#888">courses = [[100,200],[200,1300],[1000,1250],[2000,3200]]，排序后按 last 升序处理</text>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle">
+    <rect x="20" y="62" width="580" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <text x="50" y="82" fill="#3a4a66" font-weight="bold">步骤</text>
+    <text x="150" y="82" fill="#3a4a66" font-weight="bold">当前课程 [d, last]</text>
+    <text x="266" y="82" fill="#3a4a66" font-weight="bold">加入后 total</text>
+    <text x="378" y="82" fill="#3a4a66" font-weight="bold">total ≤ last ？</text>
+    <text x="524" y="82" fill="#3a4a66" font-weight="bold">堆内容（大小）</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle">
+    <rect x="20" y="98" width="580" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="6"/>
+    <text x="50" y="123" fill="#3a5a30">1</text>
+    <text x="150" y="123" fill="#3a5a30">[100, 200]</text>
+    <text x="266" y="123" fill="#3a5a30">100</text>
+    <text x="378" y="123" fill="#3a5a30">100 ≤ 200 ✓ 收下</text>
+    <text x="524" y="123" fill="#3a5a30">{100}（1）</text>
+
+    <rect x="20" y="144" width="580" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="6"/>
+    <text x="50" y="169" fill="#3a5a30">2</text>
+    <text x="150" y="169" fill="#3a5a30">[1000, 1250]</text>
+    <text x="266" y="169" fill="#3a5a30">1100</text>
+    <text x="378" y="169" fill="#3a5a30">1100 ≤ 1250 ✓ 收下</text>
+    <text x="524" y="169" fill="#3a5a30">{100, 1000}（2）</text>
+
+    <rect x="20" y="190" width="580" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="6"/>
+    <text x="50" y="215" fill="#3a5a30">3</text>
+    <text x="150" y="215" fill="#3a5a30">[200, 1300]</text>
+    <text x="266" y="215" fill="#3a5a30">1300</text>
+    <text x="378" y="215" fill="#3a5a30">1300 ≤ 1300 ✓ 收下</text>
+    <text x="524" y="215" fill="#3a5a30">{100, 1000, 200}（3）</text>
+
+    <rect x="20" y="236" width="580" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="6"/>
+    <text x="50" y="261" fill="#8a3a36">4</text>
+    <text x="150" y="261" fill="#8a3a36">[2000, 3200]</text>
+    <text x="266" y="261" fill="#8a3a36">3300</text>
+    <text x="378" y="261" fill="#8a3a36">3300 &gt; 3200 ✗ 弹出 2000</text>
+    <text x="524" y="261" fill="#8a3a36">{100, 1000, 200}（3）</text>
+  </g>
+
+  <path d="M 524 276 L 524 292" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="20" y="298" width="580" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="310" y="319" text-anchor="middle" font-size="11" fill="#8a6a20">第 4 步：total 从 3300 回落到 1300 ≤ 3200，堆大小仍是 3 → 答案 3</text>
+  </g>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="20" y="342" width="580" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="8"/>
+    <text x="310" y="359" font-size="10.5" fill="#3a4a66">修课顺序：第 1 门（第 100 天完）→ 第 3 门（第 1100 天完）→ 第 2 门（第 1300 天完）</text>
+    <text x="310" y="375" font-size="10" fill="#6b7c99">换掉的是「时长最长」的第 4 门，课程数没有损失</text>
+  </g>
+</svg>

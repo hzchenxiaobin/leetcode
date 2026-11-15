@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15.5" fill="#444" font-weight="bold" filter="url(#rough2)">建立依赖边 + 记忆化 DFS（惰性求值）</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">只在 get / sum 时按图递归计算，用 state 数组做记忆化</text>
+
+  <!-- 解析 -->
+  <rect x="70" y="64" width="420" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="82" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">解析 numbers："A1" 是单格；"A1:B2" 是矩形，拆成行进方向的所有格</text>
+  <text x="280" y="97" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">区间取行列的 min / max，避免左上右下写反</text>
+
+  <path d="M 280 104 L 280 122" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 存边 -->
+  <rect x="70" y="126" width="420" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="144" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">deps[c] ← 展开后的引用列表（vector，允许重复；重复即多次计数）</text>
+  <text x="280" y="159" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">同时把 isFormula[c] 置 1；Set 时清空 deps 把公式作废</text>
+
+  <path d="M 280 166 L 280 192" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 菱形 1 -->
+  <polygon points="160,230 280,196 400,230 280,264" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="235" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">是常数格？（无公式）</text>
+  <path d="M 400 230 L 424 230" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="426" y="212" width="118" height="36" fill="#f2f2f2" stroke="#999" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="485" y="234" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">返回 val[c]</text>
+
+  <path d="M 280 264 L 280 292" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="282" font-size="9.5" fill="#777" filter="url(#rough2)">否</text>
+
+  <!-- 菱形 2 -->
+  <polygon points="160,340 280,306 400,340 280,374" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="345" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">本次查询已算过？state=2</text>
+  <path d="M 400 340 L 424 340" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="426" y="322" width="118" height="36" fill="#f2f2f2" stroke="#999" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="485" y="344" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">返回缓存值</text>
+
+  <path d="M 280 374 L 280 400" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="392" font-size="9.5" fill="#777" filter="url(#rough2)">否</text>
+
+  <!-- 计算 -->
+  <rect x="46" y="404" width="468" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="62" y="424" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">state[c] = 1 → 对 deps[c] 中每个引用递归求值求和 → state[c] = 2 并写入缓存</text>
+  <text x="62" y="443" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">每次 get / sum 之前把 state 整体清零（O(V)），保证不读到旧缓存</text>
+
+  <text x="280" y="474" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">state：0 未访问 / 1 在栈上（防御环） / 2 已完成</text>
+</svg>

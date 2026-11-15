@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：按截止时间排序，超时就踢掉最长的那门</text>
+  <text x="290" y="48" text-anchor="middle" font-size="10.5" fill="#888">排序后只需盯住「已选课程总时长 total」与「当前 lastDay」的大小关系</text>
+
+  <text x="40" y="74" font-size="10.5" fill="#446688" font-weight="bold">① 先按 lastDay 升序排序（与编号无关）</text>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="40" y="84" width="120" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="100" y="102" font-size="11" fill="#3a4a66">[100, 200]</text>
+    <text x="100" y="116" font-size="9.5" fill="#6b7c99">d=100, last=200</text>
+
+    <rect x="172" y="84" width="120" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="232" y="102" font-size="11" fill="#3a4a66">[1000, 1250]</text>
+    <text x="232" y="116" font-size="9.5" fill="#6b7c99">d=1000, last=1250</text>
+
+    <rect x="304" y="84" width="120" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="364" y="102" font-size="11" fill="#3a4a66">[200, 1300]</text>
+    <text x="364" y="116" font-size="9.5" fill="#6b7c99">d=200, last=1300</text>
+
+    <rect x="436" y="84" width="120" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="496" y="102" font-size="11" fill="#3a4a66">[2000, 3200]</text>
+    <text x="496" y="116" font-size="9.5" fill="#6b7c99">d=2000, last=3200</text>
+  </g>
+
+  <path d="M 290 128 L 290 152" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="60" y="156" width="460" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="290" y="178" font-size="10.5" fill="#3a5a30">② total + d ≤ last ？ 能：直接收下这门（课程数 +1）</text>
+  </g>
+
+  <path d="M 290 192 L 290 214" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="60" y="218" width="460" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+    <text x="290" y="240" font-size="10.5" fill="#8a3a36">③ 不能：把总时长最长的那门踢出去，换成这一门</text>
+  </g>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="70" y="266" width="70" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <text x="105" y="286" font-size="11" fill="#8a6a20">100</text>
+
+    <rect x="156" y="266" width="70" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <text x="191" y="286" font-size="11" fill="#8a6a20">1000</text>
+
+    <rect x="242" y="266" width="70" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <text x="277" y="286" font-size="11" fill="#8a6a20">200</text>
+
+    <rect x="328" y="266" width="86" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="5"/>
+    <text x="371" y="286" font-size="11" fill="#8a3a36">2000 ✗</text>
+  </g>
+
+  <text x="425" y="286" font-size="10" fill="#b85450">← 最长，弹它</text>
+  <text x="70" y="258" font-size="10" fill="#8a6a20">大顶堆里放「已选课程的时长」：</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="314" width="460" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10"/>
+    <text x="76" y="336" font-size="10.5" fill="#8a6a20" font-weight="bold">为什么这样最优？</text>
+    <text x="76" y="352" font-size="10" fill="#555">同为 k 门课，总时长越小越容易塞进后面的截止时间。</text>
+    <text x="76" y="366" font-size="10" fill="#555">踢掉最长的一门，课程数不减，总时长还变小了 —— 稳赚不亏。</text>
+  </g>
+
+  <text x="290" y="392" text-anchor="middle" font-size="10" fill="#999">答案 = 遍历结束后堆的大小</text>
+</svg>

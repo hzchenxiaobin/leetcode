@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="400" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">一次扫描完成分组：内容作 key，路径追加进 value</text>
+  <text x="300" y="44" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">哈希表 groups：string（content） → vector&lt;string&gt;（完整路径）</text>
+
+  <rect x="150" y="60" width="270" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="285" y="83" text-anchor="middle" font-size="11.5" fill="#22324a" filter="url(#rough2)">遍历 paths 里的每一条目录信息</text>
+  <path d="M 285 96 L 285 116" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="118" width="270" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="285" y="141" text-anchor="middle" font-size="11.5" fill="#3a5a30" filter="url(#rough2)">切出目录 dir：第 1 个空格之前的部分</text>
+  <path d="M 285 154 L 285 174" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="176" width="310" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="285" y="196" text-anchor="middle" font-size="11.5" fill="#22324a" filter="url(#rough2)">循环：读到 '(' 得到 name，读到 ')' 得到 content</text>
+  <text x="285" y="213" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">两者之间的字符全部属于内容，空格也算</text>
+  <path d="M 285 222 L 285 242" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="244" width="310" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="285" y="264" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">groups[content].push_back(dir + '/' + name)</text>
+  <text x="285" y="281" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">内容相同 ⇒ 落进同一个桶，天然聚成一组</text>
+
+  <path d="M 128 267 L 68 267 L 68 199 L 126 199" stroke="#b85450" stroke-width="1.6" fill="none"
+        stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="48" y="236" font-size="9.5" fill="#b85450" filter="url(#rough2)">本行</text>
+  <text x="48" y="250" font-size="9.5" fill="#b85450" filter="url(#rough2)">还有</text>
+  <text x="48" y="264" font-size="9.5" fill="#b85450" filter="url(#rough2)">文件</text>
+
+  <path d="M 285 290 L 285 310" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="312" width="310" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="285" y="331" text-anchor="middle" font-size="11.5" fill="#3a5a30" filter="url(#rough2)">丢弃 size = 1 的桶，剩下的就是答案</text>
+  <text x="285" y="348" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">组内顺序、组的顺序都任意</text>
+
+  <text x="300" y="378" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每个字符只被扫过一次 ⇒ 总时间 O(Σ|paths[i]|)，空间同理</text>
+</svg>
