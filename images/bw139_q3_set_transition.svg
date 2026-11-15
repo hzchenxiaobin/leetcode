@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">集合 DP 的转移：不选 / 选（并上 nums[i−1]）</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888">pre[i][j] = 前 i 个元素（nums[0..i−1]）里恰好选 j 个能得到的全部 OR 值</text>
+
+  <rect x="46" y="76" width="140" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="116" y="98" text-anchor="middle" font-size="10.5" fill="#3a4a66">pre[i−1][j−1]</text>
+  <text x="116" y="118" text-anchor="middle" font-size="10.5" fill="#3a4a66">{ a, b, c }</text>
+  <text x="116" y="134" text-anchor="middle" font-size="9" fill="#999">已选 j−1 个的 OR</text>
+
+  <rect x="46" y="186" width="140" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="116" y="208" text-anchor="middle" font-size="10.5" fill="#3a4a66">pre[i−1][j]</text>
+  <text x="116" y="228" text-anchor="middle" font-size="10.5" fill="#3a4a66">{ p, q }</text>
+  <text x="116" y="244" text-anchor="middle" font-size="9" fill="#999">不选 nums[i−1] 的老集合</text>
+
+  <rect x="228" y="106" width="110" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="283" y="128" text-anchor="middle" font-size="11" fill="#8a6a20">nums[i−1] = x</text>
+  <text x="283" y="146" text-anchor="middle" font-size="9.5" fill="#8a6a20">按位或上去</text>
+
+  <path d="M 186 109 L 226 124" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 338 132 L 384 132" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="384" y="86" width="150" height="92" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="459" y="108" text-anchor="middle" font-size="10.5" fill="#3a5a30">pre[i][j] =</text>
+  <text x="459" y="128" text-anchor="middle" font-size="10.5" fill="#3a5a30">{ p, q,</text>
+  <text x="459" y="146" text-anchor="middle" font-size="10.5" fill="#3a5a30">a|x, b|x, c|x }</text>
+  <text x="459" y="166" text-anchor="middle" font-size="9" fill="#999">直接继承 ∪ 扩展</text>
+
+  <path d="M 186 219 L 206 219 L 206 160 L 228 160" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="272" width="490" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="285" y="294" text-anchor="middle" font-size="11" fill="#8a6a20">nums[i] &lt; 2⁷ ⟹ OR 结果也 &lt; 2⁷，只有 128 种取值</text>
+  <text x="285" y="316" text-anchor="middle" font-size="11" fill="#8a6a20">用 128 位 bitset 存集合：转移 = 位或 + 按位整体平移（OR x）</text>
+
+  <text x="280" y="348" text-anchor="middle" font-size="10" fill="#999">每层只做 128 次检查 → 单次转移 O(128)，总 O(n·k·128)</text>
+</svg>

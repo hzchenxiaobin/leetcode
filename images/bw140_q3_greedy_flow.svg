@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">贪心构造：给 word2[j] 找最小的下标 i，且带得动后缀</text>
+  <text x="280" y="44" text-anchor="middle" font-size="10.5" fill="#888">「带得动」用两张表 O(1) 判断：S1[i+1] ≥ m−j−1 或 S0[i+1] ≥ m−j−1</text>
+
+  <rect x="120" y="60" width="320" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="7" filter="url(#rough2)"/>
+  <text x="280" y="80" text-anchor="middle" font-size="10.5" fill="#3a4a66">从 i = pos 开始向右扫，找第一个「可行」的下标</text>
+
+  <path d="M 280 90 L 280 106" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="106" width="230" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="7" filter="url(#rough2)"/>
+  <text x="175" y="126" text-anchor="middle" font-size="10" fill="#3a5a30">① word1[i] == word2[j]</text>
+  <text x="175" y="144" text-anchor="middle" font-size="10" fill="#3a5a30">且 S1[i+1] ≥ m−j−1 → 选 i</text>
+
+  <rect x="310" y="106" width="230" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="7" filter="url(#rough2)"/>
+  <text x="425" y="126" text-anchor="middle" font-size="10" fill="#8a6a20">② 否则 S0[i+1] ≥ m−j−1</text>
+  <text x="425" y="144" text-anchor="middle" font-size="10" fill="#8a6a20">→ 选 i 并花掉唯一容错</text>
+
+  <path d="M 175 152 L 175 168" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 425 152 L 425 168" stroke="#d6a040" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="168" width="230" height="34" fill="#fff" stroke="#4a7a3a" stroke-width="1.4" rx="7" filter="url(#rough2)"/>
+  <text x="175" y="190" text-anchor="middle" font-size="10" fill="#3a5a30">预算仍未用：后面还有容错机会</text>
+  <rect x="310" y="168" width="230" height="34" fill="#fff" stroke="#d6a040" stroke-width="1.4" rx="7" filter="url(#rough2)"/>
+  <text x="425" y="190" text-anchor="middle" font-size="10" fill="#8a6a20">预算清零：之后必须逐字相等</text>
+
+  <path d="M 175 202 L 175 224" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 425 202 L 425 224" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="224" width="320" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="7" filter="url(#rough2)"/>
+  <text x="280" y="242" text-anchor="middle" font-size="10" fill="#8a3a36">预算已用：跳过不匹配字符，取下一个相等的位置</text>
+  <text x="280" y="258" text-anchor="middle" font-size="10" fill="#8a3a36">（精确匹配越早越好，留给后面的空间最大）</text>
+
+  <rect x="40" y="284" width="490" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="7" filter="url(#rough2)"/>
+  <text x="285" y="303" text-anchor="middle" font-size="10.5" fill="#3a4a66">扫不到任何一个可行下标 → 当前前缀无法完成，直接返回空数组</text>
+
+  <text x="280" y="336" text-anchor="middle" font-size="10" fill="#555">pos 单调右移，每个下标最多被检查一次 → 构造总代价 O(n)</text>
+</svg>
