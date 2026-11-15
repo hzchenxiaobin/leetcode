@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="560" height="330" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">流程：排序 → 最长连续段 → min → 平方</text>
+
+  <!-- 排序 -->
+  <rect x="40" y="60" width="180" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="130" y="82" text-anchor="middle" font-size="13" fill="#33506e" filter="url(#rough2)">① 分别排序 hBars / vBars</text>
+  <text x="130" y="102" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">例：[2,3]、[2,4]</text>
+  <path d="M 220 88 L 250 88" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 连续段 -->
+  <rect x="252" y="52" width="170" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="337" y="74" text-anchor="middle" font-size="13" fill="#2d5a1f" filter="url(#rough2)">② 扫最长连续段</text>
+  <text x="337" y="94" text-anchor="middle" font-size="12" fill="#2d5a1f" filter="url(#rough2)">k_h = 2（[2,3]）</text>
+  <text x="337" y="112" text-anchor="middle" font-size="12" fill="#2d5a1f" filter="url(#rough2)">k_v = 1（[2] 或 [4]）</text>
+  <path d="M 422 88 L 452 88" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 边长 -->
+  <rect x="454" y="60" width="90" height="56" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="499" y="82" text-anchor="middle" font-size="12" fill="#8a6d3b" filter="url(#rough2)">H = k_h+1 = 3</text>
+  <text x="499" y="102" text-anchor="middle" font-size="12" fill="#8a6d3b" filter="url(#rough2)">W = k_v+1 = 2</text>
+
+  <!-- min -->
+  <path d="M 499 116 Q 499 150 440 162" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="330" y="160" width="180" height="48" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="420" y="182" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">side = min(H, W) = 2</text>
+  <text x="420" y="200" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">短板决定正方形边长！</text>
+
+  <!-- 平方 -->
+  <path d="M 330 184 Q 280 196 250 208" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="100" y="208" width="170" height="48" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="185" y="230" text-anchor="middle" font-size="14" fill="#2d5a1f" filter="url(#rough2)">面积 = side² = 4</text>
+  <text x="185" y="248" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">（对应示例 3）</text>
+
+  <!-- 陷阱提示 -->
+  <rect x="60" y="274" width="440" height="44" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="292" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">⚠ 陷阱一：别取 max（那是"最长边"不是正方形）</text>
+  <text x="280" y="310" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">⚠ 陷阱二：别把 H×W 相乘（那是最大矩形面积）</text>
+</svg>

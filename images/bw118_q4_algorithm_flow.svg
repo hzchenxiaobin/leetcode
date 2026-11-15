@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">流程：前缀和 → 逐位二分转移 → 维护候选表</text>
+
+  <!-- 步骤框 -->
+  <rect x="30" y="56" width="160" height="60" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="110" y="80" text-anchor="middle" font-size="13" fill="#2d5a1f" filter="url(#rough2)">① 前缀和 pre</text>
+  <text x="110" y="100" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">long long，pre[n] ≤ 10¹⁰</text>
+  <path d="M 190 86 L 218 86" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="220" y="56" width="160" height="60" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="80" text-anchor="middle" font-size="13" fill="#33506e" filter="url(#rough2)">② 哨兵入表</text>
+  <text x="300" y="100" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">cand=[0], Ts=[0]</text>
+  <path d="M 380 86 L 408 86" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="410" y="56" width="130" height="60" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="475" y="80" text-anchor="middle" font-size="13" fill="#8a6d3b" filter="url(#rough2)">③ for i=1..n</text>
+  <text x="475" y="100" text-anchor="middle" font-size="11" fill="#d6a040" filter="url(#rough2)">主循环开始</text>
+
+  <!-- 主循环体 -->
+  <rect x="60" y="140" width="440" height="130" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)" opacity="0.5"/>
+  <rect x="80" y="152" width="190" height="50" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="175" y="172" text-anchor="middle" font-size="12" fill="#8a6d3b" filter="url(#rough2)">二分：upper_bound(Ts, pre[i])−1</text>
+  <text x="175" y="190" text-anchor="middle" font-size="11" fill="#8a6d3b" filter="url(#rough2)">得最大 j: T[j] ≤ pre[i]</text>
+  <rect x="290" y="152" width="190" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="385" y="172" text-anchor="middle" font-size="12" fill="#2d5a1f" filter="url(#rough2)">dp[i]=dp[j]+1, last=pre[i]−pre[j]</text>
+  <text x="385" y="190" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">T[i] = pre[i] + last[i]</text>
+  <rect x="80" y="210" width="400" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="230" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">入表：队尾弹出所有 T ≥ T[i] 后压入 i</text>
+  <text x="280" y="248" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">（保持 Ts 严格递增；每个下标至多被弹出一次）</text>
+
+  <!-- 输出 -->
+  <path d="M 280 270 Q 280 292 280 306" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="180" y="308" width="200" height="42" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="280" y="328" text-anchor="middle" font-size="13" fill="#2d5a1f" filter="url(#rough2)">返回 dp[n]</text>
+  <text x="280" y="344" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">O(n log n)：n 次二分 + 均摊 O(1) 插入</text>
+</svg>

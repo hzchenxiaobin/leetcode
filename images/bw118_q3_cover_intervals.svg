@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">买 j 送 [j+1, 2j]：覆盖区间的阶梯结构</text>
+
+  <!-- 水果编号轴 -->
+  <line x1="70" y1="70" x2="510" y2="70" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <g font-size="12" fill="#33506e">
+    <text x="95" y="60" text-anchor="middle" filter="url(#rough2)">1</text>
+    <text x="165" y="60" text-anchor="middle" filter="url(#rough2)">2</text>
+    <text x="235" y="60" text-anchor="middle" filter="url(#rough2)">3</text>
+    <text x="305" y="60" text-anchor="middle" filter="url(#rough2)">4</text>
+    <text x="375" y="60" text-anchor="middle" filter="url(#rough2)">5</text>
+    <text x="445" y="60" text-anchor="middle" filter="url(#rough2)">6</text>
+  </g>
+  <g stroke="#446688" stroke-width="1.4">
+    <line x1="95" y1="64" x2="95" y2="76" filter="url(#rough2)"/>
+    <line x1="165" y1="64" x2="165" y2="76" filter="url(#rough2)"/>
+    <line x1="235" y1="64" x2="235" y2="76" filter="url(#rough2)"/>
+    <line x1="305" y1="64" x2="305" y2="76" filter="url(#rough2)"/>
+    <line x1="375" y1="64" x2="375" y2="76" filter="url(#rough2)"/>
+    <line x1="445" y1="64" x2="445" y2="76" filter="url(#rough2)"/>
+  </g>
+
+  <!-- j=1 送 [2,2] -->
+  <rect x="130" y="88" width="70" height="26" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="165" y="106" text-anchor="middle" font-size="11" fill="#2d5a1f" filter="url(#rough2)">买1送{2}</text>
+  <path d="M 95 76 Q 95 84 110 90" fill="none" stroke="#b85450" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- j=2 送 [3,4] -->
+  <rect x="200" y="126" width="140" height="26" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="270" y="144" text-anchor="middle" font-size="11" fill="#8a6d3b" filter="url(#rough2)">买2送{3,4}</text>
+  <path d="M 165 76 Q 175 105 200 130" fill="none" stroke="#b85450" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- j=3 送 [4,6] -->
+  <rect x="270" y="164" width="210" height="26" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="375" y="182" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">买3送{4,5,6}</text>
+  <path d="M 235 76 Q 250 120 280 168" fill="none" stroke="#b85450" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- dp 定义 -->
+  <rect x="50" y="216" width="460" height="64" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="240" text-anchor="middle" font-size="14" fill="#33506e" filter="url(#rough2)">dp[i] = 已拥有水果 1..i 的最少花费</text>
+  <text x="280" y="262" text-anchor="middle" font-size="13" fill="#33506e" filter="url(#rough2)">转移：最后买 j（j ≤ i ≤ 2j），dp[i] = dp[j−1] + p_j</text>
+
+  <!-- 窗口示意 -->
+  <rect x="50" y="296" width="460" height="88" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="320" text-anchor="middle" font-size="13" fill="#8a6d3b" filter="url(#rough2)">对固定 i，合法 j 恰构成窗口 [⌈i/2⌉, i]</text>
+  <line x1="120" y1="340" x2="440" y2="340" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <rect x="230" y="328" width="120" height="24" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)" opacity="0.9"/>
+  <text x="290" y="345" text-anchor="middle" font-size="11" fill="#2d5a1f" filter="url(#rough2)">j 的滑动窗口</text>
+  <text x="120" y="362" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">⌈i/2⌉</text>
+  <text x="440" y="362" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">i</text>
+  <text x="290" y="376" text-anchor="middle" font-size="11" fill="#8a6d3b" filter="url(#rough2)">（随 i 右移，最小值 → 单调队列）</text>
+</svg>
