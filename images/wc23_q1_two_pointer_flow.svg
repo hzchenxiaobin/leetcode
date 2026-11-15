@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrB" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="480" fill="#fafafa"/>
+
+  <g filter="url(#rough2)">
+    <text x="320" y="26" text-anchor="middle" font-size="14" fill="#444" font-weight="bold">算法流程：按 2k 步进，反转 [i, min(i + k, n))</text>
+    <text x="320" y="46" text-anchor="middle" font-size="10" fill="#888">三种「剩余长度」情况被同一个 min 统一，循环体里没有分类讨论</text>
+
+    <!-- 入口 -->
+    <rect x="190" y="60" width="180" height="34" rx="17" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="280" y="82" text-anchor="middle" font-size="11.5" fill="#8a6a20">reverseStr(s, k)</text>
+    <path d="M280,94 L280,110" fill="none" stroke="#d6a040" stroke-width="1.6" marker-end="url(#arrO)"/>
+
+    <!-- 初始化 -->
+    <rect x="180" y="110" width="200" height="34" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="280" y="132" text-anchor="middle" font-size="11" fill="#24455f">n ← |s|，i ← 0</text>
+    <path d="M280,144 L280,162" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arrB)"/>
+
+    <!-- 判断菱形 -->
+    <polygon points="280,162 382,204 280,246 178,204" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="280" y="209" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold">i &lt; n ?</text>
+    <text x="292" y="264" font-size="10" fill="#4a7a3a" font-weight="bold">是</text>
+    <path d="M280,246 L280,272" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)"/>
+
+    <!-- 取右端点 -->
+    <rect x="170" y="272" width="220" height="34" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="280" y="294" text-anchor="middle" font-size="11" fill="#2f5a24">r ← min(i + k, n)</text>
+    <path d="M280,306 L280,324" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)"/>
+
+    <!-- 反转 -->
+    <rect x="140" y="324" width="280" height="50" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="280" y="344" text-anchor="middle" font-size="11" fill="#2f5a24" font-weight="bold">反转 s[i .. r − 1]</text>
+    <text x="280" y="362" text-anchor="middle" font-size="9.5" fill="#4a7a3a">l = i，j = r − 1；swap 后 l ← l+1，j ← j−1</text>
+    <path d="M280,374 L280,392" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arrG)"/>
+
+    <!-- 步进 -->
+    <rect x="190" y="392" width="180" height="34" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="280" y="414" text-anchor="middle" font-size="11" fill="#24455f">i ← i + 2k</text>
+
+    <!-- 回边 -->
+    <path d="M190,409 L96,409 L96,204 L174,204" fill="none" stroke="#446688" stroke-width="1.6"
+          stroke-dasharray="6,4" marker-end="url(#arrB)"/>
+    <text x="84" y="300" text-anchor="middle" font-size="9.5" fill="#446688" transform="rotate(-90 84 300)">回到判断，处理下一个 2k 块</text>
+
+    <!-- 否分支 -->
+    <rect x="430" y="186" width="170" height="36" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="515" y="203" text-anchor="middle" font-size="11" fill="#8c3a36" font-weight="bold">返回 s</text>
+    <text x="515" y="217" text-anchor="middle" font-size="8.5" fill="#b85450">（循环结束，返回结果）</text>
+    <path d="M382,204 L426,204" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arrR)"/>
+    <text x="404" y="196" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold">否</text>
+
+    <!-- 说明 -->
+    <text x="320" y="450" text-anchor="middle" font-size="9.5" fill="#888">每轮只处理一个 2k 块：反转前 k 个，后 k 个原样跳过；循环次数 = ⌈n / 2k⌉</text>
+    <text x="320" y="468" text-anchor="middle" font-size="9.5" fill="#888">总反转字符数 ≤ n，故整体 O(n)；C++ 用半开区间 [i, r) 恰好无需 ±1 修正</text>
+  </g>
+</svg>

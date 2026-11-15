@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+
+  <text x="290" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：只有被剪开的串，朝向不能提前定死</text>
+  <text x="290" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">其余串整段落在环的中间：位置、长度都不变 → 取最大朝向最优</text>
+
+  <rect x="30" y="66" width="250" height="140" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="44" y="88" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">未被剪开的串（共 n-1 个）</text>
+  <text x="44" y="110" font-size="10.5" fill="#555" filter="url(#rough2)">整段出现在结果串中间</text>
+  <text x="44" y="128" font-size="10.5" fill="#555" filter="url(#rough2)">长度、位置与朝向无关</text>
+  <rect x="44" y="140" width="56" height="24" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="72" y="157" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">cba</text>
+  <rect x="108" y="140" width="56" height="24" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="136" y="157" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">zyx</text>
+  <rect x="172" y="140" width="40" height="24" rx="4" fill="#ffffff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="192" y="157" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">…</text>
+  <text x="44" y="190" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">→ 每段取 max(s, rev(s)) 最优</text>
+
+  <rect x="300" y="66" width="250" height="140" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="314" y="88" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">被剪开的串（唯一一个）</text>
+  <text x="314" y="110" font-size="10.5" fill="#555" filter="url(#rough2)">它被拆成「尾部 + 头部」</text>
+  <text x="314" y="128" font-size="10.5" fill="#555" filter="url(#rough2)">分居两端，块结构被破坏</text>
+  <rect x="314" y="140" width="60" height="24" rx="4" fill="#ffffff" stroke="#b85450" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="344" y="157" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">cba</text>
+  <text x="384" y="157" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">或</text>
+  <rect x="400" y="140" width="60" height="24" rx="4" fill="#ffffff" stroke="#b85450" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="430" y="157" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">abc</text>
+  <text x="314" y="190" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">→ 两种朝向都必须枚举</text>
+
+  <rect x="30" y="216" width="520" height="86" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="44" y="238" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">反例：strs = ["ab", "ba"]</text>
+  <text x="44" y="260" font-size="10.5" fill="#555" filter="url(#rough2)">best = ["ba", "ba"]；只试 best 朝向，全部候选里最大只有 baba</text>
+  <text x="44" y="282" font-size="10.5" fill="#555" filter="url(#rough2)">正确答案 bbaa：把「ab」（较小朝向！）在 j=1 切开 → b + ba + a</text>
+
+  <rect x="30" y="314" width="520" height="60" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="44" y="336" font-size="11.5" fill="#3a5a2a" font-weight="bold" filter="url(#rough2)">结论：枚举 2·Σ|c_i| 个（朝向, 断点）组合，取字典序最大者</text>
+  <text x="44" y="358" font-size="10" fill="#4a7a3a" filter="url(#rough2)">每个组合花 O(L) 拼接，总时间 O(L²)，额外空间 O(L)</text>
+
+  <text x="290" y="392" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">两层结构：贪心定朝向（其余串）+ 枚举断点（被剪开的串）</text>
+</svg>

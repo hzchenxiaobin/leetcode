@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="450" viewBox="0 0 680 450" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.7"/>
+    </filter>
+    <marker id="dark" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="450" fill="#fafafa"/>
+
+  <text x="340" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">DP 流程：n 轮滚动转移，每轮只看 6 个状态</text>
+  <text x="340" y="54" text-anchor="middle" font-size="12" fill="#7a7a7a" filter="url(#sk)">每轮 6 个状态 × 至多 3 种字符 → 时间 O(n)、额外空间 O(1)</text>
+
+  <rect x="170" y="72" width="340" height="46" rx="9" fill="#f3f2ec" stroke="#b9b39f" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="340" y="100" text-anchor="middle" font-size="13" fill="#3d3d3d" filter="url(#sk)">初始化：dp[0][0] = 1（空串），其余 5 个状态为 0</text>
+
+  <path d="M 340 118 L 340 138" stroke="#5a5a5a" stroke-width="1.8" fill="none" marker-end="url(#dark)" filter="url(#sk)"/>
+
+  <rect x="170" y="140" width="340" height="44" rx="9" fill="#f3f2ec" stroke="#b9b39f" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="340" y="167" text-anchor="middle" font-size="13" fill="#3d3d3d" filter="url(#sk)">for i = 1 .. n：新建 ndp，6 个格子清零</text>
+
+  <path d="M 340 184 L 340 202" stroke="#5a5a5a" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 135 202 L 545 202" stroke="#5a5a5a" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 135 202 L 135 216" stroke="#5a5a5a" stroke-width="1.6" fill="none" marker-end="url(#dark)" filter="url(#sk)"/>
+  <path d="M 340 202 L 340 216" stroke="#5a5a5a" stroke-width="1.6" fill="none" marker-end="url(#dark)" filter="url(#sk)"/>
+  <path d="M 545 202 L 545 216" stroke="#5a5a5a" stroke-width="1.6" fill="none" marker-end="url(#dark)" filter="url(#sk)"/>
+
+  <rect x="55" y="218" width="160" height="66" rx="9" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="1.7" filter="url(#sk)"/>
+  <text x="135" y="240" text-anchor="middle" font-size="13" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">追加 'P'</text>
+  <text x="135" y="259" text-anchor="middle" font-size="12" fill="#3f5f3f" filter="url(#sk)">ndp[a][0] += cur</text>
+  <text x="135" y="277" text-anchor="middle" font-size="11" fill="#6a7a6a" filter="url(#sk)">a 不变，末尾 L 清零</text>
+
+  <rect x="260" y="218" width="160" height="66" rx="9" fill="#fdf2e0" stroke="#b07a20" stroke-width="1.7" filter="url(#sk)"/>
+  <text x="340" y="240" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a5c12" filter="url(#sk)">追加 'A'（仅 a = 0）</text>
+  <text x="340" y="259" text-anchor="middle" font-size="12" fill="#6b5220" filter="url(#sk)">ndp[1][0] += cur</text>
+  <text x="340" y="277" text-anchor="middle" font-size="11" fill="#8a7a5a" filter="url(#sk)">a 变 1，末尾 L 清零</text>
+
+  <rect x="465" y="218" width="160" height="66" rx="9" fill="#e8f0fa" stroke="#2b6e9e" stroke-width="1.7" filter="url(#sk)"/>
+  <text x="545" y="240" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b6e9e" filter="url(#sk)">追加 'L'（仅 l &lt; 2）</text>
+  <text x="545" y="259" text-anchor="middle" font-size="12" fill="#3a5f7a" filter="url(#sk)">ndp[a][l + 1] += cur</text>
+  <text x="545" y="277" text-anchor="middle" font-size="11" fill="#5f7a8a" filter="url(#sk)">a 不变，l 加 1</text>
+
+  <path d="M 135 284 L 135 302" stroke="#5a5a5a" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 545 284 L 545 302" stroke="#5a5a5a" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 340 284 L 340 302" stroke="#5a5a5a" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 135 302 L 545 302" stroke="#5a5a5a" stroke-width="1.6" fill="none" filter="url(#sk)"/>
+  <path d="M 340 302 L 340 316" stroke="#5a5a5a" stroke-width="1.8" fill="none" marker-end="url(#dark)" filter="url(#sk)"/>
+
+  <rect x="170" y="318" width="340" height="44" rx="9" fill="#f3f2ec" stroke="#b9b39f" stroke-width="1.5" filter="url(#sk)"/>
+  <text x="340" y="345" text-anchor="middle" font-size="13" fill="#3d3d3d" filter="url(#sk)">dp ← ndp，逐项对 1e9 + 7 取模</text>
+
+  <path d="M 340 362 L 340 380" stroke="#5a5a5a" stroke-width="1.8" fill="none" marker-end="url(#dark)" filter="url(#sk)"/>
+
+  <rect x="140" y="382" width="400" height="46" rx="10" fill="#eaf6ee" stroke="#4a8e4a" stroke-width="2.2" filter="url(#sk)"/>
+  <text x="340" y="411" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#sk)">答案 = 6 个状态计数之和（已取模）</text>
+
+  <text x="340" y="443" text-anchor="middle" font-size="11" fill="#8a8a8a" filter="url(#sk)">禁止转移：a = 1 时追加 'A'；l = 2 时追加 'L'（这两条分支直接不存在）</text>
+</svg>

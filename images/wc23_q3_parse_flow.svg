@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">扫描流程：栈顶就是待挂孩子的父节点</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888">读到整数就建节点 → 挂到栈顶（左空挂左，否则挂右）→ 入栈；读到 ')' 就弹栈</text>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="24" y="64" width="152" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="100" y="86" font-size="11" fill="#3a4a66" font-weight="bold">① 读整数</text>
+    <text x="100" y="106" font-size="9.5" fill="#555">可选 '-' + 若干数字</text>
+
+    <rect x="204" y="64" width="176" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" rx="8"/>
+    <text x="292" y="86" font-size="11" fill="#8a6a20" font-weight="bold">② 挂到栈顶节点</text>
+    <text x="292" y="106" font-size="9.5" fill="#555">left 空 → left，否则 right</text>
+
+    <rect x="408" y="64" width="128" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="472" y="86" font-size="11" fill="#3a5a30" font-weight="bold">③ 节点入栈</text>
+    <text x="472" y="106" font-size="9.5" fill="#555">成为新的栈顶</text>
+  </g>
+
+  <path d="M 178 91 L 200 91" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 382 91 L 404 91" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="24" y="150" width="200" height="48" fill="#f3f3f3" stroke="#999999" stroke-width="1.5" rx="8"/>
+    <text x="124" y="171" font-size="11" fill="#555" font-weight="bold">遇到 '('</text>
+    <text x="124" y="189" font-size="9.5" fill="#666">只是子树标记，指针后移</text>
+
+    <rect x="336" y="150" width="200" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+    <text x="436" y="171" font-size="11" fill="#8a3a36" font-weight="bold">遇到 ')'</text>
+    <text x="436" y="189" font-size="9.5" fill="#666">弹出栈顶，回到父节点</text>
+  </g>
+
+  <path d="M 100 118 L 100 146" stroke="#888" stroke-width="1.3" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 472 118 L 472 146" stroke="#888" stroke-width="1.3" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="286" y="140" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">分隔符分支</text>
+
+  <rect x="40" y="216" width="480" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10" fill="#555">
+    <text x="58" y="238" font-size="11" fill="#8a6a20" font-weight="bold">栈不变量（栈底 → 栈顶）</text>
+    <text x="58" y="258">栈内节点恰好是「根 → 当前未闭合子树的根」这条路径</text>
+    <text x="58" y="276">读到 ')' 即该子树闭合，弹出它，父节点重新暴露为栈顶</text>
+    <text x="58" y="294">于是每个新节点都能挂到正确的父亲上，且总是先占左位</text>
+  </g>
+
+  <rect x="40" y="316" width="480" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="58" y="336" font-size="10.5" fill="#3a5a30" font-weight="bold">递归版完全等价</text>
+  <text x="58" y="353" font-size="10" fill="#555">build(s, i) 用函数调用栈代替显式栈，遇到 ')' 直接 return，调用者跳过配对括号</text>
+
+  <text x="280" y="392" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">时间 O(n)：指针 i 单调递增，每个字符至多被看两次</text>
+  <text x="280" y="412" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">空间 O(h)：h 为树高，即栈（递归）深度</text>
+</svg>

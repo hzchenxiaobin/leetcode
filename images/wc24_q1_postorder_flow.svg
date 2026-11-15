@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 390" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="390" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">后序 DFS：一次遍历同时算高度与答案</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">向上只交「一条链」，答案在本地结算，全程 O(n)</text>
+
+  <!-- 步骤 1 -->
+  <rect x="80" y="62" width="400" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="89" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">dfs(u)：u 为空 → 返回 0（空树没有向下的边）</text>
+  <circle cx="58" cy="84" r="13" fill="#fafafa" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="58" y="89" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">1</text>
+
+  <path d="M 280 106 L 280 122" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="80" y="126" width="400" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="153" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">L = dfs(u.left)，R = dfs(u.right)　先拿到两棵子树的高度</text>
+  <circle cx="58" cy="148" r="13" fill="#fafafa" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="58" y="153" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">2</text>
+
+  <path d="M 280 170 L 280 186" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="80" y="190" width="400" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="217" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">ans = max(ans, L + R)　在 u 处结算穿过 u 的最长路径</text>
+  <circle cx="58" cy="212" r="13" fill="#fafafa" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="58" y="217" text-anchor="middle" font-size="11" fill="#a87a20" filter="url(#rough2)">3</text>
+
+  <path d="M 280 234 L 280 250" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4 -->
+  <rect x="80" y="254" width="400" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="281" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">return max(L, R) + 1　只把最长的一条链交给父节点</text>
+  <circle cx="58" cy="276" r="13" fill="#fafafa" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="58" y="281" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">4</text>
+
+  <!-- 警告框 -->
+  <rect x="80" y="316" width="400" height="54" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="96" y="336" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">易错：第 4 步不要返回 L + R</text>
+  <text x="96" y="356" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">父节点会把它当成一条链与兄弟链相加 → 路径在同一子树里来回折返，不是简单路径</text>
+
+  <text x="280" y="384" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">空节点 u 也走第 1 步直接回溯，因此每个真实节点恰好被访问一次</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="470" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：三步走完「下一个排列」</text>
+  <text x="280" y="50" text-anchor="middle" font-size="10.5" fill="#888">一次线性扫描 + 一次交换 + 一次反转，O(m) 时间、O(m) 空间</text>
+
+  <rect x="150" y="76" width="340" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="100" text-anchor="middle" font-size="10.5" fill="#3a4a66">① 把 n 拆成数位 d[0..m−1]（to_string 最省事）</text>
+
+  <rect x="150" y="132" width="340" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="156" text-anchor="middle" font-size="10.5" fill="#8a6a20">② i 从 m−2 左移，找第一个 d[i] &lt; d[i+1]</text>
+
+  <rect x="150" y="188" width="340" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="212" text-anchor="middle" font-size="10.5" fill="#3a5a30">③ j 从 m−1 左移，找第一个 d[j] &gt; d[i]</text>
+
+  <rect x="150" y="244" width="340" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="268" text-anchor="middle" font-size="10.5" fill="#3a5a30">④ swap(d[i], d[j])；reverse(d[i+1..m−1])</text>
+
+  <rect x="150" y="300" width="340" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="324" text-anchor="middle" font-size="10.5" fill="#3a4a66">⑤ 用 64 位拼回整数 v（stoll / int() 防溢出）</text>
+
+  <rect x="150" y="356" width="340" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="380" text-anchor="middle" font-size="10.5" fill="#8a3a36">⑥ v &gt; 2³¹−1 ? 返回 −1 : 返回 v</text>
+
+  <g filter="url(#rough2)" stroke="#666" stroke-width="1.5" fill="none">
+    <path d="M 320 114 L 320 130" marker-end="url(#arr)"/>
+    <path d="M 320 170 L 320 186" marker-end="url(#arr)"/>
+    <path d="M 320 226 L 320 242" marker-end="url(#arr)"/>
+    <path d="M 320 282 L 320 298" marker-end="url(#arr)"/>
+    <path d="M 320 338 L 320 354" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- 失败分支 -->
+  <rect x="18" y="136" width="112" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="74" y="149" text-anchor="middle" font-size="9" fill="#8a3a36">②找不到升序对</text>
+  <text x="74" y="161" text-anchor="middle" font-size="9" fill="#8a3a36">⇒ 已是最大排列 −1</text>
+  <path d="M 132 151 L 148 151" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+
+  <rect x="18" y="360" width="112" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="74" y="373" text-anchor="middle" font-size="9" fill="#8a3a36">⑥超出 32 位</text>
+  <text x="74" y="385" text-anchor="middle" font-size="9" fill="#8a3a36">⇒ 同样返回 −1</text>
+  <path d="M 132 375 L 148 375" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+
+  <text x="280" y="420" text-anchor="middle" font-size="10" fill="#555">两处失败分支都落到 −1；③的 j 一定存在：既然 d[i] &lt; d[i+1]，最右端至少有一个元素大于 d[i]</text>
+  <text x="280" y="440" text-anchor="middle" font-size="10" fill="#999">m ≤ 10（因为 n ≤ 2³¹−1），所以①②③④各只需一次 O(m) 扫描</text>
+  <text x="280" y="458" text-anchor="middle" font-size="10" fill="#b85450">易错：v 必须用 long long / 大整数承接，int 会先溢出再判范围</text>
+</svg>

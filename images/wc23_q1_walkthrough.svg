@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="680" height="470" fill="#fafafa"/>
+
+  <g filter="url(#rough2)">
+    <text x="340" y="26" text-anchor="middle" font-size="14" fill="#444" font-weight="bold">示例演算：每轮只动前 k 个，第三轮直接退出</text>
+    <text x="340" y="46" text-anchor="middle" font-size="10" fill="#888">k = 2 ⇒ 2k = 4；块起点 i = 0, 4, 8 …，i 越过 n 即停止</text>
+
+    <!-- 示例 1 -->
+    <text x="34" y="76" font-size="11" fill="#446688" font-weight="bold">示例 1　s = abcdefg，k = 2</text>
+    <g font-size="9" fill="#aaa">
+      <text x="44" y="98">轮次 i</text>
+      <text x="150" y="98">反转区间</text>
+      <text x="270" y="98">块内容</text>
+      <text x="500" y="98">当前字符串</text>
+    </g>
+
+    <rect x="30" y="104" width="620" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <g font-size="10" fill="#333">
+      <text x="44" y="126">i = 0</text>
+      <text x="150" y="126">[0, 1]</text>
+      <text x="270" y="126">ab → ba，cd 不动</text>
+      <text x="500" y="126" font-weight="bold">bacdefg</text>
+    </g>
+
+    <rect x="30" y="142" width="620" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <g font-size="10" fill="#333">
+      <text x="44" y="164">i = 4</text>
+      <text x="150" y="164">[4, 5]</text>
+      <text x="270" y="164">ef → fe，g 不动</text>
+      <text x="500" y="164" font-weight="bold">bacdfeg</text>
+    </g>
+
+    <rect x="30" y="180" width="620" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <g font-size="10" fill="#8a6a20">
+      <text x="44" y="202">i = 8</text>
+      <text x="150" y="202">8 ≥ 7，退出</text>
+      <text x="270" y="202">循环条件 i &lt; n 失败，结束</text>
+      <text x="500" y="202" font-weight="bold">bacdfeg ✓</text>
+    </g>
+
+    <!-- 示例 2 -->
+    <text x="34" y="244" font-size="11" fill="#446688" font-weight="bold">示例 2　s = abcd，k = 2（恰好一个整块）</text>
+    <g font-size="9" fill="#aaa">
+      <text x="44" y="266">轮次 i</text>
+      <text x="150" y="266">反转区间</text>
+      <text x="270" y="266">块内容</text>
+      <text x="500" y="266">当前字符串</text>
+    </g>
+
+    <rect x="30" y="272" width="620" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <g font-size="10" fill="#333">
+      <text x="44" y="294">i = 0</text>
+      <text x="150" y="294">[0, 1]</text>
+      <text x="270" y="294">ab → ba，cd 不动</text>
+      <text x="500" y="294" font-weight="bold">bacd</text>
+    </g>
+
+    <rect x="30" y="310" width="620" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <g font-size="10" fill="#8a6a20">
+      <text x="44" y="332">i = 4</text>
+      <text x="150" y="332">4 ≥ 4，退出</text>
+      <text x="270" y="332">没有下一个 2k 块</text>
+      <text x="500" y="332" font-weight="bold">bacd ✓</text>
+    </g>
+
+    <!-- 边界 -->
+    <text x="34" y="374" font-size="11" fill="#b85450" font-weight="bold">边界：剩余不足 k 个 ⇒ 全部反转；k ≤ 剩余 &lt; 2k ⇒ 只反前 k 个</text>
+    <rect x="30" y="384" width="620" height="32" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <g font-size="10" fill="#5a2a27">
+      <text x="44" y="405">abcdefg, k = 5</text>
+      <text x="196" y="405">剩余 7 &lt; 2k = 10：反转前 5 个，后 2 个保持</text>
+      <text x="596" y="405" font-weight="bold">edcbafg</text>
+    </g>
+    <rect x="30" y="422" width="620" height="32" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <g font-size="10" fill="#5a2a27">
+      <text x="44" y="443">abc, k = 5</text>
+      <text x="196" y="443">剩余 3 &lt; k = 5：整个剩余段反转</text>
+      <text x="596" y="443" font-weight="bold">cba</text>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 496" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#777"/>
+    </marker>
+  </defs>
+  <rect width="640" height="496" fill="#fafafa"/>
+  <text x="320" y="26" font-size="15" fill="#444" text-anchor="middle" font-weight="bold" filter="url(#rough2)">多源 BFS 流程：一次入队，按层扩散</text>
+
+  <rect x="120" y="52" width="400" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="79" font-size="10.5" fill="#2f3f55" text-anchor="middle" filter="url(#rough2)">① 扫描矩阵，所有 mat[i][j] == 0 的格子入队，dist = 0</text>
+
+  <path d="M 320 96 L 320 124" stroke="#777" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="124" width="400" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="151" font-size="10.5" fill="#2f3f55" text-anchor="middle" filter="url(#rough2)">② 队首出队 (x, y)，此时 dist[x][y] 已是最短距离</text>
+
+  <path d="M 320 168 L 320 196" stroke="#777" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="196" width="400" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="223" font-size="10.5" fill="#3d5c33" text-anchor="middle" filter="url(#rough2)">③ 枚举四个方向的邻居 (nx, ny)</text>
+
+  <path d="M 320 240 L 320 268" stroke="#777" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="110" y="268" width="420" height="74" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="292" font-size="10" fill="#8a6a20" text-anchor="middle" filter="url(#rough2)">④ 若 (nx, ny) 在界内且 dist[nx][ny] == -1：</text>
+  <text x="320" y="312" font-size="10" fill="#8a6a20" text-anchor="middle" filter="url(#rough2)">dist[nx][ny] = dist[x][y] + 1，并把 (nx, ny) 入队</text>
+  <text x="320" y="332" font-size="10" fill="#8a6a20" text-anchor="middle" filter="url(#rough2)">否则（越界 / 已访问）直接跳过，不改 dist</text>
+
+  <path d="M 320 342 L 320 372" stroke="#777" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="372" width="400" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="399" font-size="10.5" fill="#8a3a36" text-anchor="middle" filter="url(#rough2)">⑤ 队列为空？空则返回 dist，否则回到 ②</text>
+
+  <path d="M 120 394 L 74 394 L 74 146 L 118 146" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="60" y="270" font-size="10" fill="#b85450" text-anchor="middle" transform="rotate(-90 60 270)" filter="url(#rough2)">队列非空 → 继续扩散</text>
+
+  <rect x="90" y="428" width="460" height="52" fill="#ffffff" stroke="#9aa5b5" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="448" font-size="10.5" fill="#446688" text-anchor="middle" font-weight="bold" filter="url(#rough2)">为什么出队顺序天然按距离递增？</text>
+  <text x="320" y="468" font-size="10" fill="#666" text-anchor="middle" filter="url(#rough2)">入队时 dist 单调不减，BFS 又先入先出，故先出队的距离不会更大</text>
+</svg>

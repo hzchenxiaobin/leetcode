@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 540" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="540" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">固定中切点 j：左边建集合，右边扫一遍</text>
+  <text x="320" y="50" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">三层枚举 O(n³) → 固定 j 后左右解耦，降到 O(n²)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="180" y="64" width="280" height="40" rx="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="320" y="82" text-anchor="middle" font-size="11" fill="#3a4a66">前缀和 pre[m] = nums[0..m−1]</text>
+    <text x="320" y="97" text-anchor="middle" font-size="10" fill="#3a4a66">任意段 (l,r) 求和 O(1)</text>
+  </g>
+
+  <path d="M 320 104 L 320 122" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="124" width="560" height="306" rx="10" fill="#fbfcff" stroke="#888" stroke-width="1.3" stroke-dasharray="6 4"/>
+    <text x="60" y="146" font-size="11" fill="#555">for j = 3 … n − 4（n &lt; 7 时直接 return false）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="64" y="156" width="512" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="320" y="177" text-anchor="middle" font-size="11" fill="#3a5a30">① 建集合 C(j)：枚举 i ∈ [1, j−2]</text>
+    <text x="320" y="195" text-anchor="middle" font-size="10.5" fill="#3a5a30">若 pre[i] = pre[j] − pre[i+1]，把 pre[i] 放进 C(j)</text>
+  </g>
+
+  <path d="M 320 204 L 320 224" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="64" y="226" width="512" height="32" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="320" y="247" text-anchor="middle" font-size="10.5" fill="#8a6a20">C(j) 为空 ⇒ 跳过该 j（左侧拼不出相等的两段）</text>
+  </g>
+
+  <path d="M 320 258 L 320 280" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="64" y="282" width="512" height="92" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="320" y="303" text-anchor="middle" font-size="11" fill="#3a4a66">② 枚举 k ∈ [j+2, n−2]，令 v = pre[k] − pre[j+1]</text>
+    <text x="320" y="322" text-anchor="middle" font-size="10.5" fill="#3a4a66">v = pre[n] − pre[k+1] 且 v ∈ C(j)</text>
+    <rect x="140" y="336" width="360" height="30" rx="15" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="320" y="356" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold">命中 ⇒ 立即 return true</text>
+  </g>
+
+  <path d="M 320 430 L 320 452" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="160" y="454" width="320" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="320" y="479" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold">循环结束 ⇒ return false</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="502" width="560" height="30" rx="8" fill="#f0f4ff" stroke="#446688" stroke-width="1.3"/>
+    <text x="56" y="521" font-size="10.5" fill="#3a4a66">O(n²) 时间（每个 j：建集合 O(j) + 扫 k O(n−j)） · O(n) 空间（前缀和 + 集合）</text>
+  </g>
+</svg>
