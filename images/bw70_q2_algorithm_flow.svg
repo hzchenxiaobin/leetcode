@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">一遍扫描：维护前缀和的极小 / 极大</text>
+
+  <!-- 输入条 -->
+  <text x="110" y="64" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">differences = [1, −3, 4]</text>
+  <g filter="url(#rough2)">
+    <rect x="55" y="78" width="60" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="125" y="78" width="60" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="195" y="78" width="60" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="85" y="101">+1</text>
+    <text x="155" y="101">−3</text>
+    <text x="225" y="101">+4</text>
+  </g>
+
+  <!-- 前缀和逐步计算 -->
+  <text x="400" y="64" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">cur（hidden[0] = 0 时）</text>
+  <g filter="url(#rough2)">
+    <rect x="300" y="78" width="56" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="366" y="78" width="56" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="432" y="78" width="56" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="498" y="78" width="56" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="328" y="101">0</text>
+    <text x="394" y="101">1</text>
+    <text x="460" y="101">−2</text>
+    <text x="526" y="101">2</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10.5" fill="#666" text-anchor="middle">
+    <text x="328" y="126">S₀=0</text>
+    <text x="394" y="126">S₁</text>
+    <text x="460" y="126">S₂</text>
+    <text x="526" y="126">S₃</text>
+  </g>
+  <!-- 极值标注 -->
+  <g filter="url(#rough2)">
+    <path d="M 460 118 C 460 140, 440 142, 432 122" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 526 118 C 526 144, 548 142, 552 122" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5">
+    <text x="418" y="152" fill="#b85450">mn = −2</text>
+    <text x="500" y="152" fill="#4a7a3a">mx = 2</text>
+  </g>
+
+  <!-- 结论条 -->
+  <g filter="url(#rough2)">
+    <rect x="55" y="176" width="230" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="170" y="200">lower = 1，upper = 6</text>
+    <text x="170" y="222">窗口宽 = 6 − 1 + 1 = 6</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="305" y="176" width="230" height="64" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="420" y="200">ans = 6 − (2 − (−2))</text>
+    <text x="420" y="224">= 6 − 4 = 2 ✓</text>
+  </g>
+  <path d="M 285 208 L 300 208" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 两条隐藏数组 -->
+  <g filter="url(#rough2)" font-size="12" fill="#666" text-anchor="middle">
+    <text x="280" y="272">对应的隐藏数组（x = 3 与 x = 4）：[3,4,1,5] 与 [4,5,2,6]</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#666" text-anchor="middle">
+    <text x="280" y="296">x = 2 → [2,3,0,4] 中 0 &lt; lower ✗；x = 5 → [5,6,3,7] 中 7 &gt; upper ✗</text>
+    <text x="280" y="318">恰好 2 个合法起点，与公式一致</text>
+  </g>
+</svg>

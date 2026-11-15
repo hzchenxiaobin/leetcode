@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="59"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">三个官方示例的计数与贪心过程</text>
+
+  <!-- 示例 1 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="48" width="500" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="60" y="72" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">示例 1：["lc", "cl", "gg"]</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="60" y="96">互异对：min(cnt lc=1, cnt cl=1) × 4 = 4</text>
+    <text x="60" y="116">自配对：cnt gg=1 → 0 对 × 4 = 0；奇数余量 → center = true</text>
+    <text x="330" y="96">ans = 4 + 0 + 2 = 6</text>
+    <text x="330" y="116">构造：lc + gg + cl = "lcggcl" ✓</text>
+  </g>
+
+  <!-- 示例 2 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="150" width="500" height="88" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="60" y="174" font-size="13" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">示例 2：["ab", "ty", "yt", "lc", "cl", "ab"]</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="60" y="198">互异对：ab/ba 0 对；ty/yt 1 对 × 4；lc/cl 1 对 × 4 = 8</text>
+    <text x="60" y="218">自配对：无 aa 类；center = false（多出的 1 个 ab 无法利用）</text>
+    <text x="330" y="198">ans = 8 + 0 + 0 = 8</text>
+    <text x="330" y="218">构造：ty + lc + cl + yt = "tylcclyt" ✓</text>
+  </g>
+
+  <!-- 示例 3 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="252" width="500" height="88" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="60" y="276" font-size="13" fill="#d6a040" font-weight="bold" filter="url(#rough2)">示例 3：["cc", "ll", "xx"]（三种 aa 类各 1 个）</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="60" y="300">互异对：0；自配对：cc 0 对、ll 0 对、xx 0 对</text>
+    <text x="60" y="320">三个都余 1 个 → center = true（只需一个！其余作废）</text>
+    <text x="330" y="300">ans = 0 + 0 + 2 = 2</text>
+    <text x="330" y="320">构造：只取 "cc" 放中间，ll、xx 弃用 ✓</text>
+  </g>
+
+  <text x="280" y="366" font-size="12.5" fill="#666" text-anchor="middle" filter="url(#rough2)">关键：答案只依赖每个单词的计数，与输入顺序无关</text>
+</svg>

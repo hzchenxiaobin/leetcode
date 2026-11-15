@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="53"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">中心贪心：奇数个 "aa" 类单词，恰留一个在正中</text>
+
+  <!-- 场景一：无中心 -->
+  <text x="150" y="64" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">cnt("aa") = 2（偶数）：全配对，无中心</text>
+  <g filter="url(#rough2)">
+    <rect x="40" y="80" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="86" y="80" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="176" y="80" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="222" y="80" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="62" y="101">a</text>
+    <text x="108" y="101">a</text>
+    <text x="198" y="101">a</text>
+    <text x="244" y="101">a</text>
+  </g>
+  <text x="153" y="72" font-size="11" fill="#d6a040" filter="url(#rough2)" text-anchor="middle"></text>
+  <text x="153" y="136" font-size="12" fill="#333" text-anchor="middle" filter="url(#rough2)">"aa" + "aa" = aaaa，长度 4 = 2 对 × 4</text>
+  <g filter="url(#rough2)">
+    <rect x="70" y="158" width="166" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="153" y="180" font-size="12" fill="#333" text-anchor="middle" filter="url(#rough2)">中心位置空着，没有单词可用</text>
+
+  <!-- 场景二：有中心 -->
+  <text x="430" y="64" font-size="13.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)" text-anchor="middle">cnt("bb") = 3（奇数）：2 对 + 1 个中心</text>
+  <g filter="url(#rough2)">
+    <rect x="320" y="80" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="366" y="80" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="416" y="80" width="44" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="4"/>
+    <rect x="462" y="80" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="508" y="80" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="342" y="101">b</text>
+    <text x="388" y="101">b</text>
+    <text x="438" y="101">b</text>
+    <text x="484" y="101">b</text>
+    <text x="530" y="101">b</text>
+  </g>
+  <g filter="url(#rough2)" fill="none" stroke="#b85450" stroke-width="1.8">
+    <path d="M 438 74 C 438 58, 438 58, 438 70"/>
+  </g>
+  <text x="433" y="136" font-size="12" fill="#b85450" text-anchor="middle" filter="url(#rough2)">bb + bb + b(中心) + bb？→ bbbb | bb | bbbb</text>
+  <text x="433" y="156" font-size="12" fill="#333" text-anchor="middle" filter="url(#rough2)">长度 10 = 2 对 × 4 + 中心 2</text>
+
+  <!-- 为什么中心至多一个 -->
+  <g filter="url(#rough2)">
+    <rect x="48" y="200" width="470" height="140" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="283" y="226" font-size="13" fill="#d6a040" font-weight="bold" filter="url(#rough2)" text-anchor="middle">为什么中心至多放 1 个、且只能是 aa 类？</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="283" y="252">两个 "aa" 都放中间 ⇒ …… aa | aa …… 中心两词相邻</text>
+    <text x="283" y="274">拼接处 aa|aa 左右不对称（除非它们本来就配成一对，那样已计入 ②）</text>
+    <text x="283" y="296">"ab" 类单词自身翻转后是 "ba"，单放中间必破坏镜像</text>
+    <text x="283" y="318">⇒ 中心标志 center 只需一个布尔值，任何 cnt[i][i] 为奇即置 true</text>
+  </g>
+</svg>

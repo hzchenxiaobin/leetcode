@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：BFS → 收集候选 → 元组排序 → 截取前 k</text>
+
+  <!-- 步骤 1 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="56" width="240" height="70" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="150" y="80" font-size="13" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">① 从 start 出发 BFS</text>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="150" y="100">dist[start] = 0 入队；每步向上下左右</text>
+    <text x="150" y="117">扩一格，墙（= 0）与已访问格跳过</text>
+  </g>
+
+  <path d="M 150 126 L 150 146" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="150" width="240" height="70" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <text x="150" y="174" font-size="13" fill="#4a7a3a" font-weight="bold" text-anchor="middle" filter="url(#rough2)">② 途经格价格 ∈ [low, high] → 登记</text>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="150" y="194">候选四元组 (dist, price, row, col)</text>
+    <text x="150" y="211">起点自己是物品时也要登记（dist=0）</text>
+  </g>
+
+  <path d="M 150 220 L 150 240" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="244" width="240" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8"/>
+  </g>
+  <text x="150" y="266" font-size="13" fill="#d6a040" font-weight="bold" text-anchor="middle" filter="url(#rough2)">③ 按四元组字典序排序</text>
+  <text x="150" y="288" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">C++ array&amp;lt;int,4&amp;gt; / Python tuple 天然支持</text>
+
+  <path d="M 150 300 L 150 320" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="324" width="240" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <text x="150" y="345" font-size="13" fill="#b85450" font-weight="bold" text-anchor="middle" filter="url(#rough2)">④ 取前 min(k, 候选数) 个坐标输出</text>
+  <text x="150" y="363" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">候选不足 k 个时全部返回</text>
+
+  <!-- 右侧：堆 vs 排序 -->
+  <g filter="url(#rough2)">
+    <rect x="300" y="56" width="232" height="180" fill="#fafafa" stroke="#446688" stroke-width="1.5" stroke-dasharray="6 4" rx="10"/>
+  </g>
+  <text x="416" y="84" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">排序 or 堆？</text>
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="318" y="110">候选至多 m×n 个，全排序 O(mn log(mn))</text>
+    <text x="318" y="132">k ≤ m×n 但通常不大</text>
+    <text x="318" y="158">· 全排序 + 切片：代码最短（本文写法）</text>
+    <text x="318" y="180">· 大根堆容量 k：O(mn log k)，k 小更快</text>
+    <text x="318" y="206">两者在本题 2×10⁵ 规模下都轻松通过</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="300" y="252" width="232" height="118" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="416" y="278" font-size="13" fill="#d6a040" font-weight="bold" filter="url(#rough2)" text-anchor="middle">两个易忘点</text>
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="318" y="302">① 价格范围含端点：闭区间 [low, high]</text>
+    <text x="318" y="324">② 排名比的是"格内价格"，空格 1 也可能</text>
+    <text x="318" y="344">   落进范围（low ≥ 2 时不会，但仍按同一</text>
+    <text x="318" y="362">   判定式统一处理）</text>
+  </g>
+</svg>

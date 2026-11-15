@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="67"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">四步流水线：判可行 → 打差分 → 还原 → 验覆盖</text>
+
+  <!-- 步骤 1 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="56" width="230" height="74" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="145" y="78" font-size="13" fill="#446688" font-weight="bold" text-anchor="middle" filter="url(#rough2)">① 占据格二维前缀和 pre</text>
+  <text x="145" y="98" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">pre[i+1][j+1] = pre[i][j+1] + pre[i+1][j]</text>
+  <text x="145" y="116" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">− pre[i][j] + grid[i][j]</text>
+
+  <path d="M 145 130 L 145 150" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="154" width="230" height="74" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <text x="145" y="176" font-size="13" fill="#4a7a3a" font-weight="bold" text-anchor="middle" filter="url(#rough2)">② 枚举邮票左上角 (r, c)</text>
+  <text x="145" y="196" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">r+h ≤ m 且 c+w ≤ n 时，用 pre 查矩形和</text>
+  <text x="145" y="214" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">全零 → 在 diff 四角 ±1（上图四个操作）</text>
+
+  <path d="M 145 228 L 145 248" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="252" width="230" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8"/>
+  </g>
+  <text x="145" y="274" font-size="13" fill="#d6a040" font-weight="bold" text-anchor="middle" filter="url(#rough2)">③ diff 二维前缀和 → cover</text>
+  <text x="145" y="296" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">cover[i][j] = 覆盖 (i,j) 的可行邮票数</text>
+
+  <path d="M 145 312 L 145 332" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="336" width="230" height="54" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <text x="145" y="358" font-size="13" fill="#b85450" font-weight="bold" text-anchor="middle" filter="url(#rough2)">④ 逐格验证：空格 cover &gt; 0 ?</text>
+  <text x="145" y="378" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">有任一空格 cover = 0 → false</text>
+
+  <!-- 右侧要点框 -->
+  <g filter="url(#rough2)">
+    <rect x="300" y="56" width="232" height="334" fill="#fafafa" stroke="#446688" stroke-width="1.5" stroke-dasharray="6 4" rx="10"/>
+  </g>
+  <text x="416" y="84" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">为什么可行邮票就够？</text>
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="318" y="112">合法方案里每张邮票都是某个</text>
+    <text x="318" y="131">「可行邮票」：矩形全空且在界内</text>
+    <text x="318" y="158">于是"存在贴法覆盖所有空格"</text>
+    <text x="318" y="177">⇔ "每个空格被至少一个可行</text>
+    <text x="318" y="196">邮票覆盖"（必要性显然；充分性</text>
+    <text x="318" y="215">把覆盖它的邮票全贴上即可）</text>
+    <text x="318" y="242">覆盖允许重叠、数量不限 ⇒</text>
+    <text x="318" y="261">"全部贴上"不会冲突，占据格</text>
+    <text x="318" y="280">永远不会被可行邮票盖住</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#b85450">
+    <text x="318" y="316">⚠ h &gt; m 或 w &gt; n：无任何可行</text>
+    <text x="318" y="335">邮票位置，只要有一个空格</text>
+    <text x="318" y="354">即返回 false；全占据则 true</text>
+  </g>
+  <text x="416" y="382" font-size="11.5" fill="#666" filter="url(#rough2)" text-anchor="middle">两遍 O(mn)，与枚举每格无关</text>
+</svg>

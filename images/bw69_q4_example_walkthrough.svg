@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="71"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">示例 1：grid 5×4（第 0 列占据），邮票 4×3</text>
+
+  <!-- 网格：cell 36px，起点 (110, 46) -->
+  <g filter="url(#rough2)">
+    <!-- 行列标 -->
+  </g>
+  <g filter="url(#rough2)" font-size="10.5" fill="#999" text-anchor="middle">
+    <text x="128" y="42">0</text><text x="164" y="42">1</text><text x="200" y="42">2</text><text x="236" y="42">3</text>
+    <text x="102" y="62">0</text><text x="102" y="98">1</text><text x="102" y="134">2</text><text x="102" y="170">3</text><text x="102" y="206">4</text>
+  </g>
+  <!-- 占据格 -->
+  <g filter="url(#rough2)">
+    <rect x="110" y="46" width="36" height="36" fill="#b85450" stroke="#8a3a36" stroke-width="1.5" rx="3"/>
+    <rect x="110" y="82" width="36" height="36" fill="#b85450" stroke="#8a3a36" stroke-width="1.5" rx="3"/>
+    <rect x="110" y="118" width="36" height="36" fill="#b85450" stroke="#8a3a36" stroke-width="1.5" rx="3"/>
+    <rect x="110" y="154" width="36" height="36" fill="#b85450" stroke="#8a3a36" stroke-width="1.5" rx="3"/>
+    <rect x="110" y="190" width="36" height="36" fill="#b85450" stroke="#8a3a36" stroke-width="1.5" rx="3"/>
+  </g>
+  <!-- 空格 -->
+  <g filter="url(#rough2)">
+    <rect x="146" y="46" width="108" height="36" fill="#fafafa" stroke="#999" stroke-width="1" rx="3"/>
+    <rect x="146" y="82" width="108" height="36" fill="#fafafa" stroke="#999" stroke-width="1" rx="3"/>
+    <rect x="146" y="118" width="108" height="36" fill="#fafafa" stroke="#999" stroke-width="1" rx="3"/>
+    <rect x="146" y="154" width="108" height="36" fill="#fafafa" stroke="#999" stroke-width="1" rx="3"/>
+    <rect x="146" y="190" width="108" height="36" fill="#fafafa" stroke="#999" stroke-width="1" rx="3"/>
+  </g>
+  <!-- 邮票1: rows0-3 cols1-3 -->
+  <g filter="url(#rough2)">
+    <rect x="146" y="46" width="108" height="144" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" rx="4"/>
+  </g>
+  <!-- 邮票2: rows1-4 cols1-3 -->
+  <g filter="url(#rough2)">
+    <rect x="146" y="82" width="108" height="144" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4" fill-opacity="0.55"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="158" y="70">1</text>
+    <text x="158" y="106">1+2</text>
+    <text x="158" y="142">1+2</text>
+    <text x="158" y="178">1+2</text>
+    <text x="158" y="214">2</text>
+  </g>
+  <text x="200" y="248" font-size="12" fill="#666" filter="url(#rough2)" text-anchor="middle">格子内数字 = 覆盖它的可行邮票数</text>
+
+  <!-- 右侧解释 -->
+  <text x="420" y="60" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">可行左上角只有 (0,1) 与 (1,1)</text>
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="310" y="86">r ∈ {0, 1}（r+4 ≤ 5），c ∈ {0, 1}（c+3 ≤ 4）</text>
+    <text x="310" y="108">(0,0)、(1,0)：矩形含第 0 列的 1 → 不可行</text>
+    <text x="310" y="130">蓝框邮票：行 0–3，列 1–3，全零 ✓</text>
+    <text x="310" y="152">绿框邮票：行 1–4，列 1–3，全零 ✓</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="310" y="170" width="222" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="421" y="194">两张邮票叠加后：列 1–3 的五行空格</text>
+    <text x="421" y="214">覆盖数分别为 1,2,2,2,1，全部 &gt; 0</text>
+    <text x="421" y="236">⇒ 返回 true（两张都贴上即可）</text>
+  </g>
+
+  <!-- 示例 2 -->
+  <text x="420" y="280" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)" text-anchor="middle">示例 2：对角线占据，邮票 2×2 → false</text>
+  <g filter="url(#rough2)">
+    <rect x="316" y="294" width="210" height="96" fill="#fafafa" stroke="#999" stroke-width="1" rx="3"/>
+  </g>
+  <!-- 4x4 小网格 cell 22 -->
+  <g filter="url(#rough2)">
+    <rect x="336" y="304" width="88" height="88" fill="#fafafa" stroke="#bbb" stroke-width="1"/>
+    <rect x="336" y="304" width="22" height="22" fill="#b85450" stroke="#8a3a36" stroke-width="1"/>
+    <rect x="358" y="326" width="22" height="22" fill="#b85450" stroke="#8a3a36" stroke-width="1"/>
+    <rect x="380" y="348" width="22" height="22" fill="#b85450" stroke="#8a3a36" stroke-width="1"/>
+    <rect x="402" y="370" width="22" height="22" fill="#b85450" stroke="#8a3a36" stroke-width="1"/>
+    <rect x="358" y="348" width="44" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3" fill-opacity="0.6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333">
+    <text x="438" y="322">空格 (3,2)：</text>
+    <text x="438" y="340">包含它的 2×2 窗口</text>
+    <text x="438" y="358">只有行 2–3 × 列 1–2 与</text>
+    <text x="438" y="376">行 2–3 × 列 2–3，均含 1</text>
+  </g>
+  <text x="280" y="412" font-size="12" fill="#666" filter="url(#rough2)" text-anchor="middle">对角线上相邻两个 1 卡死了右下角空格 —— cover[3][2] = 0 ⇒ false</text>
+</svg>

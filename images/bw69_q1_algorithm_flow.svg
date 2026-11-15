@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="17"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">一次遍历：原地找单词边界并规范化</text>
+
+  <!-- 起点框 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="60" width="110" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="85" y="86" font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">i = 0</text>
+
+  <path d="M 140 81 L 175 81" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 找右边界 -->
+  <g filter="url(#rough2)">
+    <rect x="180" y="60" width="150" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <text x="255" y="78" font-size="12.5" fill="#333" text-anchor="middle" filter="url(#rough2)">j 从 i 向右扫到空格</text>
+  <text x="255" y="94" font-size="12.5" fill="#666" text-anchor="middle" filter="url(#rough2)">单词 = title[i..j−1]</text>
+
+  <path d="M 330 81 L 365 81" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断菱形 -->
+  <g filter="url(#rough2)">
+    <polygon points="455,50 545,81 455,112 365,81" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="455" y="86" font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">j − i ≤ 2 ?</text>
+
+  <!-- 分支：是 -->
+  <path d="M 455 112 C 455 145, 380 150, 340 165" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="470" y="140" font-size="12" fill="#b85450" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="180" y="170" width="160" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <text x="260" y="190" font-size="12.5" fill="#333" text-anchor="middle" filter="url(#rough2)">[i, j) 全部转小写</text>
+  <text x="260" y="207" font-size="11.5" fill="#666" text-anchor="middle" filter="url(#rough2)">tolower 逐字符</text>
+
+  <!-- 分支：否 -->
+  <path d="M 505 112 C 520 150, 520 160, 505 168" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <text x="530" y="140" font-size="12" fill="#4a7a3a" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="370" y="170" width="170" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <text x="455" y="190" font-size="12.5" fill="#333" text-anchor="middle" filter="url(#rough2)">title[i] 大写，其余小写</text>
+  <text x="455" y="207" font-size="11.5" fill="#666" text-anchor="middle" filter="url(#rough2)">toupper 1 次 + tolower</text>
+
+  <!-- 汇合：跳到下一单词 -->
+  <path d="M 260 216 C 260 245, 200 250, 165 262" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 455 216 C 455 248, 380 252, 340 262" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="60" y="265" width="130" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="125" y="285" font-size="12.5" fill="#333" text-anchor="middle" filter="url(#rough2)">i = j + 1</text>
+  <text x="125" y="300" font-size="11.5" fill="#666" text-anchor="middle" filter="url(#rough2)">跳过单个空格</text>
+
+  <path d="M 190 286 L 235 286" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断 i < n -->
+  <g filter="url(#rough2)">
+    <polygon points="320,258 395,286 320,314 245,286" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="320" y="291" font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">i &lt; n ?</text>
+
+  <!-- 回环 -->
+  <path d="M 320 258 C 320 220, 90 210, 85 110" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="185" y="240" font-size="12" fill="#446688" filter="url(#rough2)">是，处理下一单词</text>
+
+  <!-- 返回 -->
+  <path d="M 395 286 L 460 286" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="465" y="265" width="85" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <text x="507" y="285" font-size="12.5" fill="#333" text-anchor="middle" filter="url(#rough2)">返回 title</text>
+  <text x="507" y="300" font-size="11.5" fill="#666" text-anchor="middle" filter="url(#rough2)">（原地修改）</text>
+
+  <text x="280" y="355" font-size="12.5" fill="#666" text-anchor="middle" filter="url(#rough2)">空格原封不动，单词逐个就地规范化 ⇒ O(n) 时间、O(1) 额外空间</text>
+</svg>
