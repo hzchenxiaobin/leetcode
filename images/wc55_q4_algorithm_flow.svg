@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 460" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="460" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="16" fill="#444" font-weight="bold" filter="url(#rough2)">三个操作的算法流程：一次二分 + 线性扫描</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">有序表按下标（左端点）二分定位，被影响的区间个数 k 决定扫描代价</text>
+
+  <!-- 表头 -->
+  <rect x="29" y="66" width="178" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="118" y="86" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">addRange(l, r)</text>
+
+  <rect x="231" y="66" width="178" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="86" text-anchor="middle" font-size="12" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">queryRange(l, r)</text>
+
+  <rect x="433" y="66" width="178" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="522" y="86" text-anchor="middle" font-size="12" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">removeRange(l, r)</text>
+
+  <!-- 第 1 行步骤 -->
+  <rect x="29" y="112" width="178" height="52" fill="#ffffff" stroke="#446688" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="40" y="132" font-size="9.5" fill="#444" filter="url(#rough2)">① 二分：第一个 start ≥ l</text>
+  <text x="40" y="146" font-size="9.5" fill="#444" filter="url(#rough2)">   的区间位置 p</text>
+
+  <rect x="231" y="112" width="178" height="52" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="242" y="132" font-size="9.5" fill="#444" filter="url(#rough2)">① 二分：最后一个</text>
+  <text x="242" y="146" font-size="9.5" fill="#444" filter="url(#rough2)">   start ≤ l 的区间 p</text>
+
+  <rect x="433" y="112" width="178" height="52" fill="#ffffff" stroke="#b85450" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="444" y="132" font-size="9.5" fill="#444" filter="url(#rough2)">① 前驱 end &gt; l 时</text>
+  <text x="444" y="146" font-size="9.5" fill="#444" filter="url(#rough2)">   从前驱开始处理</text>
+
+  <!-- 第 2 行步骤 -->
+  <rect x="29" y="180" width="178" height="52" fill="#ffffff" stroke="#446688" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="40" y="200" font-size="9.5" fill="#444" filter="url(#rough2)">② 前驱 end ≥ l 时</text>
+  <text x="40" y="214" font-size="9.5" fill="#444" filter="url(#rough2)">   把起点挪到前驱</text>
+
+  <rect x="231" y="180" width="178" height="52" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="242" y="200" font-size="9.5" fill="#444" filter="url(#rough2)">② 若 p 不存在</text>
+  <text x="242" y="214" font-size="9.5" fill="#444" filter="url(#rough2)">   直接返回 false</text>
+
+  <rect x="433" y="180" width="178" height="52" fill="#ffffff" stroke="#b85450" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="444" y="200" font-size="9.5" fill="#444" filter="url(#rough2)">② 删除所有 start &lt; r</text>
+  <text x="444" y="214" font-size="9.5" fill="#444" filter="url(#rough2)">   的区间（含跨界的）</text>
+
+  <!-- 第 3 行步骤 -->
+  <rect x="29" y="248" width="178" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="40" y="268" font-size="9.5" fill="#6a5220" filter="url(#rough2)">③ 吞并 start ≤ r 的区间</text>
+  <text x="40" y="282" font-size="9.5" fill="#6a5220" filter="url(#rough2)">   边吞边扩展 [l, r)</text>
+
+  <rect x="231" y="248" width="178" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="242" y="268" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">③ 返回 end(p) ≥ r</text>
+  <text x="242" y="282" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">   （半开区间，等号成立）</text>
+
+  <rect x="433" y="248" width="178" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="444" y="268" font-size="9.5" fill="#6a5220" filter="url(#rough2)">③ 左残段 [l0, l)、右残段</text>
+  <text x="444" y="282" font-size="9.5" fill="#6a5220" filter="url(#rough2)">   [r, r0) 原样插回</text>
+
+  <!-- 第 4 行步骤 -->
+  <rect x="29" y="316" width="178" height="52" fill="#ffffff" stroke="#446688" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="40" y="336" font-size="9.5" fill="#444" filter="url(#rough2)">④ 在位置 p 插入</text>
+  <text x="40" y="350" font-size="9.5" fill="#444" filter="url(#rough2)">   合并后的 [l, r)</text>
+
+  <rect x="231" y="316" width="178" height="52" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="242" y="336" font-size="9.5" fill="#444" filter="url(#rough2)">④ 只读，一次二分</text>
+  <text x="242" y="350" font-size="9.5" fill="#444" filter="url(#rough2)">   定位即完成</text>
+
+  <rect x="433" y="316" width="178" height="52" fill="#ffffff" stroke="#b85450" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="444" y="336" font-size="9.5" fill="#444" filter="url(#rough2)">④ 两残段之间原有</text>
+  <text x="444" y="350" font-size="9.5" fill="#444" filter="url(#rough2)">   空隙，不会相接</text>
+
+  <!-- 竖向箭头 -->
+  <path d="M 118 98 L 118 110" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 118 166 L 118 178" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 118 234 L 118 246" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 118 302 L 118 314" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 320 98 L 320 110" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 166 L 320 178" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 234 L 320 246" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 302 L 320 314" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 522 98 L 522 110" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 522 166 L 522 178" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 522 234 L 522 246" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 522 302 L 522 314" stroke="#666" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 底部复杂度说明 -->
+  <rect x="45" y="390" width="550" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="60" y="408" font-size="10" fill="#3a4a66" filter="url(#rough2)">单次操作 = 一次二分 O(log n) + 扫描 k 个被合并/切开的区间（每个区间均摊只被删一次）。</text>
+  <text x="60" y="424" font-size="10" fill="#3a4a66" filter="url(#rough2)">k ≤ 表中区间总数，故 addRange / removeRange 为 O(log n + k)，queryRange 为 O(log n)。</text>
+  <text x="320" y="452" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">表中始终只有互不相接的区间，故 k 很小；最坏 k 可达 n</text>
+</svg>

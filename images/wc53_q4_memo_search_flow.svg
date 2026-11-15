@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L7,3.5 L0,7 Z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="470" fill="#fafafa"/>
+  <text x="30" y="34" font-size="16" fill="#333" filter="url(#rough2)">记忆化搜索：削减需求向量 + 三道剪枝</text>
+
+  <rect x="70" y="50" width="420" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="88" y="78" font-size="13" fill="#333" filter="url(#rough2)">① 统计 need[c]：target 中每个字母的数量，k 个字母</text>
+
+  <path d="M280,96 L280,110" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="112" width="420" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="88" y="140" font-size="13" fill="#333" filter="url(#rough2)">② 贴纸计数截断到 need，丢掉零贡献贴纸并去重</text>
+
+  <path d="M280,158 L280,172" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="174" width="420" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="88" y="202" font-size="13" fill="#333" filter="url(#rough2)">③ 支配剪枝：B 每位 ≥ A 且 B ≠ A ⇒ 删除 A</text>
+
+  <path d="M280,220 L280,234" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="236" width="420" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="88" y="264" font-size="13" fill="#333" filter="url(#rough2)">④ 混合进制编码：state = Σ rem[j] · ∏(need[i]+1)</text>
+
+  <path d="M280,282 L280,296" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="298" width="420" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="88" y="326" font-size="13" fill="#333" filter="url(#rough2)">⑤ 挑供给最少的缺口字母 c*，只枚举含 c* 的贴纸</text>
+
+  <path d="M280,344 L280,358" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="360" width="420" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="88" y="388" font-size="13" fill="#333" filter="url(#rough2)">⑥ memo[state] = 1 + min memo[next]，state = 0 时返回 0</text>
+
+  <rect x="70" y="416" width="420" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="88" y="442" font-size="13" fill="#333" filter="url(#rough2)">答案 = memo[满状态]；若为 ∞ 说明有字母无人供给 ⇒ 返回 -1</text>
+</svg>

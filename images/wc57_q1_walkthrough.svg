@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">示例演算：words = [a, banana, app, appl, ap, apply, apple]</text>
+  <text x="280" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">排序后逐个判定，只有「前缀可构造」的单词才入集合，并更新答案</text>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="74" width="516" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="5"/>
+    <text x="57" y="94" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a4a66">顺序</text>
+    <text x="150" y="94" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a4a66">w（已排序）</text>
+    <text x="270" y="94" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a4a66">前缀 w[:-1]</text>
+    <text x="365" y="94" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a4a66">在集合中</text>
+    <text x="470" y="94" text-anchor="middle" font-size="11" font-weight="bold" fill="#3a4a66">动作 / 当前 best</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <rect x="24" y="104" width="516" height="30" fill="#f7f9fc" stroke="#d5dde8" stroke-width="1" rx="3"/>
+    <text x="57" y="124" fill="#666">1</text>
+    <text x="150" y="124" fill="#333" font-weight="bold">a</text>
+    <text x="270" y="124" fill="#888">""</text>
+    <text x="365" y="124" fill="#4a7a3a">✓</text>
+    <text x="470" y="124" fill="#3a5a30">加入，best = a</text>
+
+    <rect x="24" y="134" width="516" height="30" fill="#ffffff" stroke="#d5dde8" stroke-width="1" rx="3"/>
+    <text x="57" y="154" fill="#666">2</text>
+    <text x="150" y="154" fill="#333" font-weight="bold">ap</text>
+    <text x="270" y="154" fill="#333">a</text>
+    <text x="365" y="154" fill="#4a7a3a">✓</text>
+    <text x="470" y="154" fill="#3a5a30">加入，best = ap</text>
+
+    <rect x="24" y="164" width="516" height="30" fill="#f7f9fc" stroke="#d5dde8" stroke-width="1" rx="3"/>
+    <text x="57" y="184" fill="#666">3</text>
+    <text x="150" y="184" fill="#333" font-weight="bold">app</text>
+    <text x="270" y="184" fill="#333">ap</text>
+    <text x="365" y="184" fill="#4a7a3a">✓</text>
+    <text x="470" y="184" fill="#3a5a30">加入，best = app</text>
+
+    <rect x="24" y="194" width="516" height="30" fill="#ffffff" stroke="#d5dde8" stroke-width="1" rx="3"/>
+    <text x="57" y="214" fill="#666">4</text>
+    <text x="150" y="214" fill="#333" font-weight="bold">appl</text>
+    <text x="270" y="214" fill="#333">app</text>
+    <text x="365" y="214" fill="#4a7a3a">✓</text>
+    <text x="470" y="214" fill="#3a5a30">加入，best = appl</text>
+
+    <rect x="24" y="224" width="516" height="30" fill="#f7f9fc" stroke="#d5dde8" stroke-width="1" rx="3"/>
+    <text x="57" y="244" fill="#666">5</text>
+    <text x="150" y="244" fill="#333" font-weight="bold">apple</text>
+    <text x="270" y="244" fill="#333">appl</text>
+    <text x="365" y="244" fill="#4a7a3a">✓</text>
+    <text x="470" y="244" fill="#3a5a30">加入，best = apple</text>
+
+    <rect x="24" y="254" width="516" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="3"/>
+    <text x="57" y="274" fill="#8a6a20">6</text>
+    <text x="150" y="274" fill="#8a6a20" font-weight="bold">apply</text>
+    <text x="270" y="274" fill="#8a6a20">appl</text>
+    <text x="365" y="274" fill="#4a7a3a">✓</text>
+    <text x="470" y="274" fill="#8a6a20">加入，同长不更新</text>
+
+    <rect x="24" y="284" width="516" height="30" fill="#fce4ec" stroke="#e0a8b8" stroke-width="1.2" rx="3"/>
+    <text x="57" y="304" fill="#8a3a36">7</text>
+    <text x="150" y="304" fill="#8a3a36" font-weight="bold">banana</text>
+    <text x="270" y="304" fill="#8a3a36">banan</text>
+    <text x="365" y="304" fill="#b85450">✗</text>
+    <text x="470" y="304" fill="#8a3a36">跳过，不可构造</text>
+  </g>
+
+  <text x="280" y="344" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">第 5 步 apple 与第 6 步 apply 同长 5：apple 字典序更小且先被访问，严格更长才更新，故答案保持 apple</text>
+  <text x="280" y="366" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">banana 的前缀 banan 不在词典，也从未进入集合，因此整条链断裂、直接跳过</text>
+  <text x="280" y="388" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">扫描结束 best = "apple"：长度为 5 的所有可构造单词中字典序最小者</text>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="470" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">算法流程：一次扫描 + 栈式递归</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">栈的每一帧 = 一层括号的计数表；出栈即「乘以本层倍数再合并」</text>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="62" width="260" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="280" y="85" text-anchor="middle" font-size="11.5" fill="#3a4a66">① 栈 ← [ 空计数表 ]，i ← 0</text>
+
+    <polygon points="280,118 404,152 280,186 156,152" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="280" y="149" text-anchor="middle" font-size="10.5" fill="#8a6a20">② formula[i] 是？</text>
+    <text x="280" y="166" text-anchor="middle" font-size="9.5" fill="#8a6a20">字母 / '(' / ')'</text>
+
+    <rect x="20" y="208" width="158" height="88" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="99" y="228" text-anchor="middle" font-size="11" fill="#3a4a66">大写字母</text>
+    <text x="99" y="248" text-anchor="middle" font-size="9.5" fill="#3a4a66">读 [A-Z][a-z]*</text>
+    <text x="99" y="265" text-anchor="middle" font-size="9.5" fill="#3a4a66">再读数字 n（缺省 1）</text>
+    <text x="99" y="284" text-anchor="middle" font-size="9.5" fill="#3a4a66">栈顶[name] += n</text>
+
+    <rect x="201" y="208" width="158" height="88" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="280" y="228" text-anchor="middle" font-size="11" fill="#3a5a30">左括号 '('</text>
+    <text x="280" y="248" text-anchor="middle" font-size="9.5" fill="#3a5a30">压入一张新的空表</text>
+    <text x="280" y="265" text-anchor="middle" font-size="9.5" fill="#3a5a30">开始新的一层</text>
+    <text x="280" y="284" text-anchor="middle" font-size="9.5" fill="#3a5a30">i += 1</text>
+
+    <rect x="382" y="208" width="158" height="88" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="461" y="228" text-anchor="middle" font-size="11" fill="#8a3a36">右括号 ')'</text>
+    <text x="461" y="248" text-anchor="middle" font-size="9.5" fill="#8a3a36">弹出栈顶 T，读倍数 m</text>
+    <text x="461" y="265" text-anchor="middle" font-size="9.5" fill="#8a3a36">新栈顶[k] += T[k]·m</text>
+    <text x="461" y="284" text-anchor="middle" font-size="9.5" fill="#8a3a36">合并回上一层</text>
+
+    <rect x="150" y="332" width="260" height="36" rx="8" fill="#f7f9fc" stroke="#d5dde8" stroke-width="1.5"/>
+    <text x="280" y="355" text-anchor="middle" font-size="11" fill="#556">③ i 前进；未到串尾 → 回到 ②</text>
+
+    <rect x="150" y="392" width="260" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="280" y="416" text-anchor="middle" font-size="11" fill="#3a5a30">④ 剩余唯一一帧 → 按字典序输出</text>
+  </g>
+
+  <g filter="url(#rough2)" fill="none" stroke="#446688" stroke-width="1.6">
+    <path d="M 280 98 L 280 114" marker-end="url(#arr)"/>
+    <path d="M 240 172 L 110 206" marker-end="url(#arr)"/>
+    <path d="M 280 186 L 280 206" marker-end="url(#arr)"/>
+    <path d="M 320 172 L 450 206" marker-end="url(#arr)"/>
+    <path d="M 99 296 L 99 318 L 280 318 L 280 330" marker-end="url(#arr)"/>
+    <path d="M 461 296 L 461 318 L 282 318" marker-end="url(#arr)"/>
+    <path d="M 280 296 L 280 330" marker-end="url(#arr)"/>
+    <path d="M 280 368 L 280 390" marker-end="url(#arr)"/>
+  </g>
+
+  <text x="280" y="452" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">递归写法与显式栈等价：函数返回时就相当于一次「出栈合并」</text>
+</svg>

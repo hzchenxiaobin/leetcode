@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">核心观察：总和无非是「左 + 我 + 右」三段</text>
+  <text x="280" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">把「右」用总和减出来，判定就只需维护一个左前缀和</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="86" width="190" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="250" y="86" width="60" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="310" y="86" width="190" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+
+    <text x="155" y="114" text-anchor="middle" font-size="12" fill="#3a4a66">左侧和 L = nums[0..i-1]</text>
+    <text x="280" y="114" text-anchor="middle" font-size="12" fill="#8a6a20">nums[i]</text>
+    <text x="405" y="114" text-anchor="middle" font-size="12" fill="#3a5a30">右侧和 R = nums[i+1..n-1]</text>
+
+    <text x="60" y="152" font-size="11" fill="#888">下标 0</text>
+    <text x="500" y="152" text-anchor="end" font-size="11" fill="#888">下标 n-1</text>
+    <text x="280" y="76" text-anchor="middle" font-size="11" fill="#b85450">中心下标 i 的候选位置</text>
+  </g>
+
+  <path d="M 280 152 L 280 170" stroke="#446688" stroke-width="1.5" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="88" y="174" width="384" height="46" fill="#f7f9fc" stroke="#d5dde8" stroke-width="1.4" rx="8"/>
+    <text x="280" y="203" text-anchor="middle" font-size="13" fill="#333">L + nums[i] + R = S   （S 为数组总和）</text>
+
+    <rect x="88" y="232" width="384" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+    <text x="280" y="254" text-anchor="middle" font-size="12" fill="#8a3a36">题目要求 L = R，代入上式消去 R：</text>
+    <text x="280" y="275" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a36">2 · L + nums[i] = S</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <text x="280" y="312" text-anchor="middle" font-size="11" fill="#555">扫描时 L 只做一次加法：进入第 i 位前 L 就是它左侧所有元素之和</text>
+    <text x="280" y="332" text-anchor="middle" font-size="11" fill="#555">于是每个下标 O(1) 判定，一次遍历就够了；从 0 开始扫，先命中的就是最左中心下标</text>
+    <text x="280" y="358" text-anchor="middle" font-size="10" fill="#999">注意：nums[i] 一定只属于「我」这一段，既不算进 L，也不算进 R</text>
+  </g>
+</svg>

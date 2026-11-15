@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="400" fill="#fafafa"/>
+
+  <text x="360" y="28" text-anchor="middle" font-size="15" fill="#333" font-weight="bold" filter="url(#rough2)">主流程：一次扫描 + 一次 DFS 产出一个键</text>
+  <text x="360" y="48" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">键只在岛屿被首次发现时写入一次，所以哈希集合 S 的大小就是不同形状数</text>
+
+  <rect x="24" y="96" width="130" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="89" y="120" text-anchor="middle" font-size="10.5" fill="#33445f" font-weight="bold" filter="url(#rough2)">行优先遍历</text>
+  <text x="89" y="141" text-anchor="middle" font-size="10.5" fill="#33445f" filter="url(#rough2)">当前格 (r, c)</text>
+
+  <path d="M 156 129 L 174 129" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="250,86 322,129 250,172 178,129" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="250" y="125" text-anchor="middle" font-size="10.5" fill="#7a5a14" filter="url(#rough2)">值为 1</text>
+  <text x="250" y="145" text-anchor="middle" font-size="10.5" fill="#7a5a14" filter="url(#rough2)">且未访问？</text>
+
+  <text x="334" y="122" font-size="11" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+  <path d="M 324 129 L 348 129" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <rect x="350" y="96" width="168" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="434" y="120" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">锚点 = (r, c)</text>
+  <text x="434" y="141" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">DFS 标记并记下偏移</text>
+
+  <path d="M 520 129 L 546 129" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="548" y="96" width="150" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="623" y="120" text-anchor="middle" font-size="10.5" fill="#7a5a14" font-weight="bold" filter="url(#rough2)">偏移排序成键</text>
+  <text x="623" y="141" text-anchor="middle" font-size="10.5" fill="#7a5a14" filter="url(#rough2)">插入集合 S</text>
+
+  <!-- 否 分支 -->
+  <path d="M 250 172 L 250 194" stroke="#999999" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="190" y="198" width="152" height="40" fill="#f2f2f2" stroke="#999999" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="266" y="223" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">否：水 / 已访问 → 跳过</text>
+
+  <!-- 扫描结束 -->
+  <path d="M 89 162 L 89 262" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="98" y="206" font-size="10" fill="#3a5a30" filter="url(#rough2)">扫描结束</text>
+  <ellipse cx="120" cy="290" rx="70" ry="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="120" y="295" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">返回 |S|</text>
+
+  <!-- 回环 -->
+  <path d="M 698 129 L 712 129 L 712 340 L 40 340 L 40 166" stroke="#4a7a3a" stroke-width="1.4" fill="none" stroke-dasharray="6 5" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="330" y="332" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">处理下一格（回到行优先扫描）</text>
+
+  <text x="360" y="378" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">偏移集合是平移不变量：DFS 先走哪个方向，都不影响最终的键</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">核心模型：只用一个布尔标志的两状态机</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">in_block 贯穿所有行；buffer 攒住「还没交付成一行」的代码字符</text>
+
+  <g filter="url(#rough2)">
+    <ellipse cx="140" cy="150" rx="76" ry="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="140" y="146" text-anchor="middle" font-size="12" fill="#3a4a66">代码态</text>
+    <text x="140" y="164" text-anchor="middle" font-size="10" fill="#3a4a66">in_block = false</text>
+  </g>
+  <g filter="url(#rough2)">
+    <ellipse cx="420" cy="150" rx="76" ry="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="420" y="146" text-anchor="middle" font-size="12" fill="#8a3a36">块注释态</text>
+    <text x="420" y="164" text-anchor="middle" font-size="10" fill="#8a3a36">in_block = true</text>
+  </g>
+
+  <path d="M 96 122 C 82 76 198 76 184 122" fill="none" stroke="#446688" stroke-width="1.4"
+        marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="140" y="72" text-anchor="middle" font-size="10" fill="#3a4a66" filter="url(#rough2)">普通字符 → buffer += c</text>
+
+  <path d="M 376 122 C 362 76 478 76 464 122" fill="none" stroke="#b85450" stroke-width="1.4"
+        marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="420" y="72" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">其它字符 → 直接跳过</text>
+
+  <path d="M 213 138 L 345 138" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="279" y="130" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">读到 /*  →  i += 2</text>
+
+  <path d="M 345 166 L 213 166" stroke="#b85450" stroke-width="1.6" fill="none"
+        marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <text x="279" y="184" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">读到 */  →  出块，i += 2</text>
+
+  <path d="M 140 184 L 140 208" stroke="#d6a040" stroke-width="1.5" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="40" y="210" width="200" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="52" y="230" font-size="10" fill="#8a6a20">读到 //  →  break</text>
+    <text x="52" y="248" font-size="10" fill="#8a6a20">本行剩余字符全部丢弃</text>
+  </g>
+
+  <path d="M 420 184 L 420 208" stroke="#4a7a3a" stroke-width="1.5" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="320" y="210" width="200" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="332" y="230" font-size="10" fill="#3a5a30">块内再遇 // 或 /* 均无效</text>
+    <text x="332" y="248" font-size="10" fill="#3a5a30">只有 */ 能把它关掉</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="48" y="284" width="464" height="66" fill="#fafafa" stroke="#446688" stroke-width="1.5" rx="10" stroke-dasharray="6 4"/>
+    <text x="64" y="304" font-size="10.5" fill="#3a4a66" font-weight="bold">行末结算（每行扫完执行一次）</text>
+    <text x="64" y="322" font-size="10" fill="#555">in_block = false 且 buffer 非空 → buffer 输出为一行，然后清空</text>
+    <text x="64" y="338" font-size="10" fill="#b85450">in_block = true → buffer 原样保留，下一行代码接在同一输出行</text>
+  </g>
+
+  <text x="280" y="382" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">非重叠规则：/*/ 里紧跟的 / 不能闭合块注释 —— 消费 /* 时必须 i += 2</text>
+</svg>

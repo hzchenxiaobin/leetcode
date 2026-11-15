@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">状态设计：dp[j] 就是「最大起点」</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">对每个右端 i，只记录匹配完 T 前缀后能取到的最右起点</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="62" width="480" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="280" y="86" text-anchor="middle" font-size="11" fill="#3a4a66">dp[j] = 扫描到第 i 位后，使 T[0..j] 成为 s1[k..i] 子序列的「最大」起点 k</text>
+    <text x="280" y="105" text-anchor="middle" font-size="11" fill="#3a4a66">若不存在这样的 k 则 dp[j] = −1；有效时窗口就是 [dp[m−1], i]</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="48" y="138" width="132" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="114" y="160" text-anchor="middle" font-size="12" fill="#3a5a30">dp[j−1] 旧值</text>
+    <text x="114" y="178" text-anchor="middle" font-size="10" fill="#6a8a5a">第 i−1 轮的</text>
+
+    <rect x="212" y="138" width="152" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="6"/>
+    <text x="288" y="160" text-anchor="middle" font-size="12" fill="#8a6a20">s1[i] == s2[j] ?</text>
+    <text x="288" y="178" text-anchor="middle" font-size="10" fill="#a08030">字符相同才可以转移</text>
+
+    <rect x="396" y="138" width="132" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="6"/>
+    <text x="462" y="160" text-anchor="middle" font-size="12" fill="#8a3a36">dp[j] 新值</text>
+    <text x="462" y="178" text-anchor="middle" font-size="10" fill="#a8605a">第 i 轮的</text>
+
+    <path d="M 182 164 L 208 164" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 366 164 L 392 164" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="210" width="480" height="80" fill="#f7f9fc" stroke="#d5dde8" stroke-width="1.4" rx="8"/>
+    <text x="60" y="232" font-size="11" fill="#3a5a30">命中：dp[j] ← dp[j−1]（沿用旧值，起点向前挪到能匹配 T[0] 的位置）</text>
+    <text x="60" y="252" font-size="11" fill="#8a6a20">未命中：dp[j] 保持不变（旧窗口 [k, i−1] 在 [k, i] 中仍然合法）</text>
+    <text x="60" y="272" font-size="11" fill="#8a3a36">边界：s1[i] == s2[0] 时 dp[0] ← i，否则 dp[0] 也保持不变</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="304" width="480" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8"/>
+    <text x="280" y="324" text-anchor="middle" font-size="11" fill="#3a5a30">原地更新必须让 j 从 m−1 递减到 1：此时 dp[j−1] 还是上一轮的旧值</text>
+    <text x="280" y="342" text-anchor="middle" font-size="10" fill="#6a8a5a">若改成递增，同一位置字符会被重复使用，答案会偏短</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <text x="280" y="374" text-anchor="middle" font-size="10" fill="#777">dp[m−1] 有效 → 得到候选窗口 [dp[m−1], i]，用长度更新最优；等长不覆盖</text>
+    <text x="280" y="392" text-anchor="middle" font-size="10" fill="#999">时间 O(n·m)，空间只用一个长度 m 的数组，即 O(m)</text>
+  </g>
+</svg>

@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 396" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="600" height="396" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例 1 走查：6 座岛，最大面积 6</text>
+  <text x="300" y="45" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">行优先扫描，遇到 1 就把它所在的整块地「抽干」，边抽边数格子</text>
+
+  <rect x="50" y="64" width="500" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="72" y="87" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">#</text>
+  <text x="110" y="87" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">发现起点（行优先）</text>
+  <text x="250" y="87" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">这一块地的形状</text>
+  <text x="428" y="87" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">面积</text>
+  <text x="500" y="87" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">best</text>
+
+  <g filter="url(#rough2)">
+    <rect x="50" y="100" width="500" height="34" fill="#ffffff" stroke="#c9d6e8" stroke-width="1"/>
+    <rect x="50" y="134" width="500" height="34" fill="#ffffff" stroke="#c9d6e8" stroke-width="1"/>
+    <rect x="50" y="168" width="500" height="34" fill="#ffffff" stroke="#c9d6e8" stroke-width="1"/>
+    <rect x="50" y="202" width="500" height="34" fill="#ffffff" stroke="#c9d6e8" stroke-width="1"/>
+    <rect x="50" y="236" width="500" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="50" y="270" width="500" height="34" fill="#ffffff" stroke="#c9d6e8" stroke-width="1"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" fill="#444">
+    <text x="72" y="121">1</text>
+    <text x="110" y="121">(0,2)</text>
+    <text x="250" y="121">孤立的一格</text>
+    <text x="428" y="121" fill="#d6a040" font-weight="bold">1</text>
+    <text x="500" y="121" fill="#4a7a3a" font-weight="bold">1</text>
+
+    <text x="72" y="155">2</text>
+    <text x="110" y="155">(0,7)</text>
+    <text x="250" y="155">右上角 L 形，4 格</text>
+    <text x="428" y="155" fill="#d6a040" font-weight="bold">4</text>
+    <text x="500" y="155" fill="#4a7a3a" font-weight="bold">4</text>
+
+    <text x="72" y="189">3</text>
+    <text x="110" y="189">(2,1)</text>
+    <text x="250" y="189">左侧竖三格加一格</text>
+    <text x="428" y="189" fill="#d6a040" font-weight="bold">4</text>
+    <text x="500" y="189" fill="#4a7a3a" font-weight="bold">4</text>
+
+    <text x="72" y="223">4</text>
+    <text x="110" y="223">(2,4)</text>
+    <text x="250" y="223">中间 2×2 缺右下角，5 格</text>
+    <text x="428" y="223" fill="#d6a040" font-weight="bold">5</text>
+    <text x="500" y="223" fill="#4a7a3a" font-weight="bold">5</text>
+
+    <text x="72" y="257">5</text>
+    <text x="110" y="257">(3,8)</text>
+    <text x="250" y="257">绕 (4,10) 拐弯的 6 格</text>
+    <text x="428" y="257" fill="#d6a040" font-weight="bold">6</text>
+    <text x="500" y="257" fill="#4a7a3a" font-weight="bold">6</text>
+
+    <text x="72" y="291">6</text>
+    <text x="110" y="291">(6,7)</text>
+    <text x="250" y="291">右下 2×3 缺两格，5 格</text>
+    <text x="428" y="291" fill="#d6a040" font-weight="bold">5</text>
+    <text x="500" y="291" fill="#4a7a3a" font-weight="bold">6</text>
+  </g>
+
+  <text x="300" y="327" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">第 5 块 = (3,8) (4,8) (4,9) (4,10) (3,10) (5,10)，正是题目解释里强调的那 6 格</text>
+  <text x="300" y="349" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">若把对角相接也算相邻，第 5 块会吞掉第 6 块变成 11 —— 错误答案 11 就是这么来的</text>
+  <text x="300" y="371" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">全程 6 次 DFS、访问 25 个 1，best 单调不减，最终停在 6</text>
+</svg>

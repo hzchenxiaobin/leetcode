@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="380" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">dp[i][j]：只看左上角一个格子</text>
+  <text x="290" y="50" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">两数相等就把它接在当前公共后缀后面，否则这段匹配立即断开</text>
+
+  <rect x="90" y="90" width="104" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="142" y="118" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">dp[i-1][j-1]</text>
+
+  <rect x="90" y="180" width="104" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="6" filter="url(#rough2)"/>
+  <text x="142" y="208" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">dp[i][j]</text>
+
+  <path d="M 142 140 L 142 176" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="156" y="152" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">+ 1，当 a[i-1] == b[j-1]</text>
+  <text x="156" y="170" font-size="10" fill="#888" filter="url(#rough2)">否则该格直接为 0</text>
+
+  <text x="90" y="250" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">dp 只记「以当前元素结尾」的公共后缀长度</text>
+  <text x="90" y="270" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">所以答案要取全表最大值，而不是 dp[m][n]</text>
+
+  <text x="430" y="84" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold" filter="url(#rough2)">一维滚动：只保留一行</text>
+
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.2">
+    <rect x="312" y="100" width="40" height="36" fill="#ffffff" rx="3"/>
+    <rect x="354" y="100" width="40" height="36" fill="#ffffff" rx="3"/>
+    <rect x="396" y="100" width="40" height="36" fill="#ffffff" rx="3"/>
+    <rect x="438" y="100" width="40" height="36" fill="#ffffff" rx="3"/>
+    <rect x="480" y="100" width="40" height="36" fill="#e8f0fe" rx="3"/>
+  </g>
+  <g filter="url(#rough2)" text-anchor="middle" font-size="9.5" fill="#3a4a66">
+    <text x="332" y="123">dp[1]</text>
+    <text x="374" y="123">dp[2]</text>
+    <text x="416" y="123">dp[3]</text>
+    <text x="458" y="123">dp[4]</text>
+    <text x="500" y="123">dp[j]</text>
+  </g>
+
+  <path d="M 496 152 L 328 152" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="412" y="172" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">j 从 n 逆序扫到 1</text>
+
+  <text x="312" y="204" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">逆序时 dp[j-1] 还没被本行覆盖，</text>
+  <text x="312" y="224" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">它正好是上一行的 dp[i-1][j-1]。</text>
+  <text x="312" y="246" font-size="10.5" fill="#888" filter="url(#rough2)">顺序扫也行，但要多存一个临时变量。</text>
+
+  <text x="290" y="300" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">每个格子只依赖左上方，所以填表顺序与行优先无关，先枚举哪个数组都可以</text>
+  <text x="290" y="324" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">时间复杂度 O(mn)，滚动后空间为 O(min(m,n))</text>
+  <text x="290" y="352" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">m、n 都 ≤ 1000，mn ≤ 10^6，一维数组足够快</text>
+</svg>
