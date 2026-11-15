@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="43"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="90"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">状态设计：只看最后两个骰值 (prev, last) 就够</text>
+
+  <!-- 序列示意 -->
+  <text x="280" y="62" font-size="13" fill="#446688" filter="url(#rough2)" text-anchor="middle">一个合法序列 …, d₁, d₂, d₃, d₄, d₅, …（约定相邻互质、等值间距 ≥ 3）</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <rect x="80" y="76" width="44" height="36" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+    <text x="102" y="99">d₁</text>
+    <rect x="136" y="76" width="44" height="36" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+    <text x="158" y="99">d₂</text>
+    <rect x="192" y="76" width="44" height="36" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+    <text x="214" y="99">d₃</text>
+    <rect x="248" y="76" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+    <text x="270" y="99">d₄</text>
+    <rect x="304" y="76" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+    <text x="326" y="99">d₅</text>
+    <rect x="368" y="76" width="44" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="4"/>
+    <text x="390" y="99">?</text>
+    <text x="390" y="130" fill="#4a7a3a" font-weight="bold">下一个值 v</text>
+  </g>
+
+  <!-- 约束检查 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="40" y="150" width="480" height="104" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="280" y="174" text-anchor="middle" font-weight="bold" fill="#d6a040">新值 v 只需检查三个条件（都只涉及 v 与最后两个值）：</text>
+    <text x="280" y="198" text-anchor="middle">① gcd(v, d₅) = 1 —— 相邻互质（同时排除 v = d₅，因 gcd(v,v)=v &gt; 1 除 v=1，而 gcd(1,1)=1 故需显式排除 v=d₅=1）</text>
+    <text x="280" y="220" text-anchor="middle">② v ≠ d₄ —— 距离 2 处等值禁止</text>
+    <text x="280" y="242" text-anchor="middle">③ 距离 ≥ 3 处的等值（d₃ 及更早）天然允许，无需检查</text>
+  </g>
+
+  <!-- 为什么两个就够 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="266" width="480" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13.5" fill="#333">
+    <text x="280" y="288" text-anchor="middle" font-weight="bold" fill="#4a7a3a">因此 (d₄, d₅) 是充分的状态：记 dp[i][a][b] = 长度 i、结尾 (a,b) 的方案数</text>
+    <text x="280" y="310" text-anchor="middle">i ≥ 3 时长度自由增长，转移与绝对位置无关 → 滚动数组压缩到 6×6</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#888">
+    <text x="280" y="348" text-anchor="middle">等值间距条件形式化：若 dᵢ = dⱼ 则 |i − j| &gt; 2（下标从 1 起）——距离 1 被相邻互质覆盖（v=1 除外），</text>
+    <text x="280" y="366" text-anchor="middle">距离 2 必须显式禁止，距离 ≥ 3 自动满足 → 记忆「最近两个值」恰好覆盖所有会影响未来的约束</text>
+  </g>
+</svg>

@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="79"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="98"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">两次操作合一次：k₁ 与 k₂ 合并为总预算 k = k₁ + k₂</text>
+
+  <!-- 等价性 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="54" width="488" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="280" y="78" text-anchor="middle">差值视角：d[i] = nums1[i] − nums2[i]，目标最小化 Σ d[i]²</text>
+    <text x="280" y="102" text-anchor="middle">「nums1[i] 加 1」= d[i] 加 1；「nums2[i] 加 1」= d[i] 减 1 —— 对平方和完全对称</text>
+    <text x="280" y="126" text-anchor="middle" font-weight="bold" fill="#446688">因此 k₁、k₂ 谁出力不重要，只有总数 k = k₁ + k₂ 有意义</text>
+  </g>
+
+  <!-- 每次操作的效果 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="60" y="170" width="180" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="150" y="192" font-weight="bold">一次操作</text>
+    <text x="150" y="214">某个 |d[i]| 减 1（或加 1，不会更优）</text>
+    <rect x="320" y="170" width="180" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="410" y="192" font-weight="bold">贪心取向</text>
+    <text x="410" y="214">永远用在当前 |d| 最大的位置</text>
+  </g>
+  <path d="M 240 198 L 316 198" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 平方和下降量 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="244" width="488" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#url(#rough2))"></g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="280" y="268" text-anchor="middle">在 |d| = h 的位置用一次操作（降到 h−1）：</text>
+    <text x="280" y="292" text-anchor="middle" font-weight="bold" fill="#b85450">平方和下降量 = h² − (h−1)² = 2h − 1 —— h 越大，收益越大（凸性）</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#888">
+    <text x="280" y="330" text-anchor="middle">推论（桶/二分的核心）：最优方案等价于「把所有差值削到一个统一水平 h，</text>
+    <text x="280" y="350" text-anchor="middle">再把 left 次操作分给 left 个仍为 h 的位置削到 h−1」—— 收益 2h−1 递减，先削高处</text>
+    <text x="280" y="370" text-anchor="middle">预算足以削平所有差值（k ≥ Σd）时答案为 0（h = 0 且无剩余可用）</text>
+  </g>
+</svg>

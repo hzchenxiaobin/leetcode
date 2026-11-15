@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="31"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="87"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">操作的代数本质：nums[i] AND (nums[i] XOR x) = nums[i] AND ¬x</text>
+
+  <!-- 位运算真值推导 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="40" y="58" width="480" height="64" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="280" y="82" font-weight="bold">对单个二进制位 b（nums[i] 该位为 b）：</text>
+    <text x="280" y="106">b AND (b XOR x) = b AND ¬x —— 因为 b XOR x 在 b 位上恰为 ¬x 的该位</text>
+  </g>
+
+  <!-- 真值表 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="70" y="140" width="90" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4"/>
+    <text x="115" y="160">原位 b</text>
+    <rect x="160" y="140" width="90" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4"/>
+    <text x="205" y="160">x 该位</text>
+    <rect x="250" y="140" width="110" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="4"/>
+    <text x="305" y="160">操作后该位</text>
+    <rect x="360" y="140" width="130" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="425" y="160">含义</text>
+
+    <rect x="70" y="170" width="90" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="115" y="189">1</text>
+    <rect x="160" y="170" width="90" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="205" y="189">0</text>
+    <rect x="250" y="170" width="110" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="305" y="189">1</text>
+    <rect x="360" y="170" width="130" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="425" y="189">保持 1</text>
+
+    <rect x="70" y="198" width="90" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="115" y="217">1</text>
+    <rect x="160" y="198" width="90" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="205" y="217">1</text>
+    <rect x="250" y="198" width="110" height="28" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <text x="305" y="217">0</text>
+    <rect x="360" y="198" width="130" height="28" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <text x="425" y="217" font-weight="bold">可把 1 清 0</text>
+
+    <rect x="70" y="226" width="90" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="115" y="245">0</text>
+    <rect x="160" y="226" width="90" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="205" y="245">任意</text>
+    <rect x="250" y="226" width="110" height="28" fill="#fafafa" stroke="#999" stroke-width="1" rx="4"/>
+    <text x="305" y="245">0</text>
+    <rect x="360" y="226" width="130" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1" rx="4"/>
+    <text x="425" y="245">0 永远不变 1</text>
+  </g>
+
+  <!-- 结论 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="270" width="480" height="50" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13.5" fill="#333">
+    <text x="280" y="291" text-anchor="middle" font-weight="bold" fill="#4a7a3a">每位要么保持、要么 1→0：操作是「只减不增」的掩码清除</text>
+    <text x="280" y="311" text-anchor="middle">nums[i] 能变成的值集合 = nums[i] 的所有子掩码（submask）</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#888">
+    <text x="280" y="346" text-anchor="middle">验证示例 1：nums = [3,2,4,6]（011,010,100,110）</text>
+    <text x="280" y="364" text-anchor="middle">按位 OR = 111₂ = 7 —— 位 0 有 3（011）、位 1 有 3/2/6、位 2 有 4/6，三位都能凑出奇数个 1</text>
+  </g>
+</svg>

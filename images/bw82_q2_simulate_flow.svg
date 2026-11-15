@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="96"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">双指针模拟流程：j 只前进不后退，cnt 按车重置</text>
+
+  <!-- 流程 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="56" width="200" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="160" y="78" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">排序 buses、passengers；j=0</text>
+  <path d="M 160 90 L 160 112" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="114" width="200" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="160" y="136" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">取下一辆车 b：cnt = 0</text>
+  <path d="M 160 148 L 160 170" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <polygon points="160,172 268,200 160,228 52,200" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="160" y="198" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">j &lt; m 且 p[j] ≤ b</text>
+  <text x="160" y="216" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">且 cnt &lt; capacity ?</text>
+  <path d="M 268 200 C 310 200, 330 200, 352 200" fill="none" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="300" y="192" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="354" y="182" width="160" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="434" y="205" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">++j；++cnt（乘客上车）</text>
+  <path d="M 434 218 C 434 246, 330 252, 244 252 L 160 252 L 160 228" fill="none" stroke="#4a7a3a" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="330" y="246" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">回到判断（本车继续装）</text>
+
+  <path d="M 160 228 L 160 258" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="170" y="248" font-size="12.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <polygon points="160,262 258,288 160,314 62,288" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="160" y="286" font-size="12.5" fill="#333" filter="url(#rough2)" text-anchor="middle">还有下一辆车 ?</text>
+  <text x="160" y="304" font-size="11.5" fill="#888" filter="url(#rough2)" text-anchor="middle">(循环车)</text>
+  <path d="M 62 288 C 20 288, 20 131, 58 131" fill="none" stroke="#d6a040" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="26" y="210" font-size="12" fill="#d6a040" filter="url(#rough2)" transform="rotate(-90 26 210)">是 → 下一辆车</text>
+
+  <!-- 末班车决策 -->
+  <path d="M 258 288 L 330 288" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="280" font-size="12.5" fill="#446688" filter="url(#rough2)">否（末班车）</text>
+  <g filter="url(#rough2)">
+    <rect x="332" y="262" width="196" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="430" y="282" text-anchor="middle">cnt &lt; capacity ? t = 末班发车时刻</text>
+    <text x="430" y="302" text-anchor="middle">满载 ? t = p[j−1] − 1</text>
+  </g>
+
+  <!-- 回退 -->
+  <g filter="url(#rough2)">
+    <rect x="332" y="326" width="196" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="430" y="342" font-size="12" fill="#333" filter="url(#rough2)" text-anchor="middle">while (t 是某乘客时刻) --t</text>
+  <text x="430" y="360" font-size="12" fill="#b85450" filter="url(#rough2)" text-anchor="middle">返回 t（最晚可上车时刻）</text>
+  <path d="M 430 314 L 430 324" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="160" y="340" font-size="12" fill="#888" filter="url(#rough2)" text-anchor="middle">关键不变量：j 是「已上车的乘客数」，</text>
+  <text x="160" y="358" font-size="12" fill="#888" filter="url(#rough2)" text-anchor="middle">每辆车只消耗属于它的最前 capacity 个合格乘客</text>
+</svg>

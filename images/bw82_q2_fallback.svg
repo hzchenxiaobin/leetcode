@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="73"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">两种收尾情形与「避开已有时刻」回退</text>
+
+  <!-- 情形 A：有空位 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="56" width="238" height="150" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="155" y="80" text-anchor="middle" font-weight="bold" fill="#4a7a3a">情形 A：末班车没坐满（cnt &lt; capacity）</text>
+    <text x="155" y="106" text-anchor="middle">我可以排最后：只要 t ≤ 发车时刻</text>
+    <text x="155" y="128" text-anchor="middle">t 初值 = 末班车发车时刻 maxBus</text>
+    <text x="155" y="152" text-anchor="middle">若 maxBus 恰是某乘客到达时刻</text>
+    <text x="155" y="174" text-anchor="middle">→ 逐个 −1 回退到第一个空档</text>
+    <text x="155" y="196" text-anchor="middle" font-size="12" fill="#888">例：示例 2 中末班车 30 有空位，但 30 有乘客</text>
+  </g>
+
+  <!-- 情形 B：满载 -->
+  <g filter="url(#rough2)">
+    <rect x="294" y="56" width="238" height="150" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="413" y="80" text-anchor="middle" font-weight="bold" fill="#b85450">情形 B：末班车坐满（cnt == capacity）</text>
+    <text x="413" y="106" text-anchor="middle">我必须挤掉一个：排在某乘客前面</text>
+    <text x="413" y="128" text-anchor="middle">t 初值 = 最后上车乘客的时刻 − 1</text>
+    <text x="413" y="152" text-anchor="middle">= passengers[j−1] − 1</text>
+    <text x="413" y="174" text-anchor="middle">再逐个 −1 回避已有时刻</text>
+    <text x="413" y="196" text-anchor="middle" font-size="12" fill="#888">例：示例 1 → 18−1=17 冲突 → 16</text>
+  </g>
+
+  <!-- 回退链 -->
+  <text x="280" y="238" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">回退示例：乘客时刻 = {…, 14, 15, 16, 18, …}，t 从 17 出发</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <rect x="140" y="252" width="44" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="6"/>
+    <text x="162" y="273">17 ✓</text>
+    <path d="M 188 269 L 216 269" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <rect x="220" y="252" width="44" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="6"/>
+    <text x="242" y="273">16 ✗</text>
+    <text x="242" y="300" font-size="11.5" fill="#b85450">乘客 16 在</text>
+    <path d="M 268 269 L 296 269" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <rect x="300" y="252" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="6"/>
+    <text x="322" y="273">15 ✗</text>
+    <text x="322" y="300" font-size="11.5" fill="#b85450">乘客 15 在</text>
+    <path d="M 348 269 L 376 269" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <rect x="380" y="252" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="6"/>
+    <text x="402" y="273">14 ✗</text>
+    <text x="402" y="300" font-size="11.5" fill="#b85450">乘客 14 在</text>
+    <path d="M 428 269 L 456 269" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <rect x="460" y="252" width="48" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="6"/>
+    <text x="484" y="273">13 ✓</text>
+    <text x="484" y="300" font-size="11.5" fill="#4a7a3a">空档 → 停</text>
+  </g>
+  <text x="100" y="273" font-size="12" fill="#888" filter="url(#rough2)" text-anchor="end">t =</text>
+
+  <!-- 为什么回退安全 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="320" width="496" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="284" y="340" text-anchor="middle">回退不会错过更晚的空档：时刻互不相同，若 t 与 t′（t′ &gt; t）都无乘客且 t′ &gt; 初值，</text>
+    <text x="284" y="360" text-anchor="middle">则初值本身就该取 t′ —— 初值已保证是「该情形下最晚的可能」，回退途中遇到的第一个空档即最优</text>
+  </g>
+</svg>

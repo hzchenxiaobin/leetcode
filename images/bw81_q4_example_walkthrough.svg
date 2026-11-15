@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="92"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">逐层求和演算：n = 1 → 2 → 3 → 4（答案 184）</text>
+
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="40" y="56" width="480" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="6"/>
+    <text x="280" y="78" text-anchor="middle" font-weight="bold">n = 1：单值序列无约束 → 6 个（代码里单判返回 6）</text>
+
+    <rect x="40" y="98" width="480" height="50" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6"/>
+    <text x="280" y="120" text-anchor="middle">n = 2：两个值只受「相邻互质 + 不等」约束</text>
+    <text x="280" y="140" text-anchor="middle" font-weight="bold" fill="#d6a040">有序对 (a,b)：gcd(a,b)=1 且 a ≠ b → 22 个（官方示例 2 ✓）</text>
+
+    <rect x="40" y="156" width="480" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="6"/>
+    <text x="280" y="178" text-anchor="middle">n = 3：从每个长度 2 状态 (p,a) 扩展 b —— 需 b ≠ p、b ≠ a、gcd(a,b)=1</text>
+    <text x="280" y="198" text-anchor="middle">例：状态 (1,2) 可接 b ∈ {3,4,5}（b≠1、b≠2、与 2 互质）→ 3 种</text>
+
+    <rect x="40" y="214" width="480" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6"/>
+    <text x="280" y="236" text-anchor="middle" font-weight="bold" fill="#4a7a3a">逐状态求和：n = 3 → 66；n = 4 → Σ f[a][b] = 184 ✓（示例 1）</text>
+  </g>
+
+  <!-- 层级条形 -->
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="150" y="284" text-anchor="middle">n=1</text>
+    <rect x="120" y="292" width="60" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="150" y="309" text-anchor="middle" font-size="11.5">6</text>
+    <text x="250" y="284" text-anchor="middle">n=2</text>
+    <rect x="190" y="292" width="120" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="4"/>
+    <text x="250" y="309" text-anchor="middle" font-size="11.5">22</text>
+    <text x="370" y="284" text-anchor="middle">n=3</text>
+    <rect x="320" y="292" width="100" height="24" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="4"/>
+    <text x="370" y="309" text-anchor="middle" font-size="11.5">66</text>
+    <text x="480" y="284" text-anchor="middle">n=4</text>
+    <rect x="430" y="292" width="90" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="475" y="309" text-anchor="middle" font-size="11.5">184</text>
+  </g>
+  <text x="280" y="344" font-size="12.5" fill="#888" filter="url(#rough2)" text-anchor="middle">条形长度按答案规模粗略示意：方案数随 n 增长（n = 10⁴ 时需取模）</text>
+  <text x="280" y="362" font-size="12.5" fill="#888" filter="url(#rough2)" text-anchor="middle">n ≥ 3 后每层转移完全同构 —— 这正是滚动数组只需要一份 6×6 表的原因</text>
+</svg>

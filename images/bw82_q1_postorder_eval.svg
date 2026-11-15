@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="59"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="93"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">后序求值：先算左右子树，再在当前节点做运算</text>
+
+  <!-- 示例树 -->
+  <text x="280" y="60" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">root = [2,1,3,null,null,0,1]</text>
+
+  <g filter="url(#rough2)">
+    <circle cx="280" cy="96" r="20" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="180" cy="164" r="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="380" cy="164" r="20" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="320" cy="232" r="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="440" cy="232" r="20" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <path d="M 265 110 L 195 152" stroke="#446688" stroke-width="1.8"/>
+    <path d="M 295 110 L 365 152" stroke="#446688" stroke-width="1.8"/>
+    <path d="M 367 180 L 330 216" stroke="#446688" stroke-width="1.8"/>
+    <path d="M 393 180 L 430 216" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13.5" fill="#333" text-anchor="middle">
+    <text x="280" y="101" font-weight="bold">2(OR)</text>
+    <text x="180" y="169" font-weight="bold">1</text>
+    <text x="380" y="169" font-weight="bold">3(AND)</text>
+    <text x="320" y="237">0</text>
+    <text x="440" y="237">1</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#888" text-anchor="middle">
+    <text x="180" y="196">叶子=true</text>
+    <text x="320" y="264">叶子=false</text>
+    <text x="440" y="264">叶子=true</text>
+  </g>
+
+  <!-- 递归返回值 -->
+  <g filter="url(#rough2)" font-size="12.5" fill="#b85450" text-anchor="middle">
+    <text x="320" y="288">evaluate → false</text>
+    <text x="440" y="288">evaluate → true</text>
+    <text x="380" y="140">false AND true = false</text>
+    <text x="180" y="140">evaluate → true</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#4a7a3a" text-anchor="middle">
+    <text x="280" y="72" font-weight="bold">true OR false = true → 答案</text>
+  </g>
+  <path d="M 280 76 C 240 86, 210 100, 186 142" fill="none" stroke="#4a7a3a" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 78 C 330 100, 370 120, 378 140" fill="none" stroke="#4a7a3a" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 代码框 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="300" width="480" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="280" y="322" text-anchor="middle">递归体：if (!root-&gt;left) return root-&gt;val == 1;　// 无左孩子 = 叶子</text>
+    <text x="280" y="344" text-anchor="middle">l = evaluateTree(left); r = evaluateTree(right);　return val==2 ? l||r : l&amp;r;</text>
+  </g>
+  <text x="280" y="374" font-size="12" fill="#888" filter="url(#rough2)" text-anchor="middle">完整二叉树保证：非叶节点必有两个孩子 → 只判一个孩子指针即可区分叶子，无需检查 val 范围</text>
+</svg>

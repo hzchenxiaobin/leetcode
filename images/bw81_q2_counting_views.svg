@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="29"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="86"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">两种统计口径对照：逐点累计 vs 补集法</text>
+
+  <!-- 左：逐点累计 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="52" width="240" height="180" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="156" y="78" text-anchor="middle" font-weight="bold" fill="#446688">口径一：逐点累计（也正确）</text>
+    <text x="156" y="104" text-anchor="middle">按分量大小 s₁, s₂, … 排好后：</text>
+    <text x="156" y="130" text-anchor="middle">ans = Σ sᵢ × (n − sᵢ) / 2</text>
+    <text x="156" y="156" text-anchor="middle">或扫一遍：已见点数 pre，</text>
+    <text x="156" y="176" text-anchor="middle">ans += pre − 同分量已见数</text>
+    <text x="156" y="204" text-anchor="middle" font-size="12" fill="#888">例：4×3 + 2×5 + 1×6 = 12+10+6</text>
+    <text x="156" y="222" text-anchor="middle" font-size="12" fill="#888">= 28，再除以 2 = 14 ✓</text>
+  </g>
+
+  <!-- 右：补集法 -->
+  <g filter="url(#rough2)">
+    <rect x="292" y="52" width="240" height="180" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="412" y="78" text-anchor="middle" font-weight="bold" fill="#4a7a3a">口径二：补集法（本文采用）</text>
+    <text x="412" y="104" text-anchor="middle">全部点对：C(n,2) = 21</text>
+    <text x="412" y="130" text-anchor="middle">可达点对必在同分量内：</text>
+    <text x="412" y="156" text-anchor="middle">same = Σ C(sᵢ,2) = 7</text>
+    <text x="412" y="182" text-anchor="middle">ans = 21 − 7 = 14</text>
+    <text x="412" y="210" text-anchor="middle" font-size="12" fill="#888">一次遍历根节点即可，无除法</text>
+    <text x="412" y="226" text-anchor="middle" font-size="12" fill="#888">细节最少、最不易写错</text>
+  </g>
+
+  <!-- 等价性说明 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="252" width="496" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="284" y="276" text-anchor="middle" font-weight="bold">两种口径恒等的代数验证（设 Σsᵢ = n）：</text>
+    <text x="284" y="300" text-anchor="middle">Σ sᵢ(n−sᵢ)/2 = (n² − Σsᵢ²)/2；C(n,2) − ΣC(sᵢ,2) = (n²−n − Σsᵢ² + n)/2 = (n² − Σsᵢ²)/2</text>
+  </g>
+  <text x="284" y="344" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#rough2)">溢出提醒：n = 10⁵ 时 n(n−1)/2 ≈ 5×10⁹，超出 32 位 int 上界，必须用 long long / Python int</text>
+  <text x="284" y="364" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#rough2)">乘法 n(n−1)/2 与 s(s−1)/2 都先乘后除，long long 中间量最高 ~10¹⁰，安全</text>
+</svg>

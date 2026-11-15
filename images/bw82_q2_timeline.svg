@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="67"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="95"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">示例 1 时间线：buses = [10,20]，passengers = [2,17,18,19]，cap = 2</text>
+
+  <!-- 时间轴 -->
+  <path d="M 60 110 L 520 110" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <!-- 乘客 2 -->
+    <circle cx="80" cy="110" r="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="80" y="92">2</text>
+    <!-- 乘客 17 -->
+    <circle cx="230" cy="110" r="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="230" y="92">17</text>
+    <!-- 乘客 18 -->
+    <circle cx="280" cy="110" r="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="280" y="92">18</text>
+    <!-- 乘客 19 -->
+    <circle cx="330" cy="110" r="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="330" y="92">19</text>
+    <!-- 车 10 -->
+    <rect x="130" y="98" width="20" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="3"/>
+    <text x="140" y="140">车①10</text>
+    <!-- 车 20 -->
+    <rect x="395" y="98" width="20" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="3"/>
+    <text x="405" y="140">车②20</text>
+    <!-- 我 16 -->
+    <circle cx="205" cy="110" r="11" fill="#fce4ec" stroke="#b85450" stroke-width="2.4"/>
+    <text x="205" y="160" fill="#b85450" font-weight="bold">我 t=16</text>
+  </g>
+  <text x="72" y="92" font-size="11" fill="#4a7a3a" filter="url(#rough2)" text-anchor="end">乘客</text>
+  <text x="72" y="140" font-size="11" fill="#d6a040" filter="url(#rough2)" text-anchor="end">公交</text>
+
+  <!-- 模拟过程 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="40" y="188" width="480" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="280" y="212" text-anchor="middle" font-weight="bold">双指针模拟：</text>
+    <text x="280" y="234" text-anchor="middle">车①（10 点发）：乘客 2 到达 ≤ 10 且有空位 → 上车（cnt=1/2）；17 &gt; 10 上不了</text>
+    <text x="280" y="256" text-anchor="middle">车②（20 点发）：乘客 17、18 依次上车（cnt=2/2 满载）；乘客 19 被挤下</text>
+    <text x="280" y="274" text-anchor="middle" font-weight="bold" fill="#b85450">末班车满载 → 我的时刻必须 &lt; 18（最后上车者），且避开所有乘客时刻</text>
+  </g>
+
+  <!-- 结论 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="292" width="480" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="280" y="312" font-size="13" fill="#333" filter="url(#rough2)" text-anchor="middle">候选 t = 18 − 1 = 17 → 17 已有乘客 → 回退到 16 → 16 无冲突</text>
+  <text x="280" y="330" font-size="13.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)" text-anchor="middle">答案 = 16 ✓</text>
+
+  <text x="280" y="356" font-size="12" fill="#888" filter="url(#rough2)" text-anchor="middle">为何不是 19？19 &gt; 18 时我排在最后，满载的车轮不到我；19 ≤ 18 才能插队</text>
+  <text x="280" y="372" font-size="12" fill="#888" filter="url(#rough2)" text-anchor="middle">为何不是 20（发车时刻）？同理：满载后即使准点赶到也上不去</text>
+</svg>

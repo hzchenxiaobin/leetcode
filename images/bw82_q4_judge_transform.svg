@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">判定改写：每个元素 &gt; threshold/k ⇔ 最小值 × k &gt; threshold</text>
+
+  <!-- 等价链 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="36" y="56" width="488" height="94" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="280" y="80" text-anchor="middle">长度为 k 的子数组「每个元素都大于 threshold / k」</text>
+    <text x="280" y="104" text-anchor="middle" font-weight="bold">⇔ min(子数组) × k &gt; threshold　（同乘 k，正数不等号方向不变）</text>
+    <text x="280" y="128" text-anchor="middle" font-weight="bold" fill="#446688">⇔ min(子数组) &gt; threshold / k（实数除法）</text>
+  </g>
+
+  <!-- 为什么看最小值 -->
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="180">子数组里所有元素都 &gt; threshold/k，等价于「最苛刻的那个」也满足 —— 最小值</text>
+    <text x="280" y="202">整数技巧：比较 min × k 与 threshold 可完全避免浮点（如 7/2 = 3.5 的截断问题）</text>
+  </g>
+
+  <!-- 枚举谁作为最小值 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="222" width="488" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="280" y="246" text-anchor="middle" font-weight="bold" fill="#4a7a3a">换个枚举对象：固定每个 i 作为「子数组最小值」</text>
+    <text x="280" y="268" text-anchor="middle">i 能撑起的最长子数组 = 左右延伸到「严格更小元素」为止（极大窗口）</text>
+  </g>
+
+  <!-- 极大窗口示意 -->
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <rect x="80" y="290" width="40" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="100" y="312">2</text>
+    <rect x="120" y="290" width="40" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="140" y="312">1</text>
+    <rect x="160" y="282" width="40" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+    <text x="180" y="310" font-weight="bold">3</text>
+    <rect x="200" y="278" width="40" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="220" y="308">4</text>
+    <rect x="240" y="282" width="40" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+    <text x="260" y="310" font-weight="bold">3</text>
+    <rect x="280" y="290" width="40" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="300" y="312">1</text>
+    <text x="180" y="344" font-size="12" fill="#d6a040">以第一个 3（下标 2）为最小值的极大窗口 = [3,4,3]（长 3）</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#888" text-anchor="middle">
+    <text x="430" y="344">两侧的 1 比它小，挡住延伸；窗口内 3×3 = 9 &gt; 6 = threshold 即合法</text>
+  </g>
+  <text x="280" y="372" font-size="12" fill="#888" filter="url(#rough2)" text-anchor="middle">关键：若极大窗口（最长）都不满足 min×len &gt; threshold，则以该元素为最小值的任何更短窗口更不满足</text>
+</svg>

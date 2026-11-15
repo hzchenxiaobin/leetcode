@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="61"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="94"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">递归调用栈展开：后序的「左 → 右 → 根」访问顺序</text>
+
+  <!-- 调用栈 -->
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <!-- 帧 1 -->
+    <rect x="40" y="60" width="420" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <text x="60" y="82">① evaluateTree(2) 进入 → 有孩子 → 先递归左子树</text>
+    <!-- 帧 2 -->
+    <rect x="70" y="102" width="390" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="90" y="124">② evaluateTree(1) 进入 → 无左孩子 → 叶子，返回 true</text>
+    <!-- 帧 3 -->
+    <rect x="70" y="144" width="390" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="90" y="166">③ evaluateTree(3) 进入 → 有孩子 → 先递归其左子树</text>
+    <!-- 帧 4 -->
+    <rect x="100" y="186" width="360" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6"/>
+    <text x="120" y="208">④ evaluateTree(0) → 叶子，返回 false</text>
+    <!-- 帧 5 -->
+    <rect x="100" y="228" width="360" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6"/>
+    <text x="120" y="250">⑤ evaluateTree(1) → 叶子，返回 true</text>
+    <!-- 回溯 -->
+    <rect x="70" y="270" width="390" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="6"/>
+    <text x="90" y="292">⑥ 回到 ③：false AND true = false → 返回 false</text>
+    <rect x="40" y="312" width="420" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="6"/>
+    <text x="60" y="334">⑦ 回到 ①：true OR false = true → 根节点求值完成，返回 true</text>
+  </g>
+
+  <!-- 右侧箭头 -->
+  <path d="M 470 76 C 500 90, 500 110, 470 118" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 470 158 C 500 172, 500 190, 470 198" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 470 242 C 500 256, 500 274, 470 284" fill="none" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 470 284 C 500 298, 500 314, 470 326" fill="none" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="280" y="368" font-size="12" fill="#888" filter="url(#rough2)" text-anchor="middle">缩进 = 递归深度：值自底向上逐层汇合，正是表达式树求值的标准后序遍历</text>
+</svg>
