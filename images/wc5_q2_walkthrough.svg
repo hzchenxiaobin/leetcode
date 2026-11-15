@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="660" height="440" fill="#fafafa"/>
+
+  <text x="330" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">演算：turnedOn = 1 逐行走查</text>
+  <text x="330" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">小时确定后，分钟还需要亮的盏数被唯一确定，内层只找 popcount(m) = need 的分钟</text>
+
+  <g filter="url(#rough2)">
+    <rect x="20" y="86" width="620" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <rect x="20" y="118" width="620" height="30" rx="4" fill="#fff8e1" stroke="#c8c8c8" stroke-width="1"/>
+    <rect x="20" y="150" width="620" height="30" rx="4" fill="#e6f4ea" stroke="#c8c8c8" stroke-width="1"/>
+    <rect x="20" y="182" width="620" height="30" rx="4" fill="#e6f4ea" stroke="#c8c8c8" stroke-width="1"/>
+    <rect x="20" y="214" width="620" height="30" rx="4" fill="#e6f4ea" stroke="#c8c8c8" stroke-width="1"/>
+    <rect x="20" y="246" width="620" height="30" rx="4" fill="#e6f4ea" stroke="#c8c8c8" stroke-width="1"/>
+    <rect x="20" y="278" width="620" height="30" rx="4" fill="#fce4ec" stroke="#c8c8c8" stroke-width="1"/>
+    <rect x="20" y="310" width="620" height="30" rx="4" fill="#fce4ec" stroke="#c8c8c8" stroke-width="1"/>
+  </g>
+
+  <g filter="url(#rough2)" stroke="#c8c8c8" stroke-width="1" fill="none">
+    <path d="M 120 118 L 120 340"/>
+    <path d="M 200 118 L 200 340"/>
+    <path d="M 270 118 L 270 340"/>
+    <path d="M 470 118 L 470 340"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10" fill="#3a4a66" text-anchor="middle" font-weight="bold">
+    <text x="70" y="106">h</text>
+    <text x="160" y="106">popcount(h)</text>
+    <text x="235" y="106">need</text>
+    <text x="370" y="106">满足 popcount(m)=need 的 m</text>
+    <text x="555" y="106">生成时间</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" fill="#555" text-anchor="middle">
+    <text x="70" y="138">0</text><text x="160" y="138">0</text><text x="235" y="138">1</text>
+    <text x="370" y="138">1, 2, 4, 8, 16, 32</text><text x="555" y="138">0:01 … 0:32（6 个）</text>
+
+    <text x="70" y="170">1</text><text x="160" y="170">1</text><text x="235" y="170">0</text>
+    <text x="370" y="170">0</text><text x="555" y="170">1:00</text>
+
+    <text x="70" y="202">2</text><text x="160" y="202">1</text><text x="235" y="202">0</text>
+    <text x="370" y="202">0</text><text x="555" y="202">2:00</text>
+
+    <text x="70" y="234">4</text><text x="160" y="234">1</text><text x="235" y="234">0</text>
+    <text x="370" y="234">0</text><text x="555" y="234">4:00</text>
+
+    <text x="70" y="266">8</text><text x="160" y="266">1</text><text x="235" y="266">0</text>
+    <text x="370" y="266">0</text><text x="555" y="266">8:00</text>
+
+    <text x="70" y="298">3, 5, 6, 9, 10</text><text x="160" y="298">2</text><text x="235" y="298">−1</text>
+    <text x="370" y="298">—</text><text x="555" y="298">need &lt; 0，跳过</text>
+
+    <text x="70" y="330">7, 11</text><text x="160" y="330">3</text><text x="235" y="330">−2</text>
+    <text x="370" y="330">—</text><text x="555" y="330">need &lt; 0，跳过</text>
+  </g>
+
+  <text x="330" y="370" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">合计 6 + 1 + 1 + 1 + 1 = 10 个时间，与示例 1 完全一致</text>
+  <text x="330" y="396" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">turnedOn = 9 时 need = 9 − popcount(h) ≥ 6 &gt; 5 恒成立，得不到任何分钟 → 空列表（示例 2）</text>
+  <text x="330" y="420" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#rough2)">turnedOn = 0 时只有 h = 0、m = 0 满足 → ["0:00"]</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="480" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：位掩码枚举 + 子集冲突判定</text>
+  <text x="310" y="44" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">循环 2^m 次，每次只要 O(1) 位运算；总判定量受 log₂n + m ≤ 20 保护</text>
+
+  <rect x="195" y="58" width="230" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="17" filter="url(#rough2)"/>
+  <text x="310" y="80" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">输入 target, dictionary</text>
+
+  <path d="M 310 92 L 310 110" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="110" width="360" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="128" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">过滤：只保留长度 = m 的单词，计算 Mk(w)</text>
+  <text x="310" y="145" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">不等长的词不可能产生冲突，直接丢弃</text>
+
+  <path d="M 310 152 L 310 170" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="170" width="360" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="188" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">去重；若 Mk₁ ⊆ Mk₂ 则删 Mk₁（约束被覆盖）</text>
+  <text x="310" y="205" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">冲突条件是 S ⊆ Mk：小掩码的禁集完全落在大掩码里</text>
+
+  <path d="M 310 212 L 310 232" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="310,232 432,274 310,316 188,274" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="310" y="279" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">掩码集合为空？</text>
+
+  <path d="M 432 274 L 452 274" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="442" y="264" font-size="10" fill="#888" filter="url(#rough2)">是</text>
+  <rect x="452" y="252" width="146" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="525" y="270" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">返回 str(m)</text>
+  <text x="525" y="287" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">全数字，长度 1，已最短</text>
+
+  <path d="M 310 316 L 310 336" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="320" y="332" font-size="10" fill="#888" filter="url(#rough2)">否</text>
+
+  <rect x="150" y="336" width="320" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="361" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">枚举 S = 0 … 2^m − 1（第 i 位 = 1 保留字母）</text>
+
+  <path d="M 310 376 L 310 392" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="85" y="392" width="450" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="410" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">① 长度 len(S) = popcount(S) + 连续 0 段数；len &gt; bestLen 直接跳过</text>
+  <text x="310" y="428" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">② 若有 Mk 满足 S &amp; ~Mk == 0 则冲突跳过；否则按 (len, 字典序) 更新 best</text>
+  <text x="310" y="444" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">判定 O(1)：子集测试只花一次按位与</text>
+
+  <path d="M 85 421 L 52 421 L 52 356 L 150 356" stroke="#666" stroke-width="1.5" fill="none" stroke-dasharray="4 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="58" y="392" font-size="10" fill="#888" filter="url(#rough2)">S++</text>
+
+  <text x="310" y="472" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">枚举结束后返回 best：长度最小，同长度取字典序最小；2^m · n ≤ 2^20</text>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="600" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：按下标递增推进，每个状态 O(1) 展开</text>
+  <text x="320" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">「位置 → 下标」哈希表把「跳过去有没有石子」压成一次查表，dp 用「每块石子一个集合」保存上一跳长度</text>
+
+  <g filter="url(#rough2)">
+    <rect x="110" y="68" width="420" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="126" y="88" font-size="11" fill="#3a4a66">① 预处理：stones[1] == 1 ？否 → 直接返回 false</text>
+    <text x="126" y="106" font-size="10.5" fill="#3a4a66">建立「位置 → 下标」哈希表 idx</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="110" y="132" width="420" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="126" y="158" font-size="10.5" fill="#3a4a66">② dp[0] = {0}：起点上一跳记 0，下一步只放出 d = 1</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="110" y="190" width="420" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="126" y="210" font-size="11" fill="#3a4a66">③ i 从 0 到 n−2：dp[i] 为空就整层跳过</text>
+    <text x="126" y="228" font-size="10.5" fill="#3a4a66">p = stones[i]</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="110" y="256" width="420" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="126" y="276" font-size="11" fill="#8a6a20">④ 对每个 k ∈ dp[i]，枚举 d ∈ {k−1, k, k+1}</text>
+    <text x="126" y="294" font-size="10.5" fill="#8a6a20">d ≤ 0 直接丢弃：既不能后退，也不能原地不动</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <polygon points="320,326 444,368 320,410 196,368" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="320" y="362" text-anchor="middle" font-size="11" fill="#3a5a30">p + d 处有石子？</text>
+    <text x="320" y="380" text-anchor="middle" font-size="9.5" fill="#3a5a30">j = idx[p + d]</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="20" y="344" width="96" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+    <text x="68" y="366" text-anchor="middle" font-size="10" fill="#8a3a36">丢弃这个 d</text>
+    <text x="68" y="382" text-anchor="middle" font-size="10" fill="#8a3a36">试下一个</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="110" y="428" width="420" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="126" y="450" font-size="11" fill="#3a5a30">⑤ 若 j == n−1：立即返回 true（已落到末石）</text>
+    <text x="126" y="468" font-size="10.5" fill="#3a5a30">否则 dp[j].add(d)，把状态 (j, d) 记下来</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="110" y="498" width="420" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+    <text x="126" y="523" font-size="10.5" fill="#8a3a36">⑥ 所有层枚举完仍未落到末石 → 返回 false</text>
+  </g>
+
+  <path d="M 320 116 L 320 128" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 174 L 320 186" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 240 L 320 252" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 308 L 320 322" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 196 368 L 122 368" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 410 L 320 424" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 482 L 320 494" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="206" y="360" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+  <text x="330" y="424" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <g filter="url(#rough2)">
+    <rect x="48" y="552" width="544" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="8"/>
+    <text x="62" y="570" font-size="9.8" fill="#8a6a20">剪枝：第 i 块石子的上一跳长度 k ≤ i ——每跳至少推进一块石子，且步长每次至多 +1</text>
+    <text x="62" y="586" font-size="9.8" fill="#8a6a20">于是状态总数 ≤ Σ(i+1) = O(n²)，n = 2000 时最坏约 2×10⁶ 次集合操作</text>
+  </g>
+</svg>

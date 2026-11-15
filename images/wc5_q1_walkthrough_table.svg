@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="430" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">三组演算：小样例走通，边界样例验证不溢出</text>
+  <text x="310" y="48" text-anchor="middle" font-size="11" fill="#888">每一步都做「减整块 → 定 d → 算 idx、num、pos」</text>
+
+  <rect x="30" y="64" width="560" height="96" fill="#ffffff" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="88" font-size="11.5" fill="#3a4a66" font-weight="bold">n = 11</text>
+  <text x="48" y="110" font-size="10.5" fill="#555">d = 1：块长 9 &lt; 11 ⇒ 减 9，n = 2，转 d = 2，start = 10</text>
+  <text x="48" y="128" font-size="10.5" fill="#555">d = 2：块长 180 ≥ 2 ⇒ 停止；idx = 2 − 1 = 1</text>
+  <text x="48" y="146" font-size="10.5" fill="#555">num = 10 + ⌊1/2⌋ = 10，pos = 1 ⇒ “10” 的第 1 位 = 0 ✓</text>
+
+  <rect x="30" y="172" width="560" height="96" fill="#ffffff" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="196" font-size="11.5" fill="#3a4a66" font-weight="bold">n = 10⁹</text>
+  <text x="48" y="218" font-size="10.5" fill="#555">d = 1…8 累减 9+180+2700+36000+450000+5400000+63000000+720000000</text>
+  <text x="48" y="236" font-size="10.5" fill="#555">⇒ n = 211111111，d = 9，start = 10⁸；idx = 211111110</text>
+  <text x="48" y="254" font-size="10.5" fill="#555">⌊211111110 / 9⌋ = 23456790，num = 123456790，pos = 0 ⇒ 1 ✓</text>
+
+  <rect x="30" y="280" width="560" height="96" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="304" font-size="11.5" fill="#8a6a20" font-weight="bold">n = 2³¹−1 = 2147483647（上限）</text>
+  <text x="48" y="326" font-size="10.5" fill="#555">d = 1…8 累减 788888889 ⇒ n = 1358594758，d = 9，start = 10⁸</text>
+  <text x="48" y="344" font-size="10.5" fill="#555">idx = 1358594757，⌊idx / 9⌋ = 150954973，num = 250954973</text>
+  <text x="48" y="362" font-size="10.5" fill="#555">pos = 1358594757 mod 9 = 0 ⇒ 首位 2 ✓</text>
+
+  <text x="310" y="404" text-anchor="middle" font-size="10.5" fill="#666">三组都满足 1 ≤ n ≤ cnt·d，且 idx mod d 落在 [0, d−1]，取位不会越界</text>
+  <text x="310" y="422" text-anchor="middle" font-size="10" fill="#999">注：n = 10⁹ 与上限用例的 num 都是 9 位数，验证了 64 位中间量是必需的</text>
+</svg>

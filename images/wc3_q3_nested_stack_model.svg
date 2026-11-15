@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="440" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">嵌套结构 = 调用栈：'[' 保存现场，']' 结算一层</text>
+  <text x="320" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">每一层只需记住两件事：外层已解码的前缀 base，以及本层的乘数 k</text>
+
+  <text x="50" y="80" font-size="10.5" fill="#999" filter="url(#rough2)">编码串 3[a2[c]] 的嵌套形状</text>
+
+  <rect x="50" y="92" width="330" height="176" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <rect x="58" y="100" width="56" height="22" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="5" filter="url(#rough2)"/>
+  <text x="86" y="115" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">k = 3</text>
+
+  <rect x="110" y="136" width="232" height="104" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <rect x="118" y="144" width="56" height="22" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="5" filter="url(#rough2)"/>
+  <text x="146" y="159" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">k = 2</text>
+
+  <text x="82" y="204" text-anchor="middle" font-size="20" fill="#3a4a66" filter="url(#rough2)">a</text>
+  <text x="226" y="208" text-anchor="middle" font-size="20" fill="#3a5a30" filter="url(#rough2)">c</text>
+
+  <text x="215" y="296" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">外层内容 a2[c] 解码为 acc，再整体重复 3 次</text>
+
+  <text x="420" y="84" font-size="10.5" fill="#999" filter="url(#rough2)">调用栈（自底向上）</text>
+
+  <rect x="420" y="96" width="184" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="432" y="122" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">base = "a"</text>
+  <text x="432" y="142" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">k = 2　← 栈顶</text>
+
+  <rect x="420" y="170" width="184" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="432" y="196" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">base = ""</text>
+  <text x="432" y="216" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">k = 3　← 栈底</text>
+
+  <rect x="420" y="244" width="184" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="432" y="272" font-size="11" fill="#8a3a36" filter="url(#rough2)">cur = "c"（当前层）</text>
+
+  <path d="M 512 292 L 512 306" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="50" y="312" width="540" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="64" y="334" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">遇到 ']'：</text>
+  <text x="64" y="354" font-size="10" fill="#555" filter="url(#rough2)">cur = base + cur × k，弹出的这个 cur 立刻成为外层「已解码内容」的尾部</text>
+
+  <text x="320" y="392" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">类比函数调用：'[' 是 call，']' 是 return，返回值就是内层展开后的字符串</text>
+  <text x="320" y="412" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">3[a2[c]]：c×2 = cc，与 a 合成 acc，外层再 ×3 → accaccacc</text>
+</svg>

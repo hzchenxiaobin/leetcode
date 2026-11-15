@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="470" fill="#fafafa"/>
+
+  <text x="320" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">固定 d 后的双指针流程：扩张 → 收缩 → 判定</text>
+  <text x="320" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">对每个 d 各跑一遍；窗口保持「≤ d 种字符」，因此 left 只进不退，总移动 O(n)</text>
+
+  <rect x="210" y="62" width="220" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="83" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">for d = 1 .. 26（外层枚举）</text>
+  <path d="M 320 94 L 320 118" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="160" y="122" width="320" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="141" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">扩张：right 右移，cnt[s[right]]++</text>
+  <text x="320" y="157" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">同步维护 distinct / good 两个计数器</text>
+  <path d="M 320 166 L 320 196" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="320,200 438,236 320,272 202,236" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="320" y="241" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">distinct &gt; d ?</text>
+
+  <path d="M 320 272 L 320 300" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="331" y="290" font-size="10" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <rect x="170" y="304" width="300" height="50" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="323" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">收缩：left 右移，移出 s[left]</text>
+  <text x="320" y="340" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">计数减到 0 则 distinct−−，减到 k−1 则 good−−</text>
+
+  <path d="M 170 329 L 96 329 L 96 236 L 200 236" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="52" y="292" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">循环</text>
+  <text x="52" y="305" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">收缩</text>
+
+  <path d="M 438 236 L 456 236" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="447" y="228" font-size="10" fill="#4a7a3a" filter="url(#rough2)">否</text>
+
+  <rect x="458" y="190" width="172" height="92" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="544" y="210" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">命中就更新答案</text>
+  <text x="544" y="229" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">distinct == d 且</text>
+  <text x="544" y="245" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">good == d 时：</text>
+  <text x="544" y="264" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">ans = max(ans, right−left+1)</text>
+
+  <rect x="120" y="374" width="400" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="320" y="395" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">right 扫到末尾 → d 加一、重开窗口；26 个 d 全部跑完 → 返回 ans</text>
+  <text x="320" y="417" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">总时间 O(26·n)，额外空间 O(26)（只需 26 个计数）</text>
+
+  <text x="320" y="455" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">关键：收缩是 while 而不是 if——一次可能剔除多种字符，必须缩到 distinct ≤ d 才能判定</text>
+</svg>

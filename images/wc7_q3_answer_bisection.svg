@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="14.5" fill="#444" font-weight="bold" filter="url(#rough2)">二分答案：把「最小化最大段和」转成「判定可行性」</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">以示例 1 为例：max = 10，sum = 32，答案 = 18</text>
+
+  <!-- 数轴 -->
+  <path d="M 76 118 L 488 118" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 80 111 L 80 125" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <path d="M 470 111 L 470 125" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <path d="M 300 86 L 300 168" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" filter="url(#rough2)"/>
+
+  <text x="80" y="104" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">max = 10</text>
+  <text x="474" y="104" text-anchor="middle" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">sum = 32</text>
+  <text x="300" y="78" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">答案 = 18</text>
+
+  <!-- 可行 / 不可行区间 -->
+  <rect x="78" y="130" width="221" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <rect x="301" y="130" width="169" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="188" y="149" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">check(x) = false（段数 &gt; k）</text>
+  <text x="385" y="149" text-anchor="middle" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">check(x) = true（段数 ≤ k）</text>
+
+  <text x="280" y="190" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">可行性对 x 单调：假 … 假 → 真 → 真 … 真，翻转点就是答案</text>
+
+  <!-- 三要素 -->
+  <rect x="40" y="212" width="152" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="52" y="232" font-size="9.8" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 下界 max(nums)</text>
+  <text x="52" y="250" font-size="8.8" fill="#555" filter="url(#rough2)">最大元素不能再拆</text>
+  <text x="52" y="266" font-size="8.8" fill="#555" filter="url(#rough2)">故答案 ≥ max = 10</text>
+
+  <rect x="204" y="212" width="152" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="216" y="232" font-size="9.8" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">② 上界 sum(nums)</text>
+  <text x="216" y="250" font-size="8.8" fill="#555" filter="url(#rough2)">一整段装完即可行</text>
+  <text x="216" y="266" font-size="8.8" fill="#555" filter="url(#rough2)">故答案 ≤ sum = 32</text>
+
+  <rect x="368" y="212" width="152" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="380" y="232" font-size="9.8" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 判定 check(x)</text>
+  <text x="380" y="250" font-size="8.8" fill="#555" filter="url(#rough2)">贪心切段，段数 ≤ k</text>
+  <text x="380" y="266" font-size="8.8" fill="#555" filter="url(#rough2)">则 x 可行，反之不可行</text>
+
+  <!-- 复杂度 -->
+  <rect x="40" y="292" width="480" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="54" y="312" font-size="10" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">为什么快</text>
+  <text x="54" y="330" font-size="9" fill="#555" filter="url(#rough2)">时间 O(n log S)：S = sum(nums) ≤ 10⁹，至多约 30 轮，每轮一遍线性扫描</text>
+  <text x="54" y="346" font-size="9" fill="#555" filter="url(#rough2)">空间 O(1)：只需 lo、hi、cur、cnt，连前缀和数组都不需要</text>
+  <text x="54" y="362" font-size="9" fill="#555" filter="url(#rough2)">对比：DP 需 O(k·n²) 次转移，n = 1000、k = 50 时约 2.5×10⁷</text>
+
+  <text x="280" y="388" text-anchor="middle" font-size="9.2" fill="#999" filter="url(#rough2)">二分的对象是「答案值」而不是下标：值域是连续的整数区间</text>
+</svg>

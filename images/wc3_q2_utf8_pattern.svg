@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <g filter="url(#rough2)">
+    <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">UTF-8 的四种字节模式</text>
+    <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888">首字节中连续 1 的个数 = 该字符总字节数 n，其后 n−1 个字节恒为 10xxxxxx</text>
+  </g>
+
+  <!-- 行 1：1 字节 -->
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="98" y="88" text-anchor="end" font-size="11" fill="#3a5a30" font-weight="bold">n = 1</text>
+    <text x="98" y="103" text-anchor="end" font-size="9.5" fill="#777">need 0</text>
+    <rect x="112" y="66" width="118" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="5"/>
+    <text x="171" y="91" font-size="12" fill="#3a5a30" font-weight="bold">0xxxxxxx</text>
+    <text x="250" y="91" text-anchor="start" font-size="10" fill="#777">ASCII，续字节 0 个</text>
+  </g>
+
+  <!-- 行 2：2 字节 -->
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="98" y="140" text-anchor="end" font-size="11" fill="#3a4a66" font-weight="bold">n = 2</text>
+    <text x="98" y="155" text-anchor="end" font-size="9.5" fill="#777">need 1</text>
+    <rect x="112" y="118" width="118" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="5"/>
+    <text x="171" y="143" font-size="12" fill="#3a4a66" font-weight="bold">110xxxxx</text>
+    <rect x="240" y="118" width="92" height="40" fill="#ffffff" stroke="#446688" stroke-width="1.4" rx="5"/>
+    <text x="286" y="143" font-size="11" fill="#555">10xxxxxx</text>
+    <text x="344" y="143" text-anchor="start" font-size="10" fill="#777">1 个续字节</text>
+  </g>
+
+  <!-- 行 3：3 字节 -->
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="98" y="192" text-anchor="end" font-size="11" fill="#8a6a20" font-weight="bold">n = 3</text>
+    <text x="98" y="207" text-anchor="end" font-size="9.5" fill="#777">need 2</text>
+    <rect x="112" y="170" width="118" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="5"/>
+    <text x="171" y="195" font-size="12" fill="#8a6a20" font-weight="bold">1110xxxx</text>
+    <rect x="240" y="170" width="92" height="40" fill="#ffffff" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <text x="286" y="195" font-size="11" fill="#555">10xxxxxx</text>
+    <rect x="340" y="170" width="92" height="40" fill="#ffffff" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <text x="386" y="195" font-size="11" fill="#555">10xxxxxx</text>
+    <text x="442" y="195" text-anchor="start" font-size="10" fill="#777">2 个续字节</text>
+  </g>
+
+  <!-- 行 4：4 字节 -->
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="98" y="244" text-anchor="end" font-size="11" fill="#8c3a3a" font-weight="bold">n = 4</text>
+    <text x="98" y="259" text-anchor="end" font-size="9.5" fill="#777">need 3</text>
+    <rect x="112" y="222" width="118" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="5"/>
+    <text x="171" y="247" font-size="12" fill="#8c3a3a" font-weight="bold">11110xxx</text>
+    <rect x="240" y="222" width="92" height="40" fill="#ffffff" stroke="#b85450" stroke-width="1.4" rx="5"/>
+    <text x="286" y="247" font-size="11" fill="#555">10xxxxxx</text>
+    <rect x="340" y="222" width="92" height="40" fill="#ffffff" stroke="#b85450" stroke-width="1.4" rx="5"/>
+    <text x="386" y="247" font-size="11" fill="#555">10xxxxxx</text>
+    <rect x="440" y="222" width="92" height="40" fill="#ffffff" stroke="#b85450" stroke-width="1.4" rx="5"/>
+    <text x="486" y="247" font-size="11" fill="#555">10xxxxxx</text>
+  </g>
+
+  <!-- 底部：掩码判定表 -->
+  <g filter="url(#rough2)">
+    <rect x="24" y="282" width="512" height="86" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.4" rx="10"/>
+    <text x="40" y="304" font-size="10.5" fill="#555" font-weight="bold">首字节裁决：从上往下匹配，命中即停</text>
+    <text x="40" y="326" font-size="10" fill="#3a4a66">b &gt;&gt; 7 == 0 → need = 0　　b &gt;&gt; 5 == 0b110 → need = 1</text>
+    <text x="40" y="346" font-size="10" fill="#3a4a66">b &gt;&gt; 4 == 0b1110 → need = 2　　b &gt;&gt; 3 == 0b11110 → need = 3</text>
+    <text x="40" y="364" font-size="10" fill="#b85450">其余（孤立的 10xxxxxx、11111xxx）→ 直接 false</text>
+  </g>
+</svg>

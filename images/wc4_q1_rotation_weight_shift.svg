@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="400" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">顺时针旋转 1 位：权重整体后移，只有尾元素例外</text>
+  <text x="300" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">F(k) = 0·arr[0] + 1·arr[1] + … + (n−1)·arr[n−1]，要求 max F(k)</text>
+
+  <text x="36" y="100" font-size="12" fill="#3a4a66" filter="url(#rough2)">arr₀</text>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" font-weight="bold" fill="#3a4a66">
+    <rect x="100" y="78" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="152" y="78" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="204" y="78" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="256" y="78" width="46" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <text x="123" y="101">4</text>
+    <text x="175" y="101">3</text>
+    <text x="227" y="101">2</text>
+    <text x="279" y="101">6</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10" text-anchor="middle" fill="#888">
+    <text x="123" y="130">0</text><text x="175" y="130">1</text>
+    <text x="227" y="130">2</text><text x="279" y="130">3</text>
+  </g>
+
+  <path d="M 180 138 L 180 168" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="192" y="158" font-size="10.5" fill="#666" filter="url(#rough2)">旋转 1 位</text>
+
+  <text x="36" y="204" font-size="12" fill="#3a4a66" filter="url(#rough2)">arr₁</text>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" font-weight="bold" fill="#3a4a66">
+    <rect x="100" y="182" width="46" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="152" y="182" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="204" y="182" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="256" y="182" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="123" y="205">6</text>
+    <text x="175" y="205">4</text>
+    <text x="227" y="205">3</text>
+    <text x="279" y="205">2</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10" text-anchor="middle" fill="#888">
+    <text x="123" y="234">0</text><text x="175" y="234">1</text>
+    <text x="227" y="234">2</text><text x="279" y="234">3</text>
+  </g>
+
+  <rect x="330" y="66" width="252" height="126" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="344" y="88" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">只看元素的权重变化</text>
+  <text x="344" y="112" font-size="9.5" fill="#555" filter="url(#rough2)">其余元素：i → i+1，加 nums[i]</text>
+  <text x="344" y="134" font-size="9.5" fill="#555" filter="url(#rough2)">尾元素 x：n−1 → 0，减 (n−1)x</text>
+  <text x="344" y="158" font-size="9.5" fill="#555" filter="url(#rough2)">合计 = (S − x) − (n−1)x</text>
+  <text x="344" y="180" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">= S − n·x</text>
+
+  <text x="306" y="262" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">红色元素 6：权重从 3 绕回 0</text>
+
+  <rect x="56" y="272" width="488" height="82" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="72" y="296" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">F(k+1) = F(k) + S − n·x，x = arr_k[n−1] = nums[n−1−k]</text>
+  <text x="72" y="318" font-size="10" fill="#555" filter="url(#rough2)">S = 全部元素之和，整轮不变；x 是这一轮末尾那个元素</text>
+  <text x="72" y="338" font-size="10" fill="#555" filter="url(#rough2)">于是 n 个 F 值可以串成一条 O(1) 转移的链，只需扫一遍</text>
+
+  <text x="300" y="382" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">关键：旋转 = 整体平移 + 一个元素绕回，平移部分用 S 一次性折算</text>
+</svg>

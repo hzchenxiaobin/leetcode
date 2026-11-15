@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">递归流程：dfs(node) 的三段式</text>
+  <text x="280" y="45" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">空节点回 0；父节点判据累加；再把两个孩子的结果加起来</text>
+
+  <!-- 入口 -->
+  <rect x="170" y="66" width="220" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="90" text-anchor="middle" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">dfs(node)：进入当前节点</text>
+
+  <path d="M 280 104 L 280 122" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判空菱形 -->
+  <polygon points="280,124 392,154 280,184 168,154" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="158" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">node == null ?</text>
+
+  <path d="M 392 154 L 428 154" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="404" y="146" font-size="9.5" fill="#999" filter="url(#rough2)">是</text>
+
+  <rect x="432" y="132" width="108" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="486" y="152" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">返回 0</text>
+  <text x="486" y="168" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">空子树无贡献</text>
+
+  <path d="M 280 184 L 280 210" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="286" y="202" font-size="9.5" fill="#999" filter="url(#rough2)">否</text>
+
+  <!-- 判据菱形 -->
+  <polygon points="280,212 404,244 280,276 156,244" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="241" text-anchor="middle" font-size="10.5" fill="#2f5a28" filter="url(#rough2)">node.left 是叶子 ?</text>
+  <text x="280" y="256" text-anchor="middle" font-size="9" fill="#4a7a3a" filter="url(#rough2)">left 非空且无孩子</text>
+
+  <path d="M 404 244 L 428 244" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="410" y="236" font-size="9.5" fill="#999" filter="url(#rough2)">是</text>
+
+  <rect x="432" y="220" width="110" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="487" y="240" text-anchor="middle" font-size="10" fill="#2f5a28" filter="url(#rough2)">total += 左孩子值</text>
+  <text x="487" y="256" text-anchor="middle" font-size="9" fill="#4a7a3a" filter="url(#rough2)">唯一一次认领</text>
+
+  <path d="M 280 276 L 280 300" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="286" y="292" font-size="9.5" fill="#999" filter="url(#rough2)">否</text>
+
+  <!-- 递归 -->
+  <rect x="130" y="302" width="300" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="322" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">total += dfs(node.left) + dfs(node.right)</text>
+  <text x="280" y="340" text-anchor="middle" font-size="9" fill="#7a8aa0" filter="url(#rough2)">左孩子自己是叶子时，递归进去返回 0，不会重复计数</text>
+
+  <path d="M 280 352 L 280 374" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="200" y="376" width="160" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="399" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">return total</text>
+
+  <rect x="40" y="424" width="480" height="44" fill="#f3f0fa" stroke="#7a6a9a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="443" font-size="10" fill="#5a4a7a" filter="url(#rough2)">等价迭代：栈里存 (node, isLeft)，弹栈时若是叶子且 isLeft 才累加；</text>
+  <text x="56" y="459" font-size="10" fill="#5a4a7a" filter="url(#rough2)">BFS 换成队列结果相同——答案与遍历顺序无关。</text>
+</svg>

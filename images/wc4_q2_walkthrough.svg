@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 356" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="356" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例演算：n = 13 → 1，贪心给出 5 步</text>
+  <text x="310" y="45" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">第 4 行命中特判 n = 3 走 −1；其余各行按「偶数 /2、末尾 01 减 1」判定</text>
+
+  <!-- 表头 -->
+  <rect x="30" y="58" width="560" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <g font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">
+    <text x="60" y="79" text-anchor="middle">步</text>
+    <text x="120" y="79" text-anchor="middle">n</text>
+    <text x="200" y="79">二进制</text>
+    <text x="300" y="79">判定依据</text>
+    <text x="492" y="79">操作</text>
+  </g>
+
+  <!-- 行背景 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="90" width="560" height="32" fill="#ffffff" stroke="#d8d8d8" stroke-width="1" rx="2"/>
+    <rect x="30" y="122" width="560" height="32" fill="#f7f9fc" stroke="#d8d8d8" stroke-width="1" rx="2"/>
+    <rect x="30" y="154" width="560" height="32" fill="#ffffff" stroke="#d8d8d8" stroke-width="1" rx="2"/>
+    <rect x="30" y="186" width="560" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="2"/>
+    <rect x="30" y="218" width="560" height="32" fill="#f7f9fc" stroke="#d8d8d8" stroke-width="1" rx="2"/>
+    <rect x="30" y="250" width="560" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="2"/>
+  </g>
+
+  <g font-size="11" fill="#444" filter="url(#rough2)">
+    <text x="60" y="111" text-anchor="middle">0</text>
+    <text x="120" y="111" text-anchor="middle">13</text>
+    <text x="200" y="111">1101</text>
+    <text x="300" y="111">奇数，13 mod 4 = 1</text>
+    <text x="492" y="111">n ← n − 1 = 12</text>
+
+    <text x="60" y="143" text-anchor="middle">1</text>
+    <text x="120" y="143" text-anchor="middle">12</text>
+    <text x="200" y="143">1100</text>
+    <text x="300" y="143">偶数（唯一操作）</text>
+    <text x="492" y="143">n ← n / 2 = 6</text>
+
+    <text x="60" y="175" text-anchor="middle">2</text>
+    <text x="120" y="175" text-anchor="middle">6</text>
+    <text x="200" y="175">110</text>
+    <text x="300" y="175">偶数（唯一操作）</text>
+    <text x="492" y="175">n ← n / 2 = 3</text>
+
+    <text x="60" y="207" text-anchor="middle" fill="#8a3a36">3</text>
+    <text x="120" y="207" text-anchor="middle" fill="#8a3a36" font-weight="bold">3</text>
+    <text x="200" y="207" fill="#8a3a36">11</text>
+    <text x="300" y="207" fill="#8a3a36">奇数且 n == 3（特判）</text>
+    <text x="492" y="207" fill="#8a3a36">n ← n − 1 = 2</text>
+
+    <text x="60" y="239" text-anchor="middle">4</text>
+    <text x="120" y="239" text-anchor="middle">2</text>
+    <text x="200" y="239">10</text>
+    <text x="300" y="239">偶数（唯一操作）</text>
+    <text x="492" y="239">n ← n / 2 = 1</text>
+
+    <text x="60" y="271" text-anchor="middle" fill="#3a5a30">5</text>
+    <text x="120" y="271" text-anchor="middle" fill="#3a5a30" font-weight="bold">1</text>
+    <text x="200" y="271" fill="#3a5a30">1</text>
+    <text x="300" y="271" fill="#3a5a30">循环结束</text>
+    <text x="492" y="271" fill="#3a5a30" font-weight="bold">返回 cnt = 5</text>
+  </g>
+
+  <!-- 底部对比 -->
+  <text x="310" y="308" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">若第 0 步选 +1：13 → 14 → 7 → 8 → 4 → 2 → 1，共 6 步，比贪心多 1 步</text>
+  <text x="310" y="328" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">反过来 n = 15 时 +1 更优：15 → 16 → 8 → 4 → 2 → 1 只要 5 步，−1 要 6 步</text>
+  <text x="310" y="348" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">官方示例 n = 8 给 3 步（8 → 4 → 2 → 1），n = 7 给 4 步（7 → 8 → 4 → 2 → 1）</text>
+</svg>

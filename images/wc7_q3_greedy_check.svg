@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">判定 check(x)：一次扫描贪心切段，段数最少</text>
+  <text x="280" y="45" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">能塞就塞、塞不下才另起一段；元素非负保证这样切出的段数最少</text>
+
+  <!-- 流程 -->
+  <rect x="60" y="66" width="210" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="165" y="86" text-anchor="middle" font-size="9.8" fill="#3a4a66" filter="url(#rough2)">cur = 0，cnt = 1</text>
+
+  <path d="M 165 96 L 165 116" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="165,118 275,150 165,182 55,150" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="165" y="154" text-anchor="middle" font-size="9.6" fill="#8a6a20" filter="url(#rough2)">cur + v &gt; x ?</text>
+
+  <path d="M 111 166 L 101 193" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="88" y="188" text-anchor="middle" font-size="9" fill="#3a5a30" filter="url(#rough2)">否</text>
+
+  <path d="M 220 166 L 231 193" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="243" y="188" text-anchor="middle" font-size="9" fill="#8a3a36" filter="url(#rough2)">是</text>
+
+  <rect x="22" y="198" width="136" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="90" y="216" text-anchor="middle" font-size="9.4" fill="#3a5a30" filter="url(#rough2)">并入当前段</text>
+  <text x="90" y="232" text-anchor="middle" font-size="9" fill="#555" filter="url(#rough2)">cur += v</text>
+
+  <rect x="170" y="198" width="136" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="238" y="216" text-anchor="middle" font-size="9.4" fill="#8a3a36" filter="url(#rough2)">另起一段</text>
+  <text x="238" y="232" text-anchor="middle" font-size="8.8" fill="#555" filter="url(#rough2)">cnt += 1，cur = v</text>
+
+  <path d="M 90 242 L 90 258 L 160 258 L 160 262" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 238 242 L 238 258 L 160 258" stroke="#666" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <rect x="60" y="266" width="200" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="160" y="288" text-anchor="middle" font-size="9.6" fill="#3a4a66" filter="url(#rough2)">扫完 → 返回 cnt ≤ k</text>
+
+  <text x="160" y="316" text-anchor="middle" font-size="9" fill="#777" filter="url(#rough2)">每个元素只判一次：单轮判定 O(n)</text>
+
+  <!-- 对照：x = 18 可行 -->
+  <rect x="316" y="64" width="224" height="116" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="428" y="84" text-anchor="middle" font-size="10" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">x = 18 → 可行</text>
+  <path d="M 330 94 L 526 94" stroke="#4a7a3a" stroke-width="1" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="330" y="114" font-size="8.6" fill="#555" filter="url(#rough2)">7 + 2 + 5 = 14 ≤ 18</text>
+  <text x="330" y="132" font-size="8.6" fill="#555" filter="url(#rough2)">再加 10 → 24 &gt; 18，切段</text>
+  <text x="330" y="150" font-size="8.6" fill="#555" filter="url(#rough2)">10 + 8 = 18 ≤ 18</text>
+  <text x="330" y="168" font-size="8.8" fill="#3a5a30" filter="url(#rough2)">→ 共 2 段 ≤ k = 2 ✓ 可行</text>
+
+  <!-- 对照：x = 17 不可行 -->
+  <rect x="316" y="192" width="224" height="116" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="428" y="212" text-anchor="middle" font-size="10" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">x = 17 → 不可行</text>
+  <path d="M 330 222 L 526 222" stroke="#b85450" stroke-width="1" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <text x="330" y="242" font-size="8.6" fill="#555" filter="url(#rough2)">7 + 2 + 5 = 14 ≤ 17</text>
+  <text x="330" y="260" font-size="8.6" fill="#555" filter="url(#rough2)">再加 10 → 24 &gt; 17，切段</text>
+  <text x="330" y="278" font-size="8.6" fill="#555" filter="url(#rough2)">10 + 8 = 18 &gt; 17，再切</text>
+  <text x="330" y="296" font-size="8.8" fill="#8a3a36" filter="url(#rough2)">→ 共 3 段 &gt; k = 2 ✗ 不可行</text>
+
+  <!-- 结论 -->
+  <rect x="40" y="322" width="480" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="54" y="342" font-size="8.8" fill="#8a6a20" filter="url(#rough2)">贪心段数 = 该 x 下的最少段数：任何合法切法的第一段都不比贪心更长（引理 1）</text>
+  <text x="54" y="360" font-size="8.8" fill="#555" filter="url(#rough2)">故 check(x) 为真 ⟺ 存在「每段和 ≤ x 且段数 ≤ k」的切法（k ≤ n 时还能继续拆段补齐）</text>
+
+  <text x="280" y="392" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">判定里不需要回溯：每段都「吃到撑」是唯一最优的贪心选择</text>
+</svg>
