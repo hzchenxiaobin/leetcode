@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="31"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">差分模型：区间移位只在两端打标记，前缀和还原净位移</text>
+
+  <!-- 原始操作层 -->
+  <text x="60" y="64" font-size="13.5" fill="#333" filter="url(#rough2)">操作 [l, r, ±1] 逐个搬运字符（暴力 O(nm)）：</text>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="120" y="78" width="38" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="158" y="78" width="38" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="196" y="78" width="38" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="234" y="78" width="38" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="272" y="78" width="38" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="139" y="99">a</text>
+    <text x="177" y="99" fill="#b85450" font-weight="bold">b</text>
+    <text x="215" y="99" fill="#b85450" font-weight="bold">c</text>
+    <text x="253" y="99">d</text>
+    <text x="291" y="99">e</text>
+  </g>
+  <path d="M 196 62 L 196 46 L 272 46 L 272 62" stroke="#b85450" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <text x="234" y="40" font-size="12" fill="#b85450" text-anchor="middle" filter="url(#rough2)">区间 [1,2] 整体 −1</text>
+  <text x="340" y="99" font-size="12.5" fill="#888" filter="url(#rough2)">← 每个操作都要摸一遍区间内字符</text>
+
+  <!-- 中间转换箭头 -->
+  <path d="M 280 122 L 280 150" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="300" y="140" font-size="12.5" fill="#446688" filter="url(#rough2)">位移可加：先攒总账，最后一次性应用</text>
+
+  <!-- 差分标记层 -->
+  <text x="60" y="174" font-size="13.5" fill="#333" filter="url(#rough2)">差分标记（每个操作只写两格，O(m)）：</text>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="120" y="188" width="38" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="158" y="188" width="38" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="196" y="188" width="38" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="234" y="188" width="38" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="272" y="188" width="38" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="310" y="188" width="38" height="32" fill="#eee" stroke="#aaa" stroke-width="1" stroke-dasharray="4 3" rx="4"/>
+    <text x="139" y="209">0</text>
+    <text x="177" y="209" fill="#b85450" font-weight="bold">−1</text>
+    <text x="215" y="209">0</text>
+    <text x="253" y="209" fill="#4a7a3a" font-weight="bold">+1</text>
+    <text x="291" y="209">0</text>
+    <text x="329" y="209" font-size="12" fill="#999">n</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#888" text-anchor="middle">
+    <text x="139" y="232">·</text><text x="177" y="232">diff[l] += −1</text>
+    <text x="253" y="232">diff[r+1] −= −1</text><text x="291" y="232">·</text>
+  </g>
+  <text x="410" y="209" font-size="12.5" fill="#888" filter="url(#rough2)">哨兵位必须开到 n</text>
+
+  <!-- 前缀和层 -->
+  <path d="M 280 246 L 280 272" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="302" y="262" font-size="12.5" fill="#446688" filter="url(#rough2)">一遍前缀和 O(n)</text>
+
+  <text x="60" y="296" font-size="13.5" fill="#333" filter="url(#rough2)">净位移 δ 与最终应用：</text>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="120" y="308" width="38" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="158" y="308" width="38" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="196" y="308" width="38" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="234" y="308" width="38" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="272" y="308" width="38" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="139" y="329">δ=0</text>
+    <text x="177" y="329">δ=−1</text>
+    <text x="215" y="329">δ=−1</text>
+    <text x="253" y="329">δ=0</text>
+    <text x="291" y="329">δ=0</text>
+  </g>
+  <text x="360" y="329" font-size="13" fill="#4a7a3a" filter="url(#rough2)">→ a→a, b→a, c→b, d→d, e→e</text>
+
+  <!-- 结论框 -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="356" width="420" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="378" text-anchor="middle" font-size="13.5" fill="#1d3a17" filter="url(#rough2)">总代价 O(n + m)：打 2m 个标记 + 一遍前缀和 + 一遍应用</text>
+</svg>

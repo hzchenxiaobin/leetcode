@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="211"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="26" text-anchor="middle" font-size="15.5" fill="#333" font-weight="bold" filter="url(#rough2)">行掩码模型：每行压成 12 位整数，覆盖判定一次位与</text>
+
+  <!-- 矩阵 → 掩码 -->
+  <text x="60" y="58" font-size="13.5" fill="#333" filter="url(#rough2)">矩阵第 i 行（n = 3 演示）：</text>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="90" y="70" width="44" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="134" y="70" width="44" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="178" y="70" width="44" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <text x="112" y="92">0</text>
+    <text x="156" y="92" fill="#1a2b45" font-weight="bold">1</text>
+    <text x="200" y="92">0</text>
+  </g>
+  <path d="M 260 87 L 300 87" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="278" y="76" font-size="11.5" fill="#446688" text-anchor="middle" filter="url(#rough2)">压缩</text>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="308" y="70" width="70" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <text x="343" y="92" fill="#1d3a17" font-weight="bold">010</text>
+  </g>
+  <text x="400" y="92" font-size="12.5" fill="#888" filter="url(#rough2)">r = 0b010 = 2</text>
+
+  <!-- 判定式 -->
+  <text x="60" y="140" font-size="13.5" fill="#333" filter="url(#rough2)">选列集合 S（同为掩码），覆盖判定：</text>
+  <g filter="url(#rough2)">
+    <rect x="70" y="152" width="420" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <text x="280" y="176" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">第 i 行被覆盖 ⟺ r &amp; ~S == 0（即 r ⊆ S）</text>
+  <text x="280" y="198" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">r 的每个 1 位都被 S 的 1 位罩住；r = 0 时空真（无 1 的行恒覆盖）</text>
+
+  <!-- 判定演示 -->
+  <text x="60" y="240" font-size="13.5" fill="#333" filter="url(#rough2)">示例：r = 101，两个候选 S：</text>
+  <g filter="url(#rough2)" font-size="13.5" fill="#333" text-anchor="middle">
+    <!-- S = 101 -->
+    <rect x="80" y="254" width="180" height="86" fill="#fafafa" stroke="#bbb" stroke-width="1.2" rx="8"/>
+    <text x="170" y="276" font-size="13">S = 101（选列 0、2）</text>
+    <text x="170" y="298" font-size="13.5">r &amp; ~S = 101 &amp; 010 = 000</text>
+    <text x="170" y="324" font-size="13.5" fill="#4a7a3a" font-weight="bold">= 0 → 覆盖 ✓</text>
+
+    <!-- S = 110 -->
+    <rect x="300" y="254" width="180" height="86" fill="#fafafa" stroke="#bbb" stroke-width="1.2" rx="8"/>
+    <text x="390" y="276" font-size="13">S = 110（选列 1、2）</text>
+    <text x="390" y="298" font-size="13.5">r &amp; ~S = 101 &amp; 001 = 001</text>
+    <text x="390" y="324" font-size="13.5" fill="#b85450" font-weight="bold">≠ 0 → 不覆盖 ✗</text>
+  </g>
+
+  <!-- 枚举层 -->
+  <text x="60" y="372" font-size="13.5" fill="#333" filter="url(#rough2)">枚举 S ∈ [0, 2ⁿ)，popcount(S) == k 才判定：</text>
+  <g filter="url(#rough2)">
+    <rect x="370" y="356" width="160" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="450" y="376" text-anchor="middle" font-size="13" fill="#1a2b45" filter="url(#rough2)">n=12 → 4096 个候选</text>
+  <text x="280" y="408" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">每行判定 O(1)，总 O(2ⁿ·(n+m))；n ≤ 12 正是“怎么暴力都对”的舒适区</text>
+</svg>

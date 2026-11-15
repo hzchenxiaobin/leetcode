@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="27" text-anchor="middle" font-size="15.5" fill="#333" font-weight="bold" filter="url(#rough2)">示例演算：s = "abc"，三段操作的差分与前缀和</text>
+
+  <!-- 操作列表 -->
+  <g filter="url(#rough2)" font-size="13.5" fill="#333">
+    <text x="60" y="58">① [0,1,0] 前移 → diff[0]−1, diff[2]+1</text>
+    <text x="60" y="80">② [1,2,1] 后移 → diff[1]+1, diff[3]−1</text>
+    <text x="60" y="102">③ [0,2,1] 后移 → diff[0]+1, diff[3]−1</text>
+  </g>
+
+  <!-- 汇总差分表 -->
+  <text x="60" y="136" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)">汇总 diff（下标 0..3，3 为哨兵）：</text>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="80"  y="148" width="72" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="4"/>
+    <rect x="152" y="148" width="72" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="4"/>
+    <rect x="224" y="148" width="72" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="4"/>
+    <rect x="296" y="148" width="72" height="34" fill="#eee" stroke="#aaa" stroke-width="1.2" stroke-dasharray="4 3" rx="4"/>
+    <text x="116" y="170">0</text>
+    <text x="188" y="170">+1</text>
+    <text x="260" y="170">+1</text>
+    <text x="332" y="170" font-size="12" fill="#999">−2</text>
+    <text x="116" y="196" font-size="11.5" fill="#888">−1+1 抵消</text>
+    <text x="188" y="196" font-size="11.5" fill="#888">来自②</text>
+    <text x="260" y="196" font-size="11.5" fill="#888">来自①</text>
+    <text x="332" y="196" font-size="11.5" fill="#999">②+③</text>
+  </g>
+
+  <!-- 前缀和 -->
+  <path d="M 224 206 L 224 232" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="244" y="224" font-size="12.5" fill="#446688" filter="url(#rough2)">前缀和</text>
+
+  <text x="60" y="256" font-size="13.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">净位移 δ：</text>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="80"  y="268" width="72" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <rect x="152" y="268" width="72" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <rect x="224" y="268" width="72" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <text x="116" y="290">δ₀ = 0</text>
+    <text x="188" y="290">δ₁ = 1</text>
+    <text x="260" y="290">δ₂ = 2</text>
+  </g>
+
+  <!-- 应用 -->
+  <path d="M 224 310 L 224 336" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="246" y="328" font-size="12.5" fill="#446688" filter="url(#rough2)">逐位应用（模 26）</text>
+
+  <text x="60" y="360" font-size="13.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">最终串：</text>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle">
+    <rect x="80"  y="372" width="60" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="152" y="372" width="60" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="224" y="372" width="60" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="110" y="394" fill="#1a2b45">a</text>
+    <text x="182" y="394" fill="#1a2b45">c</text>
+    <text x="254" y="394" fill="#1a2b45">e</text>
+  </g>
+  <text x="320" y="394" font-size="13.5" fill="#b85450" filter="url(#rough2)">= "ace" ✓ 与官方输出一致</text>
+</svg>

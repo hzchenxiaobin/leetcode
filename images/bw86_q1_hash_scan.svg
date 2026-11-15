@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="167"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">哈希查重：n−1 个相邻和，边查边插、撞车即返回</text>
+
+  <!-- 数组 -->
+  <text x="60" y="66" font-size="13.5" fill="#333" filter="url(#rough2)">nums = [1, 2, 3, 2, 2]：</text>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle">
+    <rect x="110" y="80" width="52" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="162" y="80" width="52" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="214" y="80" width="52" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="266" y="80" width="52" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="318" y="80" width="52" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="136" y="103">1</text>
+    <text x="188" y="103">2</text>
+    <text x="240" y="103">3</text>
+    <text x="292" y="103">2</text>
+    <text x="344" y="103">2</text>
+  </g>
+  <!-- 相邻和对 -->
+  <g filter="url(#rough2)" font-size="13" fill="#b85450" text-anchor="middle">
+    <path d="M 136 122 L 136 148 L 188 148 L 188 122" stroke="#b85450" stroke-width="1.5" fill="none"/>
+    <text x="162" y="144" font-size="12">s₀ = 3</text>
+    <path d="M 188 122 L 188 174 L 240 174 L 240 122" stroke="#b85450" stroke-width="1.5" fill="none"/>
+    <text x="214" y="170" font-size="12">s₁ = 5</text>
+    <path d="M 240 122 L 240 148 L 292 148 L 292 122" stroke="#b85450" stroke-width="1.5" fill="none"/>
+    <text x="266" y="144" font-size="12">s₂ = 5</text>
+    <path d="M 292 122 L 292 174 L 344 174 L 344 122" stroke="#b85450" stroke-width="1.5" fill="none"/>
+    <text x="318" y="170" font-size="12">s₃ = 4</text>
+  </g>
+
+  <!-- 集合演化 -->
+  <text x="60" y="216" font-size="13.5" fill="#446688" font-weight="bold" filter="url(#rough2)">哈希集合演化：</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <rect x="80" y="228" width="30" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="95" y="247" text-anchor="middle">3</text>
+    <path d="M 118 242 L 148 242" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arrb)"/>
+    <rect x="152" y="228" width="30" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="167" y="247" text-anchor="middle">3</text>
+    <rect x="186" y="228" width="30" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="201" y="247" text-anchor="middle">5</text>
+    <path d="M 224 242 L 254 242" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+    <g>
+      <rect x="258" y="228" width="70" height="28" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+      <text x="293" y="247" text-anchor="middle" fill="#b85450" font-weight="bold">5 已在!</text>
+    </g>
+    <text x="356" y="247" font-size="13" fill="#b85450" font-weight="bold">return true</text>
+  </g>
+  <text x="60" y="284" font-size="12.5" fill="#888" filter="url(#rough2)">（若一路无冲突扫到 sₙ₋₂，才 return false；本例在 s₂ 处短路）</text>
+
+  <!-- 复杂度框 -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="306" width="420" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="328" text-anchor="middle" font-size="14" fill="#1a2b45" filter="url(#rough2)">n−1 个和、每步一次查询一次插入，均摊 O(1)</text>
+  <text x="280" y="350" text-anchor="middle" font-size="14" fill="#1a2b45" font-weight="bold" filter="url(#rough2)">总时间 O(n)、空间 O(n)，替代 O(n²) 双重循环</text>
+</svg>
