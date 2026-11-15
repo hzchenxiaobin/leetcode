@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="640" height="380" fill="#fafafa"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">格 → 块的对偶：黑格 (x,y) 只属于至多 4 个块</text>
+
+  <!-- 左：内部黑格，4 个块 -->
+  <g filter="url(#rough2)">
+    <text x="150" y="58" text-anchor="middle" font-size="12.5" fill="#446688">内部黑格：贡献给 4 个块</text>
+    <!-- 4 个候选 2×2 块（半透明描边） -->
+    <rect x="70" y="70" width="80" height="80" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="110" y="70" width="80" height="80" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="70" y="110" width="80" height="80" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="110" y="110" width="80" height="80" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <!-- 网格细线 -->
+    <path d="M 70 110 L 190 110 M 110 70 L 110 190" stroke="#bbb" stroke-width="1"/>
+    <!-- 黑格 -->
+    <rect x="112" y="112" width="36" height="36" fill="#333" stroke="#111" stroke-width="1.6"/>
+    <!-- 块左上角标注 -->
+    <text x="86" y="100" font-size="10.5" fill="#446688">(x−1, y−1)</text>
+    <text x="146" y="100" font-size="10.5" fill="#4a7a3a">(x−1, y)</text>
+    <text x="78" y="148" font-size="10.5" fill="#d6a040">(x, y−1)</text>
+    <text x="150" y="148" font-size="10.5" fill="#b85450">(x, y)</text>
+  </g>
+
+  <!-- 右：角上黑格，1 个块 -->
+  <g filter="url(#rough2)">
+    <text x="470" y="58" text-anchor="middle" font-size="12.5" fill="#b85450">角落黑格 (0,0)：只属于 1 个块</text>
+    <!-- 网格 3×3 -->
+    <g stroke="#bbb" stroke-width="1.4" fill="none">
+      <rect x="400" y="70" width="120" height="120"/>
+      <path d="M 440 70 L 440 190 M 480 70 L 480 190 M 400 110 L 520 110 M 400 150 L 520 150"/>
+    </g>
+    <rect x="400" y="70" width="40" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="2"/>
+    <rect x="402" y="72" width="36" height="36" fill="#333" stroke="#111" stroke-width="1.4"/>
+    <text x="470" y="212" text-anchor="middle" font-size="11" fill="#b85450">候选 (−1,−1)、(−1,0)、(0,−1) 全被裁掉</text>
+    <text x="470" y="228" text-anchor="middle" font-size="11" fill="#b85450">只留下左上角 (0,0) 的块</text>
+  </g>
+
+  <!-- 底部：公式 -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="252" width="500" height="60" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="320" y="276" text-anchor="middle" font-size="13.5" fill="#333">黑格 (x, y) 向左上角在 {x−1, x} × {y−1, y} 的块各贡献 1</text>
+    <text x="320" y="298" text-anchor="middle" font-size="12.5" fill="#4a7a3a">候选再裁剪到 0 ≤ bx &lt; m−1、0 ≤ by &lt; n−1（闭区间外全丢）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="120" y="326" width="400" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="320" y="344" text-anchor="middle" font-size="12" fill="#555">块多黑格少（10^10 块 vs 10^4 黑格）：</text>
+    <text x="320" y="360" text-anchor="middle" font-size="12" fill="#d6a040">让小对象（黑格）做贡献，代价 O(K) 与 m,n 无关</text>
+  </g>
+</svg>

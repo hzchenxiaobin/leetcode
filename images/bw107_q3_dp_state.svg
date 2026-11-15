@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="41"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#4a7a3a" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="360" fill="#fafafa"/>
+
+  <text x="320" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">状态 =（首字符, 尾字符, 已删减数）：每个词只写一列 + 一行</text>
+
+  <!-- 词 w -->
+  <g filter="url(#rough2)">
+    <text x="90" y="76" text-anchor="middle" font-size="13" fill="#555">当前词 w：</text>
+    <rect x="130" y="58" width="40" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <text x="150" y="80" text-anchor="middle" font-size="14" fill="#b85450">f</text>
+    <rect x="170" y="58" width="40" height="34" rx="4" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+    <text x="190" y="80" text-anchor="middle" font-size="14" fill="#333">…</text>
+    <rect x="210" y="58" width="40" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <text x="230" y="80" text-anchor="middle" font-size="14" fill="#b85450">l</text>
+    <text x="286" y="80" text-anchor="middle" font-size="12" fill="#d6a040">首 f / 尾 l</text>
+  </g>
+
+  <!-- 当前状态 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="170" width="110" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="115" y="194" text-anchor="middle" font-size="14" fill="#333">(a, b)</text>
+    <text x="115" y="212" text-anchor="middle" font-size="11" fill="#446688">当前串首 a 尾 b</text>
+  </g>
+
+  <!-- 追加箭头 -->
+  <path d="M 176 182 C 220 160, 250 150, 292 146" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="298" y="126" width="120" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="358" y="146" text-anchor="middle" font-size="14" fill="#333">(a, l)</text>
+    <text x="358" y="163" text-anchor="middle" font-size="10.5" fill="#446688">尾换成 w 的尾</text>
+  </g>
+  <text x="240" y="140" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">追加</text>
+  <text x="240" y="156" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">+1 若 b = f</text>
+
+  <!-- 前插箭头 -->
+  <path d="M 176 214 C 220 238, 250 248, 292 252" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrGreen)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="298" y="232" width="120" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="358" y="252" text-anchor="middle" font-size="14" fill="#333">(f, b)</text>
+    <text x="358" y="269" text-anchor="middle" font-size="10.5" fill="#4a7a3a">首换成 w 的首</text>
+  </g>
+  <text x="240" y="242" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">前插</text>
+  <text x="240" y="258" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">+1 若 l = a</text>
+
+  <!-- 右侧：状态网格示意 -->
+  <g filter="url(#rough2)" font-size="11" fill="#333">
+    <text x="540" y="120" text-anchor="middle" font-size="12" fill="#555">26×26 状态网格（示意）</text>
+    <!-- 行列标签 -->
+    <text x="486" y="158" text-anchor="middle" fill="#4a7a3a">b</text>
+    <text x="520" y="158" text-anchor="middle" fill="#4a7a3a">·</text>
+    <text x="554" y="158" text-anchor="middle" fill="#4a7a3a">l</text>
+    <text x="586" y="158" text-anchor="middle" fill="#4a7a3a">·</text>
+    <text x="462" y="176" text-anchor="middle" fill="#446688">a</text>
+    <text x="462" y="208" text-anchor="middle" fill="#446688">f</text>
+    <text x="462" y="240" text-anchor="middle" fill="#446688">·</text>
+    <!-- 网格 -->
+    <rect x="486" y="162" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="518" y="162" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="550" y="162" width="32" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="582" y="162" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="486" y="194" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="518" y="194" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="550" y="194" width="32" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="582" y="194" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="486" y="226" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="518" y="226" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="550" y="226" width="32" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="582" y="226" width="32" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <text x="540" y="282" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">绿色列：追加写入 (·, l)</text>
+  <text x="540" y="298" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">蓝色行：前插写入 (f, ·)</text>
+  <text x="540" y="314" text-anchor="middle" font-size="11" fill="#d6a040" filter="url(#rough2)">交点 (f, l)：两个转移竞争</text>
+
+  <!-- 底部说明 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="300" width="380" height="44" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="250" y="318" text-anchor="middle" font-size="12.5" fill="#333">答案 = Σ|words[i]| − max dp</text>
+    <text x="250" y="336" text-anchor="middle" font-size="11.5" fill="#b85450">总长固定 → 最大化「删减次数」</text>
+  </g>
+</svg>

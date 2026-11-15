@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="73"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="380" fill="#fafafa"/>
+
+  <text x="310" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">位置集合 S：一次操作 = 先删后插</text>
+
+  <!-- 初始化 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="54" width="500" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" fill-opacity="0.5"/>
+    <text x="310" y="76" text-anchor="middle" font-size="13" fill="#333">初始化：S = set(nums)（重复位置自动合并）</text>
+    <text x="310" y="98" text-anchor="middle" font-size="12" fill="#446688">例如 nums = [1,1,3,3] → S = {1, 3}，只问「有没有」</text>
+  </g>
+  <path d="M 310 112 C 310 120, 310 124, 310 132" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 循环：先删后插 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="134" width="500" height="120" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" fill-opacity="0.5"/>
+    <text x="310" y="156" text-anchor="middle" font-size="13" fill="#4a7a3a">第 i 次操作（f = moveFrom[i]，t = moveTo[i]）</text>
+    <rect x="100" y="168" width="200" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="200" y="192" text-anchor="middle" font-size="13" fill="#b85450">① S.erase(f)　先删</text>
+    <rect x="320" y="168" width="200" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="420" y="192" text-anchor="middle" font-size="13" fill="#4a7a3a">② S.insert(t)　后插</text>
+    <path d="M 300 187 C 308 187, 312 187, 318 187" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <text x="310" y="228" text-anchor="middle" font-size="12" fill="#b85450">顺序很关键：f == t 时，先插后删会把位置误删掉！</text>
+    <text x="310" y="246" text-anchor="middle" font-size="12" fill="#555">净效果 S ← (S \ {f}) ∪ {t}：f 处石块全部搬走，t 处合并</text>
+  </g>
+  <path d="M 562 212 C 600 212, 600 150, 566 150" stroke="#4a7a3a" stroke-width="1.6" fill="none" stroke-dasharray="5 3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="604" y="182" text-anchor="middle" font-size="11" fill="#4a7a3a" transform="rotate(-90 604 182)" filter="url(#rough2)">还有操作就循环</text>
+  <path d="M 310 254 C 310 262, 310 266, 310 274" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="336" y="268" font-size="12" fill="#446688" filter="url(#rough2)">操作耗尽</text>
+
+  <!-- 输出 -->
+  <g filter="url(#rough2)">
+    <rect x="110" y="276" width="400" height="48" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="310" y="296" text-anchor="middle" font-size="13" fill="#333">输出：sort(S) 转成数组返回</text>
+    <text x="310" y="315" text-anchor="middle" font-size="11.5" fill="#d6a040">unordered_set 遍历序不确定，务必显式排序</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="80" y="336" width="460" height="34" rx="8" fill="#fafafa" stroke="#888" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <text x="310" y="358" text-anchor="middle" font-size="12" fill="#888">石块个体身份从不参与计算——信息降维是本题唯一考点</text>
+  </g>
+</svg>

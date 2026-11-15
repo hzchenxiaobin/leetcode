@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="360" fill="#fafafa"/>
+
+  <text x="310" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">哈希计数流程：黑格 → 块 → arr</text>
+
+  <!-- 步骤 1 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="56" width="500" height="48" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="310" y="76" text-anchor="middle" font-size="13" fill="#333">① 遍历每个黑格 (x, y)（坐标两两不同）</text>
+    <text x="310" y="96" text-anchor="middle" font-size="11.5" fill="#446688">若允许重复坐标，须先用 set 去重</text>
+  </g>
+  <path d="M 310 104 C 310 112, 310 116, 310 124" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="126" width="500" height="62" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="310" y="148" text-anchor="middle" font-size="13" fill="#333">② 对至多 4 个合法候选块：cnt[键] += 1</text>
+    <text x="310" y="170" text-anchor="middle" font-size="12" fill="#4a7a3a">键 = bx × n + by（C++ 用 long long！bx·n 可达 10^10）</text>
+    <text x="310" y="182" text-anchor="middle" font-size="11" fill="#555">哈希表最多 4K 项，与 m、n 无关</text>
+  </g>
+  <path d="M 310 188 C 310 196, 310 200, 310 208" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="210" width="500" height="48" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="310" y="230" text-anchor="middle" font-size="13" fill="#333">③ 遍历哈希表：值 v ∈ [1, 4]，执行 arr[v]++</text>
+    <text x="310" y="250" text-anchor="middle" font-size="11.5" fill="#d6a040">表里只有「至少含 1 个黑格」的块</text>
+  </g>
+  <path d="M 310 258 C 310 266, 310 270, 310 278" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="280" width="500" height="48" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="310" y="300" text-anchor="middle" font-size="13" fill="#333">④ arr[0] = (m−1)(n−1) − 表大小（补集）</text>
+    <text x="310" y="320" text-anchor="middle" font-size="11.5" fill="#b85450">总数本身可达 10^10 → 全程 long long，返回 long[]</text>
+  </g>
+
+  <!-- 侧注 -->
+  <g filter="url(#rough2)">
+    <text x="310" y="352" text-anchor="middle" font-size="12" fill="#4a7a3a">自检：Σ arr[i] 必须等于 (m−1)(n−1)</text>
+  </g>
+</svg>
