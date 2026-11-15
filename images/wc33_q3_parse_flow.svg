@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 560"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="560" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">解析与累加流程：游标扫描 + 每步约分</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">每轮恰好消费「符号 + 分子/分母」一个完整项</text>
+
+  <!-- A -->
+  <rect x="70" y="54" width="250" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="195" y="75" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">输入 expression（长度 ≤ 60）</text>
+
+  <path d="M 195 86 V 96" stroke="#888" stroke-width="1.3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- B -->
+  <rect x="70" y="100" width="250" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="195" y="121" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">首字符不是 '-' → 在前面补 '+'</text>
+
+  <path d="M 195 132 V 142" stroke="#888" stroke-width="1.3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- C -->
+  <rect x="70" y="146" width="250" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="195" y="167" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">i = 0，num = 0，den = 1</text>
+
+  <path d="M 195 178 V 192" stroke="#888" stroke-width="1.3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- D 判断 -->
+  <polygon points="195,194 295,224 195,254 95,224" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="195" y="229" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold" filter="url(#rough2)">i &lt; n ?</text>
+
+  <!-- 否 → 输出 -->
+  <path d="M 295 224 H 437 V 292" stroke="#888" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="320" y="217" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <rect x="350" y="300" width="175" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="437" y="321" text-anchor="middle" font-size="10.5" fill="#2f5a26" font-weight="bold" filter="url(#rough2)">输出 num + '/' + den</text>
+  <text x="437" y="340" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">正数不带 '+'，整数 x/1</text>
+
+  <!-- 是 ↓ -->
+  <path d="M 195 254 V 278" stroke="#888" stroke-width="1.3" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="208" y="271" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- E -->
+  <rect x="70" y="280" width="250" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="195" y="301" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">读符号 sign（+1 / −1），i++</text>
+
+  <path d="M 195 312 V 322" stroke="#888" stroke-width="1.3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- F -->
+  <rect x="70" y="326" width="250" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="195" y="347" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">读分子 a → 跳过 '/' → 读分母 b</text>
+
+  <path d="M 195 358 V 368" stroke="#888" stroke-width="1.3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- G 通分 -->
+  <rect x="64" y="372" width="272" height="50" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="200" y="393" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">num = num·b + sign·a·den</text>
+  <text x="200" y="411" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">den = den·b　（先算分子，用旧 den）</text>
+
+  <path d="M 200 422 V 432" stroke="#888" stroke-width="1.3" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- H 约分 -->
+  <rect x="64" y="436" width="272" height="50" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="200" y="457" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">g = gcd(|num|, den)</text>
+  <text x="200" y="475" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">num /= g，den /= g</text>
+
+  <!-- 回到判断 -->
+  <path d="M 200 486 V 512 H 30 V 224 H 88" stroke="#888" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="19" y="350" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)" transform="rotate(-90 19 350)">回到判断，处理下一项</text>
+
+  <text x="300" y="540" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">每轮都保持最简 ⇒ 循环结束时输出天然就是最简分数</text>
+</svg>

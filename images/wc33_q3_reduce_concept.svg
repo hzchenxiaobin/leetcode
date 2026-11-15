@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="13.5" fill="#444" font-weight="bold" filter="url(#rough2)">核心：通分相加 + 立即约分，累加器恒为最简精确值</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">全程整数运算，每一步都做一次 gcd，数字始终很小</text>
+
+  <!-- ① 通分 -->
+  <rect x="36" y="68" width="248" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="52" y="90" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 通分（用旧分母）</text>
+  <text x="52" y="116" font-size="12" fill="#333" filter="url(#rough2)">a/b + c/d</text>
+  <text x="52" y="142" font-size="12" fill="#333" filter="url(#rough2)">= (a·d + c·b) / (b·d)</text>
+
+  <path d="M 290 116 H 330" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="310" y="107" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">g</text>
+
+  <!-- ② 约分 -->
+  <rect x="334" y="68" width="190" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="350" y="90" font-size="11" fill="#2f5a26" font-weight="bold" filter="url(#rough2)">② 立即约分</text>
+  <text x="350" y="116" font-size="11" fill="#333" filter="url(#rough2)">g = gcd(|num|, den)</text>
+  <text x="350" y="142" font-size="11" fill="#333" filter="url(#rough2)">num ÷= g，den ÷= g</text>
+
+  <path d="M 280 168 V 190" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="36" y="188" font-size="11" fill="#666" filter="url(#rough2)">③ 每一步之后（同时成立）</text>
+
+  <!-- 三个不变量 -->
+  <rect x="36" y="196" width="152" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="112" y="214" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">值精确</text>
+  <text x="112" y="231" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">整数运算，无浮点</text>
+
+  <rect x="204" y="196" width="152" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="214" text-anchor="middle" font-size="10.5" fill="#2f5a26" font-weight="bold" filter="url(#rough2)">已经最简</text>
+  <text x="280" y="231" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">分子分母互质</text>
+
+  <rect x="372" y="196" width="152" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="448" y="214" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">分母为正</text>
+  <text x="448" y="231" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">den &gt; 0 恒成立</text>
+
+  <!-- ④ 数值上界 -->
+  <rect x="36" y="262" width="488" height="104" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="52" y="286" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">④ 为什么「立即约分」就够：分母有严格上界</text>
+  <text x="52" y="308" font-size="10.5" fill="#555" filter="url(#rough2)">输入分数已最简且分母 ∈ [1,10] ⇒ 约分后 den 整除 lcm(1..10) = 2520</text>
+  <text x="52" y="328" font-size="10.5" fill="#555" filter="url(#rough2)">于是 den ≤ 2520、|num| ≤ 252000，远在 32 位整数范围内</text>
+  <text x="52" y="350" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">若改成「分母连乘、最后才约分」，中间量可达 10¹⁰，直接越界</text>
+
+  <text x="280" y="388" text-anchor="middle" font-size="10.5" fill="#999" filter="url(#rough2)">输出：正数不带 '+'，负号留在分子，整数写成 x/1</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="430" fill="#fafafa"/>
+
+  <text x="400" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：一遍定右界、一遍定左界，共 O(n)</text>
+  <path d="M 160 40 Q 400 48 640 40" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <!-- ① 定右界 -->
+  <rect x="40" y="62" width="330" height="98" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="60" y="86" font-size="13" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">① 左 → 右扫描，求右界 r</text>
+  <text x="60" y="110" font-size="11.5" fill="#333" filter="url(#rough2)">r = -1，mx = nums[0]</text>
+  <text x="60" y="132" font-size="11.5" fill="#333" filter="url(#rough2)">i = 1 … n-1，逐个比较 nums[i] 与 mx：</text>
+  <text x="60" y="152" font-size="11.5" fill="#333" filter="url(#rough2)">nums[i] &lt; mx ⇒ r = i；否则 mx = nums[i]</text>
+
+  <!-- ② 判断 -->
+  <rect x="430" y="62" width="330" height="98" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="450" y="86" font-size="13" font-weight="bold" fill="#9a7526" filter="url(#rough2)">② r 始终没被更新？</text>
+  <text x="450" y="110" font-size="11.5" fill="#333" filter="url(#rough2)">r = -1 ⇔ 每个数都不小于左侧最大值</text>
+  <text x="450" y="132" font-size="11.5" fill="#333" filter="url(#rough2)">⇔ 原数组已经整体升序</text>
+  <text x="450" y="152" font-size="11.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">⇒ 直接返回 0，第二遍都不必做</text>
+
+  <path d="M 370 111 L 430 111" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ 定左界 -->
+  <rect x="40" y="196" width="330" height="106" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="60" y="220" font-size="13" font-weight="bold" fill="#3d6630" filter="url(#rough2)">③ 右 → 左扫描，求左界 l</text>
+  <text x="60" y="244" font-size="11.5" fill="#333" filter="url(#rough2)">l = n-1，mn = nums[n-1]</text>
+  <text x="60" y="266" font-size="11.5" fill="#333" filter="url(#rough2)">i = n-2 … 0，逐个比较 nums[i] 与 mn：</text>
+  <text x="60" y="288" font-size="11.5" fill="#333" filter="url(#rough2)">nums[i] &gt; mn ⇒ l = i；否则 mn = nums[i]</text>
+
+  <!-- ④ 输出 -->
+  <rect x="430" y="196" width="330" height="106" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="450" y="220" font-size="13" font-weight="bold" fill="#8f3b37" filter="url(#rough2)">④ 输出答案</text>
+  <text x="450" y="244" font-size="12" fill="#333" filter="url(#rough2)">长度 = r - l + 1</text>
+  <text x="450" y="266" font-size="11.5" fill="#333" filter="url(#rough2)">[l, r] 恰为「必须重排」的最短区间</text>
+  <text x="450" y="288" font-size="11.5" fill="#333" filter="url(#rough2)">时间 O(n)，额外空间 O(1)</text>
+
+  <path d="M 595 160 L 595 178 L 205 178 L 205 196" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="400" y="170" text-anchor="middle" font-size="11" font-weight="bold" fill="#b85450" filter="url(#rough2)">r ≠ -1，继续</text>
+
+  <path d="M 370 249 L 430 249" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="330" width="500" height="72" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="400" y="356" text-anchor="middle" font-size="12" fill="#2b4a6e" filter="url(#rough2)">关键：两遍扫的都是同一个「越界」判据的不同方向</text>
+  <text x="400" y="380" text-anchor="middle" font-size="12" fill="#2b4a6e" filter="url(#rough2)">左扫抓「左边有更大值」，右扫抓「右边有更小值」</text>
+</svg>

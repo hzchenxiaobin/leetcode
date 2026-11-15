@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：路径按「格子 + 步数」合并计数</text>
+
+  <!-- 左侧：dp 表 -->
+  <rect x="24" y="44" width="214" height="218" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="10" filter="url(#rough2)"/>
+  <text x="131" y="66" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">第 2 步后的 dp 表（示例 1）</text>
+
+  <text x="74" y="80" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">j=0</text>
+  <text x="126" y="80" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">j=1</text>
+  <text x="44" y="112" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">i=0</text>
+  <text x="44" y="164" text-anchor="middle" font-size="9" fill="#888" filter="url(#rough2)">i=1</text>
+
+  <rect x="56" y="88" width="48" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6" filter="url(#rough2)"/>
+  <text x="80" y="118" text-anchor="middle" font-size="15" fill="#2f5a26" font-weight="bold" filter="url(#rough2)">2</text>
+  <rect x="108" y="88" width="48" height="48" fill="#ffffff" stroke="#888" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="132" y="118" text-anchor="middle" font-size="15" fill="#bbb" filter="url(#rough2)">0</text>
+  <rect x="56" y="140" width="48" height="48" fill="#ffffff" stroke="#888" stroke-width="1.3" rx="6" filter="url(#rough2)"/>
+  <text x="80" y="170" text-anchor="middle" font-size="15" fill="#bbb" filter="url(#rough2)">0</text>
+  <rect x="108" y="140" width="48" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="6" filter="url(#rough2)"/>
+  <text x="132" y="170" text-anchor="middle" font-size="15" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">2</text>
+
+  <text x="131" y="210" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">dp[i][j] = 仍在界内、落于 (i,j)</text>
+  <text x="131" y="226" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">的路径条数（到达即合并）</text>
+  <text x="131" y="248" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">两条不同走法 → 合并成 2</text>
+
+  <!-- 右侧：出界方向数 -->
+  <rect x="252" y="44" width="284" height="218" fill="#ffffff" stroke="#999" stroke-width="1.2" rx="10" filter="url(#rough2)"/>
+  <text x="394" y="66" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">每格 e(i,j) = 指向界外的方向数</text>
+
+  <rect x="282" y="86" width="44" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="6" filter="url(#rough2)"/>
+  <text x="304" y="113" text-anchor="middle" font-size="10" fill="#8c3b37" filter="url(#rough2)">角格</text>
+  <path d="M 304 86 L 304 60" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 282 108 L 258 108" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="282" y="152" width="44" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="6" filter="url(#rough2)"/>
+  <text x="304" y="179" text-anchor="middle" font-size="10" fill="#3a4a66" filter="url(#rough2)">边格</text>
+  <path d="M 304 152 L 304 128" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="352" y="104" font-size="10.5" fill="#333" filter="url(#rough2)">角格：e = 2</text>
+  <text x="352" y="122" font-size="10.5" fill="#333" filter="url(#rough2)">边格：e = 1</text>
+  <text x="352" y="140" font-size="10.5" fill="#333" filter="url(#rough2)">内部格：e = 0</text>
+  <text x="352" y="176" font-size="10" fill="#666" filter="url(#rough2)">只有贴边的格子</text>
+  <text x="352" y="192" font-size="10" fill="#666" filter="url(#rough2)">才可能一步出界</text>
+
+  <text x="394" y="232" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">贡献 = dp[i][j] × e(i,j)</text>
+  <text x="394" y="250" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">同一格的多条路径互不干扰</text>
+
+  <!-- 公式条 -->
+  <rect x="24" y="274" width="512" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="294" text-anchor="middle" font-size="11.5" fill="#2f4460" filter="url(#rough2)">ans += Σ dp[i][j] · e(i,j)，e(i,j) = [i=0] + [i=m−1] + [j=0] + [j=n−1]</text>
+  <text x="280" y="312" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">只在第 k 步结算一次；已出界的路径不再进入下一轮 dp</text>
+
+  <text x="30" y="344" font-size="10.5" fill="#555" filter="url(#rough2)">每条路径的「出界时刻」唯一，因此按步累加既不重复也不遗漏；</text>
+  <text x="30" y="362" font-size="10.5" fill="#555" filter="url(#rough2)">而界内路径的后续走向只取决于当前格子，故可整格合并。</text>
+</svg>

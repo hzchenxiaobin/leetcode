@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="13"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">建 children 表 → 子树上遍历 → 收集答案</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">把 (pid, ppid) 表格转成邻接表，杀进程就退化成一次 DFS / BFS</text>
+
+  <rect x="34" y="64" width="226" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="50" y="86" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 建表 O(n)</text>
+  <text x="50" y="108" font-size="10" fill="#555" filter="url(#rough2)">for i in range(n):</text>
+  <text x="50" y="126" font-size="10" fill="#555" filter="url(#rough2)">　children[ppid[i]] += pid[i]</text>
+  <text x="50" y="148" font-size="9.5" fill="#888" filter="url(#rough2)">方向：父 → 子（不需要反向边）</text>
+
+  <path d="M 262 112 L 296 112" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="300" y="64" width="226" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="316" y="86" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② children 邻接表</text>
+  <text x="316" y="110" font-size="10" fill="#555" filter="url(#rough2)">0 → [3]</text>
+  <text x="316" y="128" font-size="10" fill="#555" filter="url(#rough2)">3 → [1, 5]</text>
+  <text x="316" y="146" font-size="10" fill="#555" filter="url(#rough2)">5 → [10]　（键是 PPID）</text>
+
+  <path d="M 413 160 L 413 194" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="198" width="480" height="98" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="220" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 从 kill 出发做一次 DFS / BFS（迭代，避免深链爆栈）</text>
+  <text x="56" y="240" font-size="10" fill="#555" filter="url(#rough2)">弹出 u → 写入 ans → 把 children[u] 全部入队；队列空即结束</text>
+
+  <rect x="60" y="252" width="52" height="28" fill="#ffffff" stroke="#c98a2a" stroke-width="1.8" rx="6" filter="url(#rough2)"/>
+  <text x="86" y="271" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">5</text>
+  <path d="M 114 266 L 140 266" stroke="#c98a2a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="144" y="252" width="52" height="28" fill="#ffffff" stroke="#c98a2a" stroke-width="1.8" rx="6" filter="url(#rough2)"/>
+  <text x="170" y="271" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">10</text>
+  <path d="M 198 266 L 224 266" stroke="#c98a2a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="228" y="252" width="52" height="28" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="254" y="271" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">∅</text>
+  <text x="300" y="271" font-size="10" fill="#777" filter="url(#rough2)">ans: [5] → [5, 10]</text>
+
+  <path d="M 280 296 L 280 322" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="324" width="260" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="348" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">④ 返回 [5, 10]（顺序任意）</text>
+
+  <text x="280" y="382" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">每个进程只被访问一次 → O(n)；父子边构成森林、入度 ≤ 1，故不写 visited 也不会重复</text>
+</svg>

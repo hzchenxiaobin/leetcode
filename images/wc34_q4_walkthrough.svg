@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 470" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="470" fill="#fafafa"/>
+
+  <text x="360" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">示例演算：n = 5（二进制 101），答案为 5</text>
+  <text x="360" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每遇到一个 1，就累加「本位放 0、低位自由」的合法串个数 f[i]</text>
+
+  <!-- 位串示意 -->
+  <text x="132" y="60" font-size="9.5" fill="#888" text-anchor="middle" filter="url(#rough2)">i = 2</text>
+  <text x="208" y="60" font-size="9.5" fill="#888" text-anchor="middle" filter="url(#rough2)">i = 1</text>
+  <text x="284" y="60" font-size="9.5" fill="#888" text-anchor="middle" filter="url(#rough2)">i = 0</text>
+  <g filter="url(#rough2)">
+    <rect x="100" y="64" width="64" height="50" rx="5" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="176" y="64" width="64" height="50" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="252" y="64" width="64" height="50" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="19" font-weight="bold" text-anchor="middle">
+    <text x="132" y="97" fill="#b85450">1</text>
+    <text x="208" y="97" fill="#446688">0</text>
+    <text x="284" y="97" fill="#4a7a3a">1</text>
+  </g>
+  <text x="100" y="132" font-size="10" fill="#555" filter="url(#rough2)">n = 5 = 101₂，最高位 i = 2</text>
+  <rect x="352" y="64" width="320" height="52" rx="8" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="512" y="86" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">红色位：值为 1，可产生 f[i] 个分支</text>
+  <text x="512" y="104" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">蓝色位：值为 0，只能照抄，prev ← 0</text>
+
+  <!-- 走查表 -->
+  <rect x="48" y="148" width="640" height="168" rx="6" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.4" filter="url(#rough2)"/>
+  <rect x="48" y="148" width="640" height="32" rx="6" fill="#f1f1f1" stroke="#bbbbbb" stroke-width="1.2" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" stroke="#dddddd" stroke-width="1">
+    <path d="M170,148 L170,316"/><path d="M250,148 L250,316"/><path d="M320,148 L320,316"/>
+    <path d="M392,148 L392,316"/><path d="M624,148 L624,316"/>
+    <path d="M48,180 L688,180"/><path d="M48,214 L688,214"/><path d="M48,248 L688,248"/><path d="M48,282 L688,282"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#555" text-anchor="middle">
+    <text x="109" y="168">步骤</text><text x="210" y="168">位 i</text><text x="285" y="168">n 的位</text>
+    <text x="356" y="168">prev</text><text x="508" y="168">动作</text><text x="656" y="168">ans</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#333" text-anchor="middle">
+    <text x="109" y="202">1</text><text x="210" y="202">i = 2</text><text x="285" y="202">1</text><text x="356" y="202">0</text>
+    <text x="656" y="202">3</text>
+    <text x="109" y="236">2</text><text x="210" y="236">i = 1</text><text x="285" y="236">0</text><text x="356" y="236">1</text>
+    <text x="656" y="236">3</text>
+    <text x="109" y="270">3</text><text x="210" y="270">i = 0</text><text x="285" y="270">1</text><text x="356" y="270">0</text>
+    <text x="656" y="270">4</text>
+    <text x="109" y="304">结束</text><text x="210" y="304">—</text><text x="285" y="304">—</text><text x="356" y="304">1</text>
+    <text x="656" y="304">5</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#333" text-anchor="middle">
+    <text x="508" y="202">ans += f[2] = 3　（000, 001, 010）</text>
+    <text x="508" y="236">prev ← 0（照抄 0，不累加）</text>
+    <text x="508" y="270">ans += f[0] = 1　（100）</text>
+    <text x="508" y="304">return ans + 1 = 5（101 自身合法）</text>
+  </g>
+
+  <!-- 0~5 的合法性 -->
+  <text x="56" y="346" font-size="10" fill="#555" filter="url(#rough2)">检查 0~5 的二进制表示：只有 3 出现连续 1</text>
+  <g filter="url(#rough2)">
+    <rect x="56" y="356" width="88" height="60" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="156" y="356" width="88" height="60" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="256" y="356" width="88" height="60" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="356" y="356" width="88" height="60" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <rect x="456" y="356" width="88" height="60" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="556" y="356" width="88" height="60" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" font-weight="bold" text-anchor="middle">
+    <text x="100" y="382" fill="#2f5a24">0</text><text x="200" y="382" fill="#2f5a24">1</text><text x="300" y="382" fill="#2f5a24">2</text>
+    <text x="400" y="382" fill="#8a2f2b">3</text><text x="500" y="382" fill="#2f5a24">4</text><text x="600" y="382" fill="#2f5a24">5</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle" fill="#555">
+    <text x="100" y="402">0</text><text x="200" y="402">1</text><text x="300" y="402">10</text>
+    <text x="400" y="402">11</text><text x="500" y="402">100</text><text x="600" y="402">101</text>
+  </g>
+  <text x="400" y="436" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">× 3 = 11₂ 含连续 1</text>
+  <text x="360" y="458" text-anchor="middle" font-size="10.5" fill="#2f5a24" filter="url(#rough2)">合法：0, 1, 2, 4, 5 共 5 个 → 答案 5</text>
+</svg>

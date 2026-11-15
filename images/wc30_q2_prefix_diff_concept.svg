@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="420" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：子数组和 ＝ 两个前缀和之差</text>
+
+  <!-- ===== ① array + prefix sums ===== -->
+  <text x="36" y="56" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">① 前缀和 P：P[j] 表示 nums[0..j−1] 之和，约定 P[0] = 0</text>
+
+  <g filter="url(#rough2)">
+    <text x="116" y="80" text-anchor="middle" font-size="11" fill="#999">下标 0</text>
+    <text x="172" y="80" text-anchor="middle" font-size="11" fill="#999">下标 1</text>
+    <text x="228" y="80" text-anchor="middle" font-size="11" fill="#999">下标 2</text>
+
+    <rect x="90"  y="84" width="52" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+    <text x="116" y="105" text-anchor="middle" font-size="15" fill="#333">1</text>
+    <rect x="146" y="84" width="52" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+    <text x="172" y="105" text-anchor="middle" font-size="15" fill="#333">2</text>
+    <rect x="202" y="84" width="52" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="5"/>
+    <text x="228" y="105" text-anchor="middle" font-size="15" fill="#333">3</text>
+
+    <rect x="68"  y="124" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="5"/>
+    <text x="90"  y="144" text-anchor="middle" font-size="14" fill="#333">0</text>
+    <rect x="124" y="124" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="5"/>
+    <text x="146" y="144" text-anchor="middle" font-size="14" fill="#333">1</text>
+    <rect x="180" y="124" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="5"/>
+    <text x="202" y="144" text-anchor="middle" font-size="14" fill="#333">3</text>
+    <rect x="236" y="124" width="44" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="5"/>
+    <text x="258" y="144" text-anchor="middle" font-size="14" fill="#333">6</text>
+
+    <text x="90"  y="170" text-anchor="middle" font-size="10" fill="#999">P0</text>
+    <text x="146" y="170" text-anchor="middle" font-size="10" fill="#999">P1</text>
+    <text x="202" y="170" text-anchor="middle" font-size="10" fill="#999">P2</text>
+    <text x="258" y="170" text-anchor="middle" font-size="10" fill="#999">P3</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 92 178 Q 146 208 200 178" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)"/>
+    <path d="M 204 178 Q 231 200 256 178" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arrO)"/>
+    <text x="130" y="216" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold">P[2] − P[0] = 3</text>
+    <text x="252" y="216" text-anchor="middle" font-size="11" fill="#d6a040" font-weight="bold">P[3] − P[2] = 3</text>
+  </g>
+
+  <line x1="36" y1="228" x2="546" y2="228" stroke="#ddd" stroke-width="1.2" stroke-dasharray="3,4" filter="url(#rough2)"/>
+
+  <!-- ===== ② key identity ===== -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="236" width="480" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+    <text x="290" y="266" text-anchor="middle" font-size="13" fill="#333">sum(nums[i..j−1]) ＝ P[j] − P[i]</text>
+    <text x="290" y="298" text-anchor="middle" font-size="14" fill="#4a7a3a" font-weight="bold">要求 sum ＝ k　⟺　P[i] ＝ P[j] − k</text>
+  </g>
+
+  <!-- ===== ③ hash counting ===== -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="322" width="250" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+    <text x="161" y="348" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold">cnt[v] ＝ 前缀和值 v 的出现次数</text>
+    <text x="161" y="374" text-anchor="middle" font-size="12" fill="#333">遍历 j：ans ＋＝ cnt[P[j] − k]</text>
+    <text x="161" y="398" text-anchor="middle" font-size="12" fill="#333">然后：cnt[P[j]] ＋＝ 1</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="300" y="322" width="244" height="88" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+    <text x="422" y="346" text-anchor="middle" font-size="11.5" fill="#d6a040" font-weight="bold">本例 j＝2、j＝3 各命中一次</text>
+    <text x="422" y="372" text-anchor="middle" font-size="12" fill="#333">j＝2：需 0，cnt[0]＝1 → [1,2]</text>
+    <text x="422" y="396" text-anchor="middle" font-size="12" fill="#333">j＝3：需 3，cnt[3]＝1 → [3]</text>
+  </g>
+</svg>
