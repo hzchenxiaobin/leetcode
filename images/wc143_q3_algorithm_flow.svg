@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 552" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="552" fill="#fafafa"/>
+
+  <text x="250" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">一维 DP 的执行流程</text>
+
+  <!-- 框 -->
+  <rect x="90" y="56" width="320" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="250" y="84" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">dp[0] = 0，dp[1 .. n] = +∞</text>
+
+  <rect x="90" y="126" width="320" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="250" y="154" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">外层 i = 1 .. n（每轮先置 w = 0, h = 0）</text>
+
+  <rect x="90" y="196" width="320" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="250" y="224" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">内层 j = i-1, i-2, …, 0（本层向左加书）</text>
+
+  <rect x="90" y="266" width="320" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="250" y="294" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">w += t[j]；若 w &gt; shelfWidth 则 break</text>
+
+  <rect x="90" y="336" width="320" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="250" y="364" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">h = max(h, h[j])（本层最高的一本）</text>
+
+  <rect x="90" y="406" width="320" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="250" y="434" text-anchor="middle" font-size="12" fill="#3a5a30" filter="url(#rough2)">dp[i] = min(dp[i], dp[j] + h)</text>
+
+  <rect x="90" y="486" width="320" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="250" y="514" text-anchor="middle" font-size="12" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">返回 dp[n]</text>
+
+  <!-- 主链箭头 -->
+  <g stroke="#446688" stroke-width="1.6" fill="none" filter="url(#rough2)">
+    <path d="M 250 102 L 250 124" marker-end="url(#arr)"/>
+    <path d="M 250 172 L 250 194" marker-end="url(#arr)"/>
+    <path d="M 250 242 L 250 264" marker-end="url(#arr)"/>
+    <path d="M 250 312 L 250 334" marker-end="url(#arr)"/>
+    <path d="M 250 382 L 250 404" marker-end="url(#arr)"/>
+    <path d="M 250 452 L 250 484" marker-end="url(#arr)"/>
+  </g>
+  <text x="262" y="474" font-size="10" fill="#888" filter="url(#rough2)">i 全部处理完</text>
+
+  <!-- 内层回边 -->
+  <path d="M 414 429 C 540 429 540 219 414 219" stroke="#b85450" stroke-width="1.6" stroke-dasharray="7 5" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="562" y="318" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">j -= 1</text>
+  <text x="562" y="336" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">继续左扩</text>
+</svg>

@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold"
+        filter="url(#rough2)">三元窗口：一次比较三个相邻词</text>
+  <text x="280" y="50" text-anchor="middle" font-size="11" fill="#888"
+        filter="url(#rough2)">text = "we will we will rock you"，first = "we"，second = "will"</text>
+
+  <!-- 下标标签 -->
+  <g font-size="10" fill="#999" text-anchor="middle">
+    <text x="75" y="88" filter="url(#rough2)">0</text>
+    <text x="153" y="88" filter="url(#rough2)">1</text>
+    <text x="231" y="88" filter="url(#rough2)">2</text>
+    <text x="309" y="88" filter="url(#rough2)">3</text>
+    <text x="387" y="88" filter="url(#rough2)">4</text>
+    <text x="465" y="88" filter="url(#rough2)">5</text>
+  </g>
+
+  <!-- 窗口 A（i = 0）与窗口 B（i = 2），在 i = 2 处重叠 -->
+  <rect x="32" y="94" width="246" height="58" rx="10" fill="none"
+        stroke="#446688" stroke-width="2" stroke-dasharray="7 5" filter="url(#rough2)"/>
+  <rect x="191" y="94" width="243" height="58" rx="10" fill="none"
+        stroke="#d6a040" stroke-width="2" stroke-dasharray="7 5" filter="url(#rough2)"/>
+
+  <!-- 词格 -->
+  <g font-size="12" text-anchor="middle">
+    <rect x="40" y="106" width="70" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="75" y="129" fill="#3a4a66" filter="url(#rough2)">we</text>
+    <rect x="118" y="106" width="70" height="36" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="153" y="129" fill="#3a4a66" filter="url(#rough2)">will</text>
+    <rect x="196" y="106" width="70" height="36" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+    <text x="231" y="129" fill="#8a6a20" filter="url(#rough2)">we</text>
+    <rect x="274" y="106" width="70" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="309" y="129" fill="#3a5a30" filter="url(#rough2)">will</text>
+    <rect x="352" y="106" width="70" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="387" y="129" fill="#3a5a30" filter="url(#rough2)">rock</text>
+    <rect x="430" y="106" width="70" height="36" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="465" y="129" fill="#8a3a36" filter="url(#rough2)">you</text>
+  </g>
+
+  <!-- 两条窗口的结论 -->
+  <path d="M 155 152 L 155 168" stroke="#446688" stroke-width="1.5" fill="none"
+        marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="155" y="182" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">窗口 A：we | will | we → 输出 "we"</text>
+
+  <path d="M 311 152 L 311 168" stroke="#d6a040" stroke-width="1.5" fill="none"
+        marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="311" y="202" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">窗口 B：we | will | rock → 输出 "rock"</text>
+
+  <rect x="40" y="212" width="480" height="72" rx="10" fill="#fff8e1"
+        stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="58" y="234" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">关键：起点 i 每次只 +1，窗口之间会重叠</text>
+  <text x="58" y="254" font-size="10.5" fill="#555" filter="url(#rough2)">窗口 A 的第三词 "we" 同时是窗口 B 的第一词；两处命中属于两种不同的出现，</text>
+  <text x="58" y="272" font-size="10.5" fill="#555" filter="url(#rough2)">答案里都要保留，不能对输出做去重。</text>
+
+  <text x="280" y="308" text-anchor="middle" font-size="10.5" fill="#555"
+        filter="url(#rough2)">命中条件：w[i] == first 且 w[i+1] == second；答案取 w[i+2]</text>
+  <text x="280" y="330" text-anchor="middle" font-size="10.5" fill="#999"
+        filter="url(#rough2)">i 取遍 0 … n−3，共 n−2 个三元组，每个只花 O(1) 比较</text>
+</svg>

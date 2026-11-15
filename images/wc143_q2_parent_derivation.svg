@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="440" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：自底向上求父节点，每轮 O(1)</text>
+  <text x="300" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">父 = ⌊mirror(x,h) / 2⌋ = 2^(h−1) + 2^(h−2) − 1 − ⌊x/2⌋，其中 h 为当前层号</text>
+
+  <rect x="150" y="66" width="300" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="86" text-anchor="middle" font-size="11" fill="#33475f" filter="url(#rough2)">h ← x 的二进制位数（层号，根为第 1 层）</text>
+  <path d="M 300 98 V 114" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="150" y="116" width="300" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="136" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">把当前节点 x 追加进 path</text>
+  <path d="M 300 148 V 164" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <polygon points="300,166 392,200 300,234 208,200" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="300" y="204" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">h == 1 ?</text>
+  <path d="M 392 200 H 436" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="410" y="192" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="440" y="182" width="140" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="510" y="204" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">反转 path 并返回</text>
+  <path d="M 300 234 V 254" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="314" y="248" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+  <rect x="112" y="256" width="376" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="278" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">x ← 2^(h−1) + 2^(h−2) − 1 − ⌊x/2⌋</text>
+  <text x="300" y="300" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">h ← h − 1，回到「追加进 path」</text>
+  <path d="M 112 286 H 74 V 132 H 146" stroke="#666" stroke-width="1.4" fill="none" stroke-dasharray="6 4" marker-end="url(#arrgray)" filter="url(#rough2)"/>
+  <text x="56" y="212" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">循环</text>
+  <rect x="64" y="338" width="472" height="62" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="80" y="358" font-size="10.5" fill="#33475f" font-weight="bold" filter="url(#rough2)">为什么「镜像 + 除 2」就够了</text>
+  <text x="80" y="376" font-size="10" fill="#4a5a72" filter="url(#rough2)">第 h 层整体翻转一次即回到「正常层序」，而正常层序里父节点恒为 ⌊x/2⌋；</text>
+  <text x="80" y="392" font-size="10" fill="#4a5a72" filter="url(#rough2)">h 与 h−1 层顺序类型相反，翻转与「回到之字形」恰好互相抵消，故一次即可。</text>
+
+  <text x="300" y="424" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">label ≤ 10^6 ⇒ h ≤ 20，循环至多 20 轮；空间只存 O(h) 个答案</text>
+
+</svg>

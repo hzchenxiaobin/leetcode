@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：删掉一个点，它的两棵子树各自成为新树的根</text>
+  <text x="310" y="45" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">递归：向下传 isRoot（父是否被删），向上返回修剪后的子树根</text>
+
+  <!-- ================= 左：原树 ================= -->
+  <text x="165" y="70" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">原树 root = [1,2,3,4,5,6,7]</text>
+
+  <g stroke="#8a9bb0" stroke-width="1.4" fill="none" filter="url(#rough2)">
+    <path d="M 165 102 L 115 148"/>
+    <path d="M 165 102 L 215 148"/>
+    <path d="M 115 164 L 88 208"/>
+    <path d="M 115 164 L 142 208"/>
+    <path d="M 215 164 L 188 208"/>
+    <path d="M 215 164 L 242 208"/>
+  </g>
+
+  <!-- 保留节点 -->
+  <g filter="url(#rough2)">
+    <circle cx="165" cy="94" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="165" y="99" text-anchor="middle" font-size="13" fill="#33507a">1</text>
+    <circle cx="115" cy="156" r="17" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="115" y="161" text-anchor="middle" font-size="13" fill="#33507a">2</text>
+    <circle cx="88" cy="216" r="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="88" y="221" text-anchor="middle" font-size="13" fill="#3a5a30">4</text>
+  </g>
+
+  <!-- 删除节点 -->
+  <g filter="url(#rough2)">
+    <circle cx="215" cy="156" r="17" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="215" y="161" text-anchor="middle" font-size="13" fill="#8a3a36">3</text>
+    <path d="M 202 143 L 228 169 M 228 143 L 202 169" stroke="#b85450" stroke-width="1.6"/>
+    <circle cx="142" cy="216" r="17" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="142" y="221" text-anchor="middle" font-size="13" fill="#8a3a36">5</text>
+    <path d="M 129 203 L 155 229 M 155 203 L 129 229" stroke="#b85450" stroke-width="1.6"/>
+    <circle cx="188" cy="216" r="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="188" y="221" text-anchor="middle" font-size="13" fill="#3a5a30">6</text>
+    <circle cx="242" cy="216" r="17" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="242" y="221" text-anchor="middle" font-size="13" fill="#3a5a30">7</text>
+  </g>
+  <text x="165" y="256" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">红叉 = 值在 to_delete 中（3、5）</text>
+
+  <!-- 箭头 -->
+  <path d="M 320 180 L 352 180" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="336" y="170" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">删完</text>
+
+  <!-- ================= 右：森林 ================= -->
+  <text x="487" y="70" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">结果森林（3 棵树，顺序任意）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="372" y="90" width="228" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="386" y="110" font-size="10.5" fill="#3a5a30" font-weight="bold">树 A：根 1</text>
+    <text x="386" y="126" font-size="10.5" fill="#555">[1,2,null,4]</text>
+
+    <rect x="372" y="150" width="228" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="386" y="170" font-size="10.5" fill="#8a6a20" font-weight="bold">树 B：根 6</text>
+    <text x="386" y="186" font-size="10.5" fill="#555">[6]</text>
+
+    <rect x="372" y="210" width="228" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="386" y="230" font-size="10.5" fill="#8a6a20" font-weight="bold">树 C：根 7</text>
+    <text x="386" y="246" font-size="10.5" fill="#555">[7]</text>
+  </g>
+
+  <!-- 底部结论 -->
+  <rect x="40" y="282" width="540" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="58" y="303" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">断链只发生在「被删节点 → 它的孩子」这条边上</text>
+  <text x="58" y="323" font-size="10" fill="#555" filter="url(#rough2)">· 孩子本身没被删 ⇒ 它就是一棵新树的根，需要登记进答案；</text>
+  <text x="58" y="341" font-size="10" fill="#555" filter="url(#rough2)">· 孩子继续被删 ⇒ 递归到它时再处理，与父节点是否被删无关；</text>
+  <text x="58" y="359" font-size="10" fill="#555" filter="url(#rough2)">· 因此每个节点只需知道一件事：父节点是否被删（或根本不存在）。</text>
+</svg>

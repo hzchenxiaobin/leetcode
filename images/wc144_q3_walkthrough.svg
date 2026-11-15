@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例 1 走查：root = [1,2,3,4,5,6,7]，to_delete = [3,5]</text>
+  <text x="310" y="45" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">按实际递归顺序列出 7 次调用，重点看 isRoot 何时为真</text>
+
+  <!-- 表头 -->
+  <rect x="28" y="58" width="556" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="5" filter="url(#rough2)"/>
+  <g font-size="10" fill="#33507a" font-weight="bold" text-anchor="middle" filter="url(#rough2)">
+    <text x="51" y="77">步</text>
+    <text x="106" y="77">调用</text>
+    <text x="190" y="77">被删?</text>
+    <text x="348" y="77">关键动作</text>
+    <text x="524" y="77">森林 res</text>
+  </g>
+
+  <!-- 行 1 -->
+  <rect x="28" y="86" width="556" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <g font-size="9.5" fill="#333" filter="url(#rough2)">
+    <text x="51" y="106" text-anchor="middle">1</text>
+    <text x="106" y="106" text-anchor="middle">dfs(1,true)</text>
+    <text x="190" y="106" text-anchor="middle">否</text>
+    <text x="222" y="106">isRoot 真 ⇒ 登记为根；再递归左右</text>
+    <text x="524" y="106" text-anchor="middle">[1]</text>
+  </g>
+
+  <!-- 行 2 -->
+  <rect x="28" y="118" width="556" height="32" fill="#ffffff" stroke="#b9c4d2" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <g font-size="9.5" fill="#333" filter="url(#rough2)">
+    <text x="51" y="138" text-anchor="middle">2</text>
+    <text x="106" y="138" text-anchor="middle">dfs(2,false)</text>
+    <text x="190" y="138" text-anchor="middle">否</text>
+    <text x="222" y="138">不登记；先修剪左子树</text>
+    <text x="524" y="138" text-anchor="middle">[1]</text>
+  </g>
+
+  <!-- 行 3 -->
+  <rect x="28" y="150" width="556" height="32" fill="#ffffff" stroke="#b9c4d2" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <g font-size="9.5" fill="#333" filter="url(#rough2)">
+    <text x="51" y="170" text-anchor="middle">3</text>
+    <text x="106" y="170" text-anchor="middle">dfs(4,false)</text>
+    <text x="190" y="170" text-anchor="middle">否</text>
+    <text x="222" y="170">叶子，原样返回 4</text>
+    <text x="524" y="170" text-anchor="middle">[1]</text>
+  </g>
+
+  <!-- 行 4 -->
+  <rect x="28" y="182" width="556" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" rx="4" filter="url(#rough2)"/>
+  <g font-size="9.5" fill="#333" filter="url(#rough2)">
+    <text x="51" y="202" text-anchor="middle">4</text>
+    <text x="106" y="202" text-anchor="middle">dfs(5,false)</text>
+    <text x="190" y="202" text-anchor="middle">是</text>
+    <text x="222" y="202">无孩子，返回 null ⇒ 2.right 置空</text>
+    <text x="524" y="202" text-anchor="middle">[1]</text>
+  </g>
+
+  <!-- 行 5 -->
+  <rect x="28" y="214" width="556" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" rx="4" filter="url(#rough2)"/>
+  <g font-size="9.5" fill="#333" filter="url(#rough2)">
+    <text x="51" y="234" text-anchor="middle">5</text>
+    <text x="106" y="234" text-anchor="middle">dfs(3,true)</text>
+    <text x="190" y="234" text-anchor="middle">是</text>
+    <text x="222" y="234">递归孩子时 isRoot 传 true</text>
+    <text x="524" y="234" text-anchor="middle">[1]</text>
+  </g>
+
+  <!-- 行 6 -->
+  <rect x="28" y="246" width="556" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <g font-size="9.5" fill="#333" filter="url(#rough2)">
+    <text x="51" y="266" text-anchor="middle">6</text>
+    <text x="106" y="266" text-anchor="middle">dfs(6,true)</text>
+    <text x="190" y="266" text-anchor="middle">否</text>
+    <text x="222" y="266">父 3 已删 ⇒ 登记 6 为新根</text>
+    <text x="524" y="266" text-anchor="middle">[1,6]</text>
+  </g>
+
+  <!-- 行 7 -->
+  <rect x="28" y="278" width="556" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <g font-size="9.5" fill="#333" filter="url(#rough2)">
+    <text x="51" y="298" text-anchor="middle">7</text>
+    <text x="106" y="298" text-anchor="middle">dfs(7,true)</text>
+    <text x="190" y="298" text-anchor="middle">否</text>
+    <text x="222" y="298">同样登记为根，dfs 结束</text>
+    <text x="524" y="298" text-anchor="middle">[1,6,7]</text>
+  </g>
+
+  <!-- 结论 -->
+  <rect x="40" y="326" width="532" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="58" y="346" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">绿色行 = 登记入森林；红色行 = 节点被删除、断链</text>
+  <text x="58" y="364" font-size="10" fill="#555" filter="url(#rough2)">最终 res = [1, 6, 7]，序列化为 [[1,2,null,4],[6],[7]]，与官方输出一致（顺序任意）。</text>
+  <text x="58" y="379" font-size="10" fill="#555" filter="url(#rough2)">注意 4 没有被登记：它父亲 2 未删，4 只是被「接回」2 的右孩子位置。</text>
+</svg>

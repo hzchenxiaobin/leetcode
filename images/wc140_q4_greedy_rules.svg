@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：贪心 + 单调栈，只用 last[c] 判断「还有后援」</text>
+  <text x="290" y="47" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">要同时满足三个约束，逐位构造答案前缀是唯一可行的贪心路线</text>
+
+  <rect x="45" y="58" width="155" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="122" y="82" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">① 覆盖所有不同字符</text>
+  <rect x="213" y="58" width="155" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="82" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">② 每个字符恰好一次</text>
+  <rect x="381" y="58" width="155" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="458" y="82" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">③ 保持相对顺序不变</text>
+
+  <rect x="45" y="110" width="490" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="60" y="130" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">规则 1 · 跳过：c 已经在栈里</text>
+  <text x="60" y="151" font-size="10" fill="#444" filter="url(#rough2)">更靠前的那次 c 已经保证「c 被选中」，再压一次只会重复 → 直接 continue。</text>
+
+  <rect x="45" y="182" width="490" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="60" y="202" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">规则 2 · 弹栈：栈顶 x &gt; c 且 last[x] &gt; i</text>
+  <text x="60" y="222" font-size="10" fill="#444" filter="url(#rough2)">x 在 i 之后还会出现 ⇒ 删掉栈里的 x 不会丢字符；</text>
+  <text x="60" y="240" font-size="10" fill="#444" filter="url(#rough2)">把 x 挪到后面、让更小的 c 提前 ⇒ 字典序严格变小。</text>
+  <text x="60" y="259" font-size="10" fill="#8a3a36" filter="url(#rough2)">收益（c 占住当前位置，c &lt; x）永远大于代价（x 后移）。</text>
+
+  <rect x="45" y="282" width="490" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="60" y="302" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">规则 3 · 否则压入 c</text>
+  <text x="60" y="322" font-size="10" fill="#444" filter="url(#rough2)">栈顶 x &lt; c，或 x 之后不再出现（last[x] &lt; i）：删 x 就丢字符，</text>
+  <text x="60" y="338" font-size="10" fill="#444" filter="url(#rough2)">只能保留 x 在 c 之前，把 c 压到栈顶。</text>
+
+  <text x="290" y="372" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">一次扫描：每个字符最多入栈、出栈各一次 → O(n)；栈与标记只用 26 个槽 → O(1)</text>
+</svg>

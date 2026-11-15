@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">一次后序 DFS：返回值 = 经过该节点的最大路径和</text>
+
+  <rect x="36" y="40" width="488" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="62" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">dfs(node, pre) → 经过 node 的根-叶路径和最大值，−∞ 表示整棵子树被删</text>
+  <text x="280" y="82" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">cur = pre + node.val，其中 pre 是根到 node 父节点的路径和</text>
+
+  <g font-size="11" text-anchor="middle" font-weight="bold">
+    <rect filter="url(#rough2)" x="36" y="112" width="150" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text filter="url(#rough2)" x="111" y="132" fill="#3a5a30">① 到达叶子</text>
+    <rect filter="url(#rough2)" x="205" y="112" width="150" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6"/>
+    <text filter="url(#rough2)" x="280" y="132" fill="#8a6a20">② 内部节点</text>
+    <rect filter="url(#rough2)" x="374" y="112" width="150" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="6"/>
+    <text filter="url(#rough2)" x="449" y="132" fill="#a04040">③ 就地剪枝</text>
+  </g>
+
+  <g>
+    <rect filter="url(#rough2)" x="36" y="142" width="150" height="132" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2" rx="8"/>
+    <rect filter="url(#rough2)" x="205" y="142" width="150" height="132" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" rx="8"/>
+    <rect filter="url(#rough2)" x="374" y="142" width="150" height="132" fill="#ffffff" stroke="#b85450" stroke-width="1.2" rx="8"/>
+  </g>
+
+  <g font-size="10" fill="#555">
+    <text filter="url(#rough2)" x="48" y="164">左右孩子都空 ⇒ 叶子</text>
+    <text filter="url(#rough2)" x="48" y="188">cur ≥ limit ?</text>
+    <text filter="url(#rough2)" x="48" y="210">是 → 返回 cur</text>
+    <text filter="url(#rough2)" x="48" y="232">否 → 返回 −∞</text>
+    <text filter="url(#rough2)" x="48" y="258" fill="#888">（−∞ 即“此路不通”）</text>
+
+    <text filter="url(#rough2)" x="217" y="164">l = dfs(left, cur)</text>
+    <text filter="url(#rough2)" x="217" y="186">r = dfs(right, cur)</text>
+    <text filter="url(#rough2)" x="217" y="210">返回 max(l, r)</text>
+    <text filter="url(#rough2)" x="217" y="232" fill="#888">l = r = −∞ 时见 ③</text>
+    <text filter="url(#rough2)" x="217" y="258" fill="#888">（先递归，后判断）</text>
+
+    <text filter="url(#rough2)" x="386" y="164">l = −∞ → left = null</text>
+    <text filter="url(#rough2)" x="386" y="186">r = −∞ → right = null</text>
+    <text filter="url(#rough2)" x="386" y="210">两者皆 −∞ ⇒ 本节点删</text>
+    <text filter="url(#rough2)" x="386" y="232">返回 −∞ 给父节点</text>
+    <text filter="url(#rough2)" x="386" y="258" fill="#888">（父节点据此继续上传）</text>
+  </g>
+
+  <g stroke="#446688" stroke-width="1.6" fill="none">
+    <path filter="url(#rough2)" d="M 190 208 L 201 208" marker-end="url(#arr)"/>
+    <path filter="url(#rough2)" d="M 359 208 L 370 208" marker-end="url(#arr)"/>
+  </g>
+
+  <rect x="36" y="288" width="488" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="309" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">根返回 −∞ ⇒ 答案是 null；否则原样返回 root（孩子的指针已被就地改掉）</text>
+  <text x="280" y="329" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">关键顺序：必须先拿到 l、r，再决定要不要置 null，否则会把“没算”误当成“被删”</text>
+
+  <text x="280" y="364" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">时间 O(n)：每个节点只访问一次；空间 O(h)：递归栈深度，链状最坏 O(n)</text>
+  <text x="280" y="384" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">判定与删除在同一次后序遍历里完成，天然满足“同时删除”的语义</text>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="180" y="26" text-anchor="middle" font-size="14.5" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：4 组符号 × 各一趟扫描</text>
+  <text x="180" y="44" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">每组只需维护 f 的最大值与最小值</text>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="56" width="300" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="180" y="77" text-anchor="middle" font-size="11" fill="#7a5c18">ans ← 0，固定 σ₁ = +1</text>
+    <path d="M 180 88 L 180 100" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="30" y="102" width="300" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="180" y="123" text-anchor="middle" font-size="11" fill="#2f4a66">for (σ₂, σ₃) ∈ {+1, −1}²   （4 组）</text>
+    <path d="M 180 134 L 180 146" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="30" y="148" width="300" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="180" y="169" text-anchor="middle" font-size="11" fill="#2f4a66">mx ← −∞，mn ← +∞</text>
+    <path d="M 180 180 L 180 192" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="30" y="194" width="300" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="180" y="212" text-anchor="middle" font-size="10.5" fill="#3a5a30">for i = 0 … n−1</text>
+    <text x="180" y="229" text-anchor="middle" font-size="10.5" fill="#333">f = arr1[i] + σ₂·arr2[i] + σ₃·i；更新 mx、mn</text>
+    <path d="M 180 238 L 180 250" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="30" y="252" width="300" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="8"/>
+    <text x="180" y="274" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">ans ← max(ans, mx − mn)</text>
+  </g>
+
+  <path d="M 30 269 H 12 V 118 H 24" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="12" y="196" text-anchor="middle" font-size="9.5" fill="#8a6d1f" transform="rotate(-90 12 196)" filter="url(#rough2)">还有符号组合未试</text>
+
+  <path d="M 180 286 L 180 306" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="180" y="326" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">4 组都试完 → 返回 ans</text>
+
+  <rect x="352" y="56" width="190" height="150" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="366" y="76" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">为什么可以这样算</text>
+  <text x="366" y="98" font-size="10" fill="#444" filter="url(#rough2)">对外层 i、j 取 max 时，</text>
+  <text x="366" y="116" font-size="10" fill="#444" filter="url(#rough2)">两个 max 可以交换：</text>
+  <text x="366" y="138" font-size="10" fill="#333" filter="url(#rough2)">max_i (f(i) − g(j))</text>
+  <text x="366" y="156" font-size="10" fill="#333" filter="url(#rough2)">= max_i f(i) − min_j g(j)</text>
+  <text x="366" y="180" font-size="10" fill="#444" filter="url(#rough2)">i、j 于是彻底解耦，</text>
+  <text x="366" y="198" font-size="10" fill="#444" filter="url(#rough2)">不必再枚举下标对。</text>
+
+  <rect x="352" y="218" width="190" height="104" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="366" y="238" font-size="11" fill="#7a5c18" font-weight="bold" filter="url(#rough2)">复杂度</text>
+  <text x="366" y="258" font-size="10" fill="#444" filter="url(#rough2)">时间 O(n)：4 趟线性扫描</text>
+  <text x="366" y="276" font-size="10" fill="#444" filter="url(#rough2)">空间 O(1)：仅 2 个变量</text>
+  <text x="366" y="296" font-size="10" fill="#8a6d1f" filter="url(#rough2)">n = 4×10⁴ 时约 1.6×10⁵ 次</text>
+  <text x="366" y="312" font-size="10" fill="#8a6d1f" filter="url(#rough2)">运算，远快于 O(n²) 的 1.6×10⁹</text>
+
+  <text x="180" y="376" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">等价写法：固定 σ₁ = +1 只是省掉一半对称重复的组合</text>
+</svg>

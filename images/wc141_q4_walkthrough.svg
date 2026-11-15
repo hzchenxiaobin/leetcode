@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#6a5620"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="420" fill="#fafafa"/>
+
+  <text x="310" y="30" text-anchor="middle" font-size="15.5" font-weight="bold" fill="#444" filter="url(#rough2)">示例演算：str1 = "abac"，str2 = "cab"</text>
+  <text x="310" y="50" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">沿 dp 表回溯，边退边把字符压入结果（自后向前），最后整体反转</text>
+
+  <!-- 表头 -->
+  <g filter="url(#rough2)" font-size="10.5">
+    <rect x="30" y="64" width="44" height="36" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <text x="52" y="87" text-anchor="middle" fill="#3a4a66">步</text>
+    <rect x="82" y="64" width="52" height="36" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <text x="108" y="87" text-anchor="middle" fill="#3a4a66">(i, j)</text>
+    <rect x="142" y="64" width="196" height="36" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <text x="156" y="87" fill="#3a4a66">依据（比较字符 / dp 值）</text>
+    <rect x="346" y="64" width="76" height="36" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <text x="384" y="87" text-anchor="middle" fill="#3a4a66">写出</text>
+    <rect x="430" y="64" width="140" height="36" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+    <text x="444" y="87" fill="#3a4a66">res（逆序累积）</text>
+  </g>
+
+  <!-- 第 1 行 -->
+  <g filter="url(#rough2)" font-size="10">
+    <rect x="30" y="104" width="44" height="40" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="52" y="129" text-anchor="middle" fill="#8a6a20">1</text>
+    <rect x="82" y="104" width="52" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="108" y="129" text-anchor="middle" fill="#555">(4,3)</text>
+    <rect x="142" y="104" width="196" height="40" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="154" y="129" fill="#6a5620">c ≠ b，dp[3][3]=2 ≥ dp[4][2]=1</text>
+    <rect x="346" y="104" width="76" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="384" y="129" text-anchor="middle" fill="#555">c ← str1</text>
+    <rect x="430" y="104" width="140" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="444" y="129" fill="#555">"c"</text>
+  </g>
+
+  <!-- 第 2 行 -->
+  <g filter="url(#rough2)" font-size="10">
+    <rect x="30" y="148" width="44" height="40" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="52" y="173" text-anchor="middle" fill="#8a6a20">2</text>
+    <rect x="82" y="148" width="52" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="108" y="173" text-anchor="middle" fill="#555">(3,3)</text>
+    <rect x="142" y="148" width="196" height="40" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="154" y="173" fill="#6a5620">a ≠ b，dp[2][3]=2 ≥ dp[3][2]=1</text>
+    <rect x="346" y="148" width="76" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="384" y="173" text-anchor="middle" fill="#555">a ← str1</text>
+    <rect x="430" y="148" width="140" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="444" y="173" fill="#555">"ca"</text>
+  </g>
+
+  <!-- 第 3 行 -->
+  <g filter="url(#rough2)" font-size="10">
+    <rect x="30" y="192" width="44" height="40" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="52" y="217" text-anchor="middle" fill="#3a5a30">3</text>
+    <rect x="82" y="192" width="52" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="108" y="217" text-anchor="middle" fill="#555">(2,3)</text>
+    <rect x="142" y="192" width="196" height="40" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="154" y="217" fill="#3a5a30">b = b，相等 → i、j 同时减 1</text>
+    <rect x="346" y="192" width="76" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="384" y="217" text-anchor="middle" fill="#555">b ← 共用</text>
+    <rect x="430" y="192" width="140" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="444" y="217" fill="#555">"cab"</text>
+  </g>
+
+  <!-- 第 4 行 -->
+  <g filter="url(#rough2)" font-size="10">
+    <rect x="30" y="236" width="44" height="40" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="52" y="261" text-anchor="middle" fill="#3a5a30">4</text>
+    <rect x="82" y="236" width="52" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="108" y="261" text-anchor="middle" fill="#555">(1,2)</text>
+    <rect x="142" y="236" width="196" height="40" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="154" y="261" fill="#3a5a30">a = a，相等 → i、j 同时减 1</text>
+    <rect x="346" y="236" width="76" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="384" y="261" text-anchor="middle" fill="#555">a ← 共用</text>
+    <rect x="430" y="236" width="140" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="444" y="261" fill="#555">"caba"</text>
+  </g>
+
+  <!-- 第 5 行 -->
+  <g filter="url(#rough2)" font-size="10">
+    <rect x="30" y="280" width="44" height="40" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="52" y="305" text-anchor="middle" fill="#8a6a20">5</text>
+    <rect x="82" y="280" width="52" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="108" y="305" text-anchor="middle" fill="#555">(0,1)</text>
+    <rect x="142" y="280" width="196" height="40" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="154" y="305" fill="#6a5620">i = 0 → str2 剩余前缀整段拷入</text>
+    <rect x="346" y="280" width="76" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="384" y="305" text-anchor="middle" fill="#555">c ← str2</text>
+    <rect x="430" y="280" width="140" height="40" rx="5" fill="#ffffff" stroke="#bbb" stroke-width="1.1"/>
+    <text x="444" y="305" fill="#555">"cabac"</text>
+  </g>
+
+  <!-- 结果 -->
+  <g filter="url(#rough2)">
+    <path d="M 500 320 L 500 344" stroke="#6a5620" stroke-width="1.4" fill="none" marker-end="url(#arr)"/>
+    <rect x="30" y="346" width="540" height="60" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.3"/>
+    <text x="46" y="368" font-size="11" font-weight="bold" fill="#3a4a66">反转 res（本例累积结果恰好是回文）→ "cabac"，长度 5 = 4 + 3 − 2</text>
+    <text x="46" y="390" font-size="10.5" fill="#555">校验："abac" 与 "cab" 都是 "cabac" 的子序列；没有更短的可能，长度已达下界。</text>
+  </g>
+</svg>

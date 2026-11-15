@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">单调递减栈：新元素 x 把栈里 ≤ x 的元素逐个「吸收」</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">哨兵 ∞ 垫底，栈从底到顶严格递减；每弹出一个元素就结算它的贡献</text>
+
+  <g filter="url(#rough2)">
+    <rect x="88" y="62" width="144" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6"/>
+    <text x="160" y="79" text-anchor="middle" font-size="11" fill="#3a4a66">读入下一个 x</text>
+    <path d="M 160 86 L 160 94" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+    <polygon points="160,96 250,140 160,184 70,140" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="160" y="145" text-anchor="middle" font-size="11" fill="#8a6a20">栈顶 ≤ x ？</text>
+
+    <path d="M 160 184 L 160 202" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <text x="170" y="198" font-size="10" fill="#4a7a3a">是</text>
+
+    <rect x="83" y="204" width="154" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="6"/>
+    <text x="160" y="221" text-anchor="middle" font-size="11" fill="#8a3a36">mid = 弹出栈顶</text>
+
+    <path d="M 160 230 L 160 248" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="66" y="250" width="188" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="6"/>
+    <text x="160" y="267" text-anchor="middle" font-size="11" fill="#8a3a36">ans += mid × min(新栈顶, x)</text>
+
+    <path d="M 66 263 L 44 263 L 44 140 L 66 140" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" stroke-dasharray="5 3"/>
+    <text x="50" y="196" font-size="9" fill="#4a7a3a">循环</text>
+
+    <path d="M 250 140 L 306 140" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <text x="272" y="132" font-size="10" fill="#b85450">否</text>
+
+    <rect x="310" y="126" width="206" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6"/>
+    <text x="413" y="145" text-anchor="middle" font-size="11" fill="#3a4a66">压入 x（栈仍递减）</text>
+
+    <path d="M 409 124 L 409 74 L 240 74 L 236 74" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" stroke-dasharray="5 3"/>
+    <text x="418" y="98" font-size="10" fill="#4a7a3a">下一个 x</text>
+
+    <path d="M 413 154 L 413 180" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <rect x="310" y="182" width="206" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="322" y="202" font-size="10.5" fill="#8a6a20">全部读完后清栈：</text>
+    <text x="322" y="222" font-size="10" fill="#555">while size &gt; 2: mid = pop()</text>
+    <text x="322" y="240" font-size="10" fill="#555">ans += mid × 新栈顶</text>
+
+    <path d="M 413 246 L 413 260" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <rect x="310" y="262" width="206" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6"/>
+    <text x="413" y="280" text-anchor="middle" font-size="11" fill="#3a5a30">return ans</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <text x="280" y="322" text-anchor="middle" font-size="10" fill="#666">弹栈瞬间：mid 的「左最近 ≥」正是新栈顶，「右最近 ≥」正是 x</text>
+    <text x="280" y="344" text-anchor="middle" font-size="10" fill="#666">于是 mid × min(新栈顶, x) 恰好就是计费公式里 mid 的那一项</text>
+    <text x="280" y="366" text-anchor="middle" font-size="10" fill="#999">哨兵 ∞ 让栈永不为空，也不会被弹出，省掉两类边界判断</text>
+    <text x="280" y="390" text-anchor="middle" font-size="10" fill="#999">每个元素只入栈一次、出栈一次 → 时间 O(n)，空间 O(n)</text>
+  </g>
+</svg>

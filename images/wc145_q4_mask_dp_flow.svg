@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">位掩码 DP：四个步骤</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888">dp[mask] = 覆盖技能集合 mask 所需的最少人数</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="62" width="480" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10"/>
+    <text x="56" y="82" font-size="11" fill="#3a4a66" font-weight="bold">① 状态定义</text>
+    <text x="56" y="100" font-size="10" fill="#555">mask 的第 i 位为 1 ⇔ 技能 i 已被覆盖；full = (1 &lt;&lt; m) - 1 是目标</text>
+    <text x="56" y="114" font-size="10" fill="#555">dp[mask] = 达到 mask 的最少人数，dp[0] = 0，其余为 ∞</text>
+  </g>
+
+  <path d="M 280 120 L 280 140" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="142" width="480" height="62" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <text x="56" y="162" font-size="11" fill="#3a5a30" font-weight="bold">② 转移：加入一个人</text>
+    <text x="56" y="180" font-size="10" fill="#555">nxt = mask | skill[i]（按位或，把第 i 个人会的技能并进来）</text>
+    <text x="56" y="194" font-size="10" fill="#555">若 dp[mask] + 1 &lt; dp[nxt]：更新 dp[nxt]，并记录 pre[nxt] = (mask, i)</text>
+  </g>
+
+  <path d="M 280 204 L 280 224" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="226" width="480" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <text x="56" y="246" font-size="11" fill="#8a6a20" font-weight="bold">③ 遍历顺序：mask 从小到大</text>
+    <text x="56" y="264" font-size="10" fill="#555">因为 nxt ⊇ mask，所以 nxt ≥ mask：数值递增天然是拓扑序</text>
+    <text x="56" y="278" font-size="10" fill="#555">同一轮里重复选同一个人不会更优，无需 0/1 背包的逆序技巧</text>
+  </g>
+
+  <path d="M 280 288 L 280 308" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="310" width="480" height="58" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+    <text x="56" y="330" font-size="11" fill="#8a3a36" font-weight="bold">④ 回溯重建团队</text>
+    <text x="56" y="348" font-size="10" fill="#555">从 full 出发沿 pre 指针回到 0，收集每个 prePerson，反转得到编号升序</text>
+    <text x="56" y="362" font-size="10" fill="#555">答案不唯一：任何最优规模的合法团队都可以，本题判分只比较规模与覆盖性</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="382" width="480" height="46" fill="#f2f2f2" stroke="#888" stroke-width="1.3" rx="10"/>
+    <text x="56" y="401" font-size="10.5" fill="#444" font-weight="bold">复杂度</text>
+    <text x="56" y="418" font-size="10" fill="#555">时间 O(2^m · n) ≤ 65536 × 60 ≈ 4×10^6；空间 O(2^m) 存 dp 与 pre</text>
+  </g>
+</svg>

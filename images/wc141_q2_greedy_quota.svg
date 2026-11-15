@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+
+  <text x="290" y="30" text-anchor="middle" font-size="16" font-weight="bold" fill="#444" filter="url(#rough2)">核心观察：值降序 + 标签名额</text>
+  <text x="290" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">排序 O(n log n)，随后一次线性扫描；哈希表记录每个标签已选个数</text>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="66" width="300" height="248" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <text x="38" y="88" font-size="11" font-weight="bold" fill="#3a4a66">排序后的物品（值 5 → 1）</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11.5">
+    <rect x="36" y="98" width="276" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="52" y="121" fill="#3a5a30">值 5</text>
+    <text x="150" y="121" fill="#3a5a30">标签 1</text>
+    <text x="298" y="121" text-anchor="end" font-size="11" fill="#4a7a3a">✓ 选中</text>
+
+    <rect x="36" y="140" width="276" height="36" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="52" y="163" fill="#8a3a36">值 4</text>
+    <text x="150" y="163" fill="#8a3a36">标签 1</text>
+    <text x="298" y="163" text-anchor="end" font-size="11" fill="#b85450">✗ 跳过</text>
+
+    <rect x="36" y="182" width="276" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="52" y="205" fill="#3a5a30">值 3</text>
+    <text x="150" y="205" fill="#3a5a30">标签 2</text>
+    <text x="298" y="205" text-anchor="end" font-size="11" fill="#4a7a3a">✓ 选中</text>
+
+    <rect x="36" y="224" width="276" height="36" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="52" y="247" fill="#8a3a36">值 2</text>
+    <text x="150" y="247" fill="#8a3a36">标签 2</text>
+    <text x="298" y="247" text-anchor="end" font-size="11" fill="#b85450">✗ 跳过</text>
+
+    <rect x="36" y="266" width="276" height="36" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="52" y="289" fill="#3a5a30">值 1</text>
+    <text x="150" y="289" fill="#3a5a30">标签 3</text>
+    <text x="298" y="289" text-anchor="end" font-size="11" fill="#4a7a3a">✓ 选中</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="344" y="66" width="212" height="248" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="358" y="88" font-size="11" font-weight="bold" fill="#8a6a20">标签计数表 cnt（哈希表）</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11">
+    <rect x="356" y="98" width="188" height="34" rx="5" fill="#ffffff" stroke="#d6a040" stroke-width="1.3"/>
+    <text x="368" y="120" fill="#6a5620">标签 1</text>
+    <text x="532" y="120" text-anchor="end" fill="#b85450">1 / 1 满</text>
+
+    <rect x="356" y="140" width="188" height="34" rx="5" fill="#ffffff" stroke="#d6a040" stroke-width="1.3"/>
+    <text x="368" y="162" fill="#6a5620">标签 2</text>
+    <text x="532" y="162" text-anchor="end" fill="#b85450">1 / 1 满</text>
+
+    <rect x="356" y="182" width="188" height="34" rx="5" fill="#ffffff" stroke="#d6a040" stroke-width="1.3"/>
+    <text x="368" y="204" fill="#6a5620">标签 3</text>
+    <text x="532" y="204" text-anchor="end" fill="#b85450">1 / 1 满</text>
+
+    <text x="358" y="240" font-size="10.5" fill="#555">numWanted = 3：总量上限</text>
+    <text x="358" y="258" font-size="10.5" fill="#555">已选 3 个 → 恰好用满</text>
+    <text x="358" y="282" font-size="10.5" fill="#8a6a20">同一标签第 2 次出现必被跳过</text>
+    <text x="358" y="300" font-size="10.5" fill="#8a6a20">（useLimit = 1，名额是唯一门槛）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="326" width="532" height="60" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.3"/>
+    <text x="38" y="346" font-size="11" font-weight="bold" fill="#3a4a66">交换论证 ⇒ 贪心最优</text>
+    <text x="38" y="364" font-size="10.5" fill="#555">若最优解没选贪心当前可选的 x，就把它里面一个「更靠后、值不更大」的物品</text>
+    <text x="38" y="380" font-size="10.5" fill="#555">换成 x：和不变小，且总量与标签名额都不超，解仍可行。</text>
+  </g>
+</svg>

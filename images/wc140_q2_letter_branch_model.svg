@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：状态 = 每个字母还剩几个字模</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">tiles = "AAB" → 计数向量 (A:2, B:1)：所有长度 3 的串都从同一个状态出发</text>
+
+  <rect x="30" y="68" width="270" height="150" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="92" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">反例：按「下标」枚举，重复严重</text>
+  <text x="46" y="114" font-size="10.5" fill="#555" filter="url(#rough2)">3 个字模做全排列 → 6 种顺序</text>
+  <text x="46" y="134" font-size="10.5" fill="#555" filter="url(#rough2)">交换两个 A 的下标，印出的串不变</text>
+  <text x="46" y="154" font-size="10.5" fill="#555" filter="url(#rough2)">6 种顺序只得到 3 个长度 3 的串：</text>
+  <text x="46" y="174" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">AAB / ABA / BAA</text>
+  <text x="46" y="198" font-size="10.5" fill="#555" filter="url(#rough2)">必须再用 set 去重，白白多花时间</text>
+
+  <rect x="340" y="68" width="270" height="150" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="356" y="92" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">正解：按「字母」分支</text>
+  <text x="356" y="114" font-size="10.5" fill="#555" filter="url(#rough2)">每层只挑一个「不同的字母」当前缀</text>
+  <text x="356" y="134" font-size="10.5" fill="#555" filter="url(#rough2)">还剩 2 个 A，也只走 1 个分支</text>
+  <text x="356" y="154" font-size="10.5" fill="#555" filter="url(#rough2)">首字母只有 A / B 两种选择</text>
+  <text x="356" y="174" font-size="10.5" fill="#555" filter="url(#rough2)">每个不同的序列恰好被产出一次</text>
+  <text x="356" y="198" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">不需要 set，直接累加计数</text>
+
+  <path d="M 310 130 L 330 130" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="236" width="580" height="92" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="258" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">递推：g(s) = 1 + Σ g(s - e_c)　（对每个满足 s_c &gt; 0 的字母 c）</text>
+  <text x="46" y="280" font-size="10.5" fill="#555" filter="url(#rough2)">g(s)：从剩余计数 s 出发能印出的序列总数（含空序列）；e_c 表示「字母 c 少用一个」</text>
+  <text x="46" y="300" font-size="10.5" fill="#555" filter="url(#rough2)">答案 = g(s0) - 1（扣掉空序列）；状态总数 ∏(s_c + 1)，n ≤ 7 时最多 128 个</text>
+  <text x="46" y="320" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">每个状态只算一次 → 记忆化搜索；同一层相同字母的多个副本不会重复分支</text>
+
+  <text x="320" y="352" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">把「枚举下标的排列」换成「枚举首字母」，重复自然消失</text>
+  <text x="320" y="374" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">状态只由「各字母还剩几个」决定，与「具体用了哪几个字模」无关</text>
+</svg>

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3.2" orient="auto">
+      <path d="M0,0 L7,3.2 L0,6.4 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">后序遍历：每个节点返回 (高度 h, 答案节点)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="210" y="50" width="200" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="9"/>
+    <text x="310" y="74" text-anchor="middle" font-size="12.5" fill="#8a6a20" font-weight="bold">dfs(u)：先递归左右子树</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M310,88 L310,112" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="116" width="320" height="62" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10"/>
+    <text x="310" y="140" text-anchor="middle" font-size="11.5" fill="#3a4a66">L = (hL, aL)　　R = (hR, aR)</text>
+    <text x="310" y="162" text-anchor="middle" font-size="10.5" fill="#55667f">h = 子树内最深叶子到 u 的距离；空子树 h = −1</text>
+  </g>
+
+  <g stroke="#888" stroke-width="1.6" fill="none" filter="url(#rough2)">
+    <path d="M250,178 Q160,196 110,210" marker-end="url(#arr)"/>
+    <path d="M310,178 L310,210" marker-end="url(#arr)"/>
+    <path d="M370,178 Q460,196 510,210" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="20" y="214" width="180" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10"/>
+    <text x="110" y="238" font-size="11.5" fill="#3a5a30" font-weight="bold">hL &gt; hR</text>
+    <text x="110" y="260" font-size="11" fill="#3a5a30">返回 (hL+1, aL)</text>
+    <text x="110" y="274" font-size="9.5" fill="#6a8a5a">答案在左子树里</text>
+
+    <rect x="220" y="214" width="180" height="66" fill="#fce4ec" stroke="#b85450" stroke-width="2.4" rx="10"/>
+    <text x="310" y="238" font-size="11.5" fill="#8a3a36" font-weight="bold">hL == hR</text>
+    <text x="310" y="260" font-size="11" fill="#8a3a36">返回 (hL+1, u)</text>
+    <text x="310" y="274" font-size="9.5" fill="#a86a66">u 自己就是分叉点</text>
+
+    <rect x="420" y="214" width="180" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10"/>
+    <text x="510" y="238" font-size="11.5" fill="#3a5a30" font-weight="bold">hR &gt; hL</text>
+    <text x="510" y="260" font-size="11" fill="#3a5a30">返回 (hR+1, aR)</text>
+    <text x="510" y="274" font-size="9.5" fill="#6a8a5a">答案在右子树里</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="302" width="500" height="80" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10"/>
+    <text x="76" y="326" font-size="10.5" fill="#6a5a30">• 空子树返回 (−1, null)；叶子左右都是 −1 → 返回 (0, 叶子自己)</text>
+    <text x="76" y="348" font-size="10.5" fill="#6a5a30">• 同高 ⇒ 最深叶子分居两侧，任何更深祖先都覆盖不全 ⇒ u 必是 LCA</text>
+    <text x="76" y="370" font-size="10.5" fill="#6a5a30">• 只回传高度，不需要记录最深叶子具体是谁，一次遍历即可</text>
+  </g>
+</svg>

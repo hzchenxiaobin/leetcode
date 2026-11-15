@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：前段看 arr2 的名次，后段看数值大小</text>
+  <text x="280" y="45" text-anchor="middle" font-size="11" fill="#888">两段互不干扰，所以可以拆成「按名次取数」+「按值域升序补尾」两步</text>
+
+  <text x="40" y="72" font-size="11" fill="#3a4a66" font-weight="bold">arr2 为每个值规定一个名次（rank = 下标）</text>
+
+  <g filter="url(#rough2)" text-anchor="middle" font-weight="bold">
+    <rect x="60" y="82" width="46" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="112" y="82" width="46" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="164" y="82" width="46" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="216" y="82" width="46" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="268" y="82" width="46" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="320" y="82" width="46" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="83" y="107" font-size="13" fill="#3a4a66">2</text>
+    <text x="135" y="107" font-size="13" fill="#3a4a66">1</text>
+    <text x="187" y="107" font-size="13" fill="#3a4a66">4</text>
+    <text x="239" y="107" font-size="13" fill="#3a4a66">3</text>
+    <text x="291" y="107" font-size="13" fill="#3a4a66">9</text>
+    <text x="343" y="107" font-size="13" fill="#3a4a66">6</text>
+  </g>
+  <g filter="url(#rough2)" text-anchor="middle" font-size="10" fill="#888">
+    <text x="83" y="134">rank 0</text>
+    <text x="135" y="134">rank 1</text>
+    <text x="187" y="134">rank 2</text>
+    <text x="239" y="134">rank 3</text>
+    <text x="291" y="134">rank 4</text>
+    <text x="343" y="134">rank 5</text>
+  </g>
+
+  <rect x="392" y="82" width="134" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="459" y="100" text-anchor="middle" font-size="10" fill="#8a6a20">arr2 元素互不相同</text>
+  <text x="459" y="114" text-anchor="middle" font-size="10" fill="#8a6a20">⇒ 名次唯一、可直接比较</text>
+
+  <path d="M 280 148 L 280 172" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="166" font-size="10" fill="#446688">分成两类元素分别处理</text>
+
+  <rect x="40" y="186" width="228" height="116" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="54" y="208" font-size="11" fill="#3a5a30" font-weight="bold">A 类：出现在 arr2 中</text>
+  <text x="54" y="232" font-size="10" fill="#555">按 rank 由小到大成段输出</text>
+  <text x="54" y="254" font-size="10" fill="#555">每个 rank 只对应一个值 x</text>
+  <text x="54" y="276" font-size="10" fill="#555">cnt[x] 次全部连续输出</text>
+  <text x="54" y="294" font-size="10" fill="#3a5a30">⇒ 段内相等，段间按 arr2 顺序</text>
+
+  <rect x="292" y="186" width="228" height="116" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="306" y="208" font-size="11" fill="#8a6a20" font-weight="bold">B 类：不在 arr2 中</text>
+  <text x="306" y="232" font-size="10" fill="#555">只要求相对顺序升序</text>
+  <text x="306" y="254" font-size="10" fill="#555">值域只有 0..1000</text>
+  <text x="306" y="276" font-size="10" fill="#555">从 0 扫到 1000 依次输出</text>
+  <text x="306" y="294" font-size="10" fill="#8a6a20">⇒ 天然升序，无需比较排序</text>
+
+  <text x="280" y="326" text-anchor="middle" font-size="10" fill="#999">关键结论：A 类的位置由 arr2 决定、B 类的位置由数值决定，两者都只与「值」有关</text>
+  <text x="280" y="346" text-anchor="middle" font-size="10" fill="#999">所以整个问题退化成「按值计数 + 按两种顺序各扫一遍」，与 arr1 的原始顺序完全无关</text>
+</svg>
