@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">有向带权图：查询 3 → 2，最短路 3→0→1→2 = 6</text>
+
+  <!-- 图节点 -->
+  <g filter="url(#rough2)">
+    <ellipse cx="110" cy="120" rx="22" ry="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="110" y="126" text-anchor="middle" font-size="13" fill="#333">0</text>
+    <ellipse cx="250" cy="80" rx="22" ry="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="86" text-anchor="middle" font-size="13" fill="#333">1</text>
+    <ellipse cx="400" cy="120" rx="22" ry="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="400" y="126" text-anchor="middle" font-size="13" fill="#333">2</text>
+    <ellipse cx="180" cy="230" rx="22" ry="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="180" y="236" text-anchor="middle" font-size="13" fill="#333">3</text>
+    <ellipse cx="470" cy="230" rx="22" ry="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="470" y="236" text-anchor="middle" font-size="13" fill="#333">4</text>
+  </g>
+
+  <!-- 有向边（示例图：0→2(5), 0→1(2), 1→2(1), 3→0(3), 0→4?）画 5 条 -->
+  <g filter="url(#rough2)">
+    <path d="M 132 112 C 200 92, 320 92, 378 114" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <text x="255" y="82" text-anchor="middle" font-size="12" fill="#888">5</text>
+    <path d="M 128 108 C 170 90, 210 78, 228 78" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <text x="168" y="90" text-anchor="middle" font-size="12" fill="#888">2</text>
+    <path d="M 272 84 C 320 88, 370 100, 378 112" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <text x="325" y="100" text-anchor="middle" font-size="12" fill="#888">1</text>
+    <path d="M 172 212 C 150 180, 128 160, 122 144" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <text x="130" y="186" text-anchor="middle" font-size="12" fill="#888">3</text>
+    <path d="M 202 240 C 300 246, 380 244, 448 238" stroke="#888" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <text x="330" y="258" text-anchor="middle" font-size="12" fill="#888">4</text>
+  </g>
+
+  <!-- 高亮最短路 -->
+  <g filter="url(#rough2)">
+    <path d="M 202 216 C 150 176, 128 158, 120 144" stroke="#b85450" stroke-width="2.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 126 102 C 168 82, 212 72, 226 74" stroke="#b85450" stroke-width="2.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 272 82 C 322 86, 372 100, 380 112" stroke="#b85450" stroke-width="2.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+  <text x="280" y="286" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">红色路径：3 → 0 → 1 → 2，代价 3 + 2 + 1 = 6</text>
+
+  <!-- 右侧信息框：邻接表 + 堆 -->
+  <rect x="418" y="60" width="128" height="0" rx="8" fill="none"/>
+  <text x="480" y="180" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">邻接表 adj[u] = [(v, w)…]</text>
+  <text x="480" y="198" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">addEdge = push_back O(1)</text>
+  <text x="480" y="216" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">查询 = 堆优化 Dijkstra</text>
+</svg>
