@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="137"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">设计：布尔数组 + 一条只前进的指针</text>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="56">不变量：1..cur 已全部上传（cur 是当前最长前缀），cur+1 尚未上传</text>
+  </g>
+
+  <!-- 槽位 -->
+  <g filter="url(#rough2)">
+    <rect x="110" y="80" width="60" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="6"/>
+    <rect x="180" y="80" width="60" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="6"/>
+    <rect x="250" y="80" width="60" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="6"/>
+    <rect x="320" y="80" width="60" height="44" fill="#f5f5f5" stroke="#bbb" stroke-width="1.5" stroke-dasharray="5 3" rx="6"/>
+    <rect x="390" y="80" width="60" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="6"/>
+    <rect x="460" y="80" width="60" height="44" fill="#f5f5f5" stroke="#bbb" stroke-width="1.5" stroke-dasharray="5 3" rx="6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="140" y="106">1 ✓</text><text x="210" y="106">2 ✓</text><text x="280" y="106">3 ✓</text>
+    <text x="350" y="106">4 ✗</text><text x="420" y="106">5 ✓</text><text x="490" y="106">6 ✗</text>
+  </g>
+
+  <!-- cur 指针 -->
+  <path d="M 280 150 L 280 130" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="280" y="172" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">cur = 3</text>
+  <g filter="url(#rough2)">
+    <rect x="310" y="150" width="220" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="420" y="175" text-anchor="middle" font-size="12" fill="#7a2f2b" filter="url(#rough2)">seen[cur+1] = seen[4] = 假 → 停下</text>
+
+  <!-- 操作说明 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="200" width="222" height="76" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#1a2b45" text-anchor="middle">
+    <text x="167" y="226">upload(v)：只做 seen[v] = true</text>
+    <text x="167" y="250">O(1)，不维护任何前缀信息</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="292" y="200" width="222" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#1d3a17" text-anchor="middle">
+    <text x="403" y="226">longest()：while (seen[cur+1]) ++cur</text>
+    <text x="403" y="250">扫到第一个空位即停，返回 cur</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="56" y="296" width="458" height="84" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="285" y="320">为什么 cur 不用回退：视频编号互不相同，cur 右侧一旦补上 4，</text>
+    <text x="285" y="342">只有 5、6 已在「恰好连上」时才会继续前进；新上传的编号 5</text>
+    <text x="285" y="364">只能让 cur 停在 4 或前进到 5，永远不会出现「前缀断裂」倒退</text>
+  </g>
+</svg>

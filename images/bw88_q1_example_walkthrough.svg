@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="83"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="131"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">示例演算：true 与 false 各是什么样子</text>
+
+  <!-- 例1 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="52" width="448" height="92" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="76" text-anchor="middle" font-size="13" fill="#1d3a17" font-weight="bold" filter="url(#rough2)">"abcc" → true：删掉一个 c，得 {a:1, b:1, c:1}</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="100">尝试顺序：删 a → {1, 2} ✗；删 b → {1, 2} ✗；删 c → {1, 1} ✓</text>
+    <text x="280" y="126">对应删除下标 3：word 变成 "abc"，每个字母频率都是 1</text>
+  </g>
+
+  <!-- 例2 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="160" width="448" height="92" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="184" text-anchor="middle" font-size="13" fill="#7a2f2b" font-weight="bold" filter="url(#rough2)">"aazz" → false：删谁都会留下 1 和 2</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="208">删 a → {a:1, z:2} ✗；删 z → {a:2, z:1} ✗</text>
+    <text x="280" y="234">两种字母都出现，删一次无法把两个频率拉平</text>
+  </g>
+
+  <!-- 例3 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="268" width="448" height="110" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="292" text-anchor="middle" font-size="13" fill="#7a5518" font-weight="bold" filter="url(#rough2)">"cccd" → true：删掉唯一的 d，只剩 c:3 一种字母</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="316">删 c → {c:2, d:1} ✗；删 d → {c:3} —— 非零频率只有一个取值 ✓</text>
+    <text x="280" y="342">同理 "dd" → 删一个 d 后只剩 {d:1}，返回 true</text>
+    <text x="280" y="366">易错：别要求「至少两种字母」；也别把 0 频率算进来比较</text>
+  </g>
+</svg>

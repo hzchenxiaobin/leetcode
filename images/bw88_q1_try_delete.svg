@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="79"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="127"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">26 个频率桶：枚举「删哪个字母的一个出现」</text>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="56">word = "abcc"：a→1, b→1, c→2（其余 23 个桶为 0）</text>
+  </g>
+
+  <!-- 桶 -->
+  <g filter="url(#rough2)">
+    <rect x="150" y="74" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="6"/>
+    <rect x="212" y="74" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="6"/>
+    <rect x="274" y="74" width="52" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="6"/>
+    <rect x="336" y="74" width="52" height="44" fill="#f5f5f5" stroke="#bbb" stroke-width="1" stroke-dasharray="4 3" rx="6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="176" y="93">a:1</text><text x="238" y="93">b:1</text>
+    <text x="300" y="93">c:2</text><text x="362" y="93">…:0</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#888" text-anchor="middle">
+    <text x="176" y="112">freq[a]=1</text><text x="238" y="112">freq[b]=1</text>
+    <text x="300" y="112">freq[c]=2</text><text x="362" y="112">空桶跳过</text>
+  </g>
+
+  <!-- 尝试 1：删 a -->
+  <g filter="url(#rough2)">
+    <rect x="52" y="150" width="222" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="163" y="174" text-anchor="middle" font-size="12.5" fill="#7a2f2b" font-weight="bold" filter="url(#rough2)">尝试删一个 a：freq = {a:0, b:1, c:2}</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a2f2b" text-anchor="middle">
+    <text x="163" y="198">剩下的非零频率 {1, 2} 不全相等 ✗</text>
+    <text x="163" y="222">恢复 a:1，继续试下一个字母</text>
+  </g>
+
+  <!-- 尝试 2：删 c -->
+  <g filter="url(#rough2)">
+    <rect x="292" y="150" width="222" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+  </g>
+  <text x="403" y="174" text-anchor="middle" font-size="12.5" fill="#1d3a17" font-weight="bold" filter="url(#rough2)">尝试删一个 c：freq = {a:1, b:1, c:1}</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#1d3a17" text-anchor="middle">
+    <text x="403" y="198">非零频率只剩一种取值 {1} → 全相等 ✓</text>
+    <text x="403" y="222">返回 true（对应删掉下标 2 或 3）</text>
+  </g>
+  <path d="M 300 120 C 330 136, 380 142, 398 148" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="56" y="262" width="448" height="94" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="286">关键点 ①：枚举的是「字母」而不是「下标」——同一字母的任意一个出现等价，</text>
+    <text x="280" y="308">26 次尝试代替 |word| 次；每次 O(26) 检查剩余非零频率是否唯一</text>
+    <text x="280" y="330">关键点 ②：只剩一种字母（如删完 c 只剩 a）也算「频率相同」，</text>
+    <text x="280" y="352">非零频率必须恰好一个不同取值，别把 0 混进比较</text>
+  </g>
+</svg>

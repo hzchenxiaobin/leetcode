@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="71"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="109"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">峰值推导：谁在最瘪的钱包前伸手</text>
+
+  <g filter="url(#rough2)">
+    <rect x="56" y="48" width="448" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#1a2b45" text-anchor="middle">
+    <text x="280" y="76">做第 k 笔前要满足 money ≥ cost_k，而 money = M − (前面净损失和)</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13.5" fill="#b85450" font-weight="bold" text-anchor="middle">
+    <text x="280" y="118">M ≥ cost_k + Σ(排在 k 前面的 d_t) —— 对所有顺序、所有 k 都成立</text>
+  </g>
+
+  <!-- 候选 A：关键交易是亏损的 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="140" width="222" height="152" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="167" y="164" text-anchor="middle" font-size="13" fill="#7a2f2b" font-weight="bold" filter="url(#rough2)">候选 A：k 是亏损交易</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="167" y="188">把「其他亏损交易」全排它前面：</text>
+    <text x="167" y="210">前缀净损失 = Σloss − d_k</text>
+    <text x="167" y="234">峰值 = c_k + Σloss − (c_k − w_k)</text>
+    <text x="167" y="258">　　　 = Σloss + w_k</text>
+    <text x="167" y="282">→ 取 cashback 最大的亏损交易</text>
+  </g>
+
+  <!-- 候选 B：关键交易是盈利的 -->
+  <g filter="url(#rough2)">
+    <rect x="292" y="140" width="222" height="152" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="403" y="164" text-anchor="middle" font-size="13" fill="#1d3a17" font-weight="bold" filter="url(#rough2)">候选 B：k 是盈利交易</text>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="403" y="188">把「所有亏损交易」排它前面：</text>
+    <text x="403" y="210">前缀净损失 = Σloss</text>
+    <text x="403" y="234">峰值 = c_k + Σloss</text>
+    <text x="403" y="258">（其他盈利放前面只会减少峰值）</text>
+    <text x="403" y="282">→ 取 cost 最大的盈利交易</text>
+  </g>
+
+  <!-- 结论 -->
+  <g filter="url(#rough2)">
+    <rect x="90" y="312" width="380" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#7a5518" text-anchor="middle" font-weight="bold">
+    <text x="280" y="340">answer = Σloss + max( 亏损块最大 cashback ,</text>
+    <text x="280" y="366">　　　　　　　　　盈利块最大 cost )</text>
+  </g>
+</svg>

@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="127"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="173"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">从左往右扫 + 树状数组：先查询、再插入</text>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="54">处理到下标 j 时，BIT 里存的是 c[0..j−1]；</text>
+    <text x="280" y="74">答案累加「已插入的 c[i] 中 ≤ c[j] + diff 的个数」</text>
+  </g>
+
+  <!-- 流程 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="94" width="200" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="160" y="121" text-anchor="middle" font-size="13" fill="#1a2b45" filter="url(#rough2)">j 从 0 扫到 n−1</text>
+
+  <g filter="url(#rough2)">
+    <rect x="300" y="94" width="220" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="410" y="113" text-anchor="middle" font-size="12.5" fill="#7a5518" filter="url(#rough2)">值域平移：c ∈ [−2·10⁴, 2·10⁴]</text>
+  <text x="410" y="130" text-anchor="middle" font-size="12.5" fill="#7a5518" filter="url(#rough2)">下标 = c + 30001 ∈ [1, 60001]</text>
+
+  <path d="M 262 116 L 296 116" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+
+  <!-- 查询/插入双框 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="168" width="220" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#1d3a17" text-anchor="middle">
+    <text x="170" y="192">① 查询 query(c[j] + diff)</text>
+    <text x="170" y="214">= 左边 ≤ 阈值的个数</text>
+    <text x="170" y="236">O(log V)，阈值可为负 → 前缀为空得 0</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="300" y="168" width="220" height="76" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a2f2b" text-anchor="middle">
+    <text x="410" y="192">② 插入 add(c[j])</text>
+    <text x="410" y="214">让 c[j] 从此可被后面的</text>
+    <text x="410" y="236">j′ 查询到，O(log V)</text>
+  </g>
+  <path d="M 280 206 L 296 206" stroke="#888" stroke-width="1.4" fill="none" stroke-dasharray="4 3" filter="url(#rough2)"/>
+  <path d="M 170 170 L 170 152 L 160 140" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <path d="M 410 170 L 410 152 L 410 140" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 顺序强调 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="264" width="460" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="290" y="286">顺序铁律：必须「先查询、后插入」——</text>
+    <text x="290" y="308">如果先插入 c[j] 再查询，会把 j = i 自己也数进去（c[j] ≤ c[j] + diff 恒真）</text>
+  </g>
+
+  <!-- BIT 示意 -->
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="290" y="352">树状数组下标的二进制覆盖：bit[6] 管 5..6，bit[8] 管 1..8，bit[12] 管 9..12</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="90" y="366" width="40" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="138" y="366" width="40" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="186" y="366" width="40" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="234" y="366" width="40" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="282" y="366" width="40" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="330" y="366" width="40" height="28" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="378" y="366" width="40" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="110" y="385">bit1</text><text x="158" y="385">bit2</text><text x="206" y="385">bit3</text>
+    <text x="254" y="385">bit4</text><text x="302" y="385">bit5</text><text x="350" y="385">bit6</text><text x="398" y="385">bit7</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="290" y="422">查询与插入都只碰 O(log V) 个格子 → 总复杂度 O(n log V)</text>
+  </g>
+</svg>

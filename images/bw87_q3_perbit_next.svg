@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="59"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">逐位观察：每个 bit 的「最近置位下标」决定最短终点</text>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="56">窗口 [i, j] 的 OR 恰好等于后缀 OR ⟺ 对后缀里出现的每个 bit b，都有 j ≥ nxt[b]</text>
+    <text x="280" y="76">其中 nxt[b] = 「下标 ≥ i 中，nums 里第一个把 bit b 置 1 的位置」</text>
+  </g>
+
+  <!-- 位格子图 -->
+  <text x="88" y="116" font-size="12.5" fill="#446688" font-weight="bold" filter="url(#rough2)">bit1 行</text>
+  <text x="88" y="164" font-size="12.5" fill="#446688" font-weight="bold" filter="url(#rough2)">bit0 行</text>
+  <text x="88" y="210" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">nums</text>
+  <g filter="url(#rough2)">
+    <rect x="150" y="100" width="50" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="210" y="100" width="50" height="30" fill="#f5f5f5" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="270" y="100" width="50" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="330" y="100" width="50" height="30" fill="#f5f5f5" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="390" y="100" width="50" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="150" y="148" width="50" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="210" y="148" width="50" height="30" fill="#f5f5f5" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="270" y="148" width="50" height="30" fill="#f5f5f5" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="330" y="148" width="50" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="390" y="148" width="50" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="175" y="220">1</text><text x="235" y="220">0</text><text x="295" y="220">2</text>
+    <text x="355" y="220">1</text><text x="415" y="220">3</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#888" text-anchor="middle">
+    <text x="175" y="120">0</text><text x="235" y="120">0</text><text x="295" y="120">1</text>
+    <text x="355" y="120">0</text><text x="415" y="120">1</text>
+    <text x="175" y="168">1</text><text x="235" y="168">0</text><text x="295" y="168">0</text>
+    <text x="355" y="168">1</text><text x="415" y="168">1</text>
+    <text x="175" y="240">0</text><text x="235" y="240">1</text><text x="295" y="240">2</text>
+    <text x="355" y="240">3</text><text x="415" y="240">4</text>
+  </g>
+
+  <!-- i=1 的解释 -->
+  <text x="90" y="290" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">以 i = 1 为例（从右往左扫到 1 时）：</text>
+  <path d="M 232 200 C 232 258, 330 258, 328 182" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <path d="M 238 146 C 240 264, 352 268, 352 184" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="150" y="316">bit1 最近置位 → 下标 2</text>
+    <text x="150" y="338">bit0 最近置位 → 下标 3</text>
+    <text x="150" y="366">end = max(2, 3) = 3</text>
+    <text x="150" y="392">answer[1] = 3 − 1 + 1 = 3 ✓</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="330" y="300" width="190" height="104" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#7a5518" text-anchor="middle">
+    <text x="425" y="324">两个 bit 的「所需最远来源」</text>
+    <text x="425" y="344">都纳进窗口后 OR 才追平后缀</text>
+    <text x="425" y="366">nxt[b] 随 i 左移只会被</text>
+    <text x="425" y="386">i 自己刷新 → O(n·30) 一遍扫完</text>
+  </g>
+</svg>

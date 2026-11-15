@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="139"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="320" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">均摊分析：指针一生只前进 n 步</text>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="280" y="56">单次 longest() 的推进步数可能很大（如最后一块补齐时一跳到底），</text>
+    <text x="280" y="76">但每次 +1 都对应一个「首次变连续」的槽位，全程序合计 ≤ n 次</text>
+  </g>
+
+  <!-- 操作序列条形图 -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="100" width="40" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="118" y="100" width="40" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="166" y="100" width="40" height="20" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="214" y="100" width="40" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="262" y="100" width="40" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="310" y="100" width="40" height="20" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="358" y="100" width="40" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="406" y="100" width="40" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="454" y="100" width="40" height="20" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#333" text-anchor="middle">
+    <text x="90" y="115">O(1)</text><text x="138" y="115">O(1)</text><text x="186" y="115">O(k)</text>
+    <text x="234" y="115">O(1)</text><text x="282" y="115">O(1)</text><text x="330" y="115">O(k′)</text>
+    <text x="378" y="115">O(1)</text><text x="426" y="115">O(1)</text><text x="474" y="115">O(k″)</text>
+  </g>
+  <text x="280" y="146" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">（红条 = 大跳的 longest()，白条 = 普通 O(1) 调用）</text>
+
+  <!-- 求和 -->
+  <g filter="url(#rough2)">
+    <rect x="120" y="168" width="320" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#1d3a17" text-anchor="middle">
+    <text x="280" y="192">k + k′ + k″ + … ≤ n（每个槽位至多被跨过一次）</text>
+    <text x="280" y="216">2×10⁵ 次调用总计 O(n + q)，单次均摊 O(1)</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12.5" fill="#b85450" text-anchor="middle">
+    <text x="280" y="264">对照：若 longest() 每次从 1 线性扫到位，最坏 10⁵ × 10⁵ = 10¹⁰ 次 → 超时</text>
+    <text x="280" y="288">「惰性推进」把重复扫描合并成一遍——这是前缀类设计题的标准套路</text>
+  </g>
+</svg>
