@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+  <rect width="680" height="380" fill="#fafafa"/>
+
+  <text x="22" y="30" font-size="15" fill="#333" filter="url(#rough2)">Dijkstra 求原图上到 0 的最短步数，再沿每条边「从两端各吃一截」</text>
+
+  <rect x="24" y="46" width="300" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="174" y="68" text-anchor="middle" font-size="12" fill="#2c4a63" filter="url(#rough2)">原图 Dijkstra（边权 = cnt+1）</text>
+  <text x="174" y="88" text-anchor="middle" font-size="11" fill="#2c4a63" filter="url(#rough2)">dist[i] = 从 0 到 i 的最少步数</text>
+
+  <path d="M324 72 L368 72" stroke="#446688" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+
+  <rect x="370" y="46" width="286" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="513" y="68" text-anchor="middle" font-size="12" fill="#33562a" filter="url(#rough2)">原始节点贡献</text>
+  <text x="513" y="88" text-anchor="middle" font-size="11" fill="#33562a" filter="url(#rough2)">#{ i : dist[i] ≤ maxMoves }</text>
+
+  <!-- 边内计数 -->
+  <text x="24" y="136" font-size="12" fill="#333" filter="url(#rough2)">每条边 [u,v,cnt] 内部能到达的细分点数：</text>
+
+  <!-- 边示意 -->
+  <circle cx="80" cy="212" r="18" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="80" y="217" text-anchor="middle" font-size="12" fill="#2c4a63" filter="url(#rough2)">u</text>
+  <circle cx="520" cy="212" r="18" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="520" y="217" text-anchor="middle" font-size="12" fill="#2c4a63" filter="url(#rough2)">v</text>
+  <path d="M100 212 L500 212" stroke="#9aa4b0" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+
+  <!-- 从 u 侧吃掉的一段 -->
+  <path d="M100 212 L280 212" stroke="#4a7a3a" stroke-width="5" fill="none" filter="url(#rough2)"/>
+  <text x="190" y="196" text-anchor="middle" font-size="11" fill="#33562a" filter="url(#rough2)">a = max(0, M − dist[u])</text>
+
+  <!-- 从 v 侧吃掉的一段 -->
+  <path d="M360 212 L500 212" stroke="#b85450" stroke-width="5" fill="none" filter="url(#rough2)"/>
+  <text x="430" y="196" text-anchor="middle" font-size="11" fill="#8d3b37" filter="url(#rough2)">b = max(0, M − dist[v])</text>
+
+  <text x="320" y="242" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">中间的空白是到不了的部分</text>
+
+  <rect x="24" y="256" width="632" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="340" y="280" text-anchor="middle" font-size="13" fill="#8a6410" filter="url(#rough2)">贡献 = min( cnt , a + b )</text>
+  <text x="340" y="300" text-anchor="middle" font-size="11" fill="#8a6410" filter="url(#rough2)">「封顶」是因为同一条边最多只有 cnt 个细分点，两端能吃到的部分可能重叠</text>
+
+  <rect x="24" y="320" width="632" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="340" y="342" text-anchor="middle" font-size="11" fill="#8d3b37" filter="url(#rough2)">重叠为什么可以直接「相加再封顶」？两端各是一个前缀 / 后缀，并集大小 = min(cnt, 前缀长 + 后缀长)</text>
+  <text x="340" y="360" text-anchor="middle" font-size="11" fill="#8d3b37" filter="url(#rough2)">若 a + b ≤ cnt 则不相交；若 a + b ≥ cnt 则并集覆盖整条边</text>
+</svg>

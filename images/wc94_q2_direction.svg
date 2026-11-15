@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+  <rect width="600" height="360" fill="#fafafa"/>
+
+  <text x="22" y="32" font-size="15" fill="#333" filter="url(#rough2)">用 0/1/2/3 表示 北/东/南/西，转向即模 4 加减</text>
+
+  <!-- 方向环 -->
+  <circle cx="190" cy="190" r="86" fill="none" stroke="#9aa4b0" stroke-width="1.4" stroke-dasharray="6 5" filter="url(#rough2)"/>
+  <circle cx="190" cy="104" r="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="102" text-anchor="middle" font-size="12" fill="#2c4a63" filter="url(#rough2)">0</text>
+  <text x="190" y="118" text-anchor="middle" font-size="10" fill="#2c4a63" filter="url(#rough2)">北</text>
+  <circle cx="276" cy="190" r="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="276" y="188" text-anchor="middle" font-size="12" fill="#33562a" filter="url(#rough2)">1</text>
+  <text x="276" y="204" text-anchor="middle" font-size="10" fill="#33562a" filter="url(#rough2)">东</text>
+  <circle cx="190" cy="276" r="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="190" y="274" text-anchor="middle" font-size="12" fill="#8a6410" filter="url(#rough2)">2</text>
+  <text x="190" y="290" text-anchor="middle" font-size="10" fill="#8a6410" filter="url(#rough2)">南</text>
+  <circle cx="104" cy="190" r="24" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="104" y="188" text-anchor="middle" font-size="12" fill="#8d3b37" filter="url(#rough2)">3</text>
+  <text x="104" y="204" text-anchor="middle" font-size="10" fill="#8d3b37" filter="url(#rough2)">西</text>
+
+  <path d="M214 108 C250 120 268 150 274 166" stroke="#4a7a3a" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <text x="252" y="126" font-size="10" fill="#4a7a3a" filter="url(#rough2)">右转 +1</text>
+  <path d="M166 108 C130 120 112 150 106 166" stroke="#b85450" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arrR)"/>
+  <text x="86" y="126" font-size="10" fill="#b85450" filter="url(#rough2)">左转 +3</text>
+
+  <!-- 位移表 -->
+  <rect x="330" y="60" width="252" height="124" fill="#ffffff" stroke="#9aa4b0" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="456" y="84" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">方向 → 单位位移</text>
+  <text x="346" y="108" font-size="11" fill="#446688" filter="url(#rough2)">d = 0（北）：dx = 0, dy = +1</text>
+  <text x="346" y="130" font-size="11" fill="#4a7a3a" filter="url(#rough2)">d = 1（东）：dx = +1, dy = 0</text>
+  <text x="346" y="152" font-size="11" fill="#b07d20" filter="url(#rough2)">d = 2（南）：dx = 0, dy = −1</text>
+  <text x="346" y="174" font-size="11" fill="#b85450" filter="url(#rough2)">d = 3（西）：dx = −1, dy = 0</text>
+
+  <rect x="330" y="200" width="252" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="456" y="224" text-anchor="middle" font-size="12" fill="#2c4a63" filter="url(#rough2)">只走一步，重复 x 次</text>
+  <text x="346" y="248" font-size="11" fill="#2c4a63" filter="url(#rough2)">不能「一步算到目的地」：</text>
+  <text x="346" y="268" font-size="11" fill="#2c4a63" filter="url(#rough2)">否则会跨过中间的障碍物</text>
+  <text x="346" y="288" font-size="11" fill="#2c4a63" filter="url(#rough2)">每步检查 (x+dx, y+dy) 是否被占</text>
+
+  <text x="22" y="344" font-size="11" fill="#666" filter="url(#rough2)">障碍物用哈希集合（set of pair）存，单次查询 O(1)，避免每步扫一遍 obstacles</text>
+</svg>

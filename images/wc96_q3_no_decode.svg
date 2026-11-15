@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+  <rect width="640" height="340" fill="#fafafa"/>
+
+  <text x="22" y="30" font-size="15" fill="#333" filter="url(#rough2)">反例驱动：为什么绝不能「真的解码」</text>
+
+  <rect x="24" y="48" width="592" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="320" y="72" text-anchor="middle" font-size="13" fill="#8d3b37" filter="url(#rough2)">s = "a2345678999999999999999"，k = 1</text>
+  <text x="320" y="92" text-anchor="middle" font-size="11" fill="#8d3b37" filter="url(#rough2)">解码后长度 ≈ 8.3 × 10¹⁸ 个字符，答案却是第 1 个字符 'a'</text>
+
+  <text x="24" y="132" font-size="12" fill="#333" filter="url(#rough2)">每一步的 size 增长：</text>
+  <rect x="24" y="144" width="592" height="30" fill="#ffffff" stroke="#9aa4b0" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <text x="44" y="164" font-size="11" fill="#555" filter="url(#rough2)">1 → 2 → 6 → 24 → 144 → 1152 → 10368 → 103680 → 1036800 → 10368000 → …</text>
+
+  <rect x="24" y="190" width="286" height="98" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="167" y="214" text-anchor="middle" font-size="12" fill="#33562a" filter="url(#rough2)">正确做法</text>
+  <text x="167" y="238" text-anchor="middle" font-size="11" fill="#33562a" filter="url(#rough2)">只维护 size（long long）</text>
+  <text x="167" y="260" text-anchor="middle" font-size="11" fill="#33562a" filter="url(#rough2)">再从后往前折叠 k</text>
+  <text x="167" y="280" text-anchor="middle" font-size="11" fill="#33562a" filter="url(#rough2)">时间 O(|s|)、空间 O(1)</text>
+
+  <rect x="330" y="190" width="286" height="98" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="473" y="214" text-anchor="middle" font-size="12" fill="#8d3b37" filter="url(#rough2)">错误做法</text>
+  <text x="473" y="238" text-anchor="middle" font-size="11" fill="#8d3b37" filter="url(#rough2)">构造解码后的字符串再取 k−1</text>
+  <text x="473" y="260" text-anchor="middle" font-size="11" fill="#8d3b37" filter="url(#rough2)">内存爆炸（8 EB）、必然超时/超内存</text>
+  <text x="473" y="280" text-anchor="middle" font-size="11" fill="#8d3b37" filter="url(#rough2)">哪怕只保留前 k 个也会超时</text>
+
+  <text x="24" y="316" font-size="11" fill="#666" filter="url(#rough2)">题目保证「解码后长度 &lt; 2^63」且「k ≤ 1e9」，正是为了让 size 能用 64 位整数、k 能用 int 存</text>
+</svg>
