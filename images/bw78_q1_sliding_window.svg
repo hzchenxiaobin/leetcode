@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="127"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">定长滑窗：k=2 的窗口在 "430043" 上滑动</text>
+
+  <!-- 窗口 1 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="56" width="56" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" rx="4"/>
+    <rect x="160" y="56" width="56" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" rx="4"/>
+    <rect x="220" y="56" width="56" height="48" fill="#ffffff" stroke="#ccc" stroke-width="1" rx="4"/>
+    <rect x="280" y="56" width="56" height="48" fill="#ffffff" stroke="#ccc" stroke-width="1" rx="4"/>
+    <rect x="340" y="56" width="56" height="48" fill="#ffffff" stroke="#ccc" stroke-width="1" rx="4"/>
+    <rect x="400" y="56" width="56" height="48" fill="#ffffff" stroke="#ccc" stroke-width="1" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="19" fill="#333" text-anchor="middle">
+    <text x="128" y="86">4</text><text x="188" y="86">3</text>
+    <text x="248" y="86">0</text><text x="308" y="86">0</text>
+    <text x="368" y="86">4</text><text x="428" y="86">3</text>
+  </g>
+  <text x="240" y="126" text-anchor="middle" font-size="12.5" fill="#33506b" filter="url(#rough2)">窗口 1："43" → v = 43</text>
+
+  <!-- 右移箭头 -->
+  <path d="M 280 148 L 280 172" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="164" font-size="11.5" fill="#666" filter="url(#rough2)">右移一位</text>
+
+  <!-- 窗口 2 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="180" width="56" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="160" y="180" width="56" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" rx="4"/>
+    <rect x="220" y="180" width="56" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="2.5" rx="4"/>
+    <rect x="280" y="180" width="56" height="48" fill="#ffffff" stroke="#ccc" stroke-width="1" rx="4"/>
+    <rect x="340" y="180" width="56" height="48" fill="#ffffff" stroke="#ccc" stroke-width="1" rx="4"/>
+    <rect x="400" y="180" width="56" height="48" fill="#ffffff" stroke="#ccc" stroke-width="1" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="19" fill="#333" text-anchor="middle">
+    <text x="128" y="210" fill="#8a3a36">4</text><text x="188" y="210">3</text>
+    <text x="248" y="210">0</text><text x="308" y="210">0</text>
+    <text x="368" y="210">4</text><text x="428" y="210">3</text>
+  </g>
+  <text x="240" y="250" text-anchor="middle" font-size="12.5" fill="#33506b" filter="url(#rough2)">窗口 2："30" → v = 30（"4" 滑出、"0" 滑入）</text>
+
+  <!-- 递推公式 -->
+  <rect x="50" y="266" width="460" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="285" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">v ⟵ (v − d_out × 10^(k−1)) × 10 + d_in</text>
+  <text x="280" y="303" text-anchor="middle" font-size="11.5" fill="#7a5c1e" filter="url(#rough2)">43 → (43 − 4×10)×10 + 0 = 30，O(1) 递推免重算</text>
+
+  <text x="280" y="330" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">本题 len ≤ 10 用切片暴力即可；滑窗是为大数规模准备的模板</text>
+</svg>

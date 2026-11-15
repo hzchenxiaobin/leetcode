@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="137"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：标记遮挡 → 四向投射 → 统计空格</text>
+
+  <!-- 步骤 1 -->
+  <rect x="50" y="56" width="150" height="70" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="125" y="82" text-anchor="middle" font-size="13.5" fill="#333" font-weight="bold" filter="url(#rough2)">① 标记遮挡物</text>
+  <text x="125" y="102" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">墙、警卫 → g[r][c] = 1</text>
+  <text x="125" y="117" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">统一编码，一次判停</text>
+
+  <path d="M 204 91 L 236 91" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="240" y="56" width="160" height="70" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="320" y="82" text-anchor="middle" font-size="13.5" fill="#333" font-weight="bold" filter="url(#rough2)">② 四向投射</text>
+  <text x="320" y="102" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">每警卫 × 4 方向逐格前进</text>
+  <text x="320" y="117" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">越界 / 值 1 → 停；否则置 2</text>
+
+  <path d="M 404 91 L 436 91" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="440" y="56" width="130" height="70" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="505" y="82" text-anchor="middle" font-size="13.5" fill="#333" font-weight="bold" filter="url(#rough2)">③ 统计</text>
+  <text x="505" y="102" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">g 中值 0 的格子数</text>
+  <text x="505" y="117" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">= 未被保卫空格数</text>
+
+  <!-- 内层循环展开 -->
+  <rect x="60" y="160" width="440" height="120" fill="#ffffff" stroke="#bbb" stroke-width="1.5" stroke-dasharray="6 4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="184" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">② 的内层：单方向投射伪代码</text>
+  <g filter="url(#rough2)" font-size="12" fill="#444" font-family="'Comic Sans MS', 'Kaiti SC', monospace">
+    <text x="84" y="208">nr, nc = r + dr, c + dc</text>
+    <text x="84" y="228">while 0 ≤ nr &lt; m and 0 ≤ nc &lt; n and g[nr][nc] ≠ 1:</text>
+    <text x="104" y="248">g[nr][nc] = 2        # 标记被保卫</text>
+    <text x="104" y="268">nr, nc = nr+dr, nc+dc  # 继续前进</text>
+  </g>
+
+  <!-- 状态三态说明 -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="300" width="130" height="40" fill="#ffffff" stroke="#ccc" stroke-width="1.5" rx="8"/>
+    <rect x="215" y="300" width="130" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <rect x="360" y="300" width="130" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#444" text-anchor="middle">
+    <text x="135" y="318">0 = 空格</text>
+    <text x="135" y="334">（候选计数对象）</text>
+    <text x="280" y="318">1 = 遮挡物</text>
+    <text x="280" y="334">（墙或警卫，挡视线）</text>
+    <text x="425" y="318">2 = 被保卫</text>
+    <text x="425" y="334">（幂等，重复标记无害）</text>
+  </g>
+
+  <text x="280" y="374" text-anchor="middle" font-size="12.5" fill="#888" filter="url(#rough2)">复杂度：建表 O(mn) + 投射 O(4mn) + 统计 O(mn) = O(mn)</text>
+</svg>

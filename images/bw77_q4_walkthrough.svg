@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="127"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">示例 1 走查：二分收敛于 w = 3（fire[安全屋] = 14）</text>
+
+  <!-- 时间轴 -->
+  <line x1="60" y1="120" x2="500" y2="120" stroke="#888" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="11.5" fill="#666" text-anchor="middle">
+    <text x="60" y="142">0</text><text x="140" y="142">3</text>
+    <text x="220" y="142">4</text><text x="300" y="142">6</text>
+    <text x="436" y="142">14</text>
+  </g>
+  <g filter="url(#rough2)">
+    <line x1="60" y1="112" x2="60" y2="128" stroke="#888" stroke-width="2"/>
+    <line x1="140" y1="112" x2="140" y2="128" stroke="#4a7a3a" stroke-width="2.5"/>
+    <line x1="220" y1="112" x2="220" y2="128" stroke="#b85450" stroke-width="2.5"/>
+    <line x1="300" y1="112" x2="300" y2="128" stroke="#888" stroke-width="2"/>
+    <line x1="436" y1="112" x2="436" y2="128" stroke="#d6a040" stroke-width="2.5"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" text-anchor="middle">
+    <text x="140" y="100" fill="#2d5a22" font-weight="bold">w=3 ✓</text>
+    <text x="220" y="100" fill="#8a3a36" font-weight="bold">w=4 ✗</text>
+    <text x="300" y="100" fill="#666">fire[起点]=6</text>
+    <text x="436" y="100" fill="#7a5c1e" font-weight="bold">fire[安全屋]=14</text>
+  </g>
+
+  <!-- 判定演算 -->
+  <g filter="url(#rough2)" font-size="12.5" fill="#444">
+    <text x="60" y="180">w = 3：人 10 步到安全屋，到达时刻 3 + 10 = 13 ≤ 14 ✓ 且沿途每格严格先于火 → 可行</text>
+    <text x="60" y="206">w = 4：到达时刻 14 ≤ 14 勉强达标，但路径中途某格 t 追平 fire，严格条件断裂 → 不可行</text>
+    <text x="60" y="232">w ≥ 6：等待期间火已烧到起点 (0,0)，直接判死 → 不可行</text>
+  </g>
+
+  <!-- 两条规则 -->
+  <rect x="60" y="254" width="220" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="170" y="275" text-anchor="middle" font-size="12.5" fill="#33506b" filter="url(#rough2)">普通格：t &lt; fire[v]</text>
+  <text x="170" y="294" text-anchor="middle" font-size="11.5" fill="#33506b" filter="url(#rough2)">（同分钟踏入即被吞）</text>
+  <rect x="300" y="254" width="220" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="410" y="275" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">安全屋：t ≤ fire[safe]</text>
+  <text x="410" y="294" text-anchor="middle" font-size="11.5" fill="#7a5c1e" filter="url(#rough2)">（题面：火马上到也算安全）</text>
+
+  <!-- 结论 -->
+  <rect x="140" y="326" width="280" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="348" text-anchor="middle" font-size="13.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">二分收敛 w = 3 → 返回 3 ✓</text>
+
+  <text x="280" y="380" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">w=4 的失败点在中途格而非安全屋——两类判定必须分开写</text>
+</svg>

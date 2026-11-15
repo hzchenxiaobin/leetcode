@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="127"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">贪心锚点：最优毯子的左端必与某段起点对齐</text>
+
+  <!-- 数轴 -->
+  <line x1="40" y1="120" x2="520" y2="120" stroke="#888" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="11" fill="#666" text-anchor="middle">
+    <text x="60" y="142">1</text><text x="130" y="142">5</text>
+    <text x="200" y="142">10</text><text x="290" y="142">18</text>
+    <text x="380" y="142">20</text><text x="480" y="142">25</text>
+  </g>
+
+  <!-- 白砖段（在数轴上） -->
+  <g filter="url(#rough2)">
+    <rect x="58" y="106" width="76" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="3"/>
+    <rect x="198" y="106" width="22" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="3"/>
+    <rect x="228" y="106" width="66" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="3"/>
+    <rect x="378" y="106" width="106" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="3"/>
+  </g>
+
+  <!-- 毯子（左端对齐 l_2 = 12? 演示对齐 10） -->
+  <g filter="url(#rough2)">
+    <rect x="196" y="60" width="200" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="2.5" rx="5" opacity="0.85"/>
+  </g>
+  <text x="296" y="80" text-anchor="middle" font-size="13" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)">毯子 [10, 19]（长 10）</text>
+  <path d="M 200 92 L 200 102" stroke="#d6a040" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="172" y="52" font-size="11.5" fill="#7a5c1e" filter="url(#rough2)">左端 L = 段起点 10 ✓</text>
+
+  <!-- 覆盖标注 -->
+  <path d="M 198 152 Q 209 164 220 152" stroke="#4a7a3a" fill="none" stroke-width="2" filter="url(#rough2)"/>
+  <text x="209" y="180" text-anchor="middle" font-size="11.5" fill="#2d5a22" filter="url(#rough2)">2 块</text>
+  <path d="M 228 152 Q 261 166 294 152" stroke="#4a7a3a" fill="none" stroke-width="2" filter="url(#rough2)"/>
+  <text x="261" y="182" text-anchor="middle" font-size="11.5" fill="#2d5a22" filter="url(#rough2)">7 块（整段在毯内）</text>
+
+  <!-- 平移论证 -->
+  <rect x="50" y="204" width="460" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="226" text-anchor="middle" font-size="12.5" fill="#2d5a22" filter="url(#rough2)">若左端落在空白处（毯外左侧无白砖）：右移毯子不丢覆盖</text>
+  <text x="280" y="246" text-anchor="middle" font-size="12.5" fill="#2d5a22" filter="url(#rough2)">持续右移直到左端撞上段起点，覆盖集合不减</text>
+  <text x="280" y="264" text-anchor="middle" font-size="12.5" fill="#2d5a22" filter="url(#rough2)">→ 只需枚举 T 个「左端 = l_i」的位置</text>
+
+  <!-- 提示 -->
+  <rect x="50" y="284" width="460" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="303" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">固定 L 后：相交段是排序后的连续区间 i..j（二分找 j）</text>
+  <text x="280" y="319" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">第 i..j−1 段整段在毯内（前缀和 O(1)），第 j 段 min(R, r_j) 截断</text>
+
+  <text x="280" y="352" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">本例：cover = 2 + 7 = 9 ✓</text>
+</svg>

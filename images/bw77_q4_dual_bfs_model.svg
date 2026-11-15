@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="127"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">双 BFS 模型：fire 表与人的 dist 表按时刻比较</text>
+
+  <!-- 左：火 BFS -->
+  <rect x="36" y="48" width="236" height="196" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="154" y="72" text-anchor="middle" font-size="14" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">① 多源 BFS：火（与人无关）</text>
+  <g filter="url(#rough2)" font-size="12" fill="#5a4a4a">
+    <text x="54" y="98">所有火源同时入队，fire[src]=0</text>
+    <text x="54" y="120">逐层扩散，遇墙(2)截断</text>
+    <text x="54" y="142">得 fire[v] = 火最早烧到 v 的分钟</text>
+    <text x="54" y="164">烧不到 → fire[v] = +∞</text>
+  </g>
+  <rect x="54" y="180" width="200" height="50" fill="#ffffff" stroke="#bbb" stroke-width="1" rx="6" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="11.5" fill="#444" font-family="'Comic Sans MS', monospace">
+    <text x="66" y="198">fire = 0 1 ∞ 3 2</text>
+    <text x="66" y="216">       1 2  3 4 3</text>
+  </g>
+
+  <!-- 右：人 BFS -->
+  <rect x="288" y="48" width="236" height="196" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="406" y="72" text-anchor="middle" font-size="14" fill="#33506b" font-weight="bold" filter="url(#rough2)">② 人 BFS：给定等待 w</text>
+  <g filter="url(#rough2)" font-size="12" fill="#3a4a5a">
+    <text x="306" y="98">dist[0][0] = 0，逐层扩展</text>
+    <text x="306" y="120">人到 v 的时刻 t = w + dist[v]</text>
+    <text x="306" y="142">普通格要求 t &lt; fire[v]</text>
+    <text x="306" y="164">安全屋放宽 t ≤ fire[v]</text>
+  </g>
+  <rect x="306" y="180" width="200" height="50" fill="#ffffff" stroke="#bbb" stroke-width="1" rx="6" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="11.5" fill="#444" font-family="'Comic Sans MS', monospace">
+    <text x="318" y="198">dist = 0 1 2 3 4</text>
+    <text x="318" y="216">       1 2  3 4 5</text>
+  </g>
+
+  <!-- 时刻比较 -->
+  <path d="M 154 248 L 154 272" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 406 248 L 406 272" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="276" width="420" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="297" text-anchor="middle" font-size="13.5" fill="#7a5c1e" filter="url(#rough2)">格子 v 可走 ⟺ w + dist[v] &lt; fire[v]（普通格）</text>
+  <text x="280" y="316" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">安全屋：w + dist[safe] ≤ fire[safe]（同刻也安全）</text>
+
+  <rect x="70" y="340" width="420" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="360" text-anchor="middle" font-size="12.5" fill="#2d5a22" filter="url(#rough2)">w 越大时刻越晚 → 可行性关于 w 单调 → 二分最大 w</text>
+  <text x="280" y="375" text-anchor="middle" font-size="11.5" fill="#2d5a22" filter="url(#rough2)">火表只算一次，二分里每次只跑人的 BFS</text>
+</svg>
