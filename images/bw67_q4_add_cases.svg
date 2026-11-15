@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">add 的三种情形与游标维护</text>
+
+  <!-- 情形 A -->
+  <text x="36" y="60" font-size="12.5" fill="#666" filter="url(#rough2)">情形 A：新景点好于 *cur → 游标左移</text>
+  <g filter="url(#rough2)">
+    <rect x="55" y="72" width="56" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="120" y="72" width="56" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.4" rx="4"/>
+    <rect x="185" y="72" width="56" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="250" y="72" width="56" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4" rx="4"/>
+  </g>
+  <g font-size="10.5" fill="#333" text-anchor="middle" filter="url(#rough2)">
+    <text x="83" y="93">更好</text><text x="148" y="93">原第k名</text><text x="213" y="93">cur →</text><text x="278" y="93">新景点</text>
+  </g>
+  <path d="M 250 116 C 210 130, 175 132, 155 140" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="205" y="160" font-size="11.5" fill="#7a3b37" filter="url(#rough2)">新元素插在 cur 前 → 原第 k+1 名后移 → cur 左移一格补位</text>
+
+  <!-- 情形 B -->
+  <text x="36" y="196" font-size="12.5" fill="#666" filter="url(#rough2)">情形 B：新景点差于 *cur → 游标不动</text>
+  <g filter="url(#rough2)">
+    <rect x="55" y="208" width="56" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="120" y="208" width="56" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4" rx="4"/>
+    <rect x="185" y="208" width="56" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.4" rx="4"/>
+    <rect x="250" y="208" width="56" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+  </g>
+  <g font-size="10.5" fill="#333" text-anchor="middle" filter="url(#rough2)">
+    <text x="83" y="229">最好</text><text x="148" y="229">cur →</text><text x="213" y="229">更差</text><text x="278" y="229">新景点</text>
+  </g>
+  <text x="160" y="262" font-size="11.5" fill="#2e4d24" filter="url(#rough2)">插在 cur 之后，前 k+1 名不受扰动，cur 保持原位</text>
+
+  <!-- 情形 C -->
+  <text x="36" y="298" font-size="12.5" fill="#666" filter="url(#rough2)">情形 C：cur == end()（get 数 == 元素数）</text>
+  <g filter="url(#rough2)">
+    <rect x="55" y="310" width="56" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="120" y="310" width="56" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="185" y="310" width="56" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.4" rx="4"/>
+  </g>
+  <g font-size="10.5" fill="#333" text-anchor="middle" filter="url(#rough2)">
+    <text x="83" y="331">第1名</text><text x="148" y="331">第k名</text><text x="213" y="331">新最差</text>
+  </g>
+  <path d="M 305 327 L 342 327" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="350" y="318" font-size="11.5" fill="#2b3d52" filter="url(#rough2)">插入后集合共 k+1 个，</text>
+  <text x="350" y="336" font-size="11.5" fill="#2b3d52" filter="url(#rough2)">cur = prev(end()) 指向</text>
+  <text x="350" y="354" font-size="11.5" fill="#2b3d52" filter="url(#rough2)">新的最差元素 ✓</text>
+</svg>
