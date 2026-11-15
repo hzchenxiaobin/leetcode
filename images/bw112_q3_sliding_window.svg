@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="173"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#b85450" stroke-width="1.6"/>
+    </marker>
+    <marker id="arrGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#4a7a3a" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="380" fill="#fafafa"/>
+
+  <text x="320" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">定长滑窗：相邻窗口共享 k−1 个元素，三量 O(1) 增量</text>
+
+  <!-- 数组与两个窗口 -->
+  <g filter="url(#rough2)">
+    <text x="70" y="72" text-anchor="end" font-size="12.5" fill="#555">nums</text>
+    <!-- 窗口 1 高亮框 [2,6,7,3] -->
+    <rect x="92" y="46" width="248" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2" stroke-dasharray="7 4"/>
+    <!-- 窗口 2 高亮框 [6,7,3,1] -->
+    <rect x="148" y="98" width="248" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" stroke-dasharray="7 4"/>
+
+    <rect x="100" y="52" width="52" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="126" y="73" text-anchor="middle" font-size="14" fill="#333">2</text>
+    <rect x="156" y="52" width="52" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="182" y="73" text-anchor="middle" font-size="14" fill="#333">6</text>
+    <rect x="212" y="52" width="52" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="238" y="73" text-anchor="middle" font-size="14" fill="#333">7</text>
+    <rect x="268" y="52" width="52" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="294" y="73" text-anchor="middle" font-size="14" fill="#333">3</text>
+    <rect x="324" y="52" width="52" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="350" y="73" text-anchor="middle" font-size="14" fill="#333">1</text>
+    <rect x="380" y="52" width="52" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="406" y="73" text-anchor="middle" font-size="14" fill="#333">7</text>
+
+    <!-- 窗口 2 的格子（下移展示） -->
+    <rect x="156" y="104" width="52" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="182" y="125" text-anchor="middle" font-size="14" fill="#333">6</text>
+    <rect x="212" y="104" width="52" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="238" y="125" text-anchor="middle" font-size="14" fill="#333">7</text>
+    <rect x="268" y="104" width="52" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="294" y="125" text-anchor="middle" font-size="14" fill="#333">3</text>
+    <rect x="324" y="104" width="52" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="350" y="125" text-anchor="middle" font-size="14" fill="#333">1</text>
+
+    <text x="126" y="158" text-anchor="middle" font-size="10.5" fill="#888">i−k（即将滑出）</text>
+    <text x="406" y="158" text-anchor="middle" font-size="10.5" fill="#888">i（新进入）</text>
+  </g>
+
+  <!-- 进出箭头 -->
+  <g filter="url(#rough2)">
+    <path d="M 126 90 C 120 150, 122 160, 126 172" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrRed)"/>
+    <text x="98" y="196" font-size="12" fill="#b85450">出：−nums[i−k]</text>
+    <text x="98" y="214" font-size="11" fill="#b85450">cnt 减 1；减到 0 → distinct−−</text>
+
+    <path d="M 406 90 C 416 150, 420 160, 424 172" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arrGreen)"/>
+    <text x="470" y="196" font-size="12" fill="#4a7a3a">进：+nums[i]</text>
+    <text x="470" y="214" font-size="11" fill="#4a7a3a">cnt 加 1；从 0 → 1 → distinct++</text>
+  </g>
+
+  <!-- 三件套 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="238" width="160" height="66" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="140" y="262" text-anchor="middle" font-size="13" fill="#333">sum（窗口和）</text>
+    <text x="140" y="284" text-anchor="middle" font-size="12" fill="#555">进加出减，long long</text>
+
+    <rect x="240" y="238" width="160" height="66" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="320" y="262" text-anchor="middle" font-size="13" fill="#333">cnt（值→次数）</text>
+    <text x="320" y="284" text-anchor="middle" font-size="12" fill="#555">哈希表，跨 0↔1 才动 distinct</text>
+
+    <rect x="420" y="238" width="160" height="66" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="500" y="262" text-anchor="middle" font-size="13" fill="#333">distinct（不同数）</text>
+    <text x="500" y="284" text-anchor="middle" font-size="12" fill="#555">≥ m 才用 sum 更新 ans</text>
+  </g>
+
+  <!-- 底部结论 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="322" width="520" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="320" y="340" text-anchor="middle" font-size="12.5" fill="#4a7a3a">示例 1 走查：[2,6,7,3] sum=18, distinct=4 ✓ → [6,7,3,1] 17 ✓ → [7,3,1,7] 18 ✓（7:2 不加 distinct）</text>
+    <text x="320" y="358" text-anchor="middle" font-size="12" fill="#4a7a3a">答案 18；每元素进出各一次，总时间 O(n)</text>
+  </g>
+</svg>

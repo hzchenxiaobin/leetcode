@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="143"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#b85450" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="360" fill="#fafafa"/>
+
+  <text x="320" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">j − i = 2 ⇒ 只能同奇偶互换：两条独立轨道</text>
+
+  <!-- s1 = abcd 位置图 -->
+  <g filter="url(#rough2)">
+    <text x="70" y="70" text-anchor="end" font-size="12.5" fill="#555">"abcd"</text>
+    <!-- 偶轨道 -->
+    <rect x="100" y="50" width="60" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="130" y="74" text-anchor="middle" font-size="16" fill="#333">a</text>
+    <rect x="240" y="50" width="60" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="270" y="74" text-anchor="middle" font-size="16" fill="#333">c</text>
+    <path d="M 164 62 C 190 54, 210 54, 236 62" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <path d="M 236 78 C 210 88, 190 88, 164 78" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <text x="200" y="44" text-anchor="middle" font-size="11" fill="#446688">swap(0,2) ✓</text>
+
+    <!-- 奇轨道 -->
+    <rect x="170" y="100" width="60" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="200" y="124" text-anchor="middle" font-size="16" fill="#333">b</text>
+    <rect x="310" y="100" width="60" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="340" y="124" text-anchor="middle" font-size="16" fill="#333">d</text>
+    <path d="M 234 112 C 258 104, 278 104, 306 112" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <path d="M 306 128 C 278 138, 258 138, 234 128" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <text x="270" y="96" text-anchor="middle" font-size="11" fill="#4a7a3a">swap(1,3) ✓</text>
+
+    <text x="130" y="160" text-anchor="middle" font-size="11.5" fill="#446688">偶轨道 {0,2}</text>
+    <text x="270" y="160" text-anchor="middle" font-size="11.5" fill="#4a7a3a">奇轨道 {1,3}</text>
+  </g>
+
+  <!-- 跨轨道禁止 -->
+  <g filter="url(#rough2)">
+    <path d="M 366 128 C 400 140, 420 92, 448 76" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrRed)" stroke-dasharray="6 4"/>
+    <text x="470" y="104" text-anchor="middle" font-size="12" fill="#b85450">跨奇偶交换 ✗</text>
+    <text x="470" y="122" text-anchor="middle" font-size="11.5" fill="#888">（j−i 必须为偶数）</text>
+  </g>
+
+  <!-- 判定条件 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="196" width="480" height="86" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="320" y="222" text-anchor="middle" font-size="13.5" fill="#333">判定：两串各自偶下标、奇下标字符多重集对应相等</text>
+    <text x="320" y="246" text-anchor="middle" font-size="13" fill="#4a7a3a">sorted(s1[0::2]) == sorted(s2[0::2])</text>
+    <text x="320" y="266" text-anchor="middle" font-size="13" fill="#4a7a3a">sorted(s1[1::2]) == sorted(s2[1::2])</text>
+  </g>
+
+  <!-- 示例小条 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="300" width="480" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="320" y="318" text-anchor="middle" font-size="12" fill="#4a7a3a">"abcd" vs "cdab"：偶轨道 {a,c}={c,a} ✓，奇轨道 {b,d}={d,b} ✓ → true</text>
+    <text x="320" y="336" text-anchor="middle" font-size="12" fill="#b85450">"abcd" vs "badc"：偶轨道 {a,c} ≠ {b,d} → false（跨轨道挪不动）</text>
+  </g>
+</svg>

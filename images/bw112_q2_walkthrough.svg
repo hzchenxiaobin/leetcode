@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="229"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="360" fill="#fafafa"/>
+
+  <text x="320" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">示例 1 演算：切片 → 排序 → 双重比较</text>
+
+  <!-- s1 切片 -->
+  <g filter="url(#rough2)">
+    <text x="130" y="66" text-anchor="middle" font-size="13" fill="#333">s1 = "abcdba"</text>
+    <rect x="60" y="78" width="46" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="83" y="99" text-anchor="middle" font-size="14" fill="#333">a</text>
+    <rect x="106" y="78" width="46" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="129" y="99" text-anchor="middle" font-size="14" fill="#333">b</text>
+    <rect x="152" y="78" width="46" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="175" y="99" text-anchor="middle" font-size="14" fill="#333">c</text>
+    <rect x="198" y="78" width="46" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="221" y="99" text-anchor="middle" font-size="14" fill="#333">d</text>
+    <rect x="244" y="78" width="46" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="267" y="99" text-anchor="middle" font-size="14" fill="#333">b</text>
+    <rect x="290" y="78" width="46" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="313" y="99" text-anchor="middle" font-size="14" fill="#333">a</text>
+    <text x="83" y="128" text-anchor="middle" font-size="10.5" fill="#446688">偶 0</text>
+    <text x="129" y="128" text-anchor="middle" font-size="10.5" fill="#4a7a3a">奇 1</text>
+    <text x="175" y="128" text-anchor="middle" font-size="10.5" fill="#446688">偶 2</text>
+    <text x="221" y="128" text-anchor="middle" font-size="10.5" fill="#4a7a3a">奇 3</text>
+    <text x="267" y="128" text-anchor="middle" font-size="10.5" fill="#446688">偶 4</text>
+    <text x="313" y="128" text-anchor="middle" font-size="10.5" fill="#4a7a3a">奇 5</text>
+  </g>
+
+  <!-- 切片结果 -->
+  <g filter="url(#rough2)">
+    <path d="M 120 140 C 110 158, 100 168, 92 184" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 280 140 C 290 158, 300 168, 308 184" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="60" y="188" width="200" height="76" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="160" y="210" text-anchor="middle" font-size="12.5" fill="#446688">偶下标切片 s1[0::2] = "acb"</text>
+    <text x="160" y="232" text-anchor="middle" font-size="12.5" fill="#555">排序 → "abc"</text>
+    <text x="160" y="252" text-anchor="middle" font-size="12" fill="#888">（a、c、b 三个字符）</text>
+
+    <rect x="300" y="188" width="200" height="76" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="400" y="210" text-anchor="middle" font-size="12.5" fill="#4a7a3a">奇下标切片 s1[1::2] = "bda"</text>
+    <text x="400" y="232" text-anchor="middle" font-size="12.5" fill="#555">排序 → "abd"</text>
+    <text x="400" y="252" text-anchor="middle" font-size="12" fill="#888">（b、d、a 三个字符）</text>
+  </g>
+
+  <!-- s2 对照 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="282" width="280" height="60" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="200" y="304" text-anchor="middle" font-size="12.5" fill="#333">s2 = "cabdab" 的偶切片 "cba"</text>
+    <text x="200" y="324" text-anchor="middle" font-size="12.5" fill="#4a7a3a">排序 → "abc" == "abc" ✓</text>
+
+    <rect x="360" y="282" width="280" height="60" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="500" y="304" text-anchor="middle" font-size="12.5" fill="#333">s2 奇切片 "adb" 排序 → "abd"</text>
+    <text x="500" y="324" text-anchor="middle" font-size="12.5" fill="#4a7a3a">"abd" == "abd" ✓ → true</text>
+  </g>
+
+  <text x="500" y="128" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">n = 10⁵ 时同法：</text>
+  <text x="500" y="148" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">切片 O(n) + 排序 O(n log n)</text>
+  <text x="500" y="168" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">或 26 桶计数 O(n)</text>
+</svg>

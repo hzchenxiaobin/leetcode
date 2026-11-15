@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="52"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#b85450" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="360" fill="#fafafa"/>
+
+  <text x="320" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">每个位置的候选集合 {c, c+1}，从左到右尽早匹配</text>
+
+  <!-- str1 = "zc" 匹配 str2 = "ad" -->
+  <g filter="url(#rough2)">
+    <text x="90" y="70" text-anchor="end" font-size="12.5" fill="#555">str1 = "zc"</text>
+    <rect x="110" y="50" width="64" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="142" y="73" text-anchor="middle" font-size="16" fill="#333">z</text>
+    <rect x="174" y="50" width="64" height="36" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="206" y="73" text-anchor="middle" font-size="16" fill="#333">c</text>
+
+    <!-- 候选集合标注 -->
+    <path d="M 142 90 C 142 102, 150 106, 168 110" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <ellipse cx="196" cy="116" rx="18" ry="14" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="196" y="120" text-anchor="middle" font-size="12" fill="#4a7a3a">z</text>
+    <ellipse cx="234" cy="116" rx="18" ry="14" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="234" y="120" text-anchor="middle" font-size="12" fill="#b85450">a</text>
+    <text x="215" y="144" text-anchor="middle" font-size="11.5" fill="#888">{z, a}（z 循环+1 → a）</text>
+
+    <path d="M 206 90 C 206 100, 260 100, 300 108" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <ellipse cx="328" cy="114" rx="18" ry="14" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="328" y="118" text-anchor="middle" font-size="12" fill="#4a7a3a">c</text>
+    <ellipse cx="366" cy="114" rx="18" ry="14" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="366" y="118" text-anchor="middle" font-size="12" fill="#b85450">d</text>
+    <text x="347" y="144" text-anchor="middle" font-size="11.5" fill="#888">{c, d}</text>
+  </g>
+
+  <!-- str2 匹配 -->
+  <g filter="url(#rough2)">
+    <text x="90" y="188" text-anchor="end" font-size="12.5" fill="#555">str2 = "ad"</text>
+    <rect x="110" y="168" width="64" height="36" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <text x="142" y="191" text-anchor="middle" font-size="16" fill="#b85450">a</text>
+    <rect x="174" y="168" width="64" height="36" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <text x="206" y="191" text-anchor="middle" font-size="16" fill="#b85450">d</text>
+    <text x="142" y="226" text-anchor="middle" font-size="11.5" fill="#4a7a3a">j=0 由 z 的候选 a 匹配</text>
+    <text x="206" y="226" text-anchor="middle" font-size="11.5" fill="#4a7a3a">j=1 由 c 的候选 d 匹配</text>
+  </g>
+
+  <!-- 说明框 -->
+  <g filter="url(#rough2)">
+    <rect x="420" y="160" width="196" height="120" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="518" y="186" text-anchor="middle" font-size="13" fill="#333">一次操作可选任意多个下标</text>
+    <text x="518" y="208" text-anchor="middle" font-size="12.5" fill="#555">未被匹配的位置：不动也不碍事</text>
+    <text x="518" y="230" text-anchor="middle" font-size="12.5" fill="#555">（子序列允许跳过它们）</text>
+    <text x="518" y="254" text-anchor="middle" font-size="12.5" fill="#b85450">判定 = 存在 p₁&lt;p₂&lt;…&lt;pₘ，</text>
+    <text x="518" y="272" text-anchor="middle" font-size="12.5" fill="#b85450">str2[j] ∈ {str1[pⱼ], str1[pⱼ]⁺}</text>
+  </g>
+
+  <!-- 底部反例 -->
+  <g filter="url(#rough2)">
+    <text x="320" y="262" text-anchor="middle" font-size="12.5" fill="#333">反例：str1 = "ab"，str2 = "d" —— 候选 {a,b}、{b,c} 都不含 d，j 停在 0</text>
+    <rect x="180" y="276" width="56" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="208" y="296" text-anchor="middle" font-size="14" fill="#333">a</text>
+    <rect x="236" y="276" width="56" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="264" y="296" text-anchor="middle" font-size="14" fill="#333">b</text>
+    <text x="330" y="296" text-anchor="middle" font-size="13" fill="#b85450">+1 每位至多一步</text>
+    <text x="320" y="336" text-anchor="middle" font-size="12" fill="#888">贪心尽早匹配：j 前进只会让剩余后缀更长（不更短），永不吃亏</text>
+  </g>
+</svg>

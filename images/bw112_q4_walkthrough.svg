@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="253"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#b85450" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="360" fill="#fafafa"/>
+
+  <text x="320" y="32" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">两层相乘：选字符集合 × 每字符选下标（示例 1，s = "bcca"）</text>
+
+  <!-- 第一层：字符集合 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="60" width="240" height="120" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="180" y="84" text-anchor="middle" font-size="13" fill="#446688">第一层：选哪 k 个字符</text>
+    <text x="180" y="106" text-anchor="middle" font-size="12.5" fill="#333">频次降序：c(2) > a(1) = b(1)</text>
+    <text x="180" y="128" text-anchor="middle" font-size="12.5" fill="#333">k = 2：必取 c，再从 {a,b} 任取 1 个</text>
+    <text x="180" y="150" text-anchor="middle" font-size="12.5" fill="#b85450">C(2,1) = 2 种字符集合：{c,a}、{c,b}</text>
+    <text x="180" y="170" text-anchor="middle" font-size="12" fill="#888">两种集合美丽值都是 2+1 = 3（并列最大）</text>
+  </g>
+
+  <!-- 乘号 -->
+  <g filter="url(#rough2)">
+    <text x="330" y="130" text-anchor="middle" font-size="26" fill="#d6a040">×</text>
+  </g>
+
+  <!-- 第二层：下标选择 -->
+  <g filter="url(#rough2)">
+    <rect x="360" y="60" width="240" height="120" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="480" y="84" text-anchor="middle" font-size="13" fill="#4a7a3a">第二层：每字符选哪个下标</text>
+    <text x="480" y="106" text-anchor="middle" font-size="12.5" fill="#333">s = b(0) c(1) c(2) a(3)</text>
+    <text x="480" y="128" text-anchor="middle" font-size="12.5" fill="#333">f(c) = 2 → 2 个下标可选</text>
+    <text x="480" y="150" text-anchor="middle" font-size="12.5" fill="#b85450">f(a) = f(b) = 1 → 各 1 个下标</text>
+    <text x="480" y="170" text-anchor="middle" font-size="12" fill="#888">各字符独立 → 乘法原理</text>
+  </g>
+
+  <!-- 合并 -->
+  <g filter="url(#rough2)">
+    <path d="M 180 184 C 180 206, 260 216, 300 226" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 480 184 C 480 206, 400 216, 360 226" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+
+    <rect x="140" y="230" width="360" height="56" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="320" y="252" text-anchor="middle" font-size="13.5" fill="#333">答案 = C(2,1) × 2¹ × 1¹ = 2 × 2 = 4</text>
+    <text x="320" y="274" text-anchor="middle" font-size="12" fill="#555">对应公式：C(c,t) · v^t · ∏ vᵢ^cᵢ（高频桶整取、边界桶部分取）</text>
+  </g>
+
+  <!-- 四个具体子序列 -->
+  <g filter="url(#rough2)">
+    <text x="320" y="312" text-anchor="middle" font-size="12.5" fill="#333">具体枚举：b₀c₁ / b₀c₂ / c₁a₃ / c₂a₃ —— 恰 4 个，美丽值均为 3</text>
+    <rect x="140" y="322" width="360" height="30" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="320" y="342" text-anchor="middle" font-size="12" fill="#4a7a3a">「下标不同即不同」——c 的两个下标翻倍了方案数</text>
+  </g>
+</svg>
