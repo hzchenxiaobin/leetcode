@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 372" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="372" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：只跟踪「当前玩家 − 对手」的分数差</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">所有数字总和固定 ⇒ 最大化自己的得分等价于最大化分差，胜负只看分差的符号</text>
+
+  <!-- 数组 -->
+  <text x="146" y="97" text-anchor="end" font-size="11" fill="#555" filter="url(#rough2)">nums</text>
+  <g font-size="15" text-anchor="middle">
+    <rect x="159" y="74" width="56" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="187" y="98" fill="#3a4a66" filter="url(#rough2)">1</text>
+    <rect x="221" y="74" width="56" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="249" y="98" fill="#3a4a66" filter="url(#rough2)">5</text>
+    <rect x="283" y="74" width="56" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="311" y="98" fill="#3a4a66" filter="url(#rough2)">233</text>
+    <rect x="345" y="74" width="56" height="36" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+    <text x="373" y="98" fill="#3a4a66" filter="url(#rough2)">7</text>
+  </g>
+  <g font-size="9" text-anchor="middle" fill="#999">
+    <text x="187" y="124" filter="url(#rough2)">0</text>
+    <text x="249" y="124" filter="url(#rough2)">1</text>
+    <text x="311" y="124" filter="url(#rough2)">2</text>
+    <text x="373" y="124" filter="url(#rough2)">3</text>
+  </g>
+
+  <!-- 两条分支 -->
+  <path d="M 182 130 Q 172 150 167 166" stroke="#d6a040" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 378 130 Q 390 150 393 166" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="52" y="168" width="214" height="94" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="68" y="188" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">选左端：拿走 nums[i]</text>
+  <text x="68" y="207" font-size="10" fill="#555" filter="url(#rough2)">剩余区间 [i+1, j] 轮到对手，</text>
+  <text x="68" y="223" font-size="10" fill="#555" filter="url(#rough2)">对手在其上净胜 dp[i+1][j]</text>
+  <text x="68" y="247" font-size="10.5" fill="#b85450" filter="url(#rough2)">你净得 = nums[i] − dp[i+1][j]</text>
+
+  <rect x="294" y="168" width="214" height="94" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="310" y="188" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">选右端：拿走 nums[j]</text>
+  <text x="310" y="207" font-size="10" fill="#555" filter="url(#rough2)">剩余区间 [i, j−1] 轮到对手，</text>
+  <text x="310" y="223" font-size="10" fill="#555" filter="url(#rough2)">对手在其上净胜 dp[i][j−1]</text>
+  <text x="310" y="247" font-size="10.5" fill="#b85450" filter="url(#rough2)">你净得 = nums[j] − dp[i][j−1]</text>
+
+  <!-- 转移式 -->
+  <rect x="52" y="274" width="456" height="42" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="301" text-anchor="middle" font-size="12.5" fill="#8a3a36" filter="url(#rough2)">dp[i][j] = max( nums[i] − dp[i+1][j] , nums[j] − dp[i][j−1] )</text>
+
+  <text x="280" y="338" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">dp[i][j]：在区间 nums[i..j] 上、轮到当前玩家时的最大分差</text>
+  <text x="280" y="356" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">答案即 dp[0][n−1] ≥ 0（平局也算玩家 1 赢）</text>
+</svg>

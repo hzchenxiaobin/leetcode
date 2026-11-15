@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">一次扫描：cur 记当前段长，best 记历史最大值</text>
+  <text x="280" y="44" text-anchor="middle" font-size="10.5" fill="#888">cur 只在读入 1 时增长，best 只在增长的那一刻被刷新</text>
+
+  <rect x="160" y="62" width="240" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="84" text-anchor="middle" font-size="11" fill="#3a4a66">依次读入 x = nums[i]</text>
+
+  <path d="M 280 96 L 280 106 L 158 106 L 158 118" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 106 L 402 106 L 402 118" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="48" y="120" width="220" height="64" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="62" y="140" font-size="11" fill="#3a5a30" font-weight="bold">x == 1：段在延伸</text>
+  <text x="62" y="160" font-size="10.5" fill="#555">cur += 1</text>
+  <text x="62" y="176" font-size="10.5" fill="#555">best = max(best, cur)</text>
+
+  <rect x="292" y="120" width="220" height="64" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="306" y="140" font-size="11" fill="#8a3a36" font-weight="bold">x == 0：段被打断</text>
+  <text x="306" y="160" font-size="10.5" fill="#555">cur = 0</text>
+  <text x="306" y="176" font-size="10.5" fill="#555">best 不变（旧段已计入）</text>
+
+  <path d="M 158 184 L 158 198 L 280 198 L 280 210" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 402 184 L 402 198 L 280 198" stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <rect x="150" y="212" width="260" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="236" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold">数组读完 → 返回 best</text>
+
+  <text x="280" y="268" text-anchor="middle" font-size="10.5" fill="#3a4a66">为什么不必在循环后补一次收尾？</text>
+  <rect x="60" y="276" width="440" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="296" font-size="10" fill="#555">每个段长 cur 都是「读入 1 的瞬间」增长的，而那一刻已经和 best 比较过；</text>
+  <text x="76" y="314" font-size="10" fill="#555">所以最后一段即使后面没有 0 来触发结算，它的长度也早已进入 best。</text>
+  <text x="76" y="332" font-size="10" fill="#555">等价写法：在 x == 0 时结算 best，但那样循环外必须再补 max(best, cur)。</text>
+
+  <text x="280" y="364" text-anchor="middle" font-size="10" fill="#999">时间 O(n)，额外空间 O(1)，只需两个计数器</text>
+</svg>

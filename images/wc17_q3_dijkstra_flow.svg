@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">Dijkstra 流程：键是 (距离, 指令串) 二元组</text>
+  <text x="280" y="47" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每个停点只弹出一次；洞第一次弹出时的指令串就是答案</text>
+
+  <g filter="url(#rough2)">
+    <circle cx="82" cy="78" r="12" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="82" y="82" text-anchor="middle" font-size="11" fill="#33506e">1</text>
+    <rect x="104" y="60" width="352" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="118" y="83" font-size="10.5" fill="#33506e">初始化：dist[start] = (0, "")，堆 ← (0, "", start)</text>
+
+    <circle cx="82" cy="130" r="12" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="82" y="134" text-anchor="middle" font-size="11" fill="#8a6a20">2</text>
+    <rect x="104" y="112" width="352" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="118" y="135" font-size="10.5" fill="#7a5f20">弹出 (d, p, cell)：若 cell 是洞 → 立即返回 p</text>
+
+    <circle cx="82" cy="182" r="12" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="82" y="186" text-anchor="middle" font-size="11" fill="#8a3a36">3</text>
+    <rect x="104" y="164" width="352" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+    <text x="118" y="187" font-size="10.5" fill="#8a3a36">过期标签：(d, p) 不优于 dist[cell] → 丢弃</text>
+
+    <circle cx="82" cy="236" r="12" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="82" y="240" text-anchor="middle" font-size="11" fill="#3a5a30">4</text>
+    <rect x="104" y="216" width="352" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="118" y="241" font-size="10.5" fill="#3a5a30">沿 d / l / r / u 滚动到底 → (cell2, d2, p + ch)</text>
+
+    <circle cx="82" cy="292" r="12" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="82" y="296" text-anchor="middle" font-size="11" fill="#3a5a30">5</text>
+    <rect x="104" y="272" width="352" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="118" y="297" font-size="10.5" fill="#3a5a30">滚不动 → 换方向；否则用 (d2, p2) 尝试松弛</text>
+
+    <circle cx="82" cy="346" r="12" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="82" y="350" text-anchor="middle" font-size="11" fill="#8a6a20">6</text>
+    <rect x="104" y="328" width="352" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="118" y="351" font-size="10.5" fill="#7a5f20">更优 → 更新 dist[cell2]，新标签入堆</text>
+  </g>
+
+  <path d="M 280 96 L 280 108" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 148 L 280 160" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 200 L 280 212" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 256 L 280 268" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 312 L 280 324" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 456 346 L 516 346 L 516 130 L 462 130" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="6 5" fill="none" marker-end="url(#arr2)" filter="url(#rough2)"/>
+  <text x="534" y="240" font-size="10" fill="#4a7a3a" transform="rotate(-90 534 240)" filter="url(#rough2)">回到第 2 步</text>
+
+  <text x="280" y="392" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">堆空仍未弹出洞 → 返回 "impossible"</text>
+  <text x="280" y="412" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">每次成功松弛都可能入堆，故同一停点可能被更新多次，旧标签靠第 3 步丢弃</text>
+</svg>

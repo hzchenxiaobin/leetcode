@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：按长度升序 + 只把"更短的单词"放进字典树</text>
+  <text x="320" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">拼接至少要两段 ⇒ 每段都严格比 w 短，检查 w 时它的所有组成段都已就位</text>
+
+  <!-- 面板 A：排序 -->
+  <rect x="16" y="62" width="192" height="288" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="30" y="84" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 按长度升序处理</text>
+
+  <g filter="url(#rough2)" font-size="11">
+    <text x="32" y="110" fill="#3a4a66">cat</text><text x="194" y="110" text-anchor="end" fill="#888" font-size="10">3</text>
+    <text x="32" y="136" fill="#3a4a66">dog</text><text x="194" y="136" text-anchor="end" fill="#888" font-size="10">3</text>
+    <text x="32" y="162" fill="#3a4a66">rat</text><text x="194" y="162" text-anchor="end" fill="#888" font-size="10">3</text>
+    <text x="32" y="188" fill="#3a4a66">cats</text><text x="194" y="188" text-anchor="end" fill="#888" font-size="10">4</text>
+  </g>
+  <rect x="24" y="200" width="176" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="5" filter="url(#rough2)"/>
+  <text x="32" y="217" font-size="11" fill="#8a6a20" filter="url(#rough2)">catsdogcats</text>
+  <text x="194" y="217" text-anchor="end" font-size="10" fill="#d6a040" filter="url(#rough2)">11</text>
+
+  <g filter="url(#rough2)" font-size="11">
+    <text x="32" y="248" fill="#3a4a66">ratcatdogcat</text><text x="194" y="248" text-anchor="end" fill="#888" font-size="10">12</text>
+    <text x="32" y="274" fill="#3a4a66">hippopotamuses</text><text x="194" y="274" text-anchor="end" fill="#888" font-size="10">14</text>
+  </g>
+
+  <text x="30" y="306" font-size="10" fill="#888" filter="url(#rough2)">处理橙框单词时：前 4 个</text>
+  <text x="30" y="322" font-size="10" fill="#888" filter="url(#rough2)">已经全部在树里了</text>
+  <text x="30" y="340" font-size="10" fill="#b85450" filter="url(#rough2)">它自己还没进树 → 不能自拼</text>
+
+  <!-- 面板 B：Trie -->
+  <rect x="218" y="62" width="192" height="288" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="232" y="84" font-size="12" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② 字典树（只含更短者）</text>
+
+  <g filter="url(#rough2)" stroke="#4a7a3a" stroke-width="1.4" fill="none">
+    <path d="M 306 108 L 258 138"/>
+    <path d="M 314 108 L 314 138"/>
+    <path d="M 322 108 L 370 138"/>
+    <path d="M 254 164 L 254 192"/>
+    <path d="M 314 164 L 314 192"/>
+    <path d="M 374 164 L 374 192"/>
+    <path d="M 254 218 L 254 246"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <rect x="294" y="88" width="40" height="22" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="314" y="103" fill="#3a5a30" font-size="10">root</text>
+
+    <rect x="240" y="140" width="28" height="24" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" rx="5"/>
+    <text x="254" y="157" fill="#3a5a30">c</text>
+    <rect x="300" y="140" width="28" height="24" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" rx="5"/>
+    <text x="314" y="157" fill="#3a5a30">d</text>
+    <rect x="360" y="140" width="28" height="24" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" rx="5"/>
+    <text x="374" y="157" fill="#3a5a30">r</text>
+
+    <rect x="240" y="194" width="28" height="24" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" rx="5"/>
+    <text x="254" y="211" fill="#3a5a30">a</text>
+    <rect x="300" y="194" width="28" height="24" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" rx="5"/>
+    <text x="314" y="211" fill="#3a5a30">o</text>
+    <rect x="360" y="194" width="28" height="24" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.5" rx="5"/>
+    <text x="374" y="211" fill="#3a5a30">a</text>
+
+    <rect x="238" y="248" width="32" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="5"/>
+    <text x="254" y="265" fill="#8a6a20">t</text>
+    <rect x="298" y="248" width="32" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="5"/>
+    <text x="314" y="265" fill="#8a6a20">g</text>
+    <rect x="358" y="248" width="32" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="5"/>
+    <text x="374" y="265" fill="#8a6a20">t</text>
+  </g>
+
+  <path d="M 254 272 L 254 288" stroke="#4a7a3a" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <rect x="238" y="290" width="32" height="24" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="5" filter="url(#rough2)"/>
+  <text x="254" y="307" text-anchor="middle" font-size="11" fill="#8a3a38" filter="url(#rough2)">s</text>
+
+  <rect x="232" y="316" width="14" height="12" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="3" filter="url(#rough2)"/>
+  <text x="252" y="324" font-size="10" fill="#888" filter="url(#rough2)">橙/粉底 = 单词结尾</text>
+  <text x="252" y="340" font-size="10" fill="#888" filter="url(#rough2)">cat·cats·dog·rat</text>
+
+  <!-- 面板 C：切分 -->
+  <rect x="432" y="62" width="192" height="288" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="446" y="84" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 沿树跳，dp 记账</text>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <rect x="446" y="96" width="64" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="5"/>
+    <text x="478" y="113" fill="#3a5a30">cats</text>
+    <rect x="446" y="136" width="64" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="5"/>
+    <text x="478" y="153" fill="#3a4a66">dog</text>
+    <rect x="446" y="176" width="64" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="5"/>
+    <text x="478" y="193" fill="#3a5a30">cats</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10" fill="#8a6a20" text-anchor="start">
+    <text x="520" y="113">dp[4]=1</text>
+    <text x="520" y="153">dp[7]=2</text>
+    <text x="520" y="193">dp[11]=3</text>
+  </g>
+
+  <g filter="url(#rough2)" stroke="#d6a040" stroke-width="1.6" fill="none">
+    <path d="M 478 120 L 478 134" marker-end="url(#arr)"/>
+    <path d="M 478 160 L 478 174" marker-end="url(#arr)"/>
+  </g>
+
+  <rect x="444" y="212" width="168" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="454" y="232" font-size="11" fill="#8a3a38" filter="url(#rough2)">dp[11] = 3 ≥ 2</text>
+  <text x="454" y="250" font-size="11" fill="#8a3a38" filter="url(#rough2)">⇒ "catsdogcats" 是连接词</text>
+
+  <text x="446" y="288" font-size="10" fill="#888" filter="url(#rough2)">对照："hippopotamuses" 从 h</text>
+  <text x="446" y="304" font-size="10" fill="#888" filter="url(#rough2)">就断了，dp[14] = ∞ → 不是</text>
+  <text x="446" y="330" font-size="10" fill="#b85450" filter="url(#rough2)">每段只走树，不比较字符串</text>
+
+  <text x="320" y="370" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">为什么不会自拼：检查 w 时 w 还没插入，整词永远匹配不到 ⇒ dp[n] ≥ 2 才是连接词</text>
+  <text x="320" y="388" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">等长单词互不构成彼此的组成部分（两段非空 ⇒ 每段更短），因此可以放在同一批处理</text>
+</svg>

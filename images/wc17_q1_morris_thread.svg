@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">Morris 中序遍历：借「右空指针」当回家的线索</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">每条边建一次、拆一次，额外空间 O(1)</text>
+
+  <!-- 左：示意图 -->
+  <line x1="118" y1="120" x2="84" y2="168" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <circle cx="122" cy="105" r="18" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="122" y="110" text-anchor="middle" font-size="13" fill="#334" filter="url(#rough2)">2</text>
+  <circle cx="74" cy="186" r="18" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="74" y="191" text-anchor="middle" font-size="13" fill="#5a4a20" filter="url(#rough2)">1</text>
+
+  <text x="152" y="100" font-size="10" fill="#b85450" filter="url(#rough2)">cur</text>
+  <text x="30" y="182" font-size="10" fill="#8a6a20" filter="url(#rough2)">pre</text>
+
+  <!-- 线索虚线 -->
+  <path d="M 88 173 C 118 150 130 140 130 126" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" fill="none" marker-end="url(#arrRed)" filter="url(#rough2)"/>
+  <text x="70" y="140" font-size="9.5" fill="#b85450" filter="url(#rough2)">pre.right = cur</text>
+  <text x="70" y="228" font-size="9.5" fill="#666" filter="url(#rough2)">虚线 = 临时线索</text>
+
+  <!-- 右：步骤 -->
+  <rect x="248" y="70" width="286" height="72" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="262" y="88" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">1. cur 有左子树 &#8594; 找前驱</text>
+  <text x="262" y="106" font-size="9.5" fill="#444" filter="url(#rough2)">左子树最右结点 pre 的 right 为空：</text>
+  <text x="262" y="121" font-size="9.5" fill="#444" filter="url(#rough2)">建线索 pre.right = cur，然后 cur = cur.left</text>
+  <text x="262" y="136" font-size="9" fill="#8a6a20" filter="url(#rough2)">（本步不访问结点，只是借路）</text>
+
+  <path d="M 391 144 L 391 156" stroke="#999" stroke-width="1.2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="248" y="158" width="286" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="262" y="176" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">2. cur 无左子树 &#8594; 访问并右拐</text>
+  <text x="262" y="194" font-size="9.5" fill="#444" filter="url(#rough2)">访问 cur；cur = cur.right。</text>
+  <text x="262" y="210" font-size="9.5" fill="#444" filter="url(#rough2)">若 right 是线索，就沿线索回到祖先。</text>
+
+  <path d="M 391 222 L 391 234" stroke="#999" stroke-width="1.2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="248" y="236" width="286" height="72" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="262" y="254" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">3. 再次到达 cur（线索已被建好）</text>
+  <text x="262" y="272" font-size="9.5" fill="#444" filter="url(#rough2)">pre.right == cur &#8658; 拆线索 pre.right = null，</text>
+  <text x="262" y="287" font-size="9.5" fill="#444" filter="url(#rough2)">访问 cur，再 cur = cur.right。</text>
+  <text x="262" y="302" font-size="9" fill="#8a6a20" filter="url(#rough2)">判据必须是结构上的 pre.right == cur</text>
+
+  <!-- 底部 -->
+  <rect x="40" y="336" width="486" height="82" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="358" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">为什么 O(1)</text>
+  <text x="56" y="377" font-size="10" fill="#444" filter="url(#rough2)">线索只借用已经存在的空 right 指针，建一次、用一次、拆一次，不新开数组或栈。</text>
+  <text x="56" y="395" font-size="10" fill="#444" filter="url(#rough2)">每条边被走的次数不超过 2，总时间仍是 O(n)；树结构在遍历结束时完全复原。</text>
+  <text x="56" y="412" font-size="10" fill="#444" filter="url(#rough2)">注意：不能比较结点值来判断「是否已经到过」，因为本题允许重复值 &#8212; 必须比较指针。</text>
+</svg>

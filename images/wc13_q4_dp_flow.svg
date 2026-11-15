@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：排序 → 逐个单词跑前缀 DP → 再入树</text>
+  <text x="310" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">每个单词只做两件事：先用"当前的树"判定它是不是连接词，再把自己插进去</text>
+
+  <!-- 五步流水线 -->
+  <g filter="url(#rough2)">
+    <rect x="22" y="70" width="104" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <rect x="140" y="70" width="104" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <rect x="258" y="70" width="104" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <rect x="376" y="70" width="104" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="494" y="70" width="104" height="66" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle" font-weight="bold">
+    <text x="74" y="96" fill="#3a4a66">① 排序</text>
+    <text x="192" y="96" fill="#3a4a66">② 取 w</text>
+    <text x="310" y="96" fill="#3a5a30">③ 前缀 DP</text>
+    <text x="428" y="96" fill="#8a6a20">④ dp[n] ≥ 2 ？</text>
+    <text x="546" y="96" fill="#8a3a38">⑤ 插入 w</text>
+  </g>
+  <g filter="url(#rough2)" font-size="9.5" text-anchor="middle" fill="#666">
+    <text x="74" y="114">长度升序，自己最后</text>
+    <text x="192" y="114">查的是更短的词</text>
+    <text x="310" y="114">沿 Trie 跳，不切子串</text>
+    <text x="428" y="114">是 → 记入 ans</text>
+    <text x="546" y="114">回到 ② 取下个单词</text>
+    <text x="74" y="130">等长单词可同批</text>
+    <text x="192" y="130">w 自身不在树中</text>
+    <text x="310" y="130">O(|w|²) 步</text>
+    <text x="428" y="130">否 → 什么也不做</text>
+    <text x="546" y="130">判定结束才入树</text>
+  </g>
+
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.6" fill="none">
+    <path d="M 126 103 L 138 103" marker-end="url(#arr)"/>
+    <path d="M 244 103 L 256 103" marker-end="url(#arr)"/>
+    <path d="M 362 103 L 374 103" marker-end="url(#arr)"/>
+    <path d="M 480 103 L 492 103" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- 内层转移 -->
+  <rect x="22" y="158" width="284" height="150" fill="#ffffff" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="38" y="180" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">内层转移（对单词 w）</text>
+  <g filter="url(#rough2)" font-size="9.5" fill="#555">
+    <text x="38" y="202">dp[0] = 0，其余 = ∞</text>
+    <text x="38" y="218">for i in [0, n)：</text>
+    <text x="46" y="234">if dp[i] == ∞: continue</text>
+    <text x="46" y="250">p = root</text>
+    <text x="46" y="266">for j in [i, n)：</text>
+    <text x="54" y="282">p = trie[p][w[j]]；空则 break</text>
+    <text x="54" y="298">if end[p]: dp[j+1] = min(dp[j+1], dp[i]+1)</text>
+  </g>
+
+  <!-- 不变式 -->
+  <rect x="322" y="158" width="276" height="150" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="338" y="180" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">为什么这样是对的</text>
+  <g filter="url(#rough2)" font-size="10" fill="#3f5a36">
+    <text x="338" y="204">• 树里只有"不比 w 长"的单词</text>
+    <text x="338" y="224">• w 还没入树 ⇒ 整词匹配不到</text>
+    <text x="338" y="244">• 故 dp[n] ≥ 2 才是连接词</text>
+    <text x="338" y="264">• 前缀断了立刻 break，天然剪枝</text>
+    <text x="338" y="284">• 每段只在树上走，O(1) 判断</text>
+  </g>
+
+  <rect x="322" y="320" width="276" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="336" y="338" font-size="10" fill="#8a3a38" font-weight="bold" filter="url(#rough2)">最常见的错：先把 w 插入再检查</text>
+  <text x="336" y="353" font-size="10" fill="#8a3a38" filter="url(#rough2)">那样 dp[n] 恒为 1，每个单词都会被误判</text>
+
+  <text x="310" y="382" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">总量估计：Σ|w| ≤ 10⁵、|w| ≤ 30，每个单词 O(|w|²) 步 ⇒ 约 3×10⁶ 步，秒过</text>
+</svg>

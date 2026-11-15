@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">同层去重：同一个值在每层只用一次</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">nums = [4,6,7,7]，当前 path = [4]（第 2 层，start = 1），候选为 6、7、7</text>
+
+  <g filter="url(#rough2)">
+    <rect x="143" y="68" width="64" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="213" y="68" width="64" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="283" y="68" width="64" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6"/>
+    <rect x="353" y="68" width="64" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="6"/>
+    <text x="175" y="93" text-anchor="middle" font-size="14" fill="#334">4</text>
+    <text x="245" y="93" text-anchor="middle" font-size="14" fill="#334">6</text>
+    <text x="315" y="93" text-anchor="middle" font-size="14" fill="#334">7</text>
+    <text x="385" y="93" text-anchor="middle" font-size="14" fill="#8a3a36">7</text>
+    <text x="175" y="124" text-anchor="middle" font-size="10" fill="#999">i=0</text>
+    <text x="245" y="124" text-anchor="middle" font-size="10" fill="#999">i=1</text>
+    <text x="315" y="124" text-anchor="middle" font-size="10" fill="#999">i=2</text>
+    <text x="385" y="124" text-anchor="middle" font-size="10" fill="#b85450">i=3 同值</text>
+  </g>
+
+  <rect x="120" y="146" width="320" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="170" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">path = [4]　used = ∅　start = 1</text>
+
+  <path d="M 280 184 L 110 212" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 184 L 280 212" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 184 L 450 212" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="216" width="140" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="110" y="236" text-anchor="middle" font-size="11.5" fill="#3a5a30" filter="url(#rough2)">i=1 → 取 6</text>
+  <text x="110" y="251" text-anchor="middle" font-size="9" fill="#666" filter="url(#rough2)">6 ≥ 4，used 加 6</text>
+
+  <rect x="210" y="216" width="140" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="236" text-anchor="middle" font-size="11.5" fill="#3a5a30" filter="url(#rough2)">i=2 → 取 7</text>
+  <text x="280" y="251" text-anchor="middle" font-size="9" fill="#666" filter="url(#rough2)">7 ≥ 4，used 加 7</text>
+
+  <rect x="380" y="216" width="140" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="450" y="236" text-anchor="middle" font-size="11.5" fill="#8a3a36" filter="url(#rough2)">i=3 → 剪掉</text>
+  <text x="450" y="251" text-anchor="middle" font-size="9" fill="#8a3a36" filter="url(#rough2)">7 已在 used 中</text>
+
+  <rect x="40" y="282" width="480" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="304" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">为什么可以安全剪掉？</text>
+  <text x="56" y="324" font-size="10" fill="#555" filter="url(#rough2)">任何以 i=3 开头的后续选择都能整体换成 i=2：值序列完全不变，</text>
+  <text x="56" y="341" font-size="10" fill="#555" filter="url(#rough2)">而剩余可选区间 [3, n) 被 [2, n) 包含，所以只会重复、不会漏解。</text>
+
+  <text x="280" y="378" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">结论：每条值序列恰好生成一次 —— 对应它「最左」的那条下标序列</text>
+</svg>

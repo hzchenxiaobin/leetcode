@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 500" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="500" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">DFS 回溯流程：两层剪枝保证不重不漏</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">剪枝① 值必须 ≥ path 末尾；剪枝② 同一层同一个值只用一次</text>
+
+  <rect x="155" y="58" width="250" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="78" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">dfs(start)</text>
+  <text x="280" y="95" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">已选 path，从 start 起挑下一个下标</text>
+
+  <path d="M 280 104 L 280 118" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="155" y="120" width="250" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="138" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">len(path) ≥ 2 ?</text>
+  <text x="280" y="155" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">是 → 把 path 副本记入答案，继续递归</text>
+
+  <path d="M 280 164 L 280 178" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="155" y="180" width="250" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="200" text-anchor="middle" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">for i = start … n−1</text>
+  <text x="280" y="216" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">每个 i 依次过下面两道剪枝</text>
+
+  <path d="M 280 226 L 280 240" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="155" y="242" width="250" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="260" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">剪枝①：nums[i] &lt; path.back() ?</text>
+  <text x="280" y="277" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">是 → continue（破坏非递减）</text>
+
+  <path d="M 280 286 L 280 300" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="155" y="302" width="250" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="320" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">剪枝②：nums[i] 已在本层 used ?</text>
+  <text x="280" y="337" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">是 → continue（同层同值去重）</text>
+
+  <path d="M 280 346 L 280 360" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="155" y="362" width="250" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="382" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">used 加 nums[i] → dfs(i+1) → pop</text>
+  <text x="280" y="398" text-anchor="middle" font-size="9.5" fill="#555" filter="url(#rough2)">used 只标记不回退，本层记住所有试过的值</text>
+
+  <path d="M 280 408 L 280 422" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="155" y="424" width="250" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="444" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">本层枚举结束，返回上一层</text>
+
+  <text x="280" y="478" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">used 在每次进入 dfs 时新建 → 剪枝只在「同一层」内生效，不会误杀其他层</text>
+</svg>

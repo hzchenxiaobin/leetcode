@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">0-1 背包：dp[j] = 元素和恰为 j 的子集方案数</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">每个元素只有「进 P / 不进 P」两种选择，逐个元素滚一遍即可</text>
+
+  <!-- dp 数组 -->
+  <rect x="124" y="86" width="56" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="152" y="110" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">1</text>
+  <rect x="188" y="86" width="56" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="216" y="110" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">2</text>
+  <rect x="252" y="86" width="56" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="280" y="110" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">1</text>
+  <rect x="316" y="86" width="56" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="344" y="110" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">0</text>
+  <rect x="380" y="86" width="56" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="408" y="110" text-anchor="middle" font-size="12" fill="#3a4a66" filter="url(#rough2)">0</text>
+
+  <text x="152" y="140" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">j = 0</text>
+  <text x="216" y="140" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">j = 1</text>
+  <text x="280" y="140" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">j = 2</text>
+  <text x="344" y="140" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">j = 3</text>
+  <text x="408" y="140" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">j = 4</text>
+
+  <path d="M 280 122 C 300 168, 324 168, 344 126" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="312" y="178" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">dp[j] += dp[j − x]</text>
+
+  <!-- 为什么倒序 -->
+  <rect x="40" y="192" width="480" height="78" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="214" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">为什么必须倒序枚举 j</text>
+  <text x="56" y="234" font-size="10.5" fill="#555" filter="url(#rough2)">正序时 dp[j − x] 可能已被本轮更新，同一个元素会被重复使用（退化成完全背包）</text>
+  <text x="56" y="254" font-size="10.5" fill="#555" filter="url(#rough2)">倒序则保证 dp[j − x] 仍是「只看前 i − 1 个元素」的旧值</text>
+
+  <!-- 转移骨架 -->
+  <rect x="40" y="284" width="480" height="76" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="304" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">转移骨架</text>
+  <text x="56" y="324" font-size="10.5" fill="#333" filter="url(#rough2)">dp[0] = 1，其余为 0；for x in nums: for j = w down to x: dp[j] += dp[j − x]</text>
+  <text x="56" y="346" font-size="10.5" fill="#888" filter="url(#rough2)">时间 O(n · w)，空间 O(w)，其中 w ≤ S ≤ 1000</text>
+</svg>

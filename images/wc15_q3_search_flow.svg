@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="480" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">记忆化 DFS：枚举候选 (i, c) → 插入 → 连锁消除 → 取最小</text>
+  <text x="300" y="48" text-anchor="middle" font-size="11" fill="#888">dfs(board, hand) = 清空桌面所需的最少球数（不可能时返回 ∞）</text>
+
+  <rect x="150" y="62" width="300" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="83" text-anchor="middle" font-size="11" fill="#3a4a66">枚举候选 (段边界 / 对子缝, 手牌颜色 c)</text>
+
+  <path d="M 300 94 L 300 106" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="300,108 440,142 300,176 160,142" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="300" y="138" text-anchor="middle" font-size="10.5" fill="#8a6a20">该 (i, c) 值得试吗？</text>
+  <text x="300" y="155" text-anchor="middle" font-size="10" fill="#8a6a20">贴同色 · 拆对子 · 盘面有此色</text>
+
+  <path d="M 160 142 L 132 142" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="146" y="134" text-anchor="middle" font-size="10" fill="#888">否</text>
+  <rect x="12" y="120" width="118" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="71" y="139" text-anchor="middle" font-size="10.2" fill="#8a3a36">剪枝：跳过</text>
+  <text x="71" y="155" text-anchor="middle" font-size="9.6" fill="#8a3a36">（异色停异色边界）</text>
+
+  <text x="314" y="190" font-size="10" fill="#888">是</text>
+  <path d="M 300 176 L 300 198" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="160" y="200" width="280" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="221" text-anchor="middle" font-size="11" fill="#3a5a30">插入：b′ = b[:i] + c + b[i:]</text>
+
+  <path d="M 300 232 L 300 252" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="254" width="340" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="275" text-anchor="middle" font-size="11" fill="#3a5a30">shrink(b′)：删掉长度 ≥3 的段，连锁到稳定</text>
+
+  <path d="M 300 286 L 300 306" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="300,308 414,338 300,368 186,338" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="300" y="343" text-anchor="middle" font-size="10.5" fill="#8a6a20">b′ 为空？</text>
+
+  <path d="M 414 338 L 442 338" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="426" y="330" text-anchor="middle" font-size="10" fill="#888">是</text>
+  <rect x="446" y="318" width="140" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="516" y="335" text-anchor="middle" font-size="10.5" fill="#3a5a30">这一步成功</text>
+  <text x="516" y="350" text-anchor="middle" font-size="10.5" fill="#3a5a30">返回 1</text>
+
+  <path d="M 300 368 L 300 388" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="314" y="382" font-size="10" fill="#888">否</text>
+
+  <rect x="150" y="390" width="300" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="411" text-anchor="middle" font-size="11" fill="#3a4a66">取最小：1 + dfs(b′, hand ∖ {c})</text>
+
+  <text x="300" y="440" text-anchor="middle" font-size="10.2" fill="#555">记忆化 key = board + "#" + sorted(hand)</text>
+  <text x="300" y="460" text-anchor="middle" font-size="10.2" fill="#555">同层再用 seen 去重结果盘面；某色总数 &lt; 3 时整枝剪掉</text>
+</svg>
