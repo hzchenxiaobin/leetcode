@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="29"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/></marker>
+  </defs>
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" font-weight="bold" filter="url(#rough2)">递推三步：并入当前元素 → 相邻去重 → 检查是否 ≥ k</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="56" width="130" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <rect x="215" y="56" width="130" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <rect x="390" y="56" width="130" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <g font-size="12" fill="#333" text-anchor="middle" filter="url(#rough2)">
+    <text x="105" y="80">上一轮的集合</text>
+    <text x="105" y="98">(v, s) 按 s 递减</text>
+    <text x="280" y="80">全部或上 x</text>
+    <text x="280" y="98">并置入单项 (x, i)</text>
+    <text x="455" y="80">去重 + 更新答案</text>
+    <text x="455" y="98">同值留大 s</text>
+  </g>
+  <path d="M 176 84 L 208 84" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 351 84 L 383 84" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="130" width="480" height="176" fill="#fff" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <g font-size="12.5" fill="#333" filter="url(#rough2)">
+    <text x="60" y="158">nxt = [(x, i)]</text>
+    <text x="60" y="182">for (v, s) in cur:</text>
+    <text x="60" y="206">    nv = v | x</text>
+    <text x="60" y="230">    if nv == nxt.back().v:  continue</text>
+    <text x="60" y="254">    nxt.append((nv, s))</text>
+    <text x="60" y="278">for (v, s) in nxt:  if v &gt;= k:  ans = min(ans, i − s + 1)</text>
+  </g>
+  <text x="60" y="300" font-size="11" fill="#888" filter="url(#rough2)">cur 天然按 s 从大到小排列，因此重复的或值一定相邻</text>
+
+  <rect x="40" y="320" width="480" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="342" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">去重时保留「更大起点」= 更短窗口，正是我们想最小化的量</text>
+  <text x="280" y="386" text-anchor="middle" font-size="11" fill="#7a5c1e" filter="url(#rough2)">每轮集合大小 ≤ 31 ⇒ 总复杂度 O(n · 31)</text>
+</svg>

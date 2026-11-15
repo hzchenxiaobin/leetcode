@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2"><feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="89"/><feDisplacementMap in="SourceGraphic" scale="1.5"/></filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/></marker>
+  </defs>
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" font-weight="bold" filter="url(#rough2)">栈顶计数 = 中间没有被更大元素隔断的同值位置个数</text>
+
+  <text x="40" y="60" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">合法：[3, 1, 3]，中间元素都比 3 小</text>
+  <g filter="url(#rough2)">
+    <rect x="40" y="70" width="70" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+    <rect x="110" y="70" width="70" height="34" fill="#fff" stroke="#bbb" stroke-width="1.2" rx="4"/>
+    <rect x="180" y="70" width="70" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+  </g>
+  <g font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">
+    <text x="75" y="93">3</text><text x="145" y="93">1</text><text x="215" y="93">3</text>
+  </g>
+  <path d="M 78 112 L 212 112" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="145" y="132" font-size="11" fill="#2d5a22" text-anchor="middle" filter="url(#rough2)">首尾都是 3 = 最大值 ✓</text>
+  <text x="145" y="152" font-size="10.5" fill="#666" text-anchor="middle" filter="url(#rough2)">i=2 时栈顶为 (3, 1)，贡献 1</text>
+
+  <text x="300" y="60" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">不合法：[3, 4, 3]，被 4 隔断</text>
+  <g filter="url(#rough2)">
+    <rect x="300" y="70" width="70" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="4"/>
+    <rect x="370" y="70" width="70" height="34" fill="#fff" stroke="#bbb" stroke-width="1.2" rx="4"/>
+    <rect x="440" y="70" width="70" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="4"/>
+  </g>
+  <g font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">
+    <text x="335" y="93">3</text><text x="405" y="93">4</text><text x="475" y="93">3</text>
+  </g>
+  <path d="M 338 112 L 472 112" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="405" y="132" font-size="11" fill="#8a2b26" text-anchor="middle" filter="url(#rough2)">首尾是 3，但最大值是 4 ✗</text>
+  <text x="405" y="152" font-size="10.5" fill="#666" text-anchor="middle" filter="url(#rough2)">i=1 的 4 已把 (3, 1) 弹出</text>
+
+  <rect x="40" y="176" width="480" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="198" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">所以「计数」= 还能和我配成合法区间的左端点个数，弹出即失效</text>
+  <rect x="40" y="222" width="480" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="244" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">每次新来一个 x：先弹出所有比 x 小的值，若栈顶等于 x 就累加它的计数</text>
+  <rect x="40" y="268" width="480" height="34" fill="#fff" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="290" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">单元素区间 [i, i] 永远合法，所以每次额外 +1</text>
+  <text x="280" y="330" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">严格递减的栈保证了：栈中每个值以下的元素都小于它</text>
+  <text x="280" y="356" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">因此「栈顶值等于 x」等价于「存在一个合法左端点」</text>
+  <text x="280" y="382" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">等价写法：按值分组 + 单调栈求每组贡献，本质相同</text>
+</svg>
