@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 344" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="520" height="344" fill="#fafafa"/>
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333333" filter="url(#rough2)">minAreaRect：O(n²) 对角线枚举</text>
+  <rect x="56" y="48" width="408" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="68" text-anchor="middle" font-size="12" fill="#333333" filter="url(#rough2)">① 所有点编码 x*40001+y 存入哈希集合 S</text>
+  <text x="260" y="86" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">（x, y < 4·10⁴，单 key 不冲突）</text>
+  <path d="M 260 94 L 260 114" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="56" y="114" width="408" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="134" text-anchor="middle" font-size="12" fill="#333333" filter="url(#rough2)">② 枚举所有点对 (i < j)，跳过同行/同列的退化对</text>
+  <text x="260" y="152" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">这样的点对才可能是一条真正的对角线</text>
+  <path d="M 260 160 L 260 180" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="56" y="180" width="408" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="200" text-anchor="middle" font-size="12" fill="#333333" filter="url(#rough2)">③ 若 (x1,y2) 与 (x2,y1) 都在 S：</text>
+  <text x="260" y="218" text-anchor="middle" font-size="11.5" fill="#333333" filter="url(#rough2)">用 |x1−x2|·|y1−y2| 更新最小面积</text>
+  <path d="M 260 226 L 260 246" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="56" y="246" width="408" height="46" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="260" y="266" text-anchor="middle" font-size="11.5" fill="#333333" filter="url(#rough2)">④ 没有可行矩形时返回 0（不能用 INT_MAX 直接返回）</text>
+  <text x="260" y="320" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">复杂度：时间 O(n²)，空间 O(n) —— n ≤ 500 时约 12.5 万次判定</text>
+</svg>

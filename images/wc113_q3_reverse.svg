@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 328" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="600" height="328" fill="#fafafa"/>
+  <text x="300" y="26" text-anchor="middle" font-size="14" fill="#333333" filter="url(#rough2)">逆向构造：把牌按升序「放回」队列给出的位置</text>
+  <rect x="30" y="54" width="250" height="74" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="155" y="78" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">正向过程（发牌）</text>
+  <text x="155" y="100" text-anchor="middle" font-size="10.5" fill="#333333" filter="url(#rough2)">取顶 → 亮出 → 下一张移到底</text>
+  <text x="155" y="118" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">亮出顺序必须递增</text>
+  <path d="M 284 92 L 316 92" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="320" y="54" width="250" height="74" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="445" y="78" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">逆向过程（放牌）</text>
+  <text x="445" y="100" text-anchor="middle" font-size="10" fill="#333333" filter="url(#rough2)">把最小的牌放在「下一个被亮出」的位</text>
+  <text x="445" y="118" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">再模拟一次「移到底」</text>
+  <text x="300" y="156" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">用一个下标队列 idx = [0,1,2,…,n-1] 表示「接下来会被亮出的位置顺序」</text>
+  <circle cx="96" cy="196" r="22" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="96" y="201" text-anchor="middle" font-size="12" fill="#33475b" font-weight="bold" filter="url(#rough2)">0</text>
+  <circle cx="164" cy="196" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="164" y="201" text-anchor="middle" font-size="12" fill="#33475b" font-weight="bold" filter="url(#rough2)">1</text>
+  <circle cx="232" cy="196" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="232" y="201" text-anchor="middle" font-size="12" fill="#33475b" font-weight="bold" filter="url(#rough2)">2</text>
+  <circle cx="300" cy="196" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="300" y="201" text-anchor="middle" font-size="12" fill="#33475b" font-weight="bold" filter="url(#rough2)">3</text>
+  <circle cx="368" cy="196" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="368" y="201" text-anchor="middle" font-size="12" fill="#33475b" font-weight="bold" filter="url(#rough2)">4</text>
+  <circle cx="436" cy="196" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="436" y="201" text-anchor="middle" font-size="12" fill="#33475b" font-weight="bold" filter="url(#rough2)">5</text>
+  <circle cx="504" cy="196" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="504" y="201" text-anchor="middle" font-size="12" fill="#33475b" font-weight="bold" filter="url(#rough2)">6</text>
+  <text x="300" y="240" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">① 取 idx 队首位置 p，把当前最小的牌放进 res[p]</text>
+  <text x="300" y="262" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">② 若队列非空，把新的队首挪到队尾（对应「下一张移到底」）</text>
+  <rect x="120" y="280" width="360" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="300" y="305" text-anchor="middle" font-size="11" fill="#a9761f" filter="url(#rough2)">循环 n 次即得牌组顺序，时间 O(n log n)（排序主导）</text>
+</svg>
