@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">线段树维护截面并集长度：区间加 + 根节点 covered 值</text>
+  <text x="320" y="45" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">x 坐标离散化到 2n 个端点，叶子表示相邻端点之间的一小段</text>
+
+  <text x="46" y="80" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">把 x 端点排序去重：xs = [x₁, x₂, …, x_m]</text>
+  <g filter="url(#rough2)">
+    <line x1="80" y1="112" x2="560" y2="112" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+    <g stroke="#446688" stroke-width="1.6">
+      <line x1="80" y1="104" x2="80" y2="120" filter="url(#rough2)"/>
+      <line x1="200" y1="104" x2="200" y2="120" filter="url(#rough2)"/>
+      <line x1="320" y1="104" x2="320" y2="120" filter="url(#rough2)"/>
+      <line x1="430" y1="104" x2="430" y2="120" filter="url(#rough2)"/>
+      <line x1="560" y1="104" x2="560" y2="120" filter="url(#rough2)"/>
+    </g>
+  </g>
+  <g filter="url(#rough2)" font-size="9.5" fill="#666" text-anchor="middle">
+    <text x="80" y="134" filter="url(#rough2)">xs[0]</text>
+    <text x="200" y="134" filter="url(#rough2)">xs[1]</text>
+    <text x="320" y="134" filter="url(#rough2)">xs[2]</text>
+    <text x="430" y="134" filter="url(#rough2)">xs[3]</text>
+    <text x="560" y="134" filter="url(#rough2)">xs[4]</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="80" y="142" width="120" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+    <rect x="200" y="142" width="120" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+    <rect x="320" y="142" width="110" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+    <rect x="430" y="142" width="130" height="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  </g>
+  <g filter="url(#rough2)" font-size="9.5" fill="#3a4a66" text-anchor="middle">
+    <text x="140" y="157" filter="url(#rough2)">段 0</text>
+    <text x="260" y="157" filter="url(#rough2)">段 1</text>
+    <text x="375" y="157" filter="url(#rough2)">段 2</text>
+    <text x="495" y="157" filter="url(#rough2)">段 3</text>
+  </g>
+
+  <text x="46" y="196" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">每个节点存两个量</text>
+  <g filter="url(#rough2)">
+    <rect x="46" y="206" width="250" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+    <rect x="316" y="206" width="280" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  </g>
+  <text x="60" y="226" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">cnt[node]：完整覆盖本区间的次数</text>
+  <text x="60" y="246" font-size="10" fill="#555" filter="url(#rough2)">+1 加入一个正方形，−1 移出</text>
+  <text x="330" y="226" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">covered[node]：本区间被覆盖的长度</text>
+  <text x="330" y="246" font-size="10" fill="#555" filter="url(#rough2)">cnt &gt; 0 → 整段长度；否则 = 左右孩子之和</text>
+
+  <path d="M 320 262 L 320 282" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="10" fill="#555">
+    <text x="46" y="302" filter="url(#rough2)">更新（区间加 delta）后自底向上重算：</text>
+    <text x="46" y="322" filter="url(#rough2)">covered = (cnt &gt; 0) ? xs[r] − xs[l] : (叶子 ? 0 : covered[left] + covered[right])</text>
+    <text x="46" y="342" filter="url(#rough2)">根节点 covered[1] 就是当前这一层被覆盖的 x 总长度 L(t)</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="46" y="352" width="550" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  </g>
+  <text x="60" y="370" font-size="10" fill="#8a3a36" filter="url(#rough2)">关键：叶子是"段"而不是"点"，每个叶子长度用 xs[j+1] − xs[j] 记账，避免点集与长度混淆。</text>
+  <text x="60" y="385" font-size="10" fill="#8a3a36" filter="url(#rough2)">单次更新 O(log n)，2n 个事件合计 O(n log n)；整个过程全部是整数运算，不会丢精度。</text>
+</svg>

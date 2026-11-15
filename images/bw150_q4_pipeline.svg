@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">三步流水线：出现位置 → 后缀最小 C 起点 → 后缀最小右端 → 扫 A</text>
+  <text x="320" y="45" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">全部基于 Z 函数与后缀最小值，总时间 O(|s| + |p|)</text>
+
+  <rect x="40" y="64" width="270" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="54" y="84" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① Z 函数求出现位置</text>
+  <text x="54" y="102" font-size="10" fill="#555" filter="url(#rough2)">occA[i] / occB[i] / occC[i] = 该模式是否从 i 开始</text>
+
+  <rect x="330" y="64" width="270" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="344" y="84" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② minC：C 的最早合法起点</text>
+  <text x="344" y="102" font-size="10" fill="#555" filter="url(#rough2)">minC[x] = min{ k ≥ x : occC[k] }（从右往左取 min）</text>
+
+  <path d="M 470 120 L 470 140" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="330" y="144" width="270" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="344" y="164" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ h[e]：从 e 起依次放 B、C 的最小右端</text>
+  <text x="344" y="182" font-size="10" fill="#555" filter="url(#rough2)">h[e] = min( h[e+1],</text>
+  <text x="344" y="198" font-size="10" fill="#555" filter="url(#rough2)">　　　　　 occB[e] ? minC[e+|B|] + |C| : ∞ )</text>
+
+  <path d="M 320 186 L 200 186" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="160" width="150" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="54" y="180" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 扫 A 的每个出现</text>
+  <text x="54" y="198" font-size="10" fill="#555" filter="url(#rough2)">ans = min( h[i+|A|] − i )</text>
+  <text x="54" y="212" font-size="9.5" fill="#888" filter="url(#rough2)">（i 处必须 occA[i] 为真）</text>
+
+  <text x="40" y="252" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">为什么这样做是对的（把“选三个位置”拆开）</text>
+  <path d="M 46 264 L 590 264" stroke="#ccc" stroke-width="1" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="10.3" fill="#555">
+    <text x="46" y="284" filter="url(#rough2)">· 固定 B 的起点 j 后，C 的起点只要 ≥ j+|B| 越早越好 ⇒ minC[j+|B|] 就是该 j 下最优的右端。</text>
+    <text x="46" y="304" filter="url(#rough2)">· 再对所有 j ≥ e 取最小 ⇒ h[e] = min over j≥e 的 (minC[j+|B|] + |C|)，用后缀最小值递推即可。</text>
+    <text x="46" y="324" filter="url(#rough2)">· 固定 A 的起点 i 后，右端最小是 h[i+|A|]，长度 = h[i+|A|] − i；对全部 i 取最小。</text>
+  </g>
+
+  <rect x="40" y="336" width="560" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="54" y="356" font-size="10" fill="#3a4a66" filter="url(#rough2)">递归式（从右往左，一次线性扫描）：</text>
+  <text x="54" y="374" font-size="10" fill="#3a4a66" filter="url(#rough2)">minC[x] = occC[x] ? x : minC[x+1]　；　h[e] = min(h[e+1], occB[e] ? minC[e+|B|] + |C| : ∞)</text>
+  <text x="320" y="394" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">空串的处理：空模式在任意位置都“出现”，故 occ 全为真、minC[x] = x</text>
+</svg>
