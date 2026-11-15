@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">dp 转移：最后一键是 A，或最后一段是乘法块</text>
+  <text x="280" y="47" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">dp[i] = max( dp[i-1] + 1 , max over k ≤ i-2 of dp[k] * (i-k-1) )</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="66" width="230" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10"/>
+    <text x="155" y="90" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">分支 1：最后一键按 A</text>
+    <text x="155" y="111" text-anchor="middle" font-size="10.5" fill="#555">dp[i] = dp[i-1] + 1</text>
+    <rect x="290" y="66" width="230" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10"/>
+    <text x="405" y="90" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">分支 2：末段是乘法块</text>
+    <text x="405" y="111" text-anchor="middle" font-size="10.5" fill="#555">dp[i] = dp[k] * (i-k-1)</text>
+  </g>
+
+  <path d="M 405 128 L 405 148" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="44" y="158" width="120" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="104" y="178" text-anchor="middle" font-size="11" fill="#3a5a30">dp[k]</text>
+    <text x="104" y="193" text-anchor="middle" font-size="9.5" fill="#666">前 k 键的最优值</text>
+    <rect x="212" y="158" width="132" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="278" y="178" text-anchor="middle" font-size="10.5" fill="#8a6a20">剪贴板 = dp[k]</text>
+    <text x="278" y="193" text-anchor="middle" font-size="9.5" fill="#666">Ctrl-A + Ctrl-C</text>
+    <rect x="392" y="158" width="132" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+    <text x="458" y="178" text-anchor="middle" font-size="10.5" fill="#8a3a36">dp[k] * (v+1)</text>
+    <text x="458" y="193" text-anchor="middle" font-size="9.5" fill="#666">v 次 Ctrl-V 之后</text>
+  </g>
+
+  <path d="M 168 180 L 208 180" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 348 180 L 388 180" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="222" width="484" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="58" y="243" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">块内粘贴 v = i - k - 2 次，乘数 f = v + 1 = i - k - 1</text>
+  <text x="58" y="263" font-size="10.5" fill="#555" filter="url(#rough2)">约束 k ≤ i - 2：至少留 2 键做全选与复制，否则剪贴板填不上</text>
+
+  <text x="280" y="304" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">收益最大的是 f = 3 与 f = 4，本题范围内 i ≥ 7 时只需比两个候选：</text>
+  <text x="280" y="326" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">dp[i] = max( dp[i-4] * 3 , dp[i-5] * 4 )</text>
+
+  <text x="280" y="356" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">完整 O(N^2) 写法：内层枚举全部 k；上面这步是 O(1) 剪枝</text>
+  <text x="280" y="376" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">复杂度 O(N^2) 时间 / O(N) 空间（N ≤ 50，常数极小）</text>
+</svg>

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="440" fill="#fafafa"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：答案是一段长度 k 的连续子数组</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">arr 有序 ⇒ 最近的 k 个数必然连成一片，问题变成「定位窗口左边界 l」</text>
+
+  <text x="248" y="76" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">mid</text>
+  <text x="440" y="76" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">mid + k</text>
+
+  <g filter="url(#rough2)">
+    <rect x="128" y="86" width="48" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="176" y="86" width="48" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="224" y="86" width="48" height="42" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="272" y="86" width="48" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="320" y="86" width="48" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="368" y="86" width="48" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="416" y="86" width="48" height="42" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2" stroke-dasharray="5 3"/>
+    <rect x="464" y="86" width="48" height="42" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="152" y="114">1</text><text x="200" y="114">2</text><text x="248" y="114">3</text>
+    <text x="296" y="114">4</text><text x="344" y="114">5</text><text x="392" y="114">6</text>
+    <text x="440" y="114">7</text><text x="488" y="114">8</text>
+  </g>
+  <g filter="url(#rough2)" font-size="9.5" fill="#999" text-anchor="middle">
+    <text x="152" y="144">0</text><text x="200" y="144">1</text><text x="248" y="144">2</text>
+    <text x="296" y="144">3</text><text x="344" y="144">4</text><text x="392" y="144">5</text>
+    <text x="440" y="144">6</text><text x="488" y="144">7</text>
+  </g>
+
+  <rect x="221" y="82" width="195" height="52" rx="5" fill="none" stroke="#446688" stroke-width="1.6" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="320" y="162" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">窗口 [l, l+k−1]，长度 k = 4</text>
+
+  <path d="M 248,132 L 262,176" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 440,132 L 400,176" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="182" width="500" height="76" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="86" y="204" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">取 arr[mid] 还是 arr[mid+k]？只比较这两端</text>
+  <text x="86" y="226" font-size="11" fill="#555" filter="url(#rough2)">g(l) = (x − arr[l]) − (arr[l+k] − x)；g(mid) ≤ 0 ⇒ 保留左端，hi = mid</text>
+  <text x="86" y="246" font-size="11" fill="#555" filter="url(#rough2)">g(mid) &gt; 0 ⇒ arr[mid+k] 更近，丢掉 arr[mid]，lo = mid + 1</text>
+
+  <text x="320" y="284" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#rough2)">判定函数 g(l) 单调不增 ⇒ 存在唯一分界 l*，答案就是 l*</text>
+  <path d="M 120,352 L 558,352" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 120,352 L 120,296" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="566" y="356" font-size="10.5" fill="#666" filter="url(#rough2)">l</text>
+  <text x="112" y="298" text-anchor="end" font-size="10.5" fill="#666" filter="url(#rough2)">g(l)</text>
+  <text x="126" y="366" font-size="9.5" fill="#999" filter="url(#rough2)">0</text>
+  <path d="M 160,330 H 222 V 340 H 284 V 350 H 346 V 360 H 408 V 370 H 470 V 380 H 532 V 390"
+        stroke="#446688" stroke-width="2" fill="none" filter="url(#rough2)"/>
+  <path d="M 284,336 L 284,392" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5 4" fill="none" filter="url(#rough2)"/>
+  <circle cx="284" cy="350" r="4" fill="#b85450" filter="url(#rough2)"/>
+  <text x="284" y="408" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">l* = 2（答案左边界）</text>
+  <text x="150" y="320" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">g &gt; 0：丢掉左端</text>
+  <text x="540" y="410" text-anchor="end" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">g ≤ 0：保留左端</text>
+</svg>

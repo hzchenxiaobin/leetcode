@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">两个示例的后序演算</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">示例 1 靠偶数 + 命中的子树和成功，示例 2 被奇偶性直接否决</text>
+
+  <rect x="30" y="64" width="252" height="248" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="44" y="86" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">示例 1  [5,10,10,null,null,2,3]</text>
+  <text x="44" y="110" font-size="10" fill="#555" filter="url(#rough2)">后序得到各节点的子树和：</text>
+  <text x="44" y="136" font-size="10.5" fill="#444" filter="url(#rough2)">5（根）　 → 30 ← 总和 S</text>
+  <text x="44" y="158" font-size="10.5" fill="#444" filter="url(#rough2)">10（左）→ 10</text>
+  <text x="44" y="180" font-size="10.5" fill="#444" filter="url(#rough2)">10（右）→ 15</text>
+  <text x="44" y="202" font-size="10.5" fill="#444" filter="url(#rough2)">2 → 2　　3 → 3</text>
+  <text x="44" y="230" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">S = 30 偶数，S/2 = 15</text>
+  <text x="44" y="252" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">seen = {10, 15, 2, 3}</text>
+  <text x="44" y="274" font-size="10.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">→ true（割 5–10(右) 这条边）</text>
+  <text x="44" y="298" font-size="9.5" fill="#666" filter="url(#rough2)">两块和：15 与 15 ✓</text>
+
+  <rect x="306" y="64" width="224" height="248" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="320" y="86" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">示例 2  [1,2,10,null,null,2,20]</text>
+  <text x="320" y="110" font-size="10" fill="#555" filter="url(#rough2)">后序得到各节点的子树和：</text>
+  <text x="320" y="136" font-size="10.5" fill="#444" filter="url(#rough2)">2（左）→ 2</text>
+  <text x="320" y="158" font-size="10.5" fill="#444" filter="url(#rough2)">10（右）→ 32</text>
+  <text x="320" y="180" font-size="10.5" fill="#444" filter="url(#rough2)">2 → 2　　20 → 20</text>
+  <text x="320" y="208" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">S = 1+2+32 = 35</text>
+  <text x="320" y="232" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">35 为奇数</text>
+  <text x="320" y="258" font-size="10" fill="#555" filter="url(#rough2)">奇数不可能拆成两个</text>
+  <text x="320" y="274" font-size="10" fill="#555" filter="url(#rough2)">相等的整数和</text>
+  <text x="320" y="298" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">→ false</text>
+
+  <rect x="30" y="326" width="500" height="70" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="348" font-size="10.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">⚠ 陷阱：别「把根也插入集合，再 erase(S)」</text>
+  <text x="46" y="368" font-size="9.5" fill="#555" filter="url(#rough2)">unordered_set::erase(key) 会删掉所有同值元素，S = 0 时真正的 0 和子树被一起删掉</text>
+  <text x="46" y="386" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">正解：根的 sum 根本不入表（或改用 multiset 只删一个）</text>
+</svg>

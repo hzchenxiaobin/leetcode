@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">贪心：能延长就延长，凑不出三个才新开链</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">链一创建就含 3 个元素 ⇒ 长度约束只需在建链那一刻检查</text>
+
+  <g filter="url(#rough2)">
+    <rect x="32" y="62" width="238" height="120" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10"/>
+    <text x="46" y="84" font-size="11" fill="#3a5a30" font-weight="bold">① 延长已有链（优先）</text>
+    <text x="46" y="104" font-size="9.5" fill="#4a5a44">前提：存在以 x−1 结尾的链</text>
+    <text x="46" y="122" font-size="9.5" fill="#4a5a44">tail[x−1]−− ; tail[x]++</text>
+    <text x="46" y="140" font-size="9.5" fill="#4a5a44">cnt[x]−−</text>
+    <text x="46" y="164" font-size="10" fill="#3a5a30" font-weight="bold">只花掉 1 个 x，代价最小</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="290" y="62" width="238" height="120" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10"/>
+    <text x="304" y="84" font-size="11" fill="#8a6a20" font-weight="bold">② 新开一条链（兜底）</text>
+    <text x="304" y="104" font-size="9.5" fill="#6a5a30">必须同时有 x、x+1、x+2</text>
+    <text x="304" y="122" font-size="9.5" fill="#6a5a30">cnt[x]−− ; cnt[x+1]−−</text>
+    <text x="304" y="140" font-size="9.5" fill="#6a5a30">cnt[x+2]−− ; tail[x+2]++</text>
+    <text x="304" y="164" font-size="10" fill="#8a6a20" font-weight="bold">一次锁死 3 个元素</text>
+  </g>
+
+  <rect x="32" y="196" width="496" height="74" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="218" font-size="11" fill="#3a4a66" font-weight="bold">为什么延长优先？</text>
+  <text x="46" y="238" font-size="9.5" fill="#4a5568">「在 x 处新建链」= 先延长到 x，再立刻连延长两次到 x+1、x+2，</text>
+  <text x="46" y="254" font-size="9.5" fill="#4a5568">两者都只占 1 个 x，但新建会提前锁定 x+1、x+2；延长把这两步推迟到真正需要时。</text>
+
+  <rect x="32" y="284" width="496" height="54" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="306" font-size="10.5" fill="#8a3a36" font-weight="bold">③ 两件事都做不到</text>
+  <text x="46" y="326" font-size="9.5" fill="#6a4a46">x 接不上任何链、也凑不出后两个值 → 直接 return false，无需回溯</text>
+
+  <text x="280" y="362" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">tail[v] 只统计长度 ≥ 3 的链，所以不必记录每条链的具体长度</text>
+</svg>

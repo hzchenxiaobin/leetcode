@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="380" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例演算：pairs = [[1,2], [7,8], [4,5]]</text>
+  <text x="300" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">排序后为 [1,2] → [4,5] → [7,8]，逐对与 last 比较</text>
+
+  <!-- 表头 -->
+  <rect x="40" y="76" width="520" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#2f4666" text-anchor="middle" font-weight="bold">
+    <text x="75" y="96">步</text>
+    <text x="180" y="96">数对 [a, b]</text>
+    <text x="310" y="96">a &gt; last ?</text>
+    <text x="415" y="96">cnt</text>
+    <text x="510" y="96">last</text>
+  </g>
+
+  <!-- 第 1 行 -->
+  <rect x="40" y="106" width="520" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#333" text-anchor="middle">
+    <text x="75" y="127">1</text>
+    <text x="180" y="127">[1, 2]</text>
+    <text x="310" y="127">−∞ → 是</text>
+    <text x="415" y="127">1</text>
+    <text x="510" y="127">2</text>
+  </g>
+
+  <!-- 第 2 行 -->
+  <rect x="40" y="140" width="520" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#333" text-anchor="middle">
+    <text x="75" y="161">2</text>
+    <text x="180" y="161">[4, 5]</text>
+    <text x="310" y="161">2 → 是</text>
+    <text x="415" y="161">2</text>
+    <text x="510" y="161">5</text>
+  </g>
+
+  <!-- 第 3 行 -->
+  <rect x="40" y="174" width="520" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#333" text-anchor="middle">
+    <text x="75" y="195">3</text>
+    <text x="180" y="195">[7, 8]</text>
+    <text x="310" y="195">5 → 是</text>
+    <text x="415" y="195">3</text>
+    <text x="510" y="195">8</text>
+  </g>
+
+  <rect x="40" y="226" width="520" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#555">
+    <text x="56" y="246" fill="#8a6a20" font-weight="bold">结论：cnt = 3，链为 [1,2] → [4,5] → [7,8]</text>
+    <text x="56" y="266">每步 last 更新为刚选中数对的右端点，后续只可能与右端点更大的数对相接。</text>
+  </g>
+
+  <rect x="40" y="292" width="520" height="64" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#555">
+    <text x="56" y="312" fill="#8a3a36" font-weight="bold">对照 [[1,2], [2,3], [3,4]]：严格大于才是关键</text>
+    <text x="56" y="332">第 2 步 2 &gt; 2 不成立 → 跳过 [2,3]（last 仍为 2）；第 3 步 3 &gt; 2 成立 → 取 [3,4]。</text>
+  </g>
+  <text x="300" y="370" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">答案 2 而非 3：同一个点不能既是上一对的右端点又是下一对的左端点</text>
+</svg>

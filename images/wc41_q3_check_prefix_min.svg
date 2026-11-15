@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 450"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="450" fill="#fafafa"/>
+
+  <text x="440" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">判定 check(x)：前缀和 + 滚动维护最小前缀</text>
+  <path d="M 250 42 Q 440 50 630 42" stroke="#b85450" stroke-width="1.8" fill="none" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="58" width="740" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="440" y="80" text-anchor="middle" font-size="12.5" fill="#2b4a6e">令 pre[0] = 0，pre[j] = pre[j−1] + (a[j−1] − x)，则子数组 (i, j] 的平均值 ≥ x ⟺ pre[j] − pre[i] ≥ 0</text>
+    <text x="440" y="100" text-anchor="middle" font-size="12" fill="#446688">长度条件 j − i ≥ k ⟺ i ≤ j − k ⇒ 只需在 pre[0 .. j−k] 里找最小值</text>
+  </g>
+
+  <!-- ===== Panel A：指针与窗口 ===== -->
+  <text x="70" y="140" font-size="14.5" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">① 固定右端点 j，左端点 i 只能在 [0, j−k] 里取</text>
+
+  <g filter="url(#rough2)">
+    <text x="622" y="162" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#b8860b">j = 5</text>
+    <path d="M 622 166 L 622 174" stroke="#b8860b" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="118" y="176" width="88" height="54" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="210" y="176" width="88" height="54" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="302" y="176" width="88" height="54" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.4"/>
+    <rect x="394" y="176" width="88" height="54" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.4"/>
+    <rect x="486" y="176" width="88" height="54" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.4"/>
+    <rect x="578" y="176" width="88" height="54" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <rect x="670" y="176" width="88" height="54" rx="4" fill="#ffffff" stroke="#999" stroke-width="1.4"/>
+
+    <text x="162" y="210" text-anchor="middle" font-size="13" fill="#2b5a2b">0</text>
+    <text x="254" y="210" text-anchor="middle" font-size="13" fill="#2b5a2b">−11.75</text>
+    <text x="346" y="210" text-anchor="middle" font-size="13" fill="#555">−12.5</text>
+    <text x="438" y="210" text-anchor="middle" font-size="13" fill="#555">−30.25</text>
+    <text x="530" y="210" text-anchor="middle" font-size="13" fill="#555">−49</text>
+    <text x="622" y="210" text-anchor="middle" font-size="13" fill="#8a6516">−11.75</text>
+    <text x="714" y="210" text-anchor="middle" font-size="13" fill="#555">−21.5</text>
+
+    <text x="162" y="248" text-anchor="middle" font-size="10.5" fill="#999">pre[0]</text>
+    <text x="254" y="248" text-anchor="middle" font-size="10.5" fill="#999">pre[1]</text>
+    <text x="346" y="248" text-anchor="middle" font-size="10.5" fill="#999">pre[2]</text>
+    <text x="438" y="248" text-anchor="middle" font-size="10.5" fill="#999">pre[3]</text>
+    <text x="530" y="248" text-anchor="middle" font-size="10.5" fill="#999">pre[4]</text>
+    <text x="622" y="248" text-anchor="middle" font-size="10.5" fill="#999">pre[5]</text>
+    <text x="714" y="248" text-anchor="middle" font-size="10.5" fill="#999">pre[6]</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 118 262 v 10 h 180 v -10" stroke="#4a7a3a" stroke-width="2" fill="none"/>
+    <text x="208" y="292" text-anchor="middle" font-size="11.5" fill="#3a6e3a">minPre 的候选窗口：pre[0 .. j−k] = pre[0..1]</text>
+    <text x="622" y="292" text-anchor="middle" font-size="11.5" fill="#8a6516">当前值 pre[j]</text>
+  </g>
+
+  <!-- ===== Panel B：增量维护 ===== -->
+  <g filter="url(#rough2)">
+    <rect x="70" y="316" width="350" height="86" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="245" y="340" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b5a2b">① minPre 增量维护</text>
+    <text x="245" y="364" text-anchor="middle" font-size="12" fill="#2b5a2b">minPre = min(minPre, pre[j−k])</text>
+    <text x="245" y="386" text-anchor="middle" font-size="11" fill="#4a7a3a">j 每前进一步，窗口只多出一个候选</text>
+  </g>
+
+  <path d="M 424 359 L 452 359" stroke="#3a3a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="460" y="316" width="350" height="86" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="635" y="340" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#a04a46">② 命中即返回 true</text>
+    <text x="635" y="364" text-anchor="middle" font-size="12" fill="#a04a46">pre[j] − minPre ≥ 0</text>
+    <text x="635" y="386" text-anchor="middle" font-size="11" fill="#b85450">等价于 pre[j] ≥ min{ pre[0..j−k] }</text>
+  </g>
+
+  <text x="440" y="430" text-anchor="middle" font-size="11" fill="#a08a56" filter="url(#rough2)">一次线性扫描就能判定 check(x)：O(n) 时间、O(n) 前缀空间 ⇒ 外层再套 O(log) 轮二分</text>
+</svg>

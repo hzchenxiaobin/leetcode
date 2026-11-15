@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 680"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="680" fill="#fafafa"/>
+
+  <text x="450" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">单趟扫描：两条分支各结算一次，prev 单调前移</text>
+  <path d="M 250 46 Q 450 54 650 46" stroke="#b85450" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+
+  <!-- 初始化 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="58" width="340" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="82" text-anchor="middle" font-size="13" fill="#2b4a6e">res = [0]×n；st 为空栈；prev = 0</text>
+    <text x="250" y="103" text-anchor="middle" font-size="11" fill="#446688">prev = 下一个尚未结算的时间单位</text>
+  </g>
+  <path d="M 250 116 L 250 136" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 解析 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="140" width="340" height="50" rx="8" fill="#ffffff" stroke="#777" stroke-width="1.5"/>
+    <text x="250" y="164" text-anchor="middle" font-size="13" fill="#444">取日志，切成 id / type / t</text>
+    <text x="250" y="182" text-anchor="middle" font-size="10.5" fill="#999">（形如 0:start:3 或 1:end:5）</text>
+  </g>
+  <path d="M 250 190 L 250 208" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断 -->
+  <g filter="url(#rough2)">
+    <polygon points="250,212 380,262 250,312 120,262" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="250" y="258" text-anchor="middle" font-size="13" font-weight="bold" fill="#9a7420">type == start ?</text>
+    <text x="250" y="278" text-anchor="middle" font-size="10.5" fill="#9a7420">（否则就是 end）</text>
+  </g>
+
+  <!-- 是分支 -->
+  <path d="M 250 312 L 250 334" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="262" y="330" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="338" width="380" height="98" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="250" y="364" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a2b">res[st.top()] += t − prev</text>
+    <text x="250" y="390" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b5a2b">st.push(id)；prev = t</text>
+    <text x="250" y="414" text-anchor="middle" font-size="10.5" fill="#4a7a3a">旧实例只到 t−1，单位 t 已归新实例；栈空则不结算</text>
+  </g>
+
+  <!-- 否分支 -->
+  <path d="M 380 262 L 440 262 L 440 388 L 494 388" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="398" y="252" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="500" y="338" width="380" height="98" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="690" y="364" text-anchor="middle" font-size="13" font-weight="bold" fill="#8c3a36">res[st.top()] += t − prev + 1</text>
+    <text x="690" y="390" text-anchor="middle" font-size="13" font-weight="bold" fill="#8c3a36">st.pop()；prev = t + 1</text>
+    <text x="690" y="414" text-anchor="middle" font-size="10.5" fill="#b85450">单位 t 也被它吃掉，调用方从 t+1 恢复</text>
+  </g>
+
+  <!-- 合流 -->
+  <path d="M 250 436 L 250 486" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 690 436 L 690 462 L 254 462" stroke="#3a3a3a" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- 循环判断 -->
+  <g filter="url(#rough2)">
+    <polygon points="250,490 370,534 250,578 130,534" fill="#ffffff" stroke="#777" stroke-width="1.8"/>
+    <text x="250" y="540" text-anchor="middle" font-size="13" font-weight="bold" fill="#444">还有日志？</text>
+  </g>
+
+  <!-- 是：回到解析 -->
+  <path d="M 130 534 L 46 534 L 46 165 L 76 165" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="104" y="524" font-size="12.5" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 否：返回 -->
+  <path d="M 250 578 L 250 600" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="262" y="596" font-size="12.5" font-weight="bold" fill="#b85450" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <rect x="80" y="604" width="340" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="250" y="636" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b4a6e">返回 res（每个函数的独占时间）</text>
+  </g>
+
+  <!-- 右侧注释 -->
+  <g filter="url(#rough2)">
+    <rect x="500" y="474" width="360" height="150" rx="10" fill="#ffffff" stroke="#777" stroke-width="1.5"/>
+    <text x="680" y="502" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#444">为什么不用逐单位模拟</text>
+    <text x="520" y="528" font-size="11.5" fill="#555">时间戳可达 10⁹，逐单位扫描 O(T) 直接超时；</text>
+    <text x="520" y="552" font-size="11.5" fill="#555">相邻两条日志之间没有任何事件，执行者恒为</text>
+    <text x="520" y="576" font-size="11.5" fill="#555">栈顶，因此整段 [prev, t] 可以一次性结算。</text>
+    <text x="520" y="600" font-size="11.5" fill="#555">日志仅 500 条 ⇒ 只在事件处切分区间。</text>
+  </g>
+</svg>

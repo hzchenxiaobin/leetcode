@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="380" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：按右端点排序 + 贪心选区间</text>
+  <text x="290" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">数对即闭区间 [a, b]；b &lt; c 才可跟随 ⇒ 选中的区间两两不重叠（端点可相接）</text>
+
+  <!-- 三条数对，按右端点升序从下往上 -->
+  <g filter="url(#rough2)">
+    <line x1="62" y1="200" x2="470" y2="200" stroke="#666" stroke-width="1.6"/>
+    <line x1="62" y1="196" x2="62" y2="204" stroke="#666" stroke-width="1.4"/>
+    <line x1="112" y1="200" x2="112" y2="208" stroke="#999" stroke-width="1.1"/>
+    <line x1="162" y1="200" x2="162" y2="208" stroke="#999" stroke-width="1.1"/>
+    <line x1="212" y1="200" x2="212" y2="208" stroke="#999" stroke-width="1.1"/>
+    <line x1="262" y1="200" x2="262" y2="208" stroke="#999" stroke-width="1.1"/>
+    <line x1="312" y1="200" x2="312" y2="208" stroke="#999" stroke-width="1.1"/>
+    <line x1="362" y1="200" x2="362" y2="208" stroke="#999" stroke-width="1.1"/>
+    <line x1="412" y1="200" x2="412" y2="208" stroke="#999" stroke-width="1.1"/>
+    <line x1="462" y1="200" x2="462" y2="208" stroke="#999" stroke-width="1.1"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#777" text-anchor="middle">
+    <text x="112" y="220">1</text>
+    <text x="162" y="220">2</text>
+    <text x="212" y="220">3</text>
+    <text x="262" y="220">4</text>
+    <text x="312" y="220">5</text>
+    <text x="362" y="220">6</text>
+    <text x="412" y="220">7</text>
+    <text x="462" y="220">8</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="112" y="150" width="50" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <text x="137" y="168" text-anchor="middle" font-size="11" fill="#2f4666">[1,2]</text>
+    <circle cx="92" cy="163" r="10" fill="#ffffff" stroke="#446688" stroke-width="1.2"/>
+    <text x="92" y="167" text-anchor="middle" font-size="10" fill="#2f4666">1</text>
+
+    <rect x="262" y="112" width="50" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <text x="287" y="130" text-anchor="middle" font-size="11" fill="#2f4a26">[4,5]</text>
+    <circle cx="242" cy="125" r="10" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="242" y="129" text-anchor="middle" font-size="10" fill="#2f4a26">2</text>
+
+    <rect x="412" y="74" width="50" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+    <text x="437" y="92" text-anchor="middle" font-size="11" fill="#7a5a10">[7,8]</text>
+    <circle cx="392" cy="87" r="10" fill="#ffffff" stroke="#d6a040" stroke-width="1.2"/>
+    <text x="392" y="91" text-anchor="middle" font-size="10" fill="#7a5a10">3</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <line x1="312" y1="140" x2="312" y2="196" stroke="#b85450" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text x="318" y="134" font-size="10" fill="#b85450">last = 5（下一步要求 a 大于 5）</text>
+  </g>
+
+  <rect x="60" y="238" width="460" height="88" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#555">
+    <text x="76" y="260" fill="#8a6a20" font-weight="bold">贪心规则（按 b 升序扫描一遍）</text>
+    <text x="76" y="280">若 a &gt; last：选中该数对，cnt ← cnt+1，last ← b；</text>
+    <text x="76" y="298">否则跳过，last 保持不变。</text>
+    <text x="76" y="316">严格大于 ⇒ 相邻两对自动满足 b &lt; c，链天然合法。</text>
+  </g>
+
+  <text x="290" y="354" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">示例 [[1,2],[7,8],[4,5]] 排序后为 [1,2] → [4,5] → [7,8]，三对全选中，答案 3</text>
+</svg>
