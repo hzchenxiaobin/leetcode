@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path filter="url(#rough2)" d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="640" height="300" fill="#fafafa" filter="url(#rough2)"/>
+  <text x="24" y="30" font-size="16" fill="#333" filter="url(#rough2)">搜索顺序：按位数从小到大，只走奇数位（长度 2 特判）</text>
+
+  <rect x="30" y="60" width="90" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="75" y="84" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">长度 1</text>
+  <text x="75" y="102" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">2,3,5,7</text>
+
+  <rect x="140" y="60" width="90" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="185" y="84" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">长度 2</text>
+  <text x="185" y="102" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">只有 11</text>
+
+  <rect x="250" y="60" width="90" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="295" y="84" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">长度 3</text>
+  <text x="295" y="102" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">101, 131 …</text>
+
+  <rect x="360" y="60" width="90" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="405" y="84" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">长度 4</text>
+  <text x="405" y="102" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">全部跳过</text>
+
+  <rect x="470" y="60" width="140" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="540" y="84" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">长度 5, 7, 9</text>
+  <text x="540" y="102" text-anchor="middle" font-size="11" fill="#333" filter="url(#rough2)">逐段继续，直到命中</text>
+
+  <path d="M120,86 L140,86" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M230,86 L250,86" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M340,86 L360,86" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M450,86 L470,86" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="30" y="146" font-size="12" fill="#333" filter="url(#rough2)">起点：从 n 的位数开始（若 n 是偶数位，就从下一个奇数位开始），前半段初值 = n 的前 ceil(L/2) 位。</text>
+
+  <rect x="30" y="162" width="580" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="48" y="182" font-size="11" fill="#446688" filter="url(#rough2)">对每个候选回文 pal：先判 pal ≥ n，再做试除质数判定，第一个通过的就是答案。</text>
+  <text x="48" y="200" font-size="11" fill="#666" filter="url(#rough2)">按前半段递增枚举 ⇒ 生成的 pal 也是递增的，第一个质数即最小值。</text>
+
+  <rect x="30" y="222" width="580" height="56" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="48" y="244" font-size="11" fill="#d6a040" filter="url(#rough2)">边界：n ≤ 11 时直接小范围枚举；答案 ≤ 2×10^8，最长枚举到 9 位。</text>
+  <text x="48" y="264" font-size="12" fill="#333" filter="url(#rough2)">单个候选的质数判定 O(sqrt(pal))，候选数约 10^5 ⇒ 总开销远小于逐个整数试。</text>
+</svg>

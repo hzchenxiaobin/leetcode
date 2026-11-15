@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path filter="url(#rough2)" d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path filter="url(#rough2)" d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="360" fill="#fafafa" filter="url(#rough2)"/>
+  <text x="24" y="30" font-size="16" fill="#333" filter="url(#rough2)">单调队列维护「前缀和递增」的候选左端点</text>
+
+  <text x="30" y="62" font-size="12" fill="#666" filter="url(#rough2)">nums = [2, −1, 2]，前缀和 pre：</text>
+
+  <rect x="60" y="76" width="70" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="95" y="104" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">0</text>
+  <text x="95" y="136" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">pre[0]</text>
+  <rect x="140" y="76" width="70" height="44" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="175" y="104" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">2</text>
+  <text x="175" y="136" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">pre[1]</text>
+  <rect x="220" y="76" width="70" height="44" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="255" y="104" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">1</text>
+  <text x="255" y="136" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">pre[2]</text>
+  <rect x="300" y="76" width="70" height="44" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="335" y="104" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">3</text>
+  <text x="335" y="136" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">pre[3]</text>
+
+  <path d="M175,124 L247,124" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5 4" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="215" y="158" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">pre[2] 更小，弹出 pre[1]</text>
+
+  <rect x="400" y="70" width="215" height="110" rx="9" fill="#ffffff" stroke="#c8d0da" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="416" y="92" font-size="12" fill="#446688" filter="url(#rough2)">入队规则：</text>
+  <text x="416" y="114" font-size="12" fill="#333" filter="url(#rough2)">pre[j] ≤ 队尾 ⇒ 弹出队尾</text>
+  <text x="416" y="134" font-size="11" fill="#666" filter="url(#rough2)">更大的前缀和既更靠左、又更贵</text>
+  <text x="416" y="152" font-size="11" fill="#666" filter="url(#rough2)">永远比不上更靠右且更小的 j</text>
+  <text x="416" y="170" font-size="12" fill="#4a7a3a" filter="url(#rough2)">于是队列里 pre 严格递增</text>
+
+  <text x="30" y="200" font-size="13" fill="#333" filter="url(#rough2)">出队规则：若 pre[j] − pre[队首] ≥ k，则队首就是「当前最优左端点」</text>
+
+  <path d="M30,212 L610,212" stroke="#c8d0da" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+
+  <text x="30" y="240" font-size="12" fill="#666" filter="url(#rough2)">j = 0：队列 [0]，答案长度上限 4</text>
+  <text x="30" y="264" font-size="12" fill="#666" filter="url(#rough2)">j = 1：pre=2，2 − 0 = 2 &lt; 3，队列 [0, 1]</text>
+  <text x="30" y="288" font-size="12" fill="#666" filter="url(#rough2)">j = 2：pre=1，弹出 1，队列 [0, 2]</text>
+  <text x="30" y="312" font-size="12" fill="#4a7a3a" filter="url(#rough2)">j = 3：pre=3，3 − pre[0] = 3 ≥ 3 ⇒ 长度 3，弹出队首 0，队列 [2, 3]</text>
+
+  <rect x="30" y="324" width="330" height="28" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="46" y="343" font-size="12" fill="#4a7a3a" filter="url(#rough2)">最终答案 = 3（整个数组）</text>
+  <text x="380" y="343" font-size="11" fill="#666" filter="url(#rough2)">每个下标最多入队、出队各一次 ⇒ O(n)</text>
+</svg>
