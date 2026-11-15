@@ -3,12 +3,17 @@ import { computed } from 'vue'
 import { useRoute, withBase } from 'vitepress'
 
 const route = useRoute()
-const targets: Record<string, { label: string; link: string }> = {
-  solution: { label: '题解', link: '/solutions.html' },
-  contest: { label: '周赛', link: '/contests.html' },
-  topics: { label: '专题', link: '/topics.html' }
-}
-const target = computed(() => targets[route.path.match(/^\/(solution|contest|topics)\//)?.[1] ?? ''])
+const target = computed(() => {
+  // 双周赛页（/contest/bw…）返回双周赛列表，周赛页（/contest/<数字>…）返回周赛列表
+  if (/^\/contest\/bw/.test(route.path))
+    return { label: '双周赛', link: '/biweekly.html' }
+  const targets: Record<string, { label: string; link: string }> = {
+    solution: { label: '题解', link: '/solutions.html' },
+    contest: { label: '周赛', link: '/contests.html' },
+    topics: { label: '专题', link: '/topics.html' }
+  }
+  return targets[route.path.match(/^\/(solution|contest|topics)\//)?.[1] ?? '']
+})
 </script>
 
 <template>

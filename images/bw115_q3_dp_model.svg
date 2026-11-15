@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="49"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">交替结构示意：groups = 1,2,2,1,2 时按值「跳段」交替（相邻值不同 + 等长 + 汉明距离 1）</text>
+
+  <g filter="url(#rough2)">
+    <!-- 段 -->
+    <rect x="46" y="58" width="128" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="110" y="84" text-anchor="middle" font-size="13" fill="#333">组 1</text>
+    <rect x="174" y="58" width="128" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="238" y="84" text-anchor="middle" font-size="13" fill="#333">组 2</text>
+    <rect x="302" y="58" width="128" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="366" y="84" text-anchor="middle" font-size="13" fill="#333">组 1</text>
+    <rect x="430" y="58" width="60" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="460" y="84" text-anchor="middle" font-size="13" fill="#333">组 2</text>
+
+    <!-- 元素 -->
+    <text x="78" y="126" text-anchor="middle" font-size="12" fill="#555">bab</text>
+    <text x="142" y="126" text-anchor="middle" font-size="12" fill="#555">bad</text>
+    <text x="206" y="126" text-anchor="middle" font-size="12" fill="#555">cab</text>
+    <text x="270" y="126" text-anchor="middle" font-size="12" fill="#555">dad</text>
+    <text x="334" y="126" text-anchor="middle" font-size="12" fill="#555">bac</text>
+    <text x="398" y="126" text-anchor="middle" font-size="12" fill="#555">aad</text>
+    <text x="460" y="126" text-anchor="middle" font-size="12" fill="#555">…</text>
+
+    <!-- 转移边 -->
+    <path d="M 78 140 C 150 176, 240 176, 328 142" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)"/>
+    <path d="M 206 144 C 260 186, 340 186, 394 146" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)"/>
+    <text x="196" y="176" font-size="11.5" fill="#b85450">同组相邻 ✗（组值相同）</text>
+    <text x="150" y="210" font-size="11.5" fill="#4a7a3a">合法转移：组不同 + 等长 + 恰好 1 处字符不同</text>
+
+    <!-- 条件 -->
+    <rect x="46" y="232" width="200" height="104" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" fill-opacity="0.55"/>
+    <text x="146" y="258" text-anchor="middle" font-size="13" fill="#d6a040">合法转移 ok(i, j)</text>
+    <text x="62" y="284" font-size="12.5" fill="#555">① groups[i] ≠ groups[j]</text>
+    <text x="62" y="306" font-size="12.5" fill="#555">② |words[i]| = |words[j]|</text>
+    <text x="62" y="326" font-size="12.5" fill="#555">③ 汉明距离恰为 1</text>
+
+    <rect x="272" y="232" width="218" height="104" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" fill-opacity="0.5"/>
+    <text x="381" y="258" text-anchor="middle" font-size="13" fill="#446688">LIS 型转移</text>
+    <text x="288" y="284" font-size="12.5" fill="#555">dp[i] = 1 + max{ dp[j] : j &lt; i,</text>
+    <text x="288" y="306" font-size="12.5" fill="#555">          ok(i, j) }（无 j 则 1）</text>
+    <text x="288" y="326" font-size="12.5" fill="#555">pre[i] 记最优 j，末尾回溯取词</text>
+  </g>
+</svg>

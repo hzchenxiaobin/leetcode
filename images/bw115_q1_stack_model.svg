@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="41"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">seen 是「最近者在前」的栈：正整数压栈顶，−1 按连续次数取栈中第 k 个</text>
+
+  <!-- 左：seen 栈 -->
+  <g filter="url(#rough2)">
+    <text x="86" y="62" font-size="13" fill="#446688">seen（头部 = 栈顶）</text>
+    <rect x="56" y="222" width="60" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="86" y="244" text-anchor="middle" font-size="13" fill="#333">1</text>
+    <rect x="56" y="182" width="60" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="86" y="204" text-anchor="middle" font-size="13" fill="#333">2</text>
+    <rect x="46" y="172" width="80" height="86" rx="8" fill="none" stroke="#446688" stroke-width="1.8" stroke-dasharray="5 4"/>
+    <path d="M 100 168 C 106 150, 128 142, 148 138" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arrO)"/>
+    <text x="152" y="134" font-size="12" fill="#d6a040">新正整数插到头部（k 清零）</text>
+    <text x="86" y="330" text-anchor="middle" font-size="12" fill="#888">seen = [2, 1]</text>
+    <text x="86" y="348" text-anchor="middle" font-size="11.5" fill="#888">处理完 nums = [1, 2, ...] 之后</text>
+  </g>
+
+  <!-- 右：三条规则 -->
+  <g filter="url(#rough2)">
+    <rect x="236" y="56" width="252" height="66" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" fill-opacity="0.5"/>
+    <text x="250" y="80" font-size="13" fill="#4a7a3a">① 遇正整数 x</text>
+    <text x="250" y="100" font-size="12.5" fill="#555">x 插入 seen 头部；k ← 0</text>
+
+    <rect x="236" y="136" width="252" height="66" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" fill-opacity="0.6"/>
+    <text x="250" y="160" font-size="13" fill="#d6a040">② 遇 −1：k ← k + 1</text>
+    <text x="250" y="180" font-size="12.5" fill="#555">k = 目前连续 −1 的个数</text>
+
+    <rect x="236" y="216" width="252" height="84" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" fill-opacity="0.55"/>
+    <text x="250" y="240" font-size="13" fill="#b85450">③ 取数或补 −1</text>
+    <text x="250" y="260" font-size="12.5" fill="#555">k ≤ |seen|：ans ← seen[k−1]（栈顶数起第 k 个）</text>
+    <text x="250" y="282" font-size="12.5" fill="#555">k &gt; |seen|：ans ← −1（栈被「问穿」了）</text>
+  </g>
+
+  <!-- 底部：k 与下标对应 -->
+  <g filter="url(#rough2)">
+    <text x="236" y="326" font-size="12.5" fill="#446688">取数对照：k=1→栈顶 2，k=2→次顶 1，k=3→越界补 −1</text>
+  </g>
+</svg>

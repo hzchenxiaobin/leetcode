@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="51"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">示例 1 走查：words = [bab, dab, cab]，groups = [1, 2, 2]</text>
+
+  <g filter="url(#rough2)">
+    <!-- i=0 -->
+    <rect x="40" y="60" width="440" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" fill-opacity="0.45"/>
+    <text x="58" y="84" font-size="12.5" fill="#333">i = 0（bab, 组1）：前面没有 j，dp[0] = 1，pre[0] = −1</text>
+    <text x="58" y="104" font-size="12" fill="#888">汉明距离参考：bab↔dab = 1，bab↔cab = 1，dab↔cab = 1（都等长）</text>
+
+    <!-- i=1 -->
+    <rect x="40" y="128" width="440" height="56" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" fill-opacity="0.5"/>
+    <text x="58" y="152" font-size="12.5" fill="#333">i = 1（dab, 组2）：j = 0 组不同 ✓ 等长 ✓ 汉明 1 ✓ → dp[1] = dp[0]+1 = 2</text>
+    <text x="58" y="172" font-size="12" fill="#888">pre[1] = 0，链：bab → dab</text>
+
+    <!-- i=2 -->
+    <rect x="40" y="196" width="440" height="72" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" fill-opacity="0.6"/>
+    <text x="58" y="220" font-size="12.5" fill="#333">i = 2（cab, 组2）：j = 1 同组 ✗；j = 0 组不同 ✓ 等长 ✓ 汉明 1 ✓</text>
+    <text x="58" y="240" font-size="12.5" fill="#333">→ dp[2] = dp[0] + 1 = 2，pre[2] = 0，链：bab → cab</text>
+    <text x="58" y="260" font-size="12" fill="#888">注意 i=1 与 i=2 同组，互相不能相邻——这正是 dp 转移必须逐一检查的原因</text>
+
+    <!-- 结果 -->
+    <rect x="40" y="282" width="440" height="58" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" fill-opacity="0.45"/>
+    <text x="58" y="306" font-size="13" fill="#b85450">dp = [1, 2, 2]，最大值 2：从 i=2 回溯 pre → bab, cab</text>
+    <text x="58" y="328" font-size="12" fill="#888">从 i=1 回溯则得到 bab, dab——两者长度都是 2，返回任意一个即可</text>
+  </g>
+</svg>

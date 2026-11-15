@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="47"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">同色连续段里挑 1 个就够：相邻 groups 不同直接选 → 0101…</text>
+
+  <!-- groups 段落图：1,0,1,1 → 选 0,1,2 -->
+  <g filter="url(#rough2)">
+    <text x="70" y="66" font-size="13" fill="#446688">groups = [1, 0, 1, 1]（示例 2）</text>
+
+    <rect x="70" y="86" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="96" y="112" text-anchor="middle" font-size="14" fill="#333">1</text>
+    <rect x="122" y="86" width="52" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="148" y="112" text-anchor="middle" font-size="14" fill="#333">0</text>
+    <rect x="174" y="86" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="200" y="112" text-anchor="middle" font-size="14" fill="#333">1</text>
+    <rect x="226" y="86" width="52" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="252" y="112" text-anchor="middle" font-size="14" fill="#333">1</text>
+
+    <text x="96" y="150" text-anchor="middle" font-size="11.5" fill="#4a7a3a">选 ✓</text>
+    <text x="148" y="150" text-anchor="middle" font-size="11.5" fill="#4a7a3a">选 ✓</text>
+    <text x="200" y="150" text-anchor="middle" font-size="11.5" fill="#4a7a3a">选 ✓</text>
+    <text x="252" y="150" text-anchor="middle" font-size="11.5" fill="#b85450">跳过</text>
+
+    <path d="M 96 158 C 110 178, 132 178, 146 160" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)"/>
+    <path d="M 148 164 C 162 186, 184 186, 198 164" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)"/>
+    <text x="147" y="192" text-anchor="middle" font-size="11.5" fill="#888">相邻已选的 groups 必不同 → 天然交替</text>
+
+    <text x="70" y="228" font-size="12.5" fill="#555">答案 = words[0..2] = [a, b, c]，长度 3</text>
+  </g>
+
+  <!-- 右侧：上界论证 -->
+  <g filter="url(#rough2)">
+    <rect x="330" y="56" width="164" height="176" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" fill-opacity="0.55"/>
+    <text x="412" y="82" text-anchor="middle" font-size="13" fill="#d6a040">为什么贪心最优？</text>
+    <text x="348" y="110" font-size="12" fill="#555">按 groups 把序列切成</text>
+    <text x="348" y="130" font-size="12" fill="#555">m 个极长同色段：</text>
+    <text x="348" y="158" font-size="12" fill="#555">① 每段最多贡献 1 个；</text>
+    <text x="348" y="178" font-size="12" fill="#555">② 相邻段各取 1 个即可</text>
+    <text x="348" y="198" font-size="12" fill="#555">   达成上界 m（1,0,1…</text>
+    <text x="348" y="216" font-size="12" fill="#555">   二值保证必不同）</text>
+  </g>
+
+  <!-- 底部：另一例 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="256" width="448" height="86" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" fill-opacity="0.4"/>
+    <text x="56" y="282" font-size="13" fill="#4a7a3a">示例 1：groups = [0, 0, 1] → 两个同色段，上界 = 2</text>
+    <text x="68" y="306" font-size="12.5" fill="#555">选 words[0]（段1）与 words[2]（段2）→ [e, b]；或 words[1] 与 words[2] → [a, b]</text>
+    <text x="68" y="328" font-size="12" fill="#888">两种都合法——题目允许返回任意一个</text>
+  </g>
+</svg>

@@ -6,9 +6,10 @@
 
 推送 `main` 分支后由 GitHub Actions 自动构建并部署，站点结构：
 
-- 首页：hero + 每日一题 / 周赛 / 专题 / 高频面试四个入口卡片
+- 首页：hero + 每日一题 / 周赛 / 双周赛 / 专题 / 高频面试入口卡片
 - 题解列表页（`/solutions.html`）：全部每日一题按题号区间分组折叠，支持按题号 / 标题 / 标签搜索，难度用 🟢🟡🔴 标注
-- 周赛列表页（`/contests.html`）：按场次降序分组，每场 Q1-Q4
+- 周赛列表页（`/contests.html`）：仅周赛（`contest/<纯数字场次>/`），按场次降序分组
+- 双周赛列表页（`/biweekly.html`）：仅双周赛（`contest/bw<场次>/`），按场次降序分组，两页互有跳转链接
 - 专题页（`/topics.html`）：`topics/` 下按算法类别组织的专题文档，含核心思想、模板、剪枝/去重技巧、例题精讲与课后练习
 - 高频面试题页（`/hot-interview.html`）：汇总 Hot 100 / CodeTop / 剑指 Offer 高频题，逐题链接站内题解
 - 题解页：无侧边栏，正文 + 右侧本页目录，顶部有返回列表链接，底部按题号自动推导「上一题 / 下一题」，支持 KaTeX 数学公式、代码行号、图片点击放大、全站本地搜索
@@ -19,7 +20,8 @@
 .
 ├── index.md                 # 站点首页（VitePress home 布局）
 ├── solutions.md             # 题解列表页（SolutionList 组件）
-├── contests.md              # 周赛列表页（ContestList 组件）
+├── contests.md              # 周赛列表页（ContestList 组件，仅周赛）
+├── biweekly.md              # 双周赛列表页（ContestList 组件，仅双周赛）
 ├── topics.md                # 专题索引页
 ├── hot-interview.md         # 高频算法面试题汇总页（Hot 100 / CodeTop / 剑指 Offer，链接站内题解）
 ├── 10-week-plan.md          # 10 周刷题计划（按类别组织 198 道高频题，链接站内题解）

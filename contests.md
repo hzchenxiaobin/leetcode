@@ -4,4 +4,4 @@ sidebar: false
 aside: false
 ---
 
-<ContestList />
+<ContestList kind="weekly" />

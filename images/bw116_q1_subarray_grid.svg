@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="57"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">n(n+1)/2 个子数组 = 右端点三角：枚举右端 j、向左扩 i，set 动态去重</text>
+
+  <g filter="url(#rough2)">
+    <!-- 三角表 nums=[1,2,1] -->
+    <text x="90" y="60" font-size="13" fill="#446688">nums = [1, 2, 1]：右端 j = 0, 1, 2</text>
+
+    <rect x="62" y="76" width="44" height="30" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <text x="84" y="96" text-anchor="middle" font-size="12.5" fill="#333">[1]</text>
+    <rect x="112" y="76" width="44" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="134" y="96" text-anchor="middle" font-size="12.5" fill="#333">[1,2]</text>
+    <rect x="162" y="76" width="52" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="188" y="96" text-anchor="middle" font-size="12.5" fill="#333">[1,2,1]</text>
+
+    <rect x="112" y="114" width="44" height="30" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="134" y="134" text-anchor="middle" font-size="12.5" fill="#333">[2]</text>
+    <rect x="162" y="114" width="44" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="184" y="134" text-anchor="middle" font-size="12.5" fill="#333">[2,1]</text>
+
+    <rect x="162" y="152" width="52" height="30" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="188" y="172" text-anchor="middle" font-size="12.5" fill="#333">[1]</text>
+
+    <text x="90" y="206" font-size="12" fill="#555">每格贡献 d² ：</text>
+    <text x="90" y="228" font-size="12" fill="#555">第一行 1+4+4，第二行 1+4，</text>
+    <text x="90" y="248" font-size="12" fill="#555">第三行 1 → 总和 15</text>
+
+    <rect x="48" y="268" width="212" height="72" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" fill-opacity="0.4"/>
+    <text x="154" y="294" text-anchor="middle" font-size="12.5" fill="#b85450">n ≤ 100：约 5050 个子数组</text>
+    <text x="154" y="316" text-anchor="middle" font-size="12.5" fill="#555">每格 O(1) 更新 set + O(1) 查 size</text>
+    <text x="154" y="334" text-anchor="middle" font-size="12" fill="#888">总计约 10⁵ 次操作，暴力即正解</text>
+  </g>
+
+  <!-- 右侧说明 -->
+  <g filter="url(#rough2)">
+    <rect x="292" y="56" width="200" height="130" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" fill-opacity="0.45"/>
+    <text x="392" y="82" text-anchor="middle" font-size="13" fill="#446688">右端固定、左端左移</text>
+    <text x="308" y="110" font-size="12.5" fill="#555">j 从 0 到 n−1：</text>
+    <text x="308" y="132" font-size="12.5" fill="#555">　set 清空</text>
+    <text x="308" y="154" font-size="12.5" fill="#555">　i 从 j 往回到 0：</text>
+    <text x="308" y="176" font-size="12.5" fill="#555">　　insert(nums[i])；</text>
+    <text x="308" y="194" font-size="12.5" fill="#555">　　ans += |set|²</text>
+
+    <rect x="292" y="204" width="200" height="136" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" fill-opacity="0.5"/>
+    <text x="392" y="230" text-anchor="middle" font-size="13" fill="#4a7a3a">与 II 的联系</text>
+    <text x="308" y="256" font-size="12" fill="#555">本题把 II 的 n ≤ 10⁵ 缩到</text>
+    <text x="308" y="276" font-size="12" fill="#555">n ≤ 100：平方和上界</text>
+    <text x="308" y="296" font-size="12" fill="#555">10⁵ × 100² = 10⁹ 用 64 位存，</text>
+    <text x="308" y="316" font-size="12" fill="#555">II 才需要取模与 BIT/线段树。</text>
+    <text x="308" y="334" font-size="11.5" fill="#888">数据范围决定难度，思路同源</text>
+  </g>
+</svg>

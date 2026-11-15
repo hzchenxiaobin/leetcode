@@ -3,12 +3,21 @@ import { computed } from 'vue'
 import { withBase } from 'vitepress'
 import { data } from '../data/contests.data'
 
+const props = withDefaults(defineProps<{ kind?: 'weekly' | 'biweekly' }>(), {
+  kind: 'weekly'
+})
+
+const isBiweekly = computed(() => props.kind === 'biweekly')
+
 const diffIcon = { easy: '🟢', medium: '🟡', hard: '🔴', '': '' } as const
 
-/** 按场次分组（loader 已按场次降序、场内 Q 号升序排好） */
+/** 本类比赛（周赛 / 双周赛）的题目，loader 已按场次降序、场内 Q 号升序排好 */
+const items = computed(() => data.filter(p => p.kind === props.kind))
+
+/** 按场次分组 */
 const groups = computed(() => {
   const map = new Map<number, typeof data>()
-  for (const p of data) {
+  for (const p of items.value) {
     const list = map.get(p.contest) ?? []
     list.push(p)
     map.set(p.contest, list)
@@ -19,10 +28,15 @@ const groups = computed(() => {
 
 <template>
   <div class="pl-wrap">
-    <h1 class="pl-title">🏆 周赛题解</h1>
-    <p class="pl-desc">最新场次在前 · 共 {{ groups.length }} 场 · {{ data.length }} 题</p>
+    <h1 class="pl-title">{{ isBiweekly ? '🏆 双周赛题解' : '🏆 周赛题解' }}</h1>
+    <p class="pl-desc">
+      最新场次在前 · 共 {{ groups.length }} 场 · {{ items.length }} 题 ·
+      <a :href="withBase(isBiweekly ? '/contests.html' : '/biweekly.html')">
+        {{ isBiweekly ? '查看周赛题解 →' : '查看双周赛题解 →' }}
+      </a>
+    </p>
     <div v-for="g in groups" :key="g.contest" class="pl-group">
-      <h2 class="pl-contest">第 {{ g.contest }} 场周赛</h2>
+      <h2 class="pl-contest">第 {{ g.contest }} 场{{ isBiweekly ? '双周赛' : '周赛' }}</h2>
       <div class="pl-list">
         <a v-for="p in g.list" :key="p.url" :href="withBase(p.url)" class="pl-card">
           <span class="pl-num">Q{{ p.q }}</span>
@@ -41,6 +55,8 @@ const groups = computed(() => {
 .pl-wrap { max-width: 1024px; margin: 0 auto; padding: 48px 24px 64px; }
 .pl-title { font-size: 2rem; font-weight: 700; margin: 0 0 8px; color: var(--vp-c-text-1); }
 .pl-desc { color: var(--vp-c-text-2); margin: 0 0 32px; }
+.pl-desc a { color: var(--vp-c-brand-1); font-weight: 600; text-decoration: none; }
+.pl-desc a:hover { text-decoration: underline; }
 .pl-group { margin-bottom: 32px; }
 .pl-contest {
   font-size: 1.25rem; font-weight: 700; color: var(--vp-c-text-1);

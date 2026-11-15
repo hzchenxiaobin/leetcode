@@ -34,37 +34,49 @@ function loadSolutions() {
     .sort((a, b) => a.num - b.num)
 }
 
-/** 从 contest/<场次>/ 目录读取周赛题目列表：场次升序、场内 Q 号升序 */
+/** 从 contest/ 目录读取比赛题目列表：周赛（纯数字场次）与双周赛（bw 场次）
+ *  各自独立排序：场次升序 → 场内 Q 号升序 */
 function loadContests() {
   const base = path.resolve(root, '../contest')
   if (!fs.existsSync(base)) return []
   return fs.readdirSync(base)
-    .filter(d => /^\d+$/.test(d))
+    .filter(d => /^(bw)?\d+$/.test(d))
     .flatMap(d => {
       const abs = path.join(base, d)
+      const m = d.match(/^(bw)?(\d+)$/)!
+      const kind = m[1] === 'bw' ? 'biweekly' : 'weekly'
+      const label = kind === 'biweekly' ? `双周赛第${m[2]}场` : `周赛第${m[2]}场`
       return fs.readdirSync(abs)
         .filter(f => f.endsWith('.md'))
         .map(f => {
           const q = f.match(/^Q(\d+)/)?.[1] ?? ''
           const h1 = fs.readFileSync(path.join(abs, f), 'utf-8').match(/^#\s+(.+)$/m)?.[1] ?? f
           return {
-            contest: parseInt(d),
+            kind,
+            contest: parseInt(m[2]),
             q: parseInt(q) || 0,
-            text: `第${d}场 Q${q} ${cleanTitle(h1)}`,
+            text: `${label} Q${q} ${cleanTitle(h1)}`,
             link: `/contest/${d}/${f.replace(/\.md$/, '')}`
           }
         })
     })
-    .sort((a, b) => a.contest - b.contest || a.q - b.q)
+    .sort((a, b) =>
+      a.kind === b.kind
+        ? (a.contest - b.contest || a.q - b.q)
+        : a.kind === 'weekly' ? -1 : 1)
 }
 
-// 全局题目顺序（每日一题按题号；周赛按场次 → Q 号），用于生成 上一题/下一题
+// 全局题目顺序（每日一题按题号；周赛 / 双周赛各自按场次 → Q 号，互不跨越），
+// 用于生成 上一题/下一题
 const solutionOrder = loadSolutions()
 const contestOrder = loadContests()
+const weeklyOrder = contestOrder.filter(o => o.kind === 'weekly')
+const biweeklyOrder = contestOrder.filter(o => o.kind === 'biweekly')
 
 // ---- 分批构建 ----
-// 全量 4100+ 页单次构建的内存超出 CI runner 上限（打包器模块图常驻堆内存），
-// CI 用 BATCH_INDEX/BATCH_TOTAL 把 solution/ 按区间目录切成多批，分别构建再合并产物；
+// 全量 6000+ 页单次构建的内存超出 CI runner 上限（打包器模块图常驻堆内存），
+// CI 用 BATCH_INDEX/BATCH_TOTAL 把 solution/（按区间目录）与 contest/（按场次目录）
+// 都切成多批，分别构建再合并产物；共享页面只在第 0 批构建。
 // 不带环境变量时（本地开发）仍是单批全量。
 const batchTotal = Math.max(1, parseInt(process.env.BATCH_TOTAL || '1', 10))
 const batchIndex = Math.max(0, parseInt(process.env.BATCH_INDEX || '0', 10))
@@ -78,12 +90,21 @@ const batchStart = Math.floor(allRanges.length * batchIndex / batchTotal)
 const batchEnd = Math.floor(allRanges.length * (batchIndex + 1) / batchTotal)
 const myRanges = new Set(allRanges.slice(batchStart, batchEnd))
 
+const contestDir = path.resolve(root, '../contest')
+const allContestDirs = fs.existsSync(contestDir)
+  ? fs.readdirSync(contestDir).filter(d => fs.statSync(path.join(contestDir, d)).isDirectory()).sort()
+  : []
+const contestStart = Math.floor(allContestDirs.length * batchIndex / batchTotal)
+const contestEnd = Math.floor(allContestDirs.length * (batchIndex + 1) / batchTotal)
+const myContestDirs = new Set(allContestDirs.slice(contestStart, contestEnd))
+
 const batchExclude: string[] = !batching ? [] : [
   ...allRanges.filter(d => !myRanges.has(d)).map(d => `solution/${d}/**`),
-  // 共享页面（首页/索引/周赛/专题）只在第 0 批构建，避免合并产物时互相覆盖
+  ...allContestDirs.filter(d => !myContestDirs.has(d)).map(d => `contest/${d}/**`),
+  // 共享页面（首页/索引/专题）只在第 0 批构建，避免合并产物时互相覆盖
   ...(batchIndex === 0 ? [] : [
-    'contest/**', 'topics/**',
-    'index.md', 'solutions.md', 'contests.md', 'topics.md',
+    'topics/**',
+    'index.md', 'solutions.md', 'contests.md', 'biweekly.md', 'topics.md',
     'hot-interview.md', '10-week-plan.md'
   ])
 ]
@@ -196,7 +217,7 @@ export default defineConfig({
 
   // 无侧边栏：题解页为 正文 + 右侧本页目录；按题号顺序自动推导 上一题/下一题
   transformPageData(pageData) {
-    for (const order of [solutionOrder, contestOrder]) {
+    for (const order of [solutionOrder, weeklyOrder, biweeklyOrder]) {
       const idx = order.findIndex(o => pageData.relativePath === o.link.slice(1) + '.md')
       if (idx >= 0) {
         const prev = order[idx - 1]
@@ -213,6 +234,7 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '题解', link: '/solutions.html' },
       { text: '周赛', link: '/contests.html' },
+      { text: '双周赛', link: '/biweekly.html' },
       { text: '专题', link: '/topics.html' },
       { text: 'GitHub', link: 'https://github.com/hzchenxiaobin/leetcode' }
     ],

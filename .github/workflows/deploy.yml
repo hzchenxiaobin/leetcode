@@ -11,6 +11,7 @@ on:
       - 'index.md'
       - 'solutions.md'
       - 'contests.md'
+      - 'biweekly.md'
       - 'topics.md'
       - 'hot-interview.md'
       - '10-week-plan.md'
@@ -30,13 +31,15 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # 4100+ 页单次构建内存超出 runner 上限，按 BATCH_TOTAL 分批并行构建，最后合并产物
+  # 6000+ 页单次构建内存超出 runner 上限，solution/ 与 contest/ 都按 BATCH_TOTAL
+  # 分批并行构建（共享页面只在第 0 批），最后合并产物；contest 持续增长，
+  # 必须均摊到各批，否则第 0 批会再次 OOM
   build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        batch: [0, 1, 2, 3, 4, 5, 6, 7]
+        batch: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -54,7 +57,7 @@ jobs:
         run: npm run build
         env:
           BATCH_INDEX: ${{ matrix.batch }}
-          BATCH_TOTAL: 8
+          BATCH_TOTAL: 12
           NODE_OPTIONS: --max-old-space-size=12288
 
       - name: Upload batch artifact
