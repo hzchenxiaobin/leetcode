@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <filter id="rough3">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrGray" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：行首制表符个数 = 深度，深度就是栈的下标</text>
+  <text x="320" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">我们不需要路径字符串，只需要「这个条目的绝对路径有多长」</text>
+
+  <rect x="28" y="66" width="300" height="126" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="42" y="86" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">input（换行分行，行首制表符表示层级）</text>
+
+  <text x="44" y="112" font-size="12" fill="#333" filter="url(#rough2)">dir</text>
+  <text x="316" y="112" text-anchor="end" font-size="9.5" fill="#607090" filter="url(#rough2)">d=0　len=3</text>
+
+  <path d="M 46 130 L 58 130" stroke="#446688" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="64" y="134" font-size="12" fill="#333" filter="url(#rough2)">subdir1</text>
+  <text x="316" y="134" text-anchor="end" font-size="9.5" fill="#607090" filter="url(#rough2)">d=1　len=7</text>
+
+  <path d="M 46 152 L 58 152" stroke="#446688" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 58 152 L 70 152" stroke="#446688" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="78" y="156" font-size="12" fill="#b85450" filter="url(#rough2)">file1.ext</text>
+  <text x="316" y="156" text-anchor="end" font-size="9.5" fill="#b85450" filter="url(#rough2)">d=2　len=9</text>
+
+  <text x="44" y="180" font-size="9.5" fill="#7090b0" filter="url(#rough2)">每个箭头就是一个制表符</text>
+
+  <path d="M 330 128 L 342 128" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="344" y="66" width="268" height="126" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="358" y="86" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">栈 stack：stack[d] 存深度 d 的路径长度</text>
+
+  <rect x="358" y="96" width="240" height="26" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <text x="370" y="114" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">d=0　dir = 3</text>
+
+  <rect x="358" y="124" width="240" height="26" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.2" rx="4" filter="url(#rough2)"/>
+  <text x="370" y="142" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">d=1　dir/subdir1 = 3+1+7 = 11</text>
+
+  <rect x="358" y="152" width="240" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" rx="4" filter="url(#rough2)"/>
+  <text x="370" y="170" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">d=2　file1.ext 是文件 → 不入栈</text>
+
+  <rect x="28" y="208" width="584" height="96" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="44" y="230" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">递推关系（d 为当前行的深度，name 为去掉制表符后的名字）</text>
+  <text x="44" y="252" font-size="10.5" fill="#555" filter="url(#rough2)">base = (d == 0) ? 0 : stack[d−1] + 1　　　← 每多一层就多一个 '/'，占 1 个字符</text>
+  <text x="44" y="274" font-size="10.5" fill="#555" filter="url(#rough2)">cur  = base + len(name)　　　　　　　　← 当前条目的绝对路径长度</text>
+  <text x="44" y="296" font-size="10.5" fill="#555" filter="url(#rough2)">名字含 '.' → 文件，ans = max(ans, cur)；否则是目录，stack[d] ← cur</text>
+
+  <text x="320" y="332" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">路径长度只取决于「各级名字的长度」和「每层一个 '/'」，与具体字符无关</text>
+  <text x="320" y="352" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">于是一趟扫描、纯整数运算就能得到答案，不必拼出任何路径字符串</text>
+  <text x="320" y="378" text-anchor="middle" font-size="10" fill="#aaa" filter="url(#rough2)">复杂度 O(n)：每个字符被读常数次，每个目录至多入栈、出栈各一次</text>
+</svg>

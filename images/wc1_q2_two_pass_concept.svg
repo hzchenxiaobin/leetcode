@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">唯一性是「全局属性」：先数频次，再按下标找</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">扫到下标 i 时，还看不见 s[i] 后面是否再出现，单遍扫描无法下结论</text>
+
+  <rect x="28" y="62" width="246" height="126" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="42" y="84" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">× 单遍扫描：走到 i = 0</text>
+
+  <g filter="url(#rough2)">
+    <rect x="42" y="96" width="24" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="4"/>
+    <rect x="68" y="96" width="24" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="94" y="96" width="24" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="120" y="96" width="24" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="146" y="96" width="24" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="172" y="96" width="24" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="198" y="96" width="24" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="224" y="96" width="24" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#3a4a66" text-anchor="middle" font-weight="bold">
+    <text x="54" y="117">l</text><text x="80" y="117">e</text><text x="106" y="117">e</text>
+    <text x="132" y="117">t</text><text x="158" y="117">c</text><text x="184" y="117">o</text>
+    <text x="210" y="117">d</text><text x="236" y="117">e</text>
+  </g>
+  <text x="42" y="150" font-size="10" fill="#6a4a48" filter="url(#rough2)">此刻只「见过」一次 'l'，后面 7 个字符还没读</text>
+  <text x="42" y="170" font-size="10" fill="#6a4a48" filter="url(#rough2)">⇒ 不知道 'l' 会不会再次出现，不能立刻返回 0</text>
+
+  <rect x="286" y="62" width="246" height="126" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="300" y="84" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">√ 两遍扫描：拆成两个独立子问题</text>
+  <text x="300" y="108" font-size="10" fill="#3a5a30" filter="url(#rough2)">① 频次只与「有哪些字符」有关</text>
+  <text x="300" y="128" font-size="10" fill="#3a5a30" filter="url(#rough2)">　　⇒ 先完整数一遍</text>
+  <text x="300" y="150" font-size="10" fill="#3a5a30" filter="url(#rough2)">② 答案只与「下标顺序」有关</text>
+  <text x="300" y="170" font-size="10" fill="#3a5a30" filter="url(#rough2)">　　⇒ 再从左往右查表</text>
+
+  <rect x="28" y="200" width="504" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="226" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">第一遍 O(n) 统计 + 第二遍 O(n) 查表 = O(n) ；26 个计数器与 n 无关 ⇒ O(1) 空间</text>
+
+  <rect x="28" y="254" width="504" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="42" y="274" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">两个关键式子</text>
+  <text x="42" y="296" font-size="10" fill="#555" filter="url(#rough2)">cnt[c] = c 在 s 中出现的总次数（与位置无关，只与字符种数有关）</text>
+  <text x="42" y="318" font-size="10" fill="#555" filter="url(#rough2)">答案 = min { i | cnt[s[i]] = 1 }；该集合为空则返回 −1</text>
+
+  <text x="280" y="352" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">最小下标由第二遍的扫描顺序保证，频次正确性由第一遍保证</text>
+</svg>
