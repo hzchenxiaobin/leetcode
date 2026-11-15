@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="340" fill="#fafafa"/>
+  <text x="260" y="28" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">排序 + 前缀和：每个点的贡献</text>
+
+  <!-- 排序后的位置 -->
+  <path d="M50 96 L470 96" stroke="#666" stroke-width="1.8" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle">
+    <circle cx="100" cy="96" r="15" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="100" y="101" fill="#2f4a66">a₀</text>
+    <circle cx="240" cy="96" r="15" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="240" y="101" fill="#2f5527">a₁</text>
+    <circle cx="410" cy="96" r="15" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="410" y="101" fill="#7a5a10">a₂</text>
+  </g>
+  <text x="100" y="130" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">（升序）</text>
+  <text x="410" y="130" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">（升序）</text>
+
+  <!-- 贡献标注 -->
+  <g filter="url(#rough2)" font-size="12" fill="#2f4a66">
+    <text x="62" y="62">a₀ 作为较小端出现 0 次</text>
+    <text x="62" y="80">贡献 = a₀ × (0 − 2)</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#2f5527">
+    <text x="196" y="160">a₁ 作为较大端 1 次、较小端 1 次</text>
+    <text x="196" y="178">贡献 = a₁ × (1 − 1)</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#7a5a10">
+    <text x="330" y="62">a₂ 作为较大端出现 2 次</text>
+    <text x="330" y="80">贡献 = a₂ × (2 − 0)</text>
+  </g>
+
+  <!-- 公式框 -->
+  <rect x="40" y="200" width="440" height="60" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="14" fill="#2f4a66" text-anchor="middle">
+    <text x="260" y="226">Σ&#8321;&#8336;&#8342; (aⱼ − aᵢ) = Σᵢ aᵢ · (2i − n + 1)</text>
+    <text x="260" y="248" font-size="11.5">i 左边的都比它小（被减 i 次），右边的都比它大（减别人 n−1−i 次）</text>
+  </g>
+
+  <!-- 小例子 -->
+  <rect x="40" y="276" width="440" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#2f5527">
+    <text x="58" y="298">例：终态 [−3, −1, 1]（n=3，系数 −2 / 0 / +2）</text>
+    <text x="58" y="318">(−3)×(−2) + (−1)×0 + 1×2 = 6 + 0 + 2 = 8 ✓（取模前）</text>
+  </g>
+</svg>

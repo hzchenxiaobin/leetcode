@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 340" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="340" fill="#fafafa"/>
+  <text x="260" y="28" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">状态设计：dp[i] = 前 i 个字符的最少额外字符数</text>
+
+  <!-- s = leetscode 的格子，下标 0..8 -->
+  <g filter="url(#rough2)" font-size="14" text-anchor="middle">
+    <rect x="42" y="62" width="42" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="63" y="87" fill="#2f5527">l</text>
+    <rect x="84" y="62" width="42" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="105" y="87" fill="#2f5527">e</text>
+    <rect x="126" y="62" width="42" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="147" y="87" fill="#2f5527">e</text>
+    <rect x="168" y="62" width="42" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="189" y="87" fill="#2f5527">t</text>
+    <rect x="210" y="62" width="42" height="40" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2.6"/>
+    <text x="231" y="87" fill="#8c3a36">s</text>
+    <rect x="252" y="62" width="42" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="273" y="87" fill="#2f4a66">c</text>
+    <rect x="294" y="62" width="42" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="315" y="87" fill="#2f4a66">o</text>
+    <rect x="336" y="62" width="42" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="357" y="87" fill="#2f4a66">d</text>
+    <rect x="378" y="62" width="42" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="399" y="87" fill="#2f4a66">e</text>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#999" text-anchor="middle">
+    <text x="63" y="118">0</text><text x="105" y="118">1</text><text x="147" y="118">2</text>
+    <text x="189" y="118">3</text><text x="231" y="118">4</text><text x="273" y="118">5</text>
+    <text x="315" y="118">6</text><text x="357" y="118">7</text><text x="399" y="118">8</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" text-anchor="middle">
+    <path d="M44 128 Q 104 148 188 128" fill="none" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="116" y="152" fill="#2f5527">"leet" 是单词 → 0 个额外字符</text>
+    <path d="M254 128 Q 314 170 398 128" fill="none" stroke="#446688" stroke-width="1.6"/>
+    <text x="330" y="186" fill="#2f4a66">"code" 是单词 → 0 个额外字符</text>
+    <text x="231" y="152" fill="#b85450">↑ s[4] 只能当额外字符</text>
+  </g>
+
+  <!-- 转移示意 -->
+  <rect x="40" y="204" width="222" height="58" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#7a5a10">
+    <text x="56" y="226">转移一（单字符作废）：</text>
+    <text x="56" y="246">dp[i] = dp[i−1] + 1，s[i−1] 记为额外字符</text>
+  </g>
+  <rect x="278" y="204" width="222" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#2f4a66">
+    <text x="294" y="226">转移二（整段匹配单词）：</text>
+    <text x="294" y="246">若 s[j..i) ∈ 词典 → dp[i] = dp[j]</text>
+  </g>
+  <path d="M151 262 L151 282" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <path d="M389 262 L389 282" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)" marker-end="url(#arr)"/>
+  <rect x="150" y="284" width="240" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="270" y="302" text-anchor="middle" font-size="12.5" fill="#2f5527" filter="url(#rough2)">dp[9] = dp[5] = 1</text>
+  <text x="270" y="318" text-anchor="middle" font-size="11" fill="#5a7a4a" filter="url(#rough2)">（后 4 个字符恰是 "code"）</text>
+</svg>
