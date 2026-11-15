@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="45"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="600" height="380" fill="#fafafa"/>
+
+  <text x="300" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">按 price 升序排序 + 前缀最大美丽值，查询二分定位</text>
+
+  <!-- 排序后物品表 -->
+  <text x="300" y="60" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">示例 1：items 排序后（价格，美丽值）</text>
+  <g filter="url(#rough2)">
+    <rect x="80" y="74" width="88" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="168" y="74" width="88" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="256" y="74" width="88" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="344" y="74" width="88" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <rect x="432" y="74" width="88" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g text-anchor="middle" font-size="13" filter="url(#rough2)">
+    <text x="124" y="92" fill="#446688">price=1</text><text x="124" y="108" fill="#666">b=2</text>
+    <text x="212" y="92" fill="#446688">price=2</text><text x="212" y="108" fill="#666">b=4</text>
+    <text x="300" y="92" fill="#446688">price=3</text><text x="300" y="108" fill="#666">b=2</text>
+    <text x="388" y="92" fill="#446688">price=3</text><text x="388" y="108" fill="#666">b=5</text>
+    <text x="476" y="92" fill="#446688">price=5</text><text x="476" y="108" fill="#666">b=6</text>
+  </g>
+  <path d="M 80 120 L 520 120" stroke="#446688" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="300" y="138" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">价格单调不减 → 可二分</text>
+
+  <!-- 前缀最大 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="152" width="88" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="168" y="152" width="88" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="256" y="152" width="88" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="344" y="152" width="88" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+    <rect x="432" y="152" width="88" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <g text-anchor="middle" font-size="15" font-weight="bold" filter="url(#rough2)">
+    <text x="124" y="177" fill="#4a7a3a">2</text>
+    <text x="212" y="177" fill="#4a7a3a">4</text>
+    <text x="300" y="177" fill="#4a7a3a">4</text>
+    <text x="388" y="177" fill="#4a7a3a">5</text>
+    <text x="476" y="177" fill="#4a7a3a">6</text>
+  </g>
+  <text x="300" y="214" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">best[i] = max(best[i−1], beauty[i])：前缀最大，价格 3 的两个物品合并成 best=5</text>
+
+  <!-- 查询示例 -->
+  <text x="300" y="248" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">查询 q=4：二分找到最后一个 price ≤ 4 的是下标 3（第二个 price=3）</text>
+  <path d="M 388 196 Q 388 222 388 240" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="388" y="266" text-anchor="middle" font-size="13" fill="#d6a040" filter="url(#rough2)">→ 答案 best[3] = 5</text>
+  <text x="300" y="296" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">查询 q=1：最后一个 price ≤ 1 是下标 0 → 答案 2</text>
+
+  <rect x="110" y="312" width="380" height="52" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="300" y="334" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">复杂度：排序 O(n log n) + 每次查询 O(log n)</text>
+  <text x="300" y="354" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">若先把 queries 排序可离线双指针，总 O((n+q) log(n+q)) 同阶</text>
+</svg>

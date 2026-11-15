@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 430"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="81"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="640" height="430" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">贪心匹配：任务从难到易，工人窗口从强到弱推进</text>
+
+  <!-- 队列示意 -->
+  <text x="320" y="58" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">当前任务需求 need：先激活所有 w + s ≥ need 的工人进双端队列（弱者进队首）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="86" width="60" height="40" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <rect x="124" y="86" width="60" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="188" y="86" width="60" height="40" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="252" y="86" width="60" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="316" y="86" width="60" height="40" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <g text-anchor="middle" font-size="13" filter="url(#rough2)">
+    <text x="90" y="110" fill="#b85450">w=2</text>
+    <text x="154" y="110" fill="#d6a040">w=5</text>
+    <text x="218" y="110" fill="#d6a040">w=7</text>
+    <text x="282" y="110" fill="#446688">w=9</text>
+    <text x="346" y="110" fill="#446688">w=10</text>
+  </g>
+  <text x="90" y="70" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">队首（最弱）</text>
+  <text x="346" y="70" text-anchor="middle" font-size="11" fill="#446688" filter="url(#rough2)">队尾（最强）</text>
+
+  <path d="M 60 106 L 40 106" stroke="#b85450" stroke-width="1.6" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M 376 106 L 396 106" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 决策 -->
+  <rect x="60" y="160" width="540" height="92" rx="10" fill="#fafafa" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="184" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">处理当前任务（需求 need）：</text>
+  <text x="330" y="206" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">① 队尾（最强）≥ need → 队尾直接做，不消耗药丸</text>
+  <text x="330" y="228" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">② 否则队首（最弱且 w+s ≥ need）吃药丸做，药丸 −1</text>
+  <text x="330" y="246" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">（若队空或无药丸 → 本 k 不可行）</text>
+
+  <!-- 流程 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="280" width="130" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="255" y="280" width="130" height="40" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <rect x="450" y="280" width="130" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <g text-anchor="middle" font-size="12.5" filter="url(#rough2)">
+    <text x="125" y="304" fill="#446688">激活弱工人</text>
+    <text x="320" y="304" fill="#d6a040">判定队尾/队首</text>
+    <text x="515" y="304" fill="#4a7a3a">下一个更易任务</text>
+  </g>
+  <path d="M 190 300 L 251 300" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 385 300 L 447 300" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 515 320 Q 515 352 320 352 Q 125 352 125 324" stroke="#446688" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="320" y="372" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">任务从难到易（i 递减），need 单调不增 → 新激活的工人总是更弱，队列天然单调</text>
+
+  <rect x="60" y="388" width="540" height="34" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="330" y="410" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">每个工人只在「w + s ≥ need」首次成立时入队一次，均摊 O(1)，check(k) 总 O(n + m)</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="153"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 9 5 L 0 9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="620" height="420" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">为什么不用 DP：上下/左右来回移动只增不减</text>
+
+  <!-- 来回移动 -->
+  <text x="310" y="60" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">设在某行 r 上先右移一步再左移一步（回到原格）：</text>
+  <g filter="url(#rough2)">
+    <rect x="200" y="76" width="80" height="46" rx="4" fill="#fafafa" stroke="#ccc"/>
+    <rect x="280" y="76" width="80" height="46" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="360" y="76" width="80" height="46" rx="4" fill="#fafafa" stroke="#ccc"/>
+  </g>
+  <g text-anchor="middle" font-size="13" filter="url(#rough2)">
+    <text x="240" y="104" fill="#888">(r, c−1)</text>
+    <text x="320" y="104" fill="#b85450">(r, c)</text>
+    <text x="400" y="104" fill="#888">(r, c+1)</text>
+  </g>
+  <path d="M 324 92 Q 350 66 386 88" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 380 108 Q 350 130 318 110" fill="none" stroke="#b85450" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="490" y="98" font-size="12.5" fill="#b85450" filter="url(#rough2)">来回一趟</text>
+  <text x="490" y="116" font-size="12.5" fill="#b85450" filter="url(#rough2)">白付 2·colCosts[c+1]</text>
+  <text x="310" y="152" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">所有代价非负 → 这两步对位置毫无贡献，纯浪费</text>
+
+  <!-- 净移动量下界 -->
+  <rect x="60" y="176" width="500" height="96" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="310" y="202" text-anchor="middle" font-size="13.5" fill="#446688" filter="url(#rough2)">从 (r0, c0) 到 (r1, c1)，竖直净位移 |r1 − r0|、水平净位移 |c1 − c0|</text>
+  <text x="310" y="226" text-anchor="middle" font-size="13.5" fill="#446688" filter="url(#rough2)">任何路径必包含至少这些净移动；代价非负 ⇒ 任何"多余"的移动只增不减</text>
+  <text x="310" y="252" text-anchor="middle" font-size="13.5" fill="#446688" filter="url(#rough2)">于是最优路径可取为：先竖直走 |r1−r0| 步再水平走 |c1−c0| 步（顺序无关）</text>
+
+  <!-- 代价归属 -->
+  <rect x="60" y="292" width="500" height="104" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="310" y="318" text-anchor="middle" font-size="13.5" fill="#4a7a3a" filter="url(#rough2)">竖直方向逐行进入：每进入一行 r 付 rowCosts[r]，共 |r1−r0| 步</text>
+  <text x="310" y="342" text-anchor="middle" font-size="13.5" fill="#4a7a3a" filter="url(#rough2)">水平方向逐列进入：每进入一列 c 付 colCosts[c]，共 |c1−c0| 步</text>
+  <text x="310" y="366" text-anchor="middle" font-size="13.5" fill="#4a7a3a" filter="url(#rough2)">答案与路径顺序无关，只与"经过的行集合 + 列集合"有关</text>
+  <text x="310" y="388" text-anchor="middle" font-size="11.5" fill="#888" filter="url(#rough2)">（这正是本题的陷阱：看起来像网格 DP，其实是一次区间求和）</text>
+</svg>
