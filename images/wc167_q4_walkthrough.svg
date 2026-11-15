@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例 1 演算：5 × 3 网格，k = 1，答案 6 步</text>
+  <text x="280" y="44" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">绿色为最优路径，橙色 (3,2) 是路径上唯一被消除的障碍</text>
+
+  <g filter="url(#rough2)">
+    <rect x="44" y="70" width="46" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="90" y="70" width="46" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="136" y="70" width="46" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+
+    <rect x="44" y="116" width="46" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="90" y="116" width="46" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="136" y="116" width="46" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+
+    <rect x="44" y="162" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="90" y="162" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="136" y="162" width="46" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+
+    <rect x="44" y="208" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="90" y="208" width="46" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="136" y="208" width="46" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4" rx="4"/>
+
+    <rect x="44" y="254" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="90" y="254" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="136" y="254" width="46" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" fill="#8a3a36">
+    <text x="67" y="145">✕</text>
+    <text x="113" y="145">✕</text>
+    <text x="113" y="237">✕</text>
+  </g>
+
+  <polyline points="67,93 113,93 159,93 159,139 159,185 159,231 159,277"
+            fill="none" stroke="#4a7a3a" stroke-width="2.6" stroke-linejoin="round"
+            marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="9" text-anchor="middle" font-weight="bold">
+    <text x="56" y="88" fill="#2f6b4f">S</text>
+    <text x="172" y="270" fill="#2f6b4f">T</text>
+  </g>
+
+  <rect x="206" y="70" width="324" height="140" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="220" y="90" font-size="10.5" fill="#2f6b4f" font-weight="bold" filter="url(#rough2)">k = 1 的最短路：6 步</text>
+  <text x="220" y="112" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">(0,0)→(0,1)→(0,2)→(1,2)→(2,2)</text>
+  <text x="220" y="130" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">→(3,2)→(4,2)，只消除 (3,2) 一个障碍</text>
+  <text x="220" y="156" font-size="9.5" fill="#b85450" filter="url(#rough2)">k = 0 时必须绕开整段障碍：</text>
+  <text x="220" y="174" font-size="9.5" fill="#b85450" filter="url(#rough2)">(2,1)→(2,0)→(3,0)→(4,0)→(4,1)</text>
+  <text x="220" y="192" font-size="9.5" fill="#b85450" filter="url(#rough2)">再折回 (4,2)，一共 10 步</text>
+
+  <rect x="206" y="222" width="324" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="220" y="242" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">BFS 分层（节选）</text>
+  <text x="220" y="262" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">d=1：{(0,1) rem1, (1,0) rem0}　← 进 (1,0) 已花掉预算</text>
+  <text x="220" y="280" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">d=3：首次站上最右列 (1,2)，之后沿右边一列直下</text>
+  <text x="220" y="298" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">d=6：生成终点 (4,2) ⇒ 返回 6（= 4+2 曼哈顿距离）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="44" y="322" width="14" height="14" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="3"/>
+    <text x="64" y="334" font-size="9" fill="#555">路径</text>
+    <rect x="114" y="322" width="14" height="14" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="3"/>
+    <text x="134" y="334" font-size="9" fill="#555">空地</text>
+    <rect x="184" y="322" width="14" height="14" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" rx="3"/>
+    <text x="204" y="334" font-size="9" fill="#555">障碍</text>
+    <rect x="254" y="322" width="14" height="14" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="3"/>
+    <text x="274" y="334" font-size="9" fill="#555">被消除的障碍</text>
+  </g>
+
+  <text x="44" y="368" font-size="9.8" fill="#666" filter="url(#rough2)">关键：k = 1 刚好够用，答案恰好等于曼哈顿距离 m+n−2 = 6，这已是任何路径的绝对下界</text>
+  <text x="44" y="390" font-size="9.8" fill="#666" filter="url(#rough2)">若 k 再小到 0，只能绕行整段障碍，答案退化到 10；若 k ≥ m+n−2，则必定直接拿到下界</text>
+  <text x="280" y="416" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">同层状态之间没有先后之分，BFS 保证终点第一次出现时所在层号就是最短步数</text>
+</svg>

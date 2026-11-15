@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="420" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：打开一个盒子要「同时」满足两个条件</text>
+  <text x="320" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">盒子在手上（H） + 能开门（status = 1 或 有钥匙 K），缺一不可</text>
+
+  <!-- 左：两种资源 -->
+  <rect x="34" y="76" width="176" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="122" y="96" text-anchor="middle" font-size="12.5" fill="#2f4f6f" filter="url(#rough2)">手上拥有 H</text>
+  <text x="122" y="113" text-anchor="middle" font-size="9" fill="#5b7794" filter="url(#rough2)">initialBoxes + 开箱所得</text>
+
+  <rect x="34" y="134" width="176" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="122" y="154" text-anchor="middle" font-size="12.5" fill="#8a6a20" filter="url(#rough2)">钥匙集合 K</text>
+  <text x="122" y="171" text-anchor="middle" font-size="9" fill="#a8873c" filter="url(#rough2)">开盒时从 keys[b] 里拿到</text>
+
+  <path d="M 214 99 L 246 112" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 214 157 L 246 144" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 中：盒子 -->
+  <rect x="250" y="82" width="152" height="108" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" rx="8" filter="url(#rough2)"/>
+  <text x="326" y="102" text-anchor="middle" font-size="12.5" fill="#8c3b36" font-weight="bold" filter="url(#rough2)">盒子 b</text>
+  <text x="326" y="121" text-anchor="middle" font-size="9.5" fill="#8c3b36" filter="url(#rough2)">status[b] = 0 / 1</text>
+  <text x="326" y="138" text-anchor="middle" font-size="9.5" fill="#8c3b36" filter="url(#rough2)">candies[b]</text>
+  <text x="326" y="155" text-anchor="middle" font-size="9.5" fill="#8c3b36" filter="url(#rough2)">keys[b]</text>
+  <text x="326" y="172" text-anchor="middle" font-size="9.5" fill="#8c3b36" filter="url(#rough2)">containedBoxes[b]</text>
+
+  <path d="M 406 118 L 438 118" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 右：开箱收益 -->
+  <rect x="442" y="78" width="170" height="116" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="458" y="98" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">开箱后的收益</text>
+  <text x="458" y="119" font-size="10" fill="#2f6b4f" filter="url(#rough2)">ans += candies[b]</text>
+  <text x="458" y="139" font-size="10" fill="#2f6b4f" filter="url(#rough2)">H ∪= containedBoxes[b]</text>
+  <text x="458" y="159" font-size="10" fill="#2f6b4f" filter="url(#rough2)">K ∪= keys[b]</text>
+  <text x="458" y="181" font-size="8.5" fill="#6b8f5e" filter="url(#rough2)">全部是「只增不减」的并集</text>
+
+  <!-- 判定公式 -->
+  <rect x="34" y="208" width="578" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="50" y="232" font-size="11.5" fill="#2f4f6f" filter="url(#rough2)">可以打开 b  ⇔  b ∈ H  且  ( status[b] = 1  或  b ∈ K )</text>
+  <text x="50" y="251" font-size="9" fill="#5b7794" filter="url(#rough2)">只有钥匙而没拿到盒子、或只有盒子而没有钥匙，都打不开 —— 这就是本题最容易漏判的地方</text>
+
+  <!-- 单调性 + 不动点 -->
+  <text x="34" y="288" font-size="10.5" fill="#666" filter="url(#rough2)">单调性：开箱只带来收益、没有代价，所以「先开哪个」不影响最终能开到哪些盒子</text>
+
+  <rect x="34" y="302" width="118" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="93" y="322" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">初始资源</text>
+  <text x="93" y="337" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">H0, K0</text>
+
+  <path d="M 156 324 L 186 324" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="190" y="302" width="118" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="249" y="322" text-anchor="middle" font-size="9.5" fill="#2f4f6f" filter="url(#rough2)">能开的都开掉</text>
+  <text x="249" y="337" text-anchor="middle" font-size="9.5" fill="#2f4f6f" filter="url(#rough2)">资源变大</text>
+
+  <path d="M 312 324 L 342 324" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="346" y="302" width="118" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="405" y="322" text-anchor="middle" font-size="9.5" fill="#2f4f6f" filter="url(#rough2)">再检查一遍</text>
+  <text x="405" y="337" text-anchor="middle" font-size="9.5" fill="#2f4f6f" filter="url(#rough2)">已无新盒子</text>
+
+  <path d="M 468 324 L 498 324" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="502" y="302" width="110" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="557" y="322" text-anchor="middle" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">不动点（唯一）</text>
+  <text x="557" y="337" text-anchor="middle" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">答案在此结算</text>
+
+  <text x="34" y="374" font-size="10" fill="#888" filter="url(#rough2)">不同打开顺序到达的是同一个不动点，因此「最大糖果数」其实就是「不动点内的糖果之和」，答案唯一。</text>
+  <text x="34" y="396" font-size="9.5" fill="#999" filter="url(#rough2)">BFS 只是把上面这个「反复检查」的过程用队列加速到线性：每个盒子、每把钥匙、每个内嵌盒子只处理一次。</text>
+</svg>

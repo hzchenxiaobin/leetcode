@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="470" fill="#fafafa"/>
+
+  <text x="330" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：一次 BFS 把「反复检查」压成线性</text>
+  <text x="330" y="45" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">队列里只放「已经拿到手、且此刻确实能开」的盒子；三个布尔数组兼任去重</text>
+
+  <!-- 1 初始化 -->
+  <rect x="150" y="60" width="300" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="164" y="80" font-size="10.5" fill="#2f4f6f" filter="url(#rough2)">① 初始化：对 initialBoxes 里的 b</text>
+  <text x="164" y="98" font-size="10" fill="#2f4f6f" filter="url(#rough2)">held[b] = 1；若 status[b] = 1 则入队</text>
+
+  <path d="M 300 114 L 300 138" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 2 判空 -->
+  <polygon points="300,142 392,178 300,214 208,178" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="300" y="182" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">队列为空？</text>
+
+  <path d="M 392 178 L 486 178" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="430" y="171" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">是</text>
+
+  <rect x="490" y="154" width="140" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="504" y="175" font-size="10" fill="#3a5a30" filter="url(#rough2)">返回 ans</text>
+  <text x="504" y="192" font-size="9" fill="#6b8f5e" filter="url(#rough2)">剩下的盒子都开不了</text>
+
+  <path d="M 300 214 L 300 238" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="310" y="230" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">否</text>
+
+  <!-- 3 弹出并结算 -->
+  <rect x="150" y="240" width="300" height="54" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="164" y="260" font-size="10.5" fill="#8c3b36" filter="url(#rough2)">② 弹出 b：若 opened[b] 已真则跳过</text>
+  <text x="164" y="279" font-size="10" fill="#8c3b36" filter="url(#rough2)">否则 opened[b] = 1，ans += candies[b]</text>
+
+  <path d="M 300 294 L 300 316" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 4 处理钥匙 -->
+  <rect x="150" y="318" width="300" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="164" y="338" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">③ 遍历 keys[b]：keyed[k] = 1</text>
+  <text x="164" y="357" font-size="10" fill="#8a6a20" filter="url(#rough2)">若 held[k] 且未打开 → 入队（钥匙等到了盒子）</text>
+
+  <path d="M 300 374 L 300 396" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 5 处理内含盒子 -->
+  <rect x="150" y="398" width="300" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="164" y="418" font-size="10.5" fill="#2f4f6f" filter="url(#rough2)">④ 遍历 containedBoxes[b]：held[c] = 1</text>
+  <text x="164" y="437" font-size="10" fill="#2f4f6f" filter="url(#rough2)">若 status[c] = 1 或 keyed[c] → 入队</text>
+
+  <!-- 回边：回到判空 -->
+  <path d="M 150 426 L 100 426 L 100 178 L 208 178" stroke="#b85450" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="104" y="300" font-size="9" fill="#b85450" filter="url(#rough2)" transform="rotate(-90 104 300)">回到 ② 继续</text>
+
+  <!-- 右侧说明 -->
+  <rect x="470" y="232" width="160" height="120" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="482" y="252" font-size="10" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">为什么不会漏？</text>
+  <text x="482" y="271" font-size="9" fill="#4a7a3a" filter="url(#rough2)">盒子先到手 → 等钥匙</text>
+  <text x="482" y="288" font-size="9" fill="#4a7a3a" filter="url(#rough2)">钥匙先到手 → 等盒子</text>
+  <text x="482" y="305" font-size="9" fill="#4a7a3a" filter="url(#rough2)">两条路都在「新资源</text>
+  <text x="482" y="322" font-size="9" fill="#4a7a3a" filter="url(#rough2)">到达那一刻」补一次入队</text>
+  <text x="482" y="342" font-size="9" fill="#2f6b4f" filter="url(#rough2)">→ 每个盒子只开一次</text>
+</svg>

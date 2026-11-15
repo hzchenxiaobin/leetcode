@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">状态 dp[c][i]：前 i 个字符切成 c 段的最小代价</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">枚举最后一段的起点 j，把问题缩小成「更短前缀 + 一段」</text>
+
+  <g filter="url(#rough2)" font-size="10" text-anchor="middle" fill="#999">
+    <text x="172" y="72">0</text>
+    <text x="226" y="72">1</text>
+    <text x="280" y="72">2</text>
+    <text x="334" y="72">3</text>
+    <text x="388" y="72">4</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="16" text-anchor="middle">
+    <rect x="149" y="80" width="46" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="172" y="106" fill="#2f5a28">a</text>
+    <rect x="203" y="80" width="46" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="226" y="106" fill="#2f5a28">a</text>
+    <rect x="257" y="80" width="46" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="280" y="106" fill="#2f5a28">b</text>
+    <rect x="311" y="80" width="46" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="334" y="106" fill="#8a6a20">b</text>
+    <rect x="365" y="80" width="46" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="388" y="106" fill="#8a6a20">c</text>
+  </g>
+
+  <path d="M 307 74 L 307 150" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5 4" fill="none" filter="url(#rough2)"/>
+  <text x="307" y="66" text-anchor="middle" font-size="9.5" fill="#b85450" filter="url(#rough2)">切点 j</text>
+
+  <path d="M 149 124 V 134 H 307 V 124" stroke="#4a7a3a" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <path d="M 307 124 V 134 H 411 V 124" stroke="#d6a040" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <text x="228" y="152" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">dp[c−1][j]</text>
+  <text x="359" y="152" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">cost(j, i−1)</text>
+  <text x="280" y="174" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">左边：前 j 个字符切成 c−1 段；右边：最后一段变成回文的代价</text>
+
+  <rect x="55" y="192" width="450" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="72" y="216" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">dp[c][i] = min{ dp[c−1][j] + cost(j, i−1) }，j ∈ [c−1, i−1]</text>
+  <text x="72" y="238" font-size="10" fill="#555" filter="url(#rough2)">边界：dp[0][0] = 0，dp[0][i&gt;0] = ∞；答案 = dp[k][n]</text>
+
+  <rect x="55" y="268" width="450" height="64" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="72" y="288" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">三层循环顺序（c 递增，i 递增，j 枚举切点）</text>
+  <text x="72" y="308" font-size="10" fill="#555" filter="url(#rough2)">for c = 1..k:  for i = c..n:  for j = c−1..i−1:</text>
+  <text x="72" y="324" font-size="10" fill="#555" filter="url(#rough2)">    dp[c][i] = min(dp[c][i], dp[c−1][j] + cost[j][i−1])</text>
+
+  <text x="280" y="360" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">区间代价已预处理，一次转移 O(1) ⇒ 总时间 O(k·n²)，空间 O(n² + k·n)</text>
+  <text x="280" y="382" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">i 从 c 开始：i &lt; c 时字符不够分，这些状态天然不可行</text>
+</svg>

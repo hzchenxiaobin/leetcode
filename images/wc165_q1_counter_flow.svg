@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">一次遍历：落子 → 加计数 → 判 3</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">时间 O(n)，额外空间 16 个 int，n = moves.length ≤ 9</text>
+
+  <rect x="30" y="64" width="250" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="86" font-size="12" fill="#2c4a6b" font-weight="bold" filter="url(#rough2)">① 清零 16 个计数器</text>
+  <text x="46" y="104" font-size="9.5" fill="#555" filter="url(#rough2)">row/col 各 2×3，diag/anti 各 2</text>
+
+  <path d="M 155 118 L 155 140" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="142" width="250" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="164" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">② 逐手枚举 i = 0 … n−1</text>
+  <text x="46" y="182" font-size="9.5" fill="#555" filter="url(#rough2)">p = i &amp; 1：偶数步 A(X)，奇数步 B(O)</text>
+  <text x="46" y="198" font-size="9.5" fill="#555" filter="url(#rough2)">落点 (r, c) = moves[i]</text>
+
+  <path d="M 155 204 L 155 226" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="228" width="250" height="84" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="250" font-size="12" fill="#2c4a6b" font-weight="bold" filter="url(#rough2)">③ 只做自增，不算坐标</text>
+  <text x="46" y="268" font-size="9.5" fill="#555" filter="url(#rough2)">++row[p][r]         ++col[p][c]</text>
+  <text x="46" y="284" font-size="9.5" fill="#555" filter="url(#rough2)">if (r == c) 则 ++diag[p]</text>
+  <text x="46" y="300" font-size="9.5" fill="#555" filter="url(#rough2)">if (r + c == 2) 则 ++anti[p]</text>
+
+  <path d="M 155 312 L 155 334" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="155,336 263,372 155,408 47,372" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="155" y="377" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">任一计数 == 3 ?</text>
+
+  <path d="M 265 372 L 296 372" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="268" y="364" font-size="9.5" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <rect x="300" y="346" width="230" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="10" filter="url(#rough2)"/>
+  <text x="314" y="368" font-size="11.5" fill="#2f5a24" font-weight="bold" filter="url(#rough2)">返回 “A” / “B”</text>
+  <text x="314" y="386" font-size="9.5" fill="#555" filter="url(#rough2)">p == 0 → A，p == 1 → B</text>
+
+  <path d="M 155 408 L 155 428" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="162" y="424" font-size="9.5" fill="#446688" filter="url(#rough2)">否</text>
+
+  <rect x="30" y="430" width="250" height="44" fill="#eeeeee" stroke="#777777" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="448" font-size="11.5" fill="#444" font-weight="bold" filter="url(#rough2)">④ 无人获胜，看棋盘满没满</text>
+  <text x="46" y="465" font-size="9.5" fill="#555" filter="url(#rough2)">n == 9 ? “Draw” : “Pending”</text>
+
+  <text x="302" y="420" font-size="10" fill="#555" filter="url(#rough2)">合法输入保证：三连即刻终局，</text>
+  <text x="302" y="436" font-size="10" fill="#555" filter="url(#rough2)">所以循环中首次命中就是答案，</text>
+  <text x="302" y="452" font-size="10" fill="#555" filter="url(#rough2)">不需要回头再扫一遍棋盘。</text>
+</svg>

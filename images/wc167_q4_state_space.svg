@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">状态设计：(行, 列, 剩余可消除次数)</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">只记 (r, c) 会丢信息——剩余预算不同，同一个格子的「后续能力」完全不同</text>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="82" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="76" y="82" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="122" y="82" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="30" y="128" width="46" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="76" y="128" width="46" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="122" y="128" width="46" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+    <rect x="30" y="174" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="76" y="174" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="122" y="174" width="46" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" fill="#8a3a36">
+    <text x="53" y="157">✕</text>
+    <text x="99" y="157">✕</text>
+  </g>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="145" y="146" font-size="8" fill="#3a4a66">rem = 1</text>
+    <text x="145" y="162" font-size="8" fill="#8a3a36">rem = 0</text>
+  </g>
+
+  <path d="M 145 96 L 145 124" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 108 151 L 118 151" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <text x="30" y="240" font-size="9.5" fill="#446688">上方进入：没花预算，rem = 1</text>
+    <text x="30" y="258" font-size="9.5" fill="#b85450">左方穿墙进入：预算花光，rem = 0</text>
+    <text x="30" y="276" font-size="9.5" fill="#8a6a20">同一格 ⇒ 两个状态，后续结局不同</text>
+  </g>
+
+  <rect x="250" y="76" width="286" height="212" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="266" y="96" font-size="11" fill="#2f6b4f" font-weight="bold" filter="url(#rough2)">为什么必须把 rem 写进状态</text>
+  <text x="266" y="120" font-size="9.8" fill="#3a5a30" filter="url(#rough2)">· 排在 (1,2) 时，rem = 1 能再穿 1 道墙</text>
+  <text x="266" y="140" font-size="9.8" fill="#3a5a30" filter="url(#rough2)">· 而 rem = 0 一步也穿不出去</text>
+  <text x="266" y="160" font-size="9.8" fill="#3a5a30" filter="url(#rough2)">· 所以 (r, c) 相同 ≠ 状态相同，必须按</text>
+  <text x="266" y="178" font-size="9.8" fill="#3a5a30" filter="url(#rough2)">　rem 拆成不同状态分别入队</text>
+  <text x="266" y="204" font-size="9.8" fill="#446688" filter="url(#rough2)">状态 = (r, c, rem) 三元组</text>
+  <text x="266" y="224" font-size="9.8" fill="#446688" filter="url(#rough2)">每条边代价恒为 1 ⇒ 分层 BFS 即最短路</text>
+  <text x="266" y="244" font-size="9.8" fill="#446688" filter="url(#rough2)">状态数上界 m · n · (k + 1)</text>
+  <text x="266" y="268" font-size="9.8" fill="#8a6a20" filter="url(#rough2)">rem 超过 m + n − 3 就没有意义</text>
+
+  <rect x="30" y="296" width="506" height="96" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="316" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">支配剪枝：剩余更多 = 完全更强</text>
+  <text x="46" y="338" font-size="9.6" fill="#555" filter="url(#rough2)">若 (r, c) 已被「步数更少且 rem 更大」的状态访问过，本次访问可以整支丢掉</text>
+  <text x="46" y="358" font-size="9.6" fill="#555" filter="url(#rough2)">实现：best[r][c] 记到达该格的最大剩余次数，只有 nrem &gt; best[r][c] 才入队</text>
+  <text x="46" y="378" font-size="9.6" fill="#555" filter="url(#rough2)">上界特判：k ≥ m+n−2 时单调路径最多穿过 m+n−3 个障碍，答案直接是 m+n−2</text>
+
+  <text x="280" y="410" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">示例 1 的 (3,2)：从上方进入 rem 够用，从左进入要付费——两种到达带来完全不同的结局</text>
+</svg>

@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">BFS 流程：在 (r, c, rem) 状态上分层扩展</text>
+  <text x="280" y="45" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">边权恒为 1，层号即步数；终点第一次被生成时步数已经最小</text>
+
+  <rect x="100" y="58" width="360" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="81" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">特判：m = n = 1 → 0；k ≥ m+n−2 → return m+n−2</text>
+
+  <path d="M 280 94 L 280 104" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="100" y="108" width="360" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="131" text-anchor="middle" font-size="10" fill="#3a4a66" filter="url(#rough2)">best 全置 −1，best[0][0] = k；入队 (0,0,k)，步数 d = 0</text>
+
+  <path d="M 280 144 L 280 152" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,156 400,181 280,206 160,181" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="186" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">队列空 ?</text>
+
+  <path d="M 400 181 L 424 181" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="410" y="174" font-size="9" fill="#b85450" filter="url(#rough2)">是</text>
+  <rect x="428" y="159" width="118" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="487" y="179" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">return −1</text>
+  <text x="487" y="194" text-anchor="middle" font-size="8.5" fill="#a8605c" filter="url(#rough2)">终点始终不可达</text>
+
+  <path d="M 280 206 L 280 214" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="288" y="214" font-size="9" fill="#8a6a20" filter="url(#rough2)">否</text>
+
+  <rect x="86" y="218" width="388" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="237" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">弹出 (r,c,rem,d)，枚举上下左右四个邻居 (nr,nc)</text>
+  <text x="280" y="255" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">nrem = rem − grid[nr][nc]（障碍扣 1 次，空地不扣）</text>
+
+  <path d="M 280 264 L 280 274" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,278 448,303 280,328 112,303" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="308" text-anchor="middle" font-size="10" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">nrem ≥ 0 且 nrem &gt; best[nr][nc] ?</text>
+
+  <path d="M 448 303 L 492 303 L 492 241 L 478 241" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="455" y="297" font-size="9" fill="#b85450" filter="url(#rough2)">否</text>
+  <text x="496" y="330" font-size="8.5" fill="#888" filter="url(#rough2)">跳过该</text>
+  <text x="496" y="342" font-size="8.5" fill="#888" filter="url(#rough2)">邻居</text>
+
+  <path d="M 280 328 L 280 336" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="288" y="336" font-size="9" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="100" y="340" width="360" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="359" text-anchor="middle" font-size="10" fill="#3a4a66" filter="url(#rough2)">best[nr][nc] = nrem；入队 (nr,nc,nrem,d+1)</text>
+  <text x="280" y="377" text-anchor="middle" font-size="10" fill="#3a4a66" filter="url(#rough2)">若 (nr,nc) 就是终点 ⇒ 立即 return d+1</text>
+
+  <path d="M 100 364 L 56 364 L 56 126 L 94 126" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="60" y="196" font-size="8.5" fill="#888" filter="url(#rough2)">循环</text>
+  <text x="60" y="336" font-size="8.5" fill="#888" filter="url(#rough2)">回队首</text>
+
+  <text x="280" y="412" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">每个状态只扩展 4 条边；best 数组保证同一格不会用「更差的剩余次数」重复扩展</text>
+
+  <text x="280" y="430" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">最坏状态数 m · n · (k+1)，经 rem 上界与支配剪枝后实际远小于此</text>
+</svg>

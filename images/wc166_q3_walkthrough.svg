@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6" fill="none" stroke="#777" stroke-width="1.4"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">演算：nums = [1,2,5,9]，threshold = 6，答案 5</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">先看每个 d 的总和 S(d)：红色表示 S &gt; 6，绿色表示 S ≤ 6</text>
+
+  <!-- 9 个格子 -->
+  <g filter="url(#rough2)">
+    <rect x="44" y="64" width="48" height="34" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <rect x="98" y="64" width="48" height="34" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <rect x="152" y="64" width="48" height="34" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <rect x="206" y="64" width="48" height="34" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <rect x="260" y="64" width="48" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="314" y="64" width="48" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="368" y="64" width="48" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="422" y="64" width="48" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <rect x="476" y="64" width="48" height="34" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+
+  <g font-size="13" text-anchor="middle" filter="url(#rough2)">
+    <text x="68" y="87" fill="#8c3b36">17</text>
+    <text x="122" y="87" fill="#8c3b36">10</text>
+    <text x="176" y="87" fill="#8c3b36">7</text>
+    <text x="230" y="87" fill="#8c3b36">7</text>
+    <text x="284" y="87" fill="#3d6b2f">5</text>
+    <text x="338" y="87" fill="#3d6b2f">5</text>
+    <text x="392" y="87" fill="#3d6b2f">5</text>
+    <text x="446" y="87" fill="#3d6b2f">5</text>
+    <text x="500" y="87" fill="#3d6b2f">4</text>
+  </g>
+
+  <g font-size="10.5" text-anchor="middle" fill="#666" filter="url(#rough2)">
+    <text x="68" y="113">d=1</text>
+    <text x="122" y="113">d=2</text>
+    <text x="176" y="113">d=3</text>
+    <text x="230" y="113">d=4</text>
+    <text x="284" y="113">d=5</text>
+    <text x="338" y="113">d=6</text>
+    <text x="392" y="113">d=7</text>
+    <text x="446" y="113">d=8</text>
+    <text x="500" y="113">d=9</text>
+  </g>
+
+  <path d="M257,58 V120" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5 4" fill="none" filter="url(#rough2)"/>
+  <text x="257" y="134" text-anchor="middle" font-size="10.5" fill="#8c3b36" filter="url(#rough2)">分界：d = 5 起 S ≤ 6</text>
+
+  <!-- 二分表 -->
+  <rect x="40" y="148" width="480" height="128" rx="8" fill="#f7f9fc" stroke="#b9c6d8" stroke-width="1.4" filter="url(#rough2)"/>
+  <path d="M40,180 H520" stroke="#b9c6d8" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+  <path d="M40,212 H520" stroke="#dfe6ef" stroke-width="1" fill="none" filter="url(#rough2)"/>
+  <path d="M40,244 H520" stroke="#dfe6ef" stroke-width="1" fill="none" filter="url(#rough2)"/>
+
+  <g font-size="11" text-anchor="middle" fill="#555" filter="url(#rough2)">
+    <text x="100" y="170">轮次</text>
+    <text x="176" y="170">lo</text>
+    <text x="240" y="170">hi</text>
+    <text x="316" y="170">mid</text>
+    <text x="402" y="170">S(mid)</text>
+    <text x="482" y="170">决策</text>
+  </g>
+
+  <g font-size="11.5" text-anchor="middle" fill="#333" filter="url(#rough2)">
+    <text x="100" y="200">①</text>
+    <text x="176" y="200">1</text>
+    <text x="240" y="200">9</text>
+    <text x="316" y="200">5</text>
+    <text x="402" y="200">5</text>
+    <text x="482" y="200" font-size="10.5" fill="#3d6b2f">≤6 → hi=5</text>
+
+    <text x="100" y="232">②</text>
+    <text x="176" y="232">1</text>
+    <text x="240" y="232">5</text>
+    <text x="316" y="232">3</text>
+    <text x="402" y="232">7</text>
+    <text x="482" y="232" font-size="10.5" fill="#8c3b36">&gt;6 → lo=4</text>
+
+    <text x="100" y="264">③</text>
+    <text x="176" y="264">4</text>
+    <text x="240" y="264">5</text>
+    <text x="316" y="264">4</text>
+    <text x="402" y="264">7</text>
+    <text x="482" y="264" font-size="10.5" fill="#8c3b36">&gt;6 → lo=5</text>
+  </g>
+
+  <rect x="140" y="288" width="280" height="32" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="309" text-anchor="middle" font-size="12" fill="#3d6b2f" filter="url(#rough2)">lo = hi = 5，返回 5</text>
+
+  <text x="280" y="346" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">区间长度 9 → 5 → 2 → 1，三轮收敛，每轮至少折半</text>
+  <text x="280" y="370" text-anchor="middle" font-size="10.5" fill="#777" filter="url(#rough2)">mid 向下取整 + hi = mid 才能停在最左可行点，不会越过它</text>
+</svg>

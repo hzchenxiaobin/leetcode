@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">前缀异或：区间异或 = 两个前缀异或再异或一次</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888">pre[0] = 0，pre[i] = arr[0] ⊕ arr[1] ⊕ … ⊕ arr[i−1]（pre 比 arr 多一个哨兵）</text>
+
+  <text x="88" y="108" text-anchor="end" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">arr</text>
+  <text x="88" y="190" text-anchor="end" font-size="12" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">pre</text>
+
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" font-weight="bold">
+    <rect x="124" y="82" width="56" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="180" y="82" width="56" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="236" y="82" width="56" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="292" y="82" width="56" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <text x="152" y="108" fill="#3a4a66">1</text>
+    <text x="208" y="108" fill="#3a4a66">3</text>
+    <text x="264" y="108" fill="#3a4a66">4</text>
+    <text x="320" y="108" fill="#3a4a66">8</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10" text-anchor="middle" fill="#999">
+    <text x="152" y="138">0</text><text x="208" y="138">1</text>
+    <text x="264" y="138">2</text><text x="320" y="138">3</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" font-weight="bold">
+    <rect x="96" y="164" width="56" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+    <rect x="152" y="164" width="56" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+    <rect x="208" y="164" width="56" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+    <rect x="264" y="164" width="56" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+    <rect x="320" y="164" width="56" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+    <text x="124" y="190" fill="#3a5a30">0</text>
+    <text x="180" y="190" fill="#8a6a20">1</text>
+    <text x="236" y="190" fill="#3a5a30">2</text>
+    <text x="292" y="190" fill="#8a6a20">6</text>
+    <text x="348" y="190" fill="#3a5a30">14</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10" text-anchor="middle" fill="#999">
+    <text x="124" y="220">pre[0]</text><text x="180" y="220">pre[1]</text>
+    <text x="236" y="220">pre[2]</text><text x="292" y="220">pre[3]</text>
+    <text x="348" y="220">pre[4]</text>
+  </g>
+
+  <path d="M 180 206 L 224 234" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 292 206 L 286 234" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="164" y="236" width="184" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="256" y="258" text-anchor="middle" font-size="12" fill="#8a3a36" font-weight="bold">6 ⊕ 1 = 7（查询 [1, 2]）</text>
+
+  <rect x="70" y="288" width="420" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="84" y="308" font-size="10.5" fill="#555">pre[R+1] ⊕ pre[L]</text>
+  <text x="210" y="308" font-size="10.5" fill="#555">= (arr[0..R]) ⊕ (arr[0..L−1])</text>
+  <text x="84" y="328" font-size="10.5" fill="#555">= arr[L] ⊕ … ⊕ arr[R]　（前 L 项各出现两次，成对抵消）</text>
+
+  <text x="280" y="366" text-anchor="middle" font-size="10" fill="#999">x ⊕ x = 0、x ⊕ 0 = x —— XOR 是自逆运算，所以「大前缀 ⊕ 小前缀」正好只剩中间那段</text>
+  <text x="280" y="386" text-anchor="middle" font-size="10" fill="#999">这也是为什么 pre 必须从下标 0 的哨兵开始：查询 L = 0 时正好用上 pre[0] = 0</text>
+</svg>

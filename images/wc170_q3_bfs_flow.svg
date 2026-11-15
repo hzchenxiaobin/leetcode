@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="440" fill="#fafafa"/>
+
+  <text x="310" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">四步走：BFS 分层 → 取第 level 层 → 计数 → 排序</text>
+  <text x="310" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">前两步解决「谁在第 level 层」，后两步解决「这些视频怎么排」</text>
+
+  <rect x="60" y="66" width="500" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="88" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 建距离数组</text>
+  <text x="76" y="108" font-size="10" fill="#555" filter="url(#rough2)">dist[i] = -1，dist[id] = 0；队列 q = {id}（不要用「走过就删边」的 DFS）</text>
+
+  <path d="M 310 122 L 310 142" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="146" width="500" height="94" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="168" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">② BFS 逐层扩散（队列天然按 dist 非降序）</text>
+  <text x="76" y="188" font-size="10" fill="#555" filter="url(#rough2)">出队 u，对每个 v ∈ friends[u]：</text>
+  <text x="76" y="206" font-size="10" fill="#555" filter="url(#rough2)">若 dist[v] == -1 → dist[v] = dist[u] + 1，把 v 入队</text>
+  <text x="76" y="224" font-size="10" fill="#555" filter="url(#rough2)">若 dist[v] != -1 → v 属于更早的层，直接跳过（这就是去重）</text>
+
+  <path d="M 310 240 L 310 260" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="264" width="500" height="72" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="286" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">③ 收集第 level 层的人，累加视频频次</text>
+  <text x="76" y="306" font-size="10" fill="#555" filter="url(#rough2)">扫描 u = 0..n-1，凡 dist[u] == level 的人都属于本层</text>
+  <text x="76" y="324" font-size="10" fill="#555" filter="url(#rough2)">把 watchedVideos[u] 中每个视频名写进哈希表 cnt，值 +1</text>
+
+  <path d="M 310 336 L 310 356" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="60" y="360" width="500" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="382" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 双关键字排序</text>
+  <text x="76" y="402" font-size="10" fill="#555" filter="url(#rough2)">先按频次升序，频次相同再按视频名字典序升序，返回名字列表</text>
+
+  <text x="310" y="432" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">若无 level 层的人，cnt 为空，返回 []（不是返回 null）</text>
+</svg>
