@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+  <rect width="580" height="330" fill="#fafafa"/>
+  <text x="290" y="26" text-anchor="middle" font-size="16" fill="#333">分治优化：solve(l, r, optl, optr)</text>
+
+  <rect x="60" y="46" width="460" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="71" text-anchor="middle" font-size="12" fill="#333">区间 [l, r] 的每个 opt 都落在 [optl, optr]（已知）</text>
+  <path d="M290,86 L290,108" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="140" y="108" width="300" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="130" text-anchor="middle" font-size="11" fill="#333">mid = (l+r)/2：在 optl..min(optr, mid−1) 内暴力找 best</text>
+  <text x="290" y="147" text-anchor="middle" font-size="10" fill="#666">得到 cur[mid] 与 opt(mid) = best</text>
+
+  <path d="M220,154 L150,182" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M360,154 L430,182" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="50" y="182" width="230" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="64" y="204" font-size="11" fill="#333">左半 [l, mid−1]</text>
+  <text x="64" y="222" font-size="10" fill="#4a7a3a">opt ≤ best ⇒ 上界收紧为 best</text>
+
+  <rect x="300" y="182" width="230" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="314" y="204" font-size="11" fill="#333">右半 [mid+1, r]</text>
+  <text x="314" y="222" font-size="10" fill="#b85450">opt ≥ best ⇒ 下界放宽为 best</text>
+
+  <rect x="60" y="252" width="460" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="6" filter="url(#rough2)"/>
+  <text x="74" y="270" font-size="10" fill="#333">每层递归的候选区间总长 O(n)，深度 O(log n) ⇒ 每层 O(n log n)</text>
+
+  <rect x="60" y="288" width="460" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.2" rx="6" filter="url(#rough2)"/>
+  <text x="74" y="306" font-size="10" fill="#333">k 层合计 O(k·n log n)，n = k = 1000 时约 10⁷</text>
+</svg>

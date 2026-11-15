@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+  <rect width="560" height="320" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333">两个 DP 状态：最后一块等于哪个 target</text>
+
+  <rect x="60" y="60" width="170" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="145" y="88" text-anchor="middle" font-size="13" fill="#446688">dp1[i]</text>
+  <text x="145" y="110" text-anchor="middle" font-size="11" fill="#333">最后一块异或 = target1</text>
+
+  <rect x="330" y="60" width="170" height="66" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="415" y="88" text-anchor="middle" font-size="13" fill="#b85450">dp2[i]</text>
+  <text x="415" y="110" text-anchor="middle" font-size="11" fill="#333">最后一块异或 = target2</text>
+
+  <path d="M310,94 Q390,40 470,58" fill="none" stroke="#b85450" stroke-width="1.6" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="392" y="36" text-anchor="middle" font-size="10" fill="#b85450">接 target2 块</text>
+  <path d="M400,130 Q300,180 220,132" fill="none" stroke="#446688" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="300" y="172" text-anchor="middle" font-size="10" fill="#446688">接 target1 块</text>
+
+  <rect x="50" y="196" width="460" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="66" y="218" font-size="11" fill="#333">dp1[i] = Σ dp2[j]（j &gt; 0，xor(j,i−1)=target1）+ [j = 0] 的 1 种起手</text>
+  <text x="66" y="236" font-size="11" fill="#333">dp2[i] = Σ dp1[j]（xor(j,i−1)=target2）</text>
+
+  <rect x="50" y="256" width="460" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="66" y="282" font-size="12" fill="#4a7a3a">答案 = dp1[n] + dp2[n]（最后一块两种可能都合法）</text>
+</svg>
