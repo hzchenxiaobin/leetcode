@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">两遍扫描：找目标数字 → 全串替换</text>
+
+  <!-- 流程 -->
+  <rect x="190" y="52" width="180" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="76" text-anchor="middle" font-size="13.5" fill="#2d4a66" font-weight="bold" filter="url(#rough2)">s ← str(num)</text>
+
+  <path d="M 280 90 C 280 104, 280 108, 280 120" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 左分支：max -->
+  <rect x="60" y="124" width="200" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="160" y="148" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">求最大 mx</text>
+  <text x="160" y="168" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">d ← s 中第一个 ≠ '9'</text>
+  <text x="160" y="186" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">把所有 d 替换成 '9'</text>
+  <text x="160" y="203" text-anchor="middle" font-size="11" fill="#7a5c1e" filter="url(#rough2)">（全 9 时 mx = num）</text>
+
+  <!-- 右分支：min -->
+  <rect x="300" y="124" width="200" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="400" y="148" text-anchor="middle" font-size="13" fill="#8a3a34" font-weight="bold" filter="url(#rough2)">求最小 mn</text>
+  <text x="400" y="168" text-anchor="middle" font-size="12" fill="#8a3a34" filter="url(#rough2)">d0 ← s[0]（最高位）</text>
+  <text x="400" y="186" text-anchor="middle" font-size="12" fill="#8a3a34" filter="url(#rough2)">把所有 d0 替换成 '0'</text>
+  <text x="400" y="203" text-anchor="middle" font-size="11" fill="#7a5c1e" filter="url(#rough2)">（前导零转数值自动丢弃）</text>
+
+  <path d="M 280 100 C 280 112, 200 112, 170 122" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 100 C 280 112, 360 112, 390 122" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 汇合 -->
+  <path d="M 160 210 C 160 232, 220 240, 262 248" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 400 210 C 400 232, 340 240, 298 248" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="170" y="254" width="220" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="274" text-anchor="middle" font-size="14" fill="#2d4a66" font-weight="bold" filter="url(#rough2)">return int(mx) − int(mn)</text>
+  <text x="280" y="291" text-anchor="middle" font-size="11" fill="#2d4a66" filter="url(#rough2)">差 ≤ 9×10^8，int 足够</text>
+
+  <!-- 底部要点 -->
+  <rect x="60" y="316" width="440" height="28" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="334" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">替换对「所有出现的相同数字」生效——低位重复出现也要一起换</text>
+
+  <rect x="60" y="350" width="440" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="368" text-anchor="middle" font-size="12" fill="#8a3a34" filter="url(#rough2)">反例警示：num=123 时选「最大的非 9 数字」=3 → 129 ✗，必须按位置选 1 → 923 ✓</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="107"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">流程：哈希集合 + 沿幂链逐个检查</text>
+
+  <!-- 流程 -->
+  <rect x="190" y="52" width="180" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="76" text-anchor="middle" font-size="13.5" fill="#2d4a66" font-weight="bold" filter="url(#rough2)">s ← set(nums)</text>
+  <path d="M 280 90 C 280 104, 280 108, 280 120" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 循环 -->
+  <rect x="160" y="124" width="240" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="150" text-anchor="middle" font-size="13.5" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)">p = 1, 2, 4, 8, …（p 逐次 ×2）</text>
+  <text x="280" y="172" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">若 p ∈ s：继续下一个 p</text>
+  <text x="280" y="191" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">若 p ∉ s：返回 p</text>
+
+  <!-- 位掩码替代 -->
+  <rect x="60" y="216" width="440" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="238" text-anchor="middle" font-size="12.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">O(1) 空间变体：位掩码</text>
+  <text x="280" y="258" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">mask |= (x 是 2 的幂 ? x : 0)，再找 mask 的最低 0 位</text>
+
+  <!-- 底部 -->
+  <rect x="60" y="288" width="440" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="307" text-anchor="middle" font-size="12.5" fill="#2d4a66" font-weight="bold" filter="url(#rough2)">时间 O(n)，空间 O(n)（哈希）或 O(1)（掩码）</text>
+  <text x="280" y="324" text-anchor="middle" font-size="12" fill="#2d4a66" filter="url(#rough2)">枚举上界 i ≤ 30：nums[i] ≤ 10^9 &lt; 2^30</text>
+
+  <rect x="60" y="340" width="440" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="360" text-anchor="middle" font-size="12" fill="#8a3a34" filter="url(#rough2)">别做「子序列或」的显式 DP——可达集可达 2^30 个，必爆</text>
+</svg>

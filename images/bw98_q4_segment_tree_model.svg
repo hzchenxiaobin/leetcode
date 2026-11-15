@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="113"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">线段树：nums1 管区间翻转，nums2 只剩标量</text>
+
+  <!-- 线段树结构 -->
+  <g filter="url(#rough2)">
+    <rect x="230" y="52" width="100" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="280" y="76" text-anchor="middle" font-size="13" fill="#2d4a66" font-weight="bold" filter="url(#rough2)">根 [0,7] ones=5</text>
+
+  <path d="M 260 90 C 230 108, 200 112, 170 122" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 300 90 C 330 108, 360 112, 390 122" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="100" y="126" width="96" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <rect x="364" y="126" width="96" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="148" y="148" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">[0,3] ones=3</text>
+  <text x="412" y="148" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">[4,7] ones=2</text>
+
+  <path d="M 128 162 C 110 176, 96 180, 80 190" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 168 162 C 186 176, 200 180, 216 190" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 392 162 C 374 176, 360 180, 344 190" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 432 162 C 450 176, 464 180, 480 190" fill="none" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="194" width="80" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <rect x="180" y="194" width="80" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <rect x="304" y="194" width="80" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <rect x="444" y="194" width="80" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#7a5c1e" text-anchor="middle">
+    <text x="80" y="215">[0,1] ones=2</text><text x="220" y="215">[2,3] ones=1</text>
+    <text x="344" y="215">[4,5] ones=1</text><text x="484" y="215">[6,7] ones=1</text>
+  </g>
+
+  <!-- 懒标记说明 -->
+  <rect x="60" y="248" width="200" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="160" y="270" text-anchor="middle" font-size="12.5" fill="#8a3a34" font-weight="bold" filter="url(#rough2)">懒标记 flip[o]</text>
+  <text x="160" y="288" text-anchor="middle" font-size="11.5" fill="#8a3a34" filter="url(#rough2)">= 1：孩子欠一次整段翻转</text>
+  <text x="160" y="302" text-anchor="middle" font-size="11.5" fill="#8a3a34" filter="url(#rough2)">再打一次 ^= 1 自动抵消</text>
+
+  <rect x="300" y="248" width="220" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="410" y="270" text-anchor="middle" font-size="12.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">整段翻转的计数公式</text>
+  <text x="410" y="290" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">ones ← len − ones</text>
+  <text x="410" y="304" text-anchor="middle" font-size="11" fill="#2d5a22" filter="url(#rough2)">（0 与 1 互换）</text>
+
+  <!-- nums2 标量 -->
+  <rect x="60" y="322" width="200" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="160" y="341" text-anchor="middle" font-size="12.5" fill="#2d4a66" font-weight="bold" filter="url(#rough2)">sum2：一个 long long 标量</text>
+  <text x="160" y="357" text-anchor="middle" font-size="11.5" fill="#2d4a66" filter="url(#rough2)">类型 2：sum2 += p × ones[根]</text>
+
+  <rect x="300" y="322" width="220" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="410" y="341" text-anchor="middle" font-size="12.5" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)">类型 3：追加 sum2</text>
+  <text x="410" y="357" text-anchor="middle" font-size="11.5" fill="#7a5c1e" filter="url(#rough2)">nums2 全程无需逐元素维护</text>
+
+  <rect x="60" y="372" width="460" height="22" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="388" text-anchor="middle" font-size="11.5" fill="#8a3a34" filter="url(#rough2)">sum2 上界约 10^16：必须 64 位（乘法先转 long long 再乘）</text>
+</svg>
