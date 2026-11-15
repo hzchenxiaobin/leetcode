@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+  <text x="260" y="32" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">换根 DP：两次 DFS，O(n+m)</text>
+
+  <!-- 步骤 1 -->
+  <rect x="40" y="56" width="200" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="140" y="78" text-anchor="middle" font-size="13" fill="#2f4a66" filter="url(#rough2)">① 建邻接表</text>
+  <text x="140" y="98" text-anchor="middle" font-size="12" fill="#2f4a66" filter="url(#rough2)">猜测 (u,v) 编码 u·n+v 存入哈希集合</text>
+
+  <path d="M 140 116 L 140 138" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="40" y="142" width="200" height="72" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="140" y="164" text-anchor="middle" font-size="13" fill="#2f5527" filter="url(#rough2)">② 以 0 为根做一次非递归 DFS</text>
+  <text x="140" y="184" text-anchor="middle" font-size="12" fill="#2f5527" filter="url(#rough2)">求 parent[] 与先序序列 order</text>
+  <text x="140" y="202" text-anchor="middle" font-size="12" fill="#2f5527" filter="url(#rough2)">（保证父节点排在孩子前面）</text>
+
+  <path d="M 140 218 L 140 240" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="40" y="244" width="200" height="56" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="140" y="266" text-anchor="middle" font-size="13" fill="#7a5a10" filter="url(#rough2)">③ 统计根 0 的命中数 cnt₀</text>
+  <text x="140" y="286" text-anchor="middle" font-size="12" fill="#7a5a10" filter="url(#rough2)">cnt₀ = Σ [ parent[v] = u ]</text>
+
+  <!-- 右侧递推 -->
+  <rect x="290" y="142" width="200" height="72" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="390" y="164" text-anchor="middle" font-size="13" fill="#8c3a36" filter="url(#rough2)">④ 按 order 逐个换根</text>
+  <text x="390" y="186" text-anchor="middle" font-size="13" fill="#8c3a36" filter="url(#rough2)">c(v) = c(p) − [(p,v)∈G]</text>
+  <text x="390" y="206" text-anchor="middle" font-size="13" fill="#8c3a36" filter="url(#rough2)">            + [(v,p)∈G]</text>
+
+  <path d="M 244 272 L 264 272 L 264 210 L 284 210" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="290" y="236" width="200" height="56" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="390" y="258" text-anchor="middle" font-size="13" fill="#2f5527" filter="url(#rough2)">⑤ 边递推边统计</text>
+  <text x="390" y="278" text-anchor="middle" font-size="12" fill="#2f5527" filter="url(#rough2)">答案 += [ c(v) ≥ k ]，返回答案</text>
+
+  <text x="260" y="330" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">每条树边只被"跨越"一次 → 递推共 n−1 步，总计 O(n+m)</text>
+  <text x="260" y="350" text-anchor="middle" font-size="12" fill="#888" filter="url(#rough2)">（m 条猜测只用于构造哈希集合与算 cnt₀）</text>
+</svg>
