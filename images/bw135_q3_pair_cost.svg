@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="41"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="360" fill="#fafafa"/>
+  <text x="290" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">单对 (a, b) 的代价随 X 变化：0 次 / 1 次 / 2 次</text>
+
+  <!-- 轴 -->
+  <g filter="url(#rough2)">
+    <path d="M 60 128 L 524 128" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"/>
+    <text x="536" y="132" font-size="12" fill="#446688">X</text>
+    <path d="M 70 88 L 70 128" stroke="#888" stroke-width="1.4"/>
+    <path d="M 510 88 L 510 128" stroke="#888" stroke-width="1.4"/>
+    <text x="70" y="150" text-anchor="middle" font-size="12" fill="#666">0</text>
+    <text x="510" y="150" text-anchor="middle" font-size="12" fill="#666">k</text>
+
+    <!-- 绿带 [0, T] -->
+    <rect x="70" y="94" width="264" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6"/>
+    <text x="202" y="116" text-anchor="middle" font-size="12" fill="#2d5a22">X ≤ T：改 1 次即可实现</text>
+
+    <!-- 红带 (T, k] -->
+    <rect x="334" y="94" width="176" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="6"/>
+    <text x="422" y="116" text-anchor="middle" font-size="12" fill="#b85450">X &gt; T：必须改 2 次</text>
+
+    <!-- 点 d -->
+    <circle cx="246" cy="128" r="8" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <path d="M 246 120 L 246 74" stroke="#d6a040" stroke-width="1.6" marker-end="url(#arr)"/>
+    <text x="246" y="66" text-anchor="middle" font-size="12" fill="#a06c10">X = d：0 次改动</text>
+    <path d="M 334 128 L 334 150" stroke="#888" stroke-width="1.4"/>
+    <text x="334" y="166" text-anchor="middle" font-size="12" fill="#666">T</text>
+    <text x="246" y="166" text-anchor="middle" font-size="12" fill="#666">d</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12">
+    <rect x="40" y="196" width="500" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+    <text x="56" y="220">设 a ≤ b、d = b − a。只改一个元素、保留另一个：</text>
+    <text x="56" y="242">保留 a 需 a + X ≤ k 或 a − X ≥ 0；保留 b 需 b + X ≤ k 或 b − X ≥ 0</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12">
+    <rect x="40" y="272" width="500" height="68" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+    <text x="56" y="296" fill="#a06c10">合并四个条件（a ≤ b）：恰好等价于 X ≤ max(k − a, b) = T</text>
+    <text x="56" y="318" fill="#a06c10">而 d = b − a ≤ b ≤ T，所以「0 次点」永远落在绿带内</text>
+    <text x="56" y="334" fill="#666">X &gt; T 时四个条件同时不成立 ⇒ 两格都要改（X ≤ k 保证总能改成 0 与 X）</text>
+  </g>
+</svg>

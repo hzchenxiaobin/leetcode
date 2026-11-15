@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="340" fill="#fafafa"/>
+  <text x="290" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">胜利条件：玩家 i 需要「某个颜色 ≥ i + 1 个」</text>
+
+  <g filter="url(#rough2)" font-size="12">
+    <rect x="40" y="52" width="200" height="70" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="140" y="76" text-anchor="middle" fill="#446688">玩家 0</text>
+    <text x="140" y="98" text-anchor="middle" fill="#333">任取 1 个球即胜</text>
+    <text x="140" y="114" text-anchor="middle" fill="#666">cnt[0][c] ≥ 1</text>
+
+    <rect x="256" y="52" width="200" height="70" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="356" y="76" text-anchor="middle" fill="#446688">玩家 1</text>
+    <text x="356" y="98" text-anchor="middle" fill="#333">需要 2 个同色球</text>
+    <text x="356" y="114" text-anchor="middle" fill="#666">cnt[1][c] ≥ 2</text>
+
+    <rect x="140" y="140" width="300" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <text x="290" y="164" text-anchor="middle" fill="#a06c10">… 玩家 i 的门槛是 i + 1</text>
+    <text x="290" y="184" text-anchor="middle" fill="#666">即 max_c cnt[i][c] &gt; i</text>
+
+    <path d="M 140 122 L 220 140" stroke="#446688" stroke-width="1.4" marker-end="url(#arr)"/>
+    <path d="M 356 122 L 330 140" stroke="#446688" stroke-width="1.4" marker-end="url(#arr)"/>
+
+    <rect x="40" y="214" width="240" height="88" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="160" y="238" text-anchor="middle" fill="#2d5a22">同色球严格多于 i 个</text>
+    <text x="160" y="262" text-anchor="middle" fill="#333">颜色不必固定，</text>
+    <text x="160" y="282" text-anchor="middle" fill="#333">任一颜色达标即可</text>
+
+    <rect x="300" y="214" width="240" height="88" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="420" y="238" text-anchor="middle" fill="#b85450">未拿球的玩家不胜利</text>
+    <text x="420" y="262" text-anchor="middle" fill="#333">因为 0 &gt; i 不成立</text>
+    <text x="420" y="282" text-anchor="middle" fill="#333">（含玩家 0）</text>
+  </g>
+
+  <text x="290" y="326" text-anchor="middle" font-size="11" fill="#777" filter="url(#rough2)">实现：n × 11 的计数矩阵 + 逐玩家扫描，O(n·11 + |pick|)</text>
+</svg>

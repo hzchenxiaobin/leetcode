@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="131"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+  <text x="290" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">换根 DP：down 看子树，up 看"外面"</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 176 84 L 176 136" stroke="#446688" stroke-width="1.8" fill="none"/>
+    <path d="M 176 168 L 100 224" stroke="#446688" stroke-width="1.8" fill="none"/>
+    <path d="M 176 168 L 258 224" stroke="#446688" stroke-width="1.8" fill="none"/>
+
+    <circle cx="176" cy="66" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="176" y="72" text-anchor="middle" font-size="13" fill="#446688">p</text>
+    <circle cx="176" cy="152" r="22" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <text x="176" y="158" text-anchor="middle" font-size="13" fill="#2d5a22">u</text>
+    <circle cx="94" cy="240" r="22" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <text x="94" y="246" text-anchor="middle" font-size="13" fill="#a06c10">c</text>
+    <circle cx="264" cy="240" r="22" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <text x="264" y="246" text-anchor="middle" font-size="13" fill="#b85450">s</text>
+
+    <path d="M 168 96 L 168 124" stroke="#4a7a3a" stroke-width="1.6" marker-end="url(#arr)"/>
+    <text x="150" y="116" text-anchor="end" font-size="11" fill="#2d5a22">down</text>
+    <path d="M 176 132 L 176 104" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr2)"/>
+    <text x="204" y="116" font-size="11" fill="#b85450">up</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12">
+    <rect x="330" y="48" width="228" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+    <text x="346" y="72" fill="#2d5a22">down[u] = max over 子节点 ch</text>
+    <text x="346" y="94" fill="#2d5a22">（w(ch) + down[ch]）</text>
+    <text x="346" y="118" fill="#666">子树内的最长加权路径</text>
+
+    <rect x="330" y="148" width="228" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+    <text x="346" y="172" fill="#b85450">up[u] = 从 u 向上（子树外）</text>
+    <text x="346" y="194" fill="#b85450">的最长加权路径；up[root] = 0</text>
+    <text x="346" y="218" fill="#666">两者取 max 即 times[u]</text>
+
+    <rect x="330" y="248" width="228" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+    <text x="346" y="272" fill="#446688">换根公式（c 是 u 的子节点）：</text>
+    <text x="346" y="294" fill="#333">up[c] = w(u) +</text>
+    <text x="346" y="314" fill="#333">max( up[u], 最佳兄弟分支 )</text>
+    <text x="346" y="336" fill="#666">兄弟最佳值用 top1 / top2 维护</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12">
+    <rect x="52" y="356" width="504" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <text x="68" y="378" fill="#a06c10">答 times[u] = max(down[u], up[u])：一次后序 + 一次前序，O(n)</text>
+  </g>
+</svg>
