@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="17"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="32" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">乘法溢出：三个 9999 就把 int 挤爆了</text>
+
+  <!-- 数轴刻度说明 -->
+  <g filter="url(#rough2)" font-size="12" fill="#666">
+    <text x="70" y="70">数值（对数示意，非等比）</text>
+  </g>
+
+  <!-- 条 1：int 上限 -->
+  <rect x="150" y="86" width="120" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="280" y="104" font-size="12" fill="#446688" filter="url(#rough2)">int 上限 2³¹−1 ≈ 2.1×10⁹</text>
+
+  <!-- 条 2：Bulky 阈值 -->
+  <rect x="150" y="126" width="130" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="290" y="144" font-size="12" fill="#2d5a22" filter="url(#rough2)">体积阈值 10⁹（含等于）</text>
+
+  <!-- 条 3：9999^3 -->
+  <rect x="150" y="166" width="180" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="150" y="164" font-size="11" fill="#7a5c1e" filter="url(#rough2)" text-anchor="middle" transform="translate(90,-6)">9999³ ≈ 9.997×10¹¹</text>
+  <!-- 溢出断裂标记 -->
+  <path d="M 272 179 L 262 173 M 272 179 L 262 185" stroke="#b85450" stroke-width="2.5" fill="none" filter="url(#rough2)"/>
+  <path d="M 272 179 L 282 173 M 272 179 L 282 185" stroke="#b85450" stroke-width="2.5" fill="none" filter="url(#rough2)"/>
+  <text x="340" y="184" font-size="12" fill="#b85450" filter="url(#rough2)">← 已在 int 范围外！</text>
+
+  <!-- 条 4：极端上界 -->
+  <rect x="150" y="206" width="240" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4" filter="url(#rough2)"/>
+  <text x="400" y="224" font-size="12" fill="#b85450" filter="url(#rough2)">最坏 (10⁵)³ = 10¹⁵</text>
+
+  <!-- 错误演算 vs 正确演算 -->
+  <rect x="50" y="258" width="230" height="96" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="165" y="282" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">✗ int 乘法（截断）</text>
+  <g filter="url(#rough2)" font-size="12" fill="#8a4a47" text-anchor="middle">
+    <text x="165" y="304">9999×9999×9999</text>
+    <text x="165" y="322">→ 截断成负数 ≈ −1.88×10⁹</text>
+    <text x="165" y="340">→ 误判 "Neither"</text>
+  </g>
+
+  <rect x="300" y="258" width="230" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="415" y="282" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">✓ long long 乘法</text>
+  <g filter="url(#rough2)" font-size="12" fill="#2d5a22" text-anchor="middle">
+    <text x="415" y="304">(long long)a * b * c</text>
+    <text x="415" y="322">→ 999700029999 ≥ 10⁹</text>
+    <text x="415" y="340">→ 正确返回 "Bulky"</text>
+  </g>
+  <path d="M 282 306 C 292 296, 296 296, 304 306" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+</svg>

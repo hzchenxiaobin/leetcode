@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="15"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="31"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">异或按位独立：第 b 位只看命中次数的奇偶</text>
+
+  <!-- 左：位矩阵 -->
+  <text x="150" y="64" text-anchor="middle" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">每位单独算：设该位为 1 的元素有 c 个</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="80" width="44" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="104" y="80" width="44" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="148" y="80" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="60" y="110" width="44" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="104" y="110" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="148" y="110" width="44" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="60" y="140" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="104" y="140" width="44" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="148" y="140" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="82" y="100">0</text><text x="126" y="100">1</text><text x="170" y="100" fill="#2d5a22">1</text>
+    <text x="82" y="130">0</text><text x="126" y="130" fill="#2d5a22">1</text><text x="170" y="130">0</text>
+    <text x="82" y="160" fill="#2d5a22">1</text><text x="126" y="160">0</text><text x="170" y="160" fill="#2d5a22">1</text>
+  </g>
+  <text x="104" y="192" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">行 = 元素，列 = 二进制位</text>
+  <text x="104" y="208" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">绿格 = 该位为 1，此列 c = 2</text>
+
+  <!-- 中：三元组贡献条件 -->
+  <rect x="250" y="76" width="270" height="110" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e">
+    <text x="385" y="100" text-anchor="middle">((a[i] | a[j]) &amp; a[k]) 的第 b 位 = 1</text>
+    <text x="385" y="122" text-anchor="middle">⟺ a[k] 该位 = 1  且</text>
+    <text x="385" y="142" text-anchor="middle">a[i]、a[j] 至少一个该位 = 1</text>
+    <text x="385" y="166" text-anchor="middle">命中三元组数 N = c·(n² − (n−c)²)</text>
+  </g>
+
+  <!-- 下：奇偶讨论 -->
+  <path d="M 385 186 C 385 206, 385 212, 385 222" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="226" width="180" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+    <rect x="320" y="226" width="200" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" text-anchor="middle">
+    <text x="150" y="248" fill="#2d5a22">c 为偶数 → N 必为偶</text>
+    <text x="150" y="268" fill="#2d5a22">该位答案 = 0</text>
+    <text x="420" y="248" fill="#b85450">c 为奇数 → N = c·(n²−(n−c)²)</text>
+    <text x="420" y="268" fill="#b85450">(n²−(n−c)²) = c(2n−c) 为奇 → 该位 = 1</text>
+  </g>
+
+  <!-- 结论 -->
+  <rect x="60" y="300" width="460" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="290" y="322" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">答案第 b 位 = c 为奇数 ⟺ 全体元素第 b 位的异或</text>
+  <text x="290" y="342" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">于是整数的答案 = nums 全体异或（每一位都一致）</text>
+</svg>

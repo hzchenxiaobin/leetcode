@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="9"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="23"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">一个计数器替代整个定长窗口</text>
+
+  <!-- 数据流 -->
+  <text x="70" y="66" font-size="13" fill="#666" filter="url(#rough2)">数据流：</text>
+  <g filter="url(#rough2)">
+    <rect x="130" y="48" width="44" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="178" y="48" width="44" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="226" y="48" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="274" y="48" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="322" y="48" width="44" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="370" y="48" width="44" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="152" y="68">3</text><text x="200" y="68">9</text>
+    <text x="248" y="68">4</text><text x="296" y="68">4</text><text x="344" y="68">4</text>
+    <text x="392" y="68">3</text>
+  </g>
+  <!-- 窗口框 -->
+  <rect x="222" y="40" width="150" height="46" fill="none" stroke="#b85450" stroke-width="2.5" stroke-dasharray="7 5" rx="6" filter="url(#rough2)"/>
+  <text x="297" y="32" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">最后 k=3 个数</text>
+  <text x="424" y="68" font-size="12" fill="#b85450" filter="url(#rough2)">← 异类打断</text>
+
+  <!-- 状态转移 -->
+  <text x="70" y="130" font-size="13" fill="#666" filter="url(#rough2)">计数器 cnt（尾部连续等于 value 的长度）：</text>
+
+  <!-- 命中转移 -->
+  <rect x="90" y="150" width="90" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="135" y="175" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">cnt</text>
+  <path d="M 180 170 L 260 170" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="220" y="160" text-anchor="middle" font-size="12" fill="#2d5a22" filter="url(#rough2)">num == value</text>
+  <rect x="262" y="150" width="110" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="317" y="175" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">cnt + 1</text>
+
+  <!-- 未命中归零 -->
+  <rect x="90" y="216" width="90" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="135" y="241" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">cnt</text>
+  <path d="M 180 236 L 260 236" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="220" y="226" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">num ≠ value</text>
+  <rect x="262" y="216" width="110" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="317" y="241" text-anchor="middle" font-size="13" fill="#b85450" filter="url(#rough2)">cnt = 0</text>
+  <text x="400" y="240" font-size="12" fill="#666" filter="url(#rough2)">不是减一！</text>
+  <text x="400" y="256" font-size="12" fill="#666" filter="url(#rough2)">是彻底归零</text>
+
+  <!-- 判定 -->
+  <rect x="90" y="286" width="150" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="165" y="311" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">更新后判 cnt ≥ k</text>
+  <path d="M 245 306 L 300 306" stroke="#d6a040" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="302" y="286" width="80" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+    <rect x="392" y="286" width="80" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle">
+    <text x="342" y="311" fill="#2d5a22">true</text>
+    <text x="432" y="311" fill="#b85450">false</text>
+  </g>
+  <text x="90" y="356" font-size="12" fill="#666" filter="url(#rough2)">窗口里具体是哪些数无关紧要——一个异类就判负所有重叠窗口，"归零"完整编码了这一点</text>
+</svg>

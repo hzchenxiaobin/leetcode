@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="83"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">按 nums2 降序扫描 + 大小为 k 的小顶堆</text>
+
+  <!-- 扫描序列 -->
+  <text x="70" y="62" font-size="13" fill="#666" filter="url(#rough2)">扫描顺序（nums2 降序）：</text>
+  <g filter="url(#rough2)">
+    <rect x="230" y="46" width="66" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="300" y="46" width="66" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="370" y="46" width="66" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="440" y="46" width="66" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="263" y="62">下标3</text><text x="333" y="62">下标2</text>
+    <text x="403" y="62">下标0</text><text x="473" y="62">下标1</text>
+    <text x="263" y="77" fill="#2d5a22">b=4</text><text x="333" y="77" fill="#446688">b=3</text>
+    <text x="403" y="77" fill="#7a5c1e">b=2</text><text x="473" y="77" fill="#b85450">b=1</text>
+  </g>
+
+  <!-- 堆 -->
+  <text x="70" y="126" font-size="13" fill="#666" filter="url(#rough2)">小顶堆（保留已见 nums1 的前 k 大）：</text>
+  <!-- 堆形状（金字塔示意） -->
+  <g filter="url(#rough2)">
+    <ellipse cx="280" cy="180" rx="26" ry="20" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <ellipse cx="210" cy="238" rx="26" ry="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <ellipse cx="350" cy="238" rx="26" ry="20" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="280" y="185" fill="#b85450" font-weight="bold">堆顶=最小</text>
+    <text x="210" y="243">候选</text><text x="350" y="243">候选</text>
+  </g>
+  <path d="M 258 192 C 240 208, 232 216, 228 222" fill="none" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <path d="M 302 192 C 320 208, 328 216, 332 222" fill="none" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <path d="M 280 156 L 280 142" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+
+  <!-- 规则 -->
+  <g filter="url(#rough2)">
+    <rect x="400" y="130" width="130" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <rect x="400" y="180" width="130" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+    <rect x="400" y="230" width="130" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" text-anchor="middle">
+    <text x="465" y="147" fill="#7a5c1e">push 新元素</text>
+    <text x="465" y="162" fill="#7a5c1e">sum 累加</text>
+    <text x="465" y="197" fill="#b85450">size &gt; k：</text>
+    <text x="465" y="212" fill="#b85450">弹出最小、sum 扣回</text>
+    <text x="465" y="247" fill="#2d5a22">size == k：</text>
+    <text x="465" y="262" fill="#2d5a22">ans = sum × b(当前)</text>
+  </g>
+
+  <!-- 候选集语义 -->
+  <rect x="60" y="290" width="440" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#446688" text-anchor="middle">
+    <text x="280" y="308">已见元素全满足 b ≥ 当前瓶颈 b 值</text>
+    <text x="280" y="326">堆里是它们中 nums1 最大的 k 个 → sum × 当前 b 即该瓶颈下的最优</text>
+  </g>
+  <text x="280" y="366" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">“枚举瓶颈 + 堆维护前 k 大”把 C(n,k) 的组合搜索压成 O(n log n)</text>
+</svg>

@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="33"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="43"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">贪心：城市 i 缺电 → 新站放到 min(i+r, n−1)</text>
+
+  <!-- 城市轴 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="130" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="96" y="130" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="152" y="130" width="52" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="4"/>
+    <rect x="208" y="130" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="264" y="130" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="320" y="130" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="376" y="130" width="52" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="66" y="157">城0</text><text x="122" y="157">城1</text>
+    <text x="178" y="157" fill="#b85450" font-weight="bold">城2</text>
+    <text x="234" y="157">城3</text><text x="290" y="157">城4</text>
+    <text x="346" y="157">城5</text><text x="402" y="157">城6</text>
+  </g>
+  <text x="178" y="112" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">i：电量 &lt; m，缺口 t</text>
+
+  <!-- i±r 标注 -->
+  <path d="M 152 96 L 152 122" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <path d="M 264 96 L 264 122" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="208" y="90" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">i−r　　　　　i+r</text>
+  <path d="M 152 96 L 264 96" stroke="#b85450" stroke-width="1.2" stroke-dasharray="5 4" filter="url(#rough2)"/>
+
+  <!-- 位置 A：放 i 本身（较差） -->
+  <g filter="url(#rough2)">
+    <rect x="158" y="196" width="40" height="26" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#7a5c1e" text-anchor="middle">
+    <text x="178" y="213">t 座</text>
+  </g>
+  <path d="M 178 182 C 178 188, 178 190, 178 194" fill="none" stroke="#d6a040" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 110 236 L 246 236" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="100" y="258" font-size="11.5" fill="#7a5c1e" filter="url(#rough2)">放在 i：覆盖 [i−r, i+r]，右端到 i+r 就停了</text>
+
+  <!-- 位置 B：放 i+r（更优） -->
+  <g filter="url(#rough2)">
+    <rect x="270" y="196" width="40" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#2d5a22" text-anchor="middle">
+    <text x="290" y="213">t 座</text>
+  </g>
+  <path d="M 290 182 C 290 186, 290 190, 290 194" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <text x="290" y="182" text-anchor="middle" font-size="12" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">p = min(i+r, n−1)</text>
+  <path d="M 186 232 L 402 232" stroke="#4a7a3a" stroke-width="2.4" filter="url(#rough2)"/>
+  <text x="186" y="258" font-size="11.5" fill="#2d5a22" filter="url(#rough2)">放在 p：同样覆盖 i，但一直护送到 p+r —— 多护送 r 座城</text>
+
+  <!-- 差分失效 -->
+  <rect x="60" y="286" width="440" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e">
+    <text x="280" y="308" text-anchor="middle">差分回收：在 p 放的 t 座站只活到城市 p+r；</text>
+    <text x="280" y="328" text-anchor="middle">扫描到 p+r+1 时 expire[p+r+1] −= t，cover 自动扣回</text>
+  </g>
+
+  <text x="280" y="372" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">“最右放置 + 逐城补缺口”的贪心正确性由主导性引理保证（见题解 §5）</text>
+</svg>
