@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="89"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">Z-box 复用：已知区段平移，只有小段需要暴力延伸</text>
+
+  <!-- 概念演示：s = "abcabdabcabx" 的经典场景抽象 -->
+  <text x="280" y="60" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">设最右 Z-box [l, r]（绿色框内 s[l..r] = s[0..r-l]）</text>
+
+  <!-- 第一行：s 本体 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="76" width="44" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="104" y="76" width="44" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="148" y="76" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="192" y="76" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="236" y="76" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="280" y="76" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="324" y="76" width="44" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="368" y="76" width="44" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="82" y="98">s₀</text><text x="126" y="98">s₁</text><text x="170" y="98">s₂</text>
+    <text x="214" y="98">s₃</text><text x="258" y="98">s₄</text><text x="302" y="98">s₅</text>
+    <text x="346" y="98">s₆</text><text x="390" y="98">…</text>
+  </g>
+  <text x="200" y="128" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">l=2, r=5：绿色段与前缀完全相同</text>
+
+  <!-- 第二行：对齐前缀（上方镜像） -->
+  <g filter="url(#rough2)">
+    <rect x="148" y="140" width="44" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="192" y="140" width="44" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="236" y="140" width="44" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="280" y="140" width="44" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#7a5c1e" text-anchor="middle">
+    <text x="170" y="162">= s₂</text><text x="214" y="162">= s₃</text><text x="258" y="162">= s₄</text><text x="302" y="162">= s₅</text>
+  </g>
+  <text x="132" y="162" font-size="12" fill="#d6a040" filter="url(#rough2)" text-anchor="end">s[0..3]</text>
+  <path d="M 170 174 C 170 208, 170 216, 170 224" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 新位置 i 落在 box 内 -->
+  <text x="280" y="206" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">新位置 i=4 ∈ [l, r]，对应前缀位置 k = i − l = 2</text>
+
+  <g filter="url(#rough2)">
+    <rect x="148" y="226" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="192" y="226" width="44" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="4"/>
+    <rect x="236" y="226" width="44" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="280" y="226" width="44" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="170" y="248">i=3</text><text x="214" y="248" fill="#b85450" font-weight="bold">i</text><text x="258" y="248">…</text><text x="302" y="248">r</text>
+  </g>
+  <!-- z[k] 截断示意 -->
+  <g filter="url(#rough2)">
+    <rect x="192" y="268" width="44" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5 3" rx="4"/>
+    <rect x="236" y="268" width="44" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5 3" rx="4"/>
+  </g>
+  <text x="280" y="288" font-size="12" fill="#b85450" filter="url(#rough2)" text-anchor="middle">z[k] 这段长度的匹配可以直接「抄」过来</text>
+
+  <!-- 三种情况说明 -->
+  <g filter="url(#rough2)" font-size="12.5" fill="#555">
+    <text x="70" y="326">① z[k] &lt; r−i+1（未越右端）：z[i] = z[k]，零比较；</text>
+    <text x="70" y="348">② z[k] &gt; r−i+1：z[i] = r−i+1，被封顶；</text>
+    <text x="70" y="370">③ 恰好到 r：从 z[i] = r−i+1 起继续逐位暴力延伸。</text>
+  </g>
+
+  <rect x="390" y="316" width="150" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="465" y="340" text-anchor="middle" font-size="12.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">r 只增不减，每个字符</text>
+  <text x="465" y="358" text-anchor="middle" font-size="12.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">至多推动 r 一步 → O(n)</text>
+</svg>

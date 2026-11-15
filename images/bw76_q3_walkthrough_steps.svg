@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="149"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">withdraw(550) 的逐步演算：贪心为何恰好成功</text>
+
+  <!-- 初始库存（官方示例第二次存款后 [0,1,0,3,1]） -->
+  <text x="280" y="62" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">库存 [0,1,0,3,1]（20×0, 50×1, 100×0, 200×3, 500×1），amount = 550</text>
+
+  <g filter="url(#rough2)">
+    <rect x="80" y="78" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="168" y="78" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="256" y="78" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="344" y="78" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="432" y="78" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="120" y="97">500</text><text x="208" y="97">200</text><text x="296" y="97">100</text>
+    <text x="384" y="97">50</text><text x="472" y="97">20</text>
+    <text x="120" y="115">×1</text><text x="208" y="115">×3</text><text x="296" y="115">×0</text>
+    <text x="384" y="115">×1</text><text x="472" y="115">×0</text>
+  </g>
+
+  <!-- 贪心步骤表 -->
+  <g filter="url(#rough2)" font-size="13" fill="#555">
+    <text x="96" y="160">500：rest/500 = 1，库存 1 → take 1 张，rest 550 → 50</text>
+    <text x="96" y="186">200：rest/200 = 0 → take 0 张</text>
+    <text x="96" y="212">100：rest/100 = 0 → take 0 张</text>
+    <text x="96" y="238">50：rest/50 = 1，库存 1 → take 1 张，rest 50 → 0</text>
+    <text x="96" y="264">20：rest = 0 → take 0 张；rest == 0 → 成功！</text>
+  </g>
+
+  <!-- 结果 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="286" width="360" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="280" y="313" text-anchor="middle" font-size="14" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">返回 [0,1,0,0,1]：50×1 + 500×1 = 550 ✓</text>
+
+  <rect x="100" y="342" width="360" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="362" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">对比 withdraw(600)：贪心到 50 面额时 rest=100 无法凑出 → [-1]</text>
+</svg>

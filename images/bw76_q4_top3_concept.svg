@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="113"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">固定中间边：u—v 撑起序列的「腰」，两端各挑一个邻居</text>
+
+  <!-- 序列形态 -->
+  <g filter="url(#rough2)">
+    <circle cx="120" cy="110" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <circle cx="230" cy="110" r="26" fill="#fce4ec" stroke="#b85450" stroke-width="2.5"/>
+    <circle cx="340" cy="110" r="26" fill="#fce4ec" stroke="#b85450" stroke-width="2.5"/>
+    <circle cx="450" cy="110" r="22" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle">
+    <text x="120" y="116">x</text><text x="230" y="116" font-weight="bold">u</text>
+    <text x="340" y="116" font-weight="bold">v</text><text x="450" y="116">y</text>
+  </g>
+  <path d="M 142 110 L 204 110" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 256 110 L 314 110" stroke="#b85450" stroke-width="3" filter="url(#rough2)"/>
+  <path d="M 366 110 L 428 110" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="12" fill="#888" text-anchor="middle">
+    <text x="173" y="98">边 (x,u)</text><text x="285" y="94">中间边 (u,v)</text><text x="397" y="98">边 (v,y)</text>
+  </g>
+  <text x="280" y="156" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">合法序列 ⟺ x、y 互不相同且都不等于 u、v，x 是 u 的邻居、y 是 v 的邻居</text>
+
+  <!-- 为何存前 3 大 -->
+  <text x="280" y="196" text-anchor="middle" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">为什么每个节点只需保留「得分前 3 大」的邻居？</text>
+
+  <!-- 三条排除示意 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="216" width="150" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <rect x="220" y="216" width="150" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <rect x="380" y="216" width="130" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#7a5c1e" text-anchor="middle">
+    <text x="135" y="238">候选① 可能 = v</text><text x="135" y="256">（中间边的另一端）</text>
+    <text x="295" y="238">候选② 可能 = y</text><text x="295" y="256">（对端选中的同一点）</text>
+    <text x="445" y="238">候选③ 一定可用</text><text x="445" y="256">（≠v、≠y）</text>
+  </g>
+
+  <path d="M 135 278 C 135 292, 240 300, 270 304" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <path d="M 445 278 C 445 292, 340 300, 310 304" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arrO)" filter="url(#rough2)"/>
+
+  <rect x="110" y="308" width="340" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="330" text-anchor="middle" font-size="13.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">top3 之外的邻居一定不优：最优 x 至多被排除 2 个名额</text>
+  <text x="280" y="352" text-anchor="middle" font-size="13" fill="#2d5a22" filter="url(#rough2)">枚举 top[u] × top[v] 共 ≤ 9 种组合，去重后取最大总分</text>
+</svg>

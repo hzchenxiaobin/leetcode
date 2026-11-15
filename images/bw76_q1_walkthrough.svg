@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="137"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">示例走查：nums = [-4, -2, 1, 4, 8]</text>
+
+  <!-- 数组格子 -->
+  <g filter="url(#rough2)">
+    <rect x="100" y="60" width="72" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="180" y="60" width="72" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="260" y="60" width="72" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="340" y="60" width="72" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="420" y="60" width="72" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle">
+    <text x="136" y="87">−4</text><text x="216" y="87">−2</text>
+    <text x="296" y="87" font-weight="bold" fill="#2d5a22">1</text>
+    <text x="376" y="87">4</text><text x="456" y="87">8</text>
+  </g>
+
+  <!-- 逐步 best 表 -->
+  <g filter="url(#rough2)" font-size="13" fill="#555">
+    <text x="96" y="140">读入 −4：best = −4（首个元素直接接管）</text>
+    <text x="96" y="166">读入 −2：|−2| = 2 &lt; |−4| = 4 → best = −2</text>
+    <text x="96" y="192">读入 1：|1| = 1 &lt; 2 → best = 1</text>
+    <text x="96" y="218">读入 4：|4| = 4 ≥ 1，且不相等 → best 不变</text>
+    <text x="96" y="244">读入 8：|8| = 8 ≥ 1 → best 不变</text>
+  </g>
+
+  <!-- 平局判定补充 -->
+  <rect x="80" y="266" width="400" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="291" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">若读入的是 −1：|−1| = |1| 且 −1 &lt; 1 → best 仍是 1（取大）</text>
+
+  <rect x="110" y="318" width="340" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="340" text-anchor="middle" font-size="13.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">最终返回 best = 1 ✓（与官方示例一致）</text>
+</svg>

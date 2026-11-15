@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="53"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">组合数视角：结果 = Σ C(n−1, i)·aᵢ (mod 10)</text>
+
+  <!-- n=5 的帕斯卡展开 -->
+  <text x="280" y="60" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">n = 5：每个元素向下「扩散」的路径数 = C(4, i)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="120" y="76" width="64" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="188" y="76" width="64" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="256" y="76" width="64" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="324" y="76" width="64" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="392" y="76" width="64" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="152" y="99">1</text><text x="220" y="99">2</text><text x="288" y="99">3</text><text x="356" y="99">4</text><text x="424" y="99">5</text>
+  </g>
+
+  <!-- 系数行 -->
+  <g filter="url(#rough2)" font-size="15" fill="#b85450" font-weight="bold" text-anchor="middle">
+    <text x="152" y="146">×1</text><text x="220" y="146">×4</text><text x="288" y="146">×6</text><text x="356" y="146">×4</text><text x="424" y="146">×1</text>
+  </g>
+  <text x="96" y="146" font-size="13" fill="#446688" filter="url(#rough2)" text-anchor="end">C(4,i)</text>
+  <path d="M 280 116 C 280 124, 280 128, 280 134" fill="none" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 求和 -->
+  <rect x="70" y="166" width="420" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="191" text-anchor="middle" font-size="14" fill="#7a5c1e" filter="url(#rough2)">1·1 + 4·2 + 6·3 + 4·4 + 1·5 = 48 → 48 mod 10 = 8 ✓</text>
+
+  <!-- 关键性质说明 -->
+  <text x="280" y="234" text-anchor="middle" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">直接算 C(n−1, i) mod 10 并不省事：</text>
+  <g filter="url(#rough2)" font-size="13" fill="#555">
+    <text x="110" y="260">· C(n−1, i) 本身巨大（n 可达 1000），需 Lucas / 分解质因数</text>
+    <text x="110" y="284">· 10 = 2×5 非质数，还得拆成 mod 2 与 mod 5 再 CRT 合并</text>
+    <text x="110" y="308">· 实现复杂度远超 O(n²) 模拟，仅在 n 极大时才有价值</text>
+  </g>
+
+  <rect x="110" y="320" width="340" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="340" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">n ≤ 1000 ⇒ 模拟 O(n²) = 10⁶ 次，稳过</text>
+</svg>
