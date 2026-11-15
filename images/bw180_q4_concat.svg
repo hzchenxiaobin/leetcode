@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 372" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="560" height="372" fill="#fafafa"/>
+  <text x="280.0" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">拼接求值：每段 O(log) 地乘进去</text>
+  <text x="280.0" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">把一段 1^a 0^b 视作二进制数 (2^a − 1)·2^b，接在后面就是 res·2^(a+b) + 该值</text>
+  <rect x="36" y="62" width="488" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="82" text-anchor="start" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 单段的值</text>
+  <text x="48" y="100" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">block(a, b) = (2^a − 1) · 2^b  mod MOD</text>
+  <text x="48" y="118" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">因为 1^a 0^b 的二进制值是 2^a − 1 再左移 b 位</text>
+  <rect x="36" y="128" width="488" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="148" text-anchor="start" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② 拼接</text>
+  <text x="48" y="166" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">res ← res · 2^(a+b) + block(a, b)  （每一步取模）</text>
+  <text x="48" y="184" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">旧串整体左移 a+b 位，再接上新段</text>
+  <rect x="36" y="194" width="488" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="214" text-anchor="start" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 指数与溢出</text>
+  <text x="48" y="232" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">a、b ≤ 10^4，Σ(a+b) ≤ 2×10^5 → 指数用快速幂，中间量用 64 位</text>
+  <text x="48" y="250" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">res 与 block 都在 [0, MOD) 内，乘一次后 &lt; 10^18，long long 安全</text>
+  <rect x="36" y="262" width="488" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="290" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">示例 2："111" + "1000" → 7·2^4 + 8 = 120 ✓</text>
+  <rect x="36" y="318" width="488" height="44" fill="#f2f2f2" stroke="#999999" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="338" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">总复杂度 O(n log maxLen + 排序)，排序是唯一的瓶颈</text>
+</svg>

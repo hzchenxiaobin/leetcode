@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280.0" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">先把「好数」全枚举出来：去重后只有 1524 个</text>
+  <text x="280.0" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">好数 = 数位严格递增 或 严格递减（一位数都算好数）</text>
+  <rect x="36" y="62" width="236" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="82" text-anchor="start" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">严格递增（数字 1–9）</text>
+  <text x="48" y="99" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">每位必须比前一位大 → 全部非零</text>
+  <text x="48" y="116" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">等价于从 {1,…,9} 取一个非空子集，升序排列</text>
+  <text x="48" y="133" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">共 2⁹ − 1 = 511 个，最大 123456789</text>
+  <rect x="288" y="62" width="236" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="300" y="82" text-anchor="start" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">严格递减（数字 0–9）</text>
+  <text x="300" y="99" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">首位最大，之后逐位变小，可含 0</text>
+  <text x="300" y="116" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">等价于从 {0,…,9} 取子集，降序排列（去掉空集与 {0}）</text>
+  <text x="300" y="133" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">共 2¹⁰ − 2 = 1022 个，最大 9876543210</text>
+  <rect x="36" y="170" width="488" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="190" text-anchor="start" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">两边都算好数的只有一位数</text>
+  <text x="48" y="208" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">1–9 既属于「递增」也属于「递减」（长度 1 时两个条件都空真）</text>
+  <text x="48" y="226" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">所以枚举时要去重，或者直接用 set 存，天然不重复</text>
+  <rect x="36" y="240" width="488" height="58" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="260" text-anchor="start" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">数位和也是好数：只需查 [1, 135]</text>
+  <text x="48" y="278" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">15 位数字的最大数位和 = 9 × 15 = 135（r ≤ 10^15）</text>
+  <text x="48" y="296" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">把 1..135 逐个判好数，得到 good_sums 集合（几十个元素）</text>
+  <text x="280" y="330" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">好数集合很小 → 「好数」这一支可以直接枚举</text>
+  <text x="280" y="352" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">数位和这一支要用数位 DP 统计数量</text>
+  <text x="280" y="386" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">注意 0：数字 0 本身不在区间内（l ≥ 1），数位和 0 也只会由 0 产生，两边都可不计</text>
+  <text x="280" y="404" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">好数最大不超过 9876543210 &lt; 10^15，枚举时不必额外截断</text>
+</svg>

@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 404" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+  <rect width="560" height="404" fill="#fafafa"/>
+  <text x="280.0" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">预处理：把 0…5000 按数位和分组，组内天然升序</text>
+  <text x="280.0" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">digitSum = [25, 1] 为例，取第 25 组与第 1 组</text>
+  <rect x="36" y="62" width="488" height="92" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="82" text-anchor="start" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">数位和 25 的组（共 80 个）</text>
+  <text x="48" y="99" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">799, 889, 898, 979, 988, 997, 1699, 1789, 1798, …</text>
+  <text x="48" y="116" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">≤ 1000 的只有前 6 个 —— 它们能与后面的 1000 组成非递减对</text>
+  <rect x="36" y="166" width="488" height="74" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="186" text-anchor="start" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">数位和 1 的组（共 4 个）</text>
+  <text x="48" y="203" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">1, 10, 100, 1000</text>
+  <text x="48" y="220" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">组内升序，所以「上一个数 ≤ 当前数」可以用二分定位</text>
+  <rect x="36" y="252" width="488" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="272" text-anchor="start" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">规模</text>
+  <text x="48" y="290" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">5001 个数分到 51 个组（数位和 0…50）</text>
+  <text x="48" y="308" text-anchor="start" font-size="10" fill="#555" filter="url(#rough2)">最大的组有 365 个元素（数位和 15、16）→ 每个位置只需在这 365 个候选里转移</text>
+  <rect x="36" y="326" width="488" height="50" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="346" text-anchor="start" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">空组 ⇒ 直接 0</text>
+  <text x="48" y="363" text-anchor="start" font-size="9.5" fill="#555" filter="url(#rough2)">若 digitSum[i] 在 [0,5000] 里没有任何数（如 49 &gt; 31），该位置无候选，答案必为 0</text>
+  <text x="280" y="392" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">分组只做一次，之后每个位置都是 O(log |组|) 的二分 + O(1) 前缀和查询</text>
+</svg>
