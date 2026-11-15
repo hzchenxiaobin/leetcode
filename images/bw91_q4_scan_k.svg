@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="33"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">枚举段数 k：找第一个可行值</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">cap(k) 随 k 位数增加不增；total(k) 大体递增 → 从小到大枚举，遇到可行即最小段数</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="66" width="440" height="170" fill="#ffffff" stroke="#bbb" stroke-width="1.2" rx="8"/>
+  </g>
+  <line x1="90" y1="200" x2="480" y2="200" stroke="#999" stroke-width="1.4" filter="url(#rough2)"/>
+  <line x1="90" y1="200" x2="90" y2="76" stroke="#999" stroke-width="1.4" filter="url(#rough2)"/>
+
+  <text x="80" y="92" font-size="10" fill="#666" text-anchor="end">total(k)</text>
+  <text x="486" y="212" font-size="10" fill="#666">k</text>
+
+  <path d="M 90 196 C 150 192, 180 170, 210 150" stroke="#4a7a3a" stroke-width="2.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 210 150 C 240 128, 250 126, 258 124" stroke="#4a7a3a" stroke-width="2.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 258 124 C 268 122, 272 140, 286 128" stroke="#446688" stroke-width="2.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 286 128 C 330 92, 380 84, 460 80" stroke="#446688" stroke-width="2.4" fill="none" filter="url(#rough2)"/>
+
+  <line x1="90" y1="216" x2="480" y2="216" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="470" y="232" font-size="10.5" fill="#b85450" text-anchor="end">需要 total(k) ≥ m（消息长度）</text>
+
+  <line x1="300" y1="70" x2="300" y2="200" stroke="#d6a040" stroke-width="1.6" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <ellipse cx="300" cy="118" rx="7" ry="7" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+  </g>
+  <text x="300" y="62" text-anchor="middle" font-size="10.5" fill="#d6a040" font-weight="bold">k*：第一个可行段数</text>
+
+  <text x="150" y="150" font-size="9.5" fill="#4a7a3a">1 位数段</text>
+  <text x="228" y="112" font-size="9.5" fill="#4a7a3a">2 位数段</text>
+  <text x="360" y="100" font-size="9.5" fill="#446688">3 位数段（跳档处略有回落的毛刺，但整体抬升）</text>
+
+  <rect x="60" y="252" width="210" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="165" y="274" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold">终止条件 cap(k) &lt; 1</text>
+  <text x="165" y="294" text-anchor="middle" font-size="10.5" fill="#555">digits(k) 只增不减，之后永远更差</text>
+
+  <rect x="290" y="252" width="210" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="395" y="274" text-anchor="middle" font-size="11" fill="#446688" font-weight="bold">k 上界 = m</text>
+  <text x="395" y="294" text-anchor="middle" font-size="10.5" fill="#555">每段至少 1 个内容字符，段数不可能超过 m</text>
+
+  <text x="280" y="342" text-anchor="middle" font-size="11" fill="#666" font-weight="bold">为什么不二分？跳档毛刺让 total(k) 非严格单调，线性枚举 O(m) 反而简单可靠</text>
+  <text x="280" y="364" text-anchor="middle" font-size="10" fill="#999">m ≤ 10⁵，k 最多枚举 10⁴ 段（digits ≤ 5），每次判断 O(1)（D(k) 滚动累加）</text>
+  <text x="280" y="384" text-anchor="middle" font-size="10" fill="#999">找到 k 后构造：逐段取 min(剩余, cap)，O(k) 拼接</text>
+</svg>

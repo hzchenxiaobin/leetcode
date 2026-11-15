@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="61"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例演算：customers = "YYNY"（n = 4）</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">枚举 j = 0..4，penalty = 前缀 N 数 + 后缀 Y 数，取最早最小</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="62" width="480" height="220" fill="#ffffff" stroke="#bbb" stroke-width="1.2" rx="8"/>
+  </g>
+
+  <text x="66" y="88" font-size="11" fill="#666" font-weight="bold">j</text>
+  <text x="130" y="88" font-size="11" fill="#666" font-weight="bold">开门时段</text>
+  <text x="250" y="88" font-size="11" fill="#666" font-weight="bold">关门时段</text>
+  <text x="380" y="88" font-size="11" fill="#666" font-weight="bold">prefixN + suffixY</text>
+
+  <text x="66" y="112" font-size="12" fill="#555">0</text>
+  <text x="130" y="112" font-size="11" fill="#999">（空）</text>
+  <text x="250" y="112" font-size="11" fill="#555">YYNY</text>
+  <text x="380" y="112" font-size="11" fill="#555">0 + 3 = 3</text>
+  <line x1="56" y1="120" x2="504" y2="120" stroke="#eee" stroke-width="1"/>
+
+  <text x="66" y="140" font-size="12" fill="#555">1</text>
+  <text x="130" y="140" font-size="11" fill="#4a7a3a">Y</text>
+  <text x="250" y="140" font-size="11" fill="#555">YNY</text>
+  <text x="380" y="140" font-size="11" fill="#555">0 + 2 = 2</text>
+  <line x1="56" y1="148" x2="504" y2="148" stroke="#eee" stroke-width="1"/>
+
+  <text x="66" y="168" font-size="12" fill="#555">2</text>
+  <text x="130" y="168" font-size="11" fill="#4a7a3a">YY</text>
+  <text x="250" y="168" font-size="11" fill="#555">NY</text>
+  <text x="380" y="168" font-size="12" fill="#b85450" font-weight="bold">0 + 1 = 1 ← 最小（最早）</text>
+  <line x1="56" y1="176" x2="504" y2="176" stroke="#eee" stroke-width="1"/>
+
+  <text x="66" y="196" font-size="12" fill="#555">3</text>
+  <text x="130" y="196" font-size="11" fill="#4a7a3a">YYN</text>
+  <text x="250" y="196" font-size="11" fill="#555">Y</text>
+  <text x="380" y="196" font-size="11" fill="#555">1 + 1 = 2</text>
+  <line x1="56" y1="204" x2="504" y2="204" stroke="#eee" stroke-width="1"/>
+
+  <text x="66" y="224" font-size="12" fill="#555">4</text>
+  <text x="130" y="224" font-size="11" fill="#4a7a3a">YYNY</text>
+  <text x="250" y="224" font-size="11" fill="#999">（空）</text>
+  <text x="380" y="224" font-size="11" fill="#555">1 + 0 = 1</text>
+  <line x1="56" y1="232" x2="504" y2="232" stroke="#eee" stroke-width="1"/>
+
+  <text x="66" y="258" font-size="11" fill="#666" font-weight="bold">结论</text>
+  <text x="380" y="258" font-size="11" fill="#666" font-weight="bold">j = 2 与 j = 4 并列最小，取更早的 j = 2 ✓</text>
+
+  <rect x="40" y="298" width="230" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="155" y="320" text-anchor="middle" font-size="11" fill="#4a7a3a" font-weight="bold">对照示例 2："NNNNN"</text>
+  <text x="155" y="338" text-anchor="middle" font-size="10.5" fill="#555">j=0 代价 0（全程关门最优）→ 答案 0</text>
+
+  <rect x="290" y="298" width="230" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="405" y="320" text-anchor="middle" font-size="11" fill="#d6a040" font-weight="bold">对照示例 3："YYYY"</text>
+  <text x="405" y="338" text-anchor="middle" font-size="10.5" fill="#555">j=4 代价 0（全程营业最优）→ 答案 4</text>
+
+  <text x="280" y="380" text-anchor="middle" font-size="10" fill="#999">并列时必须取更小 j：代码里用「严格小于」比较才不会把 j=4 覆盖掉 j=2</text>
+</svg>

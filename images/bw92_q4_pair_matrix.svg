@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="69"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">中心右移一位：pre2 / suf2 的增量维护</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">每步 O(10×10) 更新两个矩阵，总复杂度 O(n·10²)，免去每次重算前缀后缀</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="70" width="44" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="84" y="70" width="44" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="128" y="70" width="44" height="40" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="4"/>
+    <rect x="172" y="70" width="44" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+    <rect x="216" y="70" width="44" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+    <rect x="260" y="70" width="44" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+  </g>
+  <text x="106" y="60" font-size="10" fill="#446688" text-anchor="middle">已进入前缀</text>
+  <text x="194" y="60" font-size="10" fill="#d6a040" text-anchor="middle">中心 i</text>
+  <text x="260" y="60" font-size="10" fill="#4a7a3a" text-anchor="middle">仍在后缀</text>
+
+  <text x="106" y="95" text-anchor="middle" font-size="11" fill="#446688">…</text>
+  <text x="150" y="95" text-anchor="middle" font-size="11" fill="#446688">x</text>
+  <text x="194" y="95" text-anchor="middle" font-size="11" fill="#d6a040" font-weight="bold">c</text>
+  <text x="238" y="95" text-anchor="middle" font-size="11" fill="#4a7a3a">d</text>
+  <text x="282" y="95" text-anchor="middle" font-size="11" fill="#4a7a3a">…</text>
+
+  <text x="150" y="128" font-size="9.5" fill="#888" text-anchor="middle">s[i−1]=x</text>
+  <text x="238" y="128" font-size="9.5" fill="#888" text-anchor="middle">s[i+1]=d</text>
+
+  <path d="M 150 134 C 170 160, 218 160, 238 134" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="194" y="166" text-anchor="middle" font-size="10" fill="#666">中心右移后 x 归前缀、d 出后缀</text>
+
+  <rect x="40" y="184" width="230" height="76" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="155" y="208" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold">前缀加入字符 x（值 c）</text>
+  <text x="155" y="228" text-anchor="middle" font-size="10.5" fill="#555">新对 = (p, i)，p 为此前每个字符</text>
+  <text x="155" y="246" text-anchor="middle" font-size="10.5" fill="#555">⟹ 对每个值 v：pre2[v][x] += preCnt[v]</text>
+
+  <rect x="290" y="184" width="230" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="405" y="208" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold">后缀删除字符 d（值 x'）</text>
+  <text x="405" y="228" text-anchor="middle" font-size="10.5" fill="#555">删对 = (i+1, q)，q 为其后每个字符</text>
+  <text x="405" y="246" text-anchor="middle" font-size="10.5" fill="#555">⟹ 对每个值 v：suf2[x'][v] −= sufCnt[v]（先减计数）</text>
+
+  <rect x="40" y="278" width="230" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="155" y="300" text-anchor="middle" font-size="11" fill="#d6a040" font-weight="bold">preCnt[v]：前缀中值 v 的出现数</text>
+  <text x="155" y="318" text-anchor="middle" font-size="10.5" fill="#555">单字符计数是矩阵的「上一层」原料</text>
+
+  <rect x="290" y="278" width="230" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="405" y="300" text-anchor="middle" font-size="11" fill="#b85450" font-weight="bold">顺序陷阱：删后缀时</text>
+  <text x="405" y="318" text-anchor="middle" font-size="10.5" fill="#555">必须先 sufCnt[x']−− 再减矩阵，否则会多删一对</text>
+
+  <text x="280" y="362" text-anchor="middle" font-size="10.5" fill="#666" font-weight="bold">替换写法：前后缀各扫一遍 O(n·10²) 预处理，再枚举中心一遍同样复杂度，思路更直白</text>
+  <text x="280" y="382" text-anchor="middle" font-size="10" fill="#999">10×10 = 100 远小于 26×26（若字符集是小写字母也不怕：10⁴×676 ≈ 6.8×10⁶ 仍可过）</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="65"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">长度 5 的回文 = 中心字符 + 左右镜像对</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">t = a b c b a：枚举中心 c 的位置 i，左右各选一个有序字符对</text>
+
+  <g filter="url(#rough2)">
+    <rect x="80" y="70" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <rect x="144" y="70" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <rect x="208" y="70" width="60" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+    <rect x="272" y="70" width="60" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <rect x="336" y="70" width="60" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+  </g>
+  <text x="110" y="99" text-anchor="middle" font-size="15" fill="#446688" font-weight="bold">a</text>
+  <text x="174" y="99" text-anchor="middle" font-size="15" fill="#446688" font-weight="bold">b</text>
+  <text x="238" y="99" text-anchor="middle" font-size="15" fill="#d6a040" font-weight="bold">c</text>
+  <text x="302" y="99" text-anchor="middle" font-size="15" fill="#4a7a3a" font-weight="bold">b</text>
+  <text x="366" y="99" text-anchor="middle" font-size="15" fill="#4a7a3a" font-weight="bold">a</text>
+
+  <text x="110" y="134" text-anchor="middle" font-size="10" fill="#446688">位置 p1</text>
+  <text x="174" y="134" text-anchor="middle" font-size="10" fill="#446688">位置 p2</text>
+  <text x="238" y="134" text-anchor="middle" font-size="10" fill="#d6a040">位置 i（中心）</text>
+  <text x="302" y="134" text-anchor="middle" font-size="10" fill="#4a7a3a">位置 q1</text>
+  <text x="366" y="134" text-anchor="middle" font-size="10" fill="#4a7a3a">位置 q2</text>
+
+  <text x="110" y="152" text-anchor="middle" font-size="10" fill="#446688">p1 &lt; p2 &lt; i</text>
+  <text x="336" y="152" text-anchor="middle" font-size="10" fill="#4a7a3a">i &lt; q1 &lt; q2</text>
+
+  <path d="M 176 160 C 240 200, 320 200, 362 160" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="212" text-anchor="middle" font-size="11" fill="#b85450">s[p1]=s[q2]=a 且 s[p2]=s[q1]=b（回文约束）</text>
+
+  <rect x="60" y="232" width="220" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="256" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold">左侧：pre2[a][b]</text>
+  <text x="170" y="276" text-anchor="middle" font-size="10.5" fill="#555">前缀 s[0..i−1] 中有序对 (a,b) 的个数</text>
+
+  <rect x="300" y="232" width="220" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="410" y="256" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold">右侧：suf2[b][a]</text>
+  <text x="410" y="276" text-anchor="middle" font-size="10.5" fill="#555">后缀 s[i+1..n−1] 中有序对 (b,a) 的个数</text>
+
+  <rect x="60" y="308" width="460" height="50" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="328" text-anchor="middle" font-size="12" fill="#d6a040" font-weight="bold">答案 = Σᵢ Σₐ Σᵦ pre2[a][b] · suf2[b][a]</text>
+  <text x="290" y="348" text-anchor="middle" font-size="10.5" fill="#555">左右两侧的选择相互独立 ⟹ 乘法原理后求和；中心不同 ⟹ 回文不同，不重不漏</text>
+
+  <text x="280" y="380" text-anchor="middle" font-size="10" fill="#999">s 只含数字 '0'..'9' ⟹ (a,b) 共 10×10 = 100 种组合</text>
+</svg>

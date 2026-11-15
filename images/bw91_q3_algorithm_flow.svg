@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="21"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：两遍扫描（BFS 建树 → 按序累加）</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">全程迭代实现，n = 10⁵ 的链也不会爆栈</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="66" width="230" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="155" y="88" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold">① 从根 0 出发 BFS</text>
+  <text x="155" y="108" text-anchor="middle" font-size="10.5" fill="#555">求 parent[]、depth[] 与 BFS 序 order[]</text>
+
+  <path d="M 274 95 L 306 95" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="310" y="66" width="210" height="58" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="415" y="88" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold">② 沿 Bob 路径标记时刻</text>
+  <text x="415" y="108" text-anchor="middle" font-size="10.5" fill="#555">v=bob 逐步跳 parent，bobTime[v]=depth[bob]−depth[v]</text>
+
+  <path d="M 415 128 L 415 158" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="310" y="162" width="210" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="415" y="184" text-anchor="middle" font-size="11.5" fill="#d6a040" font-weight="bold">③ 按 BFS 序累加得分</text>
+  <text x="415" y="204" text-anchor="middle" font-size="10.5" fill="#555">score[u] = score[parent[u]] + gain(u)，父先于子</text>
+
+  <path d="M 306 191 L 274 191" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="162" width="230" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="155" y="184" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold">④ 叶子处更新答案</text>
+  <text x="155" y="204" text-anchor="middle" font-size="10.5" fill="#555">叶子 = 非根且度数为 1 的点，ans = max(ans, score)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="252" width="440" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8"/>
+  </g>
+  <text x="280" y="274" text-anchor="middle" font-size="11.5" fill="#d6a040" font-weight="bold">gain(u) 的三分支判定</text>
+  <text x="280" y="294" text-anchor="middle" font-size="10.5" fill="#555">depth &lt; bobTime → amount[u]；相等 → amount[u]/2；大于 → 0；根 u=0 恒取 amount[0]</text>
+
+  <text x="280" y="340" text-anchor="middle" font-size="11" fill="#666" font-weight="bold">为什么 BFS 序保证父先于子？</text>
+  <text x="280" y="360" text-anchor="middle" font-size="10" fill="#999">BFS 队列弹出顺序天然满足 parent 先进先出；score 只依赖父亲，一次线性遍历即可</text>
+  <text x="280" y="380" text-anchor="middle" font-size="10" fill="#999">bobTime 初始化为 +∞：不在 Bob 路径上的点永远判「先到」</text>
+</svg>

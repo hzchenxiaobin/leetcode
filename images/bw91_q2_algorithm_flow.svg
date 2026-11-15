@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="9"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：一遍 DP + 区间求和</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888">时间 O(high)，空间 O(high)；每步取模防溢出</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="66" width="180" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="150" y="88" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold">① 建数组 dp[0..high]</text>
+  <text x="150" y="106" text-anchor="middle" font-size="10.5" fill="#555">dp[0] = 1（空串），其余清 0</text>
+
+  <path d="M 244 92 L 292 92" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="296" y="66" width="200" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="396" y="88" text-anchor="middle" font-size="11.5" fill="#d6a040" font-weight="bold">② i 从 1 到 high 递推</text>
+  <text x="396" y="106" text-anchor="middle" font-size="10.5" fill="#555">i≥zero 加 dp[i−zero]；i≥one 加 dp[i−one]</text>
+
+  <path d="M 396 122 L 396 156" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="296" y="160" width="200" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="396" y="182" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold">③ 每步对 10⁹+7 取模</text>
+  <text x="396" y="200" text-anchor="middle" font-size="10.5" fill="#555">加法后立刻 % MOD，防止越界</text>
+
+  <path d="M 292 186 L 244 186" stroke="#666" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="160" width="180" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+  </g>
+  <text x="150" y="182" text-anchor="middle" font-size="11.5" fill="#4a7a3a" font-weight="bold">④ 累加 dp[low..high]</text>
+  <text x="150" y="200" text-anchor="middle" font-size="10.5" fill="#555">边累加边取模，输出答案</text>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="250" width="420" height="62" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8"/>
+  </g>
+  <text x="280" y="272" text-anchor="middle" font-size="11.5" fill="#b85450" font-weight="bold">常见错误（见 §8）</text>
+  <text x="280" y="290" text-anchor="middle" font-size="10.5" fill="#555">dp[0] 忘记置 1 ⟹ 全为 0；</text>
+  <text x="280" y="306" text-anchor="middle" font-size="10.5" fill="#555">先算总方案再减 dp[low−1] 也行，但直接区间累加更不易错</text>
+
+  <text x="280" y="348" text-anchor="middle" font-size="11" fill="#666" font-weight="bold">数据范围：high ≤ 10⁵ ⟹ 一维数组 10⁵ + 单层循环轻松通过</text>
+  <text x="280" y="370" text-anchor="middle" font-size="10" fill="#999">滚动优化空间意义不大（本来一维）；时间已是线性下界</text>
+</svg>
