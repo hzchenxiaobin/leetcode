@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="122"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：双指针窗口，坏字符超标则收缩左端</text>
+
+  <!-- 窗口示意：函数参数 other='F', k=2 -->
+  <text x="60" y="66" font-size="13" fill="#888" filter="url(#rough2)">压制字符 other = 'F'，阈值 k = 2：</text>
+  <g filter="url(#rough2)">
+    <rect x="70" y="80" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="114" y="80" width="44" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="158" y="80" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="202" y="80" width="44" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="246" y="80" width="44" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="290" y="80" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="334" y="80" width="44" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="92" y="103">T</text><text x="136" y="103">F</text><text x="180" y="103">T</text>
+    <text x="224" y="103">F</text><text x="268" y="103">F</text><text x="312" y="103">T</text>
+    <text x="356" y="103">T</text>
+  </g>
+
+  <!-- 指针 -->
+  <path d="M 92 122 L 92 148" fill="none" stroke="#4a7a3a" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="92" y="166" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">l</text>
+  <path d="M 312 122 L 312 148" fill="none" stroke="#b85450" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="312" y="166" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">r</text>
+
+  <!-- 窗口框 [l, r]，bad=2 -->
+  <rect x="66" y="74" width="252" height="48" fill="none" stroke="#4a7a3a" stroke-width="2.5" rx="8" filter="url(#rough2)"/>
+  <text x="192" y="186" text-anchor="middle" font-size="12.5" fill="#2d5a22" filter="url(#rough2)">窗口内 F 共 2 个 = k ✓（bad ≤ k，不收缩）</text>
+
+  <!-- r 右移一步后超标 -->
+  <path d="M 356 122 C 380 140, 400 140, 420 130" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="440" y="128" font-size="12.5" fill="#b85450" filter="url(#rough2)">r 再右移？</text>
+  <rect x="60" y="206" width="440" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="228" text-anchor="middle" font-size="13" fill="#7a2e2a" filter="url(#rough2)">若 bad &gt; k：while 收缩——左端 l 右移，</text>
+  <text x="280" y="250" text-anchor="middle" font-size="13" fill="#7a2e2a" filter="url(#rough2)">每跳出一个 F 就 bad−−，直到恢复 bad ≤ k</text>
+
+  <!-- 伪代码框 -->
+  <rect x="60" y="278" width="440" height="112" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333">
+    <text x="80" y="302">for r = 0 … n−1：</text>
+    <text x="100" y="322">if s[r] == other: bad++</text>
+    <text x="100" y="342">while bad &gt; k:（至多型，超标才收缩）</text>
+    <text x="122" y="362">if s[l] == other: bad−−；l++</text>
+    <text x="100" y="382">best = max(best, r − l + 1)</text>
+  </g>
+
+  <text x="280" y="410" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">l、r 各只前进不后退 ⇒ 总移动量 2n ⇒ O(n)</text>
+</svg>

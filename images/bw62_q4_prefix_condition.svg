@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="131"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：分割条件与前缀和</text>
+
+  <!-- 数组块 -->
+  <text x="60" y="66" font-size="13" fill="#888" filter="url(#rough2)">nums = [2, −1, 2]（示例 1），pivot 用竖线表示：</text>
+  <g filter="url(#rough2)">
+    <rect x="80" y="80" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="150" y="80" width="60" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="220" y="80" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="110" y="105">2</text><text x="180" y="105">−1</text><text x="250" y="105">2</text>
+  </g>
+
+  <!-- pivot=1 分割线 -->
+  <path d="M 145 72 L 145 130" stroke="#b85450" stroke-width="2.5" stroke-dasharray="7 5" fill="none" filter="url(#rough2)"/>
+  <text x="145" y="148" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">p=1</text>
+  <!-- pivot=2 分割线 -->
+  <path d="M 215 72 L 215 130" stroke="#4a7a3a" stroke-width="2.5" stroke-dasharray="7 5" fill="none" filter="url(#rough2)"/>
+  <text x="215" y="148" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">p=2</text>
+
+  <!-- 条件演算 -->
+  <rect x="60" y="166" width="440" height="94" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="84" y="192">pre = [0, 2, 1, 3]，S = pre[3] = 3</text>
+    <text x="84" y="216">p=1：左 2 ≠ 右 1 ✗　　（2·pre[1]=4 ≠ 3）</text>
+    <text x="84" y="240" fill="#2d5a22" font-weight="bold">p=2：左 2−1 = 1 ≠ 右 2 ✗（原数组无解）</text>
+  </g>
+
+  <!-- 改动后的判定 -->
+  <rect x="60" y="276" width="440" height="72" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13" fill="#2d5a22">
+    <text x="84" y="300">把 nums[0]=2 改成 k=3：δ = 1，S′ = S+δ = 4</text>
+    <text x="84" y="324" font-weight="bold">p=2：左 = pre[2] = 1+δ = 2 = S′/2 ✓（2 = 2）</text>
+  </g>
+
+  <text x="280" y="378" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">统一判定式：pivot p 合法 ⟺ 2·pre[p] = S（对改动后的数组）</text>
+  <text x="280" y="396" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">改动只让 p &gt; i 的前缀和整体 +δ，两类 pivot 分别平移</text>
+</svg>

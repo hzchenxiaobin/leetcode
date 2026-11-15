@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="133"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">示例演算：nums = [2,−1,2]，k = 3 的逐轮统计</text>
+
+  <!-- 数据行 -->
+  <rect x="60" y="56" width="440" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="81" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">pre = [0, 2, 1, 3]，S = 3，初始 right = {2:1, 1:1}，left = {}</text>
+
+  <!-- 表头 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="112" width="70" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="120" y="112" width="90" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="210" y="112" width="120" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="330" y="112" width="120" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="450" y="112" width="70" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="85" y="132">i</text><text x="165" y="132">δ=k−nums</text>
+    <text x="270" y="132">left[(S+δ)/2]</text><text x="390" y="132">right[(S−δ)/2]</text><text x="485" y="132">cand</text>
+  </g>
+
+  <!-- 三行 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="146" width="70" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="120" y="146" width="90" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="210" y="146" width="120" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="330" y="146" width="120" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="450" y="146" width="70" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+
+    <rect x="50" y="182" width="70" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="120" y="182" width="90" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="210" y="182" width="120" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="330" y="182" width="120" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="450" y="182" width="70" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+
+    <rect x="50" y="218" width="70" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="120" y="218" width="90" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="210" y="218" width="120" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="330" y="218" width="120" height="34" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="450" y="218" width="70" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="85" y="167">0</text><text x="165" y="167">3−2=1</text>
+    <text x="270" y="167">left[2] = 0（空）</text><text x="390" y="167">right[1] = 1 ✓</text>
+    <text x="485" y="167" font-weight="bold">1 ★</text>
+    <text x="85" y="203">1</text><text x="165" y="203">3−(−1)=4</text>
+    <text x="270" y="203">S+δ=7 奇 → 0</text><text x="390" y="203">S−δ=−1 奇 → 0</text>
+    <text x="485" y="203">0</text>
+    <text x="85" y="239">2</text><text x="165" y="239">3−2=1</text>
+    <text x="270" y="239">left[2] = 1 ✓（已迁入）</text><text x="390" y="239">right 已空 → 0</text>
+    <text x="485" y="239" font-weight="bold">1 ★</text>
+  </g>
+
+  <!-- 迁移注记 -->
+  <text x="60" y="272" font-size="12.5" fill="#446688" filter="url(#rough2)">迁移轨迹：i=0 统计后 pre[1]=2 迁入 left；i=1 统计后 pre[2]=1 迁入 left</text>
+
+  <!-- 结论 -->
+  <rect x="60" y="292" width="440" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="316" text-anchor="middle" font-size="13.5" fill="#2d5a22" filter="url(#rough2)">基线（不改）：S=3 奇数 → 0</text>
+  <text x="280" y="338" text-anchor="middle" font-size="14" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">ans = max(0, 1, 0, 1) = 1 ✓</text>
+
+  <text x="280" y="374" text-anchor="middle" font-size="12.5" fill="#7a2e2a" filter="url(#rough2)">i=0 改成 3 与 i=2 改成 3 都恰好带来 1 个合法 pivot（p=2）</text>
+  <text x="280" y="394" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">13 个数的大示例建议直接信程序：手算前缀和极易错位</text>
+</svg>

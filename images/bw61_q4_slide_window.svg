@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="92"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：双指针滑动窗口求最长合法子段</text>
+
+  <!-- b 数组（示例2 去重） -->
+  <text x="60" y="66" font-size="13" fill="#888" filter="url(#rough2)">排序去重后 b = [1, 2, 3, 5, 6]，n = 5，判据 b[j]−b[i] ≤ 4</text>
+  <g filter="url(#rough2)">
+    <rect x="70" y="84" width="58" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="128" y="84" width="58" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="186" y="84" width="58" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="244" y="84" width="58" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="302" y="84" width="58" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="99" y="107">1</text><text x="157" y="107">2</text>
+    <text x="215" y="107">3</text><text x="273" y="107">5</text>
+    <text x="331" y="107">6</text>
+  </g>
+
+  <!-- 指针 i, j -->
+  <path d="M 99 124 L 99 152" fill="none" stroke="#4a7a3a" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="99" y="170" text-anchor="middle" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">i</text>
+  <path d="M 331 124 L 331 152" fill="none" stroke="#b85450" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="331" y="170" text-anchor="middle" font-size="13" fill="#b85450" font-weight="bold" filter="url(#rough2)">j（开）</text>
+  <rect x="66" y="80" width="298" height="44" fill="none" stroke="#4a7a3a" stroke-width="2" rx="6" filter="url(#rough2)"/>
+  <text x="215" y="190" text-anchor="middle" font-size="12.5" fill="#2d5a22" filter="url(#rough2)">窗口 [i, j) = [1,2,3,5]，b[j−1]−b[i] = 5−1 = 4 ≤ 4 ✓</text>
+
+  <!-- 步骤表 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="212" width="120" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="180" y="212" width="180" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="360" y="212" width="140" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="60" y="246" width="120" height="30" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="180" y="246" width="180" height="30" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="360" y="246" width="140" height="30" fill="#fafafa" stroke="#bbb" stroke-width="1" rx="4"/>
+    <rect x="60" y="278" width="120" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="180" y="278" width="180" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="360" y="278" width="140" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="120" y="232">i（左端）</text><text x="270" y="232">窗口右端 j 推进到</text><text x="430" y="232">长度 j−i</text>
+    <text x="120" y="266">0</text><text x="270" y="266">4（值 6 − 1 = 5 &gt; 4 停）</text><text x="430" y="266">4</text>
+    <text x="120" y="298">1</text><text x="270" y="298">5（值 6 − 2 = 4 ≤ 4 ✓）</text><text x="430" y="298">4</text>
+  </g>
+
+  <!-- 单调性说明 -->
+  <rect x="60" y="326" width="440" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="348" text-anchor="middle" font-size="13" fill="#7a5c1e" filter="url(#rough2)">j 只前进不后退（i 增大时判据更宽松）</text>
+  <text x="280" y="370" text-anchor="middle" font-size="13" fill="#7a5c1e" font-weight="bold" filter="url(#rough2)">keep = 4 ⇒ 答案 = n − keep = 5 − 4 = 1</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="91"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">核心观察：最终区间 [L, L+n−1] 与可保留元素</text>
+
+  <!-- 值轴 -->
+  <line x1="60" y1="120" x2="500" y2="120" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="90" y="142">1</text><text x="150" y="142">2</text><text x="210" y="142">3</text>
+    <text x="270" y="142">5</text><text x="330" y="142">6</text><text x="420" y="142">…</text>
+  </g>
+  <!-- 去重值点（示例2: b=[1,2,3,5,6]） -->
+  <g filter="url(#rough2)">
+    <circle cx="90" cy="120" r="6" fill="#4a7a3a"/>
+    <circle cx="150" cy="120" r="6" fill="#4a7a3a"/>
+    <circle cx="210" cy="120" r="6" fill="#4a7a3a"/>
+    <circle cx="270" cy="120" r="6" fill="#b85450"/>
+    <circle cx="330" cy="120" r="6" fill="#b85450"/>
+  </g>
+  <text x="90" y="106" text-anchor="middle" font-size="11.5" fill="#2d5a22" filter="url(#rough2)">保留</text>
+  <text x="150" y="106" text-anchor="middle" font-size="11.5" fill="#2d5a22" filter="url(#rough2)">保留</text>
+  <text x="210" y="106" text-anchor="middle" font-size="11.5" fill="#2d5a22" filter="url(#rough2)">保留</text>
+  <text x="270" y="106" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">改掉</text>
+  <text x="330" y="106" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">改掉</text>
+
+  <!-- 长度 n=5 的窗口 -->
+  <rect x="66" y="70" width="290" height="100" fill="#e8f0fe" fill-opacity="0.35" stroke="#446688" stroke-width="2" stroke-dasharray="8 5" rx="6" filter="url(#rough2)"/>
+  <text x="211" y="62" text-anchor="middle" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">窗口 [L, L+n−1] = [1, 5]，跨度 = 4 = n−1</text>
+
+  <!-- 操作数公式 -->
+  <rect x="60" y="196" width="440" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="220" text-anchor="middle" font-size="13.5" fill="#2d5a22" filter="url(#rough2)">操作数 = n −（区间内的互异值个数）</text>
+  <text x="280" y="244" text-anchor="middle" font-size="13.5" fill="#2d5a22" font-weight="bold" filter="url(#rough2)">本例：5 − 3 = 2？不——换窗口 [2,6] 保留 4 个 ⇒ 1</text>
+
+  <!-- 窗口滑动箭头 -->
+  <path d="M 356 160 C 390 176, 400 176, 424 160" fill="none" stroke="#d6a040" stroke-width="2.2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="430" y="150" font-size="12" fill="#d6a040" filter="url(#rough2)">窗口可平移</text>
+  <rect x="146" y="86" width="230" height="60" fill="#fff8e1" fill-opacity="0.6" stroke="#d6a040" stroke-width="1.8" stroke-dasharray="8 5" rx="6" filter="url(#rough2)"/>
+  <text x="261" y="180" text-anchor="middle" font-size="12" fill="#7a5c1e" filter="url(#rough2)">最优窗口 [2,6]：保留 {2,3,5,6} 四个值</text>
+
+  <!-- 窗口判据 -->
+  <rect x="60" y="280" width="440" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="302" text-anchor="middle" font-size="13.5" fill="#333" filter="url(#rough2)">排序去重后：最长子段 b[i..j−1] 满足</text>
+  <text x="280" y="326" text-anchor="middle" font-size="14" fill="#333" font-weight="bold" filter="url(#rough2)">b[j−1] − b[i] ≤ n − 1</text>
+
+  <text x="280" y="368" text-anchor="middle" font-size="12.5" fill="#7a5c1e" filter="url(#rough2)">每个保留值留一个出现（最终数组互异）⇒ 先去重再数窗口</text>
+</svg>
