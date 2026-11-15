@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="430" fill="#fafafa"/>
+
+  <text x="330" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">根 = 左子 × 右子，且左右位置有序</text>
+  <text x="330" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">arr = [2, 3, 4, 6, 12]，以 x = 12 为根的部分形态</text>
+
+  <!-- 左：一棵具体树 12 -> (3, 4)，4 -> (2, 2) -->
+  <line x1="165" y1="101" x2="97" y2="134" stroke="#666" stroke-width="1.4" filter="url(#rough2)"/>
+  <line x1="165" y1="101" x2="233" y2="134" stroke="#666" stroke-width="1.4" filter="url(#rough2)"/>
+  <line x1="233" y1="164" x2="203" y2="198" stroke="#666" stroke-width="1.4" filter="url(#rough2)"/>
+  <line x1="233" y1="164" x2="267" y2="198" stroke="#666" stroke-width="1.4" filter="url(#rough2)"/>
+
+  <rect x="133" y="69" width="64" height="32" rx="7" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="165" y="90" text-anchor="middle" font-size="14" fill="#33507a" font-weight="bold" filter="url(#rough2)">12</text>
+
+  <rect x="73" y="134" width="48" height="30" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="97" y="154" text-anchor="middle" font-size="13" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">3</text>
+
+  <rect x="209" y="134" width="48" height="30" rx="7" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="233" y="154" text-anchor="middle" font-size="13" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">4</text>
+
+  <rect x="181" y="198" width="44" height="28" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="203" y="217" text-anchor="middle" font-size="12" fill="#33507a" filter="url(#rough2)">2</text>
+  <rect x="245" y="198" width="44" height="28" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="267" y="217" text-anchor="middle" font-size="12" fill="#33507a" filter="url(#rough2)">2</text>
+
+  <text x="165" y="252" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">12 = 3 × 4，4 = 2 × 2</text>
+
+  <!-- 右：有序对计数 -->
+  <rect x="330" y="64" width="300" height="52" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="346" y="84" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">12 左 3 右 4 → 一棵树</text>
+  <text x="346" y="103" font-size="10" fill="#555" filter="url(#rough2)">方案数 dp[3] × dp[4]</text>
+
+  <rect x="330" y="126" width="300" height="52" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="346" y="146" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">12 左 4 右 3 → 另一棵树</text>
+  <text x="346" y="165" font-size="10" fill="#555" filter="url(#rough2)">方案数 dp[4] × dp[3]，与上式相加</text>
+
+  <rect x="330" y="188" width="300" height="52" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="346" y="208" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">4 左 2 右 2 → 只有一棵</text>
+  <text x="346" y="227" font-size="10" fill="#555" filter="url(#rough2)">左右交换得到同一棵树，故只算 dp[2]²</text>
+
+  <text x="480" y="258" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">因子对有序 → 每个 a ≤ √x 枚举一次即够</text>
+
+  <!-- 公式带 -->
+  <rect x="30" y="272" width="600" height="58" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="298" text-anchor="middle" font-size="13" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">dp[x] = 1 + Σ dp[a] · dp[b] · (1 + [a ≠ b])</text>
+  <text x="330" y="319" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">求和条件：a·b = x，a ≤ b，a、b 都取自 arr</text>
+
+  <rect x="30" y="344" width="600" height="34" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="46" y="366" font-size="10.5" fill="#33507a" filter="url(#rough2)">初值 1 表示「x 单独作叶子」，题面只约束非叶结点，叶子恒合法</text>
+
+  <rect x="30" y="388" width="600" height="32" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="46" y="409" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">答案 = Σ dp[x]：每棵树的根必是 arr 中的某个值，按根分类不重不漏</text>
+</svg>

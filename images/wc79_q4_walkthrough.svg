@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="30" text-anchor="middle" font-size="16" fill="#444" font-weight="bold">示例演算：routes = [[1,2,7], [3,6,7]]，source = 1，target = 6</text>
+  <text x="310" y="50" text-anchor="middle" font-size="10.5" fill="#888">队列里放站点，dist 记录「到该站已坐几辆车」；线路一旦展开就打标记，不再展开</text>
+
+  <g filter="url(#rough2)">
+    <rect x="36" y="60" width="568" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="36" y="96" width="568" height="46" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="36" y="142" width="568" height="46" fill="#fbfbfb" stroke="#446688" stroke-width="1.4"/>
+    <rect x="36" y="188" width="568" height="46" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+    <rect x="36" y="234" width="568" height="46" fill="#fbfbfb" stroke="#446688" stroke-width="1.4"/>
+    <rect x="36" y="280" width="568" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+
+  <g filter="url(#rough2)" stroke="#9aa8bd" stroke-width="1">
+    <line x1="108" y1="60" x2="108" y2="326"/>
+    <line x1="288" y1="60" x2="288" y2="326"/>
+    <line x1="398" y1="60" x2="398" y2="326"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" fill="#3a4a66" text-anchor="middle">
+    <text x="72" y="83">步骤</text>
+    <text x="198" y="83">处理</text>
+    <text x="343" y="83">已用线路</text>
+    <text x="501" y="83">新站点 / 结论</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" fill="#444" text-anchor="middle">
+    <text x="72" y="124">0 初始</text>
+    <text x="198" y="124">dist[1] = 0，队列 [1]</text>
+    <text x="343" y="124">∅</text>
+    <text x="501" y="124">站点 1 属于线路 {0}</text>
+
+    <text x="72" y="170">1 弹出 1</text>
+    <text x="198" y="170">线路 0 未用 → 展开</text>
+    <text x="343" y="170">{0}</text>
+    <text x="501" y="170">2: d=1，7: d=1 入队</text>
+
+    <text x="72" y="216">2 弹出 2</text>
+    <text x="198" y="216">线路 0 已用 → 跳过</text>
+    <text x="343" y="216">{0}</text>
+    <text x="501" y="216">同一线路不再展开</text>
+
+    <text x="72" y="262">3 弹出 7</text>
+    <text x="198" y="262">线路 1 未用 → 展开</text>
+    <text x="343" y="262">{0, 1}</text>
+    <text x="501" y="262">3: d=2；6 = target 命中</text>
+
+    <text x="72" y="308">4 命中 6</text>
+    <text x="198" y="308">返回 d + 1 = 1 + 1</text>
+    <text x="343" y="308">—</text>
+    <text x="501" y="308">答案 2 = 线路 0 → 线路 1</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" fill="#7a6a4a">
+    <text x="72" y="350">BFS 分层：{1} → {2, 7} → {3, 6}；扫到 target 立刻返回「当前层号 + 1」</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="36" y="364" width="568" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="6"/>
+    <text x="320" y="381" text-anchor="middle" font-size="10" fill="#8a3a36">关键：同一条线路上的站点共享同一次「上车」，故必须按整条线路扩展，计数才是换乘次数</text>
+  </g>
+</svg>

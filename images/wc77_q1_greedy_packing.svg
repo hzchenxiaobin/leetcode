@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 384" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="384" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">贪心装箱：能放就放，放不下才换行</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888">只需维护「当前行已用宽度 cur」，一次扫描 O(n)</text>
+
+  <text x="70" y="80" font-size="11" fill="#446688">示例 1：26 个字母各宽 10，行宽上限 100 单位</text>
+  <rect x="70" y="88" width="400" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <line x1="110" y1="88" x2="110" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+    <line x1="150" y1="88" x2="150" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+    <line x1="190" y1="88" x2="190" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+    <line x1="230" y1="88" x2="230" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+    <line x1="270" y1="88" x2="270" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+    <line x1="310" y1="88" x2="310" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+    <line x1="350" y1="88" x2="350" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+    <line x1="390" y1="88" x2="390" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+    <line x1="430" y1="88" x2="430" y2="118" stroke="#446688" stroke-width="1" opacity="0.55"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#3a4a66" text-anchor="middle">
+    <text x="90" y="107">10</text><text x="130" y="107">10</text><text x="170" y="107">10</text>
+    <text x="210" y="107">10</text><text x="250" y="107">10</text><text x="290" y="107">10</text>
+    <text x="330" y="107">10</text><text x="370" y="107">10</text><text x="410" y="107">10</text>
+    <text x="450" y="107">10</text>
+  </g>
+  <text x="290" y="136" text-anchor="middle" font-size="10" fill="#4a7a3a">10 × 10 = 100，恰好等于上限：只有「超过」才换行，等于不换行</text>
+
+  <text x="70" y="172" font-size="11" fill="#8a6a20">示例 2：第一行已经写了 98 单位，下一个字符是 'a'（宽 4）</text>
+
+  <rect x="70" y="182" width="392" height="26" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="266" y="200" text-anchor="middle" font-size="10" fill="#3a5a30">cur = 98</text>
+  <rect x="462" y="182" width="10" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.3" rx="2" filter="url(#rough2)"/>
+  <text x="500" y="175" text-anchor="middle" font-size="9" fill="#b85450">剩 2</text>
+
+  <path d="M 467 212 L 467 226" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="447" y="230" width="48" height="24" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4" filter="url(#rough2)"/>
+  <text x="471" y="246" text-anchor="middle" font-size="10" fill="#8a3a36">'a' = 4</text>
+  <text x="70" y="247" font-size="10.5" fill="#555">98 + 4 = 102 &gt; 100 ⇒ 本行放不下，'a' 整体挪到下一行</text>
+
+  <path d="M 460 262 L 440 276" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="120" y="286" text-anchor="middle" font-size="10.5" fill="#3a5a30">第二行：</text>
+  <rect x="180" y="270" width="22" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="3" filter="url(#rough2)"/>
+  <text x="191" y="286" text-anchor="middle" font-size="10" fill="#8a6a20">a,4</text>
+  <text x="230" y="286" font-size="10.5" fill="#8a6a20">⇒ 行数 +1，cur 重置为 4（不是 0）</text>
+
+  <rect x="70" y="308" width="420" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="86" y="328" font-size="11" fill="#3a5a30" font-weight="bold">返回 [2, 4]：2 行，最后一行 4 单位</text>
+  <text x="86" y="346" font-size="10" fill="#555">字形不可拆分，溢出的字符整块换行；cur 始终是「最近一行」的宽度</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="420" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">切词契约：单词 = 极大连续字母段</text>
+  <text x="310" y="49" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">字母以外的字符（空格与 ! ? ' , ; . ）一律是分隔符，不进词</text>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <rect x="34" y="72" width="176" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+    <text x="122" y="94" fill="#3a4a66" filter="url(#rough2)">字母段整体即一个词</text>
+    <rect x="228" y="72" width="156" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+    <text x="306" y="94" fill="#3a5a30" filter="url(#rough2)">统一转小写再比</text>
+    <rect x="402" y="72" width="176" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+    <text x="490" y="94" fill="#8a6a20" filter="url(#rough2)">非字母字符直接跳过</text>
+  </g>
+
+  <text x="40" y="146" font-size="11" fill="#555" filter="url(#rough2)">以片段 “ball,” 为例，两个指针把它夹出来：</text>
+
+  <g filter="url(#rough2)">
+    <rect x="170" y="196" width="46" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4" filter="url(#rough2)"/>
+    <text x="193" y="223" text-anchor="middle" font-size="16" fill="#3a4a66" filter="url(#rough2)">b</text>
+    <rect x="222" y="196" width="46" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4" filter="url(#rough2)"/>
+    <text x="245" y="223" text-anchor="middle" font-size="16" fill="#3a4a66" filter="url(#rough2)">a</text>
+    <rect x="274" y="196" width="46" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4" filter="url(#rough2)"/>
+    <text x="297" y="223" text-anchor="middle" font-size="16" fill="#3a4a66" filter="url(#rough2)">l</text>
+    <rect x="326" y="196" width="46" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4" filter="url(#rough2)"/>
+    <text x="349" y="223" text-anchor="middle" font-size="16" fill="#3a4a66" filter="url(#rough2)">l</text>
+    <rect x="378" y="196" width="46" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+    <text x="401" y="223" text-anchor="middle" font-size="16" fill="#8a6a20" filter="url(#rough2)">,</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 193 174 L 193 192" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <path d="M 401 174 L 401 192" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <text x="150" y="168" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">i（起点）</text>
+    <text x="452" y="168" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">j（第一个非字母）</text>
+  </g>
+
+  <text x="310" y="266" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">s[i, j) = “ball”，逗号被 j 挡住，不进入单词</text>
+  <text x="310" y="290" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">小写化后仍是 “ball”；若它不在 banned 中，则 cnt[“ball”] += 1</text>
+
+  <rect x="46" y="316" width="528" height="82" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="62" y="340" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">为什么一趟扫描就够</text>
+  <text x="62" y="362" font-size="10.5" fill="#555" filter="url(#rough2)">i、j 都只单调右移，每个字符最多被字母判断看两次 ⇒ 全程 O(|paragraph|)</text>
+  <text x="62" y="382" font-size="10.5" fill="#555" filter="url(#rough2)">词频只在「非禁用词」上累加，最大值即答案（题面保证答案唯一）</text>
+</svg>

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 528" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="528" fill="#fafafa"/>
+
+  <text x="330" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：排序 + 哈希表 + 因子对累加</text>
+
+  <!-- ① -->
+  <rect x="140" y="52" width="380" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="72" text-anchor="middle" font-size="11.5" fill="#33507a" font-weight="bold" filter="url(#rough2)">① 将 arr 升序排序</text>
+  <text x="330" y="88" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">a·b = x 且 a, b ≥ 2 → a, b &lt; x，因子必已算过</text>
+
+  <line x1="330" y1="96" x2="330" y2="116" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② -->
+  <rect x="140" y="120" width="380" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="140" text-anchor="middle" font-size="11.5" fill="#33507a" font-weight="bold" filter="url(#rough2)">② 建集合 S = set(arr)</text>
+  <text x="330" y="156" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">只问「b 在不在 arr 里」，不需要下标</text>
+
+  <line x1="330" y1="164" x2="330" y2="184" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ 外层循环 -->
+  <rect x="140" y="188" width="380" height="44" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="208" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 按升序取 x，令 dp[x] = 1</text>
+  <text x="330" y="224" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">初值 1 即「x 单独作叶子」这一棵树</text>
+
+  <line x1="330" y1="232" x2="330" y2="252" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ 内层枚举 -->
+  <rect x="140" y="256" width="380" height="60" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="330" y="276" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 内层枚举 a ∈ arr，且 a·a ≤ x</text>
+  <text x="330" y="293" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">只枚举较小的因子 a：a 一旦超过 √x 就让 b &lt; a</text>
+  <text x="330" y="308" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">对称的另一半由 ⑤ 的系数 2 补上</text>
+
+  <line x1="330" y1="316" x2="330" y2="336" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ⑤ 判定 + 累加 -->
+  <rect x="140" y="340" width="380" height="62" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="360" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">⑤ 若 x % a == 0 且 b = x / a ∈ S</text>
+  <text x="330" y="378" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">dp[x] += dp[a] · dp[b] · (a == b ? 1 : 2)</text>
+  <text x="330" y="394" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">每加一次就取模，防止溢出</text>
+
+  <line x1="330" y1="402" x2="330" y2="422" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ⑥ -->
+  <rect x="140" y="426" width="380" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="446" text-anchor="middle" font-size="11.5" fill="#33507a" font-weight="bold" filter="url(#rough2)">⑥ total += dp[x]，取下一个 x</text>
+  <text x="330" y="462" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">内层扫完整个 arr 的 a ≤ √x 才进入下一轮</text>
+
+  <!-- 外层循环回边 -->
+  <path d="M 140 448 C 70 448 60 300 60 240 C 60 215 90 210 138 210" fill="none" stroke="#b85450" stroke-width="1.6" stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="52" y="330" font-size="10" fill="#b85450" transform="rotate(-90 52 330)" filter="url(#rough2)">还有未处理的 x</text>
+
+  <!-- 结束 -->
+  <text x="330" y="492" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">arr 中所有值处理完毕后…</text>
+  <rect x="200" y="498" width="260" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="330" y="516" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">返回 total 对 10^9 + 7 取模</text>
+</svg>

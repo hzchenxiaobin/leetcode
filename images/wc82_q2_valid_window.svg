@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">x 的合法好友 = 一段连续年龄区间</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">三条「不发送」条件取反后，交集仍是 [lo, a]</text>
+
+  <g filter="url(#rough2)">
+    <rect x="26" y="62" width="156" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8"/>
+    <text x="104" y="81" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold">① y 太年轻</text>
+    <text x="104" y="97" text-anchor="middle" font-size="9.5" fill="#666">y ≤ a/2 + 7 则拒绝</text>
+
+    <rect x="202" y="62" width="156" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8"/>
+    <text x="280" y="81" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold">② y 更年长</text>
+    <text x="280" y="97" text-anchor="middle" font-size="9.5" fill="#666">y &gt; a 则拒绝</text>
+
+    <rect x="378" y="62" width="156" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8"/>
+    <text x="456" y="81" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">③ 跨百岁</text>
+    <text x="456" y="97" text-anchor="middle" font-size="9.5" fill="#666">被 ① ② 吸收，恒不触发</text>
+  </g>
+
+  <path d="M 280 112 L 280 134" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="280" y="150" text-anchor="middle" font-size="12" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">以 x = 100 为例：合法 y ∈ [58, 100]</text>
+
+  <g filter="url(#rough2)">
+    <rect x="63" y="172" width="200" height="28" fill="#fce4ec" opacity="0.75"/>
+    <rect x="263" y="172" width="147" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="3"/>
+    <rect x="410" y="172" width="70" height="28" fill="#fce4ec" opacity="0.75"/>
+    <text x="163" y="166" text-anchor="middle" font-size="9.5" fill="#b85450">太年轻 → 拒绝</text>
+    <text x="445" y="166" text-anchor="middle" font-size="9.5" fill="#b85450">太年长 → 拒绝</text>
+    <text x="336" y="190" text-anchor="middle" font-size="10" fill="#3a5a30" font-weight="bold">43 个年龄可发</text>
+  </g>
+
+  <path d="M 40 200 L 526 200" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g stroke="#666" stroke-width="1.4" filter="url(#rough2)">
+    <path d="M 63 193 L 63 207" fill="none"/>
+    <path d="M 263 193 L 263 207" fill="none"/>
+    <path d="M 410 193 L 410 207" fill="none"/>
+    <path d="M 480 193 L 480 207" fill="none"/>
+  </g>
+  <g font-size="10" fill="#777" text-anchor="middle" filter="url(#rough2)">
+    <text x="63" y="222">1</text>
+    <text x="263" y="222">58</text>
+    <text x="410" y="222">100</text>
+    <text x="480" y="222">120</text>
+  </g>
+
+  <g font-size="10.5" fill="#446688" filter="url(#rough2)">
+    <text x="40" y="246">① 太年轻：y ≥ lo = a/2 下取整 + 8 = 58</text>
+    <text x="40" y="264">② 更年长：y ≤ a = 100（③ 恒被这两条覆盖）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="36" y="276" width="488" height="50" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10"/>
+    <text x="52" y="296" font-size="10.5" fill="#8a6a20" font-weight="bold">区间人数 = pref[a] − pref[lo−1]，减掉 x 自己后 × freq[a]</text>
+    <text x="52" y="314" font-size="10" fill="#555">每个年龄只算一次，乘上该年龄的人数 —— 一次前缀和查询 O(1)</text>
+  </g>
+
+  <text x="280" y="346" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">条件③为什么恒不触发：a &lt; 100 时 y ≤ a &lt; 100；a ≥ 100 时 x ≥ 100</text>
+</svg>

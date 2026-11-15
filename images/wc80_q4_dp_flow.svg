@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrK" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="440" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">状态转移与从左到右的填表流程</text>
+
+  <rect x="40" y="42" width="520" height="84" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="64" font-size="11" fill="#8a6a20" filter="url(#rough2)">dp[t] = min{  n + 1 + dp[2^n − 1 − t] ,</text>
+  <text x="86" y="86" font-size="11" fill="#8a6a20" filter="url(#rough2)">min over 0 ≤ j ≤ n−2 of  n + j + 1 + dp[t − 2^(n−1) + 2^j]  }</text>
+  <text x="56" y="110" font-size="9.5" fill="#a08a4a" filter="url(#rough2)">n = bit_length(t) 即最小整数使 2^n − 1 ≥ t；t = 2^n − 1 时 dp[t] = n</text>
+
+  <rect x="60" y="142" width="480" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="164" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">① 求 n = 最小的整数使 2^n − 1 ≥ t，记 F = 2^n − 1</text>
+
+  <rect x="60" y="196" width="480" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="218" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">② F == t：dp[t] = n，直接进入下一个 t（一路加速就是最优）</text>
+
+  <rect x="60" y="250" width="480" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="272" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">③ 否则先取范式①：dp[t] = n + 1 + dp[F − t]</text>
+
+  <rect x="60" y="304" width="480" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="326" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">④ 枚举 j = 0 … n−2，用 n + j + 1 + dp[t − 2^(n−1) + 2^j] 取 min（范式②）</text>
+
+  <rect x="60" y="358" width="480" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="380" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">⑤ 记下 dp[t]，t += 1（所有子问题下标都 &lt; t，已算好）</text>
+
+  <path d="M 300 180 L 300 194" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arrK)" filter="url(#rough2)"/>
+  <path d="M 300 234 L 300 248" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arrK)" filter="url(#rough2)"/>
+  <path d="M 300 288 L 300 302" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arrK)" filter="url(#rough2)"/>
+  <path d="M 300 342 L 300 356" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arrK)" filter="url(#rough2)"/>
+
+  <text x="300" y="414" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">子问题严格更小：F − t ≤ 2^(n−1) − 1 &lt; t；t − 2^(n−1) + 2^j ≤ t − 2^(n−2) &lt; t</text>
+  <text x="300" y="432" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">因此一维数组按 t 递增顺序填表即可，无需记忆化搜索</text>
+</svg>
