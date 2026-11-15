@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 310" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="310" fill="#fafafa"/>
+
+  <text x="280" y="26" font-size="15" fill="#444" text-anchor="middle" font-weight="bold" filter="url(#rough2)">双指针：交集右端点由「更早结束」的那个区间决定</text>
+  <text x="280" y="45" font-size="11" fill="#888" text-anchor="middle" filter="url(#rough2)">两个列表各自有序且互不相交，所以只需比较当前这一对</text>
+
+  <text x="30" y="76" font-size="12" fill="#446688" text-anchor="start" font-weight="bold" filter="url(#rough2)">firstList（i 指向）</text>
+  <rect x="30" y="88" width="96" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="2.2" rx="5" filter="url(#rough2)"/>
+  <text x="78" y="112" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">[5,10]</text>
+  <rect x="132" y="88" width="96" height="36" fill="#f3f6fc" stroke="#a8bcd8" stroke-width="1.2" rx="5" filter="url(#rough2)"/>
+  <text x="180" y="112" font-size="11" fill="#888" text-anchor="middle" filter="url(#rough2)">[13,23]</text>
+
+  <text x="30" y="156" font-size="12" fill="#4a7a3a" text-anchor="start" font-weight="bold" filter="url(#rough2)">secondList（j 指向）</text>
+  <rect x="30" y="168" width="96" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="5" filter="url(#rough2)"/>
+  <text x="78" y="192" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">[8,12]</text>
+  <rect x="132" y="168" width="96" height="36" fill="#f3f8f0" stroke="#a8c79a" stroke-width="1.2" rx="5" filter="url(#rough2)"/>
+  <text x="180" y="192" font-size="11" fill="#888" text-anchor="middle" filter="url(#rough2)">[15,24]</text>
+
+  <path d="M 78 88 L 78 78 L 350 78" stroke="#446688" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 78 168 L 78 208 L 350 208" stroke="#4a7a3a" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <rect x="356" y="60" width="180" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="446" y="80" font-size="11" fill="#333" text-anchor="middle" filter="url(#rough2)">lo = max(5,8) = 8</text>
+  <text x="446" y="97" font-size="11" fill="#333" text-anchor="middle" filter="url(#rough2)">hi = min(10,12) = 10</text>
+
+  <rect x="356" y="182" width="180" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="446" y="202" font-size="11" fill="#333" text-anchor="middle" filter="url(#rough2)">lo ≤ hi → 记录 [8,10]</text>
+  <text x="446" y="219" font-size="11" fill="#b85450" text-anchor="middle" font-weight="bold" filter="url(#rough2)">10 &lt; 12 → i 前进</text>
+
+  <rect x="30" y="234" width="506" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="42" y="254" font-size="11" fill="#333" text-anchor="start" font-weight="bold" filter="url(#rough2)">为什么移动「右端点更小」的指针是安全的？</text>
+  <text x="42" y="272" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">它的右端点比对方早结束，之后无论对方走到哪一段，都不可能再和它自己列表里的下一个区间相交 ——</text>
+  <text x="42" y="286" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">当前区间已经「用完」，可以永久丢弃。每步至少淘汰一个区间，循环至多走 n+m 次。</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 300" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="300" fill="#fafafa"/>
+
+  <text x="280" y="26" font-size="15" fill="#444" text-anchor="middle" font-weight="bold" filter="url(#rough2)">只维护「偶数之和」一个数，按增量更新</text>
+  <text x="280" y="45" font-size="11" fill="#888" text-anchor="middle" filter="url(#rough2)">每次查询只改动 A[index] 一个位置，其余元素不变</text>
+
+  <rect x="30" y="72" width="112" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="86" y="92" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">查询 (val, idx)</text>
+  <text x="86" y="109" font-size="10.5" fill="#666" text-anchor="middle" filter="url(#rough2)">取出旧值 old</text>
+
+  <rect x="164" y="72" width="112" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="220" y="92" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">old 是偶数？</text>
+  <text x="220" y="109" font-size="10.5" fill="#666" text-anchor="middle" filter="url(#rough2)">是则 S −= old</text>
+
+  <rect x="298" y="72" width="112" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="354" y="92" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">A[idx] += val</text>
+  <text x="354" y="109" font-size="10.5" fill="#666" text-anchor="middle" filter="url(#rough2)">得到新值 nw</text>
+
+  <rect x="432" y="72" width="106" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="485" y="92" font-size="11.5" fill="#333" text-anchor="middle" filter="url(#rough2)">nw 是偶数？</text>
+  <text x="485" y="109" font-size="10.5" fill="#666" text-anchor="middle" filter="url(#rough2)">是则 S += nw</text>
+
+  <path d="M 144 96 L 162 96" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 278 96 L 296 96" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 412 96 L 430 96" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="150" width="508" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="42" y="172" font-size="12" fill="#333" text-anchor="start" font-weight="bold" filter="url(#rough2)">S′ = S − [old 为偶数] · old + [nw 为偶数] · nw</text>
+  <text x="42" y="194" font-size="11" fill="#446688" text-anchor="start" filter="url(#rough2)">两个指示函数各判一次奇偶，负数取模在 C++/Python 中判断奇偶同样可靠</text>
+  <text x="42" y="210" font-size="11" fill="#446688" text-anchor="start" filter="url(#rough2)">每条查询 O(1)，总复杂度从暴力 O(nq) 降到 O(n + q)</text>
+
+  <text x="30" y="246" font-size="11.5" fill="#b85450" text-anchor="start" font-weight="bold" filter="url(#rough2)">注意「先减旧值、再加新值」的顺序不能交换</text>
+  <text x="30" y="268" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">否则当新值恰好等于旧值时会把同一个偶数重复计入；先把旧贡献撤回再结算新贡献最稳。</text>
+  <text x="30" y="288" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">上标 S 始终等于「当前数组全部偶数元素之和」，与查询顺序无关。</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+
+  <text x="280" y="26" font-size="15" fill="#444" text-anchor="middle" font-weight="bold" filter="url(#rough2)">四个计数器 + 一个灯集合，支撑开灯与关灯</text>
+  <text x="280" y="45" font-size="11" fill="#888" text-anchor="middle" filter="url(#rough2)">n 可达 10⁹，不可能开 n×n 的网格；但灯最多 2×10⁴ 盏，只存「有灯的那些线」</text>
+
+  <rect x="30" y="70" width="150" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="7" filter="url(#rough2)"/>
+  <text x="105" y="92" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">开灯 (r, c)</text>
+  <text x="105" y="111" font-size="10.5" fill="#446688" text-anchor="middle" filter="url(#rough2)">四个计数器各 +1</text>
+  <text x="105" y="124" font-size="9.5" fill="#666" text-anchor="middle" filter="url(#rough2)">同一位置重复开灯只算一次</text>
+
+  <rect x="205" y="70" width="150" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="7" filter="url(#rough2)"/>
+  <text x="280" y="92" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">查询 (r, c)</text>
+  <text x="280" y="111" font-size="10.5" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">四个计数器任一 &gt; 0</text>
+  <text x="280" y="124" font-size="9.5" fill="#666" text-anchor="middle" filter="url(#rough2)">是 → 1，否 → 0</text>
+
+  <rect x="380" y="70" width="156" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="7" filter="url(#rough2)"/>
+  <text x="458" y="92" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">关灯（3×3 邻域）</text>
+  <text x="458" y="111" font-size="10.5" fill="#b85450" text-anchor="middle" filter="url(#rough2)">删灯并四个计数器各 −1</text>
+  <text x="458" y="124" font-size="9.5" fill="#666" text-anchor="middle" filter="url(#rough2)">只在灯集合里查，最多 9 次</text>
+
+  <path d="M 182 100 L 203 100" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 357 100 L 378 100" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="152" width="240" height="88" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="42" y="172" font-size="11" fill="#333" text-anchor="start" font-weight="bold" filter="url(#rough2)">为什么用「计数」而不是布尔标记？</text>
+  <text x="42" y="191" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">同一条线上可能有多盏灯，删掉一盏不能</text>
+  <text x="42" y="208" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">让整条线熄灭，所以必须记数量；计数降</text>
+  <text x="42" y="225" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">到 0 才表示这条线真的没有灯了。</text>
+
+  <rect x="290" y="152" width="246" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="302" y="172" font-size="11" fill="#333" text-anchor="start" font-weight="bold" filter="url(#rough2)">灯集合用什么键？</text>
+  <text x="302" y="191" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">把 (r, c) 压成 r·n + c，用 long long：</text>
+  <text x="302" y="208" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">n ≤ 10⁹ 时最大约 10¹⁸，正好装得下。</text>
+  <text x="302" y="225" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">也可以直接用 (r, c) 二元组做哈希。</text>
+
+  <rect x="30" y="256" width="512" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="42" y="276" font-size="11" fill="#333" text-anchor="start" font-weight="bold" filter="url(#rough2)">复杂度：O((L + Q) · α)，实际是 O(L + Q)</text>
+  <text x="42" y="294" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">L 盏灯各做 4 次哈希自增；每次查询做 4 次查询 + 至多 9 次删灯（每次 4 次自减）。</text>
+  <text x="42" y="308" font-size="10.5" fill="#666" text-anchor="start" filter="url(#rough2)">空间 O(L)：四个哈希表最多 4L 项，灯集合 L 项。与 n 无关，这正是能处理 n = 10⁹ 的原因。</text>
+</svg>

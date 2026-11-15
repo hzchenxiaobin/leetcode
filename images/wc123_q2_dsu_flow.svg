@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+
+  <text x="280" y="26" font-size="15" fill="#444" text-anchor="middle" font-weight="bold" filter="url(#rough2)">两遍扫描：先把「等」合并成集合，再用「不等」去验证</text>
+  <text x="280" y="45" font-size="11" fill="#888" text-anchor="middle" filter="url(#rough2)">等号关系具有传递性，必须全部合并完，才有资格判断某个不等号是否被违反</text>
+
+  <rect x="30" y="70" width="150" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="105" y="90" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">第一遍：只看 ==</text>
+  <text x="105" y="107" font-size="10.5" fill="#446688" text-anchor="middle" filter="url(#rough2)">union(a, b)</text>
+
+  <rect x="205" y="70" width="150" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="90" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">得到 26 个集合</text>
+  <text x="280" y="107" font-size="10.5" fill="#4a7a3a" text-anchor="middle" filter="url(#rough2)">同集合 ⇒ 必须取同值</text>
+
+  <rect x="380" y="70" width="156" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="458" y="90" font-size="11" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">第二遍：只看 !=</text>
+  <text x="458" y="107" font-size="10.5" fill="#d6a040" text-anchor="middle" filter="url(#rough2)">find(a) 与 find(b) 比一比</text>
+
+  <path d="M 182 93 L 203 93" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 357 93 L 378 93" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="205" y="150" width="150" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="169" font-size="10.5" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">同集合却要求不等</text>
+  <text x="280" y="185" font-size="11" fill="#b85450" text-anchor="middle" font-weight="bold" filter="url(#rough2)">→ 返回 false</text>
+
+  <rect x="380" y="150" width="156" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="458" y="169" font-size="10.5" fill="#333" text-anchor="middle" font-weight="bold" filter="url(#rough2)">不同集合</text>
+  <text x="458" y="185" font-size="11" fill="#4a7a3a" text-anchor="middle" font-weight="bold" filter="url(#rough2)">→ 可满足，继续</text>
+
+  <path d="M 280 118 L 280 148" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <path d="M 458 118 L 458 148" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <rect x="30" y="212" width="506" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="42" y="232" font-size="11" fill="#333" text-anchor="start" font-weight="bold" filter="url(#rough2)">为什么「不能一遍边合并边判断」？</text>
+  <text x="42" y="250" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">例：a!=b 写在最前面时还不存在任何合并，看不出矛盾；等后面 a==c、c==b 合并完，矛盾才出现。</text>
+
+  <text x="30" y="288" font-size="11" fill="#666" text-anchor="start" filter="url(#rough2)">并查集支持「路径压缩 + 按秩合并」，单次操作近似 O(1)，总复杂度 O(n α(26)) 即 O(n)。</text>
+  <text x="30" y="310" font-size="11" fill="#666" text-anchor="start" filter="url(#rough2)">变量只有 26 个小写字母，也可以直接用 26 个桶的图 DFS 求连通分量，效果相同。</text>
+</svg>

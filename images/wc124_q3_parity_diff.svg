@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="320" fill="#fafafa"/>
+
+  <text x="280" y="26" font-size="15" fill="#444" text-anchor="middle" font-weight="bold" filter="url(#rough2)">用一个「翻转奇偶」变量代替真的去改区间</text>
+  <text x="280" y="45" font-size="11" fill="#888" text-anchor="middle" filter="url(#rough2)">窗口 [i, i+k−1] 内的元素被翻一次 ⇒ 奇偶取反；在 i+k 处再取反回来</text>
+
+  <rect x="60" y="80" width="60" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="5" filter="url(#rough2)"/>
+  <text x="90" y="108" font-size="12" fill="#333" text-anchor="middle" filter="url(#rough2)">i</text>
+  <rect x="124" y="80" width="60" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="5" filter="url(#rough2)"/>
+  <text x="154" y="108" font-size="12" fill="#333" text-anchor="middle" filter="url(#rough2)">i+1</text>
+  <text x="196" y="108" font-size="14" fill="#888" text-anchor="middle" filter="url(#rough2)">…</text>
+  <rect x="228" y="80" width="88" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="5" filter="url(#rough2)"/>
+  <text x="272" y="108" font-size="12" fill="#333" text-anchor="middle" filter="url(#rough2)">i+k−1</text>
+  <rect x="324" y="80" width="60" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="5" filter="url(#rough2)"/>
+  <text x="354" y="108" font-size="12" fill="#333" text-anchor="middle" filter="url(#rough2)">i+k</text>
+
+  <path d="M 62 68 L 316 68" stroke="#d6a040" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <text x="189" y="62" font-size="10.5" fill="#d6a040" text-anchor="middle" filter="url(#rough2)">翻转区间（长度 k），内部奇偶全部取反</text>
+  <path d="M 354 66 L 354 78" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="366" y="62" font-size="10.5" fill="#b85450" text-anchor="start" filter="url(#rough2)">在 i+k 处抵消</text>
+
+  <rect x="60" y="150" width="324" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="72" y="170" font-size="11" fill="#333" text-anchor="start" font-weight="bold" filter="url(#rough2)">cur 表示「当前下标被翻了多少次（模 2）」</text>
+  <text x="72" y="188" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">扫描到 i：先 cur ^= diff[i] 吸收在 i 结束的翻转</text>
+  <text x="72" y="204" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">再判断 nums[i] ^ cur 是否为 0</text>
+
+  <rect x="400" y="150" width="134" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="412" y="170" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">翻一次：</text>
+  <text x="412" y="187" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">ans++</text>
+  <text x="412" y="202" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">cur ^= 1</text>
+  <text x="412" y="217" font-size="10.5" fill="#333" text-anchor="start" filter="url(#rough2)">diff[i+k] ^= 1</text>
+
+  <rect x="60" y="230" width="474" height="70" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="72" y="250" font-size="11" fill="#333" text-anchor="start" font-weight="bold" filter="url(#rough2)">为什么不用真的取反？</text>
+  <text x="72" y="268" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">真取反每次 O(k)，总复杂度 O(nk)；用 diff 记录「翻转发生/结束的位置」，每次 O(1)，</text>
+  <text x="72" y="286" font-size="11" fill="#333" text-anchor="start" filter="url(#rough2)">总复杂度降到 O(n)。这也是「区间加法用差分数组」在同一类问题上的变体（异或版）。</text>
+</svg>
