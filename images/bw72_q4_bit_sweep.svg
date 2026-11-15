@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="199"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">树状数组双向扫描：固定中间元素统计</text>
+
+  <!-- left pass -->
+  <text x="60" y="64" font-size="14" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">左→右：left[q] = a[q] 左侧比它小的个数</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="78" width="50" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="116" y="78" width="50" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.5" rx="4"/>
+    <rect x="172" y="78" width="50" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="228" y="78" width="50" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="85" y="102">a₁</text><text x="141" y="102">a₂</text><text x="197" y="102">…</text><text x="253" y="102">aₙ</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 100 118 C 112 132, 124 138, 138 142" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="60" y="146" width="220" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="170" y="168" text-anchor="middle">处理 a[q] 前，BIT 里存的是</text>
+    <text x="170" y="186" text-anchor="middle">a[0..q−1] 全体 → 查询 rank(a[q]−1)</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="300" y="146" width="220" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#2d5a22">
+    <text x="410" y="166" text-anchor="middle">BIT 支持动态前缀计数：</text>
+    <text x="410" y="184" text-anchor="middle">插入 O(log n)，查询 O(log n)</text>
+  </g>
+
+  <!-- right pass -->
+  <text x="60" y="236" font-size="14" fill="#b85450" font-weight="bold" filter="url(#rough2)">右→左：right[q] = a[q] 右侧比它大的个数</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="250" width="50" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="116" y="250" width="50" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="4"/>
+    <rect x="172" y="250" width="50" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="228" y="250" width="50" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="85" y="274">a₁</text><text x="141" y="274">a₂</text><text x="197" y="274">…</text><text x="253" y="274">aₙ</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 138 290 C 126 304, 114 310, 100 314" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="60" y="318" width="460" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="290" y="340" text-anchor="middle">右侧比它大的个数 = 已插入个数 − rank(a[q])</text>
+    <text x="290" y="358" text-anchor="middle">答案 = Σ left[q] × right[q]（q 遍历所有中间位置）</text>
+  </g>
+</svg>

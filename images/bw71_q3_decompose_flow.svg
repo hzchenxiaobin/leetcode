@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="73"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">枚举 mm：target 的两种「借位」分解</text>
+
+  <!-- target seconds -->
+  <g filter="url(#rough2)">
+    <rect x="180" y="48" width="200" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="280" y="74" font-size="15" fill="#333" font-weight="bold" text-anchor="middle" filter="url(#rough2)">targetSeconds = 600 秒</text>
+
+  <path d="M 240 92 C 170 118, 130 136, 116 156" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 320 92 C 390 118, 430 136, 444 156" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decomposition 1 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="160" width="200" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="140" y="184" font-weight="bold" fill="#2d5a22">分解一：10:00</text>
+    <text x="140" y="206">mm=10, ss=0 → 按键 1000</text>
+  </g>
+
+  <!-- decomposition 2 -->
+  <g filter="url(#rough2)">
+    <rect x="320" y="160" width="200" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="420" y="184" font-weight="bold" fill="#8a6d1f">分解二：09:60</text>
+    <text x="420" y="206">mm=9, ss=60 → 按键 0960 → 960</text>
+  </g>
+
+  <!-- range note -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="244" width="480" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="280" y="266" font-size="13" fill="#333" filter="url(#rough2)" text-anchor="middle">对每个 mm ∈ [0, 99]：ss = target − 60×mm 必须 ∈ [0, 99]</text>
+  <text x="280" y="286" font-size="13" fill="#b85450" filter="url(#rough2)" text-anchor="middle">合法的 mm 至多 2 个（60 秒只够「借位」一次）→ 枚举空间极小</text>
+
+  <!-- cost comparison -->
+  <path d="M 140 230 C 150 262, 160 276, 176 300" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 420 230 C 410 262, 400 276, 384 300" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="304" width="440" height="80" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="280" y="328" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)" text-anchor="middle">对每个合法 (mm, ss) 计算按键代价后取 min</text>
+  <text x="280" y="350" font-size="13" fill="#333" filter="url(#rough2)" text-anchor="middle">按键串 = str(mm×100 + ss)，即去掉前导 0 的显示数字</text>
+  <text x="280" y="370" font-size="13" fill="#666" filter="url(#rough2)" text-anchor="middle">再从 startAt 出发逐位模拟：换键 +moveCost，每位 +pushCost</text>
+</svg>

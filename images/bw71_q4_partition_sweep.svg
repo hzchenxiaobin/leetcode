@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">枚举分割点：删除的 n 个元素必居中</text>
+
+  <!-- array with 3 zones -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="60" width="160" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="204" y="60" width="152" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="360" y="60" width="160" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="120" y="87">前一部分（n 个）</text>
+    <text x="280" y="87">删除段</text>
+    <text x="440" y="87">后一部分（n 个）</text>
+  </g>
+  <text x="280" y="122" font-size="13" fill="#666" filter="url(#rough2)" text-anchor="middle">保留下来的 2n 个元素按原顺序排列，分割点 i 是前一部分的右端</text>
+
+  <!-- sweep illustration -->
+  <text x="60" y="162" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">分割点 i 从 n−1 扫到 2n−1：</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="176" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="124" y="176" width="60" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="188" y="176" width="60" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="252" y="176" width="60" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <rect x="316" y="176" width="60" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <rect x="380" y="176" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#666" text-anchor="middle">
+    <text x="90" y="201">…</text><text x="154" y="201">i</text><text x="218" y="201">i+1</text>
+    <text x="282" y="201">…</text><text x="346" y="201">…</text><text x="410" y="201">…</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 150 220 C 180 240, 220 248, 260 248" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <text x="330" y="252" font-size="13" fill="#446688" filter="url(#rough2)">候选差值 = preMin[i] − sufMax[i+1]</text>
+
+  <!-- why middle -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="276" width="480" height="108" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <text x="280" y="302" font-size="14" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)" text-anchor="middle">为什么删除段一定连续居中？</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="60" y="326">设最优方案中前一部分的最大下标为 i*（即存在保留元素位于 i*）。</text>
+    <text x="60" y="346">所有下标 ≤ i* 的保留元素构成前一部分，> i* 的构成后一部分，</text>
+    <text x="60" y="366">则被删的 n 个位置恰好都不产生贡献 → 等价地把删除限制在中间段。</text>
+  </g>
+</svg>

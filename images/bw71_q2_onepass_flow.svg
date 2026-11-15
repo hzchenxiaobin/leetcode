@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="53"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">一趟扫描三分：写指针的「分段接力」写法</text>
+
+  <!-- input row -->
+  <text x="50" y="62" font-size="13" fill="#446688" font-weight="bold" filter="url(#rough2)">原数组</text>
+  <g filter="url(#rough2)">
+    <rect x="100" y="46" width="52" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="156" y="46" width="52" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="212" y="46" width="52" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="268" y="46" width="52" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="126" y="68">9</text><text x="182" y="68">12</text>
+    <text x="238" y="68">5</text><text x="294" y="68">10</text>
+  </g>
+  <text x="350" y="68" font-size="13" fill="#666" filter="url(#rough2)">（示意前 4 个元素）</text>
+
+  <!-- flow: diamond + branches -->
+  <g filter="url(#rough2)">
+    <polygon points="280,100 350,132 280,164 210,132" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+  </g>
+  <text x="280" y="129" font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">x 与 pivot</text>
+  <text x="280" y="146" font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">比大小？</text>
+
+  <path d="M 210 132 C 160 132, 130 140, 108 156" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 350 132 C 400 132, 430 140, 452 156" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="162" width="136" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+    <rect x="384" y="162" width="136" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="108" y="184" font-weight="bold" fill="#2d5a22">x &lt; pivot</text>
+    <text x="108" y="204">res[i++] = x</text>
+    <text x="452" y="184" font-weight="bold" fill="#8c3a36">x &gt; pivot</text>
+    <text x="452" y="204">存入暂存表</text>
+  </g>
+  <text x="108" y="238" font-size="12" fill="#4a7a3a" filter="url(#rough2)" text-anchor="middle">i 指针只向前</text>
+  <text x="452" y="238" font-size="12" fill="#b85450" filter="url(#rough2)" text-anchor="middle">顺序天然保持</text>
+
+  <!-- equal branch down -->
+  <path d="M 280 164 C 280 186, 280 196, 280 210" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="200" y="214" width="160" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <text x="280" y="236" font-weight="bold" fill="#8a6d1f">x == pivot</text>
+    <text x="280" y="254">cnt++（先记账）</text>
+  </g>
+
+  <!-- final fill -->
+  <path d="M 108 224 C 108 268, 140 286, 176 296" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 452 224 C 452 268, 420 286, 384 296" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 270 C 280 280, 280 288, 280 296" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="300" width="440" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="280" y="319" font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">扫描结束后：res[i..i+cnt) 填 cnt 个 pivot，</text>
+  <text x="280" y="336" font-size="13" fill="#333" text-anchor="middle" filter="url(#rough2)">再把暂存的大于段原序接在末尾</text>
+</svg>

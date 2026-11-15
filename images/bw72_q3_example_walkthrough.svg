@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="179"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">示例演算：finalSum = 28</text>
+
+  <!-- step 1: take evens -->
+  <text x="60" y="66" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">第 1 步：贪心吃进 2, 4, 6, 8</text>
+  <g filter="url(#rough2)">
+    <rect x="60" y="80" width="70" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="140" y="80" width="70" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="220" y="80" width="70" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="300" y="80" width="70" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="390" y="80" width="120" height="44" fill="#fafafa" stroke="#ccc" stroke-width="1.5" stroke-dasharray="5,4" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="16" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="95" y="107">2</text><text x="175" y="107">4</text>
+    <text x="255" y="107">6</text><text x="335" y="107">8</text>
+    <text x="450" y="107" fill="#999">10?</text>
+  </g>
+  <text x="450" y="142" font-size="12" fill="#b85450" filter="url(#rough2)" text-anchor="middle">20+10=30 &gt; 28，放不下</text>
+
+  <!-- step 2: remaining -->
+  <text x="60" y="172" font-size="14" fill="#446688" font-weight="bold" filter="url(#rough2)">第 2 步：余数 r = 28 − 20 = 8 并入最大项 8</text>
+  <g filter="url(#rough2)">
+    <path d="M 335 130 C 350 150, 362 158, 374 170" fill="none" stroke="#b85450" stroke-width="2.5" marker-end="url(#arr)"/>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="60" y="180" width="300" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333">
+    <text x="80" y="202">8 + 8 = 16：偶数 ✓、互异 ✓（16 &gt; 6 &gt; 4 &gt; 2）</text>
+    <text x="80" y="224" fill="#8c3a36" font-weight="bold">最终拆分 [2, 4, 6, 16]，共 4 个</text>
+  </g>
+
+  <!-- why merge into largest -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="252" width="460" height="108" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <text x="290" y="278" font-size="14" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)" text-anchor="middle">为什么并入「最大项」而不是新开一项或并入小项？</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="80" y="302">新开一项 r：停机时 r &lt; 2(k+1) 且 r 为偶数 → r ∈ {2,…,2k}，</text>
+    <text x="80" y="322">必与已取的某个 2i 重复，违反互异；</text>
+    <text x="80" y="342">并入最大项 2k：结果 2k+r &gt; 2k，严格大于其余项，天然互异。</text>
+  </g>
+</svg>

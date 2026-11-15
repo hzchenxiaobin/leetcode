@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="163"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">贪心：取 2, 4, 6, … 直到放不下，余数并入最大项</text>
+
+  <!-- staircase of evens -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="90" width="60" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="126" y="76" width="60" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="192" y="60" width="60" height="76" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="258" y="42" width="60" height="94" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="16" fill="#333" text-anchor="middle" font-weight="bold">
+    <text x="90" y="118">2</text><text x="156" y="110">4</text>
+    <text x="222" y="102">6</text><text x="288" y="92">8</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#666" text-anchor="middle">
+    <text x="90" y="148">第1个</text><text x="156" y="148">第2个</text>
+    <text x="222" y="148">第3个</text><text x="288" y="148">第k个</text>
+  </g>
+  <text x="288" y="34" font-size="12" fill="#d6a040" filter="url(#rough2)" text-anchor="middle">连续偶数：增长最慢</text>
+
+  <!-- remaining merge -->
+  <path d="M 318 88 C 350 88, 370 92, 392 100" fill="none" stroke="#b85450" stroke-width="2.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="398" y="60" width="120" height="80" fill="#fce4ec" stroke="#b85450" stroke-width="2.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <text x="458" y="88" font-weight="bold" fill="#8c3a36">最后一项 + 余数</text>
+    <text x="458" y="110">8 + r → 仍是偶数</text>
+    <text x="458" y="128">且比前面所有项大</text>
+  </g>
+
+  <!-- why max count -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="180" width="460" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="10"/>
+  </g>
+  <text x="290" y="206" font-size="14" fill="#2d5a22" font-weight="bold" filter="url(#rough2)" text-anchor="middle">为什么「从 2 开始的连续偶数」个数最多？</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="80" y="230">m 个互不相同的正偶数，最小可能总和是 2+4+…+2m = m(m+1)。</text>
+    <text x="80" y="250">若 m(m+1) &gt; finalSum 就不可能有 m 个 → 满足该式的最大 m 是上界；</text>
+    <text x="80" y="268">贪心恰好构造出这个 m，达到上界。</text>
+  </g>
+
+  <!-- parity -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="284" width="460" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <text x="290" y="310" font-size="14" fill="#8a6d1f" font-weight="bold" filter="url(#rough2)" text-anchor="middle">奇偶性门槛</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="80" y="332">finalSum 为奇数：偶数之和必为偶数 → 无解，返回 []；</text>
+    <text x="80" y="350">finalSum = 2 时贪心直接得 [2]（余数 0 不改变最后一项）。</text>
+  </g>
+</svg>
