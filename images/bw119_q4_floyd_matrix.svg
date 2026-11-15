@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9" fill="none" stroke="#888" stroke-width="1.6" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">示例 2 全开掩码：重边取最短 + Floyd 中转出的捷径</text>
+
+  <!-- 图例：roads -->
+  <g filter="url(#rough2)">
+    <text x="70" y="62" font-size="12.5" fill="#555">roads：</text>
+    <text x="140" y="62" font-size="12.5" fill="#333">0-1 权 20（重边）</text>
+    <text x="140" y="80" font-size="12.5" fill="#333">0-1 权 10（取最短）</text>
+    <text x="300" y="62" font-size="12.5" fill="#333">1-2 权 2</text>
+    <text x="300" y="80" font-size="12.5" fill="#333">0-2 权 2</text>
+  </g>
+
+  <!-- 初始矩阵 -->
+  <text x="150" y="130" text-anchor="middle" font-size="13" fill="#446688" filter="url(#rough2)">建矩阵后（k 循环前）</text>
+  <g filter="url(#rough2)">
+    <rect x="90" y="140" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="130" y="140" width="40" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="170" y="140" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="90" y="172" width="40" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="130" y="172" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="170" y="172" width="40" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="90" y="204" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="130" y="204" width="40" height="32" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <rect x="170" y="204" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <text x="110" y="161" text-anchor="middle" font-size="12" fill="#333">0</text>
+    <text x="150" y="161" text-anchor="middle" font-size="12" fill="#7a5a10">10</text>
+    <text x="190" y="161" text-anchor="middle" font-size="12" fill="#333">2</text>
+    <text x="110" y="193" text-anchor="middle" font-size="12" fill="#7a5a10">10</text>
+    <text x="150" y="193" text-anchor="middle" font-size="12" fill="#333">0</text>
+    <text x="190" y="193" text-anchor="middle" font-size="12" fill="#7a5a10">2</text>
+    <text x="110" y="225" text-anchor="middle" font-size="12" fill="#333">2</text>
+    <text x="150" y="225" text-anchor="middle" font-size="12" fill="#7a5a10">2</text>
+    <text x="190" y="225" text-anchor="middle" font-size="12" fill="#333">0</text>
+  </g>
+  <text x="150" y="262" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">黄色格子：还要看能否经中转变短</text>
+
+  <path d="M240,180 L300,180" fill="none" stroke="#888" stroke-width="2" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="270" y="168" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">Floyd k=2</text>
+
+  <!-- Floyd 后矩阵 -->
+  <text x="420" y="130" text-anchor="middle" font-size="13" fill="#4a7a3a" filter="url(#rough2)">Floyd 后（maxDistance = 5）</text>
+  <g filter="url(#rough2)">
+    <rect x="360" y="140" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="400" y="140" width="40" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="440" y="140" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="360" y="172" width="40" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="400" y="172" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="440" y="172" width="40" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="360" y="204" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <rect x="400" y="204" width="40" height="32" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2"/>
+    <rect x="440" y="204" width="40" height="32" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.2"/>
+    <text x="380" y="161" text-anchor="middle" font-size="12" fill="#333">0</text>
+    <text x="420" y="161" text-anchor="middle" font-size="12" fill="#1c3a1c" font-weight="bold">4</text>
+    <text x="460" y="161" text-anchor="middle" font-size="12" fill="#333">2</text>
+    <text x="380" y="193" text-anchor="middle" font-size="12" fill="#1c3a1c" font-weight="bold">4</text>
+    <text x="420" y="193" text-anchor="middle" font-size="12" fill="#333">0</text>
+    <text x="460" y="193" text-anchor="middle" font-size="12" fill="#1c3a1c" font-weight="bold">2</text>
+    <text x="380" y="225" text-anchor="middle" font-size="12" fill="#333">2</text>
+    <text x="420" y="225" text-anchor="middle" font-size="12" fill="#1c3a1c" font-weight="bold">2</text>
+    <text x="460" y="225" text-anchor="middle" font-size="12" fill="#333">0</text>
+  </g>
+  <text x="420" y="262" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">d[0][1] = min(10, d[0][2]+d[2][1]) = 2+2 = 4</text>
+
+  <rect x="70" y="290" width="420" height="42" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="308" text-anchor="middle" font-size="12.5" fill="#7a5a10" filter="url(#rough2)">直接看边会误判 0-1 距离 10；Floyd 经点 2 中转得 4 ≤ 5</text>
+  <text x="280" y="325" text-anchor="middle" font-size="12.5" fill="#7a5a10" filter="url(#rough2)">→ 全开合法；该输入 8 个掩码中 7 个合法</text>
+
+  <text x="280" y="368" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">这就是「两两可达 + 最远距离」必须算最短路、而不是看单条边的原因</text>
+</svg>

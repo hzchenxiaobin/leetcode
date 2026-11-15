@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 350"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="350" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">三段结构：删除 [l, r−1] 后 = 递增前缀 拼 递增后缀</text>
+
+  <!-- 数组分段 -->
+  <g filter="url(#rough2)">
+    <rect x="120" y="56" width="60" height="50" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <rect x="180" y="56" width="60" height="50" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <rect x="240" y="56" width="60" height="50" rx="4" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+    <rect x="300" y="56" width="60" height="50" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <rect x="360" y="56" width="60" height="50" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="150" y="87" text-anchor="middle" font-size="16" fill="#28415e">6</text>
+    <text x="210" y="87" text-anchor="middle" font-size="16" fill="#7a3030">5</text>
+    <text x="270" y="87" text-anchor="middle" font-size="16" fill="#7a3030">7</text>
+    <text x="330" y="87" text-anchor="middle" font-size="16" fill="#1c3a1c">8</text>
+    <text x="390" y="87" text-anchor="middle" font-size="16" fill="#1c3a1c">9</text>
+    <text x="150" y="122" text-anchor="middle" font-size="11" fill="#446688">前缀 [0..l−1]</text>
+    <text x="240" y="122" text-anchor="middle" font-size="11" fill="#b85450">被删 [l..r−1]</text>
+    <text x="360" y="122" text-anchor="middle" font-size="11" fill="#4a7a3a">后缀 [r..n−1]</text>
+  </g>
+
+  <!-- 三个条件 -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="150" width="150" height="64" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="125" y="175" text-anchor="middle" font-size="12.5" fill="#28415e">条件 ①</text>
+    <text x="125" y="195" text-anchor="middle" font-size="12" fill="#28415e">前缀严格递增</text>
+    <text x="125" y="209" text-anchor="middle" font-size="11.5" fill="#556677">⇔ l ≤ pre</text>
+
+    <rect x="205" y="150" width="150" height="64" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="280" y="175" text-anchor="middle" font-size="12.5" fill="#1c3a1c">条件 ②</text>
+    <text x="280" y="195" text-anchor="middle" font-size="12" fill="#1c3a1c">后缀严格递增</text>
+    <text x="280" y="209" text-anchor="middle" font-size="11.5" fill="#3a5a44">⇔ r ≥ s（r=n 空后缀 ✓）</text>
+
+    <rect x="360" y="150" width="150" height="64" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="435" y="175" text-anchor="middle" font-size="12.5" fill="#7a5a10">条件 ③</text>
+    <text x="435" y="195" text-anchor="middle" font-size="12" fill="#7a5a10">拼接台阶</text>
+    <text x="435" y="209" text-anchor="middle" font-size="11.5" fill="#997722">nums[l−1] &lt; nums[r]</text>
+  </g>
+
+  <!-- pre 与 s -->
+  <g filter="url(#rough2)">
+    <rect x="50" y="240" width="230" height="86" rx="10" fill="#ffffff" stroke="#bbb" stroke-width="1.2"/>
+    <text x="165" y="262" text-anchor="middle" font-size="12" fill="#446688">pre = 最长严格递增前缀长度</text>
+    <text x="165" y="280" text-anchor="middle" font-size="11.5" fill="#555">如 [6,5,7,8]：pre = 1（5 &lt; 6 断）</text>
+    <text x="165" y="298" text-anchor="middle" font-size="11.5" fill="#555">整个数组递增 ⇔ pre = n</text>
+    <text x="165" y="316" text-anchor="middle" font-size="11.5" fill="#7a5a10">→ 直接返回 n(n+1)/2</text>
+
+    <rect x="290" y="240" width="230" height="86" rx="10" fill="#ffffff" stroke="#bbb" stroke-width="1.2"/>
+    <text x="405" y="262" text-anchor="middle" font-size="12" fill="#4a7a3a">s = 最长严格递增后缀起点</text>
+    <text x="405" y="280" text-anchor="middle" font-size="11.5" fill="#555">如 [6,5,7,8]：s = 1（[5,7,8] 递增）</text>
+    <text x="405" y="298" text-anchor="middle" font-size="11.5" fill="#555">非整体递增时可证 s ≥ pre ≥ 1</text>
+    <text x="405" y="316" text-anchor="middle" font-size="11.5" fill="#555">l ∈ [0, pre]，r ∈ [s, n]</text>
+  </g>
+</svg>
