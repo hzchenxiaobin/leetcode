@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">下界：任何内部石头 i 逼出一记长跳</text>
+
+  <!-- 数轴 -->
+  <path d="M40,220 L480,220" stroke="#333" stroke-width="2" filter="url(#rough2)" marker-end="url(#arrB)"/>
+
+  <!-- 区间 (a, b) 阴影：内部只有石头 i -->
+  <rect x="150" y="170" width="240" height="100" fill="#fff8e1" opacity="0.6" filter="url(#rough2)"/>
+  <text x="270" y="192" text-anchor="middle" font-size="12" fill="#d6a040" filter="url(#rough2)">区间 (a, b) 内只有一块石头 m</text>
+
+  <!-- 石头 -->
+  <circle cx="150" cy="220" r="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="150" y="248" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">a = stones[i-1]</text>
+  <text x="150" y="264" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">左区 ≤ a</text>
+
+  <circle cx="270" cy="220" r="10" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="270" y="248" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">m = stones[i]</text>
+  <text x="270" y="264" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">中区，至多落一次</text>
+
+  <circle cx="390" cy="220" r="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="390" y="248" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">b = stones[i+1]</text>
+  <text x="390" y="264" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">右区 ≥ b</text>
+
+  <!-- 行程：左 → 中 → 右（借道 m 的一次穿越） -->
+  <path d="M70,90 Q170,60 268,86" fill="none" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)" marker-end="url(#arrB)"/>
+  <text x="150" y="52" font-size="12" fill="#4a7a3a" filter="url(#rough2)">第 1 次穿越：借道 m（左→中→右）</text>
+  <path d="M272,96 Q340,120 388,100" fill="none" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)" marker-end="url(#arrB)"/>
+
+  <!-- 行程：右 → 左（必须直跳，不能再用 m） -->
+  <path d="M392,132 Q230,166 62,138" fill="none" stroke="#b85450" stroke-width="2.5" filter="url(#rough2)" marker-end="url(#arrR)"/>
+  <text x="210" y="158" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">第 2 次穿越：m 已用过 → 一跳跨过 [a, b]</text>
+
+  <!-- 长跳标注 -->
+  <path d="M390,304 L150,304" fill="none" stroke="#b85450" stroke-width="2" filter="url(#rough2)" marker-end="url(#arrR)"/>
+  <text x="270" y="326" text-anchor="middle" font-size="14" fill="#333" filter="url(#rough2)">跳跃长度 ≥ b − a = stones[i+1] − stones[i−1]</text>
+
+  <!-- 侧注 -->
+  <rect x="18" y="60" width="110" height="64" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="73" y="82" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">行程从 0 出发</text>
+  <text x="73" y="99" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">必达最右石头</text>
+  <text x="73" y="116" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">再回到 0</text>
+</svg>
