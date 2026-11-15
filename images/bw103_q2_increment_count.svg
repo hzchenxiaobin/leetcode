@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="330" fill="#fafafa"/>
+  <text x="260" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：增量计数，到 2 转正，一趟完成</text>
+
+  <!-- A 行 -->
+  <g filter="url(#rough2)">
+    <text x="46" y="84" font-size="12" fill="#666">处理 A[i]</text>
+    <rect x="110" y="62" width="130" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="175" y="86" text-anchor="middle" font-size="13" fill="#2f5527">cnt[A[i]] += 1</text>
+    <polygon points="290,58 345,81 290,104 235,81" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="290" y="86" text-anchor="middle" font-size="12" fill="#7a5a10">== 2 ?</text>
+    <rect x="395" y="62" width="110" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="450" y="86" text-anchor="middle" font-size="13" fill="#8c3a36">common += 1</text>
+  </g>
+  <path d="M 240 81 L 235 81" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 345 81 L 395 81" stroke="#b85450" stroke-width="2" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="358" y="72" font-size="11" fill="#8c3a36" filter="url(#rough2)">是</text>
+
+  <!-- B 行 -->
+  <g filter="url(#rough2)">
+    <text x="46" y="154" font-size="12" fill="#666">处理 B[i]</text>
+    <rect x="110" y="132" width="130" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="175" y="156" text-anchor="middle" font-size="13" fill="#2f5527">cnt[B[i]] += 1</text>
+    <polygon points="290,128 345,151 290,174 235,151" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="290" y="156" text-anchor="middle" font-size="12" fill="#7a5a10">== 2 ?</text>
+    <rect x="395" y="132" width="110" height="38" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="450" y="156" text-anchor="middle" font-size="13" fill="#8c3a36">common += 1</text>
+  </g>
+  <path d="M 240 151 L 235 151" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 345 151 L 395 151" stroke="#b85450" stroke-width="2" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="358" y="142" font-size="11" fill="#8c3a36" filter="url(#rough2)">是</text>
+
+  <!-- 汇合落盘 -->
+  <path d="M 450 100 L 450 118" stroke="#446688" stroke-width="2" filter="url(#rough2)" fill="none"/>
+  <path d="M 450 170 L 450 196" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)" fill="none"/>
+  <rect x="330" y="200" width="240" height="38" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="450" y="224" text-anchor="middle" font-size="13" fill="#2f4a66" filter="url(#rough2)">C[i] = common，i 前进一步</text>
+
+  <!-- 两个 common 框的汇合线 -->
+  <path d="M 450 118 L 450 132" stroke="#446688" stroke-width="2" filter="url(#rough2)" fill="none"/>
+
+  <!-- 说明 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="262" width="460" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="46" y="283" font-size="12" fill="#7a5a10">A[i] = B[i] 时同一值连续两次自增：第一次到 2 记一次，第二次到 3 不记；</text>
+    <text x="46" y="302" font-size="12" fill="#7a5a10">位掩码版：maskA、maskB 分别吸收两侧出现，C[i] = popcount(maskA 与 maskB)。</text>
+  </g>
+</svg>

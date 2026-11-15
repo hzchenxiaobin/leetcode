@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 300" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="300" fill="#fafafa"/>
+  <text x="260" y="28" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：前缀 OR × 左移 k × 后缀 OR，枚举候选取最大</text>
+
+  <!-- 数组条 -->
+  <g filter="url(#rough2)" font-size="13">
+    <text x="80" y="72" text-anchor="middle" fill="#666" font-size="11">… 前缀 OR</text>
+    <rect x="40" y="80" width="80" height="38" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="80" y="104" text-anchor="middle" fill="#2f4a66">pre</text>
+
+    <rect x="150" y="80" width="80" height="38" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.6"/>
+    <text x="190" y="100" text-anchor="middle" fill="#7a5a10">nums[i]</text>
+    <text x="190" y="114" text-anchor="middle" fill="#7a5a10" font-size="11">≪ k（候选元素）</text>
+
+    <rect x="260" y="80" width="80" height="38" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="300" y="104" text-anchor="middle" fill="#2f5527">suf[i+1]</text>
+    <text x="300" y="72" text-anchor="middle" fill="#666" font-size="11">后缀 OR …</text>
+  </g>
+
+  <!-- 乘 2^k 箭头 -->
+  <path d="M 190 60 L 190 42" stroke="#d6a040" stroke-width="2" marker-end="url(#arrO)" filter="url(#rough2)" fill="none"/>
+  <text x="205" y="46" font-size="11" fill="#7a5a10" filter="url(#rough2)">整体左移 k 位</text>
+
+  <!-- 汇聚 -->
+  <path d="M 80 118 L 80 150 L 190 150" stroke="#446688" stroke-width="2" filter="url(#rough2)" fill="none"/>
+  <path d="M 300 118 L 300 150 L 210 150" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)" fill="none"/>
+  <path d="M 190 120 L 190 150" stroke="#d6a040" stroke-width="2" filter="url(#rough2)" fill="none"/>
+
+  <rect x="100" y="158" width="240" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="220" y="183" text-anchor="middle" font-size="13.5" fill="#8c3a36" filter="url(#rough2)">candidate = pre | (nums[i] ≪ k) | suf</text>
+
+  <path d="M 340 178 L 385 178" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+
+  <rect x="390" y="158" width="100" height="40" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="440" y="183" text-anchor="middle" font-size="13" fill="#2f5527" filter="url(#rough2)">ans 取最大</text>
+
+  <text x="40" y="232" font-size="12.5" fill="#555" filter="url(#rough2)">两趟扫描：先从右往左造后缀 OR 数组（suf[n]=0 作哨兵），</text>
+  <text x="40" y="252" font-size="12.5" fill="#555" filter="url(#rough2)">再从左往右滚动前缀 OR 并顺手产出答案 —— O(n) 时间、O(n) 空间。</text>
+  <text x="40" y="276" font-size="12" fill="#7a5a10" filter="url(#rough2)">C++ 细节：nums[i] ≪ k 可达 2^45，必须先转 long long 再移位。</text>
+</svg>

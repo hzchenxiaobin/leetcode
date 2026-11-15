@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 330" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="330" fill="#fafafa"/>
+  <text x="260" y="28" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">算法流程：滚动量 W 每步翻倍，一趟扫描合并</text>
+
+  <!-- W 展开 -->
+  <g filter="url(#rough2)" font-size="13">
+    <text x="60" y="66" fill="#333">W_j = Σ (i 小于 j) a_i · 2^(j−1−i)</text>
+    <rect x="60" y="80" width="160" height="52" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="140" y="102" text-anchor="middle" fill="#2f4a66">j 右移一格</text>
+    <text x="140" y="120" text-anchor="middle" fill="#2f4a66" font-size="11">旧项指数全体 +1</text>
+    <path d="M 220 106 L 260 106" stroke="#446688" stroke-width="2" marker-end="url(#arrB)" filter="url(#rough2)"/>
+    <rect x="265" y="80" width="200" height="52" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <text x="365" y="102" text-anchor="middle" fill="#2f5527">W_j = 2·W_(j−1) + a_(j−1)</text>
+    <text x="365" y="120" text-anchor="middle" fill="#2f5527" font-size="11">新元素以指数 0 入池</text>
+  </g>
+
+  <!-- 累加 -->
+  <g filter="url(#rough2)" font-size="13">
+    <rect x="60" y="160" width="200" height="56" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="160" y="182" text-anchor="middle" fill="#7a5a10">ans += a_j² · (a_j + W_j)</text>
+    <text x="160" y="202" text-anchor="middle" fill="#7a5a10" font-size="11">a_j 本身对应单元素组（立方）</text>
+    <rect x="290" y="160" width="180" height="56" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="380" y="182" text-anchor="middle" fill="#2f4a66">W ← 2·W + a_j</text>
+    <text x="380" y="202" text-anchor="middle" fill="#2f4a66" font-size="11">为下一个 j 准备 W_(j+1)</text>
+  </g>
+
+  <!-- 具体例子 W 演化 -->
+  <g filter="url(#rough2)" font-size="12">
+    <text x="60" y="252" fill="#555">例（排序后 [1, 2, 4]）的 W：</text>
+    <text x="60" y="274" fill="#555">W_0 = 0；W_1 = 2×0 + 1 = 1；W_2 = 2×1 + 2 = 4</text>
+    <text x="60" y="296" fill="#7a5a10">验证：W_2 = 1·2^1 + 2·2^0 = 4 ✓（每个“以 4 为最大”的组的 min 加权和）</text>
+    <text x="60" y="316" fill="#a08030">全程取模 10^9+7；C++ 中 a·a 先 % 再乘第二个因子，防止 10^27 溢出</text>
+  </g>
+</svg>
