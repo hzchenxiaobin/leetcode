@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="420" fill="#fafafa"/>
+
+  <text x="300" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">核心观察：把 B 反过来建成「值 → 下标」索引</text>
+  <text x="300" y="51" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">B 是 A 的变位词，所以 A 里每个值都必定能在 B 里查到位置</text>
+
+  <text x="60" y="84" font-size="11" fill="#555" filter="url(#rough2)">先扫一遍 B，逐个登记「值 v 出现在哪个下标 j」</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="94" width="84" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="152" y="94" width="84" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="244" y="94" width="84" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="336" y="94" width="84" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="428" y="94" width="84" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+
+    <text x="102" y="120" text-anchor="middle" font-size="13" fill="#2f3f5c">50</text>
+    <text x="194" y="120" text-anchor="middle" font-size="13" fill="#2f3f5c">12</text>
+    <text x="286" y="120" text-anchor="middle" font-size="13" fill="#2f3f5c">32</text>
+    <text x="378" y="120" text-anchor="middle" font-size="13" fill="#2f3f5c">46</text>
+    <text x="470" y="120" text-anchor="middle" font-size="13" fill="#2f3f5c">28</text>
+
+    <text x="102" y="152" text-anchor="middle" font-size="10" fill="#999">j = 0</text>
+    <text x="194" y="152" text-anchor="middle" font-size="10" fill="#999">j = 1</text>
+    <text x="286" y="152" text-anchor="middle" font-size="10" fill="#999">j = 2</text>
+    <text x="378" y="152" text-anchor="middle" font-size="10" fill="#999">j = 3</text>
+    <text x="470" y="152" text-anchor="middle" font-size="10" fill="#999">j = 4</text>
+  </g>
+
+  <path d="M 300 158 L 300 190" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="310" y="180" font-size="10" fill="#6b7a8f" filter="url(#rough2)">pos[B[j]] ← j</text>
+
+  <text x="60" y="212" font-size="11" fill="#555" filter="url(#rough2)">索引：pos = { 值 : 该值在 B 中的全部下标 }</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="224" width="84" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <rect x="152" y="224" width="84" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <rect x="244" y="224" width="84" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <rect x="336" y="224" width="84" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <rect x="428" y="224" width="84" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+
+    <text x="102" y="247" text-anchor="middle" font-size="12" fill="#33552a">12 → 1</text>
+    <text x="194" y="247" text-anchor="middle" font-size="12" fill="#33552a">28 → 4</text>
+    <text x="286" y="247" text-anchor="middle" font-size="12" fill="#33552a">32 → 2</text>
+    <text x="378" y="247" text-anchor="middle" font-size="12" fill="#33552a">46 → 3</text>
+    <text x="470" y="247" text-anchor="middle" font-size="12" fill="#33552a">50 → 0</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="48" y="286" width="504" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <text x="300" y="313" text-anchor="middle" font-size="11" fill="#8a6a20">重复值不会互相踩踏：同值的下标按升序排队进同一个桶，取一个就弹一个</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="48" y="342" width="504" height="56" fill="#f7f9fc" stroke="#d5dde8" stroke-width="1.4" rx="8"/>
+    <text x="300" y="363" text-anchor="middle" font-size="11" fill="#455">建索引花 O(n) 一次，之后 A 的每个元素只查一次表 → 总时间 O(n)</text>
+    <text x="300" y="385" text-anchor="middle" font-size="11" fill="#455">每个下标只被取用一次，所以答案天然是 0…n−1 的一个排列</text>
+  </g>
+</svg>

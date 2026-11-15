@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#666" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="470" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="16" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：切块 → 递归中段 → 包回 → 降序拼接</text>
+  <text x="320" y="49" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">dfs(s) 只处理「当前层」：层内顺序自由可排，层间结构固定只能递归</text>
+
+  <!-- 1 -->
+  <rect x="110" y="66" width="420" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="84" text-anchor="middle" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">① 从左到右扫描 s，bal 遇 1 加一、遇 0 减一，start 记录当前块起点</text>
+  <text x="320" y="100" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">bal 一旦归 0，s[start..i] 就是一个顶层特殊块（本原 Dyck 词）</text>
+  <path d="M 320 108 L 320 128" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 2 -->
+  <rect x="110" y="132" width="420" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="151" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">② 剥壳：块必为 1 · A · 0，中段 A 仍是特殊串</text>
+  <text x="320" y="168" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">递归 dfs(A) 求 A 的最大形态，结果包回 1 ⋯ 0 存入 parts</text>
+  <path d="M 320 178 L 320 198" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 3 -->
+  <rect x="110" y="202" width="420" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="221" text-anchor="middle" font-size="11.5" fill="#3a5a30" filter="url(#rough2)">③ 本层所有块按字典序降序排序（普通 sort，无需自定义比较器）</text>
+  <text x="320" y="238" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">本原块互不为前缀 ⇒ a ≥ b 与 a+b ≥ b+a 同真同假</text>
+  <path d="M 320 248 L 320 268" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 4 -->
+  <rect x="110" y="272" width="420" height="42" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="290" text-anchor="middle" font-size="11.5" fill="#8a3a36" filter="url(#rough2)">④ 顺序拼接 parts 返回，回溯给外层 —— 整棵嵌套树自底向上最大化</text>
+  <text x="320" y="306" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">递归出口：s 为空或 s = "10" 时直接返回</text>
+
+  <!-- 递归树示意 -->
+  <path d="M 320 318 L 320 336" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="320" y="352" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">以 s = 11011000 看嵌套结构（只有中段可动，外壳 1…0 不动）</text>
+
+  <rect x="150" y="362" width="340" height="26" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="320" y="380" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">1 · [ 101100 ] · 0 　整串一个块，外壳固定</text>
+
+  <rect x="176" y="392" width="288" height="26" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="320" y="410" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">101100 拆成 10 | 1100 　两块可交换</text>
+
+  <rect x="176" y="422" width="130" height="26" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="241" y="440" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">10 = 1·ε·0</text>
+  <rect x="330" y="422" width="130" height="26" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="395" y="440" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">1100 = 1·10·0</text>
+</svg>

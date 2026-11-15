@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#666" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="480" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="16" fill="#444" font-weight="bold" filter="url(#rough2)">示例演算：s = 11011000 的递归走查</text>
+  <text x="320" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">自底向上：先排内层「10 | 1100」，再把结果包回外壳 1 ⋯ 0</text>
+
+  <rect x="56" y="62" width="528" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="80" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 扫描 bal：1 2 1 2 3 2 1 0，只在末位归 0</text>
+  <text x="72" y="98" font-size="10.5" fill="#555" filter="url(#rough2)">⇒ 整串就是一个块：11011000 = 1 · ( 101100 ) · 0</text>
+
+  <path d="M 320 108 L 320 116" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="118" width="528" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="136" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② 递归中段 A = 101100：bal 为 1 0 1 2 1 0，第 2、6 位归 0</text>
+  <text x="72" y="154" font-size="10.5" fill="#555" filter="url(#rough2)">⇒ 切成两块：10 与 1100（两者都本原，互不为前缀）</text>
+
+  <path d="M 320 164 L 320 172" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="174" width="528" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="192" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 块 10 的中段为空 ⇒ dfs(空串) = 空串</text>
+  <text x="72" y="210" font-size="10.5" fill="#555" filter="url(#rough2)">⇒ 包回外壳得 1 + 空 + 0 = 10（内层已无可交换项）</text>
+
+  <path d="M 320 220 L 320 228" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="230" width="528" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="248" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">④ 块 1100 的中段是 10 ⇒ dfs(10) = 10</text>
+  <text x="72" y="266" font-size="10.5" fill="#555" filter="url(#rough2)">⇒ 包回外壳得 1 + 10 + 0 = 1100（本原块内部唯一，无法再变大）</text>
+
+  <path d="M 320 276 L 320 284" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="286" width="528" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="304" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">⑤ 本层降序排序：1100 &gt; 10，故次序为 1100 | 10</text>
+  <text x="72" y="322" font-size="10.5" fill="#555" filter="url(#rough2)">⇒ 中段拼接得 110010，恰好大于原来的中段 101100</text>
+
+  <path d="M 320 332 L 320 340" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="342" width="528" height="46" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="360" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">⑥ 包回最外层外壳：1 + 110010 + 0</text>
+  <text x="72" y="378" font-size="10.5" fill="#555" filter="url(#rough2)">⇒ 答案 11100100（仍合法：前缀 bal 全程非负、末位归 0）</text>
+
+  <rect x="120" y="402" width="400" height="40" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="427" text-anchor="middle" font-size="13" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">11011000 → 11100100</text>
+
+  <text x="320" y="464" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">对应官方解释：交换 s[1] 起的「10」与 s[3] 起的「1100」两个相邻特殊子串</text>
+</svg>

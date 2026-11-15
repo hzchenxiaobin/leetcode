@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">核心观察：宝石类型只有 52 种，一张 64 位整数就够装</text>
+  <text x="310" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">jewels 只负责「置位」，stones 逐字符「查位」；查询 = 一次移位 + 一次按位与</text>
+
+  <text x="60" y="82" font-size="11" font-weight="bold" fill="#555" filter="url(#rough2)">① 字符 → 位号：把 52 个字母压到互不重叠的位上</text>
+
+  <rect x="60" y="92" width="500" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="76" y="112" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">小写 bit(c) = c − 'a' → 第 0 … 25 位　　·　　大写 bit(c) = c − 'A' + 26 → 第 26 … 51 位</text>
+  <text x="76" y="132" font-size="10.5" fill="#555" filter="url(#rough2)">大小写各占一段、互不共用 → 「a」与「A」天然是两种石头</text>
+
+  <text x="60" y="170" font-size="11" font-weight="bold" fill="#555" filter="url(#rough2)">② jewels = "aA" 只把第 0 位、第 26 位置 1，其余位保持 0</text>
+
+  <g filter="url(#rough2)">
+    <rect x="90" y="182" width="50" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="150" y="182" width="50" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="4"/>
+    <rect x="210" y="182" width="50" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="4"/>
+    <rect x="340" y="182" width="50" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="400" y="182" width="50" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="4"/>
+    <rect x="460" y="182" width="50" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="4"/>
+
+    <text x="115" y="206" text-anchor="middle" font-size="13" font-weight="bold" fill="#33552a">1</text>
+    <text x="175" y="206" text-anchor="middle" font-size="13" fill="#8a3a36">0</text>
+    <text x="235" y="206" text-anchor="middle" font-size="13" fill="#8a3a36">0</text>
+    <text x="365" y="206" text-anchor="middle" font-size="13" font-weight="bold" fill="#33552a">1</text>
+    <text x="425" y="206" text-anchor="middle" font-size="13" fill="#8a3a36">0</text>
+    <text x="485" y="206" text-anchor="middle" font-size="13" fill="#8a3a36">0</text>
+
+    <text x="115" y="236" text-anchor="middle" font-size="11" fill="#333">'a'</text>
+    <text x="175" y="236" text-anchor="middle" font-size="11" fill="#888">'b'</text>
+    <text x="235" y="236" text-anchor="middle" font-size="11" fill="#888">'c'</text>
+    <text x="365" y="236" text-anchor="middle" font-size="11" fill="#333">'A'</text>
+    <text x="425" y="236" text-anchor="middle" font-size="11" fill="#888">'B'</text>
+    <text x="485" y="236" text-anchor="middle" font-size="11" fill="#888">'C'</text>
+
+    <text x="115" y="252" text-anchor="middle" font-size="9" fill="#999">位 0</text>
+    <text x="175" y="252" text-anchor="middle" font-size="9" fill="#999">位 1</text>
+    <text x="235" y="252" text-anchor="middle" font-size="9" fill="#999">位 2</text>
+    <text x="365" y="252" text-anchor="middle" font-size="9" fill="#999">位 26</text>
+    <text x="425" y="252" text-anchor="middle" font-size="9" fill="#999">位 27</text>
+    <text x="485" y="252" text-anchor="middle" font-size="9" fill="#999">位 28</text>
+  </g>
+
+  <text x="300" y="208" text-anchor="middle" font-size="15" fill="#666" filter="url(#rough2)">⋯</text>
+
+  <rect x="60" y="272" width="500" height="62" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="76" y="292" font-size="10.5" fill="#2f3f5c" filter="url(#rough2)">建表：mask = 0；对每个 c ∈ jewels 执行 mask |= 1 &lt;&lt; bit(c)</text>
+  <text x="76" y="310" font-size="10.5" fill="#2f3f5c" filter="url(#rough2)">查表：对每块石头 s 取 (mask &gt;&gt; bit(s)) &amp; 1，为 1 就是宝石</text>
+  <text x="76" y="328" font-size="10" fill="#6b7a8f" filter="url(#rough2)">jewels = "aA" ⇒ mask = 2⁰ + 2²⁶ = 67108865；stones = "aAAbbbb" ⇒ 命中 3 次</text>
+
+  <path d="M 60 356 L 560 356" stroke="#ddd" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+  <text x="310" y="378" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">时间 O(|jewels| + |stones|)，空间 O(1)：整张类型表就是一个 64 位整数</text>
+</svg>

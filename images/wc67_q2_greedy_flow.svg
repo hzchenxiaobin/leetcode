@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">贪心扫描：边读边把右端点推到「最远」，闭合即切</text>
+  <text x="280" y="47" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">全程一遍扫描，O(n) 时间、O(1) 额外空间（字母表大小固定为 26）</text>
+
+  <rect x="140" y="62" width="280" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="84" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">① 预处理 last[c] = 字母 c 最后一次出现的下标</text>
+
+  <path d="M 280 96 L 280 116" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="140" y="116" width="280" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="137" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">② start = 0，end = 0（当前片段是 [start, i]）</text>
+
+  <path d="M 280 148 L 280 168" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="140" y="168" width="280" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="189" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">③ 对每个 i： end = max(end, last[s[i]])</text>
+
+  <path d="M 280 200 L 280 220" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,220 400,250 280,280 160,250" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="255" text-anchor="middle" font-size="11.5" fill="#8a3a36" filter="url(#rough2)">i == end ?</text>
+
+  <path d="M 400 250 L 424 250" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="412" y="243" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="424" y="230" width="112" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="480" y="248" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">片段闭合：</text>
+  <text x="480" y="262" text-anchor="middle" font-size="10" fill="#3a5a30" filter="url(#rough2)">记长，start = i+1</text>
+
+  <path d="M 480 270 L 480 315 L 424 315" stroke="#4a7a3a" stroke-width="1.4" fill="none"
+        marker-end="url(#arr)" stroke-dasharray="5 3" filter="url(#rough2)"/>
+
+  <path d="M 280 280 L 280 300" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="296" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <rect x="140" y="300" width="280" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="320" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">④ i += 1，回到 ③ 继续扩张 / 继续扫描</text>
+
+  <!-- 回边：从 ④ 左侧回到 ③ 左侧 -->
+  <path d="M 140 315 L 96 315 L 96 184 L 136 184" stroke="#446688" stroke-width="1.4" fill="none"
+        marker-end="url(#arr)" stroke-dasharray="5 3" filter="url(#rough2)"/>
+
+  <path d="M 280 330 L 280 350" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="140" y="350" width="280" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="370" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">⑤ i 走完整串 → 返回各段长度的数组</text>
+
+  <text x="280" y="404" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">不变式：任何时刻 end ≥ i，且 end 单调不减；切点一定被 i == end 命中</text>
+  <text x="280" y="420" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">切在「最早的闭合时刻」正是片段数最多的原因（证明见正文引理 3）</text>
+</svg>

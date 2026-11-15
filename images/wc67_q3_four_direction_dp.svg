@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：加号阶数 = 四条臂长的最小值</text>
+  <text x="280" y="47" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">臂长 = 从中心沿该方向连续 1 的格子数（含中心自身），四个方向互不影响</text>
+
+  <rect x="30" y="64" width="230" height="78" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="46" y="86" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">↑ up：向上</text>
+  <text x="46" y="107" font-size="9.5" fill="#555" filter="url(#rough2)">自下而上递推，到 0 或越界即断</text>
+  <text x="46" y="128" font-size="10" fill="#3a4a66" filter="url(#rough2)">up[r][c] = up[r-1][c] + 1</text>
+
+  <rect x="300" y="64" width="230" height="78" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="316" y="86" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">↓ down：向下</text>
+  <text x="316" y="107" font-size="9.5" fill="#555" filter="url(#rough2)">自上而下递推，到 0 或越界即断</text>
+  <text x="316" y="128" font-size="10" fill="#8a3a36" filter="url(#rough2)">down[r][c] = down[r+1][c] + 1</text>
+
+  <rect x="30" y="152" width="230" height="78" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="46" y="174" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">← left：向左</text>
+  <text x="46" y="195" font-size="9.5" fill="#555" filter="url(#rough2)">自左而右递推，到 0 或越界即断</text>
+  <text x="46" y="216" font-size="10" fill="#3a5a30" filter="url(#rough2)">left[r][c] = left[r][c-1] + 1</text>
+
+  <rect x="300" y="152" width="230" height="78" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="316" y="174" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">→ right：向右</text>
+  <text x="316" y="195" font-size="9.5" fill="#555" filter="url(#rough2)">自右而左递推，到 0 或越界即断</text>
+  <text x="316" y="216" font-size="10" fill="#8a6a20" filter="url(#rough2)">right[r][c] = right[r][c+1] + 1</text>
+
+  <rect x="30" y="248" width="500" height="52" fill="#fafafa" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="270" text-anchor="middle" font-size="12.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">order(r,c) = min( up[r][c], down[r][c], left[r][c], right[r][c] )</text>
+  <text x="280" y="291" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">雷格四表全为 0，阶数自然为 0；答案 = 所有格子阶数的最大值</text>
+
+  <text x="280" y="328" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">四条臂互相独立 → 只要做四次一维线性 DP，总时间 O(n²)</text>
+  <text x="280" y="348" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">边界外侧一律视为 0：首行 up = 1、首列 left = 1（该格为 1 时）</text>
+  <text x="280" y="366" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">阶数上界为 ⌈n/2⌉：k 阶加号要占满 2k−1 行与 2k−1 列</text>
+</svg>

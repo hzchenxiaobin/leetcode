@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="430" fill="#fafafa"/>
+
+  <text x="330" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">算法流程：扁平化 → 编码 → 预计算邻接 → 反向 BFS 建表</text>
+  <text x="330" y="52" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">棋盘形状固定，所以「0 在哪个位置能换到哪」是一张写死的表；整张距离表也只有 360 项有效</text>
+
+  <text x="162" y="68" text-anchor="middle" font-size="8.5" fill="#888" filter="url(#rough2)">按行主序摊平</text>
+  <text x="368" y="68" text-anchor="middle" font-size="8.5" fill="#888" filter="url(#rough2)">base-6 压成一个整数</text>
+
+  <rect x="40" y="74" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="57" y="97" text-anchor="middle" font-size="14" fill="#2f3f5c" filter="url(#rough2)">4</text>
+  <rect x="74" y="74" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="91" y="97" text-anchor="middle" font-size="14" fill="#2f3f5c" filter="url(#rough2)">1</text>
+  <rect x="108" y="74" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="125" y="97" text-anchor="middle" font-size="14" fill="#2f3f5c" filter="url(#rough2)">2</text>
+  <rect x="40" y="108" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="57" y="131" text-anchor="middle" font-size="14" fill="#2f3f5c" filter="url(#rough2)">5</text>
+  <rect x="74" y="108" width="34" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4" filter="url(#rough2)"/>
+  <text x="91" y="131" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">0</text>
+  <rect x="108" y="108" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4" filter="url(#rough2)"/>
+  <text x="125" y="131" text-anchor="middle" font-size="14" fill="#2f3f5c" filter="url(#rough2)">3</text>
+  <text x="91" y="158" text-anchor="middle" font-size="9" fill="#6b7a8f" filter="url(#rough2)">起始 board</text>
+
+  <path d="M 150 108 L 176 108" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="180" y="74" width="170" height="68" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="265" y="100" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f3f5c" filter="url(#rough2)">扁平序列 d[0..5]</text>
+  <text x="265" y="122" text-anchor="middle" font-size="10.5" fill="#6b7a8f" filter="url(#rough2)">(4, 1, 2, 5, 0, 3)</text>
+
+  <path d="M 352 108 L 380 108" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="384" y="74" width="236" height="68" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="502" y="100" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2f3f5c" filter="url(#rough2)">state = Σ d[i] · 6^i</text>
+  <text x="502" y="122" text-anchor="middle" font-size="10" fill="#6b7a8f" filter="url(#rough2)">取值 [0, 46656)，一一对应</text>
+
+  <text x="36" y="180" font-size="11" font-weight="bold" fill="#444" filter="url(#rough2)">预计算 nxt：0 在位置 p 时，能换到哪些位置（下标 = 行主序）</text>
+
+  <rect x="36" y="190" width="88" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="80" y="212" text-anchor="middle" font-size="11" font-weight="bold" fill="#33552a" filter="url(#rough2)">p = 0</text>
+  <text x="80" y="233" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">→ 1, 3</text>
+
+  <rect x="140" y="190" width="88" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="184" y="212" text-anchor="middle" font-size="11" font-weight="bold" fill="#33552a" filter="url(#rough2)">p = 1</text>
+  <text x="184" y="233" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">→ 0, 2, 4</text>
+
+  <rect x="244" y="190" width="88" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="288" y="212" text-anchor="middle" font-size="11" font-weight="bold" fill="#33552a" filter="url(#rough2)">p = 2</text>
+  <text x="288" y="233" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">→ 1, 5</text>
+
+  <rect x="348" y="190" width="88" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="392" y="212" text-anchor="middle" font-size="11" font-weight="bold" fill="#33552a" filter="url(#rough2)">p = 3</text>
+  <text x="392" y="233" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">→ 0, 4</text>
+
+  <rect x="452" y="190" width="88" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="496" y="212" text-anchor="middle" font-size="11" font-weight="bold" fill="#33552a" filter="url(#rough2)">p = 4</text>
+  <text x="496" y="233" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">→ 1, 3, 5</text>
+
+  <rect x="556" y="190" width="88" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="600" y="212" text-anchor="middle" font-size="11" font-weight="bold" fill="#33552a" filter="url(#rough2)">p = 5</text>
+  <text x="600" y="233" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">→ 2, 4</text>
+
+  <rect x="36" y="272" width="182" height="72" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="127" y="296" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2f3f5c" filter="url(#rough2)">1) 队列 = { 目标态 }</text>
+  <text x="127" y="318" text-anchor="middle" font-size="9.5" fill="#6b7a8f" filter="url(#rough2)">dist[goal] = 0</text>
+
+  <path d="M 220 308 L 244 308" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="248" y="272" width="182" height="72" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="339" y="296" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">2) 换 0 与 nxt[p]</text>
+  <text x="339" y="318" text-anchor="middle" font-size="9.5" fill="#7a6220" filter="url(#rough2)">dist[next] = dist[cur] + 1</text>
+
+  <path d="M 432 308 L 456 308" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="460" y="272" width="170" height="72" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="545" y="296" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#33552a" filter="url(#rough2)">3) 查 dist[start]</text>
+  <text x="545" y="318" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">缺省 = 不可达 → -1</text>
+
+  <rect x="36" y="362" width="594" height="50" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="384" font-size="10" fill="#7a2f2c" filter="url(#rough2)">首次到达即最短路，所以每个状态只入队一次，队列总长度不会超过一层</text>
+  <text x="56" y="402" font-size="10" fill="#7a2f2c" filter="url(#rough2)">全表最多填 360 项，其余槽位保持 -1；查表命中就是答案</text>
+</svg>

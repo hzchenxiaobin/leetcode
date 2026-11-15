@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="470" fill="#fafafa"/>
+
+  <text x="340" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">两个示例的走查：一条成功的路 vs 全部分支失败</text>
+
+  <!-- ============ 示例 1 ============ -->
+  <text x="34" y="60" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">示例 1：bottom = "BCD" → true</text>
+
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle" fill="#333">
+    <rect x="60" y="150" width="72" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <text x="96" y="172">B</text>
+    <rect x="136" y="150" width="72" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <text x="172" y="172">C</text>
+    <rect x="212" y="150" width="72" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <text x="248" y="172">D</text>
+
+    <rect x="98" y="112" width="72" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4"/>
+    <text x="134" y="134">C</text>
+    <rect x="174" y="112" width="72" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="4"/>
+    <text x="210" y="134">E</text>
+
+    <rect x="136" y="74" width="72" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="4"/>
+    <text x="172" y="96">A</text>
+  </g>
+
+  <text x="60" y="202" font-size="10" fill="#666" filter="url(#rough2)">第 3 层 B C D</text>
+  <text x="300" y="134" font-size="10" fill="#4a7a3a" filter="url(#rough2)">第 2 层 C E</text>
+  <text x="300" y="96" font-size="10" fill="#b85450" filter="url(#rough2)">第 1 层 A</text>
+
+  <!-- 判定表 -->
+  <g filter="url(#rough2)" font-size="10.5">
+    <rect x="360" y="70" width="292" height="118" fill="#ffffff" stroke="#aaa" stroke-width="1.2" rx="8"/>
+    <text x="376" y="90" font-size="10.5" fill="#555" font-weight="bold">三角形模式逐个核对 allowed</text>
+    <text x="376" y="112" fill="#3a5a30">"BCC"：(B,C) → C　✓</text>
+    <text x="376" y="134" fill="#3a5a30">"CDE"：(C,D) → E　✓</text>
+    <text x="376" y="156" fill="#3a5a30">"CEA"：(C,E) → A　✓</text>
+    <text x="376" y="178" fill="#888" font-size="9.5">三个都命中 → 堆到 1 块，返回 true</text>
+  </g>
+
+  <path d="M 358 176 L 300 176" stroke="#4a7a3a" stroke-width="1.3" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 40 228 L 640 228" stroke="#ccc" stroke-width="1" stroke-dasharray="6 6" fill="none" filter="url(#rough2)"/>
+
+  <!-- ============ 示例 2 ============ -->
+  <text x="34" y="258" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">示例 2：bottom = "AAAA" → false（第 3 层有 8 种可能，逐条走到底全都断掉）</text>
+
+  <text x="34" y="286" font-size="10" fill="#555" filter="url(#rough2)">(A,A) 可顶 B 或 C（AAB、AAC）⇒ 第 3 层候选：</text>
+
+  <g font-size="10.5" text-anchor="middle" filter="url(#rough2)">
+    <rect x="34" y="300" width="64" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="66" y="318" fill="#3a4a66">BBB</text>
+    <rect x="108" y="300" width="64" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="4"/>
+    <text x="140" y="318" fill="#3a4a66">BBC</text>
+    <rect x="182" y="300" width="64" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="4"/>
+    <text x="214" y="318" fill="#8a3a36">BCB</text>
+    <rect x="256" y="300" width="64" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="4"/>
+    <text x="288" y="318" fill="#8a3a36">BCC</text>
+    <rect x="330" y="300" width="64" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="4"/>
+    <text x="362" y="318" fill="#8a3a36">CBB</text>
+    <rect x="404" y="300" width="64" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="4"/>
+    <text x="436" y="318" fill="#8a3a36">CBC</text>
+    <rect x="478" y="300" width="64" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="4"/>
+    <text x="510" y="318" fill="#8a3a36">CCB</text>
+    <rect x="552" y="300" width="64" height="26" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="4"/>
+    <text x="584" y="318" fill="#8a3a36">CCC</text>
+  </g>
+
+  <text x="34" y="348" font-size="9.5" fill="#b85450" filter="url(#rough2)">红色 6 种：含 (C,B) 或 (C,C)，allowed 里没这条规则，第 2 层直接无解</text>
+
+  <rect x="34" y="362" width="300" height="46" fill="#ffffff" stroke="#aaa" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="48" y="381" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">BBB → (B,B)→E 三次 ⇒ EE</text>
+  <text x="48" y="399" font-size="10" fill="#b85450" filter="url(#rough2)">⇒ (E,E) 不在 allowed，断掉 ✗</text>
+
+  <rect x="350" y="362" width="302" height="46" fill="#ffffff" stroke="#aaa" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="364" y="381" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">BBC → (B,B)→E、(B,C)→D ⇒ ED</text>
+  <text x="364" y="399" font-size="10" fill="#b85450" filter="url(#rough2)">⇒ (E,D) 不在 allowed（只有 DE→F），断掉 ✗</text>
+
+  <text x="340" y="440" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">8 条分支全部失败，且中间行互不相同 → 记忆化后每个状态只算一次，返回 false</text>
+</svg>

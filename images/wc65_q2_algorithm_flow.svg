@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 560" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="560" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">每单位水的判定流程（共 V 轮）</text>
+  <text x="310" y="48" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">两次线性扫描替代逐格滚动，每滴只把一列 +1</text>
+
+  <!-- 起点 -->
+  <rect x="120" y="66" width="380" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="88" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">第 t 滴：水滴落在第 K 列顶部</text>
+
+  <path d="M 310 100 L 310 116" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 向左扫描 -->
+  <rect x="100" y="118" width="420" height="62" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="137" text-anchor="middle" font-size="10" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">best = K，i = K − 1</text>
+  <text x="310" y="154" text-anchor="middle" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">while i ≥ 0 且 h[i] ≤ h[i+1]：若 h[i] &lt; h[best] 则 best = i，i −= 1</text>
+  <text x="310" y="170" text-anchor="middle" font-size="8.5" fill="#6a8a5a" filter="url(#rough2)">// 沿不增链扫描，best 停在「最靠右的最小值」</text>
+
+  <path d="M 310 180 L 310 196" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定 1 -->
+  <polygon points="150,240 310,198 470,240 310,282" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="310" y="245" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">h[best] &lt; h[K] ?</text>
+
+  <path d="M 470 240 L 490 240" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="482" y="232" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="494" y="211" width="110" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="549" y="232" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">落点 = best</text>
+  <text x="549" y="248" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">h[best] += 1</text>
+  <text x="549" y="263" text-anchor="middle" font-size="8.5" fill="#a87870" filter="url(#rough2)">（向左，本轮结束）</text>
+
+  <path d="M 310 282 L 310 302" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="322" y="296" font-size="9.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- 向右扫描 -->
+  <rect x="100" y="304" width="420" height="62" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="323" text-anchor="middle" font-size="10" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">否则向右扫描：best = K，i = K + 1，链条件 h[i] ≤ h[i−1]</text>
+  <text x="310" y="340" text-anchor="middle" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">while i &lt; n 且 h[i] ≤ h[i−1]：若 h[i] &lt; h[best] 则 best = i，i += 1</text>
+  <text x="310" y="356" text-anchor="middle" font-size="8.5" fill="#6a8a5a" filter="url(#rough2)">// 左右对称：落点仍是链上「最靠右的最小值」</text>
+
+  <path d="M 310 366 L 310 384" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判定 2 -->
+  <polygon points="150,428 310,386 470,428 310,470" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="310" y="433" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">右侧 h[best] &lt; h[K] ?</text>
+
+  <path d="M 470 428 L 490 428" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="482" y="420" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="494" y="399" width="110" height="60" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="549" y="420" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">落点 = best</text>
+  <text x="549" y="436" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">h[best] += 1</text>
+  <text x="549" y="451" text-anchor="middle" font-size="8.5" fill="#a87870" filter="url(#rough2)">（向右，本轮结束）</text>
+
+  <path d="M 310 470 L 310 486" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="322" y="482" font-size="9.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- 原地抬升 -->
+  <rect x="120" y="488" width="380" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="512" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">两侧都没有严格更低的列：h[K] += 1</text>
+
+  <!-- 回到下一滴 -->
+  <path d="M 120 507 L 70 507 L 70 83 L 112 83" stroke="#888" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="82" y="424" font-size="9.5" fill="#777" filter="url(#rough2)">下一滴</text>
+
+  <text x="604" y="544" text-anchor="end" font-size="9.5" fill="#999" filter="url(#rough2)">时间 O(V · n)，额外空间 O(1)</text>
+</svg>

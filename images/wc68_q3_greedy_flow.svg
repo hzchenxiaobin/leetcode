@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">贪心：一遍扫描，前缀最大值与下标对齐就收块</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">O(n) 时间、O(1) 额外空间，无需排序、无需模拟</text>
+
+  <rect x="120" y="64" width="320" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="86" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">① cur = -1（前缀最大值），ans = 0（块数）</text>
+
+  <path d="M 280 98 L 280 114" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="116" width="320" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="138" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">② 对 i = 0..n-1：cur = max(cur, arr[i])</text>
+
+  <path d="M 280 150 L 280 166" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,166 404,196 280,226 156,196" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="201" text-anchor="middle" font-size="11.5" fill="#8a3a36" filter="url(#rough2)">cur == i ?</text>
+
+  <path d="M 404 196 L 430 196" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <text x="416" y="188" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="432" y="174" width="112" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="488" y="192" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">ans += 1</text>
+  <text x="488" y="208" text-anchor="middle" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">在此收块</text>
+
+  <path d="M 488 218 L 488 264 L 412 264" stroke="#4a7a3a" stroke-width="1.4" fill="none"
+        marker-end="url(#arrg)" stroke-dasharray="5 3" filter="url(#rough2)"/>
+
+  <path d="M 280 226 L 280 248" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="242" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <rect x="150" y="248" width="262" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="281" y="269" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">③ i += 1（这里不能切，继续扫）</text>
+
+  <path d="M 150 264 L 92 264 L 92 133 L 114 133" stroke="#446688" stroke-width="1.4" fill="none"
+        marker-end="url(#arr)" stroke-dasharray="5 3" filter="url(#rough2)"/>
+
+  <path d="M 281 280 L 281 306" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="294" y="298" font-size="9.5" fill="#666" filter="url(#rough2)">i == n</text>
+
+  <rect x="120" y="308" width="320" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="329" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">④ 返回 ans（对齐次数 = 最多块数）</text>
+
+  <text x="280" y="364" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">cur 单调不减、i 严格递增 ⇒ 每个对齐点都会被恰好命中一次</text>
+  <text x="280" y="384" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">对齐点既是「可切」，也是「能切就够了」——多切一刀必然出错</text>
+  <text x="280" y="404" text-anchor="middle" font-size="9.5" fill="#aaa" filter="url(#rough2)">复杂度下界：至少要读完整个数组，O(n) 已最优</text>
+</svg>

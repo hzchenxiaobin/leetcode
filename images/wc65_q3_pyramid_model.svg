@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="430" fill="#fafafa"/>
+
+  <text x="330" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">每个三角形只看相邻两块：自底向上逐层收缩</text>
+  <text x="330" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">三角形方向敏感：(左底, 右底) → 顶块；同一对底块可能对应多个顶块</text>
+
+  <!-- 三层金字塔 BCD -> CE -> A -->
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle" fill="#333">
+    <rect x="70" y="300" width="76" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="108" y="324">B</text>
+    <rect x="150" y="300" width="76" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="188" y="324">C</text>
+    <rect x="230" y="300" width="76" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="268" y="324">D</text>
+
+    <rect x="110" y="256" width="76" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="148" y="280">C</text>
+    <rect x="190" y="256" width="76" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="228" y="280">E</text>
+
+    <rect x="150" y="212" width="76" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" rx="4"/>
+    <text x="188" y="236">A</text>
+  </g>
+
+  <path d="M 188 212 L 188 196" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="200" y="192" font-size="10" fill="#8a3a36" filter="url(#rough2)">到达 1 块 ⇒ true</text>
+
+  <text x="70" y="356" font-size="10.5" fill="#666" filter="url(#rough2)">bottom = "BCD"：3 块 → 2 块 → 1 块，每层少一块</text>
+
+  <!-- 三张说明卡 -->
+  <g filter="url(#rough2)">
+    <rect x="340" y="68" width="296" height="84" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8"/>
+    <text x="356" y="90" font-size="11.5" fill="#33465f" font-weight="bold">规则 "ABC" 的含义</text>
+    <text x="356" y="110" font-size="10.5" fill="#444">A 在左下、B 在右下 → 顶块 C</text>
+    <text x="356" y="128" font-size="10.5" fill="#444">"BAC" 是另一条规则：B 左、A 右</text>
+    <text x="356" y="145" font-size="10" fill="#888">顺序写反 = 另一条规则，不能混用</text>
+
+    <rect x="340" y="164" width="296" height="84" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8"/>
+    <text x="356" y="186" font-size="11.5" fill="#3a5a30" font-weight="bold">金字塔共有 n(n−1)/2 个三角形</text>
+    <text x="356" y="206" font-size="10.5" fill="#444">n = 6 的底层 → 5+4+3+2+1 = 15 个</text>
+    <text x="356" y="224" font-size="10.5" fill="#444">没有"跳过某层"的捷径，必须逐层填写</text>
+    <text x="356" y="241" font-size="10" fill="#888">层高由行长度唯一确定</text>
+
+    <rect x="340" y="260" width="296" height="84" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8"/>
+    <text x="356" y="282" font-size="11.5" fill="#8a6a20" font-weight="bold">一对底块 → 多个候选顶块</text>
+    <text x="356" y="302" font-size="10.5" fill="#444">如 AAB、AAC 让 (A,A) 可顶 B 或 C</text>
+    <text x="356" y="320" font-size="10.5" fill="#444">⇒ 贪心选一个会漏解，必须枚举 + 回溯</text>
+    <text x="356" y="337" font-size="10" fill="#888">候选集合用 6 位掩码表示</text>
+  </g>
+
+  <rect x="40" y="380" width="580" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="9" filter="url(#rough2)"/>
+  <text x="330" y="402" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">T(k+1)[i] ∈ trans(T(k)[i], T(k)[i+1])，每填一层长度减一，直到只剩 1 块</text>
+</svg>
