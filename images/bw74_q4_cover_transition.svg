@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="79"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">转移：第 i 块砖「不铺」或「铺一条盖住末尾 L 块」</text>
+
+  <!-- 砖块序列 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="110" width="46" height="34" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" rx="3"/>
+    <rect x="106" y="110" width="46" height="34" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" rx="3"/>
+    <rect x="152" y="110" width="46" height="34" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" rx="3"/>
+    <rect x="198" y="110" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="3"/>
+    <rect x="244" y="110" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="3"/>
+    <rect x="290" y="110" width="46" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.4" rx="3"/>
+    <rect x="336" y="110" width="46" height="34" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" rx="3"/>
+    <rect x="382" y="110" width="46" height="34" fill="#f5f5f5" stroke="#bbb" stroke-width="1.2" rx="3"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#333" text-anchor="middle">
+    <text x="83" y="131">…</text>
+    <text x="129" y="131">i−L</text>
+    <text x="175" y="131">…</text>
+    <text x="221" y="131">i−2</text>
+    <text x="267" y="131">i−1</text>
+    <text x="313" y="131">i</text>
+    <text x="359" y="131">i+1</text>
+    <text x="405" y="131">…</text>
+  </g>
+  <!-- 括号：末尾 L=4 块 -->
+  <g filter="url(#rough2)">
+    <path d="M 221 152 C 218 160, 216 162, 214 168" fill="none" stroke="#4a7a3a" stroke-width="1.8"/>
+    <path d="M 313 152 C 316 160, 318 162, 320 168" fill="none" stroke="#4a7a3a" stroke-width="1.8"/>
+    <path d="M 214 168 L 320 168" stroke="#4a7a3a" stroke-width="1.8" fill="none"/>
+  </g>
+  <text x="267" y="184" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)" text-anchor="middle">一条毯子盖住 [i−L, i−1]（L = 4）</text>
+
+  <!-- 上：铺 转移 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="52" width="240" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13.5" fill="#2a4a22">
+    <text x="76" y="78">铺：dp[i][j] = dp[i−L][j−1]</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 129 92 C 129 100, 129 104, 129 108" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arrG)"/>
+  </g>
+  <text x="330" y="72" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">盖住的整段白砖不再露出（前缀和 pre 可核对）</text>
+
+  <!-- 下：不铺 转移 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="206" width="240" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13.5" fill="#6a3a36">
+    <text x="76" y="232">不铺：dp[i][j] = dp[i−1][j] + 白(i−1)</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 267 190 C 267 196, 267 200, 267 204" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arrR)"/>
+  </g>
+  <text x="330" y="228" font-size="12.5" fill="#b85450" filter="url(#rough2)">第 i 块是白砖就 +1，黑砖 +0</text>
+
+  <!-- 合并 -->
+  <g filter="url(#rough2)">
+    <path d="M 300 226 C 340 226, 360 226, 380 226" fill="none" stroke="#446688" stroke-width="1.6" stroke-dasharray="4 3" opacity="0.5"/>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="150" y="272" width="260" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <text x="280" y="299" font-size="14" fill="#5a4a20" filter="url(#rough2)" text-anchor="middle">dp[i][j] = min(两种转移)，答案 dp[n][numCarpets]</text>
+</svg>

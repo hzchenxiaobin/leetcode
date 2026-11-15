@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 330"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="53"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="73"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="330" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">一遍扫描：同时统计 a 计数、c 计数与已有配对数</text>
+
+  <!-- 扫描循环 -->
+  <g filter="url(#rough2)">
+    <rect x="52" y="60" width="200" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="152" y="87" font-size="13.5" fill="#33465e" filter="url(#rough2)" text-anchor="middle">for c in text 逐字符扫描</text>
+  <g filter="url(#rough2)">
+    <path d="M 152 104 C 152 120, 152 126, 152 138" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- 判断 1 -->
+  <g filter="url(#rough2)">
+    <polygon points="152,140 232,172 152,204 72,172" fill="#fce4ec" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="152" y="170" font-size="13" fill="#6a3a36" filter="url(#rough2)" text-anchor="middle">c == pattern[1] ?</text>
+  <text x="152" y="188" font-size="11.5" fill="#9a5a56" filter="url(#rough2)" text-anchor="middle">（是 pattern 的尾字符）</text>
+  <g filter="url(#rough2)">
+    <rect x="256" y="152" width="240" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="376" y="177" font-size="13" fill="#6a3a36" filter="url(#rough2)" text-anchor="middle">是：both += a；b += 1</text>
+  <g filter="url(#rough2)">
+    <path d="M 232 172 C 240 172, 246 172, 252 172" fill="none" stroke="#b85450" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <text x="242" y="160" font-size="12" fill="#b85450" filter="url(#rough2)" text-anchor="middle">是</text>
+
+  <!-- 判断 2 -->
+  <g filter="url(#rough2)">
+    <path d="M 152 204 C 152 222, 152 228, 152 240" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <text x="170" y="228" font-size="12" fill="#446688" filter="url(#rough2)">否</text>
+  <g filter="url(#rough2)">
+    <polygon points="152,242 232,274 152,306 72,274" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <text x="152" y="272" font-size="13" fill="#33465e" filter="url(#rough2)" text-anchor="middle">c == pattern[0] ?</text>
+  <text x="152" y="290" font-size="11.5" fill="#5e7086" filter="url(#rough2)" text-anchor="middle">（首字符）</text>
+  <g filter="url(#rough2)">
+    <rect x="256" y="254" width="240" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="376" y="279" font-size="13" fill="#33465e" filter="url(#rough2)" text-anchor="middle">是：a += 1</text>
+  <g filter="url(#rough2)">
+    <path d="M 232 274 C 240 274, 246 274, 252 274" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  </g>
+  <text x="242" y="262" font-size="12" fill="#446688" filter="url(#rough2)" text-anchor="middle">是</text>
+
+  <!-- 输出 -->
+  <g filter="url(#rough2)">
+    <rect x="430" y="60" width="110" height="88" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" fill="#5a4a20">
+    <text x="485" y="84" text-anchor="middle">扫描结束：</text>
+    <text x="485" y="104" text-anchor="middle">both（已有）</text>
+    <text x="485" y="122" text-anchor="middle">+ max(a, b)</text>
+    <text x="485" y="140" text-anchor="middle">= 答案</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#999">
+    <text x="290" y="228">两字符相同时：先结算 both 再自增 a，</text>
+    <text x="290" y="244">保证「自己配自己」不会发生</text>
+  </g>
+</svg>
