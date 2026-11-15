@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">单调栈流程：先结算，再入栈</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888">新元素 nums[j] 只能「结束」那些比它小的栈顶，且都是最近的更大值</text>
+
+  <g filter="url(#rough2)">
+    <rect x="90" y="60" width="380" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="106" y="84" font-size="11" fill="#3a4a66">i = 0 … 2n−2，令 j = i mod n</text>
+
+    <rect x="90" y="118" width="380" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="106" y="140" font-size="10.5" fill="#8a6a20">while 栈非空 且 nums[栈顶] &lt; nums[j]：</text>
+    <text x="122" y="160" font-size="10.5" fill="#8a6a20">ans[栈顶] = nums[j]，然后弹出栈顶</text>
+
+    <rect x="90" y="196" width="380" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="106" y="220" font-size="10.5" fill="#3a5a30">若 i &lt; n：把 j 压入栈（第二圈不再入栈）</text>
+
+    <rect x="90" y="256" width="380" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+    <text x="106" y="280" font-size="10.5" fill="#8a3a36">循环结束 → 返回 ans，仍在栈中的下标保持 −1</text>
+  </g>
+
+  <path d="M 280 96 L 280 116" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 174 L 280 194" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 234 L 280 254" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 452 214 Q 500 214 500 140 Q 500 96 472 92" stroke="#8a8a8a" stroke-width="1.3" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="518" y="246" font-size="9" fill="#999" text-anchor="middle">下一个 i</text>
+
+  <rect x="60" y="310" width="440" height="62" fill="#eef3fb" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="330" font-size="10" fill="#3a4a66" font-weight="bold">为什么是 O(n)</text>
+  <text x="76" y="348" font-size="9.5" fill="#555">栈内下标自底向顶递增、对应值单调不增 → 每个下标最多入栈、出栈各一次</text>
+  <text x="76" y="364" font-size="9.5" fill="#555">总操作数 ≤ 2n，均摊 O(1) 每次 → 整体 O(n)，与暴力 O(n²) 拉开差距</text>
+
+  <text x="280" y="400" text-anchor="middle" font-size="9.5" fill="#999">相等不算「更大」：比较必须用严格小于 &lt;，例如 [2,2] 的答案应是 [−1,−1]</text>
+</svg>

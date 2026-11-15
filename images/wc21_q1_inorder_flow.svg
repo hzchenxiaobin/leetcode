@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 480" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="r" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.6"/>
+    </filter>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/></marker>
+  </defs>
+  <rect width="660" height="480" fill="#fafafa"/>
+  <text x="330" y="26" text-anchor="middle" font-size="15" font-weight="bold" fill="#333" filter="url(#r)">迭代中序流程：栈 + 前驱变量 prev，一趟扫完</text>
+  <path d="M 150 34 Q 330 42 510 34" stroke="#3a3a3a" stroke-width="1.2" fill="none" filter="url(#r)"/>
+
+  <!-- init -->
+  <g filter="url(#r)">
+    <rect x="170" y="48" width="270" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="305" y="68" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">stack ← 空，cur ← root</text>
+  <text x="305" y="85" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">prev ← 无，ans ← ∞</text>
+  <path d="M 305 92 L 305 108" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+
+  <!-- step 1: push left chain -->
+  <g filter="url(#r)">
+    <rect x="170" y="112" width="270" height="44" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="305" y="132" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a1a" filter="url(#r)">while cur ≠ 空：push(cur)，cur ← cur.left</text>
+  <text x="305" y="149" text-anchor="middle" font-size="10" fill="#8a6a1a" filter="url(#r)">（先把整条左链压栈）</text>
+  <path d="M 305 156 L 305 172" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+
+  <!-- step 2: pop -->
+  <g filter="url(#r)">
+    <rect x="170" y="176" width="270" height="42" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="305" y="203" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">cur ← stack.pop()   ← 中序访问点</text>
+  <path d="M 305 218 L 305 234" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+
+  <!-- diamond: prev exists -->
+  <g filter="url(#r)">
+    <polygon points="305,238 405,268 305,298 205,268" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="305" y="264" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6a1a" filter="url(#r)">prev 存在？</text>
+  <text x="305" y="281" text-anchor="middle" font-size="10" fill="#8a6a1a" filter="url(#r)">（不是第一个节点）</text>
+
+  <!-- yes: update ans -->
+  <path d="M 405 268 L 437 268" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+  <text x="421" y="259" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#r)">是</text>
+  <g filter="url(#r)">
+    <rect x="441" y="242" width="186" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="534" y="263" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold" fill="#b85450" filter="url(#r)">ans = min(ans,</text>
+  <text x="534" y="282" text-anchor="middle" font-size="12" font-family="monospace" font-weight="bold" fill="#b85450" filter="url(#r)">cur.val − prev)</text>
+
+  <!-- no: continue down -->
+  <path d="M 305 298 L 305 314" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+  <text x="317" y="312" font-size="10.5" font-weight="bold" fill="#4a7a3a" filter="url(#r)">否</text>
+
+  <!-- step 4 -->
+  <g filter="url(#r)">
+    <rect x="170" y="318" width="270" height="42" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="305" y="345" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2b4a6e" filter="url(#r)">prev ← cur.val，cur ← cur.right</text>
+  <path d="M 305 360 L 305 376" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+  <!-- merge arrow from yes-branch back into main flow -->
+  <path d="M 534 294 L 534 339 L 444 339" stroke="#b85450" stroke-width="1.4" fill="none" filter="url(#r)"/>
+
+  <!-- diamond 2: loop condition -->
+  <g filter="url(#r)">
+    <polygon points="305,380 425,408 305,436 185,408" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="305" y="405" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#8a6a1a" filter="url(#r)">cur ≠ 空 或 stack 非空？</text>
+  <text x="305" y="421" text-anchor="middle" font-size="9.5" fill="#8a6a1a" filter="url(#r)">（还有节点没访问）</text>
+
+  <!-- no: done -->
+  <path d="M 425 408 L 471 408" stroke="#3a3a3a" stroke-width="1.6" marker-end="url(#ar)" fill="none" filter="url(#r)"/>
+  <text x="448" y="399" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#b85450" filter="url(#r)">否</text>
+  <g filter="url(#r)">
+    <rect x="475" y="384" width="158" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="554" y="404" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2e6e2e" filter="url(#r)">return ans</text>
+  <text x="554" y="422" text-anchor="middle" font-size="10" fill="#2e6e2e" filter="url(#r)">（n ≥ 2，ans 一定被更新）</text>
+
+  <!-- yes: loop back -->
+  <path d="M 185 408 L 96 408 L 96 134 L 166 134" stroke="#8a8a8a" stroke-width="1.6" fill="none" marker-end="url(#ar)" filter="url(#r)"/>
+  <text x="106" y="300" font-size="10.5" fill="#666" filter="url(#r)">是：</text>
+  <text x="106" y="318" font-size="10.5" fill="#666" filter="url(#r)">回到</text>
+  <text x="106" y="336" font-size="10.5" fill="#666" filter="url(#r)">左链</text>
+
+  <!-- bottom note -->
+  <g filter="url(#r)">
+    <rect x="40" y="444" width="586" height="0.6" fill="#ccc"/>
+  </g>
+  <text x="40" y="462" font-size="10.5" fill="#444" filter="url(#r)">每个节点恰好入栈一次、出栈一次 ⇒ O(n)；栈深 = 树高 h ⇒ 空间 O(h)，深链时也不会爆递归栈。</text>
+</svg>

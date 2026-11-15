@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 500" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="660" height="500" fill="#fafafa"/>
+
+  <text x="330" y="30" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">状压 DP 流程：一维掩码 + 候选掩码加速</text>
+  <text x="330" y="50" text-anchor="middle" font-size="11" fill="#777" filter="url(#rough2)">把「位置 → 候选值」预先压成位掩码，转移时只需位运算与 popcount</text>
+
+  <rect x="40" y="64" width="600" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="58" y="85" font-size="12.5" fill="#2f4260" font-weight="bold" filter="url(#rough2)">① 预处理候选掩码 allowed[p]</text>
+  <text x="58" y="102" font-size="10.5" fill="#5a6b82" filter="url(#rough2)">allowed[p] 的第 k−1 位为 1 ⟺ k % p == 0 或 p % k == 0</text>
+  <rect x="40" y="130" width="600" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="58" y="151" font-size="12.5" fill="#2f4260" font-weight="bold" filter="url(#rough2)">② 初始化 dp[0] = 1，full = (1 &lt;&lt; n) − 1</text>
+  <text x="58" y="168" font-size="10.5" fill="#5a6b82" filter="url(#rough2)">空排列算 1 种方案；dp 数组长度 2^n，下标就是掩码</text>
+  <rect x="40" y="196" width="600" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="58" y="217" font-size="12.5" fill="#2f4260" font-weight="bold" filter="url(#rough2)">③ mask 从 0 递增遍历到 full − 1</text>
+  <text x="58" y="234" font-size="10.5" fill="#5a6b82" filter="url(#rough2)">dp[mask] == 0 直接跳过；mask | bit 恒大于 mask，递增即拓扑序</text>
+  <rect x="40" y="262" width="600" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="58" y="283" font-size="12.5" fill="#2f4260" font-weight="bold" filter="url(#rough2)">④ pos = popcount(mask) + 1，cand = allowed[pos] &amp; ~mask</text>
+  <text x="58" y="300" font-size="10.5" fill="#5a6b82" filter="url(#rough2)">位置由「已用个数」唯一确定；~mask 保证同一值不会被用两次</text>
+  <rect x="40" y="328" width="600" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="58" y="349" font-size="12.5" fill="#2f4260" font-weight="bold" filter="url(#rough2)">⑤ 用 lowbit 枚举 cand 的每个 bit</text>
+  <text x="58" y="366" font-size="10.5" fill="#5a6b82" filter="url(#rough2)">bit = cand &amp; −cand，dp[mask | bit] += dp[mask]；cand ^= bit 清最低位</text>
+  <rect x="40" y="394" width="600" height="52" fill="#e6f4ea" stroke="#3f7a46" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="58" y="415" font-size="12.5" fill="#33502c" font-weight="bold" filter="url(#rough2)">⑥ 返回 dp[full]</text>
+  <text x="58" y="432" font-size="10.5" fill="#4a6a42" filter="url(#rough2)">full 全 1：每个值恰好用一次，累计到的就是优美排列总数</text>
+
+  <path d="M 340 116 L 340 129" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 340 182 L 340 195" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 340 248 L 340 261" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 340 314 L 340 327" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 340 380 L 340 393" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="330" y="472" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">总操作数 O(n · 2^n) ≤ 15 × 32768，n = 15 也在毫秒级完成</text>
+</svg>

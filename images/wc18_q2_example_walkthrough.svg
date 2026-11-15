@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="430" fill="#fafafa"/>
+
+  <text x="290" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">两组官方示例的走查：只差一个叶子，答案完全不同</text>
+  <text x="290" y="46" text-anchor="middle" font-size="10.5" fill="#888">自底向上枚举 3 个子树和，边算边记频次；最后一次性挑出频次最大的取值</text>
+
+  <!-- 例 1 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="68" width="232" height="262" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10"/>
+    <text x="56" y="90" font-size="11" fill="#3a4a66" font-weight="bold">例 1：root = [5, 2, −3]</text>
+    <circle cx="156" cy="128" r="17" fill="#fff" stroke="#446688" stroke-width="1.5"/>
+    <text x="156" y="133" text-anchor="middle" font-size="12" fill="#3a4a66">5</text>
+    <circle cx="114" cy="186" r="17" fill="#fff" stroke="#446688" stroke-width="1.5"/>
+    <text x="114" y="191" text-anchor="middle" font-size="12" fill="#3a4a66">2</text>
+    <circle cx="198" cy="186" r="17" fill="#fff" stroke="#b85450" stroke-width="1.5"/>
+    <text x="198" y="191" text-anchor="middle" font-size="12" fill="#8a3a36">−3</text>
+    <path d="M 148 142 L 122 172" stroke="#666" stroke-width="1.3" fill="none"/>
+    <path d="M 164 142 L 190 172" stroke="#666" stroke-width="1.3" fill="none"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#555">
+    <text x="54" y="224">叶 2  →  子树和 2  →  频次 {2:1}</text>
+    <text x="54" y="242">叶 −3 →  子树和 −3 →  频次 {−3:1}</text>
+    <text x="54" y="260">根 5  →  5+2−3 = 4  →  频次 {4:1}</text>
+    <text x="54" y="286" font-size="10.5" fill="#3a5a30" font-weight="bold">最大频次 = 1 → 返回 [2, −3, 4]</text>
+    <text x="54" y="308" font-size="9.5" fill="#999">三者并列，顺序不限</text>
+  </g>
+
+  <!-- 例 2 -->
+  <g filter="url(#rough2)">
+    <rect x="308" y="68" width="232" height="262" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <text x="324" y="90" font-size="11" fill="#3a5a30" font-weight="bold">例 2：root = [5, 2, −5]</text>
+    <circle cx="424" cy="128" r="17" fill="#fff" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="424" y="133" text-anchor="middle" font-size="12" fill="#3a5a30">5</text>
+    <circle cx="382" cy="186" r="17" fill="#fff" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="382" y="191" text-anchor="middle" font-size="12" fill="#3a5a30">2</text>
+    <circle cx="466" cy="186" r="17" fill="#fff" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="466" y="191" text-anchor="middle" font-size="12" fill="#8a6a20">−5</text>
+    <path d="M 416 142 L 390 172" stroke="#666" stroke-width="1.3" fill="none"/>
+    <path d="M 432 142 L 458 172" stroke="#666" stroke-width="1.3" fill="none"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#555">
+    <text x="322" y="224">叶 2  →  子树和 2  →  频次 {2:1}</text>
+    <text x="322" y="242">叶 −5 →  子树和 −5 →  频次 {−5:1}</text>
+    <text x="322" y="260" fill="#8a3a36">根 5  →  5+2−5 = 2  →  频次 {2:2}</text>
+    <text x="322" y="286" font-size="10.5" fill="#3a5a30" font-weight="bold">最大频次 = 2 → 返回 [2]</text>
+    <text x="322" y="308" font-size="9.5" fill="#999">根与左叶同和，2 被计两次</text>
+  </g>
+
+  <path d="M 290 344 L 290 362" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="364" width="460" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10" fill="#555">
+    <text x="76" y="384" fill="#8a6a20" font-weight="bold">同一棵形状、只改一个叶子值，频次分布就从「三值并列」变成「单值独大」</text>
+    <text x="76" y="402">所以必须把每个子树和都真的算出来并计数，不能只看根的和或只看叶子。</text>
+  </g>
+</svg>
