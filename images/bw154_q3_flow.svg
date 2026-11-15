@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 396" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="396" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：两次标记，一次计数</text>
+  <text x="260" y="47" text-anchor="middle" font-size="11" fill="#888">pairXor[2048] 与 seen[2048] 都是布尔数组</text>
+
+  <rect x="120" y="60" width="280" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="80" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">pairXor[0..2047] ← false</text>
+  <text x="260" y="97" text-anchor="middle" font-size="10" fill="#666">while 遍历 a ∈ nums、b ∈ nums</text>
+
+  <path d="M 260 104 L 260 122" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="126" width="280" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="146" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">pairXor[a ⊕ b] ← true</text>
+  <text x="260" y="163" text-anchor="middle" font-size="10" fill="#888">O(n²) ≤ 2.25×10⁶，i ≤ j 允许同一下标</text>
+
+  <path d="M 260 170 L 260 188" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="192" width="280" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="212" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold">对每个 a ∈ nums，对每个 v with pairXor[v]</text>
+  <text x="260" y="229" text-anchor="middle" font-size="10" fill="#888">seen[a ⊕ v] ← true</text>
+
+  <path d="M 400 214 L 436 214 L 436 82 L 404 82" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="446" y="150" font-size="9.5" fill="#4a7a3a" transform="rotate(90 446 150)">两层循环</text>
+
+  <path d="M 260 236 L 260 254" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="120" y="258" width="280" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="260" y="278" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold">ans ← seen[] 中 true 的个数</text>
+  <text x="260" y="296" text-anchor="middle" font-size="10" fill="#888">每个不同的异或值只算一次</text>
+
+  <text x="260" y="328" text-anchor="middle" font-size="10" fill="#777">时间 O(n² + n·V)，V = 2048；空间 O(V)</text>
+  <text x="260" y="346" text-anchor="middle" font-size="10" fill="#777">n = 1500 时约 2.25×10⁶ + 3×10⁶ 次操作，实测 &lt; 10 ms</text>
+  <text x="260" y="368" text-anchor="middle" font-size="9.5" fill="#999">注意 pairXor 里必须包含 a ⊕ a = 0，否则 (i,i,k) 型三元组会漏</text>
+  <text x="260" y="386" text-anchor="middle" font-size="9.5" fill="#999">同理 seen 只做去重，不需要真的枚举有序三元组</text>
+</svg>

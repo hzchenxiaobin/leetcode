@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">转移方程：把「第一段」和「余下后缀」拆开算</text>
+  <text x="290" y="47" text-anchor="middle" font-size="11" fill="#888">n ≤ 1000，直接枚举 j 是 O(n²)，足够快</text>
+
+  <rect x="30" y="64" width="520" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="290" y="86" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold">dp[i] = min over j ∈ [i, n−1]</text>
+  <text x="290" y="105" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold">( P[j] + k )·( C[j+1] − C[i] ) + dp[j+1] + k·( C[n] − C[j+1] )</text>
+
+  <path d="M 120 116 L 120 138" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 290 116 L 290 138" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 460 116 L 460 138" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="142" width="180" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="120" y="163" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold">① 第一段 nums[i..j]</text>
+  <text x="120" y="182" text-anchor="middle" font-size="10" fill="#666">权重 = 前缀和 P[j] + k·1</text>
+  <text x="120" y="199" text-anchor="middle" font-size="10" fill="#666">再乘自己的 cost 和</text>
+  <text x="120" y="216" text-anchor="middle" font-size="10" fill="#666">C[j+1] − C[i]</text>
+
+  <rect x="222" y="142" width="136" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="163" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold">② 余下后缀</text>
+  <text x="290" y="182" text-anchor="middle" font-size="10" fill="#666">dp[j+1]</text>
+  <text x="290" y="199" text-anchor="middle" font-size="10" fill="#666">已按「第一段编号 1」</text>
+  <text x="290" y="216" text-anchor="middle" font-size="10" fill="#666">算好的最优值</text>
+
+  <rect x="370" y="142" width="180" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="460" y="163" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold">③ 编号整体 +1 的增量</text>
+  <text x="460" y="182" text-anchor="middle" font-size="10" fill="#666">k × 后缀 cost 和</text>
+  <text x="460" y="199" text-anchor="middle" font-size="10" fill="#666">= k·( C[n] − C[j+1] )</text>
+  <text x="460" y="216" text-anchor="middle" font-size="10" fill="#888">别漏！这是本题的关键项</text>
+
+  <rect x="30" y="244" width="520" height="60" fill="#fafafa" stroke="#aaa" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="265" text-anchor="middle" font-size="10.5" fill="#555">整理成等价形式（线性项归并，便于用凸包 / Li Chao 优化）：</text>
+  <text x="290" y="286" text-anchor="middle" font-size="11" fill="#333" font-weight="bold">dp[i] = min over j [ ( P[j]·C[j+1] + dp[j+1] + k·C[n] ) − ( P[j] + k )·C[i] ]</text>
+
+  <rect x="60" y="318" width="220" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="339" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">方向：i 从 n−1 倒推到 0</text>
+  <text x="170" y="358" text-anchor="middle" font-size="9.5" fill="#666">dp[n] = 0，答案 dp[0]</text>
+
+  <rect x="300" y="318" width="240" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="420" y="339" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold">j 的取值：i ≤ j ≤ n−1</text>
+  <text x="420" y="358" text-anchor="middle" font-size="9.5" fill="#666">每段非空，故 j 从 i 开始</text>
+
+  <text x="290" y="392" text-anchor="middle" font-size="9.5" fill="#999">n = 1000 时 O(n²) = 10⁶ 次转移，远低于时限；CHT 版留作扩展</text>
+</svg>

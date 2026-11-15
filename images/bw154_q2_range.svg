@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">值域上界：所有元素 &lt; 2M ⇒ 任意三元素异或 &lt; 2M</text>
+  <text x="280" y="47" text-anchor="middle" font-size="11" fill="#888">M = 2^msb(n) 是「不超过 n 的最大 2 的幂」，例如 n = 5,6,7 时 M = 4</text>
+
+  <rect x="60" y="76" width="220" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="100" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">低半区 [0, M−1]</text>
+  <text x="170" y="120" text-anchor="middle" font-size="10" fill="#666">bit b 全为 0；x 本身就在 nums 里</text>
+
+  <rect x="300" y="76" width="220" height="60" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="410" y="100" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">高半区 [M, 2M−1]</text>
+  <text x="410" y="120" text-anchor="middle" font-size="10" fill="#666">bit b 恒为 1；需要构造出来</text>
+
+  <text x="280" y="162" text-anchor="middle" font-size="10.5" fill="#777">数轴（以 M = 4 为例）</text>
+  <path d="M 60 186 L 500 186" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M 170 176 L 170 196" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="170" y="212" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold">M = 4</text>
+  <path d="M 390 176 L 390 196" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="390" y="212" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold">2M = 8</text>
+  <path d="M 60 178 L 60 194" stroke="#666" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="60" y="212" text-anchor="middle" font-size="10" fill="#999">0</text>
+
+  <rect x="60" y="228" width="200" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="160" y="248" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold">x &lt; M：x = x⊕x⊕x</text>
+  <text x="160" y="265" text-anchor="middle" font-size="10" fill="#666">三次选同一个下标即可</text>
+
+  <rect x="300" y="228" width="200" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="400" y="248" text-anchor="middle" font-size="10.5" fill="#8a3a36" font-weight="bold">x ≥ M：x = M ⊕ y，y &lt; M</text>
+  <text x="400" y="265" text-anchor="middle" font-size="10" fill="#666">再想办法凑出 y（见构图）</text>
+
+  <path d="M 264 250 L 296 250" stroke="#666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="280" y="300" text-anchor="middle" font-size="10.5" fill="#777">上界成立：三元素都 &lt; 2M，异或只在低 b+1 位里翻滚，结果必然 &lt; 2^(b+1) = 2M</text>
+  <text x="280" y="320" text-anchor="middle" font-size="10.5" fill="#777">所以答案最多是 2M 个不同值；下界靠构造，n ≥ 3 时可全部取满</text>
+</svg>
