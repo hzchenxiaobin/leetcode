@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 372" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="372" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="290" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">线段树建在"深度下标"上：区间最小根前缀长度 + 最右取到者</text>
+  <text filter="url(#rough2)" x="290" y="45" text-anchor="middle" font-size="11" fill="#888">路径长度 = 深端 pref − 浅端 pref，所以要让浅端 pref 尽量小；并列时取更深的浅端（节点更少）</text>
+
+  <text filter="url(#rough2)" x="26" y="76" font-size="11" fill="#333" font-weight="bold">当前根路径（栈）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="86" width="66" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="102" y="86" width="66" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="174" y="86" width="66" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="246" y="86" width="66" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10.2" text-anchor="middle" fill="#334">
+    <text x="63" y="105">d=0　pref 0</text>
+    <text x="135" y="105">d=1　pref 2</text>
+    <text x="207" y="105">d=2　pref 5</text>
+    <text x="279" y="105">d=3　pref 11</text>
+  </g>
+  <g filter="url(#rough2)" font-size="9.5" text-anchor="middle" fill="#888">
+    <text x="63" y="130">节点0 值2</text>
+    <text x="135" y="130">节点1 值1</text>
+    <text x="207" y="130">节点2 值2</text>
+    <text x="279" y="130">节点5 值1</text>
+  </g>
+  
+
+  <path d="M 174 140 L 174 158 L 174 176" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+
+  <rect x="30" y="180" width="300" height="64" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="46" y="202" font-size="11" fill="#8a6a20" font-weight="bold">查询区间 [low+1, 当前深度] = [2, 3]</text>
+  <text filter="url(#rough2)" x="46" y="222" font-size="10.6" fill="#444">pref 值 {5, 11} → 最小 5，出现在 d = 2（最右的取到者就是它）</text>
+  <text filter="url(#rough2)" x="46" y="240" font-size="10.6" fill="#3a5a30">长度 = 11 − 5 = 6，节点数 = 3 − 2 + 1 = 2</text>
+
+  <rect x="352" y="76" width="202" height="168" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="453" y="98" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">每个节点存 (minPref, 最右下标)</text>
+  <text filter="url(#rough2)" x="368" y="122" font-size="10.2" fill="#444">合并：左小取左、右小取右、</text>
+  <text filter="url(#rough2)" x="368" y="140" font-size="10.2" fill="#444">相等时取右边的下标</text>
+  <text filter="url(#rough2)" x="368" y="166" font-size="10.2" fill="#444">queryMin 只往区间内部走，</text>
+  <text filter="url(#rough2)" x="368" y="184" font-size="10.2" fill="#444">所以永远不会读到其它分支</text>
+  <text filter="url(#rough2)" x="368" y="202" font-size="10.2" fill="#444">残留的旧叶子值</text>
+  <text filter="url(#rough2)" x="368" y="226" font-size="10.2" fill="#3a5a30" font-weight="bold">回溯不需要清理线段树！</text>
+
+  <rect x="30" y="258" width="524" height="98" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="46" y="280" font-size="11" fill="#b85450" font-weight="bold">为什么"最右的下标"要单独存？</text>
+  <text filter="url(#rough2)" x="46" y="302" font-size="10.6" fill="#444">题目在长度相同时要求**节点数最少**。长度 = pref[深] − pref[浅]，浅端越深、节点数越少。</text>
+  <text filter="url(#rough2)" x="46" y="322" font-size="10.6" fill="#444">于是"取到最小 pref 的最右位置"正好给出该深端下的最少节点数，一次查询同时拿到 (长度, 节点数)。</text>
+  <text filter="url(#rough2)" x="46" y="344" font-size="10.6" fill="#666">若并列时取最左，就会把更浅的祖先当成起点，节点数偏大而答案错。</text>
+</svg>

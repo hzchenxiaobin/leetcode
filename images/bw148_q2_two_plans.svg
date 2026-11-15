@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 372" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="372" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">只有两条路：要么完全不重排，要么花一次 k 把顺序彻底打散</text>
+  <text filter="url(#rough2)" x="280" y="45" text-anchor="middle" font-size="11" fill="#888">重排操作可以拆成 n 个单元素子数组再任意排列 ⇒ 一次 k 就够，不需要多次</text>
+
+  <rect x="26" y="62" width="240" height="150" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="146" y="84" text-anchor="middle" font-size="11.6" fill="#3a4a66" font-weight="bold">方案 A：不重排</text>
+  <text filter="url(#rough2)" x="146" y="108" text-anchor="middle" font-size="10.6" fill="#444">只能逐位调整差多少补多少</text>
+  <text filter="url(#rough2)" x="146" y="132" text-anchor="middle" font-size="11.4" fill="#3a4a66" font-weight="bold">cost₀ = Σ |arr[i] − brr[i]|</text>
+  <text filter="url(#rough2)" x="146" y="156" text-anchor="middle" font-size="10.4" fill="#666">操作代价 = 调整量的绝对值之和</text>
+  <text filter="url(#rough2)" x="146" y="180" text-anchor="middle" font-size="10.4" fill="#666">因为"加减 1"记 1 的代价</text>
+  <text filter="url(#rough2)" x="146" y="200" text-anchor="middle" font-size="10.4" fill="#446688">O(n)</text>
+
+  <rect x="294" y="62" width="240" height="150" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="414" y="84" text-anchor="middle" font-size="11.6" fill="#3a5a30" font-weight="bold">方案 B：花 k 重排</text>
+  <text filter="url(#rough2)" x="414" y="108" text-anchor="middle" font-size="10.6" fill="#444">顺序自由 ⇒ 顺便让配对最优</text>
+  <text filter="url(#rough2)" x="414" y="132" text-anchor="middle" font-size="11.4" fill="#3a5a30" font-weight="bold">cost₁ = k + Σ |a′[i] − b′[i]|</text>
+  <text filter="url(#rough2)" x="414" y="156" text-anchor="middle" font-size="10.4" fill="#666">其中 a′、b′ 为 arr、brr 排序后的结果</text>
+  <text filter="url(#rough2)" x="414" y="180" text-anchor="middle" font-size="10.4" fill="#666">（排序配对 = 最优配对，见下一页）</text>
+  <text filter="url(#rough2)" x="414" y="200" text-anchor="middle" font-size="10.4" fill="#4a7a3a">O(n log n)</text>
+
+  <path d="M 270 136 L 290 136" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="236" width="260" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="280" y="258" text-anchor="middle" font-size="12.6" fill="#8a6a20" font-weight="bold">答案 = min(cost₀, cost₁)</text>
+  <text filter="url(#rough2)" x="280" y="278" text-anchor="middle" font-size="10.4" fill="#666">重排一次即够：多次重排只会多花 k</text>
+
+  <rect x="26" y="302" width="508" height="54" fill="#eef3f8" stroke="#8899aa" stroke-width="1.2" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="42" y="322" font-size="10.8" fill="#444">为什么"一次就够"：把 arr 切成 n 个单元素子数组再任意放回，就实现任意置换。</text>
+  <text filter="url(#rough2)" x="42" y="342" font-size="10.8" fill="#444">k = 0 时方案 B 没有额外开销；"什么都不做"永远是合法方案。</text>
+</svg>

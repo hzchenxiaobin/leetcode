@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="380" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="290" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">状态怎么设计：值域只有 300，就按"值"而不是"下标"做 DP</text>
+  <text filter="url(#rough2)" x="290" y="45" text-anchor="middle" font-size="11" fill="#888">关键：转移时要"上次差值 ≥ 本次差值"，于是给每个值再配一列后缀最大值</text>
+
+  <rect x="22" y="60" width="330" height="200" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="187" y="82" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold">f[v][d]：以值 v 结尾、末段差值恰为 d 的最长长度</text>
+
+  <g filter="url(#rough2)" font-size="10">
+    <text x="60" y="108" fill="#666">d =</text>
+    <text x="112" y="108" text-anchor="middle" fill="#666">0</text>
+    <text x="166" y="108" text-anchor="middle" fill="#666">9</text>
+    <text x="220" y="108" text-anchor="middle" fill="#666">10</text>
+    <text x="274" y="108" text-anchor="middle" fill="#666">…</text>
+    <text x="318" y="108" text-anchor="middle" fill="#666">300</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="44" y="116" width="272" height="32" fill="#ffffff" stroke="#8899aa" stroke-width="1.1" rx="4"/>
+    <rect x="44" y="154" width="272" height="32" fill="#ffffff" stroke="#8899aa" stroke-width="1.1" rx="4"/>
+    <rect x="44" y="192" width="272" height="32" fill="#ffffff" stroke="#8899aa" stroke-width="1.1" rx="4"/>
+    <rect x="190" y="116" width="54" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <rect x="136" y="154" width="54" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11.5" text-anchor="middle">
+    <text x="16" y="137" fill="#334" font-weight="bold">v=10</text>
+    <text x="16" y="175" fill="#334" font-weight="bold">v=19</text>
+    <text x="16" y="213" fill="#334" font-weight="bold">v=20</text>
+    <text x="112" y="137" fill="#555">0</text>
+    <text x="166" y="137" fill="#555">0</text>
+    <text x="220" y="137" fill="#3a5a30" font-weight="bold">3</text>
+    <text x="318" y="137" fill="#555">0</text>
+    <text x="112" y="175" fill="#555">0</text>
+    <text x="166" y="175" fill="#3a5a30" font-weight="bold">4</text>
+    <text x="220" y="175" fill="#555">0</text>
+    <text x="318" y="175" fill="#555">0</text>
+    <text x="112" y="213" fill="#555">0</text>
+    <text x="166" y="213" fill="#555">0</text>
+    <text x="220" y="213" fill="#8a6a20" font-weight="bold">2</text>
+    <text x="318" y="213" fill="#555">0</text>
+  </g>
+
+  <text filter="url(#rough2)" x="187" y="246" text-anchor="middle" font-size="10.4" fill="#557">直接按"下标 × 差值"建表是 O(n·300) 个状态，但转移要枚举 j &lt; i</text>
+
+  <rect x="366" y="60" width="192" height="200" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="462" y="82" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold">suf[v][d]：d 方向的后缀最大</text>
+  <text filter="url(#rough2)" x="462" y="100" text-anchor="middle" font-size="9.4" fill="#888">（示意：以 v=19 为例）</text>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle" fill="#334">
+    <text x="400" y="112">f[v][0] = 0</text>
+    <text x="400" y="136">f[v][9] = 4</text>
+    <text x="400" y="160">f[v][10] = 0</text>
+    <text x="400" y="184">…</text>
+    <text x="400" y="208">f[v][300] = 0</text>
+  </g>
+
+  <path d="M 452 104 L 452 112" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 452 128 L 452 136" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 452 152 L 452 160" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 452 176 L 452 184" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 452 200 L 452 208" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text filter="url(#rough2)" x="462" y="240" text-anchor="middle" font-size="10.4" fill="#557">suf[v][d] = max(1, max_{d' ≥ d} f[v][d'])</text>
+
+  <rect x="22" y="272" width="536" height="94" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="40" y="296" font-size="11.5" fill="#8a6a20" font-weight="bold">两个决定</text>
+  <text filter="url(#rough2)" x="40" y="318" font-size="11" fill="#444">① 以「值」为状态而不是「下标」：状态数 300 × 301，与 n 无关；正确性来自"只看上一个元素的值与差值"。</text>
+  <text filter="url(#rough2)" x="40" y="340" font-size="11" fill="#444">② 用后缀最大值把"枚举所有 d' ≥ d"压成 O(1)：每次只更新一行 v，于是可以整体重算该行后缀，O(300)。</text>
+  <text filter="url(#rough2)" x="40" y="360" font-size="10.6" fill="#666">基线取 1：长度 1 的子序列没有"上一次差值"，可以接任意 d，所以 suf 的下界是 1。</text>
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 384" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="384" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="290" y="27" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">四个操作的维护动作与代价</text>
+  <text filter="url(#rough2)" x="290" y="46" text-anchor="middle" font-size="11" fill="#888">总操作数 ≤ 2·10⁵，任何一步 O(n) 的扫描都会超时，必须 O(log n)</text>
+
+  <rect x="22" y="62" width="130" height="132" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="87" y="84" text-anchor="middle" font-size="12" fill="#3a5a30" font-weight="bold">add</text>
+  <text filter="url(#rough2)" x="87" y="106" text-anchor="middle" font-size="10.3" fill="#444">哈希表写入</text>
+  <text filter="url(#rough2)" x="87" y="124" text-anchor="middle" font-size="10.3" fill="#444">集合插入</text>
+  <text filter="url(#rough2)" x="87" y="142" text-anchor="middle" font-size="10.3" fill="#444">(taskId 保证不重复)</text>
+  <text filter="url(#rough2)" x="87" y="170" text-anchor="middle" font-size="10.5" fill="#4a7a3a" font-weight="bold">O(log n)</text>
+
+  <rect x="166" y="62" width="130" height="132" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="231" y="84" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold">edit</text>
+  <text filter="url(#rough2)" x="231" y="106" text-anchor="middle" font-size="10.3" fill="#444">查旧 (userId, priority)</text>
+  <text filter="url(#rough2)" x="231" y="124" text-anchor="middle" font-size="10.3" fill="#444">从集合删旧键</text>
+  <text filter="url(#rough2)" x="231" y="142" text-anchor="middle" font-size="10.3" fill="#444">再插入新键 + 改哈希表</text>
+  <text filter="url(#rough2)" x="231" y="170" text-anchor="middle" font-size="10.5" fill="#d6a040" font-weight="bold">O(log n)</text>
+
+  <rect x="310" y="62" width="130" height="132" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="375" y="84" text-anchor="middle" font-size="12" fill="#8a3a36" font-weight="bold">rmv</text>
+  <text filter="url(#rough2)" x="375" y="106" text-anchor="middle" font-size="10.3" fill="#444">查旧优先级</text>
+  <text filter="url(#rough2)" x="375" y="124" text-anchor="middle" font-size="10.3" fill="#444">删集合键</text>
+  <text filter="url(#rough2)" x="375" y="142" text-anchor="middle" font-size="10.3" fill="#444">删哈希表项</text>
+  <text filter="url(#rough2)" x="375" y="170" text-anchor="middle" font-size="10.5" fill="#b85450" font-weight="bold">O(log n)</text>
+
+  <rect x="454" y="62" width="104" height="132" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="506" y="84" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold">execTop</text>
+  <text filter="url(#rough2)" x="506" y="106" text-anchor="middle" font-size="10.3" fill="#444">空集合 → −1</text>
+  <text filter="url(#rough2)" x="506" y="124" text-anchor="middle" font-size="10.3" fill="#444">取集合末尾</text>
+  <text filter="url(#rough2)" x="506" y="142" text-anchor="middle" font-size="10.3" fill="#444">两边同时删</text>
+  <text filter="url(#rough2)" x="506" y="170" text-anchor="middle" font-size="10.5" fill="#446688" font-weight="bold">O(log n)</text>
+
+  <path d="M 87 200 L 87 218 L 260 218" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 231 200 L 231 218" stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <path d="M 375 200 L 375 218" stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+  <path d="M 506 200 L 506 218 L 340 218" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="22" y="226" width="536" height="126" fill="#eef3f8" stroke="#8899aa" stroke-width="1.2" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="40" y="250" font-size="11.5" fill="#3a4a66" font-weight="bold">两条不变量（每个操作后都必须成立）</text>
+  <text filter="url(#rough2)" x="40" y="274" font-size="11" fill="#444">(1) 哈希表的键集合 == 集合中 taskId 的集合（不多不少，没有"幽灵任务"）</text>
+  <text filter="url(#rough2)" x="40" y="296" font-size="11" fill="#444">(2) 集合中每个键的优先级 == 哈希表里该 taskId 的优先级（不残留旧优先级）</text>
+  <text filter="url(#rough2)" x="40" y="322" font-size="10.6" fill="#666">Python 惰性删除时的校验条件：堆顶 (negP, negT) 满足 owner[−negT].priority == −negP，否则弹出丢弃。</text>
+  <text filter="url(#rough2)" x="40" y="342" font-size="10.6" fill="#666">把"优先级相同取 taskId 最大"编码进 pair 的字典序，execTop 就不需要任何循环。</text>
+
+  <text filter="url(#rough2)" x="290" y="374" text-anchor="middle" font-size="10" fill="#999">初始化 n 个任务：逐个 add，O(n log n)</text>
+</svg>

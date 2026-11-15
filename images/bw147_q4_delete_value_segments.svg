@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="290" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">删掉某个值后，数组被切成若干"段"</text>
+  <text filter="url(#rough2)" x="290" y="45" text-anchor="middle" font-size="11" fill="#888">坑：最优子数组很可能只吃段的"一部分"，不能按整段做背包</text>
+
+  <text filter="url(#rough2)" x="26" y="78" font-size="11.5" fill="#333" font-weight="bold">nums =</text>
+  <g filter="url(#rough2)">
+    <rect x="86" y="58" width="52" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="142" y="58" width="52" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="198" y="58" width="52" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.4" rx="4"/>
+    <rect x="254" y="58" width="52" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+    <rect x="310" y="58" width="52" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" text-anchor="middle" font-weight="bold">
+    <text x="112" y="80" fill="#3a4a66">−3</text>
+    <text x="168" y="80" fill="#3a4a66">7</text>
+    <text x="224" y="80" fill="#8a3a36">−100</text>
+    <text x="280" y="80" fill="#3a5a30">7</text>
+    <text x="336" y="80" fill="#3a5a30">−3</text>
+  </g>
+  <text filter="url(#rough2)" x="374" y="80" font-size="10.4" fill="#8a3a36">← 假设删除 X = −100</text>
+
+  <text filter="url(#rough2)" x="26" y="118" font-size="11" fill="#555">删除后：</text>
+  <g filter="url(#rough2)">
+    <rect x="86" y="100" width="104" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <rect x="254" y="100" width="108" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="10.8" text-anchor="middle" fill="#334">
+    <text x="138" y="120">段 S₀ = [−3, 7]</text>
+    <text x="308" y="120">段 S₁ = [7, −3]</text>
+  </g>
+  <text filter="url(#rough2)" x="376" y="120" font-size="10.4" fill="#666">（被删空的位置隔开）</text>
+
+  <rect x="26" y="150" width="250" height="106" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="42" y="172" font-size="11.2" fill="#8a6a20" font-weight="bold">❌ 只按"整段"做背包</text>
+  <text filter="url(#rough2)" x="42" y="194" font-size="10.6" fill="#444">S₀ 整段和 = 4，S₁ 整段和 = 4</text>
+  <text filter="url(#rough2)" x="42" y="214" font-size="10.6" fill="#444">拼接得 4 + 4 = 8</text>
+  <text filter="url(#rough2)" x="42" y="234" font-size="10.6" fill="#8a3a36">但正确答案是 14，漏了解！</text>
+  <text filter="url(#rough2)" x="42" y="252" font-size="10" fill="#888">（整段和把段内的负数也吃进去了）</text>
+
+  <rect x="298" y="150" width="256" height="106" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="314" y="172" font-size="11.2" fill="#3a5a30" font-weight="bold">✓ 允许"部分段"：后缀 + 前缀</text>
+  <text filter="url(#rough2)" x="314" y="194" font-size="10.6" fill="#444">S₀ 的最大非空后缀 = [7]，和 7</text>
+  <text filter="url(#rough2)" x="314" y="214" font-size="10.6" fill="#444">S₁ 的最大非空前缀 = [7]，和 7</text>
+  <text filter="url(#rough2)" x="314" y="234" font-size="10.6" fill="#3a5a30" font-weight="bold">7 + 7 = 14 ✓</text>
+  <text filter="url(#rough2)" x="314" y="252" font-size="10" fill="#888">首段只取后缀、末段只取前缀，中间整段必取</text>
+
+  <rect x="26" y="272" width="528" height="114" fill="#eef3f8" stroke="#8899aa" stroke-width="1.2" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="42" y="294" font-size="11.3" fill="#3a4a66" font-weight="bold">于是"删值 X 后的最大子数组"只有两种来源</text>
+  <text filter="url(#rough2)" x="42" y="316" font-size="10.8" fill="#444">① 整段落在一个段内部（不含任何 X）→ 它本来就是原数组的子数组，交给"不删除"的普通 Kadane；</text>
+  <text filter="url(#rough2)" x="42" y="338" font-size="10.8" fill="#444">② 跨过至少一个被删的位置 → 形如「S_i 的非空后缀 + 若干整段 + S_j 的非空前缀」，i &lt; j。</text>
+  <text filter="url(#rough2)" x="42" y="362" font-size="10.8" fill="#666">所以对每个 X 只需按顺序"合并"它的各段，状态只有 curSuff 与 curBest 两个。</text>
+  <text filter="url(#rough2)" x="290" y="386" text-anchor="middle" font-size="10" fill="#999">总段数 = n + 不同取值个数 = O(n)，所以整体只需 O(n) 次段合并</text>
+</svg>

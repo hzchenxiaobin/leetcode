@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 390" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="9" markerHeight="9" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="390" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="290" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">段合并 DP：两个状态扫一遍，段内前缀/后缀靠线段树 O(log n) 取</text>
+  <text filter="url(#rough2)" x="290" y="45" text-anchor="middle" font-size="11" fill="#888">固定 X 后按顺序处理它的每一段，只需记住"贴住上一个段尾的最优后缀"</text>
+
+  <rect x="24" y="60" width="248" height="88" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="148" y="82" text-anchor="middle" font-size="11.3" fill="#3a4a66" font-weight="bold">状态</text>
+  <text filter="url(#rough2)" x="148" y="104" text-anchor="middle" font-size="10.6" fill="#444">curSuff：贴住当前段尾的最大和</text>
+  <text filter="url(#rough2)" x="148" y="124" text-anchor="middle" font-size="10.6" fill="#444">curBest：目前见过的最大子数组和</text>
+  <text filter="url(#rough2)" x="148" y="142" text-anchor="middle" font-size="9.8" fill="#888">两者都强制非空，避免"空区间"混入</text>
+
+  <rect x="288" y="60" width="268" height="88" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="422" y="82" text-anchor="middle" font-size="11.3" fill="#3a5a30" font-weight="bold">段 S = [L, R] 的三个量</text>
+  <text filter="url(#rough2)" x="422" y="104" text-anchor="middle" font-size="10.6" fill="#444">sum  = P[R+1] − P[L]</text>
+  <text filter="url(#rough2)" x="422" y="124" text-anchor="middle" font-size="10.6" fill="#444">pref = maxP(L+1..R+1) − P[L]</text>
+  <text filter="url(#rough2)" x="422" y="142" text-anchor="middle" font-size="10.6" fill="#444">suff = P[R+1] − minP(L..R)</text>
+
+  <path d="M 290 164 L 290 190" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="194" width="440" height="94" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="290" y="216" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold">合并一段 S（按顺序，跳过空段）</text>
+  <text filter="url(#rough2)" x="290" y="240" text-anchor="middle" font-size="11" fill="#444">curBest = max(curBest, curSuff + pref)　　　← 跨段：旧后缀 + 本段前缀</text>
+  <text filter="url(#rough2)" x="290" y="262" text-anchor="middle" font-size="11" fill="#444">curSuff = max(suff, curSuff + sum)　　　　← 要么只吃本段后缀，要么连上前面</text>
+  <text filter="url(#rough2)" x="290" y="282" text-anchor="middle" font-size="9.8" fill="#888">第一段没有"旧后缀"，直接 curSuff = suff</text>
+
+  <rect x="24" y="304" width="532" height="30" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="7" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="40" y="324" font-size="10.8" fill="#8a3a36">必须用"非空"前缀/后缀：若允许空串，pref = suff = 0 会让"空区间"被当成答案 0（全负数数组立刻错）。</text>
+
+  <rect x="24" y="342" width="532" height="34" fill="#eef3f8" stroke="#8899aa" stroke-width="1.2" rx="7" filter="url(#rough2)"/>
+  <text filter="url(#rough2)" x="40" y="364" font-size="10.8" fill="#444">另外别忘了"不删除任何元素"这条分支：普通 Kadane 一遍 O(n)，与所有"删某个值"的答案取 max。</text>
+
+  <text filter="url(#rough2)" x="290" y="386" text-anchor="middle" font-size="10" fill="#999">线段树只存前缀和数组 P 的区间最小/最大值，不需要维护 sum/pref/suff/best 四元组</text>
+</svg>
