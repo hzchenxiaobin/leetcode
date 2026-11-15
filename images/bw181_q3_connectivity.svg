@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">连通性判定：把邻接表压成位掩码，用「扩散 + 与掩码」做 BFS</text>
+  <text x="280" y="49" text-anchor="middle" font-size="10.5" fill="#888">mask = 00111（节点 0,1,2），从最低位节点出发</text>
+  <text x="36" y="84" text-anchor="start" font-size="11" fill="#333" font-weight="bold">adjMask</text>
+  <rect x="110" y="70" width="300" height="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="260" y="87" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">0 → 010  1 → 101  2 → 010</text>
+  <rect x="36" y="118" width="268" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="140" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">seen = {1&lt;&lt;0}</text>
+  <text x="170" y="153" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">frontier = {0}</text>
+  <text x="318" y="140" text-anchor="start" font-size="10" fill="#888">从最低置位节点开始</text>
+  <text x="318" y="158" text-anchor="start" font-size="9" fill="#bbb">第 1 步</text>
+  <rect x="36" y="180" width="268" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="202" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">nb = adj[0] = 010</text>
+  <text x="170" y="215" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">frontier = 010 &amp; mask &amp; ~seen = {1}</text>
+  <text x="318" y="202" text-anchor="start" font-size="10" fill="#888">邻居 1 在子集内且未访问</text>
+  <text x="318" y="220" text-anchor="start" font-size="9" fill="#bbb">第 2 步</text>
+  <rect x="36" y="242" width="268" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="264" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">nb = adj[1] = 101</text>
+  <text x="170" y="277" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">frontier = 101 &amp; 00111 &amp; ~{0,1} = {2}</text>
+  <text x="318" y="264" text-anchor="start" font-size="10" fill="#888">邻居 2 在子集内</text>
+  <text x="318" y="282" text-anchor="start" font-size="9" fill="#bbb">第 3 步</text>
+  <rect x="36" y="304" width="268" height="50" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="170" y="326" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">nb = adj[2] = 010</text>
+  <text x="170" y="339" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">frontier = ∅，seen = 00111 == mask</text>
+  <text x="318" y="326" text-anchor="start" font-size="10" fill="#888">全部命中 → 连通</text>
+  <text x="318" y="344" text-anchor="start" font-size="9" fill="#bbb">第 4 步</text>
+  <text x="280.0" y="384" text-anchor="middle" font-size="10" fill="#999">每轮把 frontier 中所有点的邻接掩码并起来，再与 mask 取交，复杂度 O(n)</text>
+</svg>

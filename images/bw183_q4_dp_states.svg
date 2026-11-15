@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">树形 DP：每个节点维护「选 / 不选」两套余数计数</text>
+  <text x="280" y="49" text-anchor="middle" font-size="10.5" fill="#888">dp0[u][r]：u 不选，子树和 ≡ r；dp1[u][r]：u 选，子树和 ≡ r</text>
+  <ellipse cx="280" cy="96" rx="26" ry="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="100" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">u</text>
+  <ellipse cx="160" cy="200" rx="24" ry="24" fill="#f2f2f2" stroke="#999999" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="160" y="204" text-anchor="middle" font-size="12" fill="#999999" font-weight="bold" filter="url(#rough2)">v1</text>
+  <ellipse cx="280" cy="200" rx="24" ry="24" fill="#f2f2f2" stroke="#999999" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="204" text-anchor="middle" font-size="12" fill="#999999" font-weight="bold" filter="url(#rough2)">v2</text>
+  <ellipse cx="400" cy="200" rx="24" ry="24" fill="#f2f2f2" stroke="#999999" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="204" text-anchor="middle" font-size="12" fill="#999999" font-weight="bold" filter="url(#rough2)">v3</text>
+  <path d="M 280 122 L 160 176" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 122 L 280 176" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 122 L 400 176" stroke="#999" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="30" y="236" width="236" height="62" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="148" y="264" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">dp0[u][0] = 1</text>
+  <text x="148" y="278" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">（不选 u，子树和为 0 的方案数 1）</text>
+  <rect x="294" y="236" width="236" height="62" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="412" y="264" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#rough2)">dp1[u][nums[u] % k] = 1</text>
+  <text x="412" y="278" text-anchor="middle" font-size="10.5" fill="#d6a040" filter="url(#rough2)">（选 u，子树和 = nums[u] 的方案数 1）</text>
+  <rect x="30" y="312" width="500" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="331" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">合并子节点 v：选 u 时只能配 dp0[v]；不选 u 时可配 dp0[v] + dp1[v]</text>
+  <text x="280" y="345" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">即经典的「相邻不能同选」约束</text>
+  <text x="280.0" y="384" text-anchor="middle" font-size="10" fill="#999">答案 = dp0[0][0] + dp1[0][0] − 1（减去空集）</text>
+</svg>
