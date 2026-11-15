@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280.0" y="26" text-anchor="middle" font-size="15" fill="#444444" font-weight="bold" filter="url(#rough2)">DFS 一趟到底：路径上只维护三个数组 / 集合</text>
+  <text x="280.0" y="44" text-anchor="middle" font-size="11" fill="#888888" filter="url(#rough2)">进入节点打标记、退出节点回滚，保证任何时候结构都对应「当前根路径」</text>
+  <rect x="30" y="66" width="500" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="46" y="93" text-anchor="start" font-size="10.5" fill="#333333" filter="url(#rough2)">occ[值]：该值在当前路径上的深度栈</text>
+  <text x="516" y="93" text-anchor="end" font-size="10" fill="#888888" filter="url(#rough2)">push / pop，O(1)</text>
+  <rect x="30" y="120" width="500" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="46" y="147" text-anchor="start" font-size="10.5" fill="#333333" filter="url(#rough2)">b1set：各值 o_{k−2} 的多重集合</text>
+  <text x="516" y="147" text-anchor="end" font-size="10" fill="#888888" filter="url(#rough2)">取 max，O(log n)</text>
+  <rect x="30" y="174" width="500" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="46" y="201" text-anchor="start" font-size="10.5" fill="#333333" filter="url(#rough2)">sset：各值 s_x 的多重集合</text>
+  <text x="516" y="201" text-anchor="end" font-size="10" fill="#888888" filter="url(#rough2)">取前两大，O(log n)</text>
+  <rect x="30" y="228" width="500" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="8" filter="url(#rough2)"/>
+  <text x="46" y="255" text-anchor="start" font-size="10.5" fill="#333333" filter="url(#rough2)">pathDist[深度]：根到该深度节点的距离</text>
+  <text x="516" y="255" text-anchor="end" font-size="10" fill="#888888" filter="url(#rough2)">直接读，O(1)</text>
+  <rect x="30" y="288" width="500" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="280" y="310" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">进入 v：先删除 x 的旧贡献 → push 深度 → 加回新贡献</text>
+  <text x="280" y="332" text-anchor="middle" font-size="10.5" fill="#555555" filter="url(#rough2)">然后读两个集合得到 U，用 dist[v] − pathDist[U] 更新答案</text>
+  <text x="280" y="348" text-anchor="middle" font-size="9.5" fill="#888888" filter="url(#rough2)">退出时反着做一遍，结构立刻回到父节点状态</text>
+  <text x="280" y="382" text-anchor="middle" font-size="11" fill="#333333" font-weight="bold" filter="url(#rough2)">每个节点 O(log n)，整棵树 O(n log n)；空间 O(n)</text>
+  <text x="280.0" y="408" text-anchor="middle" font-size="10" fill="#999999" filter="url(#rough2)">C++ 用 multiset 显式删除，Python 用堆 + 惰性删除计数器</text>
+</svg>
