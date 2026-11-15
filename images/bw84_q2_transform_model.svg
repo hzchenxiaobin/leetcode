@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="41"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="109"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">变形：坏对 ⟺ nums[i] − i ≠ nums[j] − j</text>
+
+  <!-- 推导 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="52" width="440" height="84" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13.5" fill="#333" text-anchor="middle">
+    <text x="280" y="78">坏对：j − i ≠ nums[j] − nums[i]</text>
+    <text x="280" y="102">⟺ j − nums[j] ≠ i − nums[i]（两边同移项）</text>
+    <text x="280" y="126" fill="#8a6d1f" font-weight="bold">⟺ nums[i] − i ≠ nums[j] − j（同乘 −1 不改变相等性）</text>
+  </g>
+
+  <!-- 视觉：错位对齐 -->
+  <text x="80" y="176" font-size="13" fill="#333" filter="url(#rough2)">把 nums[i] 左移 i 格后，好对 = 同列对齐：</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="150" y="188" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="210" y="188" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="270" y="188" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="330" y="188" width="40" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <text x="170" y="209">4</text><text x="230" y="209">1</text><text x="290" y="209">3</text><text x="350" y="209">3</text>
+    <text x="170" y="240">i=0</text><text x="230" y="240">1</text><text x="290" y="240">2</text><text x="350" y="240">3</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#b85450" text-anchor="middle">
+    <text x="150" y="266">4−0=4</text>
+    <text x="200" y="266">1−1=0</text>
+    <text x="258" y="266">3−2=1</text>
+    <text x="318" y="266">3−3=0</text>
+  </g>
+  <text x="432" y="230" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">值 0 出现 2 次</text>
+  <text x="432" y="250" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">→ 贡献 C(2,2)=1 好对</text>
+  <text x="432" y="270" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">（其余各组各 1 个）</text>
+
+  <!-- 互补计数 -->
+  <path d="M 280 286 L 280 306" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="106" y="310" width="348" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+  </g>
+  <text x="280" y="338" text-anchor="middle" font-size="14.5" fill="#1a2b45" font-weight="bold" filter="url(#rough2)">坏对总数 = C(n,2) − Σ 各组 C(cnt, 2)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="366" width="440" height="28" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="280" y="385" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">n ≤ 10⁵ 时 C(n,2) ≈ 5×10⁹，超出 32 位整数范围，需 64 位。</text>
+</svg>

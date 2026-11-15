@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="17"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="97"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">官方示例回放：change 的旧值清理决定 find 的正确性</text>
+
+  <!-- 阶段 1：四处填 10 -->
+  <text x="66" y="60" font-size="13" fill="#333" filter="url(#rough2)">① change(2,10) (1,10) (3,10) (5,10) 之后：</text>
+  <g filter="url(#rough2)">
+    <rect x="66" y="72" width="210" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="171" y="96" text-anchor="middle" font-size="13" fill="#1d3a17" filter="url(#rough2)">num2idx：10 → {1, 2, 3, 5}</text>
+  <text x="171" y="118" text-anchor="middle" font-size="13.5" fill="#1d3a17" font-weight="bold" filter="url(#rough2)">find(10) = 1（最小下标）</text>
+
+  <!-- 阶段 2：change(1,20) -->
+  <text x="300" y="60" font-size="13" fill="#333" filter="url(#rough2)">② change(1, 20)：</text>
+  <path d="M 276 100 L 296 100" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arrg)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="306" y="72" width="204" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="408" y="92" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">20 → {1}，10 的集合删除 1：</text>
+  <text x="408" y="116" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">10 → {2, 3, 5}</text>
+
+  <!-- 阶段 3：find(10) -->
+  <text x="66" y="172" font-size="13" fill="#333" filter="url(#rough2)">③ find(10)：集合首元素 2 → 返回 2</text>
+  <g filter="url(#rough2)">
+    <rect x="324" y="156" width="186" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="8"/>
+  </g>
+  <text x="417" y="178" text-anchor="middle" font-size="13.5" fill="#1a2b45" font-weight="bold" filter="url(#rough2)">输出序列 [-1, 1, 2]</text>
+
+  <!-- 反例警示 -->
+  <path d="M 280 214 L 280 236" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <rect x="60" y="240" width="440" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="263" text-anchor="middle" font-size="13" fill="#7a2f2b" filter="url(#rough2)">若 change 忘记从旧数字的集合里摘除 index：</text>
+  <text x="280" y="284" text-anchor="middle" font-size="13" fill="#7a2f2b" filter="url(#rough2)">find(10) 会看到「僵尸下标」1，错误返回 1 而非 2。</text>
+
+  <!-- 惰性删除备注 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="316" width="440" height="68" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="280" y="340" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">Python 版用「数字 → 最小堆 + 惰性删除」替代有序集合：</text>
+  <text x="280" y="360" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">find 时若堆顶下标的当前数字已不是本数字，说明它已改嫁，弹出即可；</text>
+  <text x="280" y="378" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">每个下标每次 change 至多入堆一次，弹出总数 ≤ 入堆总数，均摊 O(log n)。</text>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">示例 1 演算：rolls = [4,2,1,2,3,3,2,4,1]，k = 4</text>
+
+  <!-- 逐步集齐过程 -->
+  <g filter="url(#rough2)" font-size="14" fill="#333" text-anchor="middle">
+    <rect x="64"  y="58" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="112" y="58" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="160" y="58" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="208" y="58" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="256" y="58" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="4"/>
+    <rect x="304" y="58" width="48" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="352" y="58" width="48" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="400" y="58" width="48" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="448" y="58" width="48" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <text x="88"  y="83">4</text><text x="136" y="83">2</text><text x="184" y="83">1</text>
+    <text x="232" y="83">2</text><text x="280" y="83">3</text>
+    <text x="328" y="83">3</text><text x="376" y="83">2</text><text x="424" y="83">4</text><text x="472" y="83">1</text>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#b85450" text-anchor="middle">
+    <text x="88" y="114">+4</text><text x="136" y="114">+2</text><text x="184" y="114">+1</text>
+    <text x="232" y="114">✗重复</text><text x="280" y="114">+3 → 组1收尾!</text>
+    <text x="328" y="114">+3</text><text x="376" y="114">+2</text><text x="424" y="114">+4</text><text x="472" y="114">+1 → 组2收尾!</text>
+  </g>
+
+  <!-- 组 1 集合成长 -->
+  <g filter="url(#rough2)">
+    <rect x="56" y="140" width="248" height="74" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="180" y="162" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">第 1 组已见面值集合的成长：</text>
+  <text x="180" y="182" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">{4} → {4,2} → {4,2,1} → {4,2,1} → {4,2,1,3}</text>
+  <text x="180" y="204" text-anchor="middle" font-size="12.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">大小到 4 = k，立即切组，seen 清空</text>
+
+  <!-- 组 2 -->
+  <g filter="url(#rough2)">
+    <rect x="320" y="140" width="220" height="74" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <text x="430" y="162" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">第 2 组：</text>
+  <text x="430" y="182" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">{3} → {3,2} → {3,2,4} → {3,2,4,1}</text>
+  <text x="430" y="204" text-anchor="middle" font-size="12.5" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">也集齐 → groups = 2</text>
+
+  <!-- 结论 -->
+  <g filter="url(#rough2)">
+    <rect x="120" y="232" width="320" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+  </g>
+  <text x="280" y="254" text-anchor="middle" font-size="14" fill="#1a2b45" filter="url(#rough2)">groups = 2 → 答案 = 2 + 1 = 3</text>
+  <text x="280" y="274" text-anchor="middle" font-size="12.5" fill="#1a2b45" filter="url(#rough2)">长度 1、2 的全部 k、k² 个序列都能取出</text>
+
+  <!-- 佐证 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="304" width="440" height="72" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="280" y="328" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">验证：长度 3 的 [1, 4, 2] 取不到——</text>
+  <text x="280" y="348" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">1 只能取位置 3（第 3 个元素），其后 4 只有位置 8，</text>
+  <text x="280" y="367" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">再无 2 跟在后面 ⇒ 与「答案 3」一致。</text>
+</svg>

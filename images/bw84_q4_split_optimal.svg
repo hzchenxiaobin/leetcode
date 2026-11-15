@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="61"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="119"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">拆法选择：x = 13，bound = 6，最少 3 段且首段最大</text>
+
+  <!-- 左：太少段不可行 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="52" width="230" height="130" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="155" y="78" text-anchor="middle" font-size="13" fill="#7a2f2b" font-weight="bold" filter="url(#rough2)">2 段不可行</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="80" y="94" width="40" height="34" fill="#fff" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5 4" rx="4"/>
+    <rect x="120" y="94" width="40" height="34" fill="#fff" stroke="#b85450" stroke-width="1.5" stroke-dasharray="5 4" rx="4"/>
+    <text x="100" y="116">?</text><text x="140" y="116">?</text>
+    <text x="155" y="152">每段 ≤ 6，两段至多 12 &lt; 13</text>
+    <text x="155" y="172">⇒ 段数 m ≥ ⌈13/6⌉ = 3</text>
+  </g>
+
+  <!-- 右：均分最优 -->
+  <g filter="url(#rough2)">
+    <rect x="290" y="52" width="230" height="130" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="405" y="78" text-anchor="middle" font-size="13" fill="#1d3a17" font-weight="bold" filter="url(#rough2)">3 段均分最优</text>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="330" y="94" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="374" y="94" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="418" y="94" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="352" y="116">4</text><text x="396" y="116">4</text><text x="440" y="116">5</text>
+    <text x="405" y="152">首段 = ⌊13/3⌋ = 4（取不到 5）</text>
+    <text x="405" y="172">新 bound = 4 传给左邻</text>
+  </g>
+
+  <!-- 为什么首段 ≤ ⌊x/m⌋ -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="204" width="440" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="227" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">m 段非递减 p₁ ≤ p₂ ≤ … ≤ p_m、和为 x ⇒ p₁ ≤ x/m ⇒ p₁ ≤ ⌊x/m⌋；</text>
+  <text x="280" y="248" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">取 (4,4,5) 恰使 p₁ 达到上界——「余数摊给右边段」总是可行。</text>
+
+  <!-- 为什么不拆更多段 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="278" width="440" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="300" text-anchor="middle" font-size="13" fill="#1a2b45" filter="url(#rough2)">多拆一段：当前代价 +1，且新 bound = ⌊x/(m+1)⌋ 只会更小，</text>
+  <text x="280" y="322" text-anchor="middle" font-size="13" fill="#1a2b45" filter="url(#rough2)">左邻的约束只会更紧（右往左处理，bound 越大越自由）⇒ 不会更优。</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="350" width="440" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="280" y="374" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">b ≤ ⌊x/m⌋ 恒成立：m = ⌈x/b⌉ ⇒ x ≤ m·b ⇒ ⌊x/m⌋ ≤ b，分段不越界。</text>
+</svg>

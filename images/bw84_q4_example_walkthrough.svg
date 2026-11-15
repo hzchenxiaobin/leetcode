@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="67"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="121"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">示例 1 两步演算：[3, 9, 3] → [3,3,3,3,3]，共 2 次替换</text>
+
+  <!-- 原数组 -->
+  <text x="80" y="62" font-size="13" fill="#333" filter="url(#rough2)">原始：[3, 9, 3]</text>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle">
+    <rect x="180" y="72" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="260" y="72" width="60" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="4"/>
+    <rect x="340" y="72" width="60" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <text x="210" y="97">3</text><text x="290" y="97">9</text><text x="370" y="97">3</text>
+  </g>
+  <text x="216" y="140" font-size="12" fill="#666" filter="url(#rough2)">i=0</text>
+  <text x="296" y="140" font-size="12" fill="#8a6d1f" filter="url(#rough2)">i=1 越界</text>
+  <text x="376" y="140" font-size="12" fill="#4a7a3a" filter="url(#rough2)">i=2 定 bound=3</text>
+
+  <!-- 步骤 1 -->
+  <path d="M 290 150 L 290 172" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="330" y="166" font-size="12.5" fill="#b85450" filter="url(#rough2)">9 至少拆 m = ⌈9/3⌉ = 3 段，代价 +（m−1）= 2，新 bound = ⌊9/3⌋ = 3</text>
+  <g filter="url(#rough2)" font-size="15" fill="#333" text-anchor="middle">
+    <rect x="150" y="180" width="60" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="230" y="180" width="52" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="282" y="180" width="52" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="334" y="180" width="52" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="394" y="180" width="60" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <text x="180" y="205">3</text><text x="256" y="205">3</text><text x="308" y="205">3</text>
+    <text x="360" y="205">3</text><text x="424" y="205">3</text>
+  </g>
+  <text x="180" y="240" font-size="13" fill="#333" filter="url(#rough2)">得 [3, 3, 3, 3, 3]（9 经两次一分为二变成三段 3）</text>
+
+  <!-- 步骤说明 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="258" width="440" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10"/>
+  </g>
+  <text x="280" y="278" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">题解示例用两次「拆两半」：9 → (3,6)，6 → (3,3)；</text>
+  <text x="280" y="296" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">一步拆成 (3,3,3) 亦可行 —— 3 段需 2 次操作，总代价同为 2。</text>
+
+  <!-- 结论 -->
+  <g filter="url(#rough2)">
+    <rect x="120" y="318" width="320" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+  </g>
+  <text x="280" y="344" text-anchor="middle" font-size="14.5" fill="#1a2b45" font-weight="bold" filter="url(#rough2)">贪心累计 ans = 0 + 2 = 2（m − 1 = 2）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="370" width="440" height="24" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="8"/>
+  </g>
+  <text x="280" y="387" text-anchor="middle" font-size="11.5" fill="#333" filter="url(#rough2)">注意：一次操作只能一分为二，m 段必须经 m−1 次操作才能产生。</text>
+</svg>

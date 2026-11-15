@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="59"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="117"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16" fill="#333" font-weight="bold" filter="url(#rough2)">从右往左的「上界传播」：最右元素永不拆分</text>
+
+  <!-- 数组 -->
+  <g filter="url(#rough2)" font-size="16" fill="#333" text-anchor="middle">
+    <rect x="150" y="56" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="240" y="56" width="80" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="330" y="56" width="80" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="4"/>
+    <text x="190" y="83">3</text><text x="280" y="83">9</text><text x="370" y="83">3</text>
+  </g>
+  <text x="370" y="122" font-size="12" fill="#4a7a3a" filter="url(#rough2)">初始 bound = 3（右侧无邻居约束）</text>
+
+  <!-- 传播箭头 -->
+  <path d="M 340 140 L 250 140" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="295" y="132" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">处理方向：从右往左</text>
+
+  <!-- 每步决策 -->
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="90" y="176">i = 1（x = 9 &gt; bound = 3）：</text>
+    <text x="110" y="200">m = ⌈9 / 3⌉ = 3 段，代价 +2</text>
+    <text x="110" y="224">新 bound = ⌊9 / 3⌋ = 3</text>
+  </g>
+  <g filter="url(#rough2)" font-size="13" fill="#333" text-anchor="middle">
+    <rect x="150" y="238" width="26" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="176" y="238" width="26" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="202" y="238" width="26" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <text x="163" y="258">3</text><text x="189" y="258">3</text><text x="215" y="258">3</text>
+  </g>
+  <text x="250" y="258" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">均分的 9 → [3,3,3]，首段最大</text>
+
+  <g filter="url(#rough2)" font-size="13" fill="#333">
+    <text x="330" y="200">i = 0（x = 3 ≤ bound = 3）：</text>
+    <text x="350" y="224">无需拆分，新 bound = 3</text>
+  </g>
+
+  <!-- 结论 -->
+  <g filter="url(#rough2)">
+    <rect x="120" y="296" width="320" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="10"/>
+  </g>
+  <text x="280" y="322" text-anchor="middle" font-size="14" fill="#1a2b45" font-weight="bold" filter="url(#rough2)">[3,9,3] → [3, 3,3,3, 3]，答案 2 次</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="350" width="440" height="40" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+  </g>
+  <text x="280" y="374" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">每个元素拆出的段要保持非递减且都 ≤ 右邻约束，故段数下界 ⌈x/bound⌉。</text>
+</svg>
