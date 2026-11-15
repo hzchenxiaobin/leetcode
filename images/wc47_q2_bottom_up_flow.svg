@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">建表 → 递推前缀和 → 判叶子 → 累加</text>
+  <text x="280" y="45" text-anchor="middle" font-size="10.5" fill="#888">升序输入就是层序，父节点永远先于子节点，只需一趟扫描</text>
+
+  <g filter="url(#rough2)">
+    <rect x="80" y="60" width="400" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="98" y="80" font-size="11" fill="#3a4a66" font-weight="bold">① 建哈希表：坐标 → 值</text>
+    <text x="98" y="97" font-size="10" fill="#555">key = num/10 = 10D+P，value = num%10 = V，一次遍历 O(n)</text>
+
+    <rect x="80" y="128" width="400" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="98" y="148" font-size="11" fill="#3a5a30" font-weight="bold">② 按升序递推根到节点的路径和</text>
+    <text x="98" y="165" font-size="10" fill="#555">pre[key] = pre[父] + V，父 = (D−1)·10 + ⌈P/2⌉；根直接 pre = V</text>
+
+    <rect x="80" y="196" width="400" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="98" y="216" font-size="11" fill="#8a6a20" font-weight="bold">③ 判定叶子：两个孩子都不存在</text>
+    <text x="98" y="233" font-size="10" fill="#555">左孩子 (D+1, 2P−1)，右孩子 (D+1, 2P)：两个 key 都不在表中才是叶子</text>
+
+    <rect x="80" y="264" width="400" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="98" y="284" font-size="11" fill="#8a3a36" font-weight="bold">④ 累加所有叶子的路径和</text>
+    <text x="98" y="301" font-size="10" fill="#555">中间节点只是「路过」，它的 pre 不进入答案</text>
+  </g>
+
+  <g stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)">
+    <path d="M 280 106 L 280 126" marker-end="url(#arr)"/>
+    <path d="M 280 174 L 280 194" marker-end="url(#arr)"/>
+    <path d="M 280 242 L 280 262" marker-end="url(#arr)"/>
+  </g>
+
+  <rect x="60" y="330" width="440" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="74" y="350" font-size="10" fill="#3a4a66">为什么一趟就够？三位数升序 = 先按 D、再按 P 排序 = 层序遍历，</text>
+  <text x="74" y="368" font-size="10" fill="#3a4a66">而父节点的键 10(D−1)+⌈P/2⌉ 一定更小，所以递推时父的 pre 必然已经算好。</text>
+</svg>

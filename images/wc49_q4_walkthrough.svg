@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例演算：nums = [1, 3, 5, 4, 7]，逐格填写 length 与 count</text>
+  <text x="310" y="44" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">只把「length 恰好小 1」的前驱计入条数，最后把所有达到 L = 4 的 count 求和</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="60" width="540" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <text x="70" y="80" text-anchor="middle" font-size="10.5" fill="#2f3f5c" font-weight="bold">下标 i</text>
+    <text x="140" y="80" text-anchor="middle" font-size="10.5" fill="#2f3f5c" font-weight="bold">nums[i]</text>
+    <text x="280" y="80" text-anchor="middle" font-size="10" fill="#2f3f5c" font-weight="bold">可选前驱 j（nums[j] &lt; nums[i]）</text>
+    <text x="420" y="80" text-anchor="middle" font-size="10.5" fill="#2f3f5c" font-weight="bold">length[i]</text>
+    <text x="520" y="80" text-anchor="middle" font-size="10.5" fill="#2f3f5c" font-weight="bold">count[i]</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle">
+    <rect x="40" y="92" width="540" height="30" fill="#fafafa" stroke="#ccc" stroke-width="1"/>
+    <text x="70" y="112" fill="#333">0</text>
+    <text x="140" y="112" fill="#333">1</text>
+    <text x="280" y="112" fill="#777" font-size="10">无（第一个元素）</text>
+    <text x="420" y="112" fill="#333">1</text>
+    <text x="520" y="112" fill="#333">1</text>
+
+    <rect x="40" y="124" width="540" height="30" fill="#fafafa" stroke="#ccc" stroke-width="1"/>
+    <text x="70" y="144" fill="#333">1</text>
+    <text x="140" y="144" fill="#333">3</text>
+    <text x="280" y="144" fill="#777" font-size="10">j = 0（1 &lt; 3）</text>
+    <text x="420" y="144" fill="#333">2</text>
+    <text x="520" y="144" fill="#333">1</text>
+
+    <rect x="40" y="156" width="540" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="70" y="176" fill="#333">2</text>
+    <text x="140" y="176" fill="#333">5</text>
+    <text x="280" y="176" fill="#777" font-size="10">j = 0, 1（length 均为 2）</text>
+    <text x="420" y="176" fill="#333">3</text>
+    <text x="520" y="176" fill="#333">1</text>
+
+    <rect x="40" y="188" width="540" height="30" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2"/>
+    <text x="70" y="208" fill="#333">3</text>
+    <text x="140" y="208" fill="#333">4</text>
+    <text x="280" y="208" fill="#777" font-size="10">j = 0, 1（j = 2 的 5 &gt; 4 排除）</text>
+    <text x="420" y="208" fill="#333">3</text>
+    <text x="520" y="208" fill="#333">1</text>
+
+    <rect x="40" y="220" width="540" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="70" y="240" fill="#333">4</text>
+    <text x="140" y="240" fill="#333" font-weight="bold">7</text>
+    <text x="280" y="240" fill="#8a6a20" font-size="10">j = 2 与 j = 3（length 均为 3）</text>
+    <text x="420" y="240" fill="#8a6a20" font-weight="bold">4</text>
+    <text x="520" y="240" fill="#8a6a20" font-weight="bold">1 + 1 = 2</text>
+  </g>
+
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="266" width="540" height="46" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="56" y="286" font-size="10.5" fill="#8a6a20" font-weight="bold">结算：全局最大长度 L = 4，ans = count[4] = 2</text>
+    <text x="56" y="303" font-size="10" fill="#555">两条链分别是 [1, 3, 5, 7] 与 [1, 3, 4, 7]——分叉发生在下标 2 / 3，尾巴都接 7</text>
+  </g>
+
+  <text x="310" y="334" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">为什么 5 与 4 不互相累加：nums[2] = 5 无法接到 4 后面，nums[3] = 4 也无法接到 5 后面</text>
+  <text x="310" y="352" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">两条链在下标 4 处汇合，前缀不同、结尾相同，恰好构成 2 条最长递增子序列</text>
+  <text x="310" y="378" text-anchor="middle" font-size="9.5" fill="#aaa" filter="url(#rough2)">若数组是 [5, 4, 3, 2, 1]，则每个 length 都是 1、count 都是 1，答案 = 5</text>
+</svg>

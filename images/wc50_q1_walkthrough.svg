@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 372" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="372" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">示例演算：失配点决定分支，分支全灭就返回 false</text>
+
+  <text x="40" y="58" font-size="11.5" fill="#446688" font-weight="bold" filter="url(#rough2)">① s = “abca”（n = 4）：一趟夹逼 + 两条分支校验</text>
+
+  <g filter="url(#rough2)" font-size="10.5" fill="#666">
+    <text x="56" y="84">轮次</text>
+    <text x="126" y="84">i</text>
+    <text x="176" y="84">j</text>
+    <text x="232" y="84">比较 s[i] 与 s[j]</text>
+    <text x="382" y="84">动作</text>
+  </g>
+  <path d="M 40 92 L 560 92" stroke="#bbb" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="10.5" fill="#555">
+    <text x="56" y="116">1</text>
+    <text x="126" y="116">0</text>
+    <text x="176" y="116">3</text>
+    <text x="232" y="116">a = a  ✓</text>
+    <text x="382" y="116">内移 → i=1，j=2</text>
+    <text x="56" y="142">2</text>
+    <text x="126" y="142">1</text>
+    <text x="176" y="142">2</text>
+    <text x="232" y="142" fill="#b85450">b ≠ c  ✗</text>
+    <text x="382" y="142" fill="#b85450">失配 → 拆两条分支</text>
+  </g>
+  <path d="M 40 152 L 560 152" stroke="#bbb" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+
+  <rect x="44" y="170" width="244" height="58" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="60" y="190" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">分支 A：删 s[1] = 'b'</text>
+  <text x="60" y="210" font-size="10" fill="#555" filter="url(#rough2)">校验 s[2..2] = “c” → 回文 ✓</text>
+
+  <rect x="312" y="170" width="244" height="58" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="328" y="190" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">分支 B：删 s[2] = 'c'</text>
+  <text x="328" y="210" font-size="10" fill="#555" filter="url(#rough2)">校验 s[1..1] = “b” → 回文 ✓</text>
+
+  <text x="300" y="250" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">⇒ 两条分支都成立，返回 true（删 'b' 得 “aca”，删 'c' 得 “aba”）</text>
+
+  <text x="40" y="284" font-size="11.5" fill="#b85450" font-weight="bold" filter="url(#rough2)">② s = “abc”（n = 3）：首轮即失配，且两条分支都不成立</text>
+
+  <rect x="44" y="298" width="244" height="50" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="60" y="318" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">删 s[0] = 'a'</text>
+  <text x="60" y="336" font-size="10" fill="#555" filter="url(#rough2)">s[1..2] = “bc” → 不是回文 ✗</text>
+
+  <rect x="312" y="298" width="244" height="50" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="328" y="318" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">删 s[2] = 'c'</text>
+  <text x="328" y="336" font-size="10" fill="#555" filter="url(#rough2)">s[0..1] = “ab” → 不是回文 ✗</text>
+
+  <text x="300" y="366" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">⇒ 返回 false：一次删除只能消掉一个冲突位置</text>
+</svg>

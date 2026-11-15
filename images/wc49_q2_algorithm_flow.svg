@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 500" font-family="'Comic Sans MS','Marker Felt','Kaiti SC',楷体,'Segoe UI',cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="4" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#5a5a5a"/>
+    </marker>
+  </defs>
+  <rect width="560" height="500" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="16.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：Trie 建树 + 带「一次改道」的 DFS</text>
+  <path d="M 96 40 Q 280 50 464 40" stroke="#2b2b2b" stroke-width="1.5" fill="none" filter="url(#rough2)"/>
+
+  <!-- start -->
+  <rect x="140" y="54" width="240" height="34" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="76" text-anchor="middle" font-size="12" fill="#2b4a6e" filter="url(#rough2)">search(searchWord) → dfs(root, 0, false)</text>
+  <path d="M 260 88 L 260 104" stroke="#5a5a5a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- condition -->
+  <rect x="34" y="106" width="332" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="200" y="130" text-anchor="middle" font-size="11.5" fill="#8a6a30" filter="url(#rough2)">pos == searchWord.length ?</text>
+  <path d="M 366 125 L 378 125" stroke="#5a5a5a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="372" y="118" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">是</text>
+
+  <rect x="380" y="106" width="166" height="38" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="463" y="130" text-anchor="middle" font-size="11" fill="#2e6e2e" filter="url(#rough2)">return changed &amp;&amp; end</text>
+
+  <path d="M 200 144 L 200 158" stroke="#5a5a5a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="208" y="156" font-size="10" fill="#888" filter="url(#rough2)">否</text>
+
+  <!-- branch 1 -->
+  <rect x="34" y="160" width="332" height="48" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="200" y="180" text-anchor="middle" font-size="10.5" fill="#2b4a6e" filter="url(#rough2)">① 走 next[w[pos]]（不改道，changed 不变）</text>
+  <text x="200" y="198" text-anchor="middle" font-size="10" fill="#5a7a92" filter="url(#rough2)">dfs(child, pos+1, changed) 为真 → true</text>
+  <path d="M 200 208 L 200 222" stroke="#5a5a5a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="208" y="219" font-size="10" fill="#888" filter="url(#rough2)">假</text>
+
+  <!-- branch 2 -->
+  <rect x="34" y="224" width="332" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="200" y="245" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">② 若 changed == false：枚举 next[c]，c ≠ w[pos]</text>
+  <text x="200" y="264" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">dfs(child, pos+1, true) 为真 → true</text>
+  <path d="M 200 276 L 200 294" stroke="#5a5a5a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="208" y="290" font-size="10" fill="#888" filter="url(#rough2)">假</text>
+
+  <!-- fail -->
+  <rect x="34" y="296" width="332" height="40" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="200" y="321" text-anchor="middle" font-size="11" fill="#b85450" filter="url(#rough2)">③ 两条分支都失败 → return false</text>
+
+  <!-- success -->
+  <rect x="392" y="160" width="152" height="120" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="468" y="188" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">任一分支为真</text>
+  <text x="468" y="212" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">立刻「短路」</text>
+  <text x="468" y="238" text-anchor="middle" font-size="15" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">return true</text>
+  <text x="468" y="262" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">无需枚举完全部兄弟</text>
+  <path d="M 368 184 Q 380 184 388 190" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 368 252 Q 380 248 388 240" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- notes -->
+  <rect x="24" y="352" width="512" height="132" rx="10" fill="#f4f0fa" stroke="#7a5aa0" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="376" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#5a3a80" filter="url(#rough2)">buildDict：把每个词插入 Trie，节点 = next[26] + end 标记</text>
+  <text x="280" y="400" text-anchor="middle" font-size="10.5" fill="#4a4a4a" filter="url(#rough2)">改道只能发生一次：changed 置真后，后续字符必须逐位相等</text>
+  <text x="280" y="424" text-anchor="middle" font-size="10.5" fill="#4a4a4a" filter="url(#rough2)">单次查询最坏 O(25·L²) 节点访问（L ≤ 100），剪枝后通常接近 O(L)</text>
+  <text x="280" y="448" text-anchor="middle" font-size="10.5" fill="#4a4a4a" filter="url(#rough2)">建树 O(Σ|d|)、空间 O(Σ|d|)，与查询次数无关</text>
+  <text x="280" y="470" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">注意：pos == L 时必须是 changed 且 end，二者缺一不可</text>
+</svg>

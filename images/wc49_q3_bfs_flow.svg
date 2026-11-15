@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+    <marker id="arrRed" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#b85450" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa" filter="url(#rough2)"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">算法流程：收集 → 排序 → 逐段 BFS</text>
+
+  <!-- 1 -->
+  <rect x="100" y="52" width="360" height="42" rx="8" fill="#e8f0fe"
+        stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="79" text-anchor="middle" font-size="13" fill="#2c4a63" filter="url(#rough2)">① 扫描全图，收集所有 forest[i][j] &gt; 1 的格子</text>
+
+  <path d="M280,94 L280,110" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 2 -->
+  <rect x="100" y="112" width="360" height="42" rx="8" fill="#e6f4ea"
+        stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="139" text-anchor="middle" font-size="13" fill="#33602a" filter="url(#rough2)">② 按高度升序排序（等价：小顶堆逐个弹出）</text>
+
+  <path d="M280,154 L280,170" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 3 -->
+  <rect x="100" y="172" width="360" height="42" rx="8" fill="#fff8e1"
+        stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="199" text-anchor="middle" font-size="13" fill="#8a6d1f" filter="url(#rough2)">③ cur = (0,0)，ans = 0</text>
+
+  <path d="M280,214 L280,230" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 4 -->
+  <rect x="100" y="232" width="360" height="42" rx="8" fill="#e8f0fe"
+        stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="259" text-anchor="middle" font-size="13" fill="#2c4a63" filter="url(#rough2)">④ BFS(cur → 下一棵树)，只把 0 当障碍</text>
+
+  <path d="M280,274 L280,286" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断菱形 -->
+  <polygon points="280,288 386,330 280,372 174,330" fill="#fce4ec"
+           stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="335" text-anchor="middle" font-size="13" fill="#8d3a36" filter="url(#rough2)">可达？</text>
+
+  <!-- 否 -->
+  <path d="M174,330 L138,330" stroke="#b85450" stroke-width="1.6" fill="none"
+        marker-end="url(#arrRed)" filter="url(#rough2)"/>
+  <rect x="20" y="310" width="112" height="40" rx="8" fill="#fce4ec"
+        stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="76" y="335" text-anchor="middle" font-size="13" fill="#8d3a36" filter="url(#rough2)">返回 -1</text>
+
+  <!-- 是 -->
+  <path d="M386,330 L420,330" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="422" y="308" width="126" height="44" rx="8" fill="#e6f4ea"
+        stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="485" y="327" text-anchor="middle" font-size="12" fill="#33602a" filter="url(#rough2)">ans += d</text>
+  <text x="485" y="344" text-anchor="middle" font-size="12" fill="#33602a" filter="url(#rough2)">cur = 这棵树</text>
+
+  <!-- 回到 ④ -->
+  <path d="M485,308 L485,253 L464,253" stroke="#446688" stroke-width="1.5" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="494" y="300" font-size="10" fill="#666" filter="url(#rough2)">还有树</text>
+
+  <text x="280" y="404" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">共 k 次 BFS，单次 O(mn)；k ≤ 2500、mn ≤ 2500</text>
+  <text x="280" y="426" text-anchor="middle" font-size="11" fill="#777" filter="url(#rough2)">起点即障碍（forest[0][0] == 0）时直接返回 -1</text>
+</svg>

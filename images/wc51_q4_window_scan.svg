@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="420" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">滑动窗口 + 单调队列：一次扫描判定所有候选</text>
+  <text x="300" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">days = [1,4,7,5,6,3,8,2]，K = 4：检查窗口 位置 1…6，内部 4 个位置须仍灭</text>
+
+  <g filter="url(#rough2)">
+    <rect x="96" y="76" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="152" y="76" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="208" y="76" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="264" y="76" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="320" y="76" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="376" y="76" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="432" y="76" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+    <rect x="488" y="76" width="48" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" text-anchor="middle" font-weight="bold" fill="#3a4a66">
+    <text x="120" y="102">1</text><text x="176" y="102">4</text><text x="232" y="102">7</text>
+    <text x="288" y="102">5</text><text x="344" y="102">6</text><text x="400" y="102">3</text>
+    <text x="456" y="102">8</text><text x="512" y="102">2</text>
+  </g>
+  <g filter="url(#rough2)" font-size="9" text-anchor="middle" fill="#999">
+    <text x="120" y="130">1</text><text x="176" y="130">2</text><text x="232" y="130">3</text>
+    <text x="288" y="130">4</text><text x="344" y="130">5</text><text x="400" y="130">6</text>
+    <text x="456" y="130">7</text><text x="512" y="130">8</text>
+  </g>
+
+  <rect x="90" y="70" width="340" height="52" fill="none" stroke="#d6a040" stroke-width="2" rx="7" filter="url(#rough2)"/>
+  <rect x="92" y="72" width="56" height="48" fill="none" stroke="#d6a040" stroke-width="2.6" rx="6" filter="url(#rough2)"/>
+  <rect x="372" y="72" width="56" height="48" fill="none" stroke="#d6a040" stroke-width="2.6" rx="6" filter="url(#rough2)"/>
+
+  <text x="120" y="146" text-anchor="middle" font-size="11" font-weight="bold" fill="#b8860b" filter="url(#rough2)">i</text>
+  <text x="400" y="146" text-anchor="middle" font-size="11" font-weight="bold" fill="#b8860b" filter="url(#rough2)">j = i + K + 1</text>
+
+  <path d="M 152 160 L 152 154 L 368 154 L 368 160" stroke="#4a7a3a" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <text x="260" y="178" text-anchor="middle" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">内部 K = 4 个位置必须仍灭：min(4,7,5,6) = 4</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="196" width="300" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="8"/>
+    <rect x="40" y="258" width="300" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="8"/>
+    <rect x="40" y="320" width="300" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8"/>
+  </g>
+  <g filter="url(#rough2)">
+    <text x="54" y="217" font-size="11" font-weight="bold" fill="#3a4a66">① 先建 days 数组（O(n)）</text>
+    <text x="54" y="238" font-size="10" fill="#555">days[bulbs[t]−1] = t+1</text>
+    <text x="54" y="279" font-size="11" font-weight="bold" fill="#8a6a20">② 单调队列维护窗口最小</text>
+    <text x="54" y="300" font-size="10" fill="#555">队首 = min(days[j−K … j−1])，均摊 O(1)</text>
+    <text x="54" y="341" font-size="11" font-weight="bold" fill="#3a5a30">③ 判定候选窗口 (i, j)</text>
+    <text x="54" y="362" font-size="10" fill="#555">i = j − K − 1（i ≥ 0 才判定）</text>
+    <text x="54" y="382" font-size="10" fill="#555">days[队首] &gt; max(days[i], days[j]) ⇒ 更新 ans</text>
+  </g>
+
+  <path d="M 190 250 L 190 258" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 190 312 L 190 320" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="372" y="196" width="196" height="200" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="384" y="218" font-size="11" font-weight="bold" fill="#8a4a4a" filter="url(#rough2)">单调队列（存 days 下标）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="384" y="228" width="48" height="40" fill="#fff" stroke="#b85450" stroke-width="2.2" rx="5"/>
+    <rect x="440" y="228" width="48" height="40" fill="#fff" stroke="#b85450" stroke-width="1.4" rx="5"/>
+    <rect x="496" y="228" width="48" height="40" fill="#fff" stroke="#b85450" stroke-width="1.4" rx="5"/>
+  </g>
+  <g filter="url(#rough2)" font-size="15" text-anchor="middle" font-weight="bold" fill="#8a4a4a">
+    <text x="408" y="255">4</text><text x="464" y="255">5</text><text x="520" y="255">6</text>
+  </g>
+  <g filter="url(#rough2)" font-size="9" text-anchor="middle" fill="#a06a6a">
+    <text x="408" y="286">下标 1</text><text x="464" y="286">下标 3</text><text x="520" y="286">下标 4</text>
+  </g>
+  <g filter="url(#rough2)" font-size="9" text-anchor="middle" fill="#8a4a4a">
+    <text x="408" y="302">队首</text><text x="520" y="302">队尾</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9.5" fill="#666">
+    <text x="384" y="326">队首 = 窗口最小 days = 4</text>
+    <text x="384" y="346">队内 days 严格递增：4 &lt; 5 &lt; 6</text>
+    <text x="384" y="366">旧下标 2（days=7）已被 5 弹出</text>
+    <text x="384" y="386">窗口左端右移时再弹出过期下标</text>
+  </g>
+</svg>
