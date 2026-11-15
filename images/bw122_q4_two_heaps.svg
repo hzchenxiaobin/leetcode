@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 344"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <filter id="rough3">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.2"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#888"/>
+    </marker>
+  </defs>
+  <rect width="560" height="344" fill="#fafafa"/>
+  <text x="280.0" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">滑动窗口 + 对顶堆：O(1) 拿到「k−2 小之和」</text>
+  <rect x="36" y="56" width="230" height="132" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="151" y="78" text-anchor="middle" font-size="12.5" fill="#1c3a1c" font-weight="bold" filter="url(#rough2)">low：大顶堆</text>
+  <text x="50" y="102" text-anchor="start" font-size="10.5" fill="#333" filter="url(#rough2)">• 恰好放窗口内最小的 need = k−2 个</text>
+  <text x="50" y="126" text-anchor="start" font-size="10.5" fill="#333" filter="url(#rough2)">• 堆顶 = 这 need 个里的最大值</text>
+  <text x="50" y="150" text-anchor="start" font-size="10.5" fill="#333" filter="url(#rough2)">• 维护它们的和 sumLow 作为答案的一部分</text>
+  <text x="50" y="174" text-anchor="start" font-size="10.5" fill="#888" filter="url(#rough2)">• 用 multiset / 双堆实现均可</text>
+  <rect x="294" y="56" width="230" height="132" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="409" y="78" text-anchor="middle" font-size="12.5" fill="#333" font-weight="bold" filter="url(#rough2)">high：小顶堆</text>
+  <text x="308" y="102" text-anchor="start" font-size="10.5" fill="#333" filter="url(#rough2)">• 放窗口内其余的（更大的）值</text>
+  <text x="308" y="126" text-anchor="start" font-size="10.5" fill="#333" filter="url(#rough2)">• 窗口左端离开时需要补位</text>
+  <text x="308" y="150" text-anchor="start" font-size="10.5" fill="#333" filter="url(#rough2)">• 堆顶 = 补位的首选（最小者）</text>
+  <text x="308" y="174" text-anchor="start" font-size="10.5" fill="#888" filter="url(#rough2)">• 元素被删除时打「惰性删除」标记</text>
+  <path d="M266,110 L294,110" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arrK)" filter="url(#rough2)"/>
+  <path d="M294,140 L266,140" fill="none" stroke="#888" stroke-width="1.8" marker-end="url(#arrK)" filter="url(#rough2)"/>
+  <text x="280" y="104" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">换</text>
+  <rect x="50" y="200" width="460" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="222" text-anchor="middle" font-size="11" fill="#7a5a10" filter="url(#rough2)">插入 v：low 未满直接进 low；否则 v &lt; low.top 时把 low.top 换到 high</text>
+  <text x="280" y="242" text-anchor="middle" font-size="11" fill="#7a5a10" filter="url(#rough2)">再让 v 进 low（这样 low 始终是窗口内最小的 need 个）</text>
+  <rect x="50" y="262" width="460" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="284" text-anchor="middle" font-size="10.5" fill="#7a3030" filter="url(#rough2)">删除 v：在 low 里就打 low 的删除标记并使 sumLow −= v，再从 high.top 补一个</text>
+  <text x="280" y="304" text-anchor="middle" font-size="10.5" fill="#7a3030" filter="url(#rough2)">不在 low 里就打 high 的删除标记（堆顶惰性清理）</text>
+  <text x="280" y="332" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每个元素进出各一次，单次 O(log n)</text>
+</svg>
