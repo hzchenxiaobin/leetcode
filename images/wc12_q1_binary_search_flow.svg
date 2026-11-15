@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="540" height="430" fill="#fafafa"/>
+
+  <text x="270" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">排序 + 每个房屋二分找最近供暖器</text>
+  <text x="270" y="44" text-anchor="middle" font-size="11" fill="#888">时间 O(m log m + n log m)，额外空间 O(1)</text>
+
+  <!-- 步骤 1 -->
+  <rect x="80" y="62" width="380" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="270" y="84" text-anchor="middle" font-size="11" fill="#3a4a66">把 heaters 升序排序（二分查找的前提）</text>
+
+  <path d="M 270 96 L 270 112" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="60" y="112" width="420" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="270" y="131" text-anchor="middle" font-size="11" fill="#3a4a66">对每个房屋 h：j = lower_bound(heaters, h)</text>
+  <text x="270" y="147" text-anchor="middle" font-size="10" fill="#666">j 是第一个 ≥ h 的下标（可能等于 m，表示越右边界）</text>
+
+  <!-- 分叉箭头 -->
+  <path d="M 270 154 L 160 176" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 270 154 L 380 176" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 左分支 -->
+  <rect x="50" y="176" width="200" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="150" y="198" text-anchor="middle" font-size="10.5" fill="#8a6a20">左邻 heaters[j−1]（j ≥ 1）</text>
+
+  <!-- 右分支 -->
+  <rect x="290" y="176" width="200" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="390" y="198" text-anchor="middle" font-size="10.5" fill="#8a6a20">右邻 heaters[j]（j &lt; m）</text>
+
+  <text x="270" y="226" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">最近供暖器只可能在这两个位置上，取距离较小者</text>
+
+  <!-- 合并箭头 -->
+  <path d="M 150 210 L 270 246" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 390 210 L 270 246" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="90" y="248" width="360" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="270" y="271" text-anchor="middle" font-size="11" fill="#3a5a30">d(h) = min( heaters[j] − h , h − heaters[j−1] )</text>
+
+  <path d="M 270 284 L 270 302" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4 -->
+  <rect x="90" y="302" width="360" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="270" y="324" text-anchor="middle" font-size="11" fill="#3a5a30">ans = max(ans, d(h))　←　难点在于最坏的那个房屋</text>
+
+  <path d="M 270 336 L 270 354" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 5 -->
+  <rect x="150" y="354" width="240" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="270" y="375" text-anchor="middle" font-size="11.5" fill="#8a3a36">遍历结束，返回 ans</text>
+
+  <text x="270" y="408" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">lower_bound 把数轴切成两段：左边全部 &lt; h，右边第一个 ≥ h</text>
+  <text x="270" y="422" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">因此「离 h 最近的供暖器」必然落在切口两侧的相邻元素上</text>
+</svg>

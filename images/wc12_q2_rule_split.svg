@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：分隔符互斥，先分流再逐段校验</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">合法 IPv4 只含 '.' 与数字；合法 IPv6 只含 ':' 与十六进制字符</text>
+
+  <rect x="200" y="64" width="160" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="89" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">queryIP</text>
+
+  <path d="M 246 106 C 210 130, 176 146, 152 166" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 314 106 C 350 130, 384 146, 408 166" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="186" y="124" text-anchor="end" font-size="10" fill="#446688" filter="url(#rough2)">含 '.'</text>
+  <text x="374" y="124" font-size="10" fill="#4a7a3a" filter="url(#rough2)">含 ':'</text>
+
+  <rect x="34" y="170" width="232" height="152" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="194" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">分支 A：校验 IPv4</text>
+  <text x="48" y="220" font-size="10" fill="#333" filter="url(#rough2)">① split('.') 后恰好 4 段，无空段</text>
+  <text x="48" y="244" font-size="10" fill="#333" filter="url(#rough2)">② 每段 1~3 位，全为 '0'-'9'</text>
+  <text x="48" y="268" font-size="10" fill="#333" filter="url(#rough2)">③ 长度 &gt; 1 时首位不能是 '0'</text>
+  <text x="48" y="292" font-size="10" fill="#333" filter="url(#rough2)">④ 段值 ≤ 255（十进制）</text>
+  <text x="48" y="312" font-size="9" fill="#777" filter="url(#rough2)">严：禁前导零、限数值</text>
+
+  <rect x="294" y="170" width="232" height="152" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="308" y="194" font-size="12" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">分支 B：校验 IPv6</text>
+  <text x="308" y="220" font-size="10" fill="#333" filter="url(#rough2)">① split(':') 后恰好 8 段，无空段</text>
+  <text x="308" y="244" font-size="10" fill="#333" filter="url(#rough2)">② 每段长度 1~4</text>
+  <text x="308" y="268" font-size="10" fill="#333" filter="url(#rough2)">③ 字符 ∈ 0-9 / a-f / A-F</text>
+  <text x="308" y="292" font-size="10" fill="#333" filter="url(#rough2)">④ 允许前导零，无 255 限制</text>
+  <text x="308" y="312" font-size="9" fill="#777" filter="url(#rough2)">宽：只看位数与字符集</text>
+
+  <text x="280" y="346" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">'.' 与 ':' 的字符集不相交 → 两条规则互斥，一次分流即可，不会同时成立</text>
+  <text x="280" y="366" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">其余情况（无分隔符、含两种分隔符、任一检查失败）一律返回 "Neither"</text>
+</svg>

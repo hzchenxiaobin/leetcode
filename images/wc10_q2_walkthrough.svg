@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">示例演算：n = 5、desiredTotal = 8 —— 取 1 后用配对锁死</text>
+  <text x="280" y="45" text-anchor="middle" font-size="10.5" fill="#888">剩余要凑 7 = 2 + 5 = 3 + 4：后手取 y，先手就取 7 − y</text>
+
+  <!-- 表头 -->
+  <g filter="url(#rough2)" text-anchor="middle" font-size="10">
+    <rect x="60" y="62" width="440" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <text x="115" y="81" fill="#3a4a66" font-weight="bold">后手取 y</text>
+    <text x="225" y="81" fill="#3a4a66" font-weight="bold">先手取 7 − y</text>
+    <text x="335" y="81" fill="#3a4a66" font-weight="bold">累计和</text>
+    <text x="445" y="81" fill="#3a4a66" font-weight="bold">判定</text>
+  </g>
+
+  <g filter="url(#rough2)" text-anchor="middle" font-size="10.5">
+    <rect x="60" y="90" width="440" height="28" fill="#fffdf5" stroke="#d8d0bc" stroke-width="1.1" rx="4"/>
+    <text x="115" y="109" fill="#555">2</text>
+    <text x="225" y="109" fill="#3a5a30">5</text>
+    <text x="335" y="109" fill="#555">1+2+5 = 8</text>
+    <text x="445" y="109" fill="#b85450">≥ 8，先手胜</text>
+
+    <rect x="60" y="118" width="440" height="28" fill="#fafafa" stroke="#d8d0bc" stroke-width="1.1" rx="4"/>
+    <text x="115" y="137" fill="#555">3</text>
+    <text x="225" y="137" fill="#3a5a30">4</text>
+    <text x="335" y="137" fill="#555">1+3+4 = 8</text>
+    <text x="445" y="137" fill="#b85450">≥ 8，先手胜</text>
+
+    <rect x="60" y="146" width="440" height="28" fill="#fffdf5" stroke="#d8d0bc" stroke-width="1.1" rx="4"/>
+    <text x="115" y="165" fill="#555">4</text>
+    <text x="225" y="165" fill="#3a5a30">3</text>
+    <text x="335" y="165" fill="#555">1+4+3 = 8</text>
+    <text x="445" y="165" fill="#b85450">≥ 8，先手胜</text>
+
+    <rect x="60" y="174" width="440" height="28" fill="#fafafa" stroke="#d8d0bc" stroke-width="1.1" rx="4"/>
+    <text x="115" y="193" fill="#555">5</text>
+    <text x="225" y="193" fill="#3a5a30">2</text>
+    <text x="335" y="193" fill="#555">1+5+2 = 8</text>
+    <text x="445" y="193" fill="#b85450">≥ 8，先手胜</text>
+  </g>
+
+  <text x="280" y="222" text-anchor="middle" font-size="10" fill="#555">后手 4 种应手全部被 7 − y 回应，故 mask={1} 是必败态 ⇒ dfs(∅) 取 1 即可获胜</text>
+
+  <!-- 记忆化回填 -->
+  <text x="60" y="248" font-size="10" fill="#666">DFS 自底向上回填 memo（n=5, T=8；{1,4}、{1,5} 同理，都是「补一手达标」）：</text>
+  <g filter="url(#rough2)" text-anchor="middle" font-size="10">
+    <rect x="60" y="256" width="104" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="112" y="275" fill="#3a5a30">{1,2}：必胜</text>
+    <rect x="172" y="256" width="104" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="6"/>
+    <text x="224" y="275" fill="#3a5a30">{1,3}：必胜</text>
+    <rect x="284" y="256" width="104" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="6"/>
+    <text x="336" y="275" fill="#3a4a66">{1}：必败</text>
+    <rect x="396" y="256" width="104" height="28" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="6"/>
+    <text x="448" y="275" fill="#8a6a20">∅：必胜</text>
+  </g>
+
+  <!-- 示例 1 对照 -->
+  <rect x="60" y="304" width="440" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="324" font-size="10" fill="#8a6a20">示例 1（n = 10、T = 11）：先手取 x，后手永远取 11 − x 回应</text>
+  <text x="76" y="344" font-size="10" fill="#8a6a20">两轮累计和恰为 11 ≥ 11 ⇒ 先手无论怎么取都输，返回 false</text>
+
+  <text x="280" y="378" text-anchor="middle" font-size="9.5" fill="#999">配对合法的原因：T 为奇数 ⇒ 11 − x ≠ x，且 11 − x 仍落在 [1, 10] 内</text>
+  <text x="280" y="394" text-anchor="middle" font-size="9.5" fill="#999">这类输入可 O(1) 判出，但记忆化搜索会把同样的结论完整算出来</text>
+</svg>

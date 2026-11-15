@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">状态转移：两维容量都倒序枚举</text>
+  <text x="280" y="45" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">dp[i][j] = 零 ≤ i、一 ≤ j 时能选出的最大件数</text>
+
+  <rect x="40" y="60" width="290" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="56" y="81" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">① 统计每个串的 z = 0 的个数、o = 1 的个数</text>
+
+  <path d="M 185 92 L 185 106" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="108" width="290" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="56" y="129" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">② 若 z &gt; m 或 o &gt; n：直接跳过（永远选不进）</text>
+
+  <path d="M 185 140 L 185 154" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="156" width="290" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="6" filter="url(#rough2)"/>
+  <text x="56" y="175" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">③ 倒序枚举两维：i = m → z，j = n → o</text>
+  <text x="56" y="193" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">（两维都必须递减，缺一不可）</text>
+
+  <path d="M 185 204 L 185 218" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="220" width="290" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="56" y="239" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">④ dp[i][j] = max(dp[i][j], dp[i−z][j−o] + 1)</text>
+  <text x="56" y="257" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">读到的 dp[i−z][j−o] 必是本轮之前的值</text>
+
+  <path d="M 185 268 L 185 282" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="284" width="290" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6" filter="url(#rough2)"/>
+  <text x="56" y="306" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">⑤ 处理完所有串，返回 dp[m][n]</text>
+
+  <rect x="350" y="108" width="184" height="150" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="364" y="128" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">为什么必须倒序？</text>
+  <g font-size="9.5" fill="#555" filter="url(#rough2)">
+    <text x="364" y="148">倒序时 dp[i−z][j−o]</text>
+    <text x="364" y="165">还是「没选本串」的旧值，</text>
+    <text x="364" y="182">于是每个串最多用一次，</text>
+    <text x="364" y="199">正是 0-1 背包。</text>
+    <text x="364" y="220" fill="#8a3a36">正序会读到本轮刚更新的值，</text>
+    <text x="364" y="237" fill="#8a3a36">同一个串被反复选用，</text>
+    <text x="364" y="254" fill="#8a3a36">退化成完全背包。</text>
+  </g>
+
+  <rect x="350" y="284" width="184" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="364" y="304" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">复杂度</text>
+  <g font-size="9.5" fill="#555" filter="url(#rough2)">
+    <text x="364" y="323">时间 O(k·m·n)，k = |strs|</text>
+    <text x="364" y="340">空间 O(m·n)，两维滚动</text>
+  </g>
+
+  <text x="280" y="352" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">最坏规模：600 × 101 × 101 ≈ 6.1 × 10^6 次转移，C++ 与 Python 都能轻松跑完</text>
+  <text x="280" y="380" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">状态含义是「至多」，因此预算用不满也合法，dp[m][n] 直接就是答案</text>
+</svg>

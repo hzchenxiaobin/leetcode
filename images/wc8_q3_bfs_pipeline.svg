@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="660" height="500" viewBox="0 0 660 500"
+     font-family="'Comic Sans MS', 'Marker Felt', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="17" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.8"/>
+    </filter>
+    <filter id="rough2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.027" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.4"/>
+    </filter>
+    <marker id="arR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="arG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arK" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="660" height="500" fill="#fafafa"/>
+
+  <g filter="url(#rough2)"><text x="330" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b">算法流程：两次多源 BFS + 一次取交集</text></g>
+  <g filter="url(#rough2)"><text x="330" y="50" text-anchor="middle" font-size="11.5" fill="#777">推广条件只有一个：邻居高度 &gt;= 当前高度，且尚未被标记</text></g>
+
+  <g filter="url(#rough2)"><rect x="40" y="66" width="270" height="52" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/></g>
+  <g filter="url(#rough2)"><text x="175" y="88" text-anchor="middle" font-size="12" font-weight="bold" fill="#2b4a6e">太平洋侧入队</text></g>
+  <g filter="url(#rough2)"><text x="175" y="107" text-anchor="middle" font-size="11" fill="#2b4a6e">第 0 行 + 第 0 列，seenP = true</text></g>
+
+  <g filter="url(#rough2)"><rect x="350" y="66" width="270" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/></g>
+  <g filter="url(#rough2)"><text x="485" y="88" text-anchor="middle" font-size="12" font-weight="bold" fill="#2e5e22">大西洋侧入队</text></g>
+  <g filter="url(#rough2)"><text x="485" y="107" text-anchor="middle" font-size="11" fill="#2e5e22">第 m-1 行 + 第 n-1 列，seenA = true</text></g>
+
+  <path d="M 175 118 L 175 140 L 300 140 L 300 158" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arB)" filter="url(#rough)"/>
+  <path d="M 485 118 L 485 140 L 360 140 L 360 158" stroke="#4a7a3a" stroke-width="1.7" fill="none" marker-end="url(#arG)" filter="url(#rough)"/>
+
+  <g filter="url(#rough2)"><rect x="180" y="160" width="300" height="50" rx="10" fill="#ffffff" stroke="#666" stroke-width="1.6"/></g>
+  <g filter="url(#rough2)"><text x="330" y="182" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">从队列取出队首 (r, c)</text></g>
+  <g filter="url(#rough2)"><text x="330" y="201" text-anchor="middle" font-size="11" fill="#666">枚举上 / 下 / 左 / 右四个邻居 (nr, nc)</text></g>
+
+  <path d="M 330 210 L 330 228" stroke="#3a3a3a" stroke-width="1.7" fill="none" marker-end="url(#arK)" filter="url(#rough)"/>
+
+  <g filter="url(#rough2)"><rect x="150" y="230" width="360" height="52" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/></g>
+  <g filter="url(#rough2)"><text x="330" y="252" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3a36">heights[nr][nc] &gt;= heights[r][c]</text></g>
+  <g filter="url(#rough2)"><text x="330" y="271" text-anchor="middle" font-size="11" fill="#8a3a36">并且该邻居在本海侧尚未被标记？</text></g>
+
+  <path d="M 510 256 L 528 256" stroke="#4a7a3a" stroke-width="1.7" fill="none" marker-end="url(#arG)" filter="url(#rough)"/>
+  <g filter="url(#rough2)"><text x="519" y="246" text-anchor="middle" font-size="10.5" fill="#4a7a3a">是</text></g>
+  <g filter="url(#rough2)"><rect x="528" y="232" width="106" height="48" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/></g>
+  <g filter="url(#rough2)"><text x="581" y="252" text-anchor="middle" font-size="11" fill="#2e5e22">标记该海侧</text></g>
+  <g filter="url(#rough2)"><text x="581" y="270" text-anchor="middle" font-size="11" fill="#2e5e22">并入队</text></g>
+
+  <path d="M 330 282 L 330 306" stroke="#b85450" stroke-width="1.7" fill="none" marker-end="url(#arR)" filter="url(#rough)"/>
+  <g filter="url(#rough2)"><text x="344" y="298" font-size="10.5" fill="#b85450">否：跳过这个邻居</text></g>
+
+  <g filter="url(#rough2)"><rect x="180" y="308" width="300" height="50" rx="10" fill="#ffffff" stroke="#666" stroke-width="1.6"/></g>
+  <g filter="url(#rough2)"><text x="330" y="330" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">队列为空？</text></g>
+  <g filter="url(#rough2)"><text x="330" y="349" text-anchor="middle" font-size="11" fill="#666">否 → 回到取出队首；是 → 本海侧标记完成</text></g>
+
+  <path d="M 180 333 L 60 333 L 60 185 L 176 185" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arB)" filter="url(#rough)"/>
+  <g filter="url(#rough2)"><text x="52" y="262" font-size="10.5" fill="#446688" transform="rotate(-90 52 262)">队列非空，继续 BFS</text></g>
+
+  <path d="M 330 358 L 330 382" stroke="#3a3a3a" stroke-width="1.7" fill="none" marker-end="url(#arK)" filter="url(#rough)"/>
+  <g filter="url(#rough2)"><text x="342" y="374" font-size="10.5" fill="#666">两个海洋都跑完</text></g>
+
+  <g filter="url(#rough2)"><rect x="150" y="384" width="360" height="52" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/></g>
+  <g filter="url(#rough2)"><text x="330" y="406" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6a20">答案 = 满足 seenP[r][c] ∧ seenA[r][c] 的格子</text></g>
+  <g filter="url(#rough2)"><text x="330" y="425" text-anchor="middle" font-size="11" fill="#8a6a20">按行优先顺序输出即可，顺序无关</text></g>
+
+  <g filter="url(#rough2)"><text x="330" y="470" text-anchor="middle" font-size="11.5" fill="#777">每个格子最多入队一次，两次 BFS 合计 O(mn)；空间 O(mn) 存两张标记表</text></g>
+
+</svg>

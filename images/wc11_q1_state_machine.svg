@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrO" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#d6a040"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="360" fill="#fafafa"/>
+
+  <text x="300" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">两状态扫描：只在「进入单词」时计数</text>
+  <text x="300" y="51" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">OUT = 上一个字符是空格（或还没读到字符）；IN = 正处在某个单词内部</text>
+
+  <ellipse cx="150" cy="186" rx="84" ry="52" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="150" y="180" text-anchor="middle" font-size="15" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">OUT</text>
+  <text x="150" y="200" text-anchor="middle" font-size="9.5" fill="#a08040" filter="url(#rough2)">空格 / 串首</text>
+
+  <ellipse cx="430" cy="186" rx="84" ry="52" fill="#e8f0fe" stroke="#446688" stroke-width="2" filter="url(#rough2)"/>
+  <text x="430" y="180" text-anchor="middle" font-size="15" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">IN</text>
+  <text x="430" y="200" text-anchor="middle" font-size="9.5" fill="#5a6a86" filter="url(#rough2)">单词内部</text>
+
+  <path d="M 234 174 L 344 174" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="289" y="158" text-anchor="middle" font-size="10" fill="#3a7a3a" font-weight="bold" filter="url(#rough2)">读到非空格</text>
+  <text x="289" y="145" text-anchor="middle" font-size="10" fill="#3a7a3a" filter="url(#rough2)">cnt++</text>
+
+  <path d="M 344 200 L 234 200" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="289" y="222" text-anchor="middle" font-size="10" fill="#b85450" font-weight="bold" filter="url(#rough2)">读到空格</text>
+
+  <path d="M 108 142 C 102 100, 196 100, 190 142" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arrO)" filter="url(#rough2)"/>
+  <text x="150" y="92" text-anchor="middle" font-size="9.5" fill="#a08040" filter="url(#rough2)">空格：留在 OUT，不计数</text>
+
+  <path d="M 388 142 C 382 100, 476 100, 470 142" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="430" y="92" text-anchor="middle" font-size="9.5" fill="#5a6a86" filter="url(#rough2)">非空格：留在 IN，不计数</text>
+
+  <rect x="60" y="256" width="480" height="62" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="78" y="280" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">计数只发生在 OUT → IN 这一条边上：</text>
+  <text x="78" y="302" font-size="10" fill="#5a7a4a" filter="url(#rough2)">每个单词恰好触发一次，因此既不会漏数、也不会把同一个单词算两次</text>
+
+  <text x="300" y="340" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">扫描结束不需要额外 +1：单词数 = 左边界数，而不是「空格数 + 1」</text>
+</svg>

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">核心观察：局面 = 位掩码，胜负沿博弈树互推</text>
+  <text x="280" y="45" text-anchor="middle" font-size="10.5" fill="#888">已取数字的集合唯一决定累计和 ⇒ 只需按 mask 记忆化，状态数 ≤ 2^n</text>
+
+  <!-- ① 状态压缩 -->
+  <rect x="28" y="58" width="246" height="152" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="44" y="79" font-size="11" fill="#3a4a66" font-weight="bold">① 把局面压成 mask</text>
+
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle">
+    <rect x="44" y="90" width="36" height="34" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1.3" rx="4"/>
+    <text x="62" y="112" fill="#777">1</text>
+    <rect x="86" y="90" width="36" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <text x="104" y="112" fill="#3a5a30">2</text>
+    <rect x="128" y="90" width="36" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <text x="146" y="112" fill="#3a5a30">3</text>
+    <rect x="170" y="90" width="36" height="34" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1.3" rx="4"/>
+    <text x="188" y="112" fill="#777">4</text>
+    <rect x="212" y="90" width="36" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="4"/>
+    <text x="230" y="112" fill="#3a5a30">5</text>
+  </g>
+  <text x="44" y="140" font-size="10" fill="#555">已取：{2, 3, 5}</text>
+  <text x="44" y="158" font-size="10.5" fill="#3a4a66">mask = 10110₂ = 22，used = 2+3+5 = 10</text>
+  <text x="44" y="176" font-size="10" fill="#555">used 完全由 mask 决定，不必进状态</text>
+  <text x="44" y="196" font-size="9.5" fill="#7a8aa6">n ≤ 20 ⇒ 至多 2²⁰ ≈ 1.05×10⁶ 个状态</text>
+
+  <!-- ② 胜负互推 -->
+  <rect x="288" y="58" width="244" height="152" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="302" y="79" font-size="11" fill="#8a6a20" font-weight="bold">② 一步定胜负</text>
+  <text x="302" y="99" font-size="10" fill="#555">必胜(mask) ⟺ 存在未取 i 使</text>
+  <text x="314" y="117" font-size="10" fill="#555">(a) used + i ≥ desiredTotal</text>
+  <text x="314" y="135" font-size="10" fill="#555">(b) W(mask | bit_i) 为必败</text>
+  <text x="302" y="157" font-size="10" fill="#555">必败(mask) ⟺ 每个未取 i</text>
+  <text x="314" y="175" font-size="10" fill="#555">都把对手送进必胜态</text>
+  <text x="302" y="196" font-size="9.5" fill="#8a6a20">叶子先定、父节点后定，自底向上回填</text>
+
+  <!-- ③ 迷你博弈树 -->
+  <g filter="url(#rough2)">
+    <rect x="32" y="222" width="16" height="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="3"/>
+    <text x="56" y="235" font-size="10" fill="#555">必胜</text>
+    <rect x="32" y="246" width="16" height="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="3"/>
+    <text x="56" y="259" font-size="10" fill="#555">必败</text>
+  </g>
+
+  <rect x="200" y="222" width="164" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="282" y="243" text-anchor="middle" font-size="10.5" fill="#8a6a20">mask=∅, used=0（先手）</text>
+
+  <path d="M 250 256 L 128 290" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 282 256 L 282 290" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 314 256 L 432 290" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="214" y="270" font-size="9.5" fill="#777">取 1</text>
+  <text x="290" y="272" font-size="9.5" fill="#777">取 2</text>
+  <text x="350" y="270" font-size="9.5" fill="#777" text-anchor="end">取 3</text>
+
+  <g filter="url(#rough2)" text-anchor="middle" font-size="10">
+    <rect x="66" y="292" width="126" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="129" y="312" fill="#3a4a66">mask={1}：必败</text>
+    <rect x="220" y="292" width="126" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="283" y="312" fill="#3a5a30">mask={2}：必胜</text>
+    <rect x="374" y="292" width="126" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="437" y="312" fill="#3a5a30">mask={3}：必胜</text>
+  </g>
+
+  <text x="280" y="348" text-anchor="middle" font-size="10" fill="#555">n=3, T=5：先手取 1 后，对手取 2 或 3 都只能到 3 或 4，先手补一手即 ≥ 5</text>
+  <text x="280" y="366" text-anchor="middle" font-size="10" fill="#555">故 {1} 是必败态；而根节点存在这一手 ⇒ 根节点必胜（答案 true）</text>
+  <text x="280" y="388" text-anchor="middle" font-size="9.5" fill="#999">把「已取集合」换成二进制位，博弈树就从 n! 条路径塌缩成 2^n 个节点</text>
+</svg>

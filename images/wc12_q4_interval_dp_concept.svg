@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="400" fill="#fafafa" filter="url(#rough2)"/>
+
+  <text x="300" y="27" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">区间 DP：每个子串只有三种编码方式</text>
+  <text x="300" y="47" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">dp[i][j] = s[i..j) 的最短编码，按区间长度从小到大递推</text>
+
+  <rect x="70" y="62" width="460" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="300" y="88" text-anchor="middle" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">当前区间 s[i..j)，长度 len = j − i</text>
+
+  <path d="M 300 104 V 118" stroke="#666" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 108 118 H 492" stroke="#666" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 108 118 V 132" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 300 118 V 132" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 492 118 V 132" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="24" y="138" width="168" height="152" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="108" y="164" text-anchor="middle" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 原样输出</text>
+  <text x="108" y="192" text-anchor="middle" font-size="12" fill="#333" filter="url(#rough2)">s[i..j)</text>
+  <text x="108" y="218" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">长度 = len</text>
+  <text x="108" y="242" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">保底方案，永远合法</text>
+  <text x="108" y="268" text-anchor="middle" font-size="9.5" fill="#8a9ab0" filter="url(#rough2)">不编码</text>
+
+  <rect x="216" y="138" width="168" height="152" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="300" y="164" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② 在 k 处切分</text>
+  <text x="300" y="192" text-anchor="middle" font-size="10" fill="#333" filter="url(#rough2)">dp[i][k] + dp[k][j]</text>
+  <text x="300" y="218" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">i &lt; k &lt; j</text>
+  <text x="300" y="242" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">两段各自取最短再拼接</text>
+  <text x="300" y="268" text-anchor="middle" font-size="9.5" fill="#8aa87a" filter="url(#rough2)">长度相加，可分离</text>
+
+  <rect x="408" y="138" width="168" height="152" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="492" y="164" text-anchor="middle" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 周期压缩</text>
+  <text x="492" y="192" text-anchor="middle" font-size="10.5" fill="#333" filter="url(#rough2)">t [ dp[i][i+L] ]</text>
+  <text x="492" y="218" text-anchor="middle" font-size="9.5" fill="#666" filter="url(#rough2)">L | len，且是 w 的重复</text>
+  <text x="492" y="242" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">w = s[i..i+L)</text>
+  <text x="492" y="268" text-anchor="middle" font-size="9.5" fill="#c0a050" filter="url(#rough2)">内层要先压缩</text>
+
+  <path d="M 300 290 V 314" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="48" y="320" width="504" height="62" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="300" y="342" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">dp[i][j] = 三个候选中长度最短的那个（平手保留原文）</text>
+  <text x="300" y="364" text-anchor="middle" font-size="9.5" fill="#7a4a46" filter="url(#rough2)">关键：③ 的内层必须用 dp[i][i+L] 而不是原串，否则嵌套压缩会漏</text>
+</svg>

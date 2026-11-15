@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 372" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#777"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="372" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">窗口可行性判定：len − maxfreq ≤ k</text>
+  <text x="280" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">窗口内保留出现最多的字母，把其余字母全部替换即可；替换次数 = len − maxfreq</text>
+
+  <!-- 窗口 AABAB -->
+  <rect x="70" y="70" width="46" height="46" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="93" y="100" text-anchor="middle" font-size="19" fill="#3a4a66" filter="url(#rough2)">A</text>
+  <rect x="120" y="70" width="46" height="46" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="143" y="100" text-anchor="middle" font-size="19" fill="#3a4a66" filter="url(#rough2)">A</text>
+  <rect x="170" y="70" width="46" height="46" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="193" y="100" text-anchor="middle" font-size="19" fill="#3a5a30" filter="url(#rough2)">B</text>
+  <rect x="220" y="70" width="46" height="46" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="243" y="100" text-anchor="middle" font-size="19" fill="#3a4a66" filter="url(#rough2)">A</text>
+  <rect x="270" y="70" width="46" height="46" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="293" y="100" text-anchor="middle" font-size="19" fill="#3a5a30" filter="url(#rough2)">B</text>
+
+  <text x="193" y="134" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">窗口 s[l..r] = "AABAB"，len = 5</text>
+
+  <!-- 频次统计 -->
+  <rect x="362" y="66" width="160" height="76" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="374" y="84" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">窗口内频次</text>
+  <text x="374" y="102" font-size="10" fill="#555" filter="url(#rough2)">A：3   B：2</text>
+  <text x="374" y="120" font-size="10" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">maxfreq = 3（字母 A）</text>
+  <text x="374" y="135" font-size="9.5" fill="#888" filter="url(#rough2)">只需维护 26 个桶</text>
+
+  <path d="M 300 146 L 300 166" stroke="#777" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 公式框 -->
+  <rect x="56" y="170" width="448" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="190" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">替换次数 = 5 − 3 = 2 ≤ k = 2，窗口可行</text>
+  <text x="72" y="207" font-size="10" fill="#555" filter="url(#rough2)">把 2 个 B 改成 A ⇒ "AAAAA"，长度 5 全同</text>
+
+  <!-- 不可行时 -->
+  <rect x="56" y="230" width="448" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="72" y="250" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">若 len − maxfreq &gt; k：窗口太长，左指针 l 右移一格</text>
+  <text x="72" y="266" font-size="10" fill="#555" filter="url(#rough2)">收缩后 len 减 1、maxfreq 至多减 1，故差值单调不增 ⇒ 反复收缩必然可行</text>
+
+  <text x="280" y="300" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">关键：对固定左端点，可行长度随右端点右移而「先增后不可行」，</text>
+  <text x="280" y="316" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">因此左端点只会单调右移 —— 双指针一次线性扫描即可</text>
+  <text x="280" y="344" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">例：s = "AABABBA"，k = 1，答案 4（窗口 "BABB" 只需替换 1 个 A）</text>
+</svg>

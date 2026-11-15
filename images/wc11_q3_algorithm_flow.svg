@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 452" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="452" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：一次扫描 + 26 个桶</text>
+  <text x="310" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">run 是「以当前字符结尾」的合法后缀长度，只增不减地扫过去</text>
+
+  <rect x="170" y="64" width="280" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="86" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">初始化 run = 0，dp[0..25] = 0</text>
+
+  <path d="M 310 98 L 310 116" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="118" width="320" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="140" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">取 i = 0..n−1，算 d = (s[i] − s[i−1]) mod 26</text>
+
+  <path d="M 310 152 L 310 170" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="310,172 392,212 310,252 228,212" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="310" y="208" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">i &gt; 0 且 d == 1 ?</text>
+  <text x="310" y="226" text-anchor="middle" font-size="10" fill="#a08850" filter="url(#rough2)">（是不是循环后继）</text>
+
+  <path d="M 228 212 L 150 212 L 150 274" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 392 212 L 470 212 L 470 274" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr2)" filter="url(#rough2)"/>
+  <text x="176" y="232" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <text x="444" y="232" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <rect x="62" y="276" width="176" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="150" y="298" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">run += 1（继续延伸）</text>
+
+  <rect x="382" y="276" width="176" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="470" y="298" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">run = 1（重新起步）</text>
+
+  <path d="M 150 310 L 150 330 L 310 330" stroke="#446688" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 470 310 L 470 330 L 310 330" stroke="#446688" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 310 330 L 310 348" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="140" y="350" width="340" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="372" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">dp[s[i]] = max( dp[s[i]], run )</text>
+
+  <path d="M 310 384 L 310 400" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="180" y="402" width="260" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="423" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">返回 Σ dp[c]</text>
+
+  <text x="310" y="448" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">时间 O(n)，空间 O(26) = O(1)；无需字符串切片、无需哈希集合</text>
+</svg>
