@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="167"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">指针走查：cur 与 cur→next 是“当前待处理的一对”</text>
+
+  <!-- 第一步 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="48" width="448" height="118" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" fill-opacity="0.45"/>
+    <text x="60" y="72" font-size="12.5" fill="#446688">第 1 步：cur = 18，cur→next = 6</text>
+    <rect x="66" y="86" width="48" height="38" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <text x="90" y="110" text-anchor="middle" font-size="13.5" fill="#b85450">18</text>
+    <line x1="114" y1="105" x2="146" y2="105" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+    <rect x="150" y="86" width="48" height="38" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <text x="174" y="110" text-anchor="middle" font-size="13.5" fill="#8a6d1f">6</text>
+    <text x="218" y="102" font-size="12" fill="#555">在两者之间</text>
+    <text x="218" y="120" font-size="12" fill="#555">new 一个 gcd 结点</text>
+    <rect x="338" y="86" width="48" height="38" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="362" y="110" text-anchor="middle" font-size="13.5" fill="#1d5c1a">6</text>
+    <line x1="300" y1="105" x2="334" y2="105" stroke="#4a7a3a" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+    <text x="410" y="110" font-size="11.5" fill="#1d5c1a">指向原 next</text>
+    <text x="60" y="152" font-size="11.5" fill="#555">插入后：cur→next = 新结点，然后 cur = 新结点→next（跨两步！）</text>
+  </g>
+
+  <!-- 第二步 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="180" width="448" height="118" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" fill-opacity="0.45"/>
+    <text x="60" y="204" font-size="12.5" fill="#4a7a3a">第 2 步：cur 跳到 6（原链表第二个结点），处理 (6, 10)</text>
+    <rect x="66" y="218" width="48" height="38" rx="6" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+    <text x="90" y="242" text-anchor="middle" font-size="13" fill="#888">18</text>
+    <line x1="114" y1="237" x2="132" y2="237" stroke="#888" stroke-width="1.4" marker-end="url(#arr)"/>
+    <rect x="136" y="218" width="48" height="38" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="160" y="242" text-anchor="middle" font-size="13" fill="#1d5c1a">6</text>
+    <line x1="184" y1="237" x2="202" y2="237" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+    <rect x="206" y="218" width="48" height="38" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2.2"/>
+    <text x="230" y="242" text-anchor="middle" font-size="13" fill="#b85450">6</text>
+    <line x1="254" y1="237" x2="272" y2="237" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+    <rect x="276" y="218" width="48" height="38" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <text x="300" y="242" text-anchor="middle" font-size="13" fill="#8a6d1f">10</text>
+    <text x="344" y="234" font-size="11.5" fill="#555">下一对 = (6, 10)</text>
+    <text x="344" y="252" font-size="11.5" fill="#555">插入 gcd = 2</text>
+    <text x="60" y="284" font-size="11.5" fill="#555">新结点永远不会成为“cur”，因为它左右的原始结点都已处理完毕</text>
+  </g>
+
+  <!-- 结束 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="312" width="448" height="38" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" fill-opacity="0.5"/>
+    <text x="260" y="336" text-anchor="middle" font-size="12.5" fill="#8a6d1f">循环条件 cur→next ≠ null：cur 停在最后一个结点时结束，返回 head</text>
+  </g>
+</svg>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="103"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">一维 dp + 容量倒序：每件物品只被计入一次</text>
+
+  <!-- dp 数组 -->
+  <g filter="url(#rough2)">
+    <text x="60" y="66" font-size="12.5" fill="#555">dp[s]：用已考察过的物品凑出体积 s 的方案数（初始仅 dp[0] = 1）</text>
+    <g>
+      <rect x="60" y="80" width="44" height="40" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+      <text x="82" y="105" text-anchor="middle" font-size="13" fill="#1d5c1a">1</text>
+      <rect x="104" y="80" width="44" height="40" rx="4" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+      <text x="126" y="105" text-anchor="middle" font-size="13" fill="#333">0</text>
+      <rect x="148" y="80" width="44" height="40" rx="4" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+      <text x="170" y="105" text-anchor="middle" font-size="13" fill="#333">0</text>
+      <rect x="192" y="80" width="44" height="40" rx="4" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+      <text x="214" y="105" text-anchor="middle" font-size="13" fill="#333">0</text>
+      <rect x="236" y="80" width="44" height="40" rx="4" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+      <text x="258" y="105" text-anchor="middle" font-size="13" fill="#333">…</text>
+      <rect x="280" y="80" width="44" height="40" rx="4" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+      <text x="302" y="105" text-anchor="middle" font-size="13" fill="#333">0</text>
+    </g>
+    <g font-size="10" fill="#888">
+      <text x="82" y="134" text-anchor="middle">s=0</text>
+      <text x="126" y="134" text-anchor="middle">s=1</text>
+      <text x="170" y="134" text-anchor="middle">s=2</text>
+      <text x="214" y="134" text-anchor="middle">s=3</text>
+      <text x="258" y="134" text-anchor="middle">s=4</text>
+      <text x="302" y="134" text-anchor="middle">s=n</text>
+    </g>
+  </g>
+
+  <!-- 倒序箭头 -->
+  <g filter="url(#rough2)">
+    <path d="M 316 160 C 240 178, 160 178, 84 164" stroke="#4a7a3a" stroke-width="2.2" fill="none" marker-end="url(#arr)"/>
+    <text x="260" y="176" text-anchor="middle" font-size="12.5" fill="#4a7a3a">加入物品 v 后：s 从 n 到 v 倒序扫</text>
+    <text x="260" y="196" text-anchor="middle" font-size="12" fill="#555">dp[s] += dp[s − v]</text>
+  </g>
+
+  <!-- 对比面板 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="216" width="220" height="128" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" fill-opacity="0.45"/>
+    <text x="146" y="242" text-anchor="middle" font-size="13" fill="#4a7a3a">倒序 ✓（0/1 背包）</text>
+    <text x="146" y="268" text-anchor="middle" font-size="12" fill="#555">dp[s−v] 还是“没算 v”的旧值</text>
+    <text x="146" y="290" text-anchor="middle" font-size="12" fill="#555">→ v 至多选一次</text>
+    <text x="146" y="324" text-anchor="middle" font-size="15" fill="#4a7a3a">✓ 符合“底数互不相同”</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="264" y="216" width="220" height="128" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" fill-opacity="0.4"/>
+    <text x="374" y="242" text-anchor="middle" font-size="13" fill="#b85450">正序 ✗（完全背包）</text>
+    <text x="374" y="268" text-anchor="middle" font-size="12" fill="#555">dp[s−v] 已混入“选过 v”的新值</text>
+    <text x="374" y="290" text-anchor="middle" font-size="12" fill="#555">→ v 可重复选</text>
+    <text x="374" y="324" text-anchor="middle" font-size="15" fill="#b85450">✗ 会把 1²+1²+… 也算进来</text>
+  </g>
+</svg>

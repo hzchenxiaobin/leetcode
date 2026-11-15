@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="211"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9" fill="none" stroke="#446688" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="360" fill="#fafafa"/>
+
+  <text x="260" y="28" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">按 nums2 升序排序：第 j 个清零的元素吃系数 j</text>
+
+  <!-- 排序条 -->
+  <g filter="url(#rough2)">
+    <text x="60" y="64" font-size="12.5" fill="#555">t 秒内清零 t 个下标，等价于在排序后的序列里选 t 个、依次安排在第 1..t 秒：</text>
+    <g>
+      <rect x="70" y="80" width="100" height="46" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+      <text x="120" y="100" text-anchor="middle" font-size="12.5" fill="#333">b = 1</text>
+      <text x="120" y="118" text-anchor="middle" font-size="10.5" fill="#888">安排在第 1 秒</text>
+      <rect x="190" y="80" width="100" height="46" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+      <text x="240" y="100" text-anchor="middle" font-size="12.5" fill="#333">b = 3</text>
+      <text x="240" y="118" text-anchor="middle" font-size="10.5" fill="#888">第 2 秒</text>
+      <rect x="310" y="80" width="100" height="46" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+      <text x="360" y="100" text-anchor="middle" font-size="12.5" fill="#333">b = 7</text>
+      <text x="360" y="118" text-anchor="middle" font-size="10.5" fill="#888">第 3 秒</text>
+    </g>
+    <text x="60" y="150" font-size="12" fill="#b85450">nums2 小的排前面先清零，nums2 大的后面清（重排不等式 / 交换论证）</text>
+  </g>
+
+  <!-- dp 定义 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="168" width="448" height="104" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" fill-opacity="0.5"/>
+    <text x="60" y="194" font-size="13" fill="#8a6d1f">dp[i][j]：前 i 个（升序）位置里恰选 j 个清零的最大折抵</text>
+    <text x="260" y="224" text-anchor="middle" font-size="13.5" fill="#333">dp[i][j] = max( dp[i−1][j] , dp[i−1][j−1] + nums1[i] + j·nums2[i] )</text>
+    <text x="260" y="252" text-anchor="middle" font-size="12" fill="#555">“位置 i 被选为第 j 个清零”：它恰在第 j 秒被清零，贡献 nums1[i] + j·nums2[i]</text>
+  </g>
+
+  <!-- 判定 -->
+  <g filter="url(#rough2)">
+    <rect x="36" y="286" width="448" height="58" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" fill-opacity="0.5"/>
+    <text x="260" y="310" text-anchor="middle" font-size="13.5" fill="#1d5c1a">答案 = 最小的 t 使 S₁ + t·S₂ − dp[n][t] ≤ x</text>
+    <text x="260" y="332" text-anchor="middle" font-size="12" fill="#555">t 从 0 到 n 枚举；都不满足则返回 −1</text>
+  </g>
+</svg>
