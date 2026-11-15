@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14" fill="#444" font-weight="bold">状态 = (箱子格, 玩家格)：走动权 0，推动权 1</text>
+
+  <!-- 4x3 网格，格 46，原点 (60,70) -->
+  <g filter="url(#rough2)" fill="#ffffff" stroke="#bbbbbb" stroke-width="1.3">
+    <rect x="60" y="70" width="46" height="46" rx="4"/>
+    <rect x="106" y="70" width="46" height="46" rx="4"/>
+    <rect x="152" y="70" width="46" height="46" rx="4"/>
+    <rect x="198" y="70" width="46" height="46" rx="4"/>
+    <rect x="106" y="116" width="46" height="46" rx="4"/>
+    <rect x="198" y="116" width="46" height="46" rx="4"/>
+    <rect x="60" y="162" width="46" height="46" rx="4"/>
+    <rect x="106" y="162" width="46" height="46" rx="4"/>
+    <rect x="152" y="162" width="46" height="46" rx="4"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="116" width="46" height="46" rx="4" fill="#ececec" stroke="#888888" stroke-width="1.6"/>
+    <text x="83" y="146" text-anchor="middle" font-size="14" fill="#666">#</text>
+
+    <rect x="152" y="116" width="46" height="46" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2"/>
+    <text x="175" y="146" text-anchor="middle" font-size="15" fill="#8a6a20" font-weight="bold">B</text>
+
+    <rect x="198" y="162" width="46" height="46" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="2.2"/>
+    <text x="221" y="192" text-anchor="middle" font-size="15" fill="#3a4a66" font-weight="bold">P</text>
+  </g>
+
+  <!-- 说明框：推箱子（上） -->
+  <g filter="url(#rough2)">
+    <rect x="300" y="60" width="236" height="74" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="314" y="80" font-size="10.5" fill="#8a6a20" font-weight="bold">② 推箱子：权 1</text>
+    <text x="314" y="99" font-size="9.5" fill="#555">玩家紧贴箱子，箱后一格在界内且可走</text>
+    <text x="314" y="117" font-size="9.5" fill="#555">dist + 1，push_back；玩家接管旧箱格</text>
+  </g>
+  <path d="M 298 100 H 272 V 139 H 206" stroke="#d6a040" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 说明框：玩家走动（下） -->
+  <g filter="url(#rough2)">
+    <rect x="300" y="150" width="236" height="82" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="314" y="170" font-size="10.5" fill="#3a4a66" font-weight="bold">① 玩家走动：权 0</text>
+    <text x="314" y="189" font-size="9.5" fill="#555">目标格在界内、非墙、且不是箱子</text>
+    <text x="314" y="207" font-size="9.5" fill="#555">dist 不变，push_front</text>
+    <text x="314" y="224" font-size="9.5" fill="#888">无论走多少步都不计入推动次数</text>
+  </g>
+  <path d="M 298 185 H 252" stroke="#446688" stroke-width="1.6" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 底部结论 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="252" width="480" height="124" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" rx="10"/>
+    <text x="56" y="274" font-size="10.5" fill="#3a5a30" font-weight="bold">dist[box · N + player] = 箱子在 box、玩家在 player 时的最少推动次数</text>
+    <text x="56" y="296" font-size="9.8" fill="#444">0 权边：固定箱子，玩家四向移动，一次一条边</text>
+    <text x="56" y="316" font-size="9.8" fill="#444">1 权边：玩家 → 箱子 → 箱后一格，两者同时换位</text>
+    <text x="56" y="336" font-size="9.8" fill="#444">起点：b = 箱子初始格，p = S 格；答案 = min over p of dist[T · N + p]</text>
+    <text x="56" y="360" font-size="9.8" fill="#7a7a7a">状态数 (mn)² ≤ 160000，边权仅 0 / 1 → 0-1 BFS 一步到位</text>
+  </g>
+</svg>

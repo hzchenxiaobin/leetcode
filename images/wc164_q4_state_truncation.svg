@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="400" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：位置只需保留 0 .. ⌊steps/2⌋</text>
+  <text x="290" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">下标 p＞⌊steps/2⌋ 的格子「去得回不来」，对答案毫无贡献</text>
+
+  <!-- 数轴格子 -->
+  <g filter="url(#rough2)" font-size="14" text-anchor="middle">
+    <rect x="58" y="80" width="64" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="90" y="108" fill="#3a5a30">0</text>
+    <rect x="138" y="80" width="64" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="170" y="108" fill="#3a5a30">1</text>
+    <rect x="218" y="80" width="64" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="250" y="108" fill="#3a5a30">2</text>
+    <rect x="298" y="80" width="64" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="330" y="108" fill="#3a5a30">3</text>
+    <rect x="378" y="80" width="64" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5 4" rx="6"/>
+    <text x="410" y="108" fill="#8a3a36">4</text>
+    <rect x="458" y="80" width="64" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5 4" rx="6"/>
+    <text x="490" y="108" fill="#8a3a36">5</text>
+  </g>
+
+  <g filter="url(#rough2)" stroke="#b85450" stroke-width="1.6">
+    <path d="M 384 86 L 436 118" fill="none"/>
+    <path d="M 436 86 L 384 118" fill="none"/>
+    <path d="M 464 86 L 516 118" fill="none"/>
+    <path d="M 516 86 L 464 118" fill="none"/>
+  </g>
+
+  <text x="210" y="144" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">保留：m = min(arrLen, ⌊steps/2⌋+1) = 4 列</text>
+  <text x="450" y="144" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">p ≥ 4 直接丢弃</text>
+
+  <!-- 三种操作 -->
+  <text x="58" y="172" font-size="10.5" fill="#777" filter="url(#rough2)">每步三选一（越界的那一项作废）：</text>
+  <g filter="url(#rough2)" font-size="11.5" text-anchor="middle">
+    <rect x="58" y="182" width="150" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="133" y="206" fill="#3a4a66">左移：p ← p − 1</text>
+    <rect x="224" y="182" width="150" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="299" y="206" fill="#8a6a20">不动：p ← p</text>
+    <rect x="390" y="182" width="150" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="465" y="206" fill="#3a4a66">右移：p ← p + 1</text>
+  </g>
+
+  <!-- 为什么 2p <= steps -->
+  <rect x="58" y="240" width="482" height="104" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <text x="72" y="262" font-size="11.5" fill="#3a5a30" font-weight="bold">为什么上界是 ⌊steps/2⌋？</text>
+    <text x="72" y="284" font-size="10.5" fill="#555">要去到 p，至少得右移 p 次；要从 p 回到 0，又至少得左移 p 次。</text>
+    <text x="72" y="304" font-size="10.5" fill="#555">两笔账相加：2p ≤ steps，所以 p ≤ ⌊steps/2⌋。</text>
+    <text x="72" y="326" font-size="10.5" fill="#8a3a36">steps = 500 时最多 251 列 —— arrLen 高达 10^6 也不影响复杂度。</text>
+  </g>
+  <text x="290" y="376" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">时间 O(steps · m)，空间 O(m)，m = min(arrLen, ⌊steps/2⌋+1) ≤ 251</text>
+</svg>

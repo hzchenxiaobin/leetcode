@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">两趟扫描的算法流程：O(mn) 时间，O(m+n) 空间</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888">第 1 趟只做累加，第 2 趟只做判定，互不干扰</text>
+
+  <g filter="url(#rough2)">
+    <rect x="130" y="64" width="300" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="280" y="87" text-anchor="middle" font-size="11.5" fill="#3a4a66">输入：m × n 的 0 / 1 矩阵 grid</text>
+  </g>
+
+  <path d="M 280 100 L 280 122" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="124" width="420" height="50" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <text x="86" y="144" font-size="11" fill="#8a6a20" font-weight="bold">第 1 趟：统计每行 / 每列的服务器台数</text>
+    <text x="86" y="163" font-size="10" fill="#444">遍历全部格子，遇到 grid[i][j] = 1 就执行 rowCnt[i] += 1、colCnt[j] += 1</text>
+  </g>
+
+  <path d="M 280 174 L 280 196" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="198" width="420" height="52" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="86" y="218" font-size="11" fill="#3a5a30" font-weight="bold">第 2 趟：判定每台服务器是否「参与通信」</text>
+    <text x="86" y="237" font-size="10" fill="#444">若 grid[i][j] = 1 且 (rowCnt[i] &gt; 1 或 colCnt[j] &gt; 1)，则 ans += 1</text>
+  </g>
+
+  <path d="M 280 250 L 280 272" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="274" width="260" height="36" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="280" y="297" text-anchor="middle" font-size="11.5" fill="#3a4a66">返回 ans（参与通信的服务器数量）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="328" width="420" height="54" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.5"/>
+    <text x="86" y="348" font-size="10" fill="#8a3a36" font-weight="bold">复杂度</text>
+    <text x="86" y="364" font-size="10" fill="#444">时间 O(mn)：两趟都是逐格扫描；空间 O(m+n)：只有两个一维计数数组</text>
+    <text x="86" y="377" font-size="10" fill="#444">不需要建图、不需要 visited、不需要两两比较</text>
+  </g>
+</svg>

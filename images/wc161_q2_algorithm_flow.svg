@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 410" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="410" fill="#fafafa"/>
+
+  <text x="34" y="26" font-size="14.5" font-weight="bold" fill="#444" filter="url(#rough2)">一次扫描：先查前驱、再把自己登记进表</text>
+  <text x="34" y="44" font-size="10" fill="#888" filter="url(#rough2)">pref 只需维护一个整数；cnt 可以用长度 n+2 的数组代替哈希表</text>
+
+  <!-- 主流程 -->
+  <rect x="110" y="58" width="252" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="236" y="82" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">pref = 0，ans = 0，cnt 全 0</text>
+
+  <rect x="110" y="116" width="252" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="236" y="140" text-anchor="middle" font-size="11" fill="#2f4a26" filter="url(#rough2)">cnt[0] = 1（空前缀先记一次）</text>
+
+  <rect x="110" y="174" width="252" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="236" y="198" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">对每个 x：pref += x &amp; 1</text>
+
+  <rect x="110" y="232" width="252" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="236" y="256" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">若 pref ≥ k：ans += cnt[pref − k]</text>
+
+  <rect x="110" y="290" width="252" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="236" y="314" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">cnt[pref] += 1（登记当前前缀）</text>
+
+  <rect x="110" y="352" width="252" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="236" y="374" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">遍历结束，返回 ans</text>
+
+  <!-- 竖直箭头 -->
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.6" fill="none">
+    <path d="M 236 96 L 236 114" marker-end="url(#arr)"/>
+    <path d="M 236 154 L 236 172" marker-end="url(#arr)"/>
+    <path d="M 236 212 L 236 230" marker-end="url(#arr)"/>
+    <path d="M 236 270 L 236 288" marker-end="url(#arr)"/>
+    <path d="M 236 328 L 236 350" marker-end="url(#arr)"/>
+  </g>
+  <text x="246" y="344" font-size="9" fill="#888" filter="url(#rough2)">i = n 时跳出</text>
+
+  <!-- 循环回边 -->
+  <g filter="url(#rough2)" stroke="#4a7a3a" stroke-width="1.6" fill="none">
+    <path d="M 110 309 L 62 309 L 62 193 L 108 193" marker-end="url(#arr)"/>
+  </g>
+  <text x="52" y="252" text-anchor="middle" font-size="9" fill="#2f4a26" filter="url(#rough2)" transform="rotate(-90 52 252)">还有元素则继续</text>
+
+  <!-- 右侧说明卡 -->
+  <rect x="386" y="58" width="212" height="128" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="492" y="78" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2f4a26" filter="url(#rough2)">cnt[0] = 1 不能省</text>
+  <text x="400" y="100" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">下标 0 就是「什么都不选」</text>
+  <text x="400" y="118" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">的空前缀，P[0] = 0 本身</text>
+  <text x="400" y="136" font-size="9.5" fill="#3a5a30" filter="url(#rough2)">也要算作一次出现。</text>
+  <text x="400" y="160" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">漏掉它 → 所有从下标 0</text>
+  <text x="400" y="176" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">开始的解都会丢失。</text>
+
+  <rect x="386" y="200" width="212" height="128" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="492" y="220" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#3a4a66" filter="url(#rough2)">pref ≥ k 才查表</text>
+  <text x="400" y="242" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">pref − k &lt; 0 时没有</text>
+  <text x="400" y="260" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">任何前缀能和它相减得 k，</text>
+  <text x="400" y="278" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">直接跳过既省一次判断</text>
+  <text x="400" y="296" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">又天然避开负下标。</text>
+  <text x="400" y="318" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">C++ 里就是加个 if。</text>
+</svg>

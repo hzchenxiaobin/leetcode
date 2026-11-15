@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="440" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">回溯流程：选 / 不选 + 剩余价值上界剪枝</text>
+  <text x="280" y="45" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">dfs(i, cur)：rem[j] 表示字母 j 还能用几次，进入分支前减、返回后加</text>
+
+  <!-- 入口 -->
+  <rect x="180" y="58" width="200" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="82" text-anchor="middle" font-size="12" fill="#2f4a6b" filter="url(#rough2)">dfs(i, cur)，初始 dfs(0, 0)</text>
+
+  <path d="M 280 96 L 280 116" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 剪枝判定 -->
+  <polygon points="280,118 420,158 280,198 140,158" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="154" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">cur + suffix[i]</text>
+  <text x="280" y="170" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">≤ best ?</text>
+
+  <path d="M 140 158 L 104 158" stroke="#b85450" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="118" y="150" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">是</text>
+  <rect x="18" y="132" width="86" height="52" fill="#ffffff" stroke="#b85450" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="61" y="152" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">剪掉整棵</text>
+  <text x="61" y="167" text-anchor="middle" font-size="10" fill="#8a3a36" filter="url(#rough2)">子树返回</text>
+
+  <path d="M 280 198 L 280 218" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 终止判定 -->
+  <polygon points="280,220 400,254 280,288 160,254" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="280" y="258" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">i == n ?</text>
+
+  <path d="M 400 254 L 432 254" stroke="#4a7a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="414" y="246" text-anchor="middle" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="436" y="228" width="104" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="488" y="248" text-anchor="middle" font-size="10" fill="#33562a" filter="url(#rough2)">best = cur</text>
+  <text x="488" y="264" text-anchor="middle" font-size="10" fill="#33562a" filter="url(#rough2)">记录可行解</text>
+
+  <path d="M 280 288 L 280 308" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="294" y="302" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">否</text>
+
+  <!-- 选分支 -->
+  <rect x="132" y="310" width="296" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="330" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">分支一：若 c_i ≤ rem 则选第 i 个单词</text>
+
+  <path d="M 280 340 L 280 356" stroke="#446688" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="52" y="358" width="456" height="30" fill="#ffffff" stroke="#446688" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="378" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">rem -= c_i → dfs(i+1, cur+v_i) → rem += c_i（原位回溯）</text>
+
+  <path d="M 280 388 L 280 398" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="132" y="400" width="296" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="6" filter="url(#rough2)"/>
+  <text x="280" y="420" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">分支二：不选，直接 dfs(i+1, cur)</text>
+</svg>

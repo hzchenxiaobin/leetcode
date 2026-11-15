@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14.5" fill="#444" font-weight="bold">一次遍历统计 → 两条判据 → 贪心填写：O(n)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="96" y="46" width="368" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="280" y="62" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold">① 一次遍历统计 cnt2 与 cnt1（列和为 2 / 1 的列数）</text>
+    <text x="280" y="78" text-anchor="middle" font-size="9.5" fill="#555">O(n) 时间、O(1) 额外空间；colsum = 0 的列不必计数</text>
+  </g>
+
+  <path d="M 280 86 L 280 106" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="130" y="108" width="300" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="280" y="124" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold">② 判据一：upper ≥ cnt2 且 lower ≥ cnt2 ？</text>
+    <text x="280" y="139" text-anchor="middle" font-size="9.5" fill="#555">colsum=2 的列两行都必须填 1，额度不够直接无解</text>
+  </g>
+
+  <path d="M 424 127 L 470 127" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="446" y="120" text-anchor="middle" font-size="9.5" fill="#b85450">否</text>
+  <g filter="url(#rough2)">
+    <rect x="472" y="108" width="70" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+    <text x="507" y="132" text-anchor="middle" font-size="10" fill="#8a3a36">返回 []</text>
+  </g>
+
+  <path d="M 280 146 L 280 166" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="160" font-size="9.5" fill="#4a7a3a">是</text>
+
+  <g filter="url(#rough2)">
+    <rect x="86" y="168" width="376" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="280" y="184" text-anchor="middle" font-size="10.5" fill="#8a6a20" font-weight="bold">③ 判据二：令 u = upper − cnt2，l = lower − cnt2，检查 u + l == cnt1</text>
+    <text x="280" y="200" text-anchor="middle" font-size="9.5" fill="#555">剩余额度之和必须刚好等于可自由分配的 1 的个数（守恒）</text>
+  </g>
+
+  <path d="M 462 189 L 486 189" stroke="#b85450" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="474" y="182" text-anchor="middle" font-size="9.5" fill="#b85450">否</text>
+  <g filter="url(#rough2)">
+    <rect x="488" y="170" width="54" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+    <text x="515" y="194" text-anchor="middle" font-size="10" fill="#8a3a36">返回 []</text>
+  </g>
+
+  <path d="M 280 210 L 280 230" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="224" font-size="9.5" fill="#4a7a3a">是</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="232" width="480" height="118" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="10"/>
+    <text x="56" y="250" font-size="10.5" fill="#3a5a30" font-weight="bold">④ 从左到右逐列填写（顺序无关，但必须把上行灌满再动下行）</text>
+    <text x="56" y="270" font-size="10" fill="#444">colsum[i] = 0 → 上行 0、下行 0</text>
+    <text x="56" y="288" font-size="10" fill="#444">colsum[i] = 2 → 上行 1、下行 1</text>
+    <text x="56" y="306" font-size="10" fill="#444">colsum[i] = 1 → 若 u &gt; 0，写进上行并 u−−；否则写进下行并 l−−</text>
+    <text x="56" y="326" font-size="10" fill="#8a6a20">u 单调减到 0 后不再回升，因此「先灌满上行」不需要回退，天然贪心</text>
+    <text x="56" y="342" font-size="10" fill="#555">全部列填完后 u = l = 0（由判据二保证），直接返回 res</text>
+  </g>
+
+  <path d="M 280 350 L 280 368" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="180" y="370" width="200" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="280" y="395" text-anchor="middle" font-size="11" fill="#3a4a66">返回 2 × n 的答案矩阵</text>
+  </g>
+</svg>

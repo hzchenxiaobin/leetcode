@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="620" height="100%" fill="#fafafa"/>
+  <text x="310" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">算法流程：只维护「可达的并集掩码」集合 S</text>
+  <text x="310" y="49" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">每读入一个串，就把 S 中与它不冲突的掩码或上新掩码，全部并入 S</text>
+  <rect x="44" y="70" width="330" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="209" y="90" text-anchor="middle" font-size="12" fill="#2f4a26" font-weight="bold" filter="url(#rough2)">S ← {0}</text>
+  <text x="209" y="105" text-anchor="middle" font-size="9" fill="#8a8a8a" filter="url(#rough2)">空集一定能达到（一个串都不选）</text>
+  <rect x="44" y="140" width="330" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="209" y="160" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">取下一个串，得到掩码 m</text>
+  <text x="209" y="181" text-anchor="middle" font-size="9" fill="#8a8a8a" filter="url(#rough2)">自冲突的串在预处理时已丢弃</text>
+  <rect x="44" y="216" width="330" height="50" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="209" y="236" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">add ← { x | m ｜ x ∈ S, x &amp; m = 0 }</text>
+  <text x="209" y="257" text-anchor="middle" font-size="9" fill="#8a8a8a" filter="url(#rough2)">只拿与 m 不冲突的旧掩码去合并</text>
+  <rect x="44" y="292" width="330" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="209" y="312" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">S ← S ∪ add（add 基于旧 S 快照）</text>
+  <text x="209" y="327" text-anchor="middle" font-size="9" fill="#8a8a8a" filter="url(#rough2)">边遍历边更新，避免本轮新增的掩码参与本轮合并</text>
+  <path d="M 209 115 L 209 138" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 209 191 L 209 214" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 209 267 L 209 290" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 209 337 L 209 362" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="44" y="364" width="330" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <text x="209" y="384" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">答案 = max popcount(x)，x ∈ S</text>
+  <text x="209" y="401" text-anchor="middle" font-size="9" fill="#8a8a8a" filter="url(#rough2)">掩码的位数就是拼接串的长度</text>
+  <text x="310" y="426" text-anchor="middle" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">② ③ ④ 对 arr 里每个串各执行一次：S 只增不减，遍历一遍即得全部可达掩码</text>
+  <rect x="392" y="140" width="200" height="196" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="492" y="162" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">为什么集合不会爆</text>
+  <text x="408" y="186" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">26 位掩码理论上有 2^26 种，</text>
+  <text x="408" y="202" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">但 S 只可能由 arr 的某个子集</text>
+  <text x="408" y="218" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">并出来，所以 |S| ≤ 2^16。</text>
+  <text x="408" y="234" font-size="9.5" fill="#3a4a66" filter="url(#rough2)"></text>
+  <text x="408" y="250" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">每个串只扫一遍 S，</text>
+  <text x="408" y="266" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">单步代价 O(|S|)；</text>
+  <text x="408" y="282" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">总时间 O(n·|S|) ≤ O(n·2^n)。</text>
+  <text x="408" y="298" font-size="9.5" fill="#3a4a66" filter="url(#rough2)"></text>
+  <text x="408" y="314" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">用哈希集合存 S，</text>
+  <text x="408" y="330" font-size="9.5" fill="#3a4a66" filter="url(#rough2)">同一个并集不会重复入队。</text>
+</svg>

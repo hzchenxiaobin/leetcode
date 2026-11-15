@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 500" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="500" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="14" fill="#444" font-weight="bold">0-1 BFS 主循环：0 权入队首、1 权入队尾</text>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="40" width="420" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="280" y="65" text-anchor="middle" font-size="9.8" fill="#3a4a66">① 定位 S / B / T，起点 id = b · N + p，dist = 0，push_front</text>
+  </g>
+  <path d="M 280 80 V 104" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="106" width="440" height="56" fill="#ffffff" stroke="#446688" stroke-width="1.7" rx="8"/>
+    <text x="76" y="127" font-size="9.8" fill="#333">② 队首出队 cur，d0 = dist[cur]，b = cur / N，p = cur % N</text>
+    <text x="76" y="148" font-size="9.8" fill="#666">把这两个下标反解成 (bx, by) 与 (px, py)，再展开两类边</text>
+  </g>
+
+  <path d="M 190 162 L 150 202" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 370 162 L 412 202" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="20" y="206" width="256" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" rx="9"/>
+    <text x="36" y="226" font-size="10.3" fill="#3a5a30" font-weight="bold">③ 玩家走动（0 权）</text>
+    <text x="36" y="246" font-size="9.5" fill="#444">四个方向：在界内、非墙、非箱子格</text>
+    <text x="36" y="265" font-size="9.5" fill="#444">dist 更小 → 更新并 push_front</text>
+    <text x="36" y="284" font-size="9.5" fill="#888">箱子不动，推动次数不增加</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="288" y="206" width="252" height="96" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" rx="9"/>
+    <text x="304" y="226" font-size="10.3" fill="#8a6a20" font-weight="bold">④ 推箱子（1 权）</text>
+    <text x="304" y="246" font-size="9.5" fill="#444">相邻格正是箱子，且箱后一格可走</text>
+    <text x="304" y="265" font-size="9.5" fill="#444">dist + 1 更小 → 更新并 push_back</text>
+    <text x="304" y="284" font-size="9.5" fill="#888">玩家站到箱子原来的格子</text>
+  </g>
+
+  <path d="M 148 302 V 330" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 412 302 V 330" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="140" y="332" width="280" height="44" fill="#ffffff" stroke="#b85450" stroke-width="1.8" rx="10"/>
+    <text x="280" y="360" text-anchor="middle" font-size="10.6" fill="#8a3a36" font-weight="bold">⑤ 队列为空？</text>
+  </g>
+
+  <path d="M 140 354 H 50 V 134 H 56" stroke="#4a7a3a" stroke-width="1.5" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="70" y="346" font-size="9.5" fill="#4a7a3a">否：继续循环</text>
+
+  <path d="M 280 376 V 404" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="396" font-size="9.5" fill="#b85450">是</text>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="406" width="260" height="50" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" rx="9"/>
+    <text x="280" y="427" text-anchor="middle" font-size="9.8" fill="#3a5a30">答案 = min over p of dist[T · N + p]</text>
+    <text x="280" y="446" text-anchor="middle" font-size="9.5" fill="#7a7a7a">全为 INF → 返回 -1</text>
+  </g>
+
+  <text x="40" y="484" font-size="9.5" fill="#888">☞ 只在 dist 严格变小时入队，出队时按当前 dist 扩展，无需 in_queue 标记</text>
+</svg>

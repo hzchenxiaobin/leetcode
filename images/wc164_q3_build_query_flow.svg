@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="430" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：排序 → 建树（每节点截断到 3）→ 逐字符查询</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888">建树一次 O(Σ|w|)，之后每个前缀的答案都是一次指针下移 + 一次拷贝</text>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="68" width="420" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10"/>
+    <rect x="70" y="130" width="420" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <rect x="70" y="192" width="420" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <rect x="70" y="254" width="420" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <rect x="70" y="316" width="420" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+    <path d="M 280 114 L 280 126" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 280 176 L 280 188" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 280 238 L 280 250" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+    <path d="M 280 300 L 280 312" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12" fill="#333">
+    <text x="86" y="97">① 把 products 按字典序升序排序（保证插入顺序 = 字典序）</text>
+    <text x="86" y="154">② 逐个词插入 Trie：沿每个字符往下走，每到一个节点，</text>
+    <text x="86" y="170" fill="#8a6a20">　　若该节点已缓存 &lt; 3 个词，就把当前词追加进去</text>
+    <text x="86" y="216">③ 从根节点出发，沿 searchWord 的字符逐个向下走</text>
+    <text x="86" y="232" fill="#8a6a20">　　c = searchWord[i]，先看当前节点有没有孩子 c</text>
+    <text x="86" y="278">④ 每成功下移一步，把当前节点的缓存整份拷贝作为本前缀答案</text>
+    <text x="86" y="294" fill="#3a5a30">　　缓存天然有序、天然 ≤ 3 个，无需再排序或取前 K</text>
+    <text x="86" y="340">⑤ 某个字符没有对应孩子 ⇒ 该前缀起全部无解，后面一律填空列表</text>
+    <text x="86" y="356" fill="#8b3a36">　　（不必继续走，直接置标记 broken 并后移）</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="10.5" text-anchor="middle" fill="#666">
+    <text x="280" y="392">时间：排序 O(L·n log n) + 建树 O(Σ|w|) + 查询 O(|searchWord|)，L 为词长上限</text>
+    <text x="280" y="412">空间：O(Σ|w|) 个节点，每节点只额外持有至多 3 个词的引用，与 n 无关</text>
+  </g>
+</svg>

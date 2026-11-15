@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="400" fill="#fafafa"/>
+
+  <text x="32" y="26" font-size="14.5" font-weight="bold" fill="#444" filter="url(#rough2)">演算：nums = [1,1,2,1,1]，k = 3，答案 = 2</text>
+  <text x="32" y="45" font-size="10" fill="#888" filter="url(#rough2)">每一行 = 处理完 nums[i] 之后的状态；「查表」列问的是 cnt[pref − 3] 当时的值</text>
+
+  <!-- 表头 -->
+  <g filter="url(#rough2)">
+    <rect x="30" y="60" width="600" height="28" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="5"/>
+    <text x="56" y="79" text-anchor="middle" font-size="10" fill="#3a4a66">i</text>
+    <text x="118" y="79" text-anchor="middle" font-size="10" fill="#3a4a66">nums[i]</text>
+    <text x="186" y="79" text-anchor="middle" font-size="10" fill="#3a4a66">pref</text>
+    <text x="272" y="79" text-anchor="middle" font-size="10" fill="#3a4a66">查 cnt[pref − 3]</text>
+    <text x="378" y="79" text-anchor="middle" font-size="10" fill="#3a4a66">命中</text>
+    <text x="440" y="79" text-anchor="middle" font-size="10" fill="#3a4a66">ans</text>
+    <text x="540" y="79" text-anchor="middle" font-size="10" fill="#3a4a66">插入后 cnt 表</text>
+  </g>
+
+  <!-- 数据行 -->
+  <g filter="url(#rough2)" font-size="10">
+    <rect x="30" y="92" width="600" height="32" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1" rx="4"/>
+    <text x="56" y="113" text-anchor="middle" fill="#555">0</text>
+    <text x="118" y="113" text-anchor="middle" fill="#8a3a36">1 奇→1</text>
+    <text x="186" y="113" text-anchor="middle" fill="#2f4a26">1</text>
+    <text x="272" y="113" text-anchor="middle" fill="#999">−2，越界跳过</text>
+    <text x="378" y="113" text-anchor="middle" fill="#555">0</text>
+    <text x="440" y="113" text-anchor="middle" fill="#555">0</text>
+    <text x="540" y="113" text-anchor="middle" fill="#555">{0:1, 1:1}</text>
+
+    <rect x="30" y="128" width="600" height="32" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1" rx="4"/>
+    <text x="56" y="149" text-anchor="middle" fill="#555">1</text>
+    <text x="118" y="149" text-anchor="middle" fill="#8a3a36">1 奇→1</text>
+    <text x="186" y="149" text-anchor="middle" fill="#2f4a26">2</text>
+    <text x="272" y="149" text-anchor="middle" fill="#999">−1，越界跳过</text>
+    <text x="378" y="149" text-anchor="middle" fill="#555">0</text>
+    <text x="440" y="149" text-anchor="middle" fill="#555">0</text>
+    <text x="540" y="149" text-anchor="middle" fill="#555">{0:1, 1:1, 2:1}</text>
+
+    <rect x="30" y="164" width="600" height="32" fill="#ffffff" stroke="#cfcfcf" stroke-width="1.1" rx="4"/>
+    <text x="56" y="185" text-anchor="middle" fill="#555">2</text>
+    <text x="118" y="185" text-anchor="middle" fill="#3a4a66">2 偶→0</text>
+    <text x="186" y="185" text-anchor="middle" fill="#2f4a26">2</text>
+    <text x="272" y="185" text-anchor="middle" fill="#999">−1，越界跳过</text>
+    <text x="378" y="185" text-anchor="middle" fill="#555">0</text>
+    <text x="440" y="185" text-anchor="middle" fill="#555">0</text>
+    <text x="540" y="185" text-anchor="middle" fill="#555">{0:1, 1:1, 2:2}</text>
+
+    <rect x="30" y="200" width="600" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="4"/>
+    <text x="56" y="221" text-anchor="middle" fill="#555">3</text>
+    <text x="118" y="221" text-anchor="middle" fill="#8a3a36">1 奇→1</text>
+    <text x="186" y="221" text-anchor="middle" fill="#2f4a26">3</text>
+    <text x="272" y="221" text-anchor="middle" fill="#8a3a36">cnt[0] = 1</text>
+    <text x="378" y="221" text-anchor="middle" fill="#8a3a36">1</text>
+    <text x="440" y="221" text-anchor="middle" fill="#8a3a36">1</text>
+    <text x="540" y="221" text-anchor="middle" fill="#555">{0:1, 1:1, 2:2, 3:1}</text>
+
+    <rect x="30" y="236" width="600" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="4"/>
+    <text x="56" y="257" text-anchor="middle" fill="#555">4</text>
+    <text x="118" y="257" text-anchor="middle" fill="#8a3a36">1 奇→1</text>
+    <text x="186" y="257" text-anchor="middle" fill="#2f4a26">4</text>
+    <text x="272" y="257" text-anchor="middle" fill="#8a3a36">cnt[1] = 1</text>
+    <text x="378" y="257" text-anchor="middle" fill="#8a3a36">1</text>
+    <text x="440" y="257" text-anchor="middle" fill="#8a3a36">2</text>
+    <text x="540" y="257" text-anchor="middle" fill="#555">{0:1, 1:1, 2:2, 3:1, 4:1}</text>
+  </g>
+
+  <!-- 底部结论 -->
+  <rect x="30" y="284" width="600" height="96" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="46" y="306" font-size="10.5" fill="#2f4a26" filter="url(#rough2)">前 3 步 pref &lt; 3，pref − k 为负数，说明还没有任何前缀能配成 k 个奇数，命中恒为 0。</text>
+  <text x="46" y="328" font-size="10.5" fill="#2f4a26" filter="url(#rough2)">i = 3：pref = 3，查 cnt[0] = 1 → 得到子数组 [1,1,2,1]（下标 0..3）。</text>
+  <text x="46" y="350" font-size="10.5" fill="#2f4a26" filter="url(#rough2)">i = 4：pref = 4，查 cnt[1] = 1 → 得到子数组 [1,2,1,1]（下标 1..4）。</text>
+  <text x="46" y="372" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">两次命中各记 1，ans 累加到 2，与官方输出一致；cnt[2] 计数为 2 却没有贡献，因为差 3 用不到它。</text>
+</svg>

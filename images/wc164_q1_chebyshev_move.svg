@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">两点之间：先走对角线，再走直线</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888">每秒只能让 x 或 y 变化 1，故耗时下界是 max(|dx|, |dy|)</text>
+
+  <!-- 网格 -->
+  <g filter="url(#rough2)" stroke="#e2e2e2" stroke-width="1" fill="none">
+    <path d="M 70 300 L 270 300 M 70 260 L 270 260 M 70 220 L 270 220 M 70 180 L 270 180 M 70 140 L 270 140 M 70 100 L 270 100"/>
+    <path d="M 70 100 L 70 300 M 110 100 L 110 300 M 150 100 L 150 300 M 190 100 L 190 300 M 230 100 L 230 300 M 270 100 L 270 300"/>
+  </g>
+  <path d="M 60 300 L 280 300" stroke="#bbb" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 70 310 L 70 90" stroke="#bbb" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <text x="286" y="304" font-size="10" fill="#999">x</text>
+  <text x="62" y="84" font-size="10" fill="#999">y</text>
+
+  <!-- 对角线段 -->
+  <path d="M 110 260 L 190 180" stroke="#446688" stroke-width="2.2" stroke-dasharray="6 4" fill="none" filter="url(#rough2)"/>
+  <path d="M 110 260 L 150 220 L 190 180" stroke="#446688" stroke-width="2.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <!-- 竖直段 -->
+  <path d="M 190 180 L 190 144" stroke="#b85450" stroke-width="2.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+
+  <circle cx="110" cy="260" r="4.5" fill="#4a7a3a" filter="url(#rough2)"/>
+  <circle cx="190" cy="140" r="4.5" fill="#b85450" filter="url(#rough2)"/>
+  <text x="96" y="282" font-size="11" fill="#3a5a30" font-weight="bold">A = (1, 1)</text>
+  <text x="200" y="134" font-size="11" fill="#8a3a36" font-weight="bold">B = (3, 4)</text>
+
+  <!-- 尺寸标注 -->
+  <path d="M 190 140 L 190 132 M 110 132 L 190 132" stroke="#4a7a3a" stroke-width="1" stroke-dasharray="3 3" fill="none" filter="url(#rough2)"/>
+  <text x="150" y="124" text-anchor="middle" font-size="10" fill="#4a7a3a">|dx| = 2</text>
+  <path d="M 200 260 L 200 140" stroke="#b85450" stroke-width="1" stroke-dasharray="3 3" fill="none" filter="url(#rough2)"/>
+  <text x="206" y="204" font-size="10" fill="#b85450">|dy| = 3</text>
+
+  <text x="86" y="200" font-size="11" fill="#446688">2 步对角</text>
+  <text x="198" y="168" font-size="10.5" fill="#8a3a36">1 步竖直</text>
+
+  <!-- 右侧结论框 -->
+  <rect x="322" y="76" width="212" height="104" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="336" y="98" font-size="11.5" fill="#2f4f6f" font-weight="bold">时间 = max(|dx|, |dy|)</text>
+  <text x="336" y="120" font-size="10" fill="#555">A → B：max(2, 3) = 3 秒</text>
+  <text x="336" y="140" font-size="10" fill="#555">试探路径：对角 2 步 + 竖直 1 步</text>
+  <text x="336" y="162" font-size="10" fill="#2f4f6f">= 对角 min(|dx|,|dy|) 步 + 补齐直线</text>
+
+  <rect x="322" y="196" width="212" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="336" y="218" font-size="11" fill="#3a5a30" font-weight="bold">下界为何不可再小</text>
+  <text x="336" y="240" font-size="10" fill="#555">1 秒内 x、y 各最多变 1，</text>
+  <text x="336" y="258" font-size="10" fill="#555">所以 max(|dx|,|dy|) 秒是必需的。</text>
+
+  <rect x="322" y="298" width="212" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="336" y="320" font-size="11" fill="#8a6a20" font-weight="bold">多段路程可加</text>
+  <text x="336" y="340" font-size="10" fill="#555">按顺序逐段走，总时间 = 各段之和</text>
+
+  <text x="280" y="382" text-anchor="middle" font-size="10" fill="#999">注意：每段耗时只与这对相邻点有关，与中间经过的点无关</text>
+</svg>

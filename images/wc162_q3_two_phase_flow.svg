@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#666"/>
+    </marker>
+    <marker id="arrRed" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="600" height="470" fill="#fafafa"/>
+  <text x="28" y="30" font-size="15" fill="#444" text-anchor="start" font-weight="bold" filter="url(#rough2)">两阶段扫描：先把边界连通的 0 淹成 1，再数剩余连通块</text>
+  <rect x="100" y="52" width="300" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="114" y="73" font-size="10.8" fill="#3a4a66" text-anchor="start" font-weight="bold" filter="url(#rough2)">输入：m×n 网格，0 = 陆地，1 = 水域</text>
+  <path d="M 250 94 L 250 116" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="60" y="118" width="380" height="70" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="74" y="139" font-size="10.8" fill="#8a3a36" text-anchor="start" font-weight="bold" filter="url(#rough2)">阶段一：对四条边上的每个 0 发起 DFS / BFS</text>
+  <text x="74" y="158" font-size="10.8" fill="#8a3a36" text-anchor="start" filter="url(#rough2)">把与它连通的 0 全部改成 1（原地当 visited）</text>
+  <text x="74" y="177" font-size="10.8" fill="#b85450" text-anchor="start" filter="url(#rough2)">四条边：第 0 行、第 m−1 行、第 0 列、第 n−1 列</text>
+  <text x="456" y="140" font-size="10.5" fill="#888" text-anchor="start" filter="url(#rough2)">边界外没有 1，</text>
+  <text x="456" y="158" font-size="10.5" fill="#888" text-anchor="start" filter="url(#rough2)">所以只要贴上边界</text>
+  <text x="456" y="176" font-size="10.5" fill="#888" text-anchor="start" filter="url(#rough2)">就一定不是封闭岛</text>
+  <path d="M 250 190 L 250 214" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="100" y="216" width="300" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="114" y="237" font-size="10.8" fill="#8a6a20" text-anchor="start" font-weight="bold" filter="url(#rough2)">此刻剩下的每个 0 连通块 ⇔ 一个封闭岛</text>
+  <text x="114" y="256" font-size="10.8" fill="#d6a040" text-anchor="start" filter="url(#rough2)">（不与边界连通，四周只能是 1）</text>
+  <path d="M 250 262 L 250 286" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="50" y="288" width="400" height="70" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="64" y="309" font-size="10.8" fill="#3a5a30" text-anchor="start" font-weight="bold" filter="url(#rough2)">阶段二：从左到右、从上到下扫描全图</text>
+  <text x="64" y="328" font-size="10.8" fill="#3a5a30" text-anchor="start" filter="url(#rough2)">遇到 0 就 ans += 1，并立刻淹掉它所在的整个连通块</text>
+  <text x="64" y="347" font-size="10.8" fill="#4a7a3a" text-anchor="start" filter="url(#rough2)">保证同一块只被数一次（淹掉后不会再遇到它的 0）</text>
+  <path d="M 460 322 C 506 322 506 322 506 322" stroke="#4a7a3a" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="470" y="314" font-size="9.8" fill="#4a7a3a" text-anchor="start" filter="url(#rough2)">继续扫描</text>
+  <path d="M 250 360 L 250 384" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="140" y="386" width="220" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="154" y="407" font-size="10.8" fill="#3a4a66" text-anchor="start" font-weight="bold" filter="url(#rough2)">输出 ans：封闭岛屿的数目</text>
+  <text x="40" y="444" font-size="10.5" fill="#777" text-anchor="start" font-weight="bold" filter="url(#rough2)">每个格子最多被压栈 / 入队一次 ⇒ 总时间 O(mn)</text>
+</svg>
