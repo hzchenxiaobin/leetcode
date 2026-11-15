@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">合法路线 = 正数格子上的简单路径</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">回溯时把进入过的格子临时置 0，返回时恢复现场</text>
+
+  <!-- 左：示例 1 网格 -->
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle">
+    <rect x="50" y="100" width="44" height="34" fill="#ececec" stroke="#b0b0b0" stroke-width="1.2" rx="4"/>
+    <text x="72" y="123" fill="#aaa">0</text>
+    <rect x="110" y="100" width="44" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="132" y="123" fill="#8a6a20">6</text>
+    <rect x="170" y="100" width="44" height="34" fill="#ececec" stroke="#b0b0b0" stroke-width="1.2" rx="4"/>
+    <text x="192" y="123" fill="#aaa">0</text>
+
+    <rect x="50" y="150" width="44" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="4"/>
+    <text x="72" y="173" fill="#8a6a20">5</text>
+    <rect x="110" y="150" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="4"/>
+    <text x="132" y="173" fill="#3a5a30" font-weight="bold">8</text>
+    <rect x="170" y="150" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="4"/>
+    <text x="192" y="173" fill="#3a5a30" font-weight="bold">7</text>
+
+    <rect x="50" y="200" width="44" height="34" fill="#ececec" stroke="#b0b0b0" stroke-width="1.2" rx="4"/>
+    <text x="72" y="223" fill="#aaa">0</text>
+    <rect x="110" y="200" width="44" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" rx="4"/>
+    <text x="132" y="223" fill="#3a5a30" font-weight="bold">9</text>
+    <rect x="170" y="200" width="44" height="34" fill="#ececec" stroke="#b0b0b0" stroke-width="1.2" rx="4"/>
+    <text x="192" y="223" fill="#aaa">0</text>
+  </g>
+
+  <path d="M 132 200 L 132 186" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 156 167 L 168 167" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="122" y="256" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">路线 9 → 8 → 7，收益 24</text>
+  <text x="122" y="274" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">灰色 0 格：永远不能进入</text>
+
+  <!-- 右：三条建模要点 -->
+  <rect x="250" y="86" width="370" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="264" y="108" font-size="11" fill="#3a4a66" filter="url(#rough2)">① 顶点：每个 grid[i][j] &gt; 0 的格子</text>
+  <text x="264" y="127" font-size="11" fill="#3a4a66" filter="url(#rough2)">   边：上下左右相邻，共 4 个方向</text>
+
+  <rect x="250" y="152" width="370" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="264" y="174" font-size="11" fill="#3a5a30" filter="url(#rough2)">② 同一个格子只能进一次</text>
+  <text x="264" y="193" font-size="11" fill="#3a5a30" filter="url(#rough2)">   ⇒ 路线就是这条无向图上的一条简单路径</text>
+
+  <rect x="250" y="218" width="370" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="264" y="240" font-size="11" fill="#8a6a20" filter="url(#rough2)">③ 置 0 兼作「已访问」标记</text>
+  <text x="264" y="259" font-size="10.5" fill="#555" filter="url(#rough2)">g[x][y] = 0  →  dfs(...)  →  g[x][y] = saved</text>
+  <text x="264" y="278" font-size="10.5" fill="#555" filter="url(#rough2)">空格本来就是 0，两种「0」的语义天然统一</text>
+
+  <rect x="50" y="300" width="570" height="66" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="66" y="322" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">关键：起点也要枚举 —— 各起点的最优收益并不单调</text>
+  <text x="66" y="342" font-size="10.5" fill="#555" filter="url(#rough2)">以示例 1 为例：起点 9 → 24，起点 7 → 24，起点 6 → 23，起点 5 → 22，起点 8 → 仅 17</text>
+  <text x="66" y="360" font-size="10.5" fill="#555" filter="url(#rough2)">所以对每个正数格子都要跑一次 DFS，最后取全局最大值</text>
+</svg>

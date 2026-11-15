@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="400" fill="#fafafa"/>
+
+  <text x="300" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">两遍扫描：先定 best，再收集等于 best 的相邻对</text>
+  <text x="300" y="52" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">时间 O(n log n) 全部来自排序，两遍扫描各 O(n)</text>
+
+  <!-- 步骤 1 -->
+  <rect x="40" y="74" width="265" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="54" y="96" font-size="12.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 升序排序 sort(arr)</text>
+  <text x="54" y="116" font-size="10" fill="#556" filter="url(#rough2)">C++ 用 std::sort，Python 用 sorted</text>
+
+  <line x1="172" y1="130" x2="172" y2="150" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="40" y="152" width="265" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="54" y="174" font-size="12.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② 第一遍：求最小相邻间隔</text>
+  <text x="54" y="194" font-size="10" fill="#556" filter="url(#rough2)">best = min(arr[i+1] − arr[i])，共 n−1 项</text>
+
+  <line x1="172" y1="208" x2="172" y2="228" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="40" y="230" width="265" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="54" y="252" font-size="12.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 第二遍：收集 gap == best 的对</text>
+  <text x="54" y="272" font-size="10" fill="#556" filter="url(#rough2)">按 i 从 0 到 n−2 顺序压入 res</text>
+
+  <line x1="172" y1="286" x2="172" y2="306" stroke="#666" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4 -->
+  <rect x="40" y="308" width="265" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="8" filter="url(#rough2)"/>
+  <text x="54" y="330" font-size="12.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 返回 res（已天然升序）</text>
+  <text x="54" y="350" font-size="10" fill="#556" filter="url(#rough2)">不需任何额外排序，O(1) 收尾</text>
+
+  <!-- 右侧说明面板 -->
+  <rect x="322" y="74" width="246" height="286" fill="#f2f2f2" stroke="#999" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="336" y="98" font-size="12" fill="#444" font-weight="bold" filter="url(#rough2)">为什么结果天然有序？</text>
+
+  <text x="336" y="122" font-size="10.5" fill="#333" filter="url(#rough2)">arr 升序 ⇒ 先扫到的对 a 更小</text>
+  <text x="336" y="143" font-size="10.5" fill="#333" filter="url(#rough2)">元素互不相同 ⇒ 一个 a 只配一个 b</text>
+  <text x="336" y="164" font-size="10.5" fill="#333" filter="url(#rough2)">故按 i 递增收集即字典序升序</text>
+
+  <line x1="336" y1="180" x2="554" y2="180" stroke="#999" stroke-width="1" stroke-dasharray="4 3" filter="url(#rough2)"/>
+
+  <text x="336" y="202" font-size="12" fill="#444" font-weight="bold" filter="url(#rough2)">实现要点</text>
+
+  <text x="336" y="226" font-size="10.5" fill="#333" filter="url(#rough2)">best 初值 = arr[1] − arr[0]</text>
+  <text x="336" y="247" font-size="10.5" fill="#333" filter="url(#rough2)">C++ 逐项 min 更新，避免用 INF</text>
+  <text x="336" y="268" font-size="10.5" fill="#333" filter="url(#rough2)">Python 可用 min 加生成器一行求</text>
+  <text x="336" y="289" font-size="10.5" fill="#333" filter="url(#rough2)">第二遍用 vector 或 list 累加</text>
+
+  <rect x="336" y="304" width="218" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8" filter="url(#rough2)"/>
+  <text x="346" y="321" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">两遍扫描可合并，但分开写更清晰；</text>
+  <text x="346" y="338" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">合并也只省一次遍历，不影响复杂度。</text>
+</svg>

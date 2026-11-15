@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">状态转移：续掷同一点数，或换一个点数</text>
+  <text x="310" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每个状态只有两条出边：同点数则 c+1，换点数则 c 重置为 1</text>
+
+  <text x="130" y="76" text-anchor="middle" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">第 L 次投掷后：dp</text>
+  <text x="495" y="76" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">第 L+1 次投掷后：ndp</text>
+
+  <g font-size="11.5" text-anchor="middle" font-weight="bold" filter="url(#rough2)">
+    <rect x="60" y="90" width="140" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <rect x="60" y="140" width="140" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <rect x="60" y="190" width="140" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <text x="130" y="111" fill="#3a4a66">(f = 4, c = 1)</text>
+    <text x="130" y="161" fill="#3a4a66">(f = 4, c = 2)</text>
+    <text x="130" y="211" fill="#8a6a20">(f = 5, c = 3)</text>
+
+    <rect x="420" y="90" width="150" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <rect x="420" y="140" width="150" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <rect x="420" y="190" width="150" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="495" y="111" fill="#3a5a30">(4, c = 2)</text>
+    <text x="495" y="161" fill="#3a5a30">(4, c = 3)</text>
+    <text x="495" y="211" fill="#3a5a30">(g, c = 1)，g ≠ 5</text>
+  </g>
+
+  <g stroke="#446688" stroke-width="1.7" fill="none" filter="url(#rough2)">
+    <path d="M 204 106 L 412 106" marker-end="url(#arr)"/>
+    <path d="M 204 156 L 412 156" marker-end="url(#arr)"/>
+    <path d="M 204 206 L 412 206" marker-end="url(#arr)"/>
+  </g>
+
+  <g font-size="9.5" fill="#666" text-anchor="middle" filter="url(#rough2)">
+    <text x="308" y="100">续掷 4：dp[4][1] → ndp[4][2]</text>
+    <text x="308" y="150">需 3 ≤ rollMax[4]，否则这条边不存在</text>
+    <text x="308" y="200">换点数：共 5 个合法点数可选</text>
+  </g>
+
+  <path d="M 130 226 L 130 246" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arrr)" filter="url(#rough2)"/>
+  <rect x="30" y="250" width="272" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" stroke-dasharray="5 3" filter="url(#rough2)"/>
+  <text x="166" y="272" text-anchor="middle" font-size="10" fill="#a04a48" filter="url(#rough2)">续掷 5 → (5, 4)：c = rollMax[5] = 3，非法，不生成</text>
+
+  <text x="420" y="252" font-size="9.5" fill="#999" filter="url(#rough2)">非法状态从不入表，等于天然剪枝</text>
+
+  <rect x="52" y="300" width="518" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="68" y="320" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">批量写法：把「换点数」的 5 条边合并成一次减法</text>
+  <g font-size="10" fill="#555" filter="url(#rough2)">
+    <text x="68" y="342">ndp[f][1] = total − sum[f]，其中 total = Σ_f sum[f]，sum[f] = Σ_c dp[f][c]</text>
+    <text x="68" y="360">ndp[f][c+1] = dp[f][c]，仅对 1 ≤ c &lt; rollMax[f] 成立（c 到顶则无此边）</text>
+    <text x="68" y="378" fill="#888">每层 O(6 × 15) 次加法；n ≤ 5000 时总运算量不到 5 × 10⁵</text>
+  </g>
+</svg>

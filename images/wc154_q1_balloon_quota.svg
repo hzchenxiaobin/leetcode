@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">balloon 的字母配额：7 个字母、5 种字符</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888">每个单词固定消耗 b×1 a×1 l×2 o×2 n×1，其余 21 个字母完全无用</text>
+
+  <!-- 7 个字母格子 -->
+  <g filter="url(#rough2)" text-anchor="middle" font-size="18">
+    <rect x="70" y="70" width="46" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="5"/>
+    <text x="93" y="99" fill="#2f4460">b</text>
+    <rect x="130" y="70" width="46" height="42" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="5"/>
+    <text x="153" y="99" fill="#2f4460">a</text>
+    <rect x="190" y="70" width="46" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="5"/>
+    <text x="213" y="99" fill="#8a6a20">l</text>
+    <rect x="250" y="70" width="46" height="42" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="5"/>
+    <text x="273" y="99" fill="#8a6a20">l</text>
+    <rect x="310" y="70" width="46" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="5"/>
+    <text x="333" y="99" fill="#8a3a36">o</text>
+    <rect x="370" y="70" width="46" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="5"/>
+    <text x="393" y="99" fill="#8a3a36">o</text>
+    <rect x="430" y="70" width="46" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="5"/>
+    <text x="453" y="99" fill="#3a5a30">n</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="11" text-anchor="middle" fill="#666">
+    <text x="93" y="130">×1</text>
+    <text x="153" y="130">×1</text>
+    <text x="213" y="130" fill="#a06a10" font-weight="bold">×2</text>
+    <text x="273" y="130" fill="#a06a10" font-weight="bold">×2</text>
+    <text x="333" y="130" fill="#a03a36" font-weight="bold">×2</text>
+    <text x="393" y="130" fill="#a03a36" font-weight="bold">×2</text>
+    <text x="453" y="130">×1</text>
+  </g>
+
+  <text x="280" y="156" text-anchor="middle" font-size="10.5" fill="#777">l 与 o 各要 2 个（橙色/红色），其余各 1 个 —— 这就是每个字母的“单价” need[x]</text>
+
+  <!-- 推理 -->
+  <rect x="60" y="172" width="440" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="192" font-size="11" fill="#3a5a30" font-weight="bold">关键等价</text>
+  <text x="76" y="210" font-size="10.5" fill="#444">能拼出 k 个单词  ⟺  对每个字母 x 都有 k · need[x] ≤ cnt[x]</text>
+
+  <path d="M 280 222 L 280 244" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 公式 -->
+  <rect x="60" y="250" width="440" height="58" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="270" font-size="11" fill="#8a6a20" font-weight="bold">答案公式</text>
+  <text x="76" y="292" font-size="12" fill="#333">ans = min( cnt[b], cnt[a], ⌊cnt[l]/2⌋, ⌊cnt[o]/2⌋, cnt[n] )</text>
+
+  <text x="280" y="334" text-anchor="middle" font-size="10.5" fill="#555">瓶颈字母决定答案：资源按比例分配时，取「能支撑的份数」最小的那一维</text>
+  <text x="280" y="356" text-anchor="middle" font-size="10" fill="#999">例 "loonbalxballpoon"：cnt[b]=2 cnt[a]=2 cnt[l]=4 cnt[o]=4 cnt[n]=2 → min = 2</text>
+  <text x="280" y="382" text-anchor="middle" font-size="10" fill="#999">例 "leetcode"：cnt[b]=0 → min = 0（一个单词也拼不出来）</text>
+</svg>

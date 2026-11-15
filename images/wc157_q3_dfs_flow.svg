@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 530" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="530" fill="#fafafa"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">DFS 回溯流程：枚举起点 → 深搜累加 → 恢复现场</text>
+  <text x="320" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">best 与 total 都是全局量；每个起点跑完后 best 即答案</text>
+
+  <rect x="170" y="62" width="300" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="84" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">for 每个 grid[i][j] &gt; 0：dfs(i, j, 0)</text>
+
+  <path d="M 320 96 L 320 110" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="320,114 480,144 320,174 160,144" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="148" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">越界 或 该格为 0 ？</text>
+
+  <path d="M 480 144 L 486 144" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="488" y="126" width="142" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="559" y="148" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">返回上一层（不通）</text>
+
+  <path d="M 320 174 L 320 188" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="190" width="340" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="215" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">cur += grid[x][y]；best = max(best, cur)</text>
+
+  <path d="M 320 230 L 320 246" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="320,248 460,276 320,304 180,276" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="320" y="280" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">best == total ？</text>
+
+  <path d="M 460 276 L 466 276" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="468" y="258" width="162" height="36" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="549" y="280" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">全部收完，直接结束</text>
+
+  <path d="M 320 304 L 320 318" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="170" y="320" width="300" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="342" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">saved = g[x][y]；g[x][y] = 0</text>
+
+  <path d="M 320 356 L 320 370" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="140" y="372" width="360" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="390" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">对 4 个方向 (nx, ny)：在界内且 g[nx][ny] &gt; 0 时</text>
+  <text x="320" y="408" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">递归调用 dfs(nx, ny, cur)</text>
+
+  <path d="M 320 416 L 320 430" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="170" y="430" width="300" height="36" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="452" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">g[x][y] = saved   // 恢复现场</text>
+
+  <path d="M 170 448 L 110 448 L 110 144 L 156 144" stroke="#b85450" stroke-width="1.6" fill="none" stroke-dasharray="6 4" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="102" y="300" font-size="10" fill="#8a3a36" text-anchor="middle" transform="rotate(-90 102 300)" filter="url(#rough2)">回溯：撤销标记后返回上一层</text>
+
+  <text x="320" y="492" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">递归深度 ≤ 25（金矿格数上限）；除起点外每步最多 3 个分支（来路已置 0）</text>
+  <text x="320" y="512" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">总复杂度由「所有简单路径的条数」决定，而不是常规的 O(mn)</text>
+</svg>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 372" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="372" fill="#fafafa"/>
+
+  <text x="290" y="28" text-anchor="middle" font-size="15" fill="#444444" font-weight="bold" filter="url(#rough2)">核心观察：把「频次」当成新元素，再判重</text>
+  <text x="290" y="47" text-anchor="middle" font-size="10.5" fill="#888888" filter="url(#rough2)">d = 不同取值的个数；频次互不相同 ⟺ 频次去重后仍有 d 项</text>
+
+  <!-- ① -->
+  <rect x="36" y="64" width="330" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="52" y="83" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 一次遍历，统计每个取值的频次</text>
+  <text x="52" y="102" font-size="10" fill="#555555" filter="url(#rough2)">arr = [1,2,2,1,1,3] → cnt = {1:3, 2:2, 3:1}</text>
+
+  <path d="M 201 120 L 201 134" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② -->
+  <rect x="36" y="136" width="330" height="56" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="52" y="155" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② 只取频次，得到 d 项的多重集</text>
+  <text x="52" y="174" font-size="10" fill="#555555" filter="url(#rough2)">freqs = [3, 2, 1]，一共 d = 3 项</text>
+
+  <path d="M 201 192 L 201 206" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ -->
+  <rect x="36" y="208" width="330" height="56" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="52" y="227" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 频次去重：set(3, 2, 1) = {3, 2, 1}</text>
+  <text x="52" y="246" font-size="10" fill="#555555" filter="url(#rough2)">|set| = 3，恰好等于 d = 3</text>
+
+  <path d="M 201 264 L 201 278" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ -->
+  <rect x="36" y="280" width="330" height="56" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="10" filter="url(#rough2)"/>
+  <text x="52" y="299" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 返回 |set(频次)| == d</text>
+  <text x="52" y="318" font-size="10" fill="#555555" filter="url(#rough2)">相等 → 频次两两不同 → true；否则 false</text>
+
+  <!-- 右侧解释面板 -->
+  <rect x="378" y="64" width="176" height="272" fill="#ffffff" stroke="#cccccc" stroke-width="1.3" rx="10" filter="url(#rough2)"/>
+  <text x="392" y="88" font-size="10.5" fill="#446688" font-weight="bold" filter="url(#rough2)">为什么等价？</text>
+  <text x="392" y="112" font-size="9.5" fill="#555555" filter="url(#rough2)">频次表恰有 d 项，</text>
+  <text x="392" y="128" font-size="9.5" fill="#555555" filter="url(#rough2)">一个取值对应一项。</text>
+  <text x="392" y="150" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">去重后若仍是 d 项，</text>
+  <text x="392" y="166" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">说明映射一一对应，</text>
+  <text x="392" y="182" font-size="9.5" fill="#4a7a3a" filter="url(#rough2)">没有任何两项相等。</text>
+  <text x="392" y="204" font-size="9.5" fill="#b85450" filter="url(#rough2)">若少于 d 项，说明</text>
+  <text x="392" y="220" font-size="9.5" fill="#b85450" filter="url(#rough2)">至少两项撞车。</text>
+  <text x="392" y="244" font-size="9.5" fill="#555555" font-weight="bold" filter="url(#rough2)">反例 arr = [1,2]</text>
+  <text x="392" y="260" font-size="9.5" fill="#555555" filter="url(#rough2)">cnt = {1:1, 2:1}</text>
+  <text x="392" y="276" font-size="9.5" fill="#555555" filter="url(#rough2)">set = {1}，|set| = 1</text>
+  <text x="392" y="292" font-size="9.5" fill="#555555" filter="url(#rough2)">1 &lt; d = 2 → false</text>
+
+  <text x="290" y="356" text-anchor="middle" font-size="10" fill="#888888" filter="url(#rough2)">整题只要一次计数 + 一次去重：时间 O(n + d)，空间 O(d)</text>
+</svg>

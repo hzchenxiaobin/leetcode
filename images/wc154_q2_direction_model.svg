@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：反转 = 换个方向读</text>
+  <text x="280" y="50" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每跨过一层括号，读取方向翻转一次，于是每个字符只需输出一次</text>
+
+  <g filter="url(#rough2)" text-anchor="middle" font-size="12">
+    <rect x="40" y="118" width="26" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+    <text x="53" y="138" fill="#8a6a20">(</text>
+    <rect x="66" y="118" width="26" height="30" fill="#f5f5f5" stroke="#999" stroke-width="1.4" rx="4"/>
+    <text x="79" y="138" fill="#333">u</text>
+    <rect x="92" y="118" width="26" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <text x="105" y="138" fill="#3a4a66">(</text>
+    <rect x="118" y="118" width="26" height="30" fill="#f5f5f5" stroke="#999" stroke-width="1.4" rx="4"/>
+    <text x="131" y="138" fill="#333">l</text>
+    <rect x="144" y="118" width="26" height="30" fill="#f5f5f5" stroke="#999" stroke-width="1.4" rx="4"/>
+    <text x="157" y="138" fill="#333">o</text>
+    <rect x="170" y="118" width="26" height="30" fill="#f5f5f5" stroke="#999" stroke-width="1.4" rx="4"/>
+    <text x="183" y="138" fill="#333">v</text>
+    <rect x="196" y="118" width="26" height="30" fill="#f5f5f5" stroke="#999" stroke-width="1.4" rx="4"/>
+    <text x="209" y="138" fill="#333">e</text>
+    <rect x="222" y="118" width="26" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="4"/>
+    <text x="235" y="138" fill="#3a4a66">)</text>
+    <rect x="248" y="118" width="26" height="30" fill="#f5f5f5" stroke="#999" stroke-width="1.4" rx="4"/>
+    <text x="261" y="138" fill="#333">i</text>
+    <rect x="274" y="118" width="26" height="30" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="4"/>
+    <text x="287" y="138" fill="#8a6a20">)</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9" fill="#aaa" text-anchor="middle">
+    <text x="53" y="164">0</text>
+    <text x="79" y="164">1</text>
+    <text x="105" y="164">2</text>
+    <text x="131" y="164">3</text>
+    <text x="157" y="164">4</text>
+    <text x="183" y="164">5</text>
+    <text x="209" y="164">6</text>
+    <text x="235" y="164">7</text>
+    <text x="261" y="164">8</text>
+    <text x="287" y="164">9</text>
+  </g>
+
+  <path d="M 105 114 C 105 86, 235 86, 235 114" fill="none" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 53 114 C 53 62, 287 62, 287 114" fill="none" stroke="#d6a040" stroke-width="1.8" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="318" y="104" width="216" height="164" fill="#ffffff" stroke="#bbb" stroke-width="1.2" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10" fill="#555">
+    <text x="332" y="126" font-size="11" fill="#444" font-weight="bold">跳跃规则</text>
+    <text x="332" y="150" fill="#446688">碰到 ( 或 ) ：</text>
+    <text x="344" y="168" fill="#446688">i ← match[i]，dir ← −dir</text>
+    <text x="332" y="192" fill="#4a7a3a">碰到字母：直接输出</text>
+    <text x="332" y="216" fill="#b85450">循环：i 越界即结束</text>
+    <text x="332" y="242" fill="#555">每个字符只被输出一次</text>
+    <text x="332" y="258" fill="#555">时间 O(n)、空间 O(n)</text>
+  </g>
+
+  <rect x="40" y="286" width="494" height="92" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="10.5" fill="#3a5a30">
+    <text x="56" y="308" font-weight="bold">等价视角（奇偶性）：</text>
+    <text x="56" y="330">字符被翻转的次数 = 它所在括号的层数；</text>
+    <text x="56" y="350">奇数层逆序、偶数层正序，而「跳跃 + 换向」一次走查就同时完成两件事。</text>
+    <text x="56" y="368" font-size="10" fill="#6b8a5f">例：(u(love)i) 中 love 在第 2 层（偶，保持正序），u、i 在第 1 层（奇，首尾互换）。</text>
+  </g>
+
+  <text x="280" y="394" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">橙色 = 外层括号（0 ↔ 9），蓝色 = 内层括号（2 ↔ 7）</text>
+</svg>

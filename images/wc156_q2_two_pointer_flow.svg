@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666666"/>
+    </marker>
+    <marker id="arrRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect x="-10" y="-10" width="660" height="500" fill="#fafafa" filter="url(#rough2)"/>
+
+  <text x="320" y="30" text-anchor="middle" font-size="15" fill="#444444" font-weight="bold" filter="url(#rough2)">算法流程：右端入窗 → 超预算收缩 → 记录长度</text>
+  <text x="320" y="50" text-anchor="middle" font-size="10.5" fill="#888888" filter="url(#rough2)">每个下标最多进窗一次、出窗一次，因此总共 O(n) 次操作</text>
+
+  <!-- 初始化 -->
+  <rect x="200" y="64" width="240" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="85" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">left = 0，right = 0，sum = 0，ans = 0</text>
+  <path d="M 320 96 L 320 104" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 右端入窗 -->
+  <rect x="190" y="106" width="260" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="204" y="126" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">① 右端入窗</text>
+  <text x="204" y="143" font-size="10" fill="#555555" filter="url(#rough2)">sum += cost[right]，窗口是 [left, right]</text>
+  <path d="M 320 152 L 320 168" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判断 -->
+  <polygon points="320,172 464,208 320,244 176,208" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="213" text-anchor="middle" font-size="11" fill="#7a5a10" font-weight="bold" filter="url(#rough2)">sum &gt; maxCost ?</text>
+
+  <!-- 是：收缩左端 -->
+  <path d="M 176 208 L 168 208" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrRed)" filter="url(#rough2)"/>
+  <text x="171" y="201" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">是</text>
+  <rect x="36" y="182" width="128" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="50" y="200" font-size="9.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">② 弹出左端</text>
+  <text x="50" y="215" font-size="9" fill="#555555" filter="url(#rough2)">sum -= cost[left]</text>
+  <text x="50" y="229" font-size="9" fill="#555555" filter="url(#rough2)">left++</text>
+  <path d="M 100 182 L 100 160 L 320 160 L 320 170" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arrRed)" filter="url(#rough2)"/>
+  <text x="104" y="155" font-size="9" fill="#b85450" filter="url(#rough2)">仍超预算就继续弹</text>
+
+  <!-- 否：记录长度 -->
+  <path d="M 320 244 L 320 262" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="332" y="258" font-size="10" fill="#4a7a3a" filter="url(#rough2)">否</text>
+  <rect x="190" y="264" width="260" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="204" y="284" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 记录当前窗口长度</text>
+  <text x="204" y="301" font-size="10" fill="#555555" filter="url(#rough2)">ans = max(ans, right - left + 1)</text>
+  <path d="M 320 310 L 320 320" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- right++ -->
+  <rect x="250" y="322" width="140" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="320" y="343" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">④ right++</text>
+  <path d="M 320 354 L 320 364" stroke="#666666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 循环条件 -->
+  <polygon points="320,368 456,404 320,440 184,404" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="320" y="409" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">right &lt; n ?</text>
+
+  <!-- 是：回到入窗 -->
+  <path d="M 184 404 L 30 404 L 30 126 L 186 126" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="166" y="397" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 否：返回 -->
+  <path d="M 456 404 L 466 404" stroke="#666666" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="458" y="397" font-size="10" fill="#4a7a3a" filter="url(#rough2)">否</text>
+  <rect x="468" y="384" width="136" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="536" y="409" text-anchor="middle" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">return ans</text>
+</svg>
