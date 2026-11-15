@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="82"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">按开始时间扫描，小根堆维护"已结束活动"</text>
+
+  <!-- 时间轴 -->
+  <path d="M 50 200 L 530 200" stroke="#999" stroke-width="1.5" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="11.5" fill="#666" text-anchor="middle">
+    <text x="60" y="218">1</text><text x="130" y="218">2</text><text x="200" y="218">3</text>
+    <text x="270" y="218">4</text><text x="340" y="218">5</text>
+  </g>
+
+  <!-- 活动矩形：[1,3]v2 [2,4]v3 [4,5]v2 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="120" width="140" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="6"/>
+    <rect x="130" y="160" width="140" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="6"/>
+    <rect x="270" y="120" width="70" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="2" rx="6"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" text-anchor="middle">
+    <text x="130" y="141" fill="#2d5a22" font-weight="bold">活动0 [1,3] v=2</text>
+    <text x="200" y="181" fill="#7a5c1e" font-weight="bold">活动2 [2,4] v=3</text>
+    <text x="305" y="141" fill="#33506e" font-weight="bold">活动1 [4,5] v=2</text>
+  </g>
+
+  <!-- 扫描指针 -->
+  <g filter="url(#rough2)">
+    <path d="M 270 96 L 270 196" stroke="#b85450" stroke-width="2" stroke-dasharray="6 4"/>
+  </g>
+  <text x="270" y="86" font-size="12" fill="#8a3a34" font-weight="bold" filter="url(#rough2)" text-anchor="middle">当前 s=4</text>
+
+  <!-- 堆 -->
+  <g filter="url(#rough2)">
+    <path d="M 440 130 L 470 178 L 410 178 Z" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <path d="M 425 202 L 445 202 M 435 202 L 425 226 M 435 202 L 445 226" fill="none" stroke="#4a7a3a" stroke-width="1.5"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#2d5a22" text-anchor="middle">
+    <text x="440" y="162">(3, 2)</text>
+    <text x="440" y="246">小根堆（end, value）</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 350 140 L 416 158" stroke="#b85450" stroke-width="2" marker-end="url(#arrB)"/>
+  </g>
+  <text x="366" y="126" font-size="11.5" fill="#8a3a34" filter="url(#rough2)">end=3 &lt; 4 弹出</text>
+
+  <!-- best 与 ans 说明 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="262" width="220" height="46" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="300" y="262" width="220" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12.5" text-anchor="middle">
+    <text x="170" y="282" fill="#7a5c1e" font-weight="bold">best = max(已弹出的价值)</text>
+    <text x="170" y="300" fill="#7a5c1e">= 2（活动 0 刚弹出）</text>
+    <text x="410" y="282" fill="#33506e" font-weight="bold">ans = max(ans, v + best)</text>
+    <text x="410" y="300" fill="#33506e">= max(3, 2+2) = 4</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="120" y="326" width="320" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+  </g>
+  <text x="280" y="351" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)" text-anchor="middle">兼容条件：end &lt; start（共享端点算重叠）</text>
+</svg>

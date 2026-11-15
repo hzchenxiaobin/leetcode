@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="76"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+  <text x="280" y="28" text-anchor="middle" font-size="16.5" fill="#333" font-weight="bold" filter="url(#rough2)">消息时间线（示例 1 的服务器 2：d=2, p=1）</text>
+
+  <!-- 时间轴 -->
+  <path d="M 50 70 L 530 70" stroke="#999" stroke-width="1.5" filter="url(#rough2)"/>
+  <g filter="url(#rough2)">
+    <path d="M 80 64 L 80 76 M 140 64 L 140 76 M 200 64 L 200 76 M 260 64 L 260 76 M 320 64 L 320 76 M 380 64 L 380 76 M 440 64 L 440 76 M 500 64 L 500 76" stroke="#999" stroke-width="1.5"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11.5" fill="#666" text-anchor="middle">
+    <text x="80" y="92">0</text><text x="140" y="92">1</text><text x="200" y="92">2</text>
+    <text x="260" y="92">3</text><text x="320" y="92">4</text><text x="380" y="92">5</text>
+    <text x="440" y="92">6</text><text x="500" y="92">7</text>
+  </g>
+
+  <!-- 发送事件（上）与回复到达事件（下） -->
+  <g filter="url(#rough2)">
+    <circle cx="80" cy="120" r="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="140" cy="120" r="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="200" cy="120" r="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <circle cx="260" cy="120" r="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#33506e" text-anchor="middle">
+    <text x="80" y="142">发 2A</text><text x="140" y="142">发 2B</text>
+    <text x="200" y="142">发 2C</text><text x="260" y="142">发 2D</text>
+  </g>
+  <!-- 到达事件 -->
+  <g filter="url(#rough2)">
+    <circle cx="200" cy="186" r="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="320" cy="186" r="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="380" cy="186" r="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="440" cy="186" r="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="500" cy="186" r="9" fill="#fce4ec" stroke="#b85450" stroke-width="2.5"/>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#2d5a22" text-anchor="middle">
+    <text x="200" y="208">回复 2A</text><text x="320" y="208">回复 2B</text>
+    <text x="380" y="208">回复 2C</text><text x="440" y="208">回复 2D</text>
+    <text x="500" y="230" fill="#8a3a34" font-weight="bold">最后事件</text>
+  </g>
+
+  <!-- 4 秒截断说明 -->
+  <g filter="url(#rough2)">
+    <path d="M 320 112 L 320 130" stroke="#b85450" stroke-width="2" stroke-dasharray="4 3"/>
+    <path d="M 320 158 L 320 178" stroke="#b85450" stroke-width="2" stroke-dasharray="4 3"/>
+  </g>
+  <text x="330" y="168" font-size="11.5" fill="#8a3a34" filter="url(#rough2)">t=4 收到回复（先于重发判定）→ 停止重发</text>
+
+  <!-- 公式推导框 -->
+  <rect x="50" y="248" width="460" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13" fill="#7a5c1e">
+    <text x="280" y="270" text-anchor="middle" font-weight="bold">last = ⌊(2d−1)/p⌋ · p   （严格小于 2d 的最大 p 倍数）</text>
+    <text x="280" y="292" text-anchor="middle">该服务器最后事件 = last + 2d</text>
+  </g>
+
+  <!-- 答案框 -->
+  <rect x="50" y="318" width="460" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="13" fill="#33506e">
+    <text x="280" y="338" text-anchor="middle" font-weight="bold">ans = max over i (last_i + 2·dist[i]) + 1</text>
+    <text x="280" y="356" text-anchor="middle">本例：max(2, 7) + 1 = 8</text>
+  </g>
+</svg>

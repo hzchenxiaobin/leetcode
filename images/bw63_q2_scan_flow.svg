@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="74"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="340" fill="#fafafa"/>
+  <text x="280" y="30" text-anchor="middle" font-size="17" fill="#333" font-weight="bold" filter="url(#rough2)">一次线性扫描：双指针切分极大同色段</text>
+
+  <!-- 字符格子 -->
+  <g filter="url(#rough2)" font-size="12" fill="#666" text-anchor="middle">
+    <text x="70" y="70">i</text><text x="110" y="70">↑</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="60" y="78" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="94" y="78" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="128" y="78" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="162" y="78" width="34" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="196" y="78" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+    <rect x="230" y="78" width="34" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="264" y="78" width="34" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="298" y="78" width="34" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="4"/>
+    <rect x="332" y="78" width="34" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="4"/>
+  </g>
+  <g filter="url(#rough2)" font-size="13" text-anchor="middle">
+    <text x="77" y="100">A</text><text x="111" y="100">A</text><text x="145" y="100">A</text>
+    <text x="179" y="100">B</text><text x="213" y="100">A</text>
+    <text x="247" y="100">B</text><text x="281" y="100">B</text><text x="315" y="100">B</text>
+    <text x="349" y="100">A</text>
+  </g>
+  <g filter="url(#rough2)" font-size="11" fill="#666" text-anchor="middle">
+    <text x="345" y="126">j 向右延伸至异色</text>
+    <text x="110" y="126">段 [i, j)</text>
+  </g>
+
+  <!-- 步骤流程 -->
+  <g filter="url(#rough2)">
+    <rect x="40" y="152" width="160" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <rect x="200" y="152" width="160" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <rect x="360" y="152" width="160" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" text-anchor="middle">
+    <text x="120" y="174" fill="#2d5a22" font-weight="bold">① j 从 i 延伸到</text>
+    <text x="120" y="192" fill="#2d5a22">第一个异色位置</text>
+    <text x="280" y="174" fill="#7a5c1e" font-weight="bold">② 段长 L = j − i</text>
+    <text x="280" y="192" fill="#7a5c1e">累加 max(0, L−2)</text>
+    <text x="440" y="174" fill="#33506e" font-weight="bold">③ i = j 继续下一段</text>
+    <text x="440" y="192" fill="#33506e">直到 i == n</text>
+  </g>
+  <g filter="url(#rough2)">
+    <path d="M 200 178 L 196 178" stroke="#446688" stroke-width="2"/>
+    <path d="M 182 178 L 194 178" stroke="#446688" stroke-width="2" marker-end="url(#arrB)"/>
+    <path d="M 342 178 L 354 178" stroke="#446688" stroke-width="2" marker-end="url(#arrB)"/>
+  </g>
+
+  <!-- 伪代码 -->
+  <rect x="60" y="226" width="440" height="76" fill="#fafafa" stroke="#999" stroke-width="1.2" rx="8" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="12" fill="#33506e" font-family="'Comic Sans MS', 'Kaiti SC', monospace">
+    <text x="76" y="250">i = 0;  a = b = 0</text>
+    <text x="76" y="268">while i &lt; n:  j = 延伸(i);  段色 c</text>
+    <text x="76" y="286">(c=='A' ? a : b) += max(0, j−i−2);  i = j</text>
+  </g>
+
+  <text x="280" y="326" font-size="13" fill="#2d5a22" font-weight="bold" filter="url(#rough2)" text-anchor="middle">返回 a &gt; b（Alice 的固定步数严格更多）</text>
+</svg>
