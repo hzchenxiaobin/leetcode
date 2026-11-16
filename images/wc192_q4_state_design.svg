@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="430" fill="#fafafa"/>
+
+  <text x="310" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">状态设计：dp[i][j][k] 三维 DP</text>
+  <text x="310" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">前缀长度 i、末尾颜色 j、街区数 k —— 三个维度缺一不可</text>
+
+  <rect x="20" y="72" width="180" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="110" y="92" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">i · 前缀长度</text>
+  <text x="110" y="112" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">前 i 个房子已定色</text>
+  <text x="110" y="129" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">i = 0 … m</text>
+
+  <rect x="220" y="72" width="180" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="92" text-anchor="middle" font-size="12" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">j · 末尾颜色</text>
+  <text x="310" y="112" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">第 i 个房子的颜色</text>
+  <text x="310" y="129" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">j = 1 … n（0 为哨兵）</text>
+
+  <rect x="420" y="72" width="180" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="510" y="92" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">k · 街区数</text>
+  <text x="510" y="112" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">前缀里的极大同色段数</text>
+  <text x="510" y="129" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">k = 1 … target</text>
+
+  <path d="M 310 140 L 310 160" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="20" y="168" width="285" height="98" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="36" y="190" font-size="12" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">① 同色：j' = j，街区数不变</text>
+  <text x="36" y="214" font-size="10.5" fill="#555" filter="url(#rough2)">dp[i−1][j][k] + paint(i, j)</text>
+  <text x="36" y="236" font-size="10" fill="#777" filter="url(#rough2)">沿用上一房子的颜色，不产生新街区</text>
+  <text x="36" y="254" font-size="10" fill="#777" filter="url(#rough2)">（k ≥ 1 才可能，k−1 不参与）</text>
+
+  <rect x="315" y="168" width="285" height="98" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="331" y="190" font-size="12" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">② 换色：j' ≠ j，街区数 +1</text>
+  <text x="331" y="214" font-size="10.5" fill="#555" filter="url(#rough2)">min over j' ≠ j : dp[i−1][j'][k−1] + paint(i, j)</text>
+  <text x="331" y="236" font-size="10" fill="#777" filter="url(#rough2)">末位颜色变了，必然开启一个新街区</text>
+  <text x="331" y="254" font-size="10" fill="#777" filter="url(#rough2)">（j' = 0 只在 i = 1、k = 1 时生效）</text>
+
+  <rect x="20" y="286" width="580" height="82" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="34" y="308" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">转移方程</text>
+  <text x="34" y="330" font-size="10.5" fill="#444" filter="url(#rough2)">dp[i][j][k] = paint(i, j) + min( dp[i−1][j][k] ,  min over j'≠j of dp[i−1][j'][k−1] )</text>
+  <text x="34" y="352" font-size="10" fill="#666" filter="url(#rough2)">paint(i, j) = 0（houses[i] = j）｜ cost[i][j−1]（houses[i] = 0）｜ +∞（其他，颜色被锁死）</text>
+
+  <path d="M 310 368 L 310 376" stroke="#446688" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <rect x="140" y="378" width="340" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="310" y="402" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">答案 = min over j of dp[m][j][target]，全为 +∞ 则返回 −1</text>
+</svg>

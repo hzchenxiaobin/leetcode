@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#8a6a20"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">预处理 DP：up[j][v] 表示节点 v 的 2^j 级祖先</text>
+  <text x="310" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">递推 up[j][v] = up[j−1][ up[j−1][v] ]：把「跳 2^j 步」拆成两段「跳 2^(j−1) 步」</text>
+
+  <!-- 链上的三个关键节点 -->
+  <g filter="url(#rough2)">
+    <circle cx="95" cy="150" r="16" fill="#fff8e1" stroke="#d6a040" stroke-width="2"/>
+    <circle cx="300" cy="150" r="16" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="470" cy="150" r="16" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"/>
+    <circle cx="160" cy="150" r="3" fill="#bbb"/>
+    <circle cx="185" cy="150" r="3" fill="#bbb"/>
+    <circle cx="215" cy="150" r="3" fill="#bbb"/>
+    <circle cx="360" cy="150" r="3" fill="#bbb"/>
+    <circle cx="390" cy="150" r="3" fill="#bbb"/>
+    <circle cx="415" cy="150" r="3" fill="#bbb"/>
+  </g>
+  <g filter="url(#rough2)" font-size="12" fill="#333" text-anchor="middle">
+    <text x="95" y="154">v</text>
+    <text x="300" y="154">u</text>
+    <text x="470" y="154">w</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9.5" fill="#666" text-anchor="middle">
+    <text x="95" y="184">起点 v</text>
+    <text x="300" y="184">u = up[j−1][v]</text>
+    <text x="470" y="184">w = up[j][v]</text>
+  </g>
+
+  <!-- 两段 2^(j-1) 步 + 合并成 2^j 步 -->
+  <path d="M 101 135 Q 197 96 288 135" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 306 135 Q 391 96 458 135" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 95 167 Q 282 268 458 167" stroke="#b85450" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="197" y="92" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">跳 2^(j−1) 步</text>
+  <text x="391" y="92" text-anchor="middle" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">再跳 2^(j−1) 步</text>
+  <text x="282" y="256" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">合并：up[j][v] = up[j−1][u]，合计 2^j 步</text>
+
+  <!-- 表结构 -->
+  <rect x="60" y="286" width="500" height="100" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="305" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">表的规模：LOG 行 × n 列，第 j 行统一存「所有节点的 2^j 级祖先」</text>
+  <rect x="76" y="312" width="468" height="18" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <text x="86" y="325" font-size="9.5" fill="#555" filter="url(#rough2)">up[0][v] = parent[v]（父节点；根的父节点记为 −1，表示不存在）</text>
+  <rect x="76" y="334" width="468" height="18" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <text x="86" y="347" font-size="9.5" fill="#555" filter="url(#rough2)">up[1][v] = up[0][ up[0][v] ]（祖父节点，即 2 级祖先）</text>
+  <rect x="76" y="356" width="468" height="18" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.1" rx="4" filter="url(#rough2)"/>
+  <text x="86" y="369" font-size="9.5" fill="#555" filter="url(#rough2)">up[2][v] = up[1][ up[1][v] ]（4 级祖先）… 一直递推到 j = LOG − 1</text>
+</svg>

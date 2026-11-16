@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="400" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">前缀只在「单词起点」落地：等长窗口 vs searchWord</text>
+  <text x="320" y="48" text-anchor="middle" font-size="10.5" fill="#888">sentence = "this problem is an easy problem"　searchWord = "pro"（m = 3）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="46" y="72" width="54" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="73" y="94" text-anchor="middle" font-size="13" fill="#2f4a60">this</text>
+    <text x="73" y="124" text-anchor="middle" font-size="10" fill="#999">1</text>
+
+    <rect x="114" y="72" width="84" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="6"/>
+    <text x="156" y="94" text-anchor="middle" font-size="13" fill="#2f4a2f">problem</text>
+    <text x="156" y="124" text-anchor="middle" font-size="10" fill="#4a7a3a">2</text>
+
+    <rect x="212" y="72" width="42" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="233" y="94" text-anchor="middle" font-size="13" fill="#2f4a60">is</text>
+    <text x="233" y="124" text-anchor="middle" font-size="10" fill="#999">3</text>
+
+    <rect x="268" y="72" width="42" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="289" y="94" text-anchor="middle" font-size="13" fill="#2f4a60">an</text>
+    <text x="289" y="124" text-anchor="middle" font-size="10" fill="#999">4</text>
+
+    <rect x="324" y="72" width="54" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="6"/>
+    <text x="351" y="94" text-anchor="middle" font-size="13" fill="#2f4a60">easy</text>
+    <text x="351" y="124" text-anchor="middle" font-size="10" fill="#999">5</text>
+
+    <rect x="392" y="72" width="84" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="6"/>
+    <text x="434" y="94" text-anchor="middle" font-size="13" fill="#7a5a10">problem</text>
+    <text x="434" y="124" text-anchor="middle" font-size="10" fill="#d6a040">6</text>
+  </g>
+
+  <path d="M 132 110 V 146" stroke="#4a7a3a" stroke-width="2" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <path d="M 410 110 V 146" stroke="#d6a040" stroke-width="2" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="46" y="150" width="252" height="94" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10"/>
+    <text x="60" y="172" font-size="11" fill="#3a5a30" font-weight="bold">词 2 的起点 i = 5</text>
+    <text x="60" y="194" font-size="10" fill="#444">s[5..8) = "pro" 与 searchWord 完全相同 ✓</text>
+    <text x="60" y="214" font-size="10.5" fill="#2f6a2f" font-weight="bold">→ 立刻返回 2（下标从 1 开始）</text>
+    <text x="60" y="234" font-size="9.5" fill="#666">返回值 = 这是第几个单词，不是字符串下标</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="336" y="150" width="262" height="94" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10"/>
+    <text x="350" y="172" font-size="11" fill="#7a5a10" font-weight="bold">词 6 也以 pro 开头</text>
+    <text x="350" y="194" font-size="10" fill="#444">但扫描是从左到右的，第 2 个词先命中</text>
+    <text x="350" y="214" font-size="10" fill="#444">第一个命中就是最小下标，后面无须再比</text>
+    <text x="350" y="234" font-size="9.5" fill="#8a6a20">→ 因此「取最小下标」不需要额外取 min</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="46" y="266" width="552" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10"/>
+    <text x="60" y="288" font-size="11" fill="#2f4a60" font-weight="bold">为什么不必判断词尾：</text>
+    <text x="60" y="310" font-size="10" fill="#444">searchWord 只含小写字母，窗口一旦跨过空格，m 个字符必然对不上，</text>
+    <text x="60" y="330" font-size="10" fill="#444">所以只需用 i + m &lt;= n 防止越界，不必额外检查 s[i+m] 是不是空格。</text>
+  </g>
+
+  <text x="320" y="382" text-anchor="middle" font-size="9.5" fill="#999">真正的分支只有一个：在词首做一次 m 字符比较，命中即返回</text>
+</svg>

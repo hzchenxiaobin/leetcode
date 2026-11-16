@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 690 620" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="690" height="620" fill="#fafafa"/>
+
+  <text x="345" y="24" text-anchor="middle" font-size="14" fill="#444" font-weight="bold" filter="url(#rough2)">示例演算：rains = [1, 2, 0, 0, 2, 1]</text>
+  <text x="345" y="44" text-anchor="middle" font-size="9.6" fill="#888" filter="url(#rough2)">每行是一天结束后的状态；满湖集合写成 {湖: 截止期}，截止期就是该湖下一次下雨的日子</text>
+
+  <rect x="24" y="56" width="642" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="50" y="72" text-anchor="middle" font-size="9.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">天</text>
+  <text x="108" y="72" text-anchor="middle" font-size="9.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">rains[i]</text>
+  <text x="148" y="72" font-size="9.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">动作（EDF 贪心）</text>
+  <text x="408" y="72" font-size="9.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">满湖集合 {湖: 截止期}</text>
+  <text x="618" y="72" text-anchor="middle" font-size="9.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">ans[i]</text>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="82" width="642" height="28" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="3"/>
+    <rect x="24" y="112" width="642" height="28" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="3"/>
+    <rect x="24" y="142" width="642" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3"/>
+    <rect x="24" y="172" width="642" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3"/>
+    <rect x="24" y="202" width="642" height="28" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="3"/>
+    <rect x="24" y="232" width="642" height="28" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="3"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9.3">
+    <text x="50" y="100" text-anchor="middle" fill="#999">0</text>
+    <text x="108" y="100" text-anchor="middle" fill="#446688">1</text>
+    <text x="148" y="100" fill="#444">湖 1 空 → 压入 (5, 1)，ans = −1</text>
+    <text x="408" y="100" fill="#444">{1:5}</text>
+    <text x="618" y="100" text-anchor="middle" fill="#999">−1</text>
+
+    <text x="50" y="130" text-anchor="middle" fill="#999">1</text>
+    <text x="108" y="130" text-anchor="middle" fill="#446688">2</text>
+    <text x="148" y="130" fill="#444">湖 2 空 → 压入 (4, 2)，ans = −1</text>
+    <text x="408" y="130" fill="#444">{1:5, 2:4}</text>
+    <text x="618" y="130" text-anchor="middle" fill="#999">−1</text>
+
+    <text x="50" y="160" text-anchor="middle" fill="#999">2</text>
+    <text x="108" y="160" text-anchor="middle" fill="#4a7a3a" font-weight="bold">0</text>
+    <text x="148" y="160" fill="#3a5a30">堆顶 (4, 2) → ans[2] = 2（抽干湖 2）</text>
+    <text x="408" y="160" fill="#3a5a30">{1:5}</text>
+    <text x="618" y="160" text-anchor="middle" fill="#4a7a3a" font-weight="bold">2</text>
+
+    <text x="50" y="190" text-anchor="middle" fill="#999">3</text>
+    <text x="108" y="190" text-anchor="middle" fill="#4a7a3a" font-weight="bold">0</text>
+    <text x="148" y="190" fill="#3a5a30">堆顶 (5, 1) → ans[3] = 1（抽干湖 1）</text>
+    <text x="408" y="190" fill="#3a5a30">{}</text>
+    <text x="618" y="190" text-anchor="middle" fill="#4a7a3a" font-weight="bold">1</text>
+
+    <text x="50" y="220" text-anchor="middle" fill="#999">4</text>
+    <text x="108" y="220" text-anchor="middle" fill="#446688">2</text>
+    <text x="148" y="220" fill="#444">湖 2 空 → 压入 (6, 2)，ans = −1</text>
+    <text x="408" y="220" fill="#444">{2:6}</text>
+    <text x="618" y="220" text-anchor="middle" fill="#999">−1</text>
+
+    <text x="50" y="250" text-anchor="middle" fill="#999">5</text>
+    <text x="108" y="250" text-anchor="middle" fill="#446688">1</text>
+    <text x="148" y="250" fill="#444">湖 1 空 → 压入 (6, 1)，ans = −1</text>
+    <text x="408" y="250" fill="#444">{1:6, 2:6}</text>
+    <text x="618" y="250" text-anchor="middle" fill="#999">−1</text>
+  </g>
+
+  <text x="345" y="282" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">ans = [−1, −1, 2, 1, −1, −1]，与官方示例完全一致（第 4、5 天两次降雨前湖都已被抽空）</text>
+
+  <text x="345" y="314" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold" filter="url(#rough2)">反例：rains = [1, 2, 0, 1, 2]，第 4 天湖 2 仍是满的 → 返回空数组</text>
+
+  <rect x="24" y="326" width="642" height="24" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" rx="3" filter="url(#rough2)"/>
+  <text x="50" y="342" text-anchor="middle" font-size="9.5" fill="#8a4a48" font-weight="bold" filter="url(#rough2)">天</text>
+  <text x="108" y="342" text-anchor="middle" font-size="9.5" fill="#8a4a48" font-weight="bold" filter="url(#rough2)">rains[i]</text>
+  <text x="148" y="342" font-size="9.5" fill="#8a4a48" font-weight="bold" filter="url(#rough2)">动作（EDF 贪心）</text>
+  <text x="408" y="342" font-size="9.5" fill="#8a4a48" font-weight="bold" filter="url(#rough2)">满湖集合 {湖: 截止期}</text>
+  <text x="618" y="342" text-anchor="middle" font-size="9.5" fill="#8a4a48" font-weight="bold" filter="url(#rough2)">ans[i]</text>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="352" width="642" height="28" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="3"/>
+    <rect x="24" y="382" width="642" height="28" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="3"/>
+    <rect x="24" y="412" width="642" height="28" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" rx="3"/>
+    <rect x="24" y="442" width="642" height="28" fill="#ffffff" stroke="#dddddd" stroke-width="1" rx="3"/>
+    <rect x="24" y="472" width="642" height="28" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="3"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9.3">
+    <text x="50" y="370" text-anchor="middle" fill="#999">0</text>
+    <text x="108" y="370" text-anchor="middle" fill="#446688">1</text>
+    <text x="148" y="370" fill="#444">湖 1 空 → 压入 (3, 1)，ans = −1</text>
+    <text x="408" y="370" fill="#444">{1:3}</text>
+    <text x="618" y="370" text-anchor="middle" fill="#999">−1</text>
+
+    <text x="50" y="400" text-anchor="middle" fill="#999">1</text>
+    <text x="108" y="400" text-anchor="middle" fill="#446688">2</text>
+    <text x="148" y="400" fill="#444">湖 2 空 → 压入 (4, 2)，ans = −1</text>
+    <text x="408" y="400" fill="#444">{1:3, 2:4}</text>
+    <text x="618" y="400" text-anchor="middle" fill="#999">−1</text>
+
+    <text x="50" y="430" text-anchor="middle" fill="#999">2</text>
+    <text x="108" y="430" text-anchor="middle" fill="#4a7a3a" font-weight="bold">0</text>
+    <text x="148" y="430" fill="#3a5a30">堆顶截止期 3 更早 → ans[2] = 1（抽湖 1）</text>
+    <text x="408" y="430" fill="#3a5a30">{2:4}</text>
+    <text x="618" y="430" text-anchor="middle" fill="#4a7a3a" font-weight="bold">1</text>
+
+    <text x="50" y="460" text-anchor="middle" fill="#999">3</text>
+    <text x="108" y="460" text-anchor="middle" fill="#446688">1</text>
+    <text x="148" y="460" fill="#444">湖 1 空 → 压入 (5, 1)，ans = −1</text>
+    <text x="408" y="460" fill="#444">{1:5, 2:4}</text>
+    <text x="618" y="460" text-anchor="middle" fill="#999">−1</text>
+
+    <text x="50" y="490" text-anchor="middle" fill="#999">4</text>
+    <text x="108" y="490" text-anchor="middle" fill="#b85450" font-weight="bold">2</text>
+    <text x="148" y="490" fill="#b85450" font-weight="bold">湖 2 仍在满湖集合 → return []（已无零天可救）</text>
+    <text x="408" y="490" fill="#8a4a48">—</text>
+    <text x="618" y="490" text-anchor="middle" fill="#8a4a48">—</text>
+  </g>
+
+  <text x="345" y="526" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">EDF 并没有「记错」：第 2 天抽湖 1 是必须的，否则第 3 天湖 1 就淹；但这样一来湖 2 的截止期 4 无人覆盖</text>
+  <text x="345" y="548" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">任务 (0, 3) 与任务 (1, 4) 只能落在唯一的零天 2 上 → 2 个任务抢 1 个零天，必然无解</text>
+  <text x="345" y="572" text-anchor="middle" font-size="9.5" fill="#bbb" filter="url(#rough2)">绿色行 = 真正用掉零天的时刻；剩余零天若堆为空就填 1（抽干一个空湖毫无副作用）</text>
+</svg>

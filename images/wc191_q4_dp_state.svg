@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">按颜色逐个推进的 DP：状态 (s, d)</text>
+  <text x="280" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">dp[s][d]：给盒1 分 s 个球、种数差为 d−k 的方案数（下标平移 k，d=k 即差 0）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="36" y="136" width="164" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="2"/>
+    <text x="118" y="160" text-anchor="middle" font-size="14" fill="#2b3a55" font-weight="bold">dp[s][d]</text>
+    <text x="118" y="179" text-anchor="middle" font-size="10" fill="#555">已分 s 个球，差值 d</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="320" y="58" width="206" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="338" y="78" font-size="11" fill="#8a3a36" font-weight="bold">dp[s][d − 1]</text>
+    <text x="338" y="95" font-size="9.5" fill="#555">x = 0：该色全在盒2</text>
+    <text x="338" y="107" font-size="9.5" fill="#555">权重 C(b, 0) = 1</text>
+
+    <rect x="320" y="134" width="206" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="338" y="154" font-size="11" fill="#2f5426" font-weight="bold">dp[s + x][d]</text>
+    <text x="338" y="171" font-size="9.5" fill="#555">0 &lt; x &lt; b：两盒都有该色</text>
+    <text x="338" y="183" font-size="9.5" fill="#555">权重 C(b, x)</text>
+
+    <rect x="320" y="210" width="206" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="338" y="230" font-size="11" fill="#8a6a20" font-weight="bold">dp[s + x][d + 1]</text>
+    <text x="338" y="247" font-size="9.5" fill="#555">x = b：该色全在盒1</text>
+    <text x="338" y="259" font-size="9.5" fill="#555">权重 C(b, b) = 1</text>
+  </g>
+
+  <path d="M 202 152 C 250 152 262 84 314 84" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 202 164 L 314 160" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 202 176 C 250 176 262 236 314 236" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="256" y="118" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">−1</text>
+  <text x="252" y="200" text-anchor="middle" font-size="9" fill="#999" filter="url(#rough2)">+1</text>
+
+  <g filter="url(#rough2)">
+    <rect x="36" y="276" width="490" height="44" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <text x="52" y="294" font-size="10" fill="#3a4a66" font-weight="bold">剪枝与滚动</text>
+    <text x="52" y="311" font-size="9.5" fill="#555">只保留 s + x ≤ n（x ≥ 0，超过 n 永远回不到 n）；每处理一个颜色就整体换成 ndp。</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="36" y="332" width="490" height="36" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="281" y="355" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold">答案 = dp[n][k] ÷ C(2n, n)：下标 k 正好对应 d = 0</text>
+  </g>
+</svg>

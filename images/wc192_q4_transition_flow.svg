@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 450" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="450" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">推进顺序与滚动数组</text>
+  <text x="310" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">逐房推进，每个 (颜色, 街区数) 只被上一层决定</text>
+
+  <rect x="30" y="66" width="300" height="50" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="44" y="86" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">① 初始化：dp[0][0][0] = 0，其余 +∞</text>
+  <text x="44" y="105" font-size="10" fill="#666" filter="url(#rough2)">0 号颜色是「空前缀」哨兵，只服务第一个房子</text>
+
+  <path d="M 180 116 L 180 132" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="136" width="300" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="44" y="156" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">② for i = 1 … m：确定可涂颜色集合</text>
+  <text x="44" y="175" font-size="10" fill="#666" filter="url(#rough2)">houses[i] ≠ 0 → 只允许该色（花费 0）；否则 1 … n</text>
+
+  <path d="M 180 186 L 180 202" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="206" width="300" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="44" y="226" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">③ for j ∈ 允许集合, for k = 1 … target</text>
+  <text x="44" y="245" font-size="10" fill="#666" filter="url(#rough2)">内层顺序任意，因为只读上一层的 dp</text>
+
+  <path d="M 180 256 L 180 272" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="276" width="300" height="66" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="44" y="296" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">④ 两路取小后加 paint(i, j)</text>
+  <text x="44" y="315" font-size="10" fill="#555" filter="url(#rough2)">同色：dp[i−1][j][k]</text>
+  <text x="44" y="333" font-size="10" fill="#555" filter="url(#rough2)">换色：min over j'≠j of dp[i−1][j'][k−1]</text>
+
+  <path d="M 180 342 L 180 358" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="30" y="362" width="300" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="44" y="382" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">⑤ prev ← cur：i 维只保留一层</text>
+  <text x="44" y="400" font-size="10" fill="#666" filter="url(#rough2)">空间从 O(m·n·target) 压到 O(n·target)</text>
+
+  <rect x="352" y="66" width="238" height="116" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="366" y="86" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">规模核算</text>
+  <text x="366" y="108" font-size="10" fill="#555" filter="url(#rough2)">状态数 m · n · target ≤ 2×10⁵</text>
+  <text x="366" y="128" font-size="10" fill="#555" filter="url(#rough2)">每个状态枚举 n 种旧颜色</text>
+  <text x="366" y="148" font-size="10" fill="#555" filter="url(#rough2)">转移 ≤ m · target · n² = 4×10⁶</text>
+  <text x="366" y="168" font-size="10" fill="#777" filter="url(#rough2)">实测 Python 约 0.2 s</text>
+
+  <rect x="352" y="196" width="238" height="112" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="366" y="216" font-size="11.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">top-2 加速（可选）</text>
+  <text x="366" y="238" font-size="10" fill="#555" filter="url(#rough2)">对每个 k 预存 dp[i−1][·][k] 的</text>
+  <text x="366" y="257" font-size="10" fill="#555" filter="url(#rough2)">最小值 min1、次小值 min2</text>
+  <text x="366" y="277" font-size="10" fill="#555" filter="url(#rough2)">j' ≠ j 时取 min1，否则 min2</text>
+  <text x="366" y="297" font-size="10" fill="#777" filter="url(#rough2)">换色分支 O(1)，总 O(m·target·n)</text>
+
+  <rect x="352" y="322" width="238" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="366" y="342" font-size="11.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">终局</text>
+  <text x="366" y="364" font-size="10" fill="#555" filter="url(#rough2)">ans = min over j of dp[m][j][target]</text>
+  <text x="366" y="384" font-size="10" fill="#555" filter="url(#rough2)">ans ≥ +∞ → 无合法方案，返回 −1</text>
+  <text x="366" y="400" font-size="10" fill="#777" filter="url(#rough2)">不能只看某个颜色，要扫全部 n 种</text>
+
+  <text x="310" y="436" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">时间 O(m · target · n²)，空间 O(target · n)</text>
+</svg>

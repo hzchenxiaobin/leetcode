@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#333" font-weight="bold" filter="url(#rough2)">延伸：步长 2 的序列 = 步长 1 的连续区间</text>
+  <text x="310" y="48" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">把每一项右移一位，位序整体下移，异或的「逐位独立」让问题变成标准的按位计数</text>
+
+  <g filter="url(#rough2)">
+    <rect x="20" y="62" width="126" height="54" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <rect x="168" y="62" width="126" height="54" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <rect x="316" y="62" width="126" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <rect x="464" y="62" width="136" height="54" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+  </g>
+  <g filter="url(#rough2)" text-anchor="middle">
+    <text x="83" y="88" font-size="12" fill="#3a4a66">start + 2·i</text>
+    <text x="83" y="105" font-size="9" fill="#8899aa">原序列</text>
+    <text x="231" y="88" font-size="12" fill="#8a6a20">÷ 2 下取整</text>
+    <text x="231" y="105" font-size="9" fill="#b09040">右移一位</text>
+    <text x="379" y="88" font-size="12" fill="#3a5a30">a + i</text>
+    <text x="379" y="105" font-size="9" fill="#88a08a">a = start &gt;&gt; 1</text>
+    <text x="532" y="88" font-size="11" fill="#3a5a30">a … a+n−1</text>
+    <text x="532" y="105" font-size="9" fill="#88a08a">连续 n 个整数</text>
+  </g>
+  <path d="M147,89 L165,89" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M295,89 L313,89" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M443,89 L461,89" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="20" y="136" width="580" height="86" fill="#ffffff" stroke="#8899aa" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="36" y="158" font-size="11" fill="#444" font-weight="bold" filter="url(#rough2)">位等价（k ≥ 1）：整除与右移一致，位序不变</text>
+  <text x="36" y="180" font-size="11" fill="#555" filter="url(#rough2)">floor((start + 2i) / 2) = floor(start / 2) + i = a + i，且第 k 位就是右移后的第 k−1 位</text>
+  <text x="36" y="202" font-size="11" fill="#555" filter="url(#rough2)">⇒ nums[i] 的第 k 位 = (a + i) 的第 k−1 位，原来的「步长 2」在这里彻底消失</text>
+
+  <rect x="20" y="240" width="580" height="132" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="36" y="262" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">于是「数 1 的个数」变成标准的按位周期计数</text>
+  <text x="36" y="286" font-size="10" fill="#4a6a3a" filter="url(#rough2)">[0, m) 中第 j 位为 1 的个数：count(m, j) = floor(m / 2^(j+1)) · 2^j + max(0, m mod 2^(j+1) − 2^j)</text>
+  <text x="36" y="308" font-size="10" fill="#4a6a3a" filter="url(#rough2)">区间 [a, a+n) 用前缀差：count(a + n, j) − count(a, j)，其中 j = k − 1</text>
+  <text x="36" y="330" font-size="10" fill="#4a6a3a" filter="url(#rough2)">答案第 k 位 = 该计数 mod 2；第 0 位单独算 =（n 为奇数）且（start 为奇数）</text>
+  <text x="36" y="352" font-size="9" fill="#88a08a" filter="url(#rough2)">总复杂度 O(位数) ≈ O(1)，n 可以开到 10^18；本题 n ≤ 1000，直接模拟即可，不必上这套公式</text>
+</svg>

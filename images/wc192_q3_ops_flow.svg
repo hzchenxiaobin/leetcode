@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="470" fill="#fafafa"/>
+  <text x="380" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">三种操作：只有 visit 改数组，back/forward 只挪指针</text>
+
+  <!-- visit -->
+  <rect x="40" y="52" width="330" height="250" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="58" y="78" font-size="14" fill="#446688" filter="url(#rough2)">visit(url)</text>
+  <path d="M52,90 L358,90" stroke="#446688" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+  <text x="58" y="114" font-size="11.5" fill="#446688" filter="url(#rough2)">① hist.resize(cur + 1)</text>
+  <text x="72" y="136" font-size="10.5" fill="#446688" filter="url(#rough2)">砍掉 cur 之后的旧前进记录</text>
+  <text x="58" y="160" font-size="11.5" fill="#446688" filter="url(#rough2)">② hist.push_back(url)</text>
+  <text x="58" y="184" font-size="11.5" fill="#446688" filter="url(#rough2)">③ cur ← hist.size() − 1</text>
+  <text x="58" y="214" font-size="10.5" fill="#b85450" filter="url(#rough2)">注意：① 是唯一会“删数据”的一步，且一步到位</text>
+  <text x="58" y="238" font-size="10.5" fill="#666" filter="url(#rough2)">等价写法：erase(begin()+cur+1, end())</text>
+  <text x="58" y="262" font-size="10.5" fill="#666" filter="url(#rough2)">不要写成逐个 pop，那会退化成 O(len)</text>
+  <text x="58" y="286" font-size="10.5" fill="#666" filter="url(#rough2)">back/forward 不改数组，只要夹取 cur</text>
+
+  <!-- back -->
+  <rect x="390" y="52" width="330" height="115" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="408" y="78" font-size="14" fill="#2d5a2d" filter="url(#rough2)">back(steps)</text>
+  <path d="M402,90 L708,90" stroke="#4a7a3a" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+  <text x="408" y="114" font-size="11.5" fill="#2d5a2d" filter="url(#rough2)">cur ← max(0, cur − steps)</text>
+  <text x="408" y="138" font-size="11.5" fill="#2d5a2d" filter="url(#rough2)">return hist[cur]</text>
+
+  <!-- forward -->
+  <rect x="390" y="180" width="330" height="115" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="408" y="206" font-size="14" fill="#8a6d1f" filter="url(#rough2)">forward(steps)</text>
+  <path d="M402,218 L708,218" stroke="#d6a040" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+  <text x="408" y="242" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">cur ← min(n − 1, cur + steps)</text>
+  <text x="408" y="266" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">return hist[cur]</text>
+
+  <!-- 不变量 -->
+  <path d="M205,304 L205,318" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M555,297 L555,318" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="50" y="322" width="660" height="74" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="380" y="346" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">不变量：hist[0..n) 恰好是 homepage → 当前页 的完整可后退链，cur ∈ [0, n−1]（n = hist.size()）</text>
+  <text x="380" y="370" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">cur 之后不存在有效前进页面 ⇒ back/forward 只需把 cur 夹在边界内</text>
+
+  <rect x="60" y="412" width="640" height="30" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="380" y="431" text-anchor="middle" font-size="11.5" fill="#8a6d1f" filter="url(#rough2)">单次操作 O(1)：夹取与判空都是常数次比较，visit 的丢弃一步完成</text>
+</svg>

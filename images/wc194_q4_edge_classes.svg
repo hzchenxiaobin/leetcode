@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="400" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">三类边：按「是否出现在所有 MST」划分</text>
+  <text x="300" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">先跑一次 Kruskal，得到基准权值和 W</text>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="45" y="66" width="160" height="150" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="125" y="88" font-size="12" fill="#8a3a36" font-weight="bold">关键边 critical</text>
+    <text x="125" y="112" font-size="10" fill="#555">删掉它，MST 权值和</text>
+    <text x="125" y="128" font-size="10" fill="#555">一定变大（或不连通）</text>
+    <text x="125" y="152" font-size="10" fill="#555">出现在</text>
+    <text x="125" y="168" font-size="10" fill="#8a3a36" font-weight="bold">所有 MST</text>
+    <text x="125" y="192" font-size="9.5" fill="#777">把每棵 MST 都"卡住"</text>
+
+    <rect x="220" y="66" width="160" height="150" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8"/>
+    <text x="300" y="88" font-size="12" fill="#8a6a20" font-weight="bold">伪关键边 pseudo</text>
+    <text x="300" y="112" font-size="10" fill="#555">不在所有 MST 里，</text>
+    <text x="300" y="128" font-size="10" fill="#555">但能被某棵 MST 选中</text>
+    <text x="300" y="152" font-size="10" fill="#555">强制加入它仍能</text>
+    <text x="300" y="168" font-size="10" fill="#8a6a20" font-weight="bold">得到权值和 W</text>
+    <text x="300" y="192" font-size="9.5" fill="#777">"可替换"的等价选择</text>
+
+    <rect x="395" y="66" width="160" height="150" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="475" y="88" font-size="12" fill="#3a4a66" font-weight="bold">无关边（其余）</text>
+    <text x="475" y="112" font-size="10" fill="#555">既不在所有 MST，</text>
+    <text x="475" y="128" font-size="10" fill="#555">也不在任何一棵 MST</text>
+    <text x="475" y="152" font-size="10" fill="#555">两条测试</text>
+    <text x="475" y="168" font-size="10" fill="#3a4a66" font-weight="bold">全部失败</text>
+    <text x="475" y="192" font-size="9.5" fill="#777">加入只会抬高总权值</text>
+  </g>
+
+  <path d="M 300 216 L 300 234" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="55" y="240" width="225" height="104" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="10"/>
+    <text x="70" y="260" font-size="10.5" fill="#8a3a36" font-weight="bold">测试 A：删掉 e 再跑 Kruskal</text>
+    <text x="70" y="280" font-size="9.5" fill="#555">在 G − e 上求 MST，权值和记为 W′；</text>
+    <text x="70" y="296" font-size="9.5" fill="#555">若 W′ &gt; W，或剩下不足 n − 1 条边，</text>
+    <text x="70" y="312" font-size="9.5" fill="#555">则 e 是</text>
+    <text x="118" y="312" font-size="9.5" fill="#8a3a36" font-weight="bold">关键边</text>
+    <text x="70" y="332" font-size="9" fill="#999">（删一条边最多让 W 增加这么多）</text>
+
+    <rect x="320" y="240" width="225" height="104" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10"/>
+    <text x="335" y="260" font-size="10.5" fill="#8a6a20" font-weight="bold">测试 B：强制 e 再跑 Kruskal</text>
+    <text x="335" y="280" font-size="9.5" fill="#555">先把 e 的两端并进同一集合，权值和 w(e)，</text>
+    <text x="335" y="296" font-size="9.5" fill="#555">再按权值升序补边，得到 W″；若 W″ = W</text>
+    <text x="335" y="312" font-size="9.5" fill="#555">则 e 是</text>
+    <text x="383" y="312" font-size="9.5" fill="#8a6a20" font-weight="bold">伪关键边</text>
+    <text x="335" y="332" font-size="9" fill="#999">（仅当 e 不是关键边时才会走到这里）</text>
+  </g>
+
+  <text x="300" y="372" text-anchor="middle" font-size="10.5" fill="#444" filter="url(#rough2)">两条测试都基于「最小生成树权值和不变」这一唯一判据</text>
+  <text x="300" y="390" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">先判关键、再判伪关键，顺序不能反</text>
+</svg>

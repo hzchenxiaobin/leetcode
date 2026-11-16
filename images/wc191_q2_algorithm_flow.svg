@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：排序 → 补边界 → 扫最大间隔 → 相乘取模</text>
+
+  <g filter="url(#rough2)">
+    <rect x="110" y="46" width="340" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="280" y="64" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold">① 排序两个切口数组</text>
+    <text x="280" y="84" text-anchor="middle" font-size="10" fill="#555">sort(horizontalCuts)；sort(verticalCuts)</text>
+
+    <rect x="110" y="110" width="340" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="280" y="128" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold">② 补上两条边界</text>
+    <text x="280" y="148" text-anchor="middle" font-size="10" fill="#555">水平方向补 0 与 h；竖直方向补 0 与 w</text>
+
+    <rect x="110" y="174" width="340" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="280" y="192" text-anchor="middle" font-size="12" fill="#3a4a66" font-weight="bold">③ 扫描相邻间隔，记下最大值</text>
+    <text x="280" y="212" text-anchor="middle" font-size="10" fill="#555">best = max(best, c − prev)，最后再算 limit − prev</text>
+
+    <rect x="110" y="238" width="340" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="8"/>
+    <text x="280" y="256" text-anchor="middle" font-size="12" fill="#8a6a20" font-weight="bold">④ 两方向最大值相乘（长整型）</text>
+    <text x="280" y="276" text-anchor="middle" font-size="10" fill="#555">乘积最大 10⁹ × 10⁹ = 10¹⁸，必须用 long long</text>
+
+    <rect x="110" y="302" width="340" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" rx="8"/>
+    <text x="280" y="320" text-anchor="middle" font-size="12" fill="#3a5a30" font-weight="bold">⑤ 对 10⁹ + 7 取模后返回</text>
+    <text x="280" y="340" text-anchor="middle" font-size="10" fill="#555">ans = maxGapH × maxGapW mod (10⁹ + 7)</text>
+  </g>
+
+  <g stroke="#446688" stroke-width="1.5" fill="none" filter="url(#rough2)">
+    <path d="M 280 94 L 280 108" marker-end="url(#arr)"/>
+    <path d="M 280 158 L 280 172" marker-end="url(#arr)"/>
+    <path d="M 280 222 L 280 236" marker-end="url(#arr)"/>
+    <path d="M 280 286 L 280 300" marker-end="url(#arr)"/>
+  </g>
+
+  <text x="280" y="374" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">两个方向完全独立：水平间隔决定块的高，竖直间隔决定块的宽，各自取最大即可</text>
+  <text x="280" y="390" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">取模放在乘法之后，避免中间结果被截断（C++ 里 32 位 int 会在第 ④ 步溢出）</text>
+</svg>

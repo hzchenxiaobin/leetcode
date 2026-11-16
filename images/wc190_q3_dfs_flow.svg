@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="520" height="400" fill="#fafafa"/>
+
+  <text x="260" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">DFS 流程：掩码沿路径翻转，叶子处判定</text>
+  <text x="260" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">显式栈版本：每个栈帧携带 (节点, 父路径掩码)，出栈时再翻转</text>
+
+  <!-- 取出栈顶 -->
+  <rect x="145" y="60" width="230" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="79" text-anchor="middle" font-size="11" fill="#22384f" filter="url(#rough2)">出栈 (v, mask)</text>
+  <text x="260" y="96" text-anchor="middle" font-size="10" fill="#446688" filter="url(#rough2)">mask = 根到父节点的奇偶性</text>
+
+  <line x1="260" y1="106" x2="260" y2="120" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 翻转 -->
+  <rect x="145" y="122" width="230" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="260" y="143" text-anchor="middle" font-size="11" fill="#7a5a18" filter="url(#rough2)">mask ^= 1 &lt;&lt; (v.val - 1)</text>
+
+  <line x1="260" y1="156" x2="260" y2="166" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 判叶子 -->
+  <polygon points="260,168 370,208 260,248 150,208" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="260" y="213" text-anchor="middle" font-size="11" fill="#33602a" filter="url(#rough2)">v 是叶子？</text>
+
+  <!-- 左分支：是 -->
+  <path d="M 150 208 H 108 V 262" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="124" y="200" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <!-- 右分支：否 -->
+  <path d="M 370 208 H 412 V 262" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="386" y="200" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+
+  <!-- 叶子处理 -->
+  <rect x="18" y="266" width="180" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="30" y="288" font-size="10.5" fill="#8d3b38" filter="url(#rough2)">叶子：检查 mask 的 1 的个数</text>
+  <text x="30" y="307" font-size="10" fill="#8d3b38" filter="url(#rough2)">mask &amp; (mask - 1) == 0 ?</text>
+  <text x="30" y="326" font-size="10" fill="#4a7a3a" filter="url(#rough2)">成立 → ans += 1</text>
+  <text x="30" y="344" font-size="10" fill="#8d3b38" filter="url(#rough2)">不成立 → 跳过</text>
+
+  <!-- 非叶子处理 -->
+  <rect x="322" y="266" width="180" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="334" y="288" font-size="10.5" fill="#22384f" filter="url(#rough2)">非叶子：左右孩子</text>
+  <text x="334" y="307" font-size="10" fill="#22384f" filter="url(#rough2)">各自带 mask 入栈</text>
+  <text x="334" y="326" font-size="10" fill="#446688" filter="url(#rough2)">空孩子直接跳过</text>
+  <text x="334" y="344" font-size="10" fill="#446688" filter="url(#rough2)">下一轮继续出栈</text>
+
+  <!-- 循环回边 -->
+  <path d="M 502 309 H 512 V 83 H 381" fill="none" stroke="#666" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="440" y="256" font-size="9.5" fill="#888" filter="url(#rough2)">回到主循环</text>
+
+  <text x="20" y="372" font-size="10" fill="#777" filter="url(#rough2)">每个节点恰好入栈一次；mask 是传值拷贝，回溯无需撤销</text>
+  <text x="20" y="390" font-size="10" fill="#777" filter="url(#rough2)">叶子判定必须在翻转之后，否则漏掉叶子自身那一票</text>
+</svg>
