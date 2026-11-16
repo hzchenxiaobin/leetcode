@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="430" fill="#fafafa"/>
+
+  <text x="340" y="27" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心观察：子树的「整棵归零」是原子操作</text>
+  <text x="340" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">零掉孩子 c 的整棵子树 ⇒ 该子树贡献从 dp[c] 直接变成 0，损失恰好是 dp[c]</text>
+
+  <g filter="url(#rough2)" stroke="#8a9bb0" stroke-width="1.4" fill="none">
+    <path d="M 175 102 L 75 185"/>
+    <path d="M 175 102 L 175 185"/>
+    <path d="M 175 102 L 275 185"/>
+    <path d="M 75 185 L 75 270"/>
+    <path d="M 175 185 L 175 270"/>
+    <path d="M 275 185 L 235 270"/>
+    <path d="M 275 185 L 315 270"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9.5" text-anchor="middle">
+    <rect x="148" y="82" width="54" height="40" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="175" y="99" fill="#3a4a66">v=5</text>
+    <text x="175" y="114" fill="#1c3d6e" font-weight="bold">dp=16</text>
+    <rect x="48" y="165" width="54" height="40" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="75" y="182" fill="#3a4a66">v=6</text>
+    <text x="75" y="197" fill="#1c3d6e" font-weight="bold">dp=6</text>
+    <rect x="148" y="165" width="54" height="40" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="175" y="182" fill="#8a6a20">v=1</text>
+    <text x="175" y="197" fill="#8a6a20" font-weight="bold">dp=3</text>
+    <rect x="248" y="165" width="54" height="40" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="275" y="182" fill="#8a6a20">v=2</text>
+    <text x="275" y="197" fill="#8a6a20" font-weight="bold">dp=5</text>
+    <rect x="48" y="250" width="54" height="40" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="75" y="267" fill="#3a5a30">v=3</text>
+    <text x="75" y="282" fill="#3a5a30" font-weight="bold">dp=3</text>
+    <rect x="148" y="250" width="54" height="40" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="175" y="267" fill="#3a5a30">v=2</text>
+    <text x="175" y="282" fill="#3a5a30" font-weight="bold">dp=2</text>
+    <rect x="208" y="250" width="54" height="40" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="235" y="267" fill="#3a5a30">v=3</text>
+    <text x="235" y="282" fill="#3a5a30" font-weight="bold">dp=3</text>
+    <rect x="288" y="250" width="54" height="40" rx="5" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="315" y="267" fill="#8a3a36">v=−3</text>
+    <text x="315" y="282" fill="#8a3a36" font-weight="bold">dp=−3</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9" text-anchor="middle" fill="#999">
+    <text x="175" y="138">节点 0 = 根</text>
+  </g>
+
+  <text x="175" y="332" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#rough2)">示例 1 的树：圆角框里写 score 与 dp 值</text>
+  <text x="175" y="352" text-anchor="middle" font-size="9.5" fill="#777" filter="url(#rough2)">节点 3 的孩子 dp = {3, −3}，零掉 −3 反而赚 3 分</text>
+
+  <rect x="352" y="70" width="310" height="340" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)" font-size="10" fill="#555">
+    <text x="368" y="96" font-size="11" fill="#8a6a20" font-weight="bold">状态定义</text>
+    <text x="368" y="118">dp[u]：假设没有任何祖先零掉子树 u 时，</text>
+    <text x="368" y="134">子树 u 能贡献的最大分数</text>
+
+    <text x="368" y="162" font-size="11" fill="#8a6a20" font-weight="bold">转移（S 为原始总和）</text>
+    <text x="368" y="184" fill="#3a4a66">S = score[u] + Σ dp[c]</text>
+    <text x="368" y="210" fill="#4a7a3a">叶节点：dp[u] = score[u]</text>
+    <text x="368" y="236" fill="#8a6a20">op=0：dp[u] = S − min(0, min_c dp[c])</text>
+    <text x="368" y="262" fill="#8a3a36">op=1：dp[u] = S − min_c dp[c]</text>
+
+    <text x="368" y="290" font-size="11" fill="#8a6a20" font-weight="bold">为什么只要「最小的孩子」</text>
+    <text x="368" y="310">每个非叶节点最多只能零掉一个孩子，</text>
+    <text x="368" y="326">所以零掉 c 的收益就是 dp[c]：</text>
+    <text x="368" y="342">op=0 时挑负收益最大的（否则不动），</text>
+    <text x="368" y="358">op=1 时被迫挑 dp 最小的那个。</text>
+    <text x="368" y="386" fill="#1c3d6e" font-weight="bold">答案 = dp[0]</text>
+  </g>
+</svg>

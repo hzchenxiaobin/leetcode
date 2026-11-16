@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="470" fill="#fafafa"/>
+
+  <text x="330" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：建表 → 先序遍历 → 逆序 DP</text>
+  <text x="330" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">父节点的 dp 依赖全部孩子，因此孩子必须先算完；逆序先序序列恰好满足这一点</text>
+
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.6" fill="none">
+    <path d="M 180 128 L 180 148" marker-end="url(#arr)"/>
+    <path d="M 180 208 L 180 228" marker-end="url(#arr)"/>
+    <path d="M 180 288 L 180 308" marker-end="url(#arr)"/>
+    <path d="M 322 342 L 346 342" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="42" y="78" width="280" height="50" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="58" y="100" font-size="11.5" fill="#1c3d6e" font-weight="bold">① 建 children[] 邻接表</text>
+    <text x="58" y="117" font-size="10" fill="#555">只记录「每个节点的孩子」，O(n) 空间</text>
+
+    <rect x="42" y="150" width="280" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <text x="58" y="172" font-size="11.5" fill="#1c3d6e" font-weight="bold">② 显式栈做先序遍历</text>
+    <text x="58" y="189" font-size="10" fill="#555">得到 order[0..n−1]，父一定排在孩子前面</text>
+    <text x="58" y="203" font-size="10" fill="#999">（不用递归，链状树深度可达 10⁵）</text>
+
+    <rect x="42" y="230" width="280" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="58" y="252" font-size="11.5" fill="#3a5a30" font-weight="bold">③ 逆序扫描 order</text>
+    <text x="58" y="269" font-size="10" fill="#555">轮到 u 时，所有孩子的 dp 都已算好</text>
+    <text x="58" y="283" font-size="10" fill="#999">逆先序 = 合法自底向上顺序</text>
+
+    <rect x="42" y="310" width="280" height="64" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+    <text x="58" y="332" font-size="11.5" fill="#8a6a20" font-weight="bold">④ 合并孩子贡献</text>
+    <text x="58" y="349" font-size="10" fill="#555">S = score[u] + Σ dp[c]</text>
+    <text x="58" y="364" font-size="10" fill="#555">m = min_c dp[c]（只关心最小的孩子）</text>
+  </g>
+
+  <rect x="350" y="76" width="286" height="254" rx="10" fill="#fafafa" stroke="#8a9bb0" stroke-width="1.4" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="364" y="96" font-size="10.5" fill="#66788a" font-weight="bold" filter="url(#rough2)">④ 的三种分支</text>
+
+  <g filter="url(#rough2)">
+    <rect x="360" y="106" width="266" height="54" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5"/>
+    <text x="374" y="126" font-size="10.5" fill="#3a5a30" font-weight="bold">叶节点（没有孩子）</text>
+    <text x="374" y="144" font-size="10" fill="#555">dp[u] = score[u]，不参与任何选择</text>
+
+    <rect x="360" y="174" width="266" height="62" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="374" y="194" font-size="10.5" fill="#8a6a20" font-weight="bold">op[u] = 0：可以零掉至多一个孩子</text>
+    <text x="374" y="212" font-size="10" fill="#555">dp[u] = S − min(0, m)</text>
+    <text x="374" y="228" font-size="9.5" fill="#999">m ≥ 0 时不动（min(0, m) = 0）</text>
+
+    <rect x="360" y="250" width="266" height="62" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+    <text x="374" y="270" font-size="10.5" fill="#8a3a36" font-weight="bold">op[u] = 1：必须零掉恰好一个孩子</text>
+    <text x="374" y="288" font-size="10" fill="#555">dp[u] = S − m</text>
+    <text x="374" y="304" font-size="9.5" fill="#999">m 可以为负：零掉负收益反而是赚</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="350" y="352" width="286" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="366" y="374" font-size="11.5" fill="#1c3d6e" font-weight="bold">⑤ 返回 dp[0]</text>
+    <text x="366" y="392" font-size="10" fill="#555">根没有被任何祖先清零，它就是答案</text>
+  </g>
+
+  <text x="330" y="440" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">单孩子且 op[u]=1 时 dp[u] = score[u]：S − m = score[u] + m − m，可作为实现后的自检点</text>
+</svg>

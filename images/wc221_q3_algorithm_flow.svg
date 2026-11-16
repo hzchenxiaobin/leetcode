@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="612" viewBox="0 0 700 612" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="612" fill="#fafafa" filter="url(#rough2)"/>
+
+  <text x="350" y="36" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：逐球逐行递推</text>
+  <path d="M 210 46 Q 350 54 490 46" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <text x="350" y="68" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">外层枚举 n 颗球，内层最多下落 m 行；要么掉出（记下列号），要么卡住（记 -1）</text>
+
+  <!-- start: outer loop -->
+  <g filter="url(#rough2)">
+    <rect x="198" y="82" width="284" height="44" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="110" text-anchor="middle" font-size="14" font-weight="bold" fill="#34557e" filter="url(#rough2)">枚举起点 c0 = 0 … n−1</text>
+
+  <path d="M 340 126 L 340 150" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="198" y="152" width="284" height="40" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="178" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">c ← c0，r ← 0</text>
+
+  <path d="M 340 192 L 340 210" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 1: r < m -->
+  <g filter="url(#rough2)">
+    <polygon points="236,254 340,214 444,254 340,294" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="261" text-anchor="middle" font-size="14" font-weight="bold" fill="#8a6a10" filter="url(#rough2)">r &lt; m ?</text>
+
+  <path d="M 236 254 L 92 254 L 92 544 L 190 544" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="102" y="244" font-size="11" fill="#2e6e2e" filter="url(#rough2)">是（从箱底掉出）</text>
+
+  <path d="M 340 294 L 340 318" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="350" y="312" font-size="12" fill="#34557e" filter="url(#rough2)">否</text>
+
+  <g filter="url(#rough2)">
+    <rect x="194" y="320" width="292" height="56" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="340" y="343" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">g ← grid[r][c]</text>
+  <text x="340" y="365" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">nc ← c + g</text>
+
+  <path d="M 340 376 L 340 400" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- decision 2: stuck? -->
+  <g filter="url(#rough2)">
+    <polygon points="200,446 340,402 480,446 340,490" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="440" text-anchor="middle" font-size="12.5" fill="#8a3a36" filter="url(#rough2)">nc 越界，或</text>
+  <text x="340" y="460" text-anchor="middle" font-size="12.5" fill="#8a3a36" filter="url(#rough2)">grid[r][nc] ≠ g ?</text>
+
+  <path d="M 480 446 L 542 446" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="500" y="438" font-size="11" fill="#b85450" filter="url(#rough2)">是</text>
+
+  <g filter="url(#rough2)">
+    <rect x="546" y="424" width="140" height="44" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+  <text x="616" y="451" text-anchor="middle" font-size="13" fill="#8a3a36" filter="url(#rough2)">c ← −1（卡住）</text>
+
+  <path d="M 616 468 L 616 544 L 490 544" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+
+  <path d="M 340 490 L 340 514" stroke="#3a3a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="350" y="508" font-size="12" fill="#34557e" filter="url(#rough2)">否（通过，继续下落）</text>
+
+  <!-- collect answer -->
+  <g filter="url(#rough2)">
+    <rect x="194" y="516" width="292" height="46" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+  </g>
+  <text x="340" y="545" text-anchor="middle" font-size="14" font-weight="bold" fill="#2e6e2e" filter="url(#rough2)">answer[c0] ← c</text>
+
+  <path d="M 340 562 L 340 582 L 120 582 L 120 104 L 192 104" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrB)" filter="url(#rough2)"/>
+  <text x="132" y="574" font-size="11" fill="#34557e" filter="url(#rough2)">下一颗球（c0 + 1）</text>
+
+  <!-- side note -->
+  <g filter="url(#rough2)">
+    <rect x="516" y="168" width="168" height="152" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+  </g>
+  <text x="600" y="190" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a6a10" filter="url(#rough2)">要点</text>
+  <g font-size="11" fill="#6b5310" filter="url(#rough2)">
+    <text x="532" y="212">· 内层最多 m 步</text>
+    <text x="532" y="234">· 卡住立即 break</text>
+    <text x="532" y="256">· 掉出则记末列号</text>
+    <text x="532" y="278">· 越界判断要短路</text>
+    <text x="532" y="300">· 无需记忆化</text>
+  </g>
+
+  <text x="350" y="596" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">循环结束后返回 answer；answer 的长度恒为 n，卡住的球填 -1</text>
+</svg>
