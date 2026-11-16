@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="440" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：切词 → 入桶 → 按桶号拼接 → 修大小写</text>
+  <text x="320" y="48" text-anchor="middle" font-size="10.5" fill="#888">全程只做常数次线性扫描，不需要比较排序</text>
+
+  <g filter="url(#rough2)" text-anchor="middle">
+    <rect x="40" y="66" width="330" height="48" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="205" y="88" font-size="11.5" fill="#333">1. 按单个空格切出 words</text>
+    <text x="205" y="105" font-size="9.5" fill="#5a6a86">一次扫描，O(n)</text>
+
+    <rect x="40" y="136" width="330" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="205" y="158" font-size="11.5" fill="#333">2. 把首词首字母改成小写</text>
+    <text x="205" y="175" font-size="9.5" fill="#8a6a20">全句唯一可能有大写的位置</text>
+
+    <rect x="40" y="206" width="330" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="205" y="228" font-size="11.5" fill="#333">3. 按原顺序 append 进 buckets[len]</text>
+    <text x="205" y="245" font-size="9.5" fill="#3a5a30">先来先放，桶内天然稳定</text>
+
+    <rect x="40" y="276" width="330" height="48" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="205" y="298" font-size="11.5" fill="#333">4. L = 1..maxLen 逐桶取出并拼接</text>
+    <text x="205" y="315" font-size="9.5" fill="#3a5a30">桶号升序 = 长度升序</text>
+
+    <rect x="40" y="346" width="330" height="48" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+    <text x="205" y="368" font-size="11.5" fill="#333">5. 结果首字符转大写，返回</text>
+    <text x="205" y="385" font-size="9.5" fill="#8a3a36">其余字符一律保持小写</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 205 114 L 205 134" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <path d="M 205 184 L 205 204" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <path d="M 205 254 L 205 274" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+    <path d="M 205 324 L 205 344" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="396" y="66" width="212" height="328" fill="#f3f0fa" stroke="#6a5a8a" stroke-width="1.4" rx="12"/>
+  </g>
+  <text x="410" y="88" font-size="11" fill="#4a3a6a" font-weight="bold">桶结构（示例）</text>
+
+  <g filter="url(#rough2)" font-size="10" fill="#333">
+    <text x="410" y="112">桶 2:</text>
+    <rect x="462" y="99" width="66" height="20" fill="#ffffff" stroke="#6a5a8a" stroke-width="1.2" rx="4"/>
+    <text x="495" y="113" text-anchor="middle" font-size="10">is</text>
+
+    <text x="410" y="146">桶 4:</text>
+    <rect x="462" y="133" width="66" height="20" fill="#ffffff" stroke="#6a5a8a" stroke-width="1.2" rx="4"/>
+    <text x="495" y="147" text-anchor="middle" font-size="10">cool</text>
+
+    <text x="410" y="180">桶 8:</text>
+    <rect x="462" y="167" width="92" height="20" fill="#ffffff" stroke="#6a5a8a" stroke-width="1.2" rx="4"/>
+    <text x="508" y="181" text-anchor="middle" font-size="10">leetcode</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9.5" fill="#5a4a7a">
+    <text x="410" y="212">空桶直接跳过，不占额外时间；</text>
+    <text x="410" y="228">桶用数组下标定位，无需哈希。</text>
+    <text x="410" y="252">拼接时每个词后加一个空格，</text>
+    <text x="410" y="268">最后一个词后不加。</text>
+    <text x="410" y="292">"Leetcode" 在第 2 步已变成</text>
+    <text x="410" y="308">"leetcode"，所以最后只需补</text>
+    <text x="410" y="324">一个首字母大写。</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="410" y="344" width="184" height="38" fill="#ffffff" stroke="#6a5a8a" stroke-width="1.2" rx="8"/>
+  </g>
+  <text x="502" y="360" text-anchor="middle" font-size="9.5" fill="#4a3a6a">时间 O(n + maxLen)</text>
+  <text x="502" y="375" text-anchor="middle" font-size="9.5" fill="#4a3a6a">空间 O(n)</text>
+</svg>

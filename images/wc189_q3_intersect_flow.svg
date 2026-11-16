@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 520" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="520" fill="#fafafa"/>
+
+  <text x="310" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：倒排建表 + 逐人求交 + 早停</text>
+  <text x="310" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">两条独立的小技巧：位集压掉「逐个比对」、早停压掉「全部公司」</text>
+
+  <rect x="70" y="60" width="480" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="86" y="80" font-size="11" fill="#3a4a66" filter="url(#rough2)">① 扫一遍所有清单，建倒排表 like[公司] ← 收藏它的用户位集</text>
+  <text x="86" y="98" font-size="10" fill="#667" filter="url(#rough2)">对用户 i 的每个公司 c 执行 like[c] |= (1 &lt;&lt; i)，共 Σ|Lᵢ| 次置位</text>
+
+  <path d="M 310 106 L 310 122" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="124" width="480" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="86" y="143" font-size="11" fill="#3a5a30" filter="url(#rough2)">② 对每个人 i：令交集体 inter = 全 1（恒等元，第 i 位必然为 1）</text>
+  <text x="86" y="159" font-size="10" fill="#667" filter="url(#rough2)">Python 写 -1；C++ 用 bitset&lt;100&gt; 再 .set()</text>
+
+  <path d="M 310 166 L 310 182" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="184" width="480" height="42" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="86" y="203" font-size="11" fill="#3a5a30" filter="url(#rough2)">③ 遍历清单里的每个公司 c： inter &amp;= like[c]</text>
+  <text x="86" y="219" font-size="10" fill="#667" filter="url(#rough2)">每步把「必须同时收藏 c」的人留下，交集只会越交越小</text>
+
+  <path d="M 310 226 L 310 248" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 310 252 L 520 300 L 310 348 L 100 300 Z" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="310" y="296" text-anchor="middle" font-size="12" fill="#8a6a20" filter="url(#rough2)">inter 只剩第 i 位？</text>
+  <text x="310" y="314" text-anchor="middle" font-size="10" fill="#8a6a20" filter="url(#rough2)">（即 inter == 1 &lt;&lt; i）</text>
+
+  <!-- 否：右侧回环回到 ③ -->
+  <path d="M 520 300 L 585 300 L 585 205 L 556 205" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="566" y="262" font-size="10.5" fill="#b85450" filter="url(#rough2)">否</text>
+  <text x="536" y="330" font-size="9.5" fill="#b85450" filter="url(#rough2)">继续下一个公司</text>
+
+  <!-- 是：向下 -->
+  <path d="M 310 348 L 310 368" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="320" y="364" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="150" y="370" width="320" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="395" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">break：i 是极大元，加入答案</text>
+
+  <path d="M 310 410 L 310 424" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="426" width="480" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="86" y="451" font-size="11" fill="#3a4a66" filter="url(#rough2)">④ i 从小到大扫描，答案天然升序，无需再排序</text>
+
+  <text x="310" y="490" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">早停合法：第 i 位永远留在交集中，一旦只剩它，后面的 ∩ 不可能再变大</text>
+  <text x="310" y="508" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">循环结束时 inter 是否恰为 {i}，就是「除自己外无人包含整份清单」的判据</text>
+</svg>

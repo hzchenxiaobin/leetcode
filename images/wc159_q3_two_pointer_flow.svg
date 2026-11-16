@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 444" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="444" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：右指针补齐 need，左指针贪心收缩</text>
+  <text x="280" y="42" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">missing 记录「还有几个字符没被窗口补齐」，它一旦归零，窗口外就合法了</text>
+
+  <g filter="url(#rough2)">
+    <rect x="150" y="56" width="260" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="280" y="77" text-anchor="middle" font-size="11" fill="#3a4a66">① 统计 total[4]，t = n / 4</text>
+
+    <rect x="150" y="100" width="260" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="280" y="121" text-anchor="middle" font-size="11" fill="#3a4a66">② need[c] = max(0, total[c] − t)</text>
+
+    <rect x="150" y="144" width="260" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="280" y="165" text-anchor="middle" font-size="11" fill="#8a6a20">③ missing = #{c : need[c] &gt; 0}；为 0 则返回 0</text>
+
+    <rect x="150" y="188" width="260" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="280" y="209" text-anchor="middle" font-size="11" fill="#3a5a30">④ 加入 s[r]：inside 增 1，补齐则 missing − 1</text>
+
+    <path d="M 280 236 L 380 272 L 280 308 L 180 272 Z" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+    <text x="280" y="277" text-anchor="middle" font-size="12" fill="#b85450" font-weight="bold">⑤ missing = 0 ?</text>
+
+    <rect x="150" y="330" width="260" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="280" y="351" text-anchor="middle" font-size="11" fill="#3a5a30">⑥ ans = min(ans, r − l + 1)；移出 s[l] 后 l + 1</text>
+
+    <rect x="196" y="382" width="168" height="30" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="280" y="402" text-anchor="middle" font-size="11" fill="#3a4a66">r 走完 n → 返回 ans</text>
+  </g>
+
+  <path d="M 280 88 L 280 98" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 132 L 280 142" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 176 L 280 186" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 220 L 280 234" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 308 L 280 328" stroke="#4a7a3a" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="292" y="322" font-size="10" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">是</text>
+
+  <path d="M 380 272 L 440 272 L 440 204 L 412 204" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr2)" filter="url(#rough2)"/>
+  <text x="446" y="240" font-size="10" fill="#b85450" font-weight="bold" filter="url(#rough2)">否：继续扩</text>
+
+  <path d="M 196 346 L 108 346 L 108 204 L 148 204" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr2)" filter="url(#rough2)"/>
+  <text x="116" y="272" font-size="10" fill="#b85450" font-weight="bold" filter="url(#rough2)">收缩循环</text>
+
+  <text x="280" y="435" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">r 只增不减（n 步），l 也只增不减（≤ n 步）：每个字符进出窗口各一次，总时间 O(n)</text>
+</svg>
