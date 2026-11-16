@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 480" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+    <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="480" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">逆向还原 + 大根堆 + 取模加速：算法流程</text>
+
+  <rect x="130" y="46" width="300" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="71" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">① 大根堆：target 全部入堆，total = sum(target)</text>
+
+  <path d="M 280 86 L 280 108" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="110" width="300" height="40" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="135" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">② 弹出堆顶 M（当前最大值），rest = total − M</text>
+
+  <path d="M 280 150 L 280 176" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="280,178 405,212 280,246 155,212" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="209" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">M == 1 ?</text>
+  <text x="280" y="224" text-anchor="middle" font-size="9" fill="#8a6a20" filter="url(#rough2)">堆顶为 1 意味着全为 1</text>
+
+  <path d="M 405 212 L 442 212" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrG)" filter="url(#rough2)"/>
+  <text x="424" y="204" text-anchor="middle" font-size="9" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <rect x="444" y="188" width="104" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="496" y="216" text-anchor="middle" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">返回 true</text>
+
+  <path d="M 280 246 L 280 272" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="290" y="264" font-size="9" fill="#666" filter="url(#rough2)">否</text>
+
+  <polygon points="280,274 412,310 280,346 148,310" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="280" y="306" text-anchor="middle" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">rest == 0 或 M ≤ rest ?</text>
+  <text x="280" y="321" text-anchor="middle" font-size="9" fill="#8a3a36" filter="url(#rough2)">n = 1 或最大值不够大 ⇒ 无前驱</text>
+
+  <path d="M 412 310 L 442 310" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arrR)" filter="url(#rough2)"/>
+  <text x="428" y="302" text-anchor="middle" font-size="9" fill="#b85450" filter="url(#rough2)">是</text>
+  <rect x="444" y="282" width="104" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="496" y="304" text-anchor="middle" font-size="11.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">返回 false</text>
+  <text x="496" y="322" text-anchor="middle" font-size="9" fill="#8a3a36" filter="url(#rough2)">不可达</text>
+
+  <path d="M 280 346 L 280 366" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="290" y="360" font-size="9" fill="#666" filter="url(#rough2)">否</text>
+
+  <rect x="118" y="368" width="324" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="388" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">③ 取模加速：prev = (M − 1) mod rest + 1</text>
+  <text x="280" y="404" text-anchor="middle" font-size="9" fill="#8a6a20" filter="url(#rough2)">等价于反复 prev −= rest 直到落进 [1, rest]，一次算完</text>
+
+  <path d="M 280 412 L 280 434" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="118" y="436" width="324" height="36" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="459" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">④ total = rest + prev，push(prev) → 回到 ②</text>
+
+  <path d="M 118 454 L 66 454 L 66 130 L 126 130" stroke="#446688" stroke-width="1.5" fill="none" stroke-dasharray="5 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+</svg>

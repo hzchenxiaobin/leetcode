@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 436" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="580" height="436" fill="#fafafa"/>
+
+  <text x="290" y="27" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">核心归约：水龙头 → 覆盖区间 → reach[] 跳跃数组</text>
+  <text x="290" y="47" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">n = 5，ranges = [3, 4, 1, 1, 0, 0]；每个水龙头 i 覆盖 [i − r, i + r]</text>
+
+  <g filter="url(#rough2)">
+    <text x="56" y="84" text-anchor="end" font-size="10.5" fill="#666">水龙头</text>
+    <text x="56" y="100" text-anchor="end" font-size="10.5" fill="#666">i = 0</text>
+    <text x="56" y="118" text-anchor="end" font-size="10.5" fill="#666">i = 1</text>
+    <text x="56" y="136" text-anchor="end" font-size="10.5" fill="#666">i = 2</text>
+    <text x="56" y="154" text-anchor="end" font-size="10.5" fill="#666">i = 3</text>
+    <text x="56" y="172" text-anchor="end" font-size="10.5" fill="#666">i = 4</text>
+    <text x="56" y="190" text-anchor="end" font-size="10.5" fill="#666">i = 5</text>
+  </g>
+
+  <g filter="url(#rough2)" stroke-width="1.3">
+    <rect x="80" y="93" width="264" height="10" fill="#e8f0fe" stroke="#446688" rx="3"/>
+    <rect x="80" y="111" width="440" height="10" fill="#fff8e1" stroke="#d6a040" rx="3" stroke-width="2"/>
+    <rect x="168" y="129" width="176" height="10" fill="#e8f0fe" stroke="#446688" rx="3"/>
+    <rect x="256" y="147" width="176" height="10" fill="#e8f0fe" stroke="#446688" rx="3"/>
+    <rect x="429" y="165" width="7" height="10" fill="#e6f4ea" stroke="#4a7a3a" rx="2"/>
+    <rect x="517" y="183" width="7" height="10" fill="#e6f4ea" stroke="#4a7a3a" rx="2"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <text x="352" y="101" font-size="9.5" fill="#3a4a66">[−3, 3]</text>
+    <text x="524" y="119" font-size="9.5" fill="#8a6a20">[−3, 5] 最远</text>
+    <text x="352" y="137" font-size="9.5" fill="#3a4a66">[1, 3]</text>
+    <text x="440" y="155" font-size="9.5" fill="#3a4a66">[2, 4]</text>
+    <text x="442" y="173" font-size="9.5" fill="#3a5a30">[4, 4]</text>
+    <text x="530" y="191" font-size="9.5" fill="#3a5a30">[5, 5]</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <line x1="70" y1="205" x2="535" y2="205" stroke="#666" stroke-width="1.6"/>
+    <line x1="80" y1="199" x2="80" y2="211" stroke="#666" stroke-width="1.4"/>
+    <line x1="168" y1="199" x2="168" y2="211" stroke="#666" stroke-width="1.4"/>
+    <line x1="256" y1="199" x2="256" y2="211" stroke="#666" stroke-width="1.4"/>
+    <line x1="344" y1="199" x2="344" y2="211" stroke="#666" stroke-width="1.4"/>
+    <line x1="432" y1="199" x2="432" y2="211" stroke="#666" stroke-width="1.4"/>
+    <line x1="520" y1="199" x2="520" y2="211" stroke="#666" stroke-width="1.4"/>
+    <text x="80" y="225" text-anchor="middle" font-size="10.5" fill="#555">0</text>
+    <text x="168" y="225" text-anchor="middle" font-size="10.5" fill="#555">1</text>
+    <text x="256" y="225" text-anchor="middle" font-size="10.5" fill="#555">2</text>
+    <text x="344" y="225" text-anchor="middle" font-size="10.5" fill="#555">3</text>
+    <text x="432" y="225" text-anchor="middle" font-size="10.5" fill="#555">4</text>
+    <text x="520" y="225" text-anchor="middle" font-size="10.5" fill="#555">n = 5</text>
+  </g>
+
+  <text x="290" y="246" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">超出 [0, n] 的部分一律裁掉：只需关心每个水龙头在花园内能盖到哪</text>
+
+  <rect x="60" y="258" width="460" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="280" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">reach[max(0, i − r)] = max(reach[·], min(n, i + r))</text>
+
+  <path d="M 290 296 L 290 310" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <text x="122" y="336" text-anchor="end" font-size="11" fill="#555">reach =</text>
+    <rect x="130" y="320" width="56" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="5"/>
+    <rect x="194" y="320" width="56" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="5"/>
+    <rect x="258" y="320" width="56" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="5"/>
+    <rect x="322" y="320" width="56" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="5"/>
+    <rect x="386" y="320" width="56" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="5"/>
+    <rect x="450" y="320" width="56" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="5"/>
+    <text x="158" y="316" text-anchor="middle" font-size="9.5" fill="#999">0</text>
+    <text x="222" y="316" text-anchor="middle" font-size="9.5" fill="#999">1</text>
+    <text x="286" y="316" text-anchor="middle" font-size="9.5" fill="#999">2</text>
+    <text x="350" y="316" text-anchor="middle" font-size="9.5" fill="#999">3</text>
+    <text x="414" y="316" text-anchor="middle" font-size="9.5" fill="#999">4</text>
+    <text x="478" y="316" text-anchor="middle" font-size="9.5" fill="#999">5</text>
+    <text x="158" y="342" text-anchor="middle" font-size="13" fill="#8a6a20" font-weight="bold">5</text>
+    <text x="222" y="342" text-anchor="middle" font-size="13" fill="#3a4a66">3</text>
+    <text x="286" y="342" text-anchor="middle" font-size="13" fill="#3a4a66">4</text>
+    <text x="350" y="342" text-anchor="middle" font-size="13" fill="#3a4a66">4</text>
+    <text x="414" y="342" text-anchor="middle" font-size="13" fill="#3a5a30">4</text>
+    <text x="478" y="342" text-anchor="middle" font-size="13" fill="#3a5a30">5</text>
+  </g>
+
+  <text x="290" y="372" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">左端点为 0 的两个水龙头，只有跳到 5 的那个有用（支配消除）</text>
+
+  <rect x="60" y="384" width="460" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="290" y="400" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">问题变为：从 0 出发，站在位置 j 可一步走到 reach[j]，最少几步到 n？</text>
+  <text x="290" y="415" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">本例 reach[0] = 5 ≥ n，一步到终点，答案是 1</text>
+</svg>

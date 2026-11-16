@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 380" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrd" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="380" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：切词 → 求最长 → 逐行拼装 → 去尾空格</text>
+  <text x="280" y="44" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">一趟遍历就能出结果，不需要真的造一个二维矩阵</text>
+
+  <g filter="url(#rough2)">
+    <rect x="50" y="60" width="176" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="138" y="80" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">① split 空格 → words</text>
+    <text x="138" y="96" text-anchor="middle" font-size="10" fill="#666">题目保证单词间只有一个空格</text>
+
+    <rect x="50" y="128" width="176" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="138" y="148" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold">② maxLen = max |w|</text>
+    <text x="138" y="164" text-anchor="middle" font-size="10" fill="#666">答案的行数就是 maxLen</text>
+
+    <rect x="50" y="196" width="176" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="138" y="216" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">③ for r in 0..maxLen-1</text>
+    <text x="138" y="232" text-anchor="middle" font-size="10" fill="#8a6a20">枚举「行号」，从 0 开始</text>
+
+    <rect x="290" y="196" width="200" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="390" y="216" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold">④ w[r] if r &lt; |w| else ' '</text>
+    <text x="390" y="232" text-anchor="middle" font-size="10" fill="#8a6a20">越界补空格，保持列对齐</text>
+
+    <rect x="290" y="128" width="200" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="390" y="148" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">⑤ rstrip(" ") 去行尾空格</text>
+    <text x="390" y="164" text-anchor="middle" font-size="10" fill="#3a5a30">只删尾部，中间空格保留</text>
+
+    <rect x="290" y="60" width="200" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="390" y="80" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold">⑥ ans.append(row)</text>
+    <text x="390" y="96" text-anchor="middle" font-size="10" fill="#3a5a30">逐行收集，顺序即行号顺序</text>
+  </g>
+
+  <path d="M 138 104 L 138 126" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 138 172 L 138 194" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 228 218 L 288 218" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 390 194 L 390 174" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 390 126 L 390 106" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 490 82 L 526 82 L 526 258 L 138 258 L 138 242" stroke="#b85450" stroke-width="1.4"
+        fill="none" stroke-dasharray="5 4" marker-end="url(#arrd)" filter="url(#rough2)"/>
+  <text x="332" y="274" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">r += 1 继续下一行（循环 maxLen 次）</text>
+
+  <text x="280" y="310" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">④ 的两种实现：先补空格到 maxLen 再取第 r 个字符，或直接判 r &lt; len(w)；后者少一次复制</text>
+  <text x="280" y="332" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">⑤ 必须放在 ④ 之后：先对齐再裁剪，顺序反了就会把中间的空格也吃掉</text>
+  <text x="280" y="354" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">每个 r 都至少有一列（最长单词）有字符，因此 rstrip 后的行一定非空</text>
+</svg>

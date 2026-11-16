@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrRed" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">正向发散 · 逆向唯一：最大值就是上一步被改的位置</text>
+  <text x="280" y="46" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">替换后 A[i] = prev + rest，其中 rest 是其余元素之和，prev ≥ 1</text>
+
+  <!-- 正向一步：数组格子 -->
+  <text x="70" y="84" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">正向一步：把某个位置换成当前总和</text>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="94" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="120" y="94" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="170" y="94" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <text x="93" y="116" text-anchor="middle" font-size="13" fill="#333">1</text>
+    <text x="143" y="116" text-anchor="middle" font-size="13" fill="#333">3</text>
+    <text x="193" y="116" text-anchor="middle" font-size="13" fill="#333">1</text>
+    <text x="143" y="146" text-anchor="middle" font-size="10" fill="#777">总和 S = 5</text>
+  </g>
+
+  <path d="M 228 111 L 286 111" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="257" y="102" text-anchor="middle" font-size="10" fill="#666" filter="url(#rough2)">A[2] ← S</text>
+
+  <g filter="url(#rough2)">
+    <rect x="296" y="94" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="346" y="94" width="46" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="4"/>
+    <rect x="396" y="94" width="46" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" rx="4"/>
+    <text x="319" y="116" text-anchor="middle" font-size="13" fill="#333">1</text>
+    <text x="369" y="116" text-anchor="middle" font-size="13" fill="#333">3</text>
+    <text x="419" y="116" text-anchor="middle" font-size="13" fill="#8a6a20" font-weight="bold">5</text>
+    <text x="369" y="146" text-anchor="middle" font-size="10" fill="#8a6a20">被改位置严格最大</text>
+  </g>
+
+  <text x="280" y="176" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">5 = prev + rest = 1 + (1+3) &gt; 3 ≥ 其余任一元素 ⇒ 每一步后「被改的位置」必是唯一最大值</text>
+
+  <path d="M 280 190 L 280 214" stroke="#b85450" stroke-width="1.8" fill="none" marker-end="url(#arrRed)" filter="url(#rough2)"/>
+
+  <!-- 逆向还原 -->
+  <rect x="56" y="220" width="448" height="150" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="76" y="244" font-size="12" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">逆向还原：从 target 倒着走，每一层前驱唯一</text>
+  <text x="76" y="268" font-size="11" fill="#444" filter="url(#rough2)">设当前最大值 M（唯一），其余元素之和 rest = total − M</text>
+  <text x="76" y="290" font-size="11" fill="#444" filter="url(#rough2)">上一步必然把「prev」改成了 M，且 M = prev + rest ⇒ prev = M − rest</text>
+  <text x="76" y="312" font-size="11" fill="#b85450" filter="url(#rough2)">合法性：prev ≥ 1 要求 M &gt; rest；若 M ≤ rest 且 M ≠ 1 ⇒ 返回 false</text>
+  <text x="76" y="334" font-size="11" fill="#444" filter="url(#rough2)">反复还原，直到 M = 1（堆顶为 1 ⇒ 全为 1）返回 true</text>
+  <text x="76" y="356" font-size="10.5" fill="#777" filter="url(#rough2)">正向每步 n 个分支、指数爆炸；逆向每步只有 1 个分支，且必须取最大值</text>
+</svg>

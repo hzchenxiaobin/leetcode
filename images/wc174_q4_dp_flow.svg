@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 490" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="490" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="14.5" fill="#444" font-weight="bold" filter="url(#rough2)">按高度升序做 DP：一个转移式 + 两条截断扫描</text>
+  <text x="310" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">升序处理保证算 dp[i] 时，它可能跳到的更矮位置的 dp 都已定稿</text>
+
+  <rect x="95" y="60" width="430" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="310" y="87" text-anchor="middle" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">① order = 全部下标按 arr 升序排列，dp[0..n-1] 初值全为 1</text>
+
+  <rect x="95" y="120" width="430" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="9" filter="url(#rough2)"/>
+  <text x="310" y="147" text-anchor="middle" font-size="11.5" fill="#3a4a66" filter="url(#rough2)">② 取出 order 里的下一个下标 i（从最矮的柱子开始）</text>
+
+  <rect x="95" y="180" width="430" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="9" filter="url(#rough2)"/>
+  <text x="310" y="202" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">③ 向右扫 j = i+1 … i+d，越界即停</text>
+  <text x="310" y="222" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">arr[j] ≥ arr[i] 就 break；否则 dp[i] = max(dp[i], dp[j]+1)</text>
+
+  <rect x="95" y="248" width="430" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="9" filter="url(#rough2)"/>
+  <text x="310" y="270" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">④ 向左扫 j = i−1 … i−d，规则完全对称</text>
+  <text x="310" y="290" text-anchor="middle" font-size="11.5" fill="#8a6a20" filter="url(#rough2)">同样遇到 arr[j] ≥ arr[i] 立即 break，同样用它更新 dp[i]</text>
+
+  <rect x="95" y="316" width="430" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="9" filter="url(#rough2)"/>
+  <text x="310" y="343" text-anchor="middle" font-size="11.5" fill="#3a5a2a" filter="url(#rough2)">⑤ ans = max(ans, dp[i])，把 i 从待处理集合中删掉</text>
+
+  <polygon points="310,372 442,402 310,432 178,402" fill="#f5f5f5" stroke="#777" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="310" y="406" text-anchor="middle" font-size="11.5" fill="#444" filter="url(#rough2)">order 里还有下标？</text>
+
+  <text x="310" y="470" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">否 → 输出 ans（所有 dp 的最大值，即最多访问的下标数）</text>
+
+  <!-- 主干箭头 -->
+  <path d="M 310 104 L 310 118" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 310 164 L 310 178" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 310 232 L 310 246" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 310 300 L 310 314" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 310 360 L 310 370" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 310 432 L 310 452" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 是 → 回到 ② -->
+  <path d="M 178 402 L 46 402 L 46 142 L 91 142" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="60" y="392" font-size="12" fill="#446688" filter="url(#rough2)">是</text>
+</svg>

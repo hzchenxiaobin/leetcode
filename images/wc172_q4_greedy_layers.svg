@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 404" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+    <marker id="arrg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="404" fill="#fafafa"/>
+
+  <text x="310" y="27" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">贪心 = 按层扩张：每层代表再开一个水龙头</text>
+  <text x="310" y="47" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">end 是本层已覆盖的右边界，far 是 [0, end] 内所有水龙头能推到的最远点</text>
+
+  <g filter="url(#rough2)" font-size="10.5">
+    <rect x="40" y="66" width="340" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="7"/>
+    <text x="56" y="90" fill="#3a4a66">① 建 reach[]：同左端点只留最远</text>
+
+    <rect x="40" y="122" width="340" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="7"/>
+    <text x="56" y="146" fill="#3a4a66">② 逐格扫描：far = max(far, reach[i])</text>
+
+    <rect x="40" y="178" width="340" height="38" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" rx="7"/>
+    <text x="56" y="202" fill="#8a6a20">③ i == end：本层扫完，再开一个</text>
+
+    <rect x="40" y="234" width="340" height="38" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" rx="7"/>
+    <text x="56" y="258" fill="#8a3a36">④ far &lt;= end：有缺口，返回 −1</text>
+
+    <rect x="40" y="290" width="340" height="38" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" rx="7"/>
+    <text x="56" y="314" fill="#3a5a30">⑤ steps++，end = far；满 n 就返回</text>
+  </g>
+
+  <g stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)">
+    <path d="M 210 104 L 210 118" marker-end="url(#arr)"/>
+    <path d="M 210 160 L 210 174" marker-end="url(#arr)"/>
+    <path d="M 210 216 L 210 230" marker-end="url(#arr)"/>
+    <path d="M 210 272 L 210 286" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9" fill="#999">
+    <text x="222" y="116">预处理完，开始扫</text>
+    <text x="222" y="172">i 追上 end 时</text>
+    <text x="222" y="228">先检测有没有缺口</text>
+    <text x="222" y="284">far &gt; end：推进一层</text>
+  </g>
+
+  <text x="510" y="90" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">示例：end 从 0 推到 3，再推到 5</text>
+
+  <g filter="url(#rough2)">
+    <line x1="405" y1="252" x2="597" y2="252" stroke="#666" stroke-width="1.5"/>
+    <line x1="410" y1="246" x2="410" y2="258" stroke="#666" stroke-width="1.2"/>
+    <line x1="518" y1="246" x2="518" y2="258" stroke="#666" stroke-width="1.2"/>
+    <line x1="590" y1="246" x2="590" y2="258" stroke="#666" stroke-width="1.2"/>
+    <text x="410" y="272" text-anchor="middle" font-size="9.5" fill="#666">0</text>
+    <text x="518" y="272" text-anchor="middle" font-size="9.5" fill="#666">3</text>
+    <text x="590" y="272" text-anchor="middle" font-size="9.5" fill="#666">5</text>
+    <circle cx="410" cy="252" r="3.2" fill="#446688"/>
+    <circle cx="518" cy="252" r="3.2" fill="#d6a040"/>
+    <circle cx="590" cy="252" r="3.2" fill="#4a7a3a"/>
+    <path d="M 413 248 Q 464 206 515 248" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arrb)"/>
+    <path d="M 521 248 Q 553 196 587 248" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arrg)"/>
+    <text x="462" y="214" text-anchor="middle" font-size="9.5" fill="#3a4a66">第 1 层</text>
+    <text x="552" y="206" text-anchor="middle" font-size="9.5" fill="#3a5a30">第 2 层</text>
+    <text x="502" y="298" text-anchor="middle" font-size="10" fill="#777">层数 = 最少水龙头数</text>
+  </g>
+
+  <rect x="40" y="344" width="540" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="310" y="362" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">② → ⑤ 循环往复：能推就 +1 层，推不动就 −1</text>
+  <text x="310" y="380" text-anchor="middle" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">关键：只需维护一个边界 end，不必记住到底选了哪几个水龙头</text>
+</svg>

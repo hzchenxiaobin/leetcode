@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="420" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="14.5" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：Floyd 预处理全源最短路，再逐行计数</text>
+  <text x="280" y="46" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">先算「任意两点最短路」，再对每个城市各数一次</text>
+
+  <rect x="44" y="62" width="300" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="60" y="82" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">① 建距离矩阵 d（n × n）</text>
+  <text x="60" y="99" font-size="9.5" fill="#555" filter="url(#rough2)">对角线 0；每条边 u–v 置 w；其余 ∞</text>
+
+  <path d="M 194 106 L 194 118" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="44" y="122" width="300" height="36" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="60" y="145" font-size="10.5" fill="#3a5a30" filter="url(#rough2)">② 枚举中转城市 k = 0 … n−1</text>
+
+  <path d="M 194 158 L 194 170" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="44" y="174" width="300" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="60" y="196" font-size="10.5" fill="#8a3a36" filter="url(#rough2)">③ 对每组 (i, j) 松弛一次：</text>
+  <text x="60" y="215" font-size="10" fill="#555" filter="url(#rough2)">d[i][j] = min(d[i][j], d[i][k] + d[k][j])</text>
+
+  <path d="M 194 226 L 194 238" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="44" y="242" width="300" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="60" y="267" font-size="10.5" fill="#3a4a66" filter="url(#rough2)">④ 数第 i 行：d[i][j] ≤ D 且 j ≠ i 的个数</text>
+
+  <path d="M 194 282 L 194 294" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="44" y="298" width="300" height="58" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="60" y="320" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">⑤ 若 c_i ≤ bestCnt：更新 bestCnt 与 ans</text>
+  <text x="60" y="340" font-size="9.5" fill="#555" filter="url(#rough2)">等号也更新 ⇒ 同分时留下编号更大的城市；返回 ans</text>
+
+  <rect x="356" y="62" width="190" height="118" rx="10" fill="#eef9f1" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="368" y="84" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">为什么 k 在最外层</text>
+  <text x="368" y="104" font-size="9.5" fill="#555" filter="url(#rough2)">k 是 DP 阶段：它表示</text>
+  <text x="368" y="120" font-size="9.5" fill="#555" filter="url(#rough2)">允许经过的中转点集合</text>
+  <text x="368" y="136" font-size="9.5" fill="#555" filter="url(#rough2)">{0, 1, …, k}。k 增大时</text>
+  <text x="368" y="152" font-size="9.5" fill="#555" filter="url(#rough2)">集合只增不减，先算好的</text>
+  <text x="368" y="168" font-size="9.5" fill="#555" filter="url(#rough2)">阶段才能安全复用。</text>
+
+  <rect x="356" y="194" width="190" height="98" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="368" y="216" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">为什么用 ≤ 更新</text>
+  <text x="368" y="236" font-size="9.5" fill="#555" filter="url(#rough2)">按编号 0 → n−1 顺序扫，</text>
+  <text x="368" y="252" font-size="9.5" fill="#555" filter="url(#rough2)">计数相等时让后到的</text>
+  <text x="368" y="268" font-size="9.5" fill="#555" filter="url(#rough2)">更大编号覆盖前者，</text>
+  <text x="368" y="284" font-size="9.5" fill="#555" filter="url(#rough2)">正好等价于同分取大编号。</text>
+
+  <rect x="356" y="306" width="190" height="86" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="368" y="328" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">复杂度</text>
+  <text x="368" y="348" font-size="9.5" fill="#555" filter="url(#rough2)">时间 O(n³)，n = 100 时</text>
+  <text x="368" y="364" font-size="9.5" fill="#555" filter="url(#rough2)">约 10⁶ 次松弛</text>
+  <text x="368" y="380" font-size="9.5" fill="#555" filter="url(#rough2)">空间 O(n²)：距离矩阵</text>
+
+  <text x="280" y="404" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">最短路之和不会超过 99 × 10⁴，32 位整数足够；INF 取 10⁹ 也能安全相加</text>
+</svg>

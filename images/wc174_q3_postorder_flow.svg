@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="6.5" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="400" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">两遍树遍历：求子树和 → 枚举切边</text>
+  <text x="280" y="45" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">第一遍拿到总和 S，第二遍才能对每个 s 算出 S − s</text>
+
+  <rect x="55" y="62" width="450" height="66" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="72" y="82" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">第 1 遍：自底向上累加子树和</text>
+  <text x="72" y="101" font-size="10" fill="#555" filter="url(#rough2)">逆前序（父先子后）倒着扫 ⇒ 子一定先于父被算到；也可直接写后序 DFS</text>
+  <text x="72" y="118" font-size="10" fill="#555" filter="url(#rough2)">sub[x] = x.val + sub[x.left] + sub[x.right]，得到 S = sub[root]</text>
+
+  <path d="M 280 128 L 280 152" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="55" y="154" width="450" height="66" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="72" y="174" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">第 2 遍：枚举每个非根节点 x（每个 x 唯一对应一条被删的边）</text>
+  <text x="72" y="193" font-size="10" fill="#555" filter="url(#rough2)">cand = sub[x] × (S − sub[x])</text>
+  <text x="72" y="210" font-size="10" fill="#555" filter="url(#rough2)">best = max(best, cand)　—　根节点没有父边，必须跳过</text>
+
+  <path d="M 280 220 L 280 244" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="55" y="246" width="450" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10" filter="url(#rough2)"/>
+  <text x="72" y="266" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">最后：返回 best mod (10^9+7)</text>
+  <text x="72" y="282" font-size="10" fill="#555" filter="url(#rough2)">best 用 64 位整数：S ≤ 5×10^8，乘积 ≤ 6.25×10^16，仍在 long long 内</text>
+
+  <rect x="55" y="306" width="450" height="58" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="72" y="326" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">复杂度</text>
+  <text x="72" y="344" font-size="10" fill="#555" filter="url(#rough2)">时间 O(n)：两次完整遍历，每个节点 O(1) 运算</text>
+  <text x="72" y="358" font-size="10" fill="#555" filter="url(#rough2)">空间 O(n)：哈希表/数组存 n 个子树和 + 显式栈 O(h)</text>
+
+  <text x="280" y="386" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">示例 [1,2,3,4,5,6]：S = 21，切 1–2 得 11 与 10，乘积 110</text>
+</svg>
