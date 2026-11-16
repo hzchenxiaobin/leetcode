@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="520" viewBox="0 0 760 520" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="2" seed="11" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.4"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="760" height="520" fill="#fafafa"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">双单调队列 + 双指针：每个元素进出队列各一次</text>
+  <text x="380" y="57" text-anchor="middle" font-size="12.5" fill="#666" filter="url(#rough2)">right 每前进一步就往两个队列压入下标；极差超限就把 left 右移，直到窗口重新合法</text>
+
+  <!-- A -->
+  <rect x="250" y="74" width="300" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="101" text-anchor="middle" font-size="13" fill="#2b4a6e" filter="url(#rough2)">读取 x = nums[right]（right 从 0 到 n−1）</text>
+  <path d="M 400 118 L 400 130" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- B -->
+  <rect x="250" y="132" width="300" height="48" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="152" text-anchor="middle" font-size="12.5" fill="#2e5e22" filter="url(#rough2)">maxQ：队头是窗口最大值，队内值单调不增</text>
+  <text x="400" y="170" text-anchor="middle" font-size="12.5" fill="#2e5e22" filter="url(#rough2)">弹出队尾值 ≤ x 的下标，再压入 right</text>
+  <path d="M 400 180 L 400 192" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- C -->
+  <rect x="250" y="194" width="300" height="48" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="214" text-anchor="middle" font-size="12.5" fill="#8a3a36" filter="url(#rough2)">minQ：队头是窗口最小值，队内值单调不减</text>
+  <text x="400" y="232" text-anchor="middle" font-size="12.5" fill="#8a3a36" filter="url(#rough2)">弹出队尾值 ≥ x 的下标，再压入 right</text>
+  <path d="M 400 242 L 400 250" stroke="#3a3a3a" stroke-width="1.5" filter="url(#rough2)"/>
+
+  <!-- 汇合点 + 条件判断 -->
+  <circle cx="400" cy="252" r="4" fill="#3a3a3a" filter="url(#rough2)"/>
+  <path d="M 400 252 L 400 266" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <polygon points="400,268 500,302 400,336 300,302" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="400" y="307" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5415" filter="url(#rough2)">极差 &gt; limit ?</text>
+
+  <!-- 是：收缩窗口 -->
+  <path d="M 300 302 L 274 302" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="288" y="294" text-anchor="middle" font-size="12" font-weight="bold" fill="#b85450" filter="url(#rough2)">是</text>
+  <rect x="70" y="274" width="200" height="56" rx="8" fill="#f2f6ff" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="170" y="297" text-anchor="middle" font-size="12" fill="#2b4a6e" filter="url(#rough2)">队头等于 left 就弹出</text>
+  <text x="170" y="316" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b4a6e" filter="url(#rough2)">left += 1</text>
+
+  <!-- 收缩后重新判断 -->
+  <path d="M 170 274 L 170 252 L 395 252" stroke="#b85450" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="215" y="245" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">重新判断</text>
+
+  <!-- 否：更新答案 -->
+  <path d="M 400 336 L 400 360" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="412" y="352" font-size="12" font-weight="bold" fill="#2e5e22" filter="url(#rough2)">否</text>
+  <rect x="250" y="362" width="300" height="44" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="389" text-anchor="middle" font-size="13" fill="#2e5e22" filter="url(#rough2)">ans = max(ans, right − left + 1)</text>
+  <path d="M 400 406 L 400 420" stroke="#3a3a3a" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- G: 进入下一轮 -->
+  <rect x="250" y="422" width="300" height="44" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="449" text-anchor="middle" font-size="12.5" fill="#2b4a6e" filter="url(#rough2)">right += 1；若 right &lt; n 则回第 1 步</text>
+
+  <path d="M 550 444 L 690 444 L 690 96 L 556 96" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="642" y="478" text-anchor="middle" font-size="11.5" fill="#b85450" filter="url(#rough2)">外层循环</text>
+
+  <text x="380" y="506" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">每个下标最多压入 / 弹出每个队列各一次，left 只增不减 ⇒ 总时间 O(n)</text>
+</svg>

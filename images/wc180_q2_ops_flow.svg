@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 460"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="460" fill="#fafafa"/>
+  <text x="350" y="26" text-anchor="middle" font-size="16" fill="#333" filter="url(#rough2)">三个操作的规则：每个操作只碰 O(1) 个格子</text>
+
+  <!-- 分派节点 -->
+  <rect x="286" y="42" width="128" height="30" rx="15" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="350" y="62" text-anchor="middle" font-size="12" fill="#446688" filter="url(#rough2)">任意一次操作</text>
+  <path d="M350,72 L350,84" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M116,84 L584,84" stroke="#666" stroke-width="1.6" fill="none" filter="url(#rough2)"/>
+  <path d="M116,84 L116,96" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M350,84 L350,96" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M584,84 L584,96" stroke="#666" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 卡片 1：push -->
+  <rect x="18" y="98" width="196" height="258" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="116" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">push(x)</text>
+  <rect x="28" y="132" width="176" height="38" rx="7" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="116" y="156" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">size 已达 maxSize？</text>
+  <rect x="28" y="178" width="176" height="38" rx="7" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="116" y="195" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">是 → 丢弃（栈不变，</text>
+  <text x="116" y="209" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">不新增 add 格子）</text>
+  <rect x="28" y="224" width="176" height="38" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="116" y="241" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">否 → st 追加 x，</text>
+  <text x="116" y="255" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">add 追加 0（自己不欠账）</text>
+  <rect x="28" y="270" width="176" height="34" rx="7" fill="#ffffff" stroke="#888" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="116" y="292" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">时间 O(1)</text>
+  <text x="116" y="332" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">新元素的真实值 = x + 0</text>
+
+  <!-- 卡片 2：pop -->
+  <rect x="252" y="98" width="196" height="258" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="350" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">pop()</text>
+  <rect x="262" y="132" width="176" height="38" rx="7" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="350" y="156" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">栈为空？</text>
+  <rect x="262" y="178" width="176" height="38" rx="7" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="350" y="202" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">是 → 返回 −1</text>
+  <rect x="262" y="224" width="176" height="38" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="350" y="241" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">否 → i = size − 1</text>
+  <text x="350" y="255" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">res = st[i] + add[i]</text>
+  <rect x="262" y="270" width="176" height="34" rx="7" fill="#ffffff" stroke="#888" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="350" y="285" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">add[i−1] += add[i]，再弹出</text>
+  <text x="350" y="299" text-anchor="middle" font-size="10.5" fill="#555" filter="url(#rough2)">返回 res</text>
+  <text x="350" y="332" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">账随弹出向栈底挪一格</text>
+
+  <!-- 卡片 3：increment -->
+  <rect x="486" y="98" width="196" height="258" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="584" y="122" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#446688" filter="url(#rough2)">increment(k, val)</text>
+  <rect x="496" y="132" width="176" height="38" rx="7" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="584" y="156" text-anchor="middle" font-size="11" fill="#8a6d1f" filter="url(#rough2)">栈为空？</text>
+  <rect x="496" y="178" width="176" height="38" rx="7" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="584" y="202" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">是 → 直接返回（无元素）</text>
+  <rect x="496" y="224" width="176" height="38" rx="7" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="584" y="241" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">否 → i = min(k, size) − 1</text>
+  <text x="584" y="255" text-anchor="middle" font-size="10.5" fill="#4a7a3a" filter="url(#rough2)">add[i] += val</text>
+  <rect x="496" y="270" width="176" height="34" rx="7" fill="#ffffff" stroke="#888" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="584" y="292" text-anchor="middle" font-size="11" fill="#555" filter="url(#rough2)">时间 O(1)</text>
+  <text x="584" y="332" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">一格账覆盖栈底 k 个元素</text>
+
+  <!-- 底部要点 -->
+  <rect x="60" y="384" width="580" height="58" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="350" y="406" text-anchor="middle" font-size="12" font-weight="bold" fill="#4a7a3a" filter="url(#rough2)">关键：push/pop 只动栈顶，increment 只动「栈底前缀」——两者在 add 上撞不到一起</text>
+  <text x="350" y="428" text-anchor="middle" font-size="11" fill="#4a7a3a" filter="url(#rough2)">因此永远不需要把 add 摊平（摊平的总代价等于把 O(1) 退回 O(k)）</text>
+</svg>

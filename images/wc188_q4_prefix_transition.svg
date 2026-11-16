@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 440" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#777"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="440" fill="#fafafa"/>
+  <text x="300" y="28" text-anchor="middle" font-size="15" fill="#333" font-weight="bold" filter="url(#rough2)">二维后缀和：O(1) 判断一条 / 一个矩形里有没有苹果</text>
+  <text x="300" y="48" text-anchor="middle" font-size="10" fill="#888" filter="url(#rough2)">判苹果是转移里最高频的操作，预处理一次，之后每次查询只要 4 次加减</text>
+  <rect x="32" y="66" width="536" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="90" text-anchor="start" font-size="10.5" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">pre[r][c] = 后缀矩形 [r,R) × [c,C) 内的苹果数（r、c 逆序递推）</text>
+  <text x="48" y="112" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">pre[r][c] = pre[r+1][c] + pre[r][c+1] − pre[r+1][c+1] + [pizza[r][c] = 'A']</text>
+  <text x="48" y="134" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">任意矩形 [r1,r2) × [c1,c2) 的苹果数 =</text>
+  <text x="48" y="154" text-anchor="start" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">pre[r1][c1] − pre[r2][c1] − pre[r1][c2] + pre[r2][c2]</text>
+  <path d="M 300 162 L 300 174" stroke="#777" stroke-width="1.6" fill="none" stroke-linecap="round" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="32" y="176" width="536" height="136" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="200" text-anchor="start" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">递推顺序：块数 t 从 2 到 k，r、c 都逆序（因为要读「更靠右下」的旧值）</text>
+  <text x="48" y="222" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">for t in 2..k:</text>
+  <text x="60" y="242" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">for r = R−1 down to 0,  c = C−1 down to 0:</text>
+  <text x="72" y="262" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">if 区域 [r,R) × [c,C) 无苹果: continue</text>
+  <text x="72" y="282" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">dp[r][c] = Σ old[nr][c]   （nr &amp;gt; r 且上边条 [r,nr) 含苹果）</text>
+  <text x="72" y="300" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">          + Σ old[r][nc]  （nc &amp;gt; c 且左边条 [c,nc) 含苹果）</text>
+  <path d="M 300 312 L 300 324" stroke="#777" stroke-width="1.6" fill="none" stroke-linecap="round" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="32" y="326" width="536" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="48" y="350" text-anchor="start" font-size="10.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">为什么必须逆序：子状态 (nr,c)、(r,nc) 都更靠右下，先算它们才能累加</text>
+  <text x="48" y="372" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">复杂度 O(k·R·C·(R+C))：R = C = 50、k = 10 时约 2.5×10^6 次运算</text>
+  <text x="48" y="394" text-anchor="start" font-size="10" fill="#444" filter="url(#rough2)">滚动数组：old 存 t−1 层、dp 存 t 层，空间从 O(k·R·C) 降到 O(R·C)</text>
+  <text x="300" y="430" text-anchor="middle" font-size="9.5" fill="#999" filter="url(#rough2)">哨兵：pre 开 (R+1)×(C+1)，下标 R 与 C 处全 0，省掉所有越界特判</text>
+</svg>

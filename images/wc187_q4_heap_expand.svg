@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 450" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="450" fill="#fafafa"/>
+
+  <text x="280" y="24" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">算法流程：逐行合并 + 堆式多路归并</text>
+  <text x="280" y="42" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每行都把「已得前 k 小和 dp」与「该行 row」做一次归并</text>
+
+  <g filter="url(#rough2)">
+    <rect x="56" y="58" width="214" height="38" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="163" y="76" text-anchor="middle" font-size="11" fill="#3a4a66">① 取下一行 row</text>
+    <text x="163" y="90" text-anchor="middle" font-size="9.5" fill="#557">p ← |dp|，n ← |row|</text>
+
+    <rect x="56" y="112" width="214" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="8"/>
+    <text x="163" y="132" text-anchor="middle" font-size="11" fill="#3a4a66">② take ← min(k, p·n)</text>
+    <text x="163" y="148" text-anchor="middle" font-size="9.5" fill="#557">堆 ← {(dp[0]+row[0], 0, 0)}</text>
+
+    <rect x="56" y="174" width="214" height="62" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="163" y="193" text-anchor="middle" font-size="11" fill="#3a5a30">③ 弹出堆顶 (i,j)，和记入 nxt</text>
+    <text x="163" y="212" text-anchor="middle" font-size="9.5" fill="#3a5a30">i+1 &lt; p → push (i+1, j)</text>
+    <text x="163" y="228" text-anchor="middle" font-size="9.5" fill="#3a5a30">i = 0 且 j+1 &lt; n → push (0, j+1)</text>
+
+    <rect x="71" y="250" width="184" height="36" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="163" y="273" text-anchor="middle" font-size="11" fill="#8a6a20">④ 已收集 take 个和？</text>
+
+    <rect x="56" y="302" width="214" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="8"/>
+    <text x="163" y="324" text-anchor="middle" font-size="11" fill="#3a5a30">⑤ dp ← nxt（长度 = take）</text>
+
+    <rect x="71" y="352" width="184" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="163" y="374" text-anchor="middle" font-size="11" fill="#8a6a20">还有下一行？</text>
+
+    <rect x="56" y="402" width="214" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="163" y="424" text-anchor="middle" font-size="11" fill="#8a3a36">⑥ return dp[k−1]</text>
+  </g>
+
+  <g stroke="#666" stroke-width="1.5" fill="none" filter="url(#rough2)">
+    <path d="M 163 96 L 163 110" marker-end="url(#arr)"/>
+    <path d="M 163 158 L 163 172" marker-end="url(#arr)"/>
+    <path d="M 163 236 L 163 248" marker-end="url(#arr)"/>
+    <path d="M 163 286 L 163 300" marker-end="url(#arr)"/>
+    <path d="M 163 336 L 163 350" marker-end="url(#arr)"/>
+    <path d="M 163 386 L 163 400" marker-end="url(#arr)"/>
+    <path d="M 71 268 L 30 268 L 30 205 L 52 205" marker-end="url(#arr)"/>
+    <path d="M 255 369 L 300 369 L 300 77 L 276 77" marker-end="url(#arr)"/>
+  </g>
+
+  <text x="44" y="244" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">否</text>
+  <text x="306" y="362" text-anchor="start" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+  <text x="172" y="298" font-size="10" fill="#4a7a3a" filter="url(#rough2)">是</text>
+
+  <rect x="336" y="58" width="204" height="170" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <g filter="url(#rough2)" font-size="9.8" fill="#6a5a20">
+    <text x="350" y="80" font-size="11" font-weight="bold">只在第一行向右走？</text>
+    <text x="350" y="102">若每个格子都同时向右、</text>
+    <text x="350" y="118">向下扩散，同一组合会被</text>
+    <text x="350" y="134">多条路径重复入堆，前 k</text>
+    <text x="350" y="150">小就被重复计数了。</text>
+    <text x="350" y="172">规定 (i,j) 只能来自</text>
+    <text x="350" y="188">(i−1,j) 或 (0,j−1)，</text>
+    <text x="350" y="204">于是每格恰好入堆一次。</text>
+  </g>
+
+  <g filter="url(#rough2)" font-size="9.8" fill="#555">
+    <text x="336" y="266">堆大小 ≤ take + 1 ≤ k + 1</text>
+    <text x="336" y="284">单次入堆 / 出堆 O(log k)</text>
+    <text x="336" y="302">总共 m·k 次 → O(m·k·log k)</text>
+    <text x="336" y="320" fill="#999">dp 只保留前 k 小，故每行</text>
+    <text x="336" y="336" fill="#999">最坏 p·n ≤ 8000 个候选</text>
+  </g>
+</svg>

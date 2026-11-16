@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420" font-family="'Comic Sans MS','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="sk" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="13" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="420" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#sk)">算法流程：一次自底向上的 need 标记</text>
+  <text x="320" y="50" text-anchor="middle" font-size="12" fill="#777" filter="url(#sk)">把「哪些边要留着」变成「哪些子树含着苹果」，再数一数</text>
+
+  <g filter="url(#sk)">
+    <rect x="46" y="68" width="330" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="46" y="134" width="330" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <rect x="46" y="200" width="330" height="46" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"/>
+    <rect x="46" y="266" width="330" height="46" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <rect x="46" y="332" width="330" height="46" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.8"/>
+  </g>
+
+  <g filter="url(#sk)" font-size="12">
+    <text x="60" y="90" fill="#2b4a6e" font-weight="bold">① 建邻接表</text>
+    <text x="60" y="110" fill="#2b4a6e">n-1 条边按无向图双向存放</text>
+
+    <text x="60" y="156" fill="#2b4a6e" font-weight="bold">② 从 0 定根：parent[] + order[]</text>
+    <text x="60" y="176" fill="#2b4a6e">BFS 或迭代 DFS，order 即访问序</text>
+
+    <text x="60" y="222" fill="#8a6a20" font-weight="bold">③ 初始化 need[u] = hasApple[u]</text>
+    <text x="60" y="242" fill="#8a6a20">先相信自己，再看孩子能不能帮上</text>
+
+    <text x="60" y="288" fill="#2e5a24" font-weight="bold">④ 逆序扫 order（叶 → 根）</text>
+    <text x="60" y="308" fill="#2e5a24">need[u] 为真 ⇒ need[parent[u]] 置真</text>
+
+    <text x="60" y="354" fill="#8f3830" font-weight="bold">⑤ 答案 = 2 × #{ u ≠ 0 : need[u] }</text>
+    <text x="60" y="374" fill="#8f3830">每个 need 为真的非根点对应一条必走边</text>
+  </g>
+
+  <path d="M 211 114 L 211 132" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <path d="M 211 180 L 211 198" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <path d="M 211 246 L 211 264" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+  <path d="M 211 312 L 211 330" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)" filter="url(#sk)"/>
+
+  <g filter="url(#sk)">
+    <rect x="400" y="68" width="196" height="90" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="400" y="172" width="196" height="86" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="400" y="272" width="196" height="106" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <g filter="url(#sk)" font-size="11.5">
+    <text x="414" y="90" fill="#2e5a24" font-weight="bold">为什么必须逆序？</text>
+    <text x="414" y="110" fill="#3a6a34">order 是父先子后，逆着扫</text>
+    <text x="414" y="128" fill="#3a6a34">才能保证孩子全部算完，</text>
+    <text x="414" y="146" fill="#3a6a34">再把自己的结论上推给父。</text>
+
+    <text x="414" y="194" fill="#2b4a6e" font-weight="bold">复杂度</text>
+    <text x="414" y="214" fill="#2b4a6e">时间 O(n)：每条边看两次</text>
+    <text x="414" y="234" fill="#2b4a6e">空间 O(n)：邻接表 + 3 个数组</text>
+
+    <text x="414" y="294" fill="#8a6a20" font-weight="bold">关键等价</text>
+    <text x="414" y="314" fill="#8a6a20">need[u] 为真的非根点</text>
+    <text x="414" y="332" fill="#8a6a20">↔ 边 (parent(u),u) 要走</text>
+    <text x="414" y="352" fill="#8a6a20">↔ 该边贡献 2 秒</text>
+    <text x="414" y="370" fill="#8a6a20">三者是同一个集合。</text>
+  </g>
+</svg>
