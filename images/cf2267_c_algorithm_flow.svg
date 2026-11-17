@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="400" viewBox="0 0 860 400"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="400" fill="#fafafa"/>
+
+  <text x="430" y="30" text-anchor="middle" font-size="17.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：压成约数桶 → 求 x 的 gcd 闭包 → 在每个可达 r 上求和取最大</text>
+  <path d="M 96 40 Q 430 47 764 40" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <rect x="24" y="62" width="178" height="66" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="113" y="88" text-anchor="middle" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">① 读入 n, x 与 a</text>
+  <text x="113" y="110" text-anchor="middle" font-size="11.5" fill="#6a6a6a" filter="url(#rough2)">多测，Σn ≤ 3·10^5</text>
+
+  <path d="M 206 95 L 232 95" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="236" y="62" width="178" height="66" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="325" y="88" text-anchor="middle" font-size="12.5" fill="#3c5e2e" filter="url(#rough2)">② b_i = gcd(a_i, x)</text>
+  <text x="325" y="110" text-anchor="middle" font-size="11.5" fill="#6a6a6a" filter="url(#rough2)">桶 B[b] += a_i，丢掉 b = 1</text>
+
+  <path d="M 418 95 L 444 95" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="448" y="62" width="178" height="66" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="537" y="88" text-anchor="middle" font-size="12.5" fill="#8a6015" filter="url(#rough2)">③ 闭包：r ← gcd(r, b)</text>
+  <text x="537" y="110" text-anchor="middle" font-size="11.5" fill="#6a6a6a" filter="url(#rough2)">从 {x} 出发，加到不动点</text>
+
+  <path d="M 630 95 L 656 95" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="660" y="62" width="178" height="66" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="2.1" filter="url(#rough2)"/>
+  <text x="749" y="88" text-anchor="middle" font-size="12.5" fill="#8c3b38" filter="url(#rough2)">④ 对 r ∈ R 求 S(r)</text>
+  <text x="749" y="110" text-anchor="middle" font-size="11.5" fill="#6a6a6a" filter="url(#rough2)">输出 max，要求 r ≥ 2</text>
+
+  <rect x="24" y="158" width="398" height="152" rx="10" fill="none" stroke="#a9a9a9" stroke-width="1.3"
+        stroke-dasharray="7 5" filter="url(#rough2)"/>
+  <text x="40" y="182" font-size="12.5" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">为什么闭包只在约数桶上做</text>
+  <text x="40" y="206" font-size="12" fill="#2b2b2b" filter="url(#rough2)">• gcd(r, b) 一定整除 r，而 r 一定整除 x</text>
+  <text x="40" y="228" font-size="12" fill="#2b2b2b" filter="url(#rough2)">• r | x 时 gcd(r, a) = gcd(r, gcd(a, x))</text>
+  <text x="40" y="250" font-size="12" fill="#2b2b2b" filter="url(#rough2)">  ⇒ 用 b_i 代替 a_i 等价，最多 τ(x) 个不同值</text>
+  <text x="40" y="272" font-size="12" fill="#2b2b2b" filter="url(#rough2)">• 闭包 = x 与 a 的任意子集的 gcd 的全体</text>
+  <text x="40" y="294" font-size="12" fill="#8c3b38" filter="url(#rough2)">• |R| ≤ τ(x) ≤ 180（x ≤ 3·10^5）</text>
+
+  <rect x="446" y="158" width="392" height="152" rx="10" fill="none" stroke="#a9a9a9" stroke-width="1.3"
+        stroke-dasharray="7 5" filter="url(#rough2)"/>
+  <text x="462" y="182" font-size="12.5" font-weight="bold" fill="#8a6015" filter="url(#rough2)">S(r) 怎么算</text>
+  <text x="462" y="206" font-size="12" fill="#2b2b2b" filter="url(#rough2)">• S(r) = Σ B[b]，对所有满足 r | b 的桶求和</text>
+  <text x="462" y="228" font-size="12" fill="#2b2b2b" filter="url(#rough2)">• r | a_i ⟺ r | b_i（因为 r 是 x 的约数）</text>
+  <text x="462" y="250" font-size="12" fill="#2b2b2b" filter="url(#rough2)">• x=210 的桶 105,70,42,30 ⇒ S(7)=217</text>
+  <text x="462" y="272" font-size="12" fill="#2b2b2b" filter="url(#rough2)">• 单堆贡献是 0 或 a_i，不会取一半</text>
+  <text x="462" y="294" font-size="12" fill="#8c3b38" filter="url(#rough2)">• 总和 ≤ 3·10^5 × 3·10^5 ⇒ long long</text>
+
+  <text x="430" y="344" text-anchor="middle" font-size="15" fill="#2b2b2b" filter="url(#rough2)">答案 = max{ Σ a_i (r | a_i) : r ∈ R，r ≥ 2 }</text>
+  <text x="430" y="374" text-anchor="middle" font-size="12.5" fill="#6a6a6a" filter="url(#rough2)">复杂度 O(n log A + k·τ(x))，k 为不同 b 的个数（≤ min(n, τ(x))）</text>
+</svg>
