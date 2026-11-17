@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 470" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="700" height="470" fill="#fafafa"/>
+
+  <text filter="url(#rough2)" x="350" y="27" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">算法流程：从深度 0 起逐位定出 P</text>
+  <text filter="url(#rough2)" x="350" y="48" text-anchor="middle" font-size="11" fill="#888">第 d 层的条件只用到 P 的低 d+1 位，所以可以一层一层往下推</text>
+
+  <g>
+    <rect filter="url(#rough2)" x="26" y="64" width="304" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="8"/>
+    <text filter="url(#rough2)" x="178" y="91" text-anchor="middle" font-size="11" fill="#2f4f6f">① BFS：求 par、dep，按深度分层</text>
+    <rect filter="url(#rough2)" x="26" y="126" width="304" height="44" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="8"/>
+    <text filter="url(#rough2)" x="178" y="153" text-anchor="middle" font-size="11" fill="#2f4f6f">② 第 0 层：bit[0] = x₁ ⊕ y₁</text>
+    <rect filter="url(#rough2)" x="26" y="188" width="304" height="88" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text filter="url(#rough2)" x="178" y="210" text-anchor="middle" font-size="11" fill="#8a6a20">③ 第 d 层每个节点 v（父亲记为 p）：</text>
+    <text filter="url(#rough2)" x="178" y="232" text-anchor="middle" font-size="10.5" fill="#8a6a20">carry_v = [ carry_p + bit[d−1] + x_p ≥ 2 ]</text>
+    <text filter="url(#rough2)" x="178" y="254" text-anchor="middle" font-size="10.5" fill="#8a6a20">need_v = x_v ⊕ y_v ⊕ carry_v</text>
+    <rect filter="url(#rough2)" x="26" y="294" width="148" height="44" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8"/>
+    <text filter="url(#rough2)" x="100" y="321" text-anchor="middle" font-size="10.5" fill="#b85450">同层 need 冲突 → −1</text>
+    <rect filter="url(#rough2)" x="182" y="294" width="148" height="44" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8"/>
+    <text filter="url(#rough2)" x="256" y="321" text-anchor="middle" font-size="10.5" fill="#4a7a3a">否则 bit[d] = need</text>
+    <rect filter="url(#rough2)" x="26" y="356" width="304" height="46" fill="#ffffff" stroke="#8899aa" stroke-width="1.3" rx="8"/>
+    <text filter="url(#rough2)" x="178" y="384" text-anchor="middle" font-size="11" fill="#333">④ ans = Σ 2^d（只加 bit[d] = 1 的层）</text>
+
+    <line filter="url(#rough2)" x1="178" y1="108" x2="178" y2="121" stroke="#666" stroke-width="1.4" marker-end="url(#arr)"/>
+    <line filter="url(#rough2)" x1="178" y1="170" x2="178" y2="183" stroke="#666" stroke-width="1.4" marker-end="url(#arr)"/>
+    <line filter="url(#rough2)" x1="178" y1="276" x2="178" y2="289" stroke="#666" stroke-width="1.4" marker-end="url(#arr)"/>
+    <line filter="url(#rough2)" x1="178" y1="338" x2="178" y2="351" stroke="#666" stroke-width="1.4" marker-end="url(#arr)"/>
+  </g>
+
+  <g>
+    <rect filter="url(#rough2)" x="352" y="62" width="334" height="360" fill="#ffffff" stroke="#8899aa" stroke-width="1.3" rx="10"/>
+    <text filter="url(#rough2)" x="519" y="84" text-anchor="middle" font-size="11.5" fill="#446688" font-weight="bold">进位从哪来：低 d 位相加（d = 4 举例）</text>
+
+    <text filter="url(#rough2)" x="396" y="123" text-anchor="end" font-size="10.5" fill="#2f4f6f">L</text>
+    <text filter="url(#rough2)" x="396" y="161" text-anchor="end" font-size="10.5" fill="#2f4f6f">C_v</text>
+    <text filter="url(#rough2)" x="396" y="199" text-anchor="end" font-size="10.5" fill="#2f4f6f">＋</text>
+
+    <rect filter="url(#rough2)" x="430" y="106" width="28" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="458" y="106" width="28" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="486" y="106" width="28" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="514" y="106" width="28" height="24" fill="#e8f0fe" stroke="#446688" stroke-width="1.3" rx="3"/>
+    <text filter="url(#rough2)" x="444" y="123" text-anchor="middle" font-size="11" fill="#2f4f6f">1</text>
+    <text filter="url(#rough2)" x="472" y="123" text-anchor="middle" font-size="11" fill="#2f4f6f">0</text>
+    <text filter="url(#rough2)" x="500" y="123" text-anchor="middle" font-size="11" fill="#2f4f6f">1</text>
+    <text filter="url(#rough2)" x="528" y="123" text-anchor="middle" font-size="11" fill="#2f4f6f">1</text>
+
+    <rect filter="url(#rough2)" x="430" y="144" width="28" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="458" y="144" width="28" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="486" y="144" width="28" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="514" y="144" width="28" height="24" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.3" rx="3"/>
+    <text filter="url(#rough2)" x="444" y="161" text-anchor="middle" font-size="11" fill="#4a7a3a">0</text>
+    <text filter="url(#rough2)" x="472" y="161" text-anchor="middle" font-size="11" fill="#4a7a3a">1</text>
+    <text filter="url(#rough2)" x="500" y="161" text-anchor="middle" font-size="11" fill="#4a7a3a">1</text>
+    <text filter="url(#rough2)" x="528" y="161" text-anchor="middle" font-size="11" fill="#4a7a3a">0</text>
+
+    <line filter="url(#rough2)" x1="430" y1="178" x2="542" y2="178" stroke="#8899aa" stroke-width="1.2"/>
+
+    <rect filter="url(#rough2)" x="402" y="182" width="28" height="24" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="3"/>
+    <rect filter="url(#rough2)" x="430" y="182" width="28" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="458" y="182" width="28" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="486" y="182" width="28" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="3"/>
+    <rect filter="url(#rough2)" x="514" y="182" width="28" height="24" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" rx="3"/>
+    <text filter="url(#rough2)" x="416" y="199" text-anchor="middle" font-size="11" fill="#b85450">1</text>
+    <text filter="url(#rough2)" x="444" y="199" text-anchor="middle" font-size="11" fill="#8a6a20">0</text>
+    <text filter="url(#rough2)" x="472" y="199" text-anchor="middle" font-size="11" fill="#8a6a20">0</text>
+    <text filter="url(#rough2)" x="500" y="199" text-anchor="middle" font-size="11" fill="#8a6a20">0</text>
+    <text filter="url(#rough2)" x="528" y="199" text-anchor="middle" font-size="11" fill="#8a6a20">1</text>
+    <text filter="url(#rough2)" x="416" y="222" text-anchor="middle" font-size="9.5" fill="#b85450">进位</text>
+    <text filter="url(#rough2)" x="486" y="222" text-anchor="middle" font-size="9.5" fill="#888">低 4 位</text>
+
+    <text filter="url(#rough2)" x="519" y="244" text-anchor="middle" font-size="10.5" fill="#333">低 d 位相加溢出第 d 位 ⟺ carry_v = 1</text>
+
+    <rect filter="url(#rough2)" x="366" y="256" width="306" height="112" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="8"/>
+    <text filter="url(#rough2)" x="519" y="278" text-anchor="middle" font-size="10.5" fill="#4a7a3a">拆出最高祖先：C_v = C_p + x_p · 2^(d−1)</text>
+    <text filter="url(#rough2)" x="519" y="300" text-anchor="middle" font-size="10.5" fill="#4a7a3a">P 的低 d 位 = 低 d−1 位 + bit[d−1] · 2^(d−1)</text>
+    <text filter="url(#rough2)" x="519" y="326" text-anchor="middle" font-size="10.5" fill="#b85450">⇒ carry_v = [ carry_p + bit[d−1] + x_p ≥ 2 ]</text>
+    <text filter="url(#rough2)" x="519" y="350" text-anchor="middle" font-size="10.5" fill="#888">关键：低 d−1 位的和 R 一定小于 2^(d−1)，撑不满一位</text>
+
+    <text filter="url(#rough2)" x="519" y="390" text-anchor="middle" font-size="10.5" fill="#333">于是每处理一个节点只花 O(1)，总 O(n)</text>
+    <text filter="url(#rough2)" x="519" y="412" text-anchor="middle" font-size="10.5" fill="#888">答案 P 本身有 O(n) 位，但只在模意义下累加</text>
+  </g>
+</svg>
