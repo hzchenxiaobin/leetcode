@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" width="760" height="400"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="400" fill="#fafafa"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：只看 1 的个数，胜负就已经注定</text>
+  <text x="380" y="56" text-anchor="middle" font-size="12" fill="#6b6b6b" filter="url(#rough2)">合并一对元素只影响这一对，1 的个数单调不增；两位玩家一步最多或恰好改变 1 个</text>
+
+  <!-- 左：Bessie max -->
+  <rect x="36" y="76" width="336" height="158" rx="12" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="204" y="104" text-anchor="middle" font-size="15" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">Bessie · 先手 · max</text>
+  <text x="204" y="134" text-anchor="middle" font-size="13" fill="#33475f" filter="url(#rough2)">0 0 → 0 ：1 的个数不变</text>
+  <text x="204" y="162" text-anchor="middle" font-size="13" fill="#33475f" filter="url(#rough2)">0 1 → 1 ：1 的个数不变</text>
+  <text x="204" y="190" text-anchor="middle" font-size="13" fill="#33475f" filter="url(#rough2)">1 1 → 1 ：1 的个数 − 1</text>
+  <text x="204" y="218" text-anchor="middle" font-size="11.5" fill="#5a6f8c" filter="url(#rough2)">0 与 1 并存 ⇒ 必有相邻的 0/1 边界，可以不掉数</text>
+
+  <!-- 右：Elsie min -->
+  <rect x="388" y="76" width="336" height="158" rx="12" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="556" y="104" text-anchor="middle" font-size="15" font-weight="bold" fill="#8c3a37" filter="url(#rough2)">Elsie · 后手 · min</text>
+  <text x="556" y="134" text-anchor="middle" font-size="13" fill="#6d3a37" filter="url(#rough2)">0 0 → 0 ：1 的个数不变</text>
+  <text x="556" y="162" text-anchor="middle" font-size="13" fill="#6d3a37" filter="url(#rough2)">0 1 → 0 ：1 的个数 − 1</text>
+  <text x="556" y="190" text-anchor="middle" font-size="13" fill="#6d3a37" filter="url(#rough2)">1 1 → 1 ：1 的个数 − 1</text>
+  <text x="556" y="218" text-anchor="middle" font-size="11.5" fill="#8c5f5b" filter="url(#rough2)">取任意一个 1 与邻居合并 ⇒ 每步恰好消掉一个 1</text>
+
+  <!-- 中间结论 -->
+  <path d="M 204 234 L 204 252" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 556 234 L 556 252" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <text x="380" y="272" text-anchor="middle" font-size="12.5" fill="#4a4a4a" filter="url(#rough2)">Elsie 一共只有 E = floor((n−1)/2) 步，每步恰好消掉一个 1；Bessie 的一步不会让 1 变多。</text>
+  <text x="380" y="292" text-anchor="middle" font-size="12.5" fill="#4a4a4a" filter="url(#rough2)">所以 c &gt; E 时她消不完（挤出一个 1 撑到最后），c ≤ E 时 1 会被消光。</text>
+
+  <!-- 判定框 -->
+  <rect x="120" y="306" width="520" height="54" rx="12" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="380" y="330" text-anchor="middle" font-size="15" font-weight="bold" fill="#33582a" filter="url(#rough2)">Bessie 胜：c &gt; floor((n−1)/2)，等价于 2c ≥ n</text>
+  <text x="380" y="350" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">即「至少有 ceil(n/2) 个 1」；只要差一个 1，Elsie 就能把它全部消成 0</text>
+
+  <text x="380" y="382" text-anchor="middle" font-size="11" fill="#999" filter="url(#rough2)">例：n=5 的 [1,0,1,0,1] 有 c=3 &gt; E=2 → Bessie；n=3 的 [0,0,1] 有 c=1 = E → Elsie</text>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="12"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="400" fill="#fafafa"/>
+
+  <text x="300" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">同一行/同一列的整块删除：偶校验就够了</text>
+  <text x="300" y="45" text-anchor="middle" font-size="11" fill="#888">每行的「坏格」永远是奇数个，于是每行都能留一个坏格、删掉其余</text>
+
+  <!-- row illustration -->
+  <text x="60" y="76" font-size="12" fill="#3a4a66" font-weight="bold">第 i 行：绿 = 安全格（B[j][i]=0），红 = 坏格（B[j][i]=1）</text>
+  <g filter="url(#rough2)" text-anchor="middle" font-size="13" font-weight="bold">
+    <rect x="62" y="88" width="40" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="102" y="88" width="40" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.0" rx="4"/>
+    <rect x="142" y="88" width="40" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="182" y="88" width="40" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="4"/>
+    <rect x="222" y="88" width="40" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.0" rx="4"/>
+    <rect x="262" y="88" width="40" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="2.0" rx="4"/>
+    <text x="82" y="110" fill="#3a5a30">1</text>
+    <text x="122" y="110" fill="#8a3a38">1</text>
+    <text x="162" y="110" fill="#3a5a30">1</text>
+    <text x="202" y="110" fill="#3a5a30">1</text>
+    <text x="242" y="110" fill="#8a3a38">1</text>
+    <text x="282" y="110" fill="#8a3a38">1</text>
+  </g>
+  <text x="320" y="110" font-size="12" fill="#8a3a38" font-weight="bold">坏格 3 个（奇数）</text>
+  <text x="60" y="142" font-size="11" fill="#555">取行内任意子集 S 一起删：安全 ⟺ S 里坏格的个数是偶数</text>
+  <text x="60" y="160" font-size="11" fill="#555">⇒ 留一个坏格、删该行其余 d−1 个；若行内有安全格，还可删 1…d−1 中任意多个</text>
+
+  <!-- inverse update box -->
+  <rect x="40" y="176" width="248" height="96" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="54" y="196" font-size="12" fill="#3a4a66" font-weight="bold">逆矩阵 O(n) 更新</text>
+  <text x="54" y="220" font-size="11" fill="#555">u = B 的第 i 列，v = Σⱼ∈ₛ B 的第 j 行</text>
+  <text x="54" y="242" font-size="11" fill="#555">B ← B + u·vᵀ（对 u 中为 1 的行异或 v）</text>
+  <text x="54" y="262" font-size="10" fill="#888">逐格删也用它；整块删一次更新即可</text>
+
+  <!-- dead state box -->
+  <rect x="308" y="176" width="252" height="96" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="322" y="196" font-size="12" fill="#8a3a38" font-weight="bold">困境态：每行每列都没有安全格</text>
+  <text x="322" y="220" font-size="11" fill="#555">此时所有行度数为奇数，同一行取 2 格可同删</text>
+  <text x="322" y="242" font-size="11" fill="#555">奇数额度时，在补置换块里删三元环：</text>
+  <text x="322" y="262" font-size="11" fill="#8a3a38">(r₀,σ(r₁)) (r₁,σ(r₂)) (r₂,σ(r₀))</text>
+
+  <!-- endgame -->
+  <path d="M 300 284 L 300 300" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="40" y="304" width="520" height="80" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="10" filter="url(#rough2)"/>
+  <text x="56" y="326" font-size="12" fill="#8a6a20" font-weight="bold">收尾（n &lt; c ≤ 2n）：跳一步到部分置换</text>
+  <text x="56" y="350" font-size="11" fill="#555">取一个完美匹配 P（Kuhn），保留其中 t = c − n 格 Q，删掉其余 c − t = n 格</text>
+  <text x="56" y="370" font-size="11" fill="#555">剩下的 Q 行列互不相同 ⇒ 秩 = |Q| = t，最后一步整块删掉即可</text>
+</svg>
