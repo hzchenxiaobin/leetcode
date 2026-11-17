@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="400" fill="#fafafa"/>
+
+  <text x="330" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">核心观察：只有「相邻两位相同」时才要动手</text>
+  <text x="330" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">写完一个字母后笔一定自动取反，所以代价只由 s[i-1] 与 s[i] 是否相等决定</text>
+
+  <rect x="70" y="64" width="520" height="40" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="84" y="89" font-size="12" fill="#2f4a63" filter="url(#rough2)">起点：笔初始为红色 ⇒ 首字符是 R 花 0 次，首字符是 B 花 1 次</text>
+
+  <rect x="70" y="120" width="250" height="82" rx="6" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="195" y="145" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">R → R 或 B → B</text>
+  <text x="195" y="168" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">自动换色恰好换「反」了</text>
+  <text x="195" y="189" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">必须手动再切回 ⇒ 记 1 次</text>
+
+  <rect x="340" y="120" width="250" height="82" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="465" y="145" text-anchor="middle" font-size="13" font-weight="bold" fill="#3a5a30" filter="url(#rough2)">R → B 或 B → R</text>
+  <text x="465" y="168" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">自动换色正好换到目标色</text>
+  <text x="465" y="189" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">手完全不用动 ⇒ 记 0 次</text>
+
+  <rect x="70" y="218" width="520" height="58" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="243" text-anchor="middle" font-size="14" font-weight="bold" fill="#7a5a10" filter="url(#rough2)">ans = [s[0] = B] + #{ i ≥ 2 : s[i] = s[i-1] }</text>
+  <text x="330" y="265" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">等价写法：ans = (n − 同色段数) + [s[0] = B]，同色段数就是极长同色连续段的个数</text>
+
+  <rect x="70" y="288" width="520" height="78" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="84" y="310" font-size="11" fill="#2f4a63" filter="url(#rough2)">为什么每一层可以独立贪心？写第 i 位之前，笔的颜色只可能由「第 i−1 位实际用的颜色」自动取反</text>
+  <text x="84" y="328" font-size="11" fill="#2f4a63" filter="url(#rough2)">得到，没有任何别的历史信息可以依赖；于是每一层只剩「免费」与「花 1 次」两种选择，</text>
+  <text x="84" y="346" font-size="11" fill="#2f4a63" filter="url(#rough2)">且互不影响 —— 逐层取更便宜的那个，自然就是全局最优。</text>
+
+  <text x="330" y="386" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">换句话说：手动切换是唯一的「纠错」手段，而自动换色每次都会把颜色翻面，所以只有翻面后仍不对时才需要纠错</text>
+</svg>
