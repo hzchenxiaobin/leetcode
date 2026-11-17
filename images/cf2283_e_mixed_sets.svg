@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="520" fill="#fafafa"/>
+
+  <text x="300" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">合法集合只有三类形状：混色集合必须「贴」在一起</text>
+  <text x="300" y="48" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">纯色集合贡献 |M|，混色集合贡献 2·|M|，且 |M| ≤ 3</text>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="64" width="552" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="40" y="86" font-size="11.5" fill="#2f4f6f" font-weight="bold">① 纯色集合（f = 1，任意大小）</text>
+    <text x="40" y="105" font-size="10.5" fill="#3a4a66">集合内字符全相同 ⇒ 成本 = |M|·1 = |M|，位置之间远近无所谓</text>
+    <text x="40" y="123" font-size="10.5" fill="#3a4a66">所以「同色的剩余位置」怎么切分都不影响成本，只影响方案数</text>
+    <text x="40" y="141" font-size="10.5" fill="#3a4a66">→ 切分方式数 = 集合划分数 Bell(z) / Bell(o)</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="430" y="92" width="36" height="30" fill="#ffffff" stroke="#446688" stroke-width="1.4" rx="5"/>
+    <rect x="470" y="92" width="36" height="30" fill="#ffffff" stroke="#446688" stroke-width="1.4" rx="5"/>
+    <rect x="510" y="92" width="36" height="30" fill="#ffffff" stroke="#446688" stroke-width="1.4" rx="5"/>
+    <text x="448" y="112" text-anchor="middle" font-size="13" fill="#2f4f6f">0</text>
+    <text x="488" y="112" text-anchor="middle" font-size="13" fill="#2f4f6f">0</text>
+    <text x="528" y="112" text-anchor="middle" font-size="13" fill="#2f4f6f">0</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="162" width="552" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="40" y="184" font-size="11.5" fill="#3a5a30" font-weight="bold">② 混色对 { i, i+1 }（f = 2，|M| = 2）</text>
+    <text x="40" y="203" font-size="10.5" fill="#3f5a38">两个位置异色时必须相邻，于是成本 2·2 = 4</text>
+    <text x="40" y="221" font-size="10.5" fill="#3f5a38">而同样的两个位置各自纯色只能拿 1 + 1 = 2</text>
+    <text x="40" y="239" font-size="10.5" fill="#3f5a38">→ 每用一对，总成本增益 +2（收益固定，与位置无关）</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="450" y="190" width="36" height="30" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.4" rx="5"/>
+    <rect x="490" y="190" width="36" height="30" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.4" rx="5"/>
+    <text x="468" y="210" text-anchor="middle" font-size="13" fill="#3a5a30">1</text>
+    <text x="508" y="210" text-anchor="middle" font-size="13" fill="#3a5a30">0</text>
+    <path d="M 452 228 L 522 228" stroke="#4a7a3a" stroke-width="1.8" fill="none"/>
+    <text x="487" y="243" text-anchor="middle" font-size="9.5" fill="#3a5a30">相邻</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="260" width="552" height="86" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8"/>
+    <text x="40" y="282" font-size="11.5" fill="#8a6a20" font-weight="bold">③ 混色三元组 { i, i+1, i+2 }（f = 2，|M| = 3）</text>
+    <text x="40" y="301" font-size="10.5" fill="#6b5a30">只能是 ABA：s_i = s_{i+2} ≠ s_{i+1}，成本 3·2 = 6，增益 +3</text>
+    <text x="40" y="319" font-size="10.5" fill="#6b5a30">两条相邻的「不同」边界自动给出 s_i = s_{i+2}，无需额外判断</text>
+    <text x="40" y="337" font-size="10.5" fill="#6b5a30">但它会吃掉两条边界，有时不如一对划算（如 k = 1 时只能取对）</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="430" y="288" width="36" height="30" fill="#ffffff" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <rect x="470" y="288" width="36" height="30" fill="#ffffff" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <rect x="510" y="288" width="36" height="30" fill="#ffffff" stroke="#d6a040" stroke-width="1.4" rx="5"/>
+    <text x="448" y="308" text-anchor="middle" font-size="13" fill="#8a6a20">0</text>
+    <text x="488" y="308" text-anchor="middle" font-size="13" fill="#8a6a20">1</text>
+    <text x="528" y="308" text-anchor="middle" font-size="13" fill="#8a6a20">0</text>
+    <path d="M 432 326 L 552 326" stroke="#d6a040" stroke-width="1.8" fill="none"/>
+    <text x="492" y="341" text-anchor="middle" font-size="9.5" fill="#8a6a20">ABA 三连</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="358" width="552" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8"/>
+    <text x="40" y="380" font-size="11.5" fill="#8a3a36" font-weight="bold">④ 其它混色形状一律非法（这是全局约束）</text>
+    <text x="40" y="399" font-size="10.5" fill="#7a4a46">任一异色对 (x, y) 都要求 |x − y| = 1：异色元素只能「紧贴」</text>
+    <text x="40" y="417" font-size="10.5" fill="#7a4a46">再往集合里塞同色元素，只有 x 另一侧的邻居能同时贴住双方</text>
+    <text x="40" y="435" font-size="10.5" fill="#7a4a46">⇒ |M| ≥ 4 不可能；{1,3}（异色、距离 2）、101 上的 {1,2,3} 都非法</text>
+  </g>
+  <g filter="url(#rough2)">
+    <rect x="430" y="386" width="36" height="30" fill="#ffffff" stroke="#b85450" stroke-width="1.4" rx="5"/>
+    <rect x="510" y="386" width="36" height="30" fill="#ffffff" stroke="#b85450" stroke-width="1.4" rx="5"/>
+    <text x="448" y="406" text-anchor="middle" font-size="13" fill="#8a3a36">1</text>
+    <text x="528" y="406" text-anchor="middle" font-size="13" fill="#8a3a36">0</text>
+    <path d="M 444 384 L 536 418" stroke="#b85450" stroke-width="2.2" fill="none"/>
+    <text x="488" y="438" text-anchor="middle" font-size="9.5" fill="#8a3a36">异色且不相邻</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="454" width="552" height="50" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="10"/>
+    <text x="40" y="475" font-size="11.5" fill="#3a5a30" font-weight="bold">于是 总成本 = n + 2p + 3q（p 个混色对、q 个三元组）</text>
+    <text x="40" y="494" font-size="10.5" fill="#3f5a38">每个位置先记 1 分，混色集合再额外加「2 或 3」分 ⇒ 只需最大化增益 2p + 3q。</text>
+  </g>
+</svg>

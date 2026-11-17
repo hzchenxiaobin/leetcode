@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="400" fill="#fafafa"/>
+
+  <text x="330" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">算法流程：排序 + 枚举候选 p + 上界剪枝</text>
+  <text x="330" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">每个不同的 a_i 都当一次周期候选，统计它整除多少个元素</text>
+
+  <rect x="150" y="56" width="360" height="42" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="82" text-anchor="middle" font-size="12" fill="#2f4a63" filter="url(#rough2)">读入 a，升序排序；best ← 1</text>
+
+  <rect x="150" y="118" width="360" height="42" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="144" text-anchor="middle" font-size="12" fill="#2f4a63" filter="url(#rough2)">i 指向每个不同值的首次下标，p ← a[i]</text>
+
+  <path d="M 330 98 L 330 115" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <polygon points="330,172 470,205 330,238 190,205" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="330" y="202" text-anchor="middle" font-size="12" fill="#7a5a10" filter="url(#rough2)">n − i ≤ best ?</text>
+  <text x="330" y="220" text-anchor="middle" font-size="9.5" fill="#8a6a20" filter="url(#rough2)">剪枝：cnt ≤ n − i</text>
+
+  <path d="M 330 160 L 330 169" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="264" width="360" height="42" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="290" text-anchor="middle" font-size="12" fill="#3a5a30" filter="url(#rough2)">cnt ← #{ j ≥ i : a[j] % p == 0 }</text>
+
+  <rect x="150" y="326" width="360" height="42" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="352" text-anchor="middle" font-size="12" fill="#3a5a30" filter="url(#rough2)">best ← max(best, cnt)；i 移到下一个不同值</text>
+
+  <path d="M 330 238 L 330 261" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="340" y="255" font-size="10.5" fill="#666" filter="url(#rough2)">否</text>
+  <path d="M 330 306 L 330 323" stroke="#888" stroke-width="1.4" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 是分支：跳到输出 -->
+  <path d="M 470 205 L 500 205" stroke="#b85450" stroke-width="1.6" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="478" y="197" font-size="10.5" fill="#b85450" filter="url(#rough2)">是</text>
+  <rect x="502" y="176" width="140" height="58" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="572" y="200" text-anchor="middle" font-size="11.5" fill="#8a3a36" filter="url(#rough2)">输出 n − best</text>
+  <text x="572" y="220" text-anchor="middle" font-size="9.5" fill="#8a3a36" filter="url(#rough2)">后面不可能更优了</text>
+
+  <!-- 循环回边 -->
+  <path d="M 150 347 L 108 347 L 108 139 L 147 139" stroke="#888" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="114" y="300" font-size="10" fill="#888" filter="url(#rough2)">下一轮</text>
+  <text x="114" y="316" font-size="10" fill="#888" filter="url(#rough2)">继续枚举</text>
+
+  <text x="330" y="388" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">best 的初值取 1：只保留一个元素永远合法；去重后最坏约 n²/2 次取模，n ≤ 5000</text>
+</svg>
