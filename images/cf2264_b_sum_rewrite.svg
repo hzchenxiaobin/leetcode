@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 830 386" width="830" height="386"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="830" height="386" fill="#fafafa"/>
+
+  <text x="415" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：加权差分和化简为「末项 × m − 前缀和」</text>
+  <text x="415" y="54" text-anchor="middle" font-size="12.5" fill="#777" filter="url(#rough2)">展开 → 换元 → 同阶相消，三步把 O(m) 求值压成 O(1)</text>
+
+  <!-- ① 原始定义 -->
+  <rect x="36" y="76" width="466" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="52" y="103" font-size="13" fill="#2f4a66" filter="url(#rough2)">① 原始定义　S = Σ(i=1..m) i·(b[i] − b[i−1])，b[0] = 0</text>
+
+  <path d="M 269 120 L 269 132" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 拆成两项 -->
+  <rect x="36" y="134" width="466" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="52" y="161" font-size="13" fill="#2f4a66" filter="url(#rough2)">② 拆两项　Σ(i=1..m) i·b[i]　−　Σ(i=1..m) i·b[i−1]</text>
+
+  <path d="M 269 178 L 269 190" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ③ 换元 -->
+  <rect x="36" y="192" width="466" height="44" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="52" y="219" font-size="13" fill="#33582a" filter="url(#rough2)">③ 后项换元 j = i − 1　⇒　Σ(j=0..m−1) (j+1)·b[j]</text>
+
+  <path d="M 269 236 L 269 248" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ 相消结果 -->
+  <rect x="36" y="250" width="466" height="62" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2" filter="url(#rough2)"/>
+  <text x="52" y="274" font-size="12.8" fill="#8a6015" filter="url(#rough2)">④ 同阶系数相消：i − (i+1) = −1，只剩 i = m 那一项</text>
+  <text x="52" y="298" font-size="14" font-weight="bold" fill="#8a6015" filter="url(#rough2)">S = m·b[m] − ( b[1] + b[2] + ⋯ + b[m−1] )</text>
+
+  <!-- 右侧解读卡 -->
+  <rect x="524" y="76" width="272" height="236" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="542" y="102" font-size="13" font-weight="bold" fill="#8c3a37" filter="url(#rough2)">这个式子说明了什么</text>
+  <text x="542" y="128" font-size="11.8" fill="#8c3a37" filter="url(#rough2)">· 末项 b[m] 按 +m 倍计入</text>
+  <text x="542" y="150" font-size="11.8" fill="#8c3a37" filter="url(#rough2)">· 其余 m−1 项每项按 −1 倍计入</text>
+  <text x="542" y="176" font-size="11.8" fill="#8c3a37" filter="url(#rough2)">· 于是固定末项后，前面这些</text>
+  <text x="542" y="197" font-size="11.8" fill="#8c3a37" filter="url(#rough2)">  越小越好（负数越负越好）</text>
+  <text x="542" y="223" font-size="11.8" fill="#8c3a37" filter="url(#rough2)">· 末项越大越好，两者互不</text>
+  <text x="542" y="244" font-size="11.8" fill="#8c3a37" filter="url(#rough2)">  干扰 ⇒ 两个目标可以拆开</text>
+  <text x="542" y="270" font-size="11.8" fill="#8c3a37" filter="url(#rough2)">· 原来「相邻差分」的耦合</text>
+  <text x="542" y="291" font-size="11.8" fill="#8c3a37" filter="url(#rough2)">  被彻底消掉了</text>
+
+  <rect x="36" y="326" width="760" height="44" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="54" y="353" font-size="12.2" fill="#2f4a66" filter="url(#rough2)">结论：一个候选解的分数只由「末项」和「前 m−1 项之和」决定，与它们各自的排列顺序完全无关。</text>
+</svg>
