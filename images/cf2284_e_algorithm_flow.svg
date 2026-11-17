@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 470"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <filter id="rough1">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <marker id="arrD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8"
+            orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="470" fill="#fafafa"/>
+
+  <text x="330" y="28" text-anchor="middle" font-size="18" fill="#333" filter="url(#rough2)">
+    三段二分 + 一次点查
+  </text>
+  <text x="330" y="50" text-anchor="middle" font-size="12" fill="#777" filter="url(#rough2)">
+    共用同一个不变量：S 与每个连通块之交连通 ⇒ 答 0 ⟺ 四个隐藏端点全在 S 内
+  </text>
+
+  <!-- ① -->
+  <rect x="60" y="64" width="512" height="68" rx="10" fill="#e8f0fe"
+        stroke="#446688" stroke-width="1.8" filter="url(#rough1)"/>
+  <text x="80" y="92" font-size="14" fill="#2f4f6f" filter="url(#rough2)">① 全局 BFS 序的前缀二分</text>
+  <text x="80" y="116" font-size="12" fill="#555" filter="url(#rough2)">
+    得到位置最靠后的隐藏端点 x，记它所在的块为 A
+  </text>
+  <text x="600" y="104" text-anchor="middle" font-size="14" fill="#b85450" filter="url(#rough2)">≤11</text>
+
+  <line x1="316" y1="132" x2="316" y2="152" stroke="#446688" stroke-width="1.8"
+        marker-end="url(#arrD)" filter="url(#rough2)"/>
+
+  <!-- ② -->
+  <rect x="60" y="154" width="512" height="68" rx="10" fill="#e6f4ea"
+        stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough1)"/>
+  <text x="80" y="182" font-size="14" fill="#3c6330" filter="url(#rough2)">
+    ② A 内的后缀二分（保留含 x 的层前缀）
+  </text>
+  <text x="80" y="206" font-size="12" fill="#555" filter="url(#rough2)">
+    得到 A 侧另一端点 a₂；若无翻转点则 a₂ = x（两条隐藏边共用端点）
+  </text>
+  <text x="600" y="194" text-anchor="middle" font-size="14" fill="#b85450" filter="url(#rough2)">≤11</text>
+
+  <line x1="316" y1="222" x2="316" y2="242" stroke="#446688" stroke-width="1.8"
+        marker-end="url(#arrD)" filter="url(#rough2)"/>
+
+  <!-- ③ -->
+  <rect x="60" y="244" width="512" height="68" rx="10" fill="#fff8e1"
+        stroke="#d6a040" stroke-width="1.8" filter="url(#rough1)"/>
+  <text x="80" y="272" font-size="14" fill="#8a6520" filter="url(#rough2)">③ V∖A 的 BFS 前缀二分</text>
+  <text x="80" y="296" font-size="12" fill="#555" filter="url(#rough2)">
+    得到另一块 B 的一个端点 b（两个候选里 BFS 位置较大的那个）
+  </text>
+  <text x="600" y="284" text-anchor="middle" font-size="14" fill="#b85450" filter="url(#rough2)">≤11</text>
+
+  <line x1="316" y1="312" x2="316" y2="332" stroke="#446688" stroke-width="1.8"
+        marker-end="url(#arrD)" filter="url(#rough2)"/>
+
+  <!-- ④ -->
+  <rect x="60" y="334" width="512" height="68" rx="10" fill="#fce4ec"
+        stroke="#b85450" stroke-width="1.8" filter="url(#rough1)"/>
+  <text x="80" y="362" font-size="14" fill="#8c3a36" filter="url(#rough2)">④ 一次点查：? 2 x b</text>
+  <text x="80" y="386" font-size="12" fill="#555" filter="url(#rough2)">
+    答 1 报 (x,b)；答 0 说明 b 只能配 a₂，报 (a₂,b)
+  </text>
+  <text x="600" y="374" text-anchor="middle" font-size="14" fill="#b85450" filter="url(#rough2)">1</text>
+
+  <!-- total -->
+  <rect x="60" y="420" width="512" height="40" rx="9" fill="#f5f5f5"
+        stroke="#888888" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="316" y="446" text-anchor="middle" font-size="13" fill="#333" filter="url(#rough2)">
+    合计 ≤ 11 + 21 + 1 = 33 次（|A| + |W| = n ≤ 2000，两项对数不可能同时超过 11）
+  </text>
+</svg>
