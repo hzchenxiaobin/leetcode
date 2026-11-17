@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="400" fill="#fafafa"/>
+
+  <text x="24" y="32" font-size="17" fill="#333" filter="url(#rough2)">折半搜索：在边界切一刀，左右各自枚举，靠异或值配对</text>
+  <text x="24" y="55" font-size="13" fill="#666" filter="url(#rough2)">答案 ≤ 49，所以总能在某个边界让两侧代价都 ≤ 25</text>
+
+  <!-- cells -->
+  <g font-size="12" fill="#888">
+    <text x="66" y="78" text-anchor="middle" filter="url(#rough2)">0</text>
+    <text x="122" y="78" text-anchor="middle" filter="url(#rough2)">1</text>
+    <text x="178" y="78" text-anchor="middle" filter="url(#rough2)">2</text>
+    <text x="234" y="78" text-anchor="middle" filter="url(#rough2)">i</text>
+    <text x="290" y="78" text-anchor="middle" filter="url(#rough2)">i+1</text>
+    <text x="346" y="78" text-anchor="middle" filter="url(#rough2)">j</text>
+    <text x="402" y="78" text-anchor="middle" filter="url(#rough2)">…</text>
+    <text x="458" y="78" text-anchor="middle" filter="url(#rough2)">n−1</text>
+  </g>
+  <g>
+    <rect x="40" y="84" width="52" height="38" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+    <rect x="96" y="84" width="52" height="38" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+    <rect x="152" y="84" width="52" height="38" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+    <rect x="208" y="84" width="52" height="38" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2.2" filter="url(#rough2)"/>
+    <rect x="264" y="84" width="52" height="38" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="2.2" filter="url(#rough2)"/>
+    <rect x="320" y="84" width="52" height="38" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+    <rect x="376" y="84" width="52" height="38" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+    <rect x="432" y="84" width="52" height="38" rx="5" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  </g>
+  <path d="M258,72 L258,136" stroke="#b85450" stroke-width="2" stroke-dasharray="6 5" filter="url(#rough2)"/>
+  <text x="262" y="150" font-size="12" fill="#94403c" filter="url(#rough2)">切点在 i / i+1 之间</text>
+  <text x="120" y="140" font-size="12" fill="#2f4f2a" filter="url(#rough2)">左半：向 i 汇聚</text>
+  <text x="380" y="140" font-size="12" fill="#8a6a20" filter="url(#rough2)">右半：从 i+1 向右枚举</text>
+
+  <!-- left DFS tree -->
+  <rect x="34" y="176" width="196" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="132" y="197" text-anchor="middle" font-size="12" fill="#33506e" filter="url(#rough2)">从 i 向左：cost 从 1 开始</text>
+  <text x="132" y="214" text-anchor="middle" font-size="12" fill="#33506e" filter="url(#rough2)">每格：计入 +1；跳过 +2</text>
+
+  <path d="M100,222 C88,240 78,252 74,266" fill="none" stroke="#4a7a3a" stroke-width="2" marker-end="url(#arr2)" filter="url(#rough2)"/>
+  <path d="M164,222 C176,240 186,252 190,266" fill="none" stroke="#d6a040" stroke-width="2" marker-end="url(#arr2)" filter="url(#rough2)"/>
+  <text x="46" y="262" font-size="12" fill="#2f4f2a" filter="url(#rough2)">计入 +1</text>
+  <text x="176" y="262" font-size="12" fill="#8a6a20" filter="url(#rough2)">跳过 +2</text>
+
+  <rect x="34" y="272" width="196" height="62" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="132" y="294" text-anchor="middle" font-size="12" fill="#6b5316" filter="url(#rough2)">状态数 ≈ Σ_{c≤25} Fib(c+1)</text>
+  <text x="132" y="312" text-anchor="middle" font-size="12" fill="#6b5316" filter="url(#rough2)">≈ 1.96×10⁵ 个 / 每个切点</text>
+  <text x="132" y="328" text-anchor="middle" font-size="11" fill="#94403c" filter="url(#rough2)">这正是 φ²⁵ 的来源</text>
+
+  <!-- arrows to table -->
+  <path d="M234,204 C258,204 268,204 286,204" fill="none" stroke="#446688" stroke-width="2" marker-end="url(#arr2)" filter="url(#rough2)"/>
+
+  <!-- right boxes -->
+  <rect x="290" y="182" width="356" height="44" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="302" y="209" font-size="12.5" fill="#2f4f2a" filter="url(#rough2)">左表：键 = 子集异或值，值 = 该异或值的最小代价</text>
+
+  <rect x="290" y="240" width="356" height="44" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="302" y="267" font-size="12.5" fill="#33506e" filter="url(#rough2)">右侧 DFS 每到一个状态就查表：异或值相同即可拼起来</text>
+
+  <rect x="290" y="298" width="356" height="44" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="2" filter="url(#rough2)"/>
+  <text x="302" y="325" font-size="12.5" fill="#7d2b27" filter="url(#rough2)">总代价 = 左代价 + 右代价 − 1（合并只算一次）</text>
+
+  <rect x="34" y="348" width="612" height="40" rx="9" fill="#fafafa" stroke="#888" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="46" y="373" font-size="12.5" fill="#444" filter="url(#rough2)">n &gt; 25 时答案必 ≤ 49：26 个连续元素一定线性相关；否则答案 ≤ 2n−3 ≤ 47</text>
+</svg>
