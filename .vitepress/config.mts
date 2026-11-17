@@ -66,12 +66,36 @@ function loadContests() {
         : a.kind === 'weekly' ? -1 : 1)
 }
 
+/** 从 codeforces/ 目录读取题解列表：场次升序 → 题号（A/B/…/G1/G2）升序 */
+function loadCodeforces() {
+  const base = path.resolve(root, '../codeforces')
+  if (!fs.existsSync(base)) return []
+  return fs.readdirSync(base)
+    .filter(d => /^\d+$/.test(d))
+    .flatMap(d =>
+      fs.readdirSync(path.join(base, d))
+        .filter(f => f.endsWith('.md'))
+        .map(f => {
+          const idx = f.match(/^([A-Za-z0-9]+)\./)?.[1] ?? ''
+          const h1 = fs.readFileSync(path.join(base, d, f), 'utf-8').match(/^#\s+(.+)$/m)?.[1] ?? f
+          return {
+            contest: parseInt(d),
+            index: idx.toUpperCase(),
+            text: `CF ${d}${idx.toUpperCase()} ${cleanTitle(h1)}`,
+            link: `/codeforces/${d}/${f.replace(/\.md$/, '')}`
+          }
+        })
+    )
+    .sort((a, b) => a.contest - b.contest || a.index.localeCompare(b.index, 'en', { numeric: true }))
+}
+
 // 全局题目顺序（每日一题按题号；周赛 / 双周赛各自按场次 → Q 号，互不跨越），
 // 用于生成 上一题/下一题
 const solutionOrder = loadSolutions()
 const contestOrder = loadContests()
 const weeklyOrder = contestOrder.filter(o => o.kind === 'weekly')
 const biweeklyOrder = contestOrder.filter(o => o.kind === 'biweekly')
+const codeforcesOrder = loadCodeforces()
 
 // ---- 分批构建 ----
 // 全量 6000+ 页单次构建的内存超出 CI runner 上限（打包器模块图常驻堆内存），
@@ -114,7 +138,7 @@ const batchExclude: string[] = !batching ? [] : [
   // 共享页面（首页/索引/专题）只在第 0 批构建，避免合并产物时互相覆盖
   ...(batchIndex === 0 ? [] : [
     'topics/**',
-    'index.md', 'solutions.md', 'contests.md', 'biweekly.md', 'topics.md',
+    'index.md', 'solutions.md', 'contests.md', 'biweekly.md', 'codeforces.md', 'topics.md',
     'hot-interview.md', '10-week-plan.md'
   ])
 ]
@@ -227,7 +251,7 @@ export default defineConfig({
 
   // 无侧边栏：题解页为 正文 + 右侧本页目录；按题号顺序自动推导 上一题/下一题
   transformPageData(pageData) {
-    for (const order of [solutionOrder, weeklyOrder, biweeklyOrder]) {
+    for (const order of [solutionOrder, weeklyOrder, biweeklyOrder, codeforcesOrder]) {
       const idx = order.findIndex(o => pageData.relativePath === o.link.slice(1) + '.md')
       if (idx >= 0) {
         const prev = order[idx - 1]
@@ -245,6 +269,7 @@ export default defineConfig({
       { text: '题解', link: '/solutions.html' },
       { text: '周赛', link: '/contests.html' },
       { text: '双周赛', link: '/biweekly.html' },
+      { text: 'Codeforces', link: '/codeforces.html' },
       { text: '专题', link: '/topics.html' },
       { text: 'GitHub', link: 'https://github.com/hzchenxiaobin/leetcode' }
     ],

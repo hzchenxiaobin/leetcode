@@ -4,6 +4,7 @@ import { useRoute } from 'vitepress'
 import { initLightbox } from './lightbox'
 import SolutionList from './SolutionList.vue'
 import ContestList from './ContestList.vue'
+import CodeforcesList from './CodeforcesList.vue'
 import BackLink from './BackLink.vue'
 import 'katex/dist/katex.min.css'
 import './custom.css'
@@ -13,6 +14,7 @@ export default {
   enhanceApp({ app }) {
     app.component('SolutionList', SolutionList)
     app.component('ContestList', ContestList)
+    app.component('CodeforcesList', CodeforcesList)
   },
   Layout() {
     return h(DefaultTheme.Layout, null, {
