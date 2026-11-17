@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 500" width="780" height="500"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="500" fill="#fafafa"/>
+
+  <text x="390" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：逆序加点，只维护「块头集合 ＋ 块总和」</text>
+  <path d="M 168 42 Q 390 49 612 42" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <rect x="180" y="56" width="420" height="42" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="390" y="82" text-anchor="middle" font-size="13" fill="#2f4a66" filter="url(#rough2)">读入 n、a[1..n]、p[1..n]，把 p 反转成插入顺序</text>
+  <path d="M 390 98 L 390 112" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="180" y="114" width="420" height="42" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="390" y="133" text-anchor="middle" font-size="13" fill="#2f4a66" filter="url(#rough2)">O(n) 预处理：tau[i] 加入时刻，leftNb[i] 左邻居（单调栈）</text>
+  <text x="390" y="150" text-anchor="middle" font-size="11" fill="#7a8fa6" filter="url(#rough2)">leftNb[i] = 左边最近的 tau 更小的位置 = 插入 i 时左边最近的在场元素</text>
+  <path d="M 390 156 L 390 170" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="180" y="172" width="420" height="40" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="390" y="197" text-anchor="middle" font-size="13" fill="#2f4a66" filter="url(#rough2)">加入 pos = p[j]：树状数组单点加 a[pos]（P 前缀和）</text>
+  <path d="M 390 212 L 390 226" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="228" width="480" height="44" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="390" y="247" text-anchor="middle" font-size="13" fill="#8a6015" filter="url(#rough2)">L = leftNb[pos]；b = 不超过 L 的最大块头；S = 块 b 的总和</text>
+  <text x="390" y="264" text-anchor="middle" font-size="12.5" fill="#8a6015" filter="url(#rough2)">U = P[L] − P[b − 1]（旧冠军走到 L 时的战力）</text>
+  <path d="M 390 272 L 390 288" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="56" y="290" width="316" height="76" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.9" filter="url(#rough2)"/>
+  <text x="214" y="312" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">U ≥ x：pos 被吞并</text>
+  <text x="214" y="332" text-anchor="middle" font-size="12" fill="#2f4a66" filter="url(#rough2)">块数不变，b 不变</text>
+  <text x="214" y="352" text-anchor="middle" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">cur = S + x</text>
+
+  <rect x="408" y="290" width="316" height="76" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.9" filter="url(#rough2)"/>
+  <text x="566" y="312" text-anchor="middle" font-size="13.5" font-weight="bold" fill="#8c3a37" filter="url(#rough2)">U &lt; x：x 夺魁（新块）</text>
+  <text x="566" y="332" text-anchor="middle" font-size="12" fill="#8c3a37" filter="url(#rough2)">块数 +1，旧块缩成 [b, L]，块总 s ← U</text>
+  <text x="566" y="352" text-anchor="middle" font-size="12.5" fill="#8c3a37" filter="url(#rough2)">cur = S + x − U，b ← pos</text>
+
+  <path d="M 214 366 L 214 384 L 390 384 L 390 394" stroke="#446688" stroke-width="1.7" fill="none" filter="url(#rough2)"/>
+  <path d="M 566 366 L 566 384 L 390 384" stroke="#446688" stroke-width="1.7" fill="none" filter="url(#rough2)"/>
+  <path d="M 390 384 L 390 394" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="130" y="396" width="520" height="44" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.9" filter="url(#rough2)"/>
+  <text x="390" y="415" text-anchor="middle" font-size="13" font-weight="bold" fill="#33582a" filter="url(#rough2)">级联：while cur ≥ a[下一块头] → cur += 该块总和，块数 −1，删块头</text>
+  <text x="390" y="432" text-anchor="middle" font-size="11.5" fill="#4a7a3a" filter="url(#rough2)">每次删除的块头不会再回来 ⇒ 全过程的合并总次数 ≤ n</text>
+  <path d="M 390 440 L 390 452" stroke="#4a7a3a" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="230" y="454" width="320" height="34" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="390" y="476" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6015" filter="url(#rough2)">ans[j − 1] = 块数 − 1</text>
+</svg>
