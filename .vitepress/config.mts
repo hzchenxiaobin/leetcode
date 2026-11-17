@@ -98,9 +98,19 @@ const contestStart = Math.floor(allContestDirs.length * batchIndex / batchTotal)
 const contestEnd = Math.floor(allContestDirs.length * (batchIndex + 1) / batchTotal)
 const myContestDirs = new Set(allContestDirs.slice(contestStart, contestEnd))
 
+// Codeforces 题解同样按场次目录切批，避免题量增长后每批都全量构建
+const codeforcesDir = path.resolve(root, '../codeforces')
+const allCfDirs = fs.existsSync(codeforcesDir)
+  ? fs.readdirSync(codeforcesDir).filter(d => fs.statSync(path.join(codeforcesDir, d)).isDirectory()).sort()
+  : []
+const cfStart = Math.floor(allCfDirs.length * batchIndex / batchTotal)
+const cfEnd = Math.floor(allCfDirs.length * (batchIndex + 1) / batchTotal)
+const myCfDirs = new Set(allCfDirs.slice(cfStart, cfEnd))
+
 const batchExclude: string[] = !batching ? [] : [
   ...allRanges.filter(d => !myRanges.has(d)).map(d => `solution/${d}/**`),
   ...allContestDirs.filter(d => !myContestDirs.has(d)).map(d => `contest/${d}/**`),
+  ...allCfDirs.filter(d => !myCfDirs.has(d)).map(d => `codeforces/${d}/**`),
   // 共享页面（首页/索引/专题）只在第 0 批构建，避免合并产物时互相覆盖
   ...(batchIndex === 0 ? [] : [
     'topics/**',
