@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <filter id="rough3">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="2"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#6a6a72"/>
+    </marker>
+    <marker id="arrR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="560" height="400" fill="#fafafa"/>
+  <text x="280" y="26" font-size="14" fill="#444" text-anchor="middle" font-weight="bold" filter="url(#rough2)">两轮算法：把目标 x 编码进“重心”，再由重心直接读出</text>
+  <text x="280" y="44" font-size="10.5" fill="#888" text-anchor="middle" filter="url(#rough2)">交换只做一件事：让 A(S′) 恰好落在 x 上</text>
+  <rect x="36" y="58" width="488" height="86" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="52" y="78" font-size="11.5" fill="#33475f" font-weight="bold" filter="url(#rough2)">第一轮 · Chtholly（看得到原图和 x）</text>
+  <text x="52" y="98" font-size="10" fill="#3d5068" filter="url(#rough2)">① 数出 w、Σ = 所有黑格坐标之和（mod n）；② δ = w·x − Σ (mod n)；</text>
+  <text x="52" y="116" font-size="10" fill="#3d5068" filter="url(#rough2)">③ δ = 0：随便输出同一个格子两次；否则找黑格 a 使 a + δ 为白格，输出 a、a + δ。</text>
+  <text x="52" y="134" font-size="10" fill="#8a4a2a" font-weight="bold" filter="url(#rough2)">交换后 A(S′) = (Σ + δ)·w⁻¹ = x —— 锚点被“钉”在目标格上。</text>
+  <path d="M 280 146 L 280 172" stroke="#6a6a72" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="36" y="176" width="488" height="44" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="52" y="196" font-size="10.5" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">裁判：任意次 平移 / 旋转 90° / 左右翻转 / 全体反色（图形与 x 一起动）</text>
+  <text x="52" y="212" font-size="10" fill="#7a6020" filter="url(#rough2)">图形被换成 Q = L·S′ + t（可能再整体反色），x 被换成 L·x + t</text>
+  <path d="M 280 222 L 280 248" stroke="#6a6a72" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <rect x="36" y="252" width="488" height="76" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="52" y="272" font-size="11.5" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">第二轮 · Willem（只看到 Q）</text>
+  <text x="52" y="292" font-size="10" fill="#42583a" filter="url(#rough2)">数出 Q 的黑格数 w′ 与坐标和 Σ′，直接输出 A(Q) = Σ′·w′⁻¹ (mod n)，转成 1-indexed。</text>
+  <text x="52" y="310" font-size="10" fill="#42583a" filter="url(#rough2)">被反色时 w′ = n² − w，A(Q) = −w(n²−w)⁻¹(L·x + t)，但 −w ≡ n² − w 使系数恰好为 1。</text>
+  <rect x="36" y="340" width="488" height="42" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="9" filter="url(#rough2)"/>
+  <text x="52" y="358" font-size="10.5" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">两轮之间没有别的信道：Willem 输出的 A(Q) 就必须等于 x 的最终位置。</text>
+  <text x="52" y="374" font-size="10" fill="#8a3a36" filter="url(#rough2)">多测之间互不影响（顺序可能被打乱），所以每个测试都独立编码、独立解码。</text>
+</svg>

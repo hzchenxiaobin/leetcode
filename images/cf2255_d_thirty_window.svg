@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 440" width="720" height="440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="3"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M 0 0 L 8 3 L 0 6 z" fill="#7a8fa6"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="440" fill="#fafafa"/>
+
+  <text x="360" y="28" text-anchor="middle" font-size="15" font-weight="bold" fill="#444" filter="url(#rough2)">截断：a_i ≤ 10^9 &lt; 2^30，所以只有最后 30 件物品要精算</text>
+  <text x="360" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">T ≥ n 时，前 T−30 件物品每件都大到能单独喂饱任意一个箱子</text>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="68" width="316" height="82" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="9"/>
+    <text x="40" y="90" font-size="11.5" font-weight="bold" fill="#333">前 T − 30 件大物品</text>
+    <text x="40" y="110" font-size="9.6" fill="#555">权值 2^(T−1), 2^(T−2), … , 2^30</text>
+    <text x="40" y="128" font-size="9.6" fill="#555">每件都 ≥ 2^30 &gt; 10^9 ≥ 任何 a_i</text>
+    <text x="40" y="144" font-size="9.6" fill="#666">⟹ 一件就能喂饱一个箱子</text>
+
+    <rect x="380" y="68" width="316" height="82" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="9"/>
+    <text x="396" y="90" font-size="11.5" font-weight="bold" fill="#333">最大的 min(n, T−30) 个需求</text>
+    <text x="396" y="110" font-size="9.6" fill="#555">LPT 依次把大物品给当前最大剩余需求，</text>
+    <text x="396" y="128" font-size="9.6" fill="#555">拿到即清零、退出堆 ⟹ 一对一，无需再算</text>
+    <text x="396" y="144" font-size="9.6" fill="#666">这一步是「免费」的，只剩小需求要处理</text>
+
+    <rect x="24" y="176" width="316" height="82" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="9"/>
+    <text x="40" y="198" font-size="11.5" font-weight="bold" fill="#333">最后 30 件小物品</text>
+    <text x="40" y="218" font-size="9.6" fill="#555">权值 2^29, 2^28, … , 2^0</text>
+    <text x="40" y="236" font-size="9.6" fill="#555">大小跨度极大：2^29 很肥，2^0 极小</text>
+    <text x="40" y="252" font-size="9.6" fill="#666">⟹ 只能老老实实跑 LPT</text>
+
+    <rect x="380" y="176" width="316" height="82" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="9"/>
+    <text x="396" y="198" font-size="11.5" font-weight="bold" fill="#333">最小的 n' = n − min(n, T−30) 个需求</text>
+    <text x="396" y="218" font-size="9.6" fill="#555">因为 T ≥ n，所以 n' ≤ 30：</text>
+    <text x="396" y="236" font-size="9.6" fill="#555">n' = n − (T−30) ≤ n − (n−30) = 30</text>
+    <text x="396" y="252" font-size="9.6" fill="#666">箱子 ≤ 30 个、物品 ≤ 30 件 —— 极小规模</text>
+  </g>
+
+  <path d="M 340 108 L 376 108" stroke="#7a8fa6" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 340 216 L 376 216" stroke="#7a8fa6" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="278" width="672" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="9"/>
+    <text x="40" y="300" font-size="11.5" font-weight="bold" fill="#333">判定复杂度</text>
+    <text x="40" y="319" font-size="9.6" fill="#555">每个 T：排序后只需对最小的 n' 个需求与 2^29…2^0 做 LPT，O(30 log 30) —— 与 n 无关</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="24" y="344" width="672" height="76" fill="#fff8e1" stroke="#d6a040" stroke-width="2" rx="9"/>
+    <text x="40" y="366" font-size="11.5" font-weight="bold" fill="#333">答案范围：n ≤ T ≤ n + 30，直接二分</text>
+    <text x="40" y="385" font-size="9.6" fill="#555">下界：T &lt; n 时物品件数不够分（每个箱子至少 1 件）；上界：T = n + 30 时前 n 件物品都 ≥ 2^30，各喂一个</text>
+    <text x="40" y="405" font-size="9.6" fill="#666">可行性单调 ⟹ 二分区间长度 31，只需约 5 次判定</text>
+  </g>
+</svg>
