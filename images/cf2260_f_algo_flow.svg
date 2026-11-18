@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="500" viewBox="0 0 820 500"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="19"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="820" height="500" fill="#fafafa"/>
+
+  <text x="410" y="30" text-anchor="middle" font-size="18.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：先剪到至多 18 个点，再枚举 2^rr 个回路空间元素</text>
+  <text x="410" y="53" text-anchor="middle" font-size="12.5" fill="#66788c" filter="url(#rough2)">判据：存在简单环 C 使 G − C 连通 ⟺ 存在非空回路空间元素 Y ⊆ E'' 使 G − Y 连通</text>
+
+  <rect x="44" y="70" width="572" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="60" y="92" font-size="12.5" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">① 剥叶子：反复删去当前度数 ≤ 1 的点，得到 2-核 H</text>
+  <text x="60" y="111" font-size="12" fill="#2f4a66" filter="url(#rough2)">叶子边是桥，永远不在任何环上；删掉它也不影响“删环后是否连通”</text>
+  <path d="M 330 122 L 330 138" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="44" y="138" width="572" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="60" y="160" font-size="12.5" font-weight="bold" fill="#3c5e2e" filter="url(#rough2)">② 取 V'' = H 中度数 ≥ 3 的点，E'' = 两端都在 V'' 的边</text>
+  <text x="60" y="179" font-size="12" fill="#3c5e2e" filter="url(#rough2)">可删的环不能过 H 中度为 2 的点：它的两条边都会被环占掉，删完就孤零零挂着了</text>
+  <path d="M 330 190 L 330 206" stroke="#4a7a3a" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="44" y="206" width="572" height="52" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="60" y="228" font-size="12.5" font-weight="bold" fill="#8a6015" filter="url(#rough2)">③ 缩点：把 E'' 以外的边全部并起来（一次并查集）</text>
+  <text x="60" y="247" font-size="12" fill="#8a6015" filter="url(#rough2)">Y ⊆ E'' 不碰这些边，所以缩点不改变 G − Y 的连通性；缩点图只有 h ≤ |V''| 个点</text>
+  <path d="M 330 258 L 330 274" stroke="#d6a040" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="44" y="274" width="572" height="52" rx="8" fill="#f2e6f4" stroke="#8a5b9c" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="60" y="296" font-size="12.5" font-weight="bold" fill="#6b4479" filter="url(#rough2)">④ 枚举 K = (V'', E'') 的全部 2^rr 个回路空间元素（bitmask 对称差）</text>
+  <text x="60" y="315" font-size="12" fill="#6b4479" filter="url(#rough2)">rr = |E''| − |V''| + c(K) ≤ r = m − n + 1 ≤ 10，所以最多 1024 个候选</text>
+  <path d="M 330 326 L 330 342" stroke="#8a5b9c" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="44" y="342" width="572" height="52" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="60" y="364" font-size="12.5" font-weight="bold" fill="#a14340" filter="url(#rough2)">⑤ 对每个 Y：缩点图上删掉 Y 的边，并查集判是否只剩一块</text>
+  <text x="60" y="383" font-size="12" fill="#a14340" filter="url(#rough2)">只要有一次连通就 YES；1024 个候选全都不连通才 NO（枚举完备，不会漏掉可行解）</text>
+
+  <!-- 右侧标注 -->
+  <text x="632" y="168" font-size="12" fill="#3c5e2e" filter="url(#rough2)">|V''| ≤ 18</text>
+  <text x="632" y="236" font-size="12" fill="#8a6015" filter="url(#rough2)">h ≤ 18</text>
+  <text x="632" y="304" font-size="12" fill="#6b4479" filter="url(#rough2)">2^rr ≤ 1024</text>
+  <text x="632" y="372" font-size="12" fill="#a14340" filter="url(#rough2)">每次 O(27)</text>
+
+  <!-- 底部：为什么小 -->
+  <rect x="44" y="412" width="732" height="72" rx="9" fill="#ffffff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="60" y="436" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">为什么小：Σ_{v∈V''}( deg_H(v) − 2 ) ≤ 2|E(H)| − 2|V(H)| = 2(r − 1)，而每一项 ≥ 1，故 |V''| ≤ 2(r−1) ≤ 18；</text>
+  <text x="60" y="460" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">E'' 是 H 的子图、回路秩不超过 r，所以 |E''| ≤ |V''| − 1 + r ≤ 27。总复杂度 O(n + m + 2^r·r²)，与 n 无关。</text>
+</svg>
