@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="634" viewBox="0 0 880 634" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough" x="-6%%" y="-6%%" width="112%%" height="112%%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="880" height="634" fill="#fafafa"/>
+  <text x="440" y="34" text-anchor="middle" font-size="17.5" font-weight="bold" fill="#22303f" filter="url(#rough)">算法流程：一次 DFS + 每个顶点 O(deg) 的对称多项式</text>
+  <rect x="50" y="58" width="780" height="96" rx="10" fill="#e8eef7" stroke="#446688" stroke-width="1.6" filter="url(#rough)"/>
+  <text x="70" y="86" text-anchor="start" font-size="13.5" font-weight="bold" fill="#173a5e" filter="url(#rough)">① 迭代 DFS 定序（链状树也不会爆栈）</text>
+  <text x="70" y="114" text-anchor="start" font-size="12.5" fill="#2b2b2b" filter="url(#rough)">队列/栈给出 parent[] 与遍历序 order[]；</text>
+  <text x="70" y="138" text-anchor="start" font-size="12.5" fill="#2b2b2b" filter="url(#rough)">逆序把 sz[u] 累加到 sz[parent[u]]，得到子树大小</text>
+  <line x1="440" y1="156" x2="440" y2="176" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="50" y="178" width="780" height="96" rx="10" fill="#eef4e8" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough)"/>
+  <text x="70" y="206" text-anchor="start" font-size="13.5" font-weight="bold" fill="#173a5e" filter="url(#rough)">② 收集顶点 v 的每个分支大小</text>
+  <text x="70" y="234" text-anchor="start" font-size="12.5" fill="#2b2b2b" filter="url(#rough)">儿子 u：s = sz[u]；</text>
+  <text x="70" y="258" text-anchor="start" font-size="12.5" fill="#2b2b2b" filter="url(#rough)">父方向（v 不是根）：s = n − sz[v]</text>
+  <line x1="440" y1="276" x2="440" y2="296" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="50" y="298" width="780" height="96" rx="10" fill="#e8eef7" stroke="#446688" stroke-width="1.6" filter="url(#rough)"/>
+  <text x="70" y="326" text-anchor="start" font-size="13.5" font-weight="bold" fill="#173a5e" filter="url(#rough)">③ 合并对称多项式，算出 e₂ 与 e₃</text>
+  <text x="70" y="354" text-anchor="start" font-size="12.5" fill="#2b2b2b" filter="url(#rough)">q₂ = Σ s²，q₃ = Σ s³（对 v 的所有分支求和）；</text>
+  <text x="70" y="378" text-anchor="start" font-size="12.5" fill="#2b2b2b" filter="url(#rough)">e₂ = (S² − q₂)/2，e₃ = (S³ − 3S·q₂ + 2q₃)/6</text>
+  <line x1="440" y1="396" x2="440" y2="416" stroke="#446688" stroke-width="2" marker-end="url(#arr)"/>
+  <rect x="50" y="418" width="780" height="96" rx="10" fill="#eef4e8" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough)"/>
+  <text x="70" y="446" text-anchor="start" font-size="13.5" font-weight="bold" fill="#173a5e" filter="url(#rough)">④ 按 a_v 是否为完全平方数累加</text>
+  <text x="70" y="474" text-anchor="start" font-size="12.5" fill="#2b2b2b" filter="url(#rough)">是：ans += e₂ + e₃；否：整个顶点跳过；</text>
+  <text x="70" y="498" text-anchor="start" font-size="12.5" fill="#2b2b2b" filter="url(#rough)">答案 = 所有顶点贡献之和</text>
+  <rect x="50" y="538" width="780" height="74" rx="10" fill="#fdf6dd" stroke="#b08d2e" stroke-width="1.6" filter="url(#rough)"/>
+  <text x="70" y="568" text-anchor="start" font-size="12.5" fill="#5a4410" filter="url(#rough)">总复杂度 O(n) / 组（Σn ≤ 2·10⁵）：每顶点只扫一遍自己的邻接表，全局恰好 O(n)。</text>
+  <text x="70" y="594" text-anchor="start" font-size="12.5" font-weight="bold" fill="#7a3b12" filter="url(#rough)">每个三元组只在中位数处被统计一次 ⟹ 按顶点累加不重不漏。</text>
+</svg>
