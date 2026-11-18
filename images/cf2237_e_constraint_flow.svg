@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+    <marker id="arrr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="660" height="430" fill="#fafafa"/>
+
+  <g filter="url(#rough2)">
+  <text x="330" y="26" text-anchor="middle" font-size="14" fill="#444" font-weight="bold">算法流程：先用已知 b_i 钉死部分映射，再在每个长度组内贪心补齐</text>
+  <text x="330" y="46" text-anchor="middle" font-size="10.5" fill="#888">四步对每组测试各跑一次，总和 O(n)，只需线性空间</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="64" width="440" height="56" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8"/>
+    <text x="86" y="88" font-size="10.5" fill="#2f4d6b">① 把 a 分解成置换环，每个环从「最小元素」出发按 a 的顺序列出</text>
+    <text x="86" y="107" font-size="10.5" fill="#2f4d6b">记录 cid[x]（环编号）与 pos[x]（在环内的位置）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 290 122 L 290 142" stroke="#666" stroke-width="1.6" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="146" width="440" height="86" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="8"/>
+    <text x="86" y="168" font-size="10.5" fill="#8a3a36">② 处理每个已知的 b_i ≠ −1：源环 s = cid[i]，目标环 t = cid[b_i]</text>
+    <text x="86" y="187" font-size="10.5" fill="#8a3a36">shift = (pos[b_i] − pos[i]) mod L；若两环长度不同 → NO</text>
+    <text x="86" y="206" font-size="10.5" fill="#8a3a36">同一源环给出不同的 (t, shift)，或 t 已被别的源环占用 → NO</text>
+    <text x="86" y="224" font-size="10.5" fill="#8a3a36">全部通过 ⇒ 已知值彼此相容，且能延伸成完整的交换置换</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 290 234 L 290 254" stroke="#666" stroke-width="1.6" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="258" width="440" height="86" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8"/>
+    <text x="86" y="280" font-size="10.5" fill="#3a5a30">③ 按 i = 1..n 扫描：遇到「空闲环的最小元素」就为它选目标环</text>
+    <text x="86" y="299" font-size="10.5" fill="#3a5a30">选「最小可用目标环」D：shift = 0 时 b_i = min D，正是 b_i 的最小值</text>
+    <text x="86" y="318" font-size="10.5" fill="#3a5a30">每个长度组维护单调右移的指针 p_L，跳过已占用目标环，故整体 O(n)</text>
+    <text x="86" y="337" font-size="10.5" fill="#3a5a30">（环按最小元素升序编号，指针扫过的环不会再被选中）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <path d="M 290 346 L 290 366" stroke="#666" stroke-width="1.6" marker-end="url(#arr)"/>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="70" y="370" width="440" height="48" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="8"/>
+    <text x="86" y="392" font-size="10.5" fill="#8a6a20">④ 对每个位置还原 b_i = elems[img[cid[i]]][(pos[i] + shift) mod L]</text>
+    <text x="86" y="410" font-size="10.5" fill="#8a6a20">输出 YES 与 b；若中途判负则只输出 NO</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="524" y="164" width="122" height="46" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="8"/>
+    <text x="585" y="185" text-anchor="middle" font-size="12" fill="#8a3a36" font-weight="bold">输出 NO</text>
+    <text x="585" y="201" text-anchor="middle" font-size="9.5" fill="#8a3a36">跳过该组</text>
+    <path d="M 512 187 L 520 187" stroke="#b85450" stroke-width="1.6" stroke-dasharray="4 2" marker-end="url(#arrr)"/>
+  </g>
+</svg>
