@@ -306,11 +306,32 @@ pending → drafting → sample_passed → verified → review_passed → publis
 
 ## 10. 立即执行清单
 
-- [ ] 获取并保存 Codeforces API 快照，统计实际比赛数、题位数和唯一题目数。
-- [ ] 确认 Gym 不纳入主计划，记录主计划范围。
-- [ ] 创建 `codeforces/` 目录、数据清单、写作规范和文章模板。
-- [ ] 选定四类试点比赛，完成全流程试点。
-- [ ] 接入 Codeforces 列表页、搜索、分批构建和部署。
-- [ ] 根据试点数据确定每批容量，开始第 1 个 100 场里程碑。
-- [ ] 每批完成代码验证、文档复核、覆盖率对账和网站构建。
-- [ ] 全量完成后补漏，再建立新比赛增量更新机制。
+- [x] 获取并保存 Codeforces API 快照，统计实际比赛数、题位数和唯一题目数（`data/snapshot.json`，2026-11-19 快照：2164 场已结束、2030 场有题面映射、11526 个题位）。
+- [x] 确认 Gym 不纳入主计划，记录主计划范围（`README.md`、`data/snapshot.json` 的 `source`）。
+- [x] 创建 `codeforces/` 目录、数据清单、写作规范和文章模板（`README.md`、`SKILL.md`、`data/*.json`、`tools/`）。
+- [x] 选定四类试点比赛，完成全流程试点：早期场（Round 1-3）、近期 Div.3/Div.4（2290、2285）、交互/特殊评测（2237G、2245G、7C）、Div.1/Div.2 共享题（指纹核对见 `tools/find_shared.py`）。
+- [x] 接入 Codeforces 列表页、搜索、分批构建和部署（`codeforces.md`、`CodeforcesList.vue`（题号/标题/标签/难度检索）、`config.mts` 分批与上一题/下一题、`deploy.yml` 12 批矩阵）。
+- [x] 根据试点数据确定每批容量，开始第 1 个 100 场里程碑（当前批容量 3-5 题/子代理，M1 进行中）。
+- [~] 每批完成代码验证、文档复核、覆盖率对账和网站构建（已固化为 `tools/` 脚本 + BATCH 构建；按里程碑滚动执行）。
+- [ ] 全量完成后补漏，再建立新比赛增量更新机制（增量工具 `refresh_api.py` + 保留状态的 `build_manifest.py` 已就绪，待全量后启用定期任务）。
+
+> 说明：`[x]` 已完成并可在仓库中复核，`[~]` 流程已固化但仍在逐批执行，`[ ]` 未开始。
+
+## 11. 执行状态（滚动更新）
+
+最近更新：2026-11-19。
+
+| 项目 | 状态 |
+| --- | --- |
+| 快照范围 | 2164 场已结束比赛；2030 场有题面映射；11526 个题位 |
+| 已发布正文 | 见 `codeforces/data/progress.md`（本文件不重复记数，避免两处漂移） |
+| 题面来源 | Codeforces 主站题面页对脚本 403，统一走洛谷镜像缓存（`tools/fetch_problem.py`，样例与 CF 原页一致） |
+| 代码验证 | 本机无 GNU g++，用 `clang++ -std=c++17 -O2` + 仓库内 `bits/stdc++.h` 兼容头；提交代码仍是标准 GNU C++17 |
+| 样例比对 | `tools/verify_solution.py` 默认按 Codeforces 标准 checker 的 token 比对；构造/交互/多解题用 `--checker` |
+| 全量回归 | `tools/audit.py`：327 篇正文全部编译通过，官方样例一致 304 篇，其余为多解/交互题（逐篇「验证记录」已注明） |
+| 文档规范 | `tools/check.py` 全量 0 失败；历史题解保留旧编号（算法细节 + 验证记录编号 9），已写入 `SKILL.md` 5.2 |
+| 对账 | `tools/reconcile.py`：快照 ↔ 比赛清单 ↔ 题位清单 ↔ 正文 ↔ 站点页面，当前无失败项 |
+| 站点构建 | `BATCH_TOTAL=12 BATCH_INDEX=0 npm run build` 本地通过（116 s）；CI 用同一分片参数 |
+| 阻塞 | 1 项：`2237/I2` DBFS Order (Hard Version)（editorial 与提交均 403，容斥 DP 未推导出可验证版本） |
+
+下一步（按计划 §4 阶段 2 执行）：继续按开赛时间从旧到新推进 M1，每批 3-5 题/子代理，批末跑 `check.py` + `check_samples.py` + `verify_solution.py` + `update_progress.py` 并提交。
