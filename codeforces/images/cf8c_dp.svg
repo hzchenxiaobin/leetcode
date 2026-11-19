@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="560" viewBox="0 0 880 560"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.023" numOctaves="2" seed="29"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="a8dp" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="880" height="560" fill="#fafafa"/>
+
+  <text x="440" y="34" text-anchor="middle" font-size="18.5" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">状压 DP：mask 记录"已取走哪些物品"</text>
+  <path d="M 120 46 Q 440 52 760 46" stroke="#2b2b2b" stroke-width="1.2" fill="none"
+        filter="url(#rough2)"/>
+
+  <!-- 位串 -->
+  <text x="120" y="88" font-size="13" fill="#44597a" filter="url(#rough2)">mask 的第 b 位 = 1 表示 b 号物品已经取走</text>
+  <g filter="url(#rough2)">
+    <rect x="140" y="102" width="52" height="46" rx="6" fill="#dbe7fb" stroke="#446688" stroke-width="1.6"/>
+    <rect x="196" y="102" width="52" height="46" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1.6"/>
+    <rect x="252" y="102" width="52" height="46" rx="6" fill="#dbe7fb" stroke="#446688" stroke-width="1.6"/>
+    <rect x="308" y="102" width="52" height="46" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1.6"/>
+    <rect x="364" y="102" width="52" height="46" rx="6" fill="#ffffff" stroke="#b9b9b9" stroke-width="1.6"/>
+  </g>
+  <text x="166" y="132" text-anchor="middle" font-size="14" fill="#23405c" filter="url(#rough2)">1</text>
+  <text x="222" y="132" text-anchor="middle" font-size="14" fill="#9a9a9a" filter="url(#rough2)">0</text>
+  <text x="278" y="132" text-anchor="middle" font-size="14" fill="#23405c" filter="url(#rough2)">1</text>
+  <text x="334" y="132" text-anchor="middle" font-size="14" fill="#9a9a9a" filter="url(#rough2)">0</text>
+  <text x="390" y="132" text-anchor="middle" font-size="14" fill="#9a9a9a" filter="url(#rough2)">0</text>
+  <text x="440" y="132" font-size="13" fill="#44597a" filter="url(#rough2)">dp[mask]：取完这些物品并回到包的最短时间</text>
+
+  <!-- 转移一 -->
+  <rect x="140" y="196" width="360" height="52" rx="8" fill="#e8f0fe" stroke="#446688"
+        stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="156" y="218" font-size="12.5" fill="#23405c" filter="url(#rough2)">i = 编号最小的未取物品（保证每件只被考虑一次）</text>
+  <text x="156" y="238" font-size="12" fill="#44597a" filter="url(#rough2)">这一趟只拿 i：新状态 mask | (1&lt;&lt;i)</text>
+  <text x="530" y="228" font-size="12.5" fill="#23405c" filter="url(#rough2)">代价 + 2·d(0, i)</text>
+
+  <!-- 转移二 -->
+  <rect x="140" y="268" width="360" height="52" rx="8" fill="#fff8e1" stroke="#d6a040"
+        stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="156" y="290" font-size="12.5" fill="#8a6015" filter="url(#rough2)">或把 i 和另一件未取的 j 配对：</text>
+  <text x="156" y="310" font-size="12" fill="#8a6015" filter="url(#rough2)">新状态 mask | (1&lt;&lt;i) | (1&lt;&lt;j)</text>
+  <text x="530" y="300" font-size="12.5" fill="#8a6015" filter="url(#rough2)">代价 + d(0,i)+d(i,j)+d(j,0)</text>
+
+  <path d="M 320 152 L 320 192" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#a8dp)" filter="url(#rough2)"/>
+  <path d="M 320 252 L 320 264" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#a8dp)" filter="url(#rough2)"/>
+
+  <!-- 规模 -->
+  <rect x="140" y="348" width="600" height="64" rx="8" fill="#eef1f7" stroke="#7a8ca6"
+        stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="156" y="372" font-size="12.5" fill="#33445c" filter="url(#rough2)">状态数 2^n；每条状态枚举"与 i 配对的 j"，总转移数约 n·2^(n-1) / 2</text>
+  <text x="156" y="394" font-size="12" fill="#44597a" filter="url(#rough2)">n ≤ 24 时是 1670 万个状态、约 2 亿次转移；时间 4 s、内存 512 MB 都放得下（实测见第 8 节）</text>
+
+  <!-- 回溯 -->
+  <text x="140" y="446" font-size="13" fill="#44597a" filter="url(#rough2)">最后从 mask = 全 1 出发，按记录的前驱一步步回退，就得到每一趟取走的物品：</text>
+  <rect x="140" y="462" width="600" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a"
+        stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="156" y="484" font-size="12.5" fill="#2f5223" filter="url(#rough2)">add = cur &amp; ~pre[cur] 就是"走到 cur 这一趟新增的物品"，逆序输出即可</text>
+  <text x="156" y="504" font-size="12" fill="#2f5223" filter="url(#rough2)">输出形如 0 i j 0 k 0，首尾都是包 0</text>
+
+  <text x="440" y="542" text-anchor="middle" font-size="11.5" fill="#8a8a8a"
+        filter="url(#rough2)">为什么只固定"编号最小的未取物品"不会漏解：任何最优划分里，i 所在的组无非是 {i} 或 {i, j} 两种。</text>
+</svg>

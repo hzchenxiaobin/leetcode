@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="450" viewBox="0 0 760 450"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.021" numOctaves="2" seed="173"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="a14earr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="450" fill="#fafafa"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">状态与转移：只看最后一个值和上一步方向</text>
+  <path d="M 110 44 Q 380 50 650 44" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <!-- 状态 -->
+  <rect x="260" y="64" width="240" height="56" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="380" y="90" text-anchor="middle" font-size="14" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">dp[i][v][p][q][d]</text>
+  <text x="380" y="110" text-anchor="middle" font-size="10.5" fill="#2f4a66" filter="url(#rough2)">i 个点，末尾 v，p 峰，q 谷，方向 d</text>
+
+  <!-- 两个分支 -->
+  <line x1="300" y1="120" x2="210" y2="180" stroke="#446688" stroke-width="1.8" marker-end="url(#a14earr)" filter="url(#rough2)"/>
+  <line x1="460" y1="120" x2="550" y2="180" stroke="#446688" stroke-width="1.8" marker-end="url(#a14earr)" filter="url(#rough2)"/>
+
+  <rect x="70" y="184" width="280" height="92" rx="10" fill="#ffffff" stroke="#c9c2b4" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="210" y="210" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">下一个 u &gt; v</text>
+  <text x="210" y="234" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">新方向 d' = up</text>
+  <text x="210" y="258" text-anchor="middle" font-size="11.5" fill="#2f5223" filter="url(#rough2)">若 d = down：q + 1（谷在 i）</text>
+
+  <rect x="410" y="184" width="280" height="92" rx="10" fill="#ffffff" stroke="#c9c2b4" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="550" y="210" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">下一个 u &lt; v</text>
+  <text x="550" y="234" text-anchor="middle" font-size="11.5" fill="#555" filter="url(#rough2)">新方向 d' = down</text>
+  <text x="550" y="258" text-anchor="middle" font-size="11.5" fill="#8a3b36" filter="url(#rough2)">若 d = up：p + 1（峰在 i）</text>
+
+  <!-- 禁止 -->
+  <rect x="270" y="294" width="220" height="46" rx="9" fill="#fde8e8" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="380" y="322" text-anchor="middle" font-size="12" font-weight="bold" fill="#8a3b36" filter="url(#rough2)">u = v：直接跳过</text>
+  <line x1="380" y1="120" x2="380" y2="290" stroke="#b85450" stroke-width="1.4" stroke-dasharray="5 5" filter="url(#rough2)"/>
+  <text x="392" y="292" font-size="10.5" fill="#8a3b36" filter="url(#rough2)">水平段不允许</text>
+
+  <!-- 初始化与答案 -->
+  <rect x="40" y="358" width="330" height="70" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="58" y="382" font-size="11.5" font-weight="bold" fill="#2f5223" filter="url(#rough2)">初始化（i = 1）</text>
+  <text x="58" y="404" font-size="11.5" fill="#3c5e2e" filter="url(#rough2)">dp[1][v][0][0][none] = 1（v = 1..4）</text>
+  <text x="58" y="422" font-size="11" fill="#3c5e2e" filter="url(#rough2)">方向 none 表示还没有上一步</text>
+
+  <rect x="390" y="358" width="330" height="70" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="408" y="382" font-size="11.5" font-weight="bold" fill="#8a6015" filter="url(#rough2)">答案（i = n）</text>
+  <text x="408" y="404" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">Σ dp[n][v][t][t-1][up/down]</text>
+  <text x="408" y="422" font-size="11" fill="#7a5a1b" filter="url(#rough2)">用 long long 计数</text>
+</svg>
