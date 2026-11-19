@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 420" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="420" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold">构造流程：排序分块 → 升序左链 → 降序剩余副本</text>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="46" width="500" height="32" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="7"/>
+    <text x="310" y="67" text-anchor="middle" font-size="11" fill="#3a4a66">读入 n 与 h[1..n]（多测：逐组独立处理，总输出量 O(Σn)）</text>
+  </g>
+  <path d="M 310 78 L 310 96" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="98" width="500" height="32" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="7"/>
+    <text x="310" y="119" text-anchor="middle" font-size="11" fill="#8a6a20">把 h 升序排序，同高度元素成为一段连续区间</text>
+  </g>
+  <path d="M 310 130 L 310 148" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="150" width="500" height="32" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="7"/>
+    <text x="310" y="171" text-anchor="middle" font-size="11" fill="#3a5a30">统计上界 k = Σ min(段长, 2)；段长即该高度的出现次数</text>
+  </g>
+  <path d="M 310 182 L 310 200" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="202" width="500" height="46" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="8"/>
+    <text x="76" y="221" font-size="11" fill="#3a5a30" font-weight="bold">第一段（左链）：每个高度取 1 本，按高度升序输出</text>
+    <text x="76" y="239" font-size="10" fill="#555">共 m = 不同高度数 本，每一本都是前缀严格最大值 → 全部左可见</text>
+  </g>
+  <path d="M 310 248 L 310 266" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="268" width="500" height="46" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="8"/>
+    <text x="76" y="287" font-size="11" fill="#3a4a66" font-weight="bold">第二段（右链）：每个高度的剩余副本，按高度从大到小分块输出</text>
+    <text x="76" y="305" font-size="10" fill="#555">每块只有最后一份是右可见，前面的副本左右两侧都有 ≥ 自己的书，被挤成不可见</text>
+  </g>
+  <path d="M 310 314 L 310 332" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="334" width="500" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.5" rx="7"/>
+    <text x="310" y="356" text-anchor="middle" font-size="11" fill="#8a3a36">输出 k，再输出拼接后的 n 本排列（第一段 m 本 + 第二段 n−m 本）</text>
+  </g>
+
+  <text x="310" y="392" text-anchor="middle" font-size="10" fill="#999">整体代价：排序 O(n log n) + 拼接输出 O(n)；无需任何数据结构</text>
+  <text x="310" y="408" text-anchor="middle" font-size="10" fill="#999">关键：第二段长度恰为 n − m，保证输出正好 n 个数、且是原数组的一个排列</text>
+</svg>

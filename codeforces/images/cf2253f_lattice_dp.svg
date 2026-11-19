@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440" font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="13" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.5"/>
+    </filter>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#3a3a3a"/>
+    </marker>
+  </defs>
+  <rect width="720" height="440" fill="#fafafa"/>
+
+  <text x="360" y="27" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">按 c 分解：a = c·2^i·3^j，每个分量单独做轮廓线 DP</text>
+  <text x="360" y="46" text-anchor="middle" font-size="11" fill="#777" filter="url(#rough2)">超边 E_a = {a, 2a, 3a, 4a} 的元素都有相同的 c ⇒ 不同 c 的超边和元素互不相交</text>
+
+  <g filter="url(#rough2)">
+    <rect x="32" y="64" width="326" height="164" rx="10" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.2"/>
+  </g>
+  <text x="46" y="84" font-size="10.5" fill="#666" filter="url(#rough2)">分量 c = 1 的格子（格中写元素值）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="44" y="94" width="54" height="34" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="106" y="94" width="54" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="168" y="94" width="54" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="230" y="94" width="54" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="292" y="94" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+    <rect x="44" y="136" width="54" height="34" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.5"/>
+    <rect x="106" y="136" width="54" height="34" rx="6" fill="#fff8e1" stroke="#d6a040" stroke-width="2.4"/>
+    <rect x="168" y="136" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+    <rect x="230" y="136" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+    <rect x="292" y="136" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+    <rect x="44" y="178" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+    <rect x="106" y="178" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+    <rect x="168" y="178" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+    <rect x="230" y="178" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+    <rect x="292" y="178" width="54" height="34" rx="6" fill="#f4f4f4" stroke="#999" stroke-width="1.2"/>
+  </g>
+  <g font-size="11" text-anchor="middle" fill="#333" filter="url(#rough2)">
+    <text x="71" y="116">1</text><text x="133" y="116">2</text><text x="195" y="116">4</text><text x="257" y="116">8</text><text x="319" y="116">16</text>
+    <text x="71" y="158">3</text><text x="133" y="158">6</text><text x="195" y="158">12</text><text x="257" y="158">24</text><text x="319" y="158">48</text>
+    <text x="71" y="200">9</text><text x="133" y="200">18</text><text x="195" y="200">36</text><text x="257" y="200">72</text><text x="319" y="200">144</text>
+  </g>
+  <text x="44" y="224" font-size="10" fill="#8a6d3b" filter="url(#rough2)">橙色 = 超边 a=2 = {2,4,6,8}：(i,j),(i+1,j),(i+2,j),(i,j+1)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="372" y="64" width="326" height="48" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="535" y="86" text-anchor="middle" font-size="10.5" fill="#33517a" filter="url(#rough2)">行 J+1：没有约束，只有元素（作为 3u）</text>
+  <text x="535" y="102" text-anchor="middle" font-size="10.5" fill="#33517a" filter="url(#rough2)">dp[S] = cost(S)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="372" y="126" width="326" height="56" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <text x="535" y="147" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">dp_j[S] = cost_j(S) + g_j[U_j(S)]</text>
+  <text x="535" y="167" text-anchor="middle" font-size="10.5" fill="#2e6e2e" filter="url(#rough2)">g_j[T] = min{ dp_{j+1}[S'] : S' ⊇ T }</text>
+
+  <g filter="url(#rough2)">
+    <rect x="372" y="196" width="326" height="48" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6"/>
+  </g>
+  <text x="535" y="217" text-anchor="middle" font-size="10.5" fill="#8a6d3b" filter="url(#rough2)">U_j(S) = ~( S | S&gt;&gt;1 | S&gt;&gt;2 )</text>
+  <text x="535" y="233" text-anchor="middle" font-size="10.5" fill="#8a6d3b" filter="url(#rough2)">&amp; ( 2^(I_j+1) − 1 )，只留 0..I_j 位</text>
+
+  <g filter="url(#rough2)">
+    <rect x="372" y="258" width="326" height="42" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.6"/>
+  </g>
+  <text x="535" y="284" text-anchor="middle" font-size="10.5" fill="#8e4b48" filter="url(#rough2)">超集最小用 SOS 逐位合并：O(W · 2^W)</text>
+
+  <g filter="url(#rough2)">
+    <rect x="372" y="314" width="326" height="42" rx="9" fill="#ffffff" stroke="#446688" stroke-width="1.6"/>
+  </g>
+  <text x="535" y="340" text-anchor="middle" font-size="10.5" fill="#33517a" filter="url(#rough2)">行 0：min_S dp_0[S] = 该分量答案，再对 c 求和</text>
+
+  <g filter="url(#rough2)">
+    <path d="M 535 112 L 535 126" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+    <path d="M 535 182 L 535 196" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+    <path d="M 535 244 L 535 258" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+    <path d="M 535 300 L 535 314" stroke="#3a3a3a" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+  </g>
+
+  <text x="360" y="392" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">行内三个元素 (i,j),(i+1,j),(i+2,j) 同属一行 ⇒ 状态只需一行的删除掩码 S</text>
+  <text x="360" y="414" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">宽度 W = I_0 + 3 ≤ 19（n = 5×10^5 时 2^19 个状态；c 越大分量越小，天然稀疏）</text>
+</svg>

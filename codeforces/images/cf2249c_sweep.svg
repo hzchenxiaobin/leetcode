@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 360"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="360" fill="#fafafa"/>
+
+  <text x="280" y="26" text-anchor="middle" font-size="15" fill="#444" font-weight="bold"
+        filter="url(#rough2)">扫描 s：区间加 + 区间最大值</text>
+
+  <rect x="40" y="44" width="480" height="46" fill="#e8f0fe" stroke="#446688"
+        stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="64" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">① 对每个 v = 2..n 求两条弧</text>
+  <text x="280" y="82" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">A_v = [pos[v], pos[v−1])，B_v = (pos[v−1], pos[v]]</text>
+
+  <path d="M 280 90 L 280 108" stroke="#666" stroke-width="1.5" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="110" width="480" height="46" fill="#fff8e1" stroke="#d6a040"
+        stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="130" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">② B_v 是 s 轴上的一段弧，作为两个事件</text>
+  <text x="280" y="148" text-anchor="middle" font-size="11" fill="#8a6a20" filter="url(#rough2)">进入 s ∈ B_v 时把 A_v 整段 +1，离开时 −1（跨 0 就拆两段）</text>
+
+  <path d="M 280 156 L 280 174" stroke="#666" stroke-width="1.5" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="176" width="480" height="46" fill="#e6f4ea" stroke="#4a7a3a"
+        stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="196" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">③ s 从 0 扫到 n−1：先处理 ev[s] 的全部加减</text>
+  <text x="280" y="214" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">此时线段树的叶子 p 就存着 C(p)，再查两段弧的最大值</text>
+
+  <path d="M 280 222 L 250 240" stroke="#666" stroke-width="1.4" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 280 222 L 310 240" stroke="#666" stroke-width="1.4" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="242" width="230" height="52" fill="#e8f0fe" stroke="#446688"
+        stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="155" y="262" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">P1 = [s, pos[1])：1 还没读</text>
+  <text x="155" y="282" text-anchor="middle" font-size="11" fill="#3a4a66" filter="url(#rough2)">要求 max C(p) ≤ 2</text>
+
+  <rect x="290" y="242" width="230" height="52" fill="#fce4ec" stroke="#b85450"
+        stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="405" y="262" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">P2 = [pos[1], s)：1 已读</text>
+  <text x="405" y="282" text-anchor="middle" font-size="11" fill="#8a3a36" filter="url(#rough2)">要求 max C(p) ≤ 1（块数 = C+1）</text>
+
+  <path d="M 155 294 L 240 310" stroke="#666" stroke-width="1.4" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 405 294 L 320 310" stroke="#666" stroke-width="1.4" fill="none"
+        marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="150" y="312" width="260" height="26" fill="#e6f4ea" stroke="#4a7a3a"
+        stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="280" y="329" text-anchor="middle" font-size="11" fill="#3a5a30" filter="url(#rough2)">两段都满足 → s 是好的，ans++</text>
+
+  <text x="280" y="354" text-anchor="middle" font-size="10" fill="#777"
+        filter="url(#rough2)">pos[1] = s 时 P1 为空、P2 退化成整圈，两段合起来恰好覆盖所有 p</text>
+</svg>

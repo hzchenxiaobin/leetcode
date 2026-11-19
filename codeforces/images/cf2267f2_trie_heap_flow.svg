@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="430" fill="#fafafa"/>
+
+  <text x="310" y="28" text-anchor="middle" font-size="15.5" fill="#444" font-weight="bold" filter="url(#rough2)">单次变换：Trie 查 k 小异或 + 小根堆多路归并</text>
+  <text x="310" y="48" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">一次变换只保留 m 个最小异或值，m = n，共需 2n 个「有序对」值</text>
+
+  <rect x="40" y="66" width="300" height="60" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="190" y="88" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">① 建 0-1 Trie（30 层）</text>
+  <text x="190" y="108" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">每个节点记子树里的元素个数 cnt</text>
+
+  <path d="M 190 126 L 190 144" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="148" width="300" height="60" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="190" y="170" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">② 每个下标 i 建一条有序「行」</text>
+  <text x="190" y="190" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">row_i(p) = kth(a_i, p+1)，p = 1 … n−1</text>
+
+  <path d="M 190 208 L 190 226" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="230" width="300" height="82" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="8" filter="url(#rough2)"/>
+  <text x="190" y="252" text-anchor="middle" font-size="11" fill="#8a6a20" font-weight="bold" filter="url(#rough2)">③ 小根堆弹 2n 次</text>
+  <text x="190" y="272" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">弹 (val, i, p)：第偶数个 val 收下，</text>
+  <text x="190" y="290" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">再把 row_i(p+1) 压回堆</text>
+
+  <path d="M 190 312 L 190 330" stroke="#666" stroke-width="1.5" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <rect x="40" y="334" width="300" height="62" fill="#fce4ec" stroke="#b85450" stroke-width="1.6" rx="8" filter="url(#rough2)"/>
+  <text x="190" y="356" text-anchor="middle" font-size="11" fill="#8a3a36" font-weight="bold" filter="url(#rough2)">④ 得到新的 n 个数</text>
+  <text x="190" y="376" text-anchor="middle" font-size="10" fill="#555" filter="url(#rough2)">即有序列表的第 0,2,4,…,2n−2 项</text>
+
+  <rect x="368" y="66" width="220" height="150" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="478" y="88" text-anchor="middle" font-size="11" fill="#3a4a66" font-weight="bold" filter="url(#rough2)">kth(v, k) 怎么查？</text>
+  <text x="382" y="110" font-size="9.6" fill="#555" filter="url(#rough2)">从根按 v 的 bit 往下走：</text>
+  <text x="382" y="128" font-size="9.6" fill="#555" filter="url(#rough2)">优先走「与 v 同 bit」的子节点，</text>
+  <text x="382" y="146" font-size="9.6" fill="#555" filter="url(#rough2)">它的异或最高位为 0，整块更小；</text>
+  <text x="382" y="164" font-size="9.6" fill="#555" filter="url(#rough2)">若 cnt &lt; k 则 k −= cnt，</text>
+  <text x="382" y="182" font-size="9.6" fill="#555" filter="url(#rough2)">改走另一支（该位异或为 1）。</text>
+  <text x="382" y="204" font-size="9.6" fill="#8a3a36" filter="url(#rough2)">单次查询 O(30)</text>
+
+  <rect x="368" y="232" width="220" height="164" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" rx="10" filter="url(#rough2)"/>
+  <text x="478" y="254" text-anchor="middle" font-size="11" fill="#3a5a30" font-weight="bold" filter="url(#rough2)">为什么隔一个取一个？</text>
+  <text x="382" y="276" font-size="9.6" fill="#555" filter="url(#rough2)">把 (i, j) 与 (j, i) 都算进来，</text>
+  <text x="382" y="294" font-size="9.6" fill="#555" filter="url(#rough2)">每个无序对恰好出现两次，</text>
+  <text x="382" y="312" font-size="9.6" fill="#555" filter="url(#rough2)">有序列表排好序就是</text>
+  <text x="382" y="332" font-size="9.6" fill="#8a3a36" filter="url(#rough2)">u1,u1,u2,u2,u3,u3,…</text>
+  <text x="382" y="352" font-size="9.6" fill="#555" filter="url(#rough2)">取下标 0,2,4,… 正好是</text>
+  <text x="382" y="370" font-size="9.6" fill="#555" filter="url(#rough2)">无序对的 n 个最小值。</text>
+  <text x="382" y="388" font-size="9.6" fill="#8a3a36" filter="url(#rough2)">row_i 从 k = 2 开始，自动跳过自己</text>
+
+  <text x="310" y="416" text-anchor="middle" font-size="10" fill="#999" filter="url(#rough2)">整体：位宽每 2 步降 1，故只需模拟 O(log V) 步（V &lt; 2^30），实测 ≤ 9 步</text>
+</svg>

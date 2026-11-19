@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 350"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="23"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="660" height="350" fill="#fafafa"/>
+
+  <text x="330" y="30" text-anchor="middle" font-size="16.5" fill="#333" filter="url(#rough2)">
+    一次询问 O(1)：前缀 run 起点计数 + 左端截断修正
+  </text>
+
+  <text x="52" y="72" font-size="11" fill="#888" filter="url(#rough2)">run 起点</text>
+
+  <!-- 7 个格子：1 0 0 1 1 0 1 -->
+  <rect x="70" y="80" width="42" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"
+        filter="url(#rough2)"/>
+  <text x="91" y="103" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="116" y="80" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"
+        filter="url(#rough2)"/>
+  <text x="137" y="103" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">0</text>
+  <rect x="162" y="80" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"
+        filter="url(#rough2)"/>
+  <text x="183" y="103" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">0</text>
+  <rect x="208" y="80" width="42" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"
+        filter="url(#rough2)"/>
+  <text x="229" y="103" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="254" y="80" width="42" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"
+        filter="url(#rough2)"/>
+  <text x="275" y="103" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">1</text>
+  <rect x="300" y="80" width="42" height="34" rx="4" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8"
+        filter="url(#rough2)"/>
+  <text x="321" y="103" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">0</text>
+  <rect x="346" y="80" width="42" height="34" rx="4" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"
+        filter="url(#rough2)"/>
+  <text x="367" y="103" text-anchor="middle" font-size="15" fill="#333" filter="url(#rough2)">1</text>
+
+  <!-- run 起点圆点 -->
+  <circle cx="91" cy="70" r="4" fill="#446688" filter="url(#rough2)"/>
+  <circle cx="137" cy="70" r="4" fill="#d6a040" filter="url(#rough2)"/>
+  <circle cx="229" cy="70" r="4" fill="#446688" filter="url(#rough2)"/>
+  <circle cx="321" cy="70" r="4" fill="#d6a040" filter="url(#rough2)"/>
+  <circle cx="367" cy="70" r="4" fill="#446688" filter="url(#rough2)"/>
+
+  <!-- 下标 -->
+  <text x="91" y="132" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">1</text>
+  <text x="137" y="132" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">2</text>
+  <text x="183" y="132" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">3</text>
+  <text x="229" y="132" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">4</text>
+  <text x="275" y="132" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">5</text>
+  <text x="321" y="132" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">6</text>
+  <text x="367" y="132" text-anchor="middle" font-size="10.5" fill="#888" filter="url(#rough2)">7</text>
+
+  <!-- 查询窗口 -->
+  <rect x="156" y="74" width="234" height="46" rx="6" fill="none" stroke="#b85450"
+        stroke-width="2" stroke-dasharray="7 4" filter="url(#rough2)"/>
+  <path d="M 160 148 L 160 142 L 386 142 L 386 148" fill="none" stroke="#b85450"
+        stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="275" y="166" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">
+    l = 3, r = 6
+  </text>
+
+  <!-- 右侧推导 -->
+  <text x="404" y="90" font-size="12" fill="#333" filter="url(#rough2)">pre1[6] − pre1[2] = 1（位置 4）</text>
+  <text x="404" y="114" font-size="12" fill="#333" filter="url(#rough2)">pre0[6] − pre0[2] = 0（无）</text>
+  <text x="404" y="138" font-size="12" fill="#b85450" filter="url(#rough2)">y2 = y3 = 0 ⇒ r0 补 1</text>
+  <text x="404" y="162" font-size="12.5" fill="#446688" filter="url(#rough2)">r0 = 1，r1 = 1</text>
+  <text x="404" y="186" font-size="12.5" fill="#4a7a3a" filter="url(#rough2)">min(r0, r1) = 1</text>
+
+  <!-- 修正规则 -->
+  <rect x="56" y="196" width="548" height="132" rx="8" fill="#ffffff" stroke="#4a7a3a"
+        stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="222" font-size="12" fill="#333" filter="url(#rough2)">
+    ① y[l−1] = y[l] = v ⇒ 这条 v-run 被 l 截断，差分漏计，r_v += 1
+  </text>
+  <text x="76" y="248" font-size="12" fill="#333" filter="url(#rough2)">
+    ② l 本身就是 run 起点 ⇒ 差分已计入，不可重复加
+  </text>
+  <text x="76" y="274" font-size="12" fill="#333" filter="url(#rough2)">
+    ③ l = 1 没有左邻居（哨兵 y[0] = −1），无需修正
+  </text>
+  <text x="76" y="300" font-size="12" fill="#333" filter="url(#rough2)">
+    ④ 右端 r 不用修正：run 在 r 处被截断不影响 [l,r] 内的 run 条数
+  </text>
+  <text x="330" y="322" text-anchor="middle" font-size="11" fill="#b8860b" filter="url(#rough2)">
+    结论：min(r0, r1) ≤ k 输出 YES，否则 NO
+  </text>
+</svg>

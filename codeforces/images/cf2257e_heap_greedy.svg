@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="9"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#7a8fa6"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="540" fill="#fafafa"/>
+
+  <g filter="url(#rough2)">
+    <text x="360" y="30" text-anchor="middle" font-size="15" font-weight="bold" fill="#444">两阶段：先贪心收割，再逐栋梭哈</text>
+    <text x="360" y="50" text-anchor="middle" font-size="10.5" fill="#888">X = 当前资金；f_i = 楼 i 已被第一阶段建到的层数</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="72" width="400" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="9"/>
+    <text x="76" y="94" font-size="11.5" font-weight="bold" fill="#333">① 把每栋楼切块</text>
+    <text x="76" y="113" font-size="9.6" fill="#555">O(m_i) 扫描：sum 为块内累计收益，首次 sum &gt; 0 就封块</text>
+  </g>
+  <path d="M 260 124 L 260 144" stroke="#7a8fa6" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="146" width="400" height="52" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" rx="9"/>
+    <text x="76" y="168" font-size="11.5" font-weight="bold" fill="#333">② 每栋楼的第 1 块入小根堆</text>
+    <text x="76" y="187" font-size="9.6" fill="#555">堆按 need 升序；每栋楼在堆里最多只有一个块头</text>
+  </g>
+  <path d="M 260 198 L 260 218" stroke="#7a8fa6" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="220" width="400" height="52" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="9"/>
+    <text x="76" y="242" font-size="11.5" font-weight="bold" fill="#333">③ 看堆顶：need ≤ X ？（need 最小的块）</text>
+    <text x="76" y="261" font-size="9.6" fill="#555">堆空也算「否」；堆空说明再也榨不出钱</text>
+  </g>
+  <path d="M 260 272 L 260 294" stroke="#7a8fa6" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)"><text x="270" y="288" font-size="10.5" fill="#4a7a3a">是</text></g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="296" width="400" height="52" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="9"/>
+    <text x="76" y="318" font-size="11.5" font-weight="bold" fill="#333">④ 执行该块：X += gain，同楼下一块入堆</text>
+    <text x="76" y="337" font-size="9.6" fill="#555">gain &gt; 0，资金只增不减；覆盖层数推进到该块末层</text>
+  </g>
+  <path d="M 60 322 L 32 322 L 32 246 L 56 246" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <path d="M 460 246 L 516 246 L 516 416 L 464 416" stroke="#b85450" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <g filter="url(#rough2)"><text x="470" y="236" font-size="10.5" fill="#b85450">否（卡住）</text></g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="390" width="400" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="9"/>
+    <text x="76" y="412" font-size="11.5" font-weight="bold" fill="#333">⑤ 阶段 2：每栋楼从 f_i 起用 X 逐层建</text>
+    <text x="76" y="431" font-size="9.6" fill="#555">cur = X，能付 a 就建、cur += b − a；一旦付不起立即停</text>
+  </g>
+  <path d="M 260 442 L 260 462" stroke="#7a8fa6" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="464" width="400" height="52" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="9"/>
+    <text x="76" y="486" font-size="11.5" font-weight="bold" fill="#333">⑥ 取最大层数，同高取最小编号</text>
+    <text x="76" y="505" font-size="9.6" fill="#555">全部为 0 时输出「0 1」</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="488" y="72" width="214" height="118" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" rx="9"/>
+    <text x="500" y="94" font-size="10.4" font-weight="bold" fill="#333">阶段 1 结束时</text>
+    <text x="500" y="114" font-size="9.6" fill="#555">所有剩余块 need &gt; X，</text>
+    <text x="500" y="132" font-size="9.6" fill="#555">即再没有任何「买了</text>
+    <text x="500" y="150" font-size="9.6" fill="#555">就回本」的投资可做。</text>
+    <text x="500" y="172" font-size="9.6" fill="#b85450">故 X 是可达最大资金。</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="488" y="440" width="214" height="96" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" rx="9"/>
+    <text x="500" y="461" font-size="10.4" font-weight="bold" fill="#333">阶段 2 为何不必回堆</text>
+    <text x="500" y="481" font-size="9.6" fill="#555">剩余段真前缀累计和 ≤ 0</text>
+    <text x="500" y="499" font-size="9.6" fill="#555">⇒ 资金始终 ≤ X，</text>
+    <text x="500" y="517" font-size="9.6" fill="#555">⇒ 不会有新块变便宜。</text>
+  </g>
+</svg>

@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="424" viewBox="0 0 720 424"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="5" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+  <rect width="720" height="424" fill="#fafafa"/>
+
+  <text x="360" y="28" text-anchor="middle" font-size="18.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">两次运行都是 O(2^h)：伊莎贝尔编码，塔拉一步解码</text>
+
+  <g font-size="12.5" font-weight="bold" text-anchor="middle">
+    <rect x="22" y="44" width="212" height="26" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+    <text x="128" y="62" fill="#33517a" filter="url(#rough2)">伊莎贝尔（写树）</text>
+    <rect x="254" y="44" width="212" height="26" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+    <text x="360" y="62" fill="#8c2f2a" filter="url(#rough2)">维瑞蒂（翻一位 + 换子树）</text>
+    <rect x="486" y="44" width="212" height="26" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+    <text x="592" y="62" fill="#2f5a22" filter="url(#rough2)">塔拉（读树）</text>
+  </g>
+
+  <g font-size="11">
+    <rect x="22" y="84" width="212" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+    <text x="32" y="102" fill="#233" filter="url(#rough2)">① 消息放到 2030 个自由位</text>
+    <text x="32" y="120" fill="#233" filter="url(#rough2)">　（去掉 14 个校验位后剩</text>
+    <text x="32" y="136" fill="#233" filter="url(#rough2)">　2033 个节点，取前 2030）</text>
+
+    <rect x="22" y="152" width="212" height="58" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+    <text x="32" y="170" fill="#233" filter="url(#rough2)">② T = 所有写入 1 的自由</text>
+    <text x="32" y="188" fill="#233" filter="url(#rough2)">　位的 key 的异或</text>
+    <text x="32" y="204" fill="#888" filter="url(#rough2)">　O(N)</text>
+
+    <rect x="22" y="220" width="212" height="76" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+    <text x="32" y="238" fill="#233" filter="url(#rough2)">③ 解 14 元 GF(2) 方程</text>
+    <text x="32" y="256" fill="#233" filter="url(#rough2)">　⊕ x_j · key(c_j) = T</text>
+    <text x="32" y="274" fill="#233" filter="url(#rough2)">　逆矩阵预处理，O(14²)</text>
+    <text x="32" y="290" fill="#233" filter="url(#rough2)">　得到 ⊕ key = 0 的码字 a</text>
+  </g>
+
+  <g font-size="11">
+    <rect x="486" y="84" width="212" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+    <text x="496" y="102" fill="#233" filter="url(#rough2)">① 扫一遍 l，O(N) 求出</text>
+    <text x="496" y="120" fill="#233" filter="url(#rough2)">　S = ⊕ 值为 1 的 key</text>
+    <text x="496" y="136" fill="#233" filter="url(#rough2)">　恒有 S = key(u) ⊕ 2^d·s</text>
+
+    <rect x="486" y="152" width="212" height="58" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+    <text x="496" y="170" fill="#233" filter="url(#rough2)">② d = S &gt;&gt; (h−1)</text>
+    <text x="496" y="188" fill="#233" filter="url(#rough2)">　p = ((S 低 h−1 位) &amp; (2^d−1))</text>
+    <text x="496" y="204" fill="#888" filter="url(#rough2)">　2^d·s 被直接抹掉</text>
+
+    <rect x="486" y="220" width="212" height="76" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+    <text x="496" y="238" fill="#233" filter="url(#rough2)">③ 从根走 d 步得 u</text>
+    <text x="496" y="256" fill="#233" filter="url(#rough2)">　还原 a = T_u(l)：翻 u，</text>
+    <text x="496" y="274" fill="#233" filter="url(#rough2)">　再把子树逐层镜像回来</text>
+    <text x="496" y="290" fill="#233" filter="url(#rough2)">④ 读出 a 的 2030 个消息位</text>
+  </g>
+
+  <g font-size="11">
+    <rect x="254" y="118" width="212" height="88" rx="8" fill="#fce4ec" stroke="#b85450" stroke-width="1.2" filter="url(#rough2)"/>
+    <text x="264" y="138" fill="#5a2a26" filter="url(#rough2)">选一个节点 u（可自适应）</text>
+    <text x="264" y="158" fill="#5a2a26" filter="url(#rough2)">翻转 u 上的值</text>
+    <text x="264" y="178" fill="#5a2a26" filter="url(#rough2)">若 u 非叶：交换它的两个孩子</text>
+    <text x="264" y="196" fill="#5a2a26" filter="url(#rough2)">（子树内路径位全体翻一位）</text>
+  </g>
+
+  <g stroke="#446688" stroke-width="1.6" fill="none">
+    <path d="M234,196 L252,196" marker-end="url(#arr)" filter="url(#rough2)"/>
+    <path d="M466,196 L484,196" marker-end="url(#arr)" filter="url(#rough2)"/>
+  </g>
+  <text x="243" y="188" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">a</text>
+  <text x="475" y="188" text-anchor="middle" font-size="10.5" fill="#446688" filter="url(#rough2)">l</text>
+
+  <g filter="url(#rough2)">
+    <rect x="22" y="312" width="676" height="94" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+  </g>
+  <text x="360" y="334" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6410" filter="url(#rough2)">解码只需一个 14 位异或和，不必枚举 2047 个候选</text>
+  <text x="360" y="356" text-anchor="middle" font-size="11.5" fill="#7a5a12" filter="url(#rough2)">s = (子树 u 内 1 的个数奇偶) ⊕ a[u] ∈ {0,1}，它只会把 S 的第 d 位翻一下</text>
+  <text x="360" y="376" text-anchor="middle" font-size="11.5" fill="#7a5a12" filter="url(#rough2)">而第 d 位正好在“路径码字段之上”，所以取低 d 位即得 p，高位即得 d</text>
+  <text x="360" y="396" text-anchor="middle" font-size="11.5" fill="#7a5a12" filter="url(#rough2)">最后对 l 再做一次同样的操作 T_u 就还原出 a，异或和随之回到 0</text>
+</svg>

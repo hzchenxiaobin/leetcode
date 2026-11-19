@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 440"
+     font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688" filter="url(#rough2)"/>
+    </marker>
+  </defs>
+
+  <rect width="680" height="440" fill="#fafafa" filter="url(#rough2)"/>
+
+  <text x="340" y="30" text-anchor="middle" font-size="17" fill="#333" filter="url(#rough2)">判定：按最高位把目标区间劈成两半</text>
+  <text x="340" y="54" text-anchor="middle" font-size="12" fill="#666" filter="url(#rough2)">[0, N] = 一个满立方体 ⊕ 一个更短的区间，只有短的那半需要递归</text>
+
+  <rect x="196" y="74" width="288" height="46" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="2"
+        filter="url(#rough2)"/>
+  <text x="340" y="96" text-anchor="middle" font-size="13.5" fill="#1f3b57" filter="url(#rough2)">当前子问题：[0 … N]</text>
+  <text x="340" y="114" text-anchor="middle" font-size="11.5" fill="#446688" filter="url(#rough2)">待定列 |cols| = N+1，还有 d 条串可选</text>
+
+  <text x="340" y="150" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">候选串 L：在 cols 上恰好 need = m+1 个 1（m = N − 2^(d−1)）</text>
+
+  <path d="M282,124 L196,182" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"
+        filter="url(#rough2)"/>
+  <path d="M398,124 L484,182" stroke="#446688" stroke-width="1.8" fill="none" marker-end="url(#arr)"
+        filter="url(#rough2)"/>
+
+  <rect x="30" y="186" width="290" height="98" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="2"
+        filter="url(#rough2)"/>
+  <text x="175" y="210" text-anchor="middle" font-size="13" fill="#2c4a22" filter="url(#rough2)">L = 0 的那些列</text>
+  <text x="175" y="234" text-anchor="middle" font-size="12" fill="#4a7a3a" filter="url(#rough2)">应该是 [0 … 2^(d−1)−1]</text>
+  <text x="175" y="256" text-anchor="middle" font-size="11.5" fill="#6a8c5c" filter="url(#rough2)">恰好 2^(d−1) 列且投影互异</text>
+  <text x="175" y="274" text-anchor="middle" font-size="12" fill="#2c4a22" filter="url(#rough2)">⇒ 一定是满立方体，直接成立 ✓</text>
+
+  <rect x="360" y="186" width="290" height="98" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="2"
+        filter="url(#rough2)"/>
+  <text x="505" y="210" text-anchor="middle" font-size="13" fill="#7a5a1c" filter="url(#rough2)">L = 1 的那些列</text>
+  <text x="505" y="234" text-anchor="middle" font-size="12" fill="#8a6a2c" filter="url(#rough2)">低 d−1 位恰好是 [0 … m]</text>
+  <text x="505" y="256" text-anchor="middle" font-size="11.5" fill="#b08040" filter="url(#rough2)">列数 m+1 已由候选条件保证</text>
+  <text x="505" y="274" text-anchor="middle" font-size="12" fill="#7a5a1c" filter="url(#rough2)">⇒ 递归 check(子列, d−1 条串, m)</text>
+
+  <rect x="30" y="304" width="620" height="52" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="2"
+        filter="url(#rough2)"/>
+  <text x="340" y="326" text-anchor="middle" font-size="12.5" fill="#8a3040" filter="url(#rough2)">若 N &lt; 2^(d−1)：目标里这个最高位恒为 0</text>
+  <text x="340" y="346" text-anchor="middle" font-size="12" fill="#b85450" filter="url(#rough2)">⇒ 必须存在一条在 cols 上全 0 的串，把它当自由位删掉，再递归同一个 N</text>
+
+  <rect x="30" y="368" width="620" height="56" rx="10" fill="#f2f2f2" stroke="#999" stroke-width="1.6"
+        filter="url(#rough2)"/>
+  <text x="340" y="390" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">前置条件：全部列向量两两不同（否则 0）；每层还要求</text>
+  <text x="340" y="410" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">“剩余串的 1 个数多重集 = 目标区间各位的列计数多重集”，这是最狠的剪枝</text>
+</svg>

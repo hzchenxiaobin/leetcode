@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="472" viewBox="0 0 760 472"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="29"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="472" fill="#fafafa"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">答案只有两种落点：首堆（前缀段）或中间某堆（中间段）</text>
+  <path d="M 100 42 Q 380 49 660 42" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <rect x="28" y="58" width="342" height="212" rx="12" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="44" y="82" font-size="13" font-weight="bold" fill="#3a5a30" filter="url(#rough2)">情况 A：答案落在首堆</text>
+  <text x="44" y="106" font-size="11" fill="#3a5a30" filter="url(#rough2)">· 首堆依次吞并 c₂,c₃,…,c_(r+1)，共 r 次操作</text>
+  <text x="44" y="126" font-size="11" fill="#3a5a30" filter="url(#rough2)">· 每次吞并是无损的，累计得到 P_(r+1)</text>
+  <text x="44" y="146" font-size="11" fill="#3a5a30" filter="url(#rough2)">· 剩下的 k−r 次操作，每次只让首堆 +1</text>
+  <text x="44" y="166" font-size="11" fill="#3a5a30" filter="url(#rough2)">· 值 = P_(r+1) + (k−r)；但总质量只有 m</text>
+
+  <rect x="40" y="180" width="318" height="76" rx="9" fill="#ffffff" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="56" y="204" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">ans_A = min( (k+1) + max Qᵢ , m )</text>
+  <text x="56" y="226" font-size="10.5" fill="#66788c" filter="url(#rough2)">其中 i 取 1 … min(k+1, m)，Qᵢ = Pᵢ − i</text>
+  <text x="56" y="246" font-size="10.5" fill="#999" filter="url(#rough2)">k+1 来自：k 次「+1」再抵消掉 i−1 次下标</text>
+
+  <rect x="390" y="58" width="342" height="212" rx="12" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="406" y="82" font-size="13" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">情况 B：答案落在中间某堆</text>
+  <text x="406" y="106" font-size="11" fill="#8a3a36" filter="url(#rough2)">· 这堆必是原数组一段连续区间 c_L … c_R 的合并</text>
+  <text x="406" y="126" font-size="11" fill="#8a3a36" filter="url(#rough2)">· 合并 R−L 次，每次自身 −1，故值 = Σ − (R−L)</text>
+  <text x="406" y="146" font-size="11" fill="#8a3a36" filter="url(#rough2)">· 操作数够用 ⇔ R−L ≤ k，即下标差 ≤ k+1</text>
+  <text x="406" y="166" font-size="11" fill="#8a3a36" filter="url(#rough2)">· 首堆白拿的 +1 与它无关，纯靠「吞并」攒大</text>
+
+  <rect x="402" y="180" width="318" height="76" rx="9" fill="#ffffff" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="418" y="204" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">ans_B = max { Q_R − Q_(L−1) + 1 }</text>
+  <text x="418" y="226" font-size="10.5" fill="#66788c" filter="url(#rough2)">约束 0 ≤ L−1 &lt; R ≤ m 且 R − (L−1) ≤ k+1</text>
+  <text x="418" y="246" font-size="10.5" fill="#999" filter="url(#rough2)">把「区间和 − 长度」化成两个 Q 之差，好扫</text>
+
+  <text x="380" y="296" text-anchor="middle" font-size="14" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">ans_B 的 O(m) 求法：在 Q 上滑一个长度 k+2 的窗口，维护窗口最小值</text>
+
+  <rect x="150" y="316" width="40" height="32" rx="5" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="170" y="338" text-anchor="middle" font-size="13" fill="#8a8a8a" filter="url(#rough2)">0</text>
+  <rect x="196" y="316" width="40" height="32" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="216" y="338" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a6a20" filter="url(#rough2)">0</text>
+  <rect x="242" y="316" width="40" height="32" rx="5" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="262" y="338" text-anchor="middle" font-size="13" fill="#8a6a20" filter="url(#rough2)">3</text>
+  <rect x="288" y="316" width="40" height="32" rx="5" fill="#fce4ec" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+  <text x="308" y="338" text-anchor="middle" font-size="13" font-weight="bold" fill="#8a3a36" filter="url(#rough2)">5</text>
+  <rect x="334" y="316" width="40" height="32" rx="5" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="354" y="338" text-anchor="middle" font-size="13" fill="#8a8a8a" filter="url(#rough2)">4</text>
+  <rect x="380" y="316" width="40" height="32" rx="5" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="400" y="338" text-anchor="middle" font-size="13" fill="#8a8a8a" filter="url(#rough2)">3</text>
+  <rect x="426" y="316" width="40" height="32" rx="5" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="446" y="338" text-anchor="middle" font-size="13" fill="#8a8a8a" filter="url(#rough2)">2</text>
+  <rect x="472" y="316" width="40" height="32" rx="5" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="492" y="338" text-anchor="middle" font-size="13" fill="#8a8a8a" filter="url(#rough2)">1</text>
+  <rect x="518" y="316" width="40" height="32" rx="5" fill="#f2f2f2" stroke="#9a9a9a" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="538" y="338" text-anchor="middle" font-size="13" fill="#8a8a8a" filter="url(#rough2)">0</text>
+
+  <text x="170" y="366" text-anchor="middle" font-size="10.5" fill="#9a9a9a" filter="url(#rough2)">0</text>
+  <text x="216" y="366" text-anchor="middle" font-size="10.5" fill="#9a9a9a" filter="url(#rough2)">1</text>
+  <text x="262" y="366" text-anchor="middle" font-size="10.5" fill="#9a9a9a" filter="url(#rough2)">2</text>
+  <text x="308" y="366" text-anchor="middle" font-size="10.5" fill="#b85450" filter="url(#rough2)">3</text>
+  <text x="354" y="366" text-anchor="middle" font-size="10.5" fill="#9a9a9a" filter="url(#rough2)">4</text>
+  <text x="400" y="366" text-anchor="middle" font-size="10.5" fill="#9a9a9a" filter="url(#rough2)">5</text>
+  <text x="446" y="366" text-anchor="middle" font-size="10.5" fill="#9a9a9a" filter="url(#rough2)">6</text>
+  <text x="492" y="366" text-anchor="middle" font-size="10.5" fill="#9a9a9a" filter="url(#rough2)">7</text>
+  <text x="538" y="366" text-anchor="middle" font-size="10.5" fill="#9a9a9a" filter="url(#rough2)">8</text>
+
+  <text x="120" y="332" text-anchor="end" font-size="11" fill="#66788c" filter="url(#rough2)">Q =</text>
+  <text x="380" y="390" text-anchor="middle" font-size="10.5" fill="#8a6a20" filter="url(#rough2)">窗口 [b−k−1, b−1]（样例 7 的 Q，k = 1）</text>
+  <text x="380" y="412" text-anchor="middle" font-size="11.5" fill="#2b2b2b" filter="url(#rough2)">b = 3 时窗口 {1,2} 内 min Q = Q₁ = 0 ⇒ ans_B = 5 − 0 + 1 = 6（区间 [2,3]）</text>
+
+  <rect x="40" y="428" width="680" height="32" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="380" y="449" text-anchor="middle" font-size="11.5" fill="#2f4a66" filter="url(#rough2)">ans = max(ans_A, ans_B)；两式都用 P、Q 表达，一次扫描 O(m)，无需二分</text>
+</svg>

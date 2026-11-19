@@ -66,27 +66,31 @@ function loadContests() {
         : a.kind === 'weekly' ? -1 : 1)
 }
 
-/** 从 codeforces/ 目录读取题解列表：场次升序 → 题号（A/B/…/G1/G2）升序 */
+/** 从 codeforces/contests/<区间>/<场次>/ 读取题解列表：场次升序 → 题号升序 */
 function loadCodeforces() {
-  const base = path.resolve(root, '../codeforces')
+  const base = path.resolve(root, '../codeforces', 'contests')
   if (!fs.existsSync(base)) return []
-  return fs.readdirSync(base)
-    .filter(d => /^\d+$/.test(d))
-    .flatMap(d =>
-      fs.readdirSync(path.join(base, d))
-        .filter(f => f.endsWith('.md'))
-        .map(f => {
-          const idx = f.match(/^([A-Za-z0-9]+)\./)?.[1] ?? ''
-          const h1 = fs.readFileSync(path.join(base, d, f), 'utf-8').match(/^#\s+(.+)$/m)?.[1] ?? f
-          return {
-            contest: parseInt(d),
-            index: idx.toUpperCase(),
-            text: `CF ${d}${idx.toUpperCase()} ${cleanTitle(h1)}`,
-            link: `/codeforces/${d}/${f.replace(/\.md$/, '')}`
-          }
+  const out = []
+  for (const range of fs.readdirSync(base)) {
+    const rp = path.join(base, range)
+    if (!/^\d{4}-\d{4}$/.test(range) || !fs.statSync(rp).isDirectory()) continue
+    for (const d of fs.readdirSync(rp)) {
+      const dp = path.join(rp, d)
+      if (!/^\d+$/.test(d) || !fs.statSync(dp).isDirectory()) continue
+      for (const f of fs.readdirSync(dp)) {
+        if (!f.endsWith('.md')) continue
+        const idx = f.match(/^([A-Za-z0-9]+)_/)?.[1] ?? ''
+        const h1 = fs.readFileSync(path.join(dp, f), 'utf-8').match(/^#\s+(.+)$/m)?.[1] ?? f
+        out.push({
+          contest: parseInt(d),
+          index: idx.toUpperCase(),
+          text: `CF ${d}${idx.toUpperCase()} ${cleanTitle(h1)}`,
+          link: `/codeforces/contests/${range}/${d}/${f.replace(/\.md$/, '')}`
         })
-    )
-    .sort((a, b) => a.contest - b.contest || a.index.localeCompare(b.index, 'en', { numeric: true }))
+      }
+    }
+  }
+  return out.sort((a, b) => a.contest - b.contest || a.index.localeCompare(b.index, 'en', { numeric: true }))
 }
 
 // 全局题目顺序（每日一题按题号；周赛 / 双周赛各自按场次 → Q 号，互不跨越），
@@ -123,9 +127,14 @@ const contestEnd = Math.floor(allContestDirs.length * (batchIndex + 1) / batchTo
 const myContestDirs = new Set(allContestDirs.slice(contestStart, contestEnd))
 
 // Codeforces 题解同样按场次目录切批，避免题量增长后每批都全量构建
-const codeforcesDir = path.resolve(root, '../codeforces')
+const codeforcesDir = path.resolve(root, '../codeforces', 'contests')
 const allCfDirs = fs.existsSync(codeforcesDir)
-  ? fs.readdirSync(codeforcesDir).filter(d => fs.statSync(path.join(codeforcesDir, d)).isDirectory()).sort()
+  ? fs.readdirSync(codeforcesDir)
+      .filter(r => /^\d{4}-\d{4}$/.test(r) && fs.statSync(path.join(codeforcesDir, r)).isDirectory())
+      .flatMap(r => fs.readdirSync(path.join(codeforcesDir, r))
+        .filter(d => /^\d+$/.test(d) && fs.statSync(path.join(codeforcesDir, r, d)).isDirectory())
+        .map(d => `${r}/${d}`))
+      .sort()
   : []
 const cfStart = Math.floor(allCfDirs.length * batchIndex / batchTotal)
 const cfEnd = Math.floor(allCfDirs.length * (batchIndex + 1) / batchTotal)
@@ -134,7 +143,7 @@ const myCfDirs = new Set(allCfDirs.slice(cfStart, cfEnd))
 const batchExclude: string[] = !batching ? [] : [
   ...allRanges.filter(d => !myRanges.has(d)).map(d => `solution/${d}/**`),
   ...allContestDirs.filter(d => !myContestDirs.has(d)).map(d => `contest/${d}/**`),
-  ...allCfDirs.filter(d => !myCfDirs.has(d)).map(d => `codeforces/${d}/**`),
+  ...allCfDirs.filter(d => !myCfDirs.has(d)).map(d => `codeforces/contests/${d}/**`),
   // 共享页面（首页/索引/专题）只在第 0 批构建，避免合并产物时互相覆盖
   ...(batchIndex === 0 ? [] : [
     'topics/**',
@@ -151,7 +160,7 @@ export default defineConfig({
   // 旧版 Python 生成器与文档不纳入站点构建（保留在仓库中作存档）；
   // dist*/** 排除各批构建产物目录
   srcExclude: [
-    'README.md', '**/SKILL.md', '**/INDEX.md',
+    'README.md', 'codeforces/README.md', '**/SKILL.md', '**/INDEX.md', 'codeforces/data/**', 'codeforces/tools/**',
     'build/**', 'static/**', 'public/**', 'dist*/**',
     ...batchExclude
   ],

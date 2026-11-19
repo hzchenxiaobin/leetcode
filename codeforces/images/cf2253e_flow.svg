@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.026" numOctaves="2" seed="31"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="arr4" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M 0 0 L 9 4.5 L 0 9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="440" fill="#fafafa"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：找中心边 → 两侧求 Q → 卷积出答案</text>
+  <path d="M 110 42 Q 380 49 650 42" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <!-- 步骤 1 -->
+  <rect x="140" y="64" width="400" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="340" y="93" text-anchor="middle" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">两次 BFS 求直径端点 s、t 与长度 D；h = (D−1)/2</text>
+  <text x="556" y="93" text-anchor="start" font-size="12" fill="#888" filter="url(#rough2)">O(n)</text>
+  <path d="M 340 112 L 340 132" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr4)" filter="url(#rough2)"/>
+
+  <!-- 步骤 2 -->
+  <rect x="140" y="136" width="400" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="340" y="165" text-anchor="middle" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">回溯路径，中心边 = (path[h], path[h+1])</text>
+  <text x="556" y="165" text-anchor="start" font-size="12" fill="#888" filter="url(#rough2)">O(n)</text>
+  <path d="M 340 184 L 340 204" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr4)" filter="url(#rough2)"/>
+
+  <!-- 步骤 3 -->
+  <rect x="140" y="208" width="400" height="46" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="340" y="237" text-anchor="middle" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">以 u、v 为根各 BFS 一次（屏蔽中心边）</text>
+  <text x="556" y="237" text-anchor="start" font-size="12" fill="#888" filter="url(#rough2)">O(n)</text>
+  <path d="M 340 256 L 340 276" stroke="#d6a040" stroke-width="1.6" fill="none" marker-end="url(#arr4)" filter="url(#rough2)"/>
+
+  <!-- 步骤 4 -->
+  <rect x="140" y="280" width="400" height="52" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="340" y="302" text-anchor="middle" font-size="12" fill="#8a6015" filter="url(#rough2)">逆序扫描累加 cnt；childDeep 记含最深点的孩子数</text>
+  <text x="340" y="322" text-anchor="middle" font-size="11.5" fill="#8a6015" filter="url(#rough2)">标记 Q_A、Q_B：深度 h + 所有 childDeep ≥ 2 的深度</text>
+  <text x="556" y="310" text-anchor="start" font-size="12" fill="#888" filter="url(#rough2)">O(n)</text>
+  <path d="M 340 334 L 340 352" stroke="#4a7a3a" stroke-width="1.6" fill="none" marker-end="url(#arr4)" filter="url(#rough2)"/>
+
+  <!-- 步骤 5 -->
+  <rect x="140" y="356" width="400" height="52" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="340" y="378" text-anchor="middle" font-size="12" fill="#31602c" filter="url(#rough2)">Q_A、Q_B 作为 0/1 向量做 NTT 卷积（模 998244353）</text>
+  <text x="340" y="397" text-anchor="middle" font-size="12" fill="#31602c" filter="url(#rough2)">非零系数的下标 s ⇒ k = s + 1，升序输出</text>
+  <text x="556" y="386" text-anchor="start" font-size="12" fill="#888" filter="url(#rough2)">O(h log h)</text>
+
+  <text x="380" y="430" text-anchor="middle" font-size="12.5" fill="#7d2b26" filter="url(#rough2)">总复杂度 O(n + h log h)，Σn ≤ 10^6，h ≤ (n−1)/2</text>
+</svg>

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 430" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="430" fill="#fafafa"/>
+
+  <text x="360" y="26" text-anchor="middle" font-size="15" fill="#333" font-weight="bold" filter="url(#rough2)">算法流程：一次装箱，两条运行</text>
+  <text x="360" y="46" text-anchor="middle" font-size="11" fill="#777" filter="url(#rough2)">第一轮当 Ja 造参考数，第二轮当 Quack 用 gcd + lcm 还原（评测机会打乱测试点顺序）</text>
+
+  <!-- 左：Ja -->
+  <text x="185" y="72" text-anchor="middle" font-size="12" fill="#446688" font-weight="bold" filter="url(#rough2)">第一轮 Ja</text>
+  <g filter="url(#rough2)">
+    <rect x="30" y="82" width="310" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6"/>
+    <text x="185" y="104" text-anchor="middle" font-size="11" fill="#2c4a63">读入 n 与 a₁…aₙ（aᵢ ≤ 10⁶）</text>
+
+    <rect x="30" y="132" width="310" height="34" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="6"/>
+    <text x="185" y="154" text-anchor="middle" font-size="11" fill="#2c4a63">筛出最小素因子，把每个 aᵢ 完全分解</text>
+
+    <rect x="30" y="182" width="310" height="34" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="6"/>
+    <text x="185" y="204" text-anchor="middle" font-size="11" fill="#8a6a20">对每个素数 p 求最高次幂 p^E（E = max v_p）</text>
+
+    <rect x="30" y="232" width="310" height="40" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" rx="6"/>
+    <text x="185" y="249" text-anchor="middle" font-size="11" fill="#8a6a20">装箱（FFD）：多个 p^E 相乘 ≤ 10⁶ 就合并</text>
+    <text x="185" y="264" text-anchor="middle" font-size="10.5" fill="#997a34">每箱 = 一个参考数，得到 r 个参考数</text>
+
+    <rect x="30" y="288" width="310" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8" rx="6"/>
+    <text x="185" y="310" text-anchor="middle" font-size="11" fill="#33602a">输出 k = n + r：先 r 个参考数，再原数组</text>
+  </g>
+  <path d="M 185 118 L 185 128" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 185 168 L 185 178" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 185 218 L 185 228" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 185 274 L 185 284" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- 中间传递 -->
+  <path d="M 341 305 L 352 305 L 352 250 L 374 250" stroke="#b85450" stroke-width="1.8" fill="none"
+        stroke-dasharray="6 4" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="360" y="330" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">b 交给第二轮</text>
+  <text x="360" y="345" text-anchor="middle" font-size="10" fill="#b85450" filter="url(#rough2)">顺序被打乱</text>
+
+  <!-- 右：Quack -->
+  <text x="535" y="72" text-anchor="middle" font-size="12" fill="#4a7a3a" font-weight="bold" filter="url(#rough2)">第二轮 Quack</text>
+  <g filter="url(#rough2)">
+    <rect x="380" y="82" width="310" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="535" y="104" text-anchor="middle" font-size="11" fill="#33602a">读 n、k，算出参考数个数 r = k − n</text>
+
+    <rect x="380" y="132" width="310" height="40" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="535" y="149" text-anchor="middle" font-size="11" fill="#33602a">对每个 i，问 gcd(b_j, b_{r+i})（j = 1…r）</text>
+    <text x="535" y="164" text-anchor="middle" font-size="10.5" fill="#4a7a3a">共 n·r 次查询，≤ 180n + 150</text>
+
+    <rect x="380" y="182" width="310" height="34" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" rx="6"/>
+    <text x="535" y="204" text-anchor="middle" font-size="11" fill="#33602a">val_i = lcm(所有回答) —— 只会整除 aᵢ</text>
+
+    <rect x="380" y="232" width="310" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.8" rx="6"/>
+    <text x="535" y="254" text-anchor="middle" font-size="11" fill="#8c3b37">输出 ! val₁ val₂ … valₙ</text>
+  </g>
+  <path d="M 535 118 L 535 128" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 535 172 L 535 178" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <path d="M 535 216 L 535 228" stroke="#666" stroke-width="1.4" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="368" width="660" height="46" fill="#fafafa" stroke="#999" stroke-width="1.3" rx="8" stroke-dasharray="5 4"/>
+    <text x="46" y="388" font-size="11" fill="#555">关键：gcd(b_j, b_{r+i}) 给出的是 aᵢ 在参考数 b_j 上的"投影"，把所有投影取 lcm 就补齐了 aᵢ 的每个素数幂；</text>
+    <text x="46" y="405" font-size="11" fill="#555">而 lcm 又不可能超过 aᵢ（每个投影都整除 aᵢ），因此结果恰好等于 aᵢ。</text>
+  </g>
+</svg>

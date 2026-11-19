@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 420" width="840" height="420"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="13"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="840" height="420" fill="#fafafa"/>
+
+  <text x="420" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">核心观察：根被钉死 → 代价线性化 → 逐对统计</text>
+  <text x="420" y="54" text-anchor="middle" font-size="12.5" fill="#777" filter="url(#rough2)">三层坍缩之后，答案只剩「排序 + 一趟前缀和」</text>
+
+  <!-- ① 根唯一 -->
+  <rect x="26" y="72" width="420" height="104" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="42" y="96" font-size="13" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">① 根 = 评分最大的点（唯一）</text>
+  <text x="42" y="122" font-size="11.6" fill="#2f4a66" filter="url(#rough2)">最大点没有更大的点可当父亲，故它必须是根；</text>
+  <text x="42" y="146" font-size="11.6" fill="#2f4a66" filter="url(#rough2)">其余点都能挂在它下面，故父亲一定选得到。</text>
+  <text x="42" y="168" font-size="11.6" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">⇒ 根不用枚举，候选集永远非空</text>
+
+  <path d="M 236 176 L 236 188" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ② 独立选父即树 -->
+  <rect x="26" y="188" width="420" height="96" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="42" y="212" font-size="13" font-weight="bold" fill="#33582a" filter="url(#rough2)">② 独立选父 ⇒ 自动是树（不必判连通）</text>
+  <text x="42" y="238" font-size="11.6" fill="#33582a" filter="url(#rough2)">沿父亲链评分严格递增，绝不可能形成环；</text>
+  <text x="42" y="262" font-size="11.6" fill="#33582a" filter="url(#rough2)">链必终止于唯一无父点 = 根 ⇒ 所有点连通。</text>
+
+  <!-- ③ 代价线性化 -->
+  <rect x="460" y="72" width="354" height="104" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="476" y="96" font-size="13" font-weight="bold" fill="#8a6015" filter="url(#rough2)">③ 代价线性化</text>
+  <text x="476" y="122" font-size="11.2" fill="#8a6015" filter="url(#rough2)">cost = Σ c[u]·a[u] − (S − a[r])</text>
+  <text x="476" y="146" font-size="11.4" fill="#8a6015" filter="url(#rough2)">c[u] = u 的儿子数，S = Σ a[v]</text>
+  <text x="476" y="168" font-size="11.4" fill="#8a6015" filter="url(#rough2)">后一项对固定输入是常数</text>
+
+  <path d="M 637 176 L 637 188" stroke="#b85450" stroke-width="1.7" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+
+  <!-- ④ 逐对统计 -->
+  <rect x="460" y="188" width="354" height="136" rx="10" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="476" y="212" font-size="13" font-weight="bold" fill="#8c3a37" filter="url(#rough2)">④ 逐对统计（线性 ⇒ 交换求和）</text>
+  <text x="476" y="238" font-size="11.4" fill="#8c3a37" filter="url(#rough2)">看每一对 a[v] &lt; a[u]（v 是较低者）：</text>
+  <text x="476" y="262" font-size="11.4" fill="#8c3a37" filter="url(#rough2)">u 作 v 父亲的王朝数 = (n−1)! / k[v]</text>
+  <text x="476" y="286" font-size="11.4" fill="#8c3a37" filter="url(#rough2)">k[v] = 比 a[v] 大的点数</text>
+  <text x="476" y="310" font-size="12" font-weight="bold" fill="#8c3a37" filter="url(#rough2)">该对贡献 = a[u]·(n−1)! / k[v]</text>
+
+  <!-- 结论条 -->
+  <rect x="26" y="340" width="788" height="60" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="44" y="366" font-size="13.4" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">ans = Σ(j=1..n−1) pref(j−1)·(n−1)!/j　−　(S − a[max])·(n−1)!</text>
+  <text x="44" y="388" font-size="11.4" fill="#2f4a66" filter="url(#rough2)">按较低端点 v[j] 分组后，pref 就是降序前缀和 ⇒ 一趟扫描得到答案</text>
+</svg>

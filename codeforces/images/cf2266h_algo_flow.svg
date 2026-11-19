@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 470" width="800" height="470"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-8%" y="-8%" width="116%" height="116%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#446688"/>
+    </marker>
+    <marker id="arR" markerWidth="9" markerHeight="9" refX="5" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 Z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="470" fill="#fafafa"/>
+
+  <text x="400" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">算法流程：先给每个位置打「合法」标记，再用两棵前缀最大值树拼出两条链</text>
+
+  <!-- 1 -->
+  <rect x="200" y="52" width="400" height="40" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="400" y="77" text-anchor="middle" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">读入 b，统计 first[v] 与 last[v]；若有值从未出现 ⇒ 输出 −1</text>
+  <path d="M 400 92 L 400 108" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+
+  <!-- 2 -->
+  <rect x="170" y="110" width="460" height="40" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="400" y="128" text-anchor="middle" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">prefM[v] = min{ last[u] : u &lt; v }，sufM[v] = min{ last[u] : u &gt; v }</text>
+  <text x="400" y="144" text-anchor="middle" font-size="11" fill="#666" filter="url(#rough2)">（两个方向的前缀/后缀最小值，各 O(n)）</text>
+  <path d="M 400 150 L 400 166" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+
+  <!-- 3 判定菱形 -->
+  <polygon points="400,168 520,208 400,248 280,208" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="203" text-anchor="middle" font-size="12" fill="#8a6410" filter="url(#rough2)">位置 j（值 v）合法？</text>
+  <text x="400" y="221" text-anchor="middle" font-size="11" fill="#8a6410" filter="url(#rough2)">A：j &lt; prefM[v]　B：j &lt; sufM[v]</text>
+  <text x="540" y="200" font-size="11" fill="#444" filter="url(#rough2)">都合法 → 既能进左链</text>
+  <text x="540" y="216" font-size="11" fill="#444" filter="url(#rough2)">也能进右链（可复用）</text>
+  <path d="M 400 248 L 400 264" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+
+  <!-- 4: 两棵树 -->
+  <rect x="60" y="266" width="300" height="86" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="210" y="286" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#33582a" filter="url(#rough2)">倒序扫描：f[v]（下降链 → 1）</text>
+  <text x="210" y="305" text-anchor="middle" font-size="11" fill="#33582a" filter="url(#rough2)">只用 A 合法位置，值 v 处</text>
+  <text x="210" y="321" text-anchor="middle" font-size="11" fill="#33582a" filter="url(#rough2)">f[v] = 1 + max{ f[x] : x &lt; v }</text>
+  <text x="210" y="339" text-anchor="middle" font-size="11" fill="#5a7a4a" filter="url(#rough2)">树状数组下标 = 值，查询前缀最大</text>
+
+  <rect x="440" y="266" width="300" height="86" rx="9" fill="#fce4ec" stroke="#b85450" stroke-width="1.7" filter="url(#rough2)"/>
+  <text x="590" y="286" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8c3b38" filter="url(#rough2)">倒序扫描：g[v]（上升链 → n）</text>
+  <text x="590" y="305" text-anchor="middle" font-size="11" fill="#8c3b38" filter="url(#rough2)">只用 B 合法位置，值 v 处</text>
+  <text x="590" y="321" text-anchor="middle" font-size="11" fill="#8c3b38" filter="url(#rough2)">g[v] = 1 + max{ g[x] : x &gt; v }</text>
+  <text x="590" y="339" text-anchor="middle" font-size="11" fill="#a05a55" filter="url(#rough2)">下标翻转成 n+1−v，仍查前缀最大</text>
+
+  <path d="M 360 312 L 436 312" stroke="#d6a040" stroke-width="1.4" fill="none" stroke-dasharray="5 4" filter="url(#rough2)"/>
+  <text x="398" y="304" text-anchor="middle" font-size="10.5" fill="#a07a20" filter="url(#rough2)">同一棵树</text>
+  <text x="398" y="330" text-anchor="middle" font-size="10.5" fill="#a07a20" filter="url(#rough2)">清空即可复用</text>
+
+  <path d="M 210 352 L 210 372 L 400 372" stroke="#446688" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 590 352 L 590 372 L 400 372" stroke="#446688" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <path d="M 400 372 L 400 388" stroke="#446688" stroke-width="1.5" fill="none" marker-end="url(#ar)" filter="url(#rough2)"/>
+
+  <!-- 5 合并 -->
+  <rect x="150" y="390" width="500" height="46" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="400" y="409" text-anchor="middle" font-size="12.5" fill="#8a6410" filter="url(#rough2)">扫 j = 1..n+1，用 run = max{ f[i] : i &lt; j } 拼右链</text>
+  <text x="400" y="427" text-anchor="middle" font-size="12.5" fill="#8a6410" filter="url(#rough2)">best = max( run + g[j] )　⇒　答案 = n − best</text>
+
+  <text x="400" y="458" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">总复杂度 O((n+m) log n)；两条链必须以 1 / n 收尾，接不上就置 0 而不是 1</text>
+</svg>

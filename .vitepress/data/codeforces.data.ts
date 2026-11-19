@@ -15,13 +15,13 @@ export interface CfProblem {
 declare const data: CfProblem[]
 export { data }
 
-export default createContentLoader('codeforces/*/*.md', {
+export default createContentLoader('codeforces/contests/*/*/*.md', {
   includeSrc: true,
   transform(raw): CfProblem[] {
     return raw
       .map(page => {
-        // 路径形如 /codeforces/2285/A.合数排列
-        const m = page.url.match(/\/codeforces\/(\d+)\/([A-Za-z0-9]+)\.(.+)/)
+        // 路径形如 /codeforces/contests/2201-2300/2285/A_合数排列
+        const m = page.url.match(/\/codeforces\/contests\/[\d-]+\/(\d+)\/([A-Za-z0-9]+)_(.+)/)
         if (!m) return null
         const src = page.src ?? ''
         const h1 = src.match(/^#\s+(.+)$/m)?.[1] ?? m[3]
