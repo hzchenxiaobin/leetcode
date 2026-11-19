@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="450" viewBox="0 0 860 450"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.023" numOctaves="2" seed="91"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="a3df" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="860" height="450" fill="#fafafa"/>
+  <text x="430" y="34" text-anchor="middle" font-size="18.5" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">算法流程：先全当 ')'，欠了就翻最便宜的</text>
+  <path d="M 150 46 Q 430 52 710 46" stroke="#2b2b2b" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+
+  <rect x="60" y="66" width="420" height="52" rx="8" fill="#eef1f7" stroke="#7a8ca6" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="88" font-size="12.5" fill="#33445c" filter="url(#rough2)">读入模式；长度为奇数直接输出 -1</text>
+  <text x="76" y="108" font-size="11.5" fill="#44597a" filter="url(#rough2)">把所有 '?' 先替换成 ')'，代价累加 Σb_i</text>
+
+  <rect x="60" y="142" width="420" height="52" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="164" font-size="12.5" fill="#23405c" filter="url(#rough2)">从左到右扫描，维护平衡量 bal</text>
+  <text x="76" y="184" font-size="11.5" fill="#44597a" filter="url(#rough2)">遇到 '?' 时把 (a_i − b_i) 连同位置压进小根堆</text>
+
+  <rect x="60" y="218" width="420" height="52" rx="8" fill="#fde8e8" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="240" font-size="12.5" fill="#8c3b37" filter="url(#rough2)">若 bal &lt; 0：弹出堆顶，翻成 '('</text>
+  <text x="76" y="260" font-size="11.5" fill="#8c3b37" filter="url(#rough2)">代价 += (a−b)，bal += 2；堆空则 -1</text>
+
+  <rect x="60" y="294" width="420" height="52" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="316" font-size="12.5" fill="#2f5223" filter="url(#rough2)">扫完后 bal 必须为 0，否则无解</text>
+  <text x="76" y="336" font-size="11.5" fill="#2f5223" filter="url(#rough2)">输出总代价与构造出的括号串</text>
+
+  <path d="M 270 118 L 270 138" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#a3df)" filter="url(#rough2)"/>
+  <path d="M 270 194 L 270 214" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#a3df)" filter="url(#rough2)"/>
+  <path d="M 270 270 L 270 290" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#a3df)" filter="url(#rough2)"/>
+
+  <rect x="530" y="218" width="300" height="128" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="546" y="242" font-size="12" fill="#8a6015" filter="url(#rough2)">为什么这样最优：</text>
+  <text x="546" y="266" font-size="11.5" fill="#8a6015" filter="url(#rough2)">bal 为负时，任何合法解都必须把</text>
+  <text x="546" y="286" font-size="11.5" fill="#8a6015" filter="url(#rough2)">已扫过的某个 '?' 改成 '('；</text>
+  <text x="546" y="306" font-size="11.5" fill="#8a6015" filter="url(#rough2)">改最便宜的不会让后面更容易欠，</text>
+  <text x="546" y="326" font-size="11.5" fill="#8a6015" filter="url(#rough2)">交换论证即得最优。</text>
+
+  <text x="430" y="392" text-anchor="middle" font-size="11.5" fill="#666" filter="url(#rough2)">复杂度：每个 '?' 进出堆各一次，O(n log n)；n ≤ 5×10^4，实测 C++ 0.12 s。</text>
+  <text x="430" y="416" text-anchor="middle" font-size="11.5" fill="#8a8a8a" filter="url(#rough2)">注意：翻转的是"已扫过"的 '?'，因此它前面的前缀不受影响，后面的前缀平衡量都 +2。</text>
+</svg>

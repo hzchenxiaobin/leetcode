@@ -289,7 +289,7 @@ main()
 - **编译环境与命令**：本机没有 GNU `g++`（`/usr/bin/g++` 是 Apple clang 的软链），C++ 用 `clang++ -std=c++17 -O2` 搭配 `codeforces/tools/include/bits/stdc++.h` 兼容头编译，代码只用标准库，可原样提交 GNU C++17；Python 为 `Python 3.9.6`。文档结构 / 编译 / 样例由 `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/15/A_小屋村庄的建造位置.md` 一条命令复核。
 - **官方样例**：3 / 3 通过（`samples 3`、`C++ 编译 OK, 样例 3/3`、`Python 语法 OK, 样例 3/3`）。
 - **独立暴力对拍**：暴力程序在二倍坐标上**枚举所有整数中心**（等价于枚举所有半整数位置），逐个判断"是否与至少一座房子相切"且"是否与任何房子内部相交"，完全不使用"候选只有 $2n$ 个"这一结论。生成 **250 组**随机小数据（$n \le 4$、$t \le 5$、$|x| \le 6$、$a \le 5$，生成时保证房子互不重叠；两种模式分别取范围 $6$ 与 $3$），C++ 与 Python 各跑一遍，合计 **500 次**比对，**0 处不符**。
-- **最大约束性能**：$n = 1000$、$t = 1000$、$1000$ 座边长 $1$ 或 $2$ 的小房子塞满 $[-1000, 1000]$ 的数据，C++ 端到端约 $2 \sim 5$ ms、峰值内存 $1.9$ MB；Python 约 $60$ ms，远低于 2 s / 64 MB。
+- **最大约束性能**：$n = 1000$、$t = 1000$、$1000$ 座边长 $1$ 或 $2$ 的小房子塞满 $[-1000, 1000]$ 的数据，C++ 端到端 $4.5 \sim 14.6$ ms（含进程启动）、峰值内存 $1.7$ MB；Python 约 $65$ ms，远低于 2 s / 64 MB。
 - **图片校验**：两张 SVG（`cf15a_intervals.svg`、`cf15a_walkthrough.svg`）均通过 `xml.etree.ElementTree.parse`，并用无头浏览器读取每个 `text` 的 `getBBox` 复核：无越出 `viewBox`、无文字互相重叠、无文字溢出所在方框。
 - **公式校验**：正文公式经 `node codeforces/tools/katex_check.cjs`（`throwOnError`）渲染无报错。
 - **复核状态**：verified（样例、500 次对拍、性能、图片、公式五项均实跑通过；环境差异仅在于本机无 GNU g++，已用 clang++ 等价验证）。

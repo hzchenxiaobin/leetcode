@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="470" viewBox="0 0 860 470"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.023" numOctaves="2" seed="101"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.4"/>
+    </filter>
+    <marker id="a7d" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="860" height="470" fill="#fafafa"/>
+  <text x="430" y="34" text-anchor="middle" font-size="18.5" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">滚动哈希：正向与反向同时算，两个值相等即为回文</text>
+  <path d="M 120 46 Q 430 52 740 46" stroke="#2b2b2b" stroke-width="1.2" fill="none" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="80" y="84" width="60" height="44" fill="#dbe7fb" stroke="#446688" stroke-width="1.4"/>
+    <rect x="144" y="84" width="60" height="44" fill="#dbe7fb" stroke="#446688" stroke-width="1.4"/>
+    <rect x="208" y="84" width="60" height="44" fill="#dbe7fb" stroke="#446688" stroke-width="1.4"/>
+    <rect x="272" y="84" width="60" height="44" fill="#dbe7fb" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <g font-size="14" fill="#23405c" filter="url(#rough2)">
+    <text x="110" y="112" text-anchor="middle">a</text><text x="174" y="112" text-anchor="middle">b</text>
+    <text x="238" y="112" text-anchor="middle">a</text><text x="302" y="112" text-anchor="middle">c</text>
+  </g>
+  <text x="360" y="112" font-size="12" fill="#44597a" filter="url(#rough2)">当前前缀</text>
+
+  <text x="80" y="170" font-size="12.5" fill="#23405c" filter="url(#rough2)">正向：F[i+1] = F[i] + c_i · base^i</text>
+  <text x="80" y="196" font-size="12.5" fill="#23405c" filter="url(#rough2)">反向：R[i+1] = R[i] · base + c_i</text>
+  <text x="80" y="228" font-size="12.5" fill="#2f5223" filter="url(#rough2)">前缀 s[0..i) 是回文 ⇔ F[i] = R[i]（模两个大素数都成立）</text>
+
+  <rect x="80" y="256" width="700" height="80" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="96" y="280" font-size="12" fill="#8a6015" filter="url(#rough2)">为什么要双哈希：单个模数下不同的串可能撞到同一个值，"误判回文"会让回文度和偏大。</text>
+  <text x="96" y="302" font-size="12" fill="#8a6015" filter="url(#rough2)">用两个互素的模数 10^9+7 与 10^9+9、同一个 base，需要同时"撞"，概率约 n/p₁p₂ ≈ 10^−12；</text>
+  <text x="96" y="324" font-size="12" fill="#8a6015" filter="url(#rough2)">再加随机 base 可让数据无法构造碰撞。追求确定性时可用 Manacher（回文半径）代替哈希。</text>
+
+  <rect x="80" y="352" width="700" height="72" rx="8" fill="#eef1f7" stroke="#7a8ca6" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="96" y="376" font-size="12" fill="#33445c" filter="url(#rough2)">求度只需 O(1) 额外空间：deg[i] 只依赖 deg[i/2]，边扫边算即可（deg 数组 4·(n+1) 字节）。</text>
+  <text x="96" y="400" font-size="12" fill="#33445c" filter="url(#rough2)">时间 O(n)、空间 O(n)，n = 5×10^6 时 C++ 实测 0.43 s、内存约 33 MB。</text>
+</svg>

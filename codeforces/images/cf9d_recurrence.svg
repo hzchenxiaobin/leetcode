@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="380" viewBox="0 0 740 380"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="5"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="740" height="380" fill="#fafafa"/>
+  <text x="370" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">一棵树 = 根 + 左子树 + 右子树；高度 = 1 + max(左右高度)</text>
+
+  <!-- 根 -->
+  <g filter="url(#rough2)">
+    <circle cx="370" cy="90" r="20" fill="#fce8e6" stroke="#b85450" stroke-width="2.2"/>
+    <text x="370" y="96" text-anchor="middle" font-size="13" font-weight="bold" fill="#8f3b37">根</text>
+  </g>
+
+  <!-- 左子树三角形 -->
+  <g filter="url(#rough2)">
+    <polygon points="215,150 305,150 260,235" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="260" y="185" text-anchor="middle" font-size="12" fill="#2f4a66">左子树</text>
+    <text x="260" y="205" text-anchor="middle" font-size="11" fill="#2f4a66">l 个节点</text>
+    <polygon points="435,150 525,150 480,235" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.8"/>
+    <text x="480" y="185" text-anchor="middle" font-size="12" fill="#2f5223">右子树</text>
+    <text x="480" y="205" text-anchor="middle" font-size="11" fill="#2f5223">i−1−l 个节点</text>
+  </g>
+  <g stroke="#2b2b2b" stroke-width="1.6" filter="url(#rough2)">
+    <line x1="352" y1="105" x2="290" y2="145"/>
+    <line x1="388" y1="105" x2="450" y2="145"/>
+  </g>
+  <text x="300" y="128" font-size="11" fill="#555" filter="url(#rough2)">左</text>
+  <text x="430" y="128" font-size="11" fill="#555" filter="url(#rough2)">右</text>
+
+  <!-- 高度说明 -->
+  <rect x="560" y="70" width="165" height="86" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="572" y="94" font-size="11.5" fill="#8a6015" filter="url(#rough2)">空子树高度记 0</text>
+  <text x="572" y="116" font-size="11.5" fill="#8a6015" filter="url(#rough2)">H = 1 + max(H_L, H_R)</text>
+  <text x="572" y="138" font-size="11.5" fill="#8a6015" filter="url(#rough2)">H ≤ k ⇔ 两边都 ≤ k−1</text>
+
+  <!-- 递推式 -->
+  <rect x="60" y="262" width="620" height="96" rx="10" fill="#f4f6f9" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="80" y="290" font-size="13.5" fill="#2f4a66" filter="url(#rough2)">f(i, k) = Σ_{l=0}^{i−1} f(l, k−1) · f(i−1−l, k−1)</text>
+  <text x="80" y="316" font-size="12" fill="#2f4a66" filter="url(#rough2)">边界：f(0, k) = 1（空树）；f(i, 0) = 0（i ≥ 1）</text>
+  <text x="80" y="340" font-size="12" fill="#2f4a66" filter="url(#rough2)">答案：f(n, n) − f(n, h−1)，即"全部 − 高度不超过 h−1 的"</text>
+</svg>
