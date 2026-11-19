@@ -12,6 +12,11 @@ IMGRE = re.compile(r'!\[[\s\S]*?\]\(([^)]+)\)')
 SECTIONS = ['## 1. 题目概述', '## 2. 示例与观察', '## 3. 解题思路', '## 4. 正确性证明',
             '## 5. 复杂度分析', '## 6. 参考代码', '## 7. 边界情况与易错点', '## 8. 验证记录',
             '## 相关题目与扩展']
+# 旧版结构（阶段 1 之前迁移进来的 296 篇）：多一节「算法细节」，验证记录编号为 9
+LEGACY_SECTIONS = ['## 1. 题目概述', '## 2. 示例', '## 3. 解题思路', '## 4. 算法细节',
+                   '## 5. 正确性证明', '## 6. 复杂度分析', '## 7. 参考代码',
+                   '## 8. 边界情况与易错点', '## 相关题目与扩展']
+VERIFY_RE = re.compile(r'^## (?:8|9)\. 验证记录\s*$', re.M)
 
 
 def check_doc(path):
@@ -27,9 +32,14 @@ def check_doc(path):
             errs.append(f'H1 场次 {m.group(1)} 与路径 {rel} 不一致')
     if re.search(r'^---\s*$', src, re.M):
         warns.append('含 --- 分隔线')
-    for sec in SECTIONS:
-        if sec not in src:
-            errs.append(f'缺少章节 {sec}')
+    if all(sec in src for sec in LEGACY_SECTIONS):
+        warns.append('旧版章节结构（示例 / 算法细节 / 验证记录编号 9）')
+    else:
+        for sec in SECTIONS:
+            if sec not in src:
+                errs.append(f'缺少章节 {sec}')
+    if not VERIFY_RE.search(src):
+        errs.append('缺少章节 验证记录')
     for key in ['题目链接', '比赛来源', '难度', '标签', '评测类型', '**题意**', '**约束**']:
         if key not in src:
             warns.append(f'元信息缺 {key}')
@@ -52,8 +62,9 @@ def check_doc(path):
         n = len(re.findall(r'^\d+\.\s', mm.group(1), re.M))
         if n < 4:
             warns.append(f'边界情况仅 {n} 条')
-    if '## 8. 验证记录' in src:
-        seg = src.split('## 8. 验证记录', 1)[1]
+    mvr = VERIFY_RE.search(src)
+    if mvr:
+        seg = src[mvr.end():]
         if len(seg.strip()) < 40:
             warns.append('验证记录过短')
     imgs = [x for x in IMGRE.findall(src) if re.search(r'\.svg$', x)]

@@ -27,6 +27,13 @@ def main():
     contests = json.load(open(os.path.join(META, 'contest_list.json')))['result']
     problems = json.load(open(os.path.join(META, 'problemset.json')))['result']['problems']
 
+    # 增量重建时必须保留已完成的写作状态，否则一次刷新就会把进度清零
+    old = {}
+    old_path = os.path.join(DATA, 'problems.json')
+    if os.path.exists(old_path):
+        for p in json.load(open(old_path, encoding='utf-8')):
+            old[p['key']] = p
+
     by_cid = {}
     for p in problems:
         by_cid.setdefault(p['contestId'], []).append(p)
@@ -62,16 +69,19 @@ def main():
             continue
         key = (p['name'], p.get('rating'), tuple(sorted(p.get('tags') or [])))
         aliases = [x for x in groups[key] if x != f"{p['contestId']}/{p['index']}"]
+        k = f"{p['contestId']}/{p['index']}"
+        prev = old.get(k) or {}
         out_problems.append({
-            'key': f"{p['contestId']}/{p['index']}",
+            'key': k,
             'contestId': p['contestId'],
             'index': p['index'],
             'name': p['name'],
             'rating': p.get('rating'),
             'tags': p.get('tags') or [],
             'shared_candidates': aliases,
-            'path': None,
-            'status': 'pending',
+            'path': prev.get('path'),
+            'status': prev.get('status', 'pending'),
+            **({'blocked_reason': prev['blocked_reason']} if prev.get('blocked_reason') else {}),
         })
     out_problems.sort(key=lambda p: (p['contestId'], sortkey(p['index'])))
 

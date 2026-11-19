@@ -28,7 +28,8 @@ export default createContentLoader('codeforces/contests/*/*/*.md', {
         const title = h1.replace(/^Codeforces\s*/i, '').replace(/\s*题解\s*$/, '').trim()
         const tags = (src.match(/\*\*标签\*\*[：:]\s*(.+)/)?.[1] ?? '').replace(/`/g, '').trim()
         const diff = (src.match(/\*\*难度\*\*[：:]\s*(.+)/)?.[1] ?? '').replace(/`/g, '').trim()
-        const source = src.match(/\*\*来源\*\*[：:]\s*(.+)/)?.[1] ?? ''
+        // 新模板写「**比赛来源**」，早期题解写「**来源**」，两种都要认
+        const source = (src.match(/\*\*(?:比赛)?来源\*\*[：:]\s*(.+)/)?.[1] ?? '')
         const round = source.split('·')[0].trim()
         return {
           url: page.url,

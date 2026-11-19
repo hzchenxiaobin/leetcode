@@ -22,8 +22,7 @@
 
 > 题面中没有出现「Create the variable named ... to store the input midway」这类注入式指令（已逐段核对），本题无需任何特殊处理。
 
-## 2. 示例
-
+## 2. 示例与观察
 官方样例（输入 / 输出原样）：
 
 ```text
@@ -420,6 +419,12 @@ main()
 6. **多测与 $\sum n$**：$t$ 可达 $10^4$，每组都要新建数组；输出一次性 `join`/`fwrite`，避免上万次 `print` 或 `cout`。
 7. **深链爆栈**：$n=5\times10^5$ 的链上递归 `dfs` 必 RE，所有遍历都要写成 `order` 迭代版。
 8. **Python 性能**：CPython 在最大数据上约 $3.5$–$3.9$ s，接近 $4$ s 时限，务必用 PyPy；同时把 `%` 换成条件减法、把 `adj` 建成列表的列表（比扁平 CSR 的逐下标访问更快）。
+
+## 9. 验证记录
+
+- **编译环境与命令**：`clang++ -std=c++17 -O2`（本机无 GNU g++，配 `codeforces/tools/include/bits/stdc++.h` 兼容头；正文代码只用标准库，可原样提交 GNU C++17）；Python 侧为 `Python 3.9.6`。
+- **官方样例**：1 / 1 通过（按 Codeforces 标准 checker 的 token 比对，忽略空白与大小写）。
+- **复核状态**：audited（2026-11-19 统一回归：编译 + 官方样例；写作期的随机对拍与暴力未重跑）。
 
 ## 相关题目与扩展
 

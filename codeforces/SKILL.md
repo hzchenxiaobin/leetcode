@@ -104,7 +104,29 @@ codeforces/
 
 状态流转：`pending → drafting → sample_passed → verified → review_passed → published`；`blocked` 不属于完成。
 
-普通题最低要求：
+### 5.1 工具链（都在 `tools/`，一律可重复执行）
+
+| 脚本 | 用途 |
+| --- | --- |
+| `refresh_api.py` | 拉取 `contest.list` / `problemset.problems` 原始响应到 `.cf-meta/`（阶段 4 增量入口） |
+| `build_manifest.py` | 由原始响应重建 `data/{snapshot,contests,problems}.json`，**保留已有的 path/status/blocked** |
+| `fetch_problem.py` | 抓题面（洛谷镜像，样例与 Codeforces 原页一致）到 `.cf-meta/statements/CF<cid><idx>.json` |
+| `verify_solution.py` | 编译正文里的 C++/Python，跑真实样例；默认按 **token 比对**（等价于 CF 标准 checker：忽略空白与大小写），`--compare exact` 逐字比对，`--checker` 接特殊评测 |
+| `audit.py` | 全量回归：逐篇编译 + 样例比对 + 文档结构，结果写 `.cf-meta/audit.json` |
+| `check.py` | 单篇/单场文档规范检查（章节、引理、∎、代码块、图片可解析、Python 语法、C++ 语法） |
+| `sync_paths.py` | 扫描正文目录，把真实路径与状态写回 `problems.json`；`--publish k1,k2` 把复核通过的题位置为 published |
+| `update_progress.py` | 重算 `data/progress.md`（五项覆盖率 + 里程碑 + 阻塞项 + 下一批） |
+
+- Codeforces 主站题面页对脚本请求返回 403，题面与样例统一走 `fetch_problem.py` 的镜像缓存，不要凭记忆写"官方样例"。
+- 本机没有 GNU g++，`verify_solution.py` 会自动回退到 `clang++ + tools/include/bits/stdc++.h`；正文代码仍写 `#include <bits/stdc++.h>`，可原样提交。
+
+### 5.2 章节结构的两套写法
+
+- 现行模板见第 2 节，验证记录编号为 8。
+- 阶段 1 之前迁移进来的历史题解多一节「## 4. 算法细节」，因此后续章节顺延，**验证记录编号为 9**：`2 示例与观察 / 3 解题思路 / 4 算法细节 / 5 正确性证明 / 6 复杂度分析 / 7 参考代码 / 8 边界情况与易错点 / 9 验证记录`。`check.py` 两套都接受，新增文章一律用现行模板。
+
+### 5.3 普通题最低要求
+
 1. GNU C++17 `-O2` 编译通过；
 2. 全部官方样例通过；
 3. 与独立暴力随机/全枚举对拍（小数据 ≥200 组或穷举）；

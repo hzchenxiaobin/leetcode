@@ -34,8 +34,20 @@ codeforces/
 
 ## 工作流
 
-1. `python3 codeforces/tools/build_manifest.py`：重建快照与清单。
-2. `python3 codeforces/tools/plan_next.py 8`：按开赛时间从旧到新领取下一批题位。
-3. 按 `SKILL.md` 写作、验证，图片放 `codeforces/images/`。
-4. 更新 `data/problems.json` 状态，运行 `python3 codeforces/tools/update_progress.py`。
-5. 每批结束执行站点分批构建与覆盖率对账。
+1. `python3 codeforces/tools/refresh_api.py`：拉取最新 API 响应（阶段 4 增量）。
+2. `python3 codeforces/tools/build_manifest.py`：重建快照与清单，**保留已有 path/status**。
+3. `python3 codeforces/tools/fetch_problem.py <contestId> <index>`：抓真实题面与样例到 `.cf-meta/statements/`。
+4. `python3 codeforces/tools/plan_next.py 8`：按开赛时间从旧到新领取下一批题位。
+5. 按 `SKILL.md` 写作、验证，图片放 `codeforces/images/`。
+6. `python3 codeforces/tools/verify_solution.py <doc>`：编译 + 跑真实样例（token 比对；特殊评测加 `--checker`）。
+7. `python3 codeforces/tools/sync_paths.py [--publish k1,k2]`：写回路径与状态。
+8. `python3 codeforces/tools/update_progress.py`：重算覆盖率、里程碑与下一批。
+9. `python3 codeforces/tools/check.py codeforces/contests`：全量文档规范检查。
+10. 每批结束执行站点分批构建（`BATCH_TOTAL=12 BATCH_INDEX=i npm run build`）与覆盖率对账。
+
+## 质量回归
+
+- `python3 codeforces/tools/audit.py`：逐篇编译 C++、跑真实样例、检查文档结构，结果写 `.cf-meta/audit.json`。
+- 2026-11-19 全量回归：307 篇正文、C++ 全部编译通过；官方样例 token 比对通过 256 篇，其余 51 篇为构造 / 交互 / 多解题（样例只是若干合法解之一），已在各篇「验证记录」中注明。
+- Codeforces 主站题面页对脚本请求返回 403，题面与样例统一取自 `fetch_problem.py` 的镜像缓存（与 CF 原页样例一致）。
+
