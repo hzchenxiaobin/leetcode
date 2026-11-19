@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 400" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#666"/>
+    </marker>
+  </defs>
+
+  <rect width="620" height="400" fill="#fafafa"/>
+
+  <text x="310" y="30" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">赢家判定分两步：先定 m，再定谁先到 m</text>
+  <text x="310" y="50" text-anchor="middle" font-size="11" fill="#888" filter="url(#rough2)">「最高分」用最终分数算，「谁赢」用时间顺序算，两个条件缺一不可</text>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="64" width="560" height="150" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" rx="10"/>
+    <text x="48" y="88" font-size="12" fill="#33445c" font-weight="bold">① 只看终局：把每轮分数累加，取最终总分的最大值 m</text>
+    <text x="48" y="114" font-size="10" fill="#446688">玩家</text>
+    <text x="180" y="114" font-size="10" fill="#446688">最终总分</text>
+    <text x="330" y="114" font-size="10" fill="#446688">是否进入候选集合 S</text>
+    <rect x="42" y="120" width="536" height="1" fill="#446688" opacity="0.5"/>
+    <text x="48" y="140" font-size="10.5" fill="#333">mike</text>
+    <text x="180" y="140" font-size="10.5" fill="#333">3 + 2 = 5</text>
+    <text x="330" y="140" font-size="10.5" fill="#8a3a36">是（= m）</text>
+    <text x="48" y="162" font-size="10.5" fill="#333">andrew</text>
+    <text x="180" y="162" font-size="10.5" fill="#333">5</text>
+    <text x="330" y="162" font-size="10.5" fill="#8a3a36">是（= m）</text>
+    <text x="48" y="196" font-size="10.5" fill="#33445c">本例 m = 5，S = {mike, andrew}；分数比 m 低的玩家直接淘汰</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="230" width="560" height="112" fill="#fff8e1" stroke="#d6a040" stroke-width="1.6" rx="10"/>
+    <text x="48" y="254" font-size="12" fill="#8a6a20" font-weight="bold">② 再看时序：按原顺序重放，第一次满足 cur ≥ m 且 total = m 的人获胜</text>
+    <rect x="48" y="266" width="150" height="32" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" rx="4"/>
+    <text x="123" y="286" text-anchor="middle" font-size="9.5" fill="#333">轮 1：mike 3（cur 3）</text>
+    <rect x="210" y="266" width="168" height="32" fill="#fce4ec" stroke="#b85450" stroke-width="2" rx="4"/>
+    <text x="294" y="286" text-anchor="middle" font-size="9.5" fill="#8a3a36">轮 2：andrew 5（cur 5）✓</text>
+    <rect x="390" y="266" width="150" height="32" fill="#ffffff" stroke="#d6a040" stroke-width="1.2" rx="4"/>
+    <text x="465" y="286" text-anchor="middle" font-size="9.5" fill="#333">轮 3：mike 2（cur 5）</text>
+    <text x="48" y="322" font-size="10" fill="#8a6a20">andrew 在第 2 轮就到 5 分，早于 mike 的第 3 轮 → 输出 andrew</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="356" width="560" height="34" fill="#fce4ec" stroke="#b85450" stroke-width="1.4" rx="8"/>
+    <text x="44" y="378" font-size="10.5" fill="#8a3a36">只判 cur ≥ m 会误选「中途领先、最终掉队」的人，必须再叠加 total = m</text>
+  </g>
+</svg>

@@ -8,9 +8,9 @@
 
 | 指标 | 数值 |
 | --- | --- |
-| 比赛覆盖率 | 45 / 2030（2.22%） |
-| 题位覆盖率 | 296 / 11526（2.57%） |
-| 已发布正文 | 296 |
+| 比赛覆盖率 | 47 / 2030（2.32%） |
+| 题位覆盖率 | 304 / 11526（2.64%） |
+| 已发布正文 | 304 |
 | blocked | 1 |
 
 ## 最近完成的场次
@@ -32,15 +32,15 @@
 
 ## 下一批
 
-- `1/A` Theatre Square（1000）
-- `1/B` Spreadsheet（1600）
-- `1/C` Ancient Berland Circus（2100）
-- `2/A` Winner（1500）
-- `2/B` The least round way（2000）
-- `2/C` Commentator problem（2600）
-- `3/A` Shortest path of the king（1000）
-- `3/B` Lorry（1900）
 - `3/C` Tic-tac-toe（1800）
 - `3/D` Least Cost Bracket Sequence（2600）
 - `4/A` Watermelon（800）
 - `4/B` Before an Exam（1200）
+- `4/C` Registration System（1300）
+- `4/D` Mysterious Present（1700）
+- `5/A` Chat Servers Outgoing Traffic（1000）
+- `5/B` Center Alignment（1200）
+- `5/C` Longest Regular Bracket Sequence（1900）
+- `5/D` Follow Traffic Rules（2100）
+- `5/E` Bindian Signalizing（2400）
+- `6/A` Triangle（900）

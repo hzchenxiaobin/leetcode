@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 390" font-family="'Comic Sans MS', 'Segoe UI', 'Kaiti SC', 楷体, cursive">
+  <defs>
+    <filter id="rough2">
+      <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="640" height="390" fill="#fafafa"/>
+
+  <text x="320" y="28" text-anchor="middle" font-size="15" fill="#444" font-weight="bold" filter="url(#rough2)">列号 55 与字母串 BC 的互转演算</text>
+  <text x="320" y="47" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">左：55 → "BC"（每轮先 col−− 再取模，从低位往高位攒）；右："BC" → 55（逐位累乘）</text>
+
+  <g filter="url(#rough2)">
+    <rect x="22" y="60" width="330" height="142" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.7"/>
+    <text x="34" y="80" font-size="9" fill="#2b3a55" font-weight="bold">while (col &gt; 0) { col−−; s += 'A' + col%26; col /= 26; }</text>
+
+    <text x="46" y="104" text-anchor="middle" font-size="8.5" fill="#446688">轮次</text>
+    <text x="112" y="104" text-anchor="middle" font-size="8.5" fill="#446688">col</text>
+    <text x="180" y="104" text-anchor="middle" font-size="8.5" fill="#446688">col−1</text>
+    <text x="252" y="104" text-anchor="middle" font-size="8.5" fill="#446688">(col−1)%26</text>
+    <text x="320" y="104" text-anchor="middle" font-size="8.5" fill="#446688">字母</text>
+
+    <text x="46" y="128" text-anchor="middle" font-size="10" fill="#2b3a55">1</text>
+    <text x="112" y="128" text-anchor="middle" font-size="10" fill="#2b3a55">55</text>
+    <text x="180" y="128" text-anchor="middle" font-size="10" fill="#2b3a55">54</text>
+    <text x="252" y="128" text-anchor="middle" font-size="10" fill="#2b3a55">2</text>
+    <text x="320" y="128" text-anchor="middle" font-size="10" fill="#8a3a38">C</text>
+
+    <text x="46" y="152" text-anchor="middle" font-size="10" fill="#2b3a55">2</text>
+    <text x="112" y="152" text-anchor="middle" font-size="10" fill="#2b3a55">2</text>
+    <text x="180" y="152" text-anchor="middle" font-size="10" fill="#2b3a55">1</text>
+    <text x="252" y="152" text-anchor="middle" font-size="10" fill="#2b3a55">1</text>
+    <text x="320" y="152" text-anchor="middle" font-size="10" fill="#8a3a38">B</text>
+
+    <text x="34" y="174" font-size="8.8" fill="#3a4a66">新 col ← ⌊(col−1)/26⌋：第 1 轮 54/26 = 2，第 2 轮 1/26 = 0 ⇒ 停止</text>
+    <text x="34" y="192" font-size="8.8" fill="#3a4a66">攒到 "C"、"B"，逆序拼接得 "BC" —— 正是第 55 列</text>
+  </g>
+
+  <path d="M 356 131 L 384 131" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="370" y="122" text-anchor="middle" font-size="8" fill="#888" filter="url(#rough2)">逆序</text>
+
+  <g filter="url(#rough2)">
+    <rect x="386" y="60" width="232" height="142" rx="9" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.7"/>
+    <text x="398" y="80" font-size="9.5" fill="#2c4a24" font-weight="bold">"BC"：col 从 0 开始</text>
+    <text x="398" y="104" font-size="8.8" fill="#3a5a30">'B' = 2 ⇒ col = 0×26 + 2 = 2</text>
+    <text x="398" y="126" font-size="8.8" fill="#3a5a30">'C' = 3 ⇒ col = 2×26 + 3 = 55</text>
+    <text x="398" y="150" font-size="8.8" fill="#3a5a30">每位贡献 (c − 'A' + 1)，高位先乘 26</text>
+    <text x="398" y="172" font-size="8.8" fill="#3a5a30">两趟都是 O(字母数) = O(log₂₆ col)</text>
+    <text x="398" y="192" font-size="8.8" fill="#3a5a30">与左式互为逆运算（见第 4 节引理）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="22" y="212" width="596" height="108" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="34" y="231" font-size="9.2" fill="#5a4a20" font-weight="bold">为什么必须「先减 1」：这套记法里没有 0</text>
+    <text x="34" y="251" font-size="8.8" fill="#5a4a20">若当普通 26 进制（A 记 0），26 会写成 "BA"，而正确答案是 "Z"：每个长度区间都整体错位一位</text>
+    <text x="34" y="271" font-size="8.8" fill="#5a4a20">长度 L 覆盖列号 ((26^L − 1)/25) … (26^(L+1) − 26)/25</text>
+    <text x="34" y="291" font-size="8.8" fill="#5a4a20">L=1: 1–26　L=2: 27–702　L=3: 703–18278　L=4: 18279–475254　L=5: 475255–12356630</text>
+    <text x="34" y="311" font-size="8.8" fill="#5a4a20">列号上限 10^6 只需 5 个字母（10^6 = BDWGN）；每轮缩小 26 倍，循环次数 ≤ 5</text>
+  </g>
+
+  <text x="320" y="342" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">核对：A=1，Z=26，AA=27，AZ=52，BA=53，BC=55，ZZ=702，AAA=703，BDWGN=1000000</text>
+  <text x="320" y="364" text-anchor="middle" font-size="9.5" fill="#888" filter="url(#rough2)">这就是「双射 26 进制」：字母表 1..26 与正整数一一对应，两个方向的转换互为逆运算</text>
+</svg>
