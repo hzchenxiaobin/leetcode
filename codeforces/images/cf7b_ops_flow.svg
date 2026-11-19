@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="470" viewBox="0 0 760 470"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="17"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#c9801f"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="470" fill="#fafafa" filter="url(#rough2)"/>
+  <text x="380.0" y="38" text-anchor="middle" font-size="18.5" fill="#2b2b2b" font-weight="bold" filter="url(#rough2)">三条指令，一套共享状态</text>
+  <path d="M 152 50 Q 380 56 608 50" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+  <rect x="30" y="80" width="220" height="200" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="140" y="108" text-anchor="middle" font-size="15" fill="#2f4a66" font-weight="bold" filter="url(#rough2)">alloc n</text>
+  <text x="44" y="142" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">从字节 1 往后扫，</text>
+  <text x="44" y="168" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">取最靠前的、能放下</text>
+  <text x="44" y="194" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">n 个字节的空闲段。</text>
+  <text x="44" y="220" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">成功：编号 +1 并输出；</text>
+  <text x="44" y="246" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">放不下：输出 NULL。</text>
+  <rect x="270" y="80" width="220" height="200" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="380" y="108" text-anchor="middle" font-size="15" fill="#2f5223" font-weight="bold" filter="url(#rough2)">erase x</text>
+  <text x="284" y="142" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">查编号 x 是否还在</text>
+  <text x="284" y="168" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">块表里（未被释放）。</text>
+  <text x="284" y="194" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">在：这些字节变空闲；</text>
+  <text x="284" y="220" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">不在：输出</text>
+  <text x="284" y="246" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">ILLEGAL_ERASE_ARGUMENT</text>
+  <rect x="510" y="80" width="220" height="200" rx="10" fill="#fff3e0" stroke="#c9801f" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="620" y="108" text-anchor="middle" font-size="15" fill="#a8641a" font-weight="bold" filter="url(#rough2)">defragment</text>
+  <text x="524" y="142" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">按块的当前起点排序，</text>
+  <text x="524" y="168" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">依次推到字节 1 起紧挨</text>
+  <text x="524" y="194" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">着放。块的先后顺序不</text>
+  <text x="524" y="220" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">变，块编号也不变，只</text>
+  <text x="524" y="246" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">是每个块的起点变小了。</text>
+  <rect x="30" y="306" width="700" height="128" rx="10" fill="#f2f2f2" stroke="#2b2b2b" stroke-width="1.6" stroke-dasharray="7 5" filter="url(#rough2)"/>
+  <text x="44" y="334" text-anchor="start" font-size="13.5" fill="#2b2b2b" font-weight="bold" filter="url(#rough2)">共用状态</text>
+  <text x="128" y="334" text-anchor="start" font-size="12.5" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">owner[1..m]：每个字节归哪个块（0 = 空闲）；块表：编号 -&gt; (起点, 长度)。</text>
+  <text x="44" y="362" text-anchor="start" font-size="12.5" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">不变量 1：块与块不重叠，块表里的编号互不相同，已释放的编号不再出现。</text>
+  <text x="44" y="388" text-anchor="start" font-size="12.5" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">不变量 2：空闲字节永远是若干段连续区间；defragment 把段之间的空隙全部压掉。</text>
+
+  <text x="44" y="414" text-anchor="start" font-size="12.5" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">不变量 3：alloc 只影响新编号，erase 只影响该块，defragment 只改变块的起点。</text>
+</svg>

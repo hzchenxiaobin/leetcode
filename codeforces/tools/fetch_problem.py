@@ -34,9 +34,10 @@ def _get(url, tries=4):
         try:
             with _opener.open(req, timeout=30) as r:
                 return r.read().decode('utf-8', 'ignore')
-        except Exception as e:  # 302 机器人校验、限频、超时都重试
+        except Exception as e:  # 302 机器人校验、限频(401/429)、超时都退避重试
             last = e
-            time.sleep(1.5 * (i + 1))
+            code = getattr(e, 'code', None)
+            time.sleep((12 if code in (401, 403, 429) else 2) * (i + 1))
     raise RuntimeError(f'fetch failed {url}: {last}')
 
 
@@ -61,13 +62,14 @@ def _strip(md):
     return md.strip()
 
 
-def fetch(contest, index, force=False):
+def fetch(contest, index, force=False, delay=1.2):
     pid = f'CF{contest}{index}'
     os.makedirs(CACHE, exist_ok=True)
     cache = os.path.join(CACHE, pid + '.json')
     if os.path.exists(cache) and not force:
         return json.load(open(cache, encoding='utf-8'))
 
+    time.sleep(delay)
     html = _get(f'https://www.luogu.com.cn/problem/{pid}')
     ctx = _context(html)
     if not ctx or ctx.get('status') != 200:

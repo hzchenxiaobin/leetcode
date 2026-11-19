@@ -3,24 +3,24 @@
 - 快照时间：2026-11-19T22:17:49+0800
 - 已结束比赛（contest.list）：2164，其中有题面映射：2030，无映射（ICPC/IOI 镜像等）：134
 - 原始题位：11526；唯一题目：11526
-- 报告生成时间：2026-11-19 22:22
+- 报告生成时间：2026-11-19 22:32
 
 ## 覆盖率
 
 | 指标 | 数值 |
 | --- | --- |
-| 比赛覆盖率 | 47 / 2030（2.32%） |
-| 题位覆盖率 | 308 / 11526（2.67%） |
-| 唯一题解覆盖率 | 308 / 11526（2.67%） |
-| 验证覆盖率 | 308 / 308（100.00%） |
-| 复核覆盖率 | 3 / 308（0.97%） |
+| 比赛覆盖率 | 49 / 2030（2.41%） |
+| 题位覆盖率 | 324 / 11526（2.81%） |
+| 唯一题解覆盖率 | 324 / 11526（2.81%） |
+| 验证覆盖率 | 324 / 324（100.00%） |
+| 复核覆盖率 | 20 / 324（6.17%） |
 | blocked | 1 |
 
 ## 里程碑进度
 
 | 里程碑 | 场次区间 | 题位 | 已完成 | 覆盖率 | 状态 |
 | --- | --- | ---: | ---: | ---: | --- |
-| M1 | #1 – #100 | 505 | 12 | 2.38% | 🚧 进行中 |
+| M1 | #1 – #100 | 505 | 28 | 5.54% | 🚧 进行中 |
 | M2 | #101 – #203 | 452 | 0 | 0.00% | ⬜ 未开始 |
 | M3 | #207 – #305 | 425 | 0 | 0.00% | ⬜ 未开始 |
 | M4 | #311 – #411 | 434 | 0 | 0.00% | ⬜ 未开始 |
@@ -62,14 +62,14 @@
 ## 下一批（按开赛时间从旧到新）
 
 - `3/D` Least Cost Bracket Sequence（2600）
-- `4/C` Registration System（1300）
-- `4/D` Mysterious Present（1700）
-- `5/A` Chat Servers Outgoing Traffic（1000）
-- `5/B` Center Alignment（1200）
-- `5/C` Longest Regular Bracket Sequence（1900）
-- `5/D` Follow Traffic Rules（2100）
-- `5/E` Bindian Signalizing（2400）
-- `6/B` President's Office（1100）
-- `6/C` Alice, Bob and Chocolate（1200）
 - `6/D` Lizards and Basements 2（2600）
 - `6/E` Exposition（1900）
+- `7/D` Palindrome Degree（2200）
+- `7/E` Defining Macros（2600）
+- `8/C` Looking for Order（2000）
+- `8/D` Two Friends（2600）
+- `8/E` Beads（2600）
+- `9/C` Hexadecimal's Numbers（1200）
+- `9/D` How many trees?（1900）
+- `9/E` Interestring graph and Apples（2300）
+- `10/A` Power Consumption Calculation（900）
