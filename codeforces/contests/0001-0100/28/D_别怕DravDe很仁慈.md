@@ -125,9 +125,9 @@ $$C = l_i + c_i + r_i \quad \text{（对所有被选中的 } i \text{ 相同）}
 
 ## 5. 复杂度分析
 
-- **时间**：每辆车一次哈希查找 + 一次更新，期望 $O(n)$；$n = 10^5$ 时实测 C++ 约 30 ms（含读入）。
+- **时间**：每辆车一次哈希查找 + 一次更新，期望 $O(n)$；$n = 10^5$ 时实测 C++ 约 10 ms（含读入，用 fread 快读；本机 `cin` 读 4×10^5 个整数反而要 0.5 s）。
 - **空间**：$O(n)$（状态表 + 前驱数组 + 排序/哈希开销）。
-- **与时限的关系**：2 s 时限下余量在 50 倍以上。
+- **与时限的关系**：2 s 时限下余量在百倍以上。
 
 ## 6. 参考代码
 
@@ -138,19 +138,39 @@ $$C = l_i + c_i + r_i \quad \text{（对所有被选中的 } i \text{ 相同）}
 using namespace std;
 using ll = long long;
 
+static char buf[1 << 25];
+static size_t bufLen = 0, bufPos = 0;
+static inline int readChar() {
+    if (bufPos == bufLen) {
+        bufLen = fread(buf, 1, sizeof(buf), stdin);
+        bufPos = 0;
+        if (bufLen == 0) return -1;
+    }
+    return buf[bufPos++];
+}
+static inline long long readInt() {
+    int c = readChar();
+    while (c != -1 && (c < '0' || c > '9') && c != '-') c = readChar();
+    bool neg = false;
+    if (c == '-') { neg = true; c = readChar(); }
+    long long x = 0;
+    while (c >= '0' && c <= '9') { x = x * 10 + (c - '0'); c = readChar(); }
+    return neg ? -x : x;
+}
+
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int n;
-    if (!(cin >> n)) return 0;
+    int n = (int)readInt();
+    if (n <= 0) return 0;
     vector<ll> v(n), c(n), l(n), r(n);
-    for (int i = 0; i < n; ++i) cin >> v[i] >> c[i] >> l[i] >> r[i];
+    for (int i = 0; i < n; ++i) { v[i] = readInt(); c[i] = readInt(); l[i] = readInt(); r[i] = readInt(); }
 
     // 关键观察：被选中的卡车 i 必须满足 l_i + c_i + r_i = 总人数 C；
     // 且按原始顺序选中时，前缀人数恰好等于 l_i。于是按 K = l+c+r 分组，
     // 组内做 dp：前缀人数 p -> 最大价值（及链尾卡车）。
     const ll BASE = 400001;
     unordered_map<ll, pair<ll,int>> state;   // (K, p) -> (最大价值, 链尾卡车下标)
+    state.reserve((size_t)n * 2 + 16);
+    state.max_load_factor(0.7f);
     vector<int> pre(n, -1);
     ll bestVal = -1;
     int bestTruck = -1;
@@ -275,7 +295,7 @@ main()
   - 独立暴力 `/tmp/cf28_D/stress.py`：枚举全部 $2^n$ 个子集（$n \le 8$），对每个子集逐车校验 $l_i$（前缀人数）与 $r_i$（后缀人数），取最大价值（空集价值 0）。
   - 数据：2 组官方样例 + 300 组随机（$n \in [1,8]$，$c_i \in [1,3]$，$l_i, r_i \in [0,5]$，$v_i \in [1,20]$）。
   - 结果：`cases 302 bad 0`（C++ 输出经 `check_out` 逐车校验合法，且总价值等于暴力最优值；C++ 与 Python 车数一致）。
-- **最大约束性能**：$n = 10^5$ 随机数据，C++ 端到端约 30 ms；峰值内存 $O(n)$。
+- **最大约束性能**：$n = 10^5$ 随机数据，C++ 端到端约 10 ms（fread 快读；同样数据用 `cin` 要 0.58 s，所以正文代码用快读）；峰值内存 $O(n)$。
 - **图片校验**：两张 SVG 通过 `ElementTree.parse`；文本包围盒检查 0 越界、0 重叠、0 越框。
 - **复核状态**：verified。
 
