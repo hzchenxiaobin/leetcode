@@ -167,17 +167,18 @@ def main():
                         best_ms = ms if best_ms is None else min(best_ms, ms)
                     result['max_ms'] = max(result['max_ms'], round(best_ms))
                     if a.checker:
+                        # C++ 分支的循环变量是 smp（Python 分支才是 s）
                         ip = os.path.join(wd, 'in.txt'); op = os.path.join(wd, 'out.txt')
-                        open(ip, 'w').write(s['in']); open(op, 'w').write(out)
+                        open(ip, 'w').write(smp['in']); open(op, 'w').write(out)
                         good = subprocess.run([sys.executable, a.checker, ip, op, '/dev/stdin'],
-                                              input=s['out'], capture_output=True, text=True).returncode == 0
+                                              input=smp['out'], capture_output=True, text=True).returncode == 0
                     else:
                         good = norm(out, a.compare) == norm(smp['out'], a.compare)
                     if good:
                         ok += 1
                     else:
                         result.setdefault('fails', []).append({
-                            'sample': i + 1, 'expected': s['out'][:200], 'got': out[:200]})
+                            'sample': i + 1, 'expected': smp['out'][:200], 'got': out[:200]})
                 result['cpp_ok'] = ok
         if d['py']:
             src = os.path.join(wd, 'main.py')
@@ -209,7 +210,9 @@ def main():
                         good = subprocess.run([sys.executable, a.checker, ip, op, '/dev/stdin'],
                                               input=s['out'], capture_output=True, text=True).returncode == 0
                     else:
-                        good = norm(out, a.compare) == norm(smp['out'], a.compare)
+                        # 注意：Python 分支的循环变量是 s（不是 C++ 分支里的 smp），
+                        # 之前误用 smp 会让每组样例都与「最后一组」比对。
+                        good = norm(out, a.compare) == norm(s['out'], a.compare)
                     ok += good
                 result['py_ok'] = ok
 
