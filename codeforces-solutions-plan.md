@@ -327,7 +327,7 @@ pending → drafting → sample_passed → verified → review_passed → publis
 | 已发布正文 | 651 篇（另有 17 项 blocked，不计入） |
 | 比赛覆盖率 | 103 / 2030（全部题位都已有正文的比赛数） |
 | 题位覆盖率 | 651 / 11526（5.65%） |
-| M1 进度 | #1–#100 共 505 个题位，已完成 365（72.3%） |
+| M1 进度 | #1–#100 共 505 个题位，已完成 355（70.3%；缺 #64 待确认评测语义、#72 受镜像限频） |
 | 题面来源 | Codeforces 主站题面页对脚本 403，统一走洛谷镜像缓存（`tools/fetch_problem.py`，样例与 CF 原页一致）；**格式与约束以 `outputFormat.en` 等英文原文为准，中文翻译可能截断** |
 | 代码验证 | 本机无 GNU g++，用 `clang++ -std=c++17 -O2` + 仓库内 `bits/stdc++.h` 兼容头；提交代码仍是标准 GNU C++17 |
 | 样例比对 | `tools/verify_solution.py` 默认按 Codeforces 标准 checker 的 token 比对；构造/交互/多解题用 `--checker`；题面写明文件输入输出的自动切到临时目录读写 `input.txt`/`output.txt` |
