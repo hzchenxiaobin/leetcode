@@ -344,7 +344,7 @@ main()
 - **编译环境与命令**：本机没有 GNU `g++`（`/usr/bin/g++` 是 Apple clang 21.0.0 的软链），用 `clang++ -std=c++17 -O2 -Wall -Wextra -I codeforces/tools/include` 配合仓库自带的 `bits/stdc++.h` 兼容头编译，**零警告**；Python 侧为 `Python 3.9.6`。
 - **官方样例**：3 / 3 通过（半径 1 十字、`-1`、半径 1/3 十字）。`verify_solution.py` 输出 `CF32D: samples 3`、`C++ 编译 OK, 样例 3/3`、`Python 语法 OK, 样例 3/3`。
 - **独立暴力对拍**：另写暴力：枚举所有中心与所有 $x$，收集全部合法星座，按 $(x,i,j)$ 排序后取第 $K$ 个。共测 **300 组随机数据**（$N,M \in [1,8]$，每格 `*` 概率 $0.35$，$K \in [1,40]$），C++、Python 与暴力**全部一致，0 处不符**。
-- **最大约束性能**：$300 \times 300$ 全 `*`、$K=3\,000\,000$ 时，C++ 端到端约 $27$ ms；Python3 约 $1.24$ s（均含进程启动）。总星座数 $4\,455\,100$，$K$ 更大时快速输出 `-1`。
+- **最大约束性能**：$300 \times 300$ 全 `*`、$K=3\,000\,000$ 时，C++ 端到端约 $27$ ms；Python3 约 $1.24$ s（均含进程启动）。总星座数 $4\,455\,100$；$K$ 超过总数时仍需先统计，再输出 `-1`。
 - **图片校验**：两张 SVG（`cf32d_cross.svg`、`cf32d_order.svg`）均通过 `xml.etree.ElementTree.parse`；文本包围盒均在 `viewBox` 内且两两不重叠。
 - **公式校验**：正文公式经 `node codeforces/tools/katex_check.cjs` 的 KaTeX（`throwOnError`）校验，0 处报错；证明结尾用 `∎`。
 - **样例逐字核对**：`python3 codeforces/tools/check_samples.py --only 0001-0100/32` 对本文的三组官方样例报告一致。
