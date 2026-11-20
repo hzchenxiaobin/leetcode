@@ -28,7 +28,8 @@ def main():
     for p in probs:
         by_cid.setdefault(p['contestId'], []).append(p)
 
-    done = [p for p in probs if p.get('path')]
+    # blocked 即使留了正文也不计入完成数（计划 §4：blocked 不属于完成状态）
+    done = [p for p in probs if p.get('path') and p.get('status') != 'blocked']
     done_keys = {p['key'] for p in done}
     full = [c for c in contests if all(f"{c['id']}/{i}" in done_keys for i in c['problems'])]
     blocked = [p for p in probs if p.get('status') == 'blocked']

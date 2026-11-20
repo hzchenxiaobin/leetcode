@@ -223,7 +223,7 @@ main()
 - [Codeforces 17B Hierarchy](https://codeforces.com/problemset/problem/17/B)、[17C Balance](https://codeforces.com/problemset/problem/17/C)、[17D Notepad](https://codeforces.com/problemset/problem/17/D)、[17E Palisection](https://codeforces.com/problemset/problem/17/E)：同场其余四题。
 - [Codeforces 26A Almost Prime](https://codeforces.com/problemset/problem/26/A)：同样是"筛完再按条件数一数"的入门数论题。
 - [Codeforces 230B T-primes](https://codeforces.com/problemset/problem/230/B)：素数筛 + 完全平方数判定，适合接着练筛法。
-- [Codeforces 17A? 无] 若想练"相邻素数"这类构造，可看看 [Codeforces 776B Sherlock and his girlfriend](https://codeforces.com/problemset/problem/776/B)：用素数/合数给数染色。
+- [Codeforces 776B Sherlock and his girlfriend](https://codeforces.com/problemset/problem/776/B)：直接用素数/合数给数染色，筛法的另一种用法。
 - [LeetCode 204. 计数质数](https://leetcode.cn/problems/count-primes/)：埃氏筛的标准实现，可与本题的筛法部分对照。
 
 **延伸思考**：
