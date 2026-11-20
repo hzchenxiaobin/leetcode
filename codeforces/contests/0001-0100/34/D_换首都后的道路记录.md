@@ -236,7 +236,7 @@ main()
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`，没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
 - **官方样例**：2 / 2 通过（`2 3`、`6 4 1 4 2`），C++ 与 Python 一致，且与 JSON 的 `out` 一致（行尾空格被归一化）。
-- **独立暴力对拍**：暴力（`codeforces/tools/checkers/cf34d.py`）用**递归 DFS** 从 $r_2$ 重新定根——与参考解的迭代 BFS 是两种不同遍历。随机生成 **300 组**输入（$n\le12$ 的随机树，随机选 $r_1\ne r_2$，再转成以 $r_1$ 为根的输入格式），C++ / Python / 暴力三方 **300/300 一致**。
+- **独立暴力对拍**：暴力（`codeforces/tools/brutes/cf34d.py`）用**递归 DFS** 从 $r_2$ 重新定根——与参考解的迭代 BFS 是两种不同遍历。随机生成 **300 组**输入（$n\le12$ 的随机树，随机选 $r_1\ne r_2$，再转成以 $r_1$ 为根的输入格式），C++ / Python / 暴力三方 **300/300 一致**。
 - **最大约束性能**：$n=5\cdot10^4$ 的链状树（最坏深度），C++ 端到端约 14 ms、Python 约 51 ms，内存 < 10 MB。
 - **图片校验**：两张 SVG（`cf34d_reroot.svg`、`cf34d_walkthrough.svg`）均通过 `xml.etree.ElementTree.parse`；用脚本估算每个 `text` 的包围盒，确认不越出 viewBox、文字互不重叠；并用 headless Chrome 渲染 PNG 后检查画布四边无墨迹（无裁切）。
 - **公式校验**：公式均为 `$...$`，星号直接写 `*`，`\text{}` 内无裸 `#`，KaTeX（`throwOnError`）渲染无报错。

@@ -211,7 +211,7 @@ main()
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`（`/usr/bin/g++` 是 clang 软链），没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
 - **官方样例**：2 / 2 通过（`YES`、`NO`），C++ 与 Python 输出一致，且与 JSON 中的 `out` 逐字符相同。
-- **独立暴力对拍**：暴力（`codeforces/tools/checkers/cf17a.py`）完全不建表：对 $[2,n]$ 的每个素数 $p$，枚举所有相邻素数对并直接判断 $q_i+q_{i+1}+1=p$，复杂度 $O(\pi(n)^2)$。随机生成 **300 组**输入（$n$ 取 $2\sim1000$，$k$ 覆盖 $0$、小值、全域与临界值），C++ / Python / 暴力三方 **300/300 一致**。
+- **独立暴力对拍**：暴力（`codeforces/tools/brutes/cf17a.py`）完全不建表：对 $[2,n]$ 的每个素数 $p$，枚举所有相邻素数对并直接判断 $q_i+q_{i+1}+1=p$，复杂度 $O(\pi(n)^2)$。随机生成 **300 组**输入（$n$ 取 $2\sim1000$，$k$ 覆盖 $0$、小值、全域与临界值），C++ / Python / 暴力三方 **300/300 一致**。
 - **边界用例**：$k=0$、$n=2$、$n=3$、$n=27$、$n=45$、$k=1000$ 等手写用例均与预期一致。
 - **最大约束性能**：$n=1000,k=1000$（最坏统计量），C++ 端到端约 2.4 ms，Python 约 18 ms，内存 < 2 MB，相对 2 s / 64 MB 余量极大。
 - **图片校验**：两张 SVG（`cf17a_flow.svg`、`cf17a_walkthrough.svg`）均通过 `xml.etree.ElementTree.parse`；用脚本估算每个 `text` 的包围盒，确认不越出 viewBox、文字之间不重叠；并用 headless Chrome 渲染 PNG 后检查画布四边无墨迹（无裁切）。

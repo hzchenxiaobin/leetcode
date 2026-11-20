@@ -182,7 +182,7 @@ main()
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`（`/usr/bin/g++` 是 clang 软链），没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
 - **官方样例**：3 / 3 通过（`YES`、`NO`、`YES`），C++ 与 Python 一致，且与 JSON 的 `out` 逐字符相同。
-- **独立暴力对拍**：暴力（`codeforces/tools/checkers/cf47a.py`）用判别式 $8n+1$ 是否完全平方来判定——与参考解的"枚举 $k$"是完全不同的算法。随机生成 **300 组**输入（一半取自真实三角数，一半在 $1..500$ 内全随机），C++ / Python / 暴力三方 **300/300 一致**。
+- **独立暴力对拍**：暴力（`codeforces/tools/brutes/cf47a.py`）用判别式 $8n+1$ 是否完全平方来判定——与参考解的"枚举 $k$"是完全不同的算法。随机生成 **300 组**输入（一半取自真实三角数，一半在 $1..500$ 内全随机），C++ / Python / 暴力三方 **300/300 一致**。
 - **穷举对拍**：对 $n=1..500$ 的**全部** 500 个输入，两版输出也全部与判别式结果一致（等价于完整覆盖了值域）。
 - **最大约束性能**：$n=500$，C++ 端到端约 2 ms，Python 约 16 ms，内存 < 2 MB。
 - **图片校验**：两张 SVG（`cf47a_triangles.svg`、`cf47a_walkthrough.svg`）均通过 `xml.etree.ElementTree.parse`；用脚本估算每个 `text` 的包围盒，确认不越出 viewBox、文字互不重叠；并用 headless Chrome 渲染 PNG 后检查画布四边无墨迹（无裁切）。
