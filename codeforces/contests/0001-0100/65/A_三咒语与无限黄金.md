@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/65/A
-- **比赛来源**：Codeforces Beta Round 60 · Problem A（UTC 2011-03-06）
+- **比赛来源**：Codeforces Beta Round 60 · Problem A（UTC 2011-03-05）
 - **难度**：1800
 - **标签**：实现、数学（比例与循环放大）、分类讨论
 - **评测类型**：普通
@@ -325,7 +325,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机无 GNU `g++`，`codeforces/tools/verify_solution.py` 自动用 `clang++ -std=c++17 -O2` 搭配仓库内的 `bits/stdc++.h` 兼容头编译；Python 为 `Python 3.9.6`。
-- **官方样例**：7 / 7 通过（`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/65/65A_三咒语与无限黄金.md`），C++ 与 Python 输出一致。
+- **官方样例**：7 / 7 通过（`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/65/A_三咒语与无限黄金.md`），C++ 与 Python 输出一致。
 - **额外测试与独立校验**：把题意写成三变量线性规划「存在 $u \ge 0$ 使 $Mu \ge 0$ 且 $d u_2 - e u_3 > 0$」（$M$ 的行是 $(-a,0,f)$、$(b,-c,0)$、$(0,d,-e)$），用**精确有理数**（`fractions.Fraction`）在归一化单纯形上枚举全部顶点求最优值，得到与本题完全独立的判定；再与提交代码的判定逐组比较：$0 \le a,\dots,f \le 6$ 的 **117 649 组**全枚举 + $2400$ 组边界/随机数据（系数取自 $\{0,1,2,3,999,1000\}$ 与 $[0,1000]$ 均匀随机），**零处不一致**。
 - **最大约束性能**：输入 `1000 1000 1000 1000 1000 1000` 时，C++ 端到端（含进程启动）约 $3 \sim 6$ ms，峰值内存 $1.5$ MB；相对 2 s / 256 MB 的余量在百倍以上。
 - **图片校验**：三张 SVG（`cf65a_three_spells.svg`、`cf65a_zero_cases.svg`、`cf65a_sample1_loop.svg`）均通过 `xml.etree.ElementTree.parse`，含 `feTurbulence` 抖动滤镜与手写字体，文字块逐个核对未越出 `viewBox`。

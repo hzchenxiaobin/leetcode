@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/65/C
-- **比赛来源**：Codeforces Beta Round 60 · Problem C（UTC 2011-03-06）
+- **比赛来源**：Codeforces Beta Round 60 · Problem C（UTC 2011-03-05）
 - **难度**：2100
 - **标签**：二分、几何（三维距离）、数值精度
 - **评测类型**：特殊评测（实数比较，绝对/相对误差 $10^{-6}$）
@@ -350,8 +350,8 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机无 GNU `g++`，用 `clang++ -std=c++17 -O2` 搭配仓库内 `bits/stdc++.h` 兼容头；Python 为 `Python 3.9.6`。
-- **官方样例**：3 / 3 通过（`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/65/65C_拦截金色飞贼.md --checker /tmp/cf_verify_65_C/checker.py`），C++ 输出与样例逐字相同（含 10 位小数）。
-- **校验器**：`/tmp/cf_verify_65_C/checker.py`。校验条件：① 输出 `NO` 时用独立参考（逐段二次不等式的 Python 实现）确认确实追不上；② 输出 `YES` 时要求恰好 `YES / t / X Y Z` 三行；时刻与独立参考的最早时刻相差不超过 $10^{-6}$（相对）；给出的点必须落在时刻 $t$ 对应的折线位置上（误差 $10^{-6}$）；且 $|P - \text{点}| \le v_p t + 10^{-6}$。已用官方样例、本文输出与 3 组人为构造的「偏晚 / 点不在轨迹上 / 点跑不到」的非法输出验证（正例 6 次通过，反例 3 次全部拒绝）。
+- **官方样例**：3 / 3 通过（`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/65/C_拦截金色飞贼.md --checker codeforces/tools/checkers/cf65c.py`），C++ 输出与样例逐字相同（含 10 位小数）。
+- **校验器**：`codeforces/tools/checkers/cf65c.py`。校验条件：① 输出 `NO` 时用独立参考（逐段二次不等式的 Python 实现）确认确实追不上；② 输出 `YES` 时要求恰好 `YES / t / X Y Z` 三行；时刻与独立参考的最早时刻相差不超过 $10^{-6}$（相对）；给出的点必须落在时刻 $t$ 对应的折线位置上（误差 $10^{-6}$）；且 $|P - \text{点}| \le v_p t + 10^{-6}$。已用官方样例、本文输出与 3 组人为构造的「偏晚 / 点不在轨迹上 / 点跑不到」的非法输出验证（正例 6 次通过，反例 3 次全部拒绝）。
 - **独立验证**：另写两份独立参考。其一是 **60 位十进制高精度**（`decimal.Decimal`）的同款逐段解析解，用来确认 `double` 版本的数值稳定性；其二是**不依赖二次代数**的暴力：在 $[0,T]$ 上以 $2 \times 10^5$ 个采样点找第一个 $g \le 0$ 的位置，再在该小区间内二分 80 次。对 **160 组**随机小规模数据（$n \le 5$、坐标 $\in [-5,5]$、$v_s \le v_p$ 随机、含 $P$ 与起点重合、$v_p = v_s$ 的共线追及等退化情形）三方比对：**判定（YES/NO）与最早时刻全部一致**（C++/Python 两版也逐位一致，误差 $< 10^{-9}$）。另对 $v_p = v_s$ 且 $P$ 与起点重合的构造数据单独验证过：输出 $t = 0$ 而非偏晚值。
 - **最大约束性能**：$n = 10^4$、坐标随机游走的最大数据，C++ 端到端约 $0.06$ s、Python 约 $0.04$ s（均含进程启动）；相对 2 s 时限余量充足，内存占用 $< 5$ MB。
 - **图片校验**：三张 SVG 均通过 `xml.etree.ElementTree.parse`，含 `feTurbulence` 抖动滤镜与手写字体，文字块逐个核对未越出 `viewBox`。
