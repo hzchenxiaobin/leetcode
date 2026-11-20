@@ -324,10 +324,10 @@ pending → drafting → sample_passed → verified → review_passed → publis
 | 项目 | 状态 |
 | --- | --- |
 | 快照范围 | 2164 场已结束比赛；2030 场有题面映射；11526 个题位 |
-| 已发布正文 | 600 篇（另有 17 项 blocked，不计入） |
-| 比赛覆盖率 | 93 / 2030（全部题位都已有正文的比赛数） |
-| 题位覆盖率 | 600 / 11526（5.21%） |
-| M1 进度 | #1–#100 共 505 个题位，已完成 304（60.2%） |
+| 已发布正文 | 646 篇（另有 17 项 blocked，不计入） |
+| 比赛覆盖率 | 102 / 2030（全部题位都已有正文的比赛数） |
+| 题位覆盖率 | 646 / 11526（5.60%） |
+| M1 进度 | #1–#100 共 505 个题位，已完成 350（69.3%） |
 | 题面来源 | Codeforces 主站题面页对脚本 403，统一走洛谷镜像缓存（`tools/fetch_problem.py`，样例与 CF 原页一致）；**格式与约束以 `outputFormat.en` 等英文原文为准，中文翻译可能截断** |
 | 代码验证 | 本机无 GNU g++，用 `clang++ -std=c++17 -O2` + 仓库内 `bits/stdc++.h` 兼容头；提交代码仍是标准 GNU C++17 |
 | 样例比对 | `tools/verify_solution.py` 默认按 Codeforces 标准 checker 的 token 比对；构造/交互/多解题用 `--checker`；题面写明文件输入输出的自动切到临时目录读写 `input.txt`/`output.txt` |
@@ -340,4 +340,4 @@ pending → drafting → sample_passed → verified → review_passed → publis
 
 阻塞项一览（详细原因见清单）：`8/E`、`10/E`、`30/E`、`38/F`、`39/G`、`39/I`、`39/K`、`40/A`、`42/C`、`42/E`、`44/F`、`45/F`、`46/G`、`48/H`、`57/D`、`57/E`、`2237/I2`。
 
-下一步：继续按开赛时间推进 M1（#1–#100，剩余 201 个题位），每批 3–5 题/子代理，批末跑 `check.py` + `check_samples.py` + `verify_solution.py` + `update_progress.py` 并提交；遇到题面语义不明或性能不达标的题目按 blocked 记录，不写半成品。
+下一步：继续按开赛时间推进 M1（#1–#100，剩余 155 个题位），每批 3–5 题/子代理，批末跑 `check.py` + `check_samples.py` + `verify_solution.py` + `update_progress.py` 并提交；遇到题面语义不明或性能不达标的题目按 blocked 记录，不写半成品。
