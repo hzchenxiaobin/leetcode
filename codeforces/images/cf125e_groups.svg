@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="440" viewBox="0 0 780 440"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="73"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arr125e2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#555"/>
+    </marker>
+  </defs>
+  <rect width="780" height="440" fill="#fafafa"/>
+
+  <text x="390" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">λ0 下定好后就按「同权分组」处理：每组能贡献的首都边数是一个区间</text>
+  <path d="M 60 42 Q 390 50 720 42" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <!-- 轴 -->
+  <line x1="60" y1="96" x2="720" y2="96" stroke="#555" stroke-width="1.4" marker-end="url(#arr125e2)" filter="url(#rough2)"/>
+  <text x="716" y="86" text-anchor="end" font-size="12.5" fill="#555" filter="url(#rough2)">W = w + λ0·[首都边] 升序</text>
+
+  <!-- 四个组 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="108" width="140" height="70" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.4"/>
+    <text x="150" y="130" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f4a66">第 1 组</text>
+    <text x="150" y="150" text-anchor="middle" font-size="12" fill="#2f4a66">首都边条数 [1, 3]</text>
+    <text x="150" y="170" text-anchor="middle" font-size="12" fill="#8b3a37">取 c₁ = 2</text>
+
+    <rect x="240" y="108" width="140" height="70" rx="8" fill="#e9f5e6" stroke="#4a7a3a" stroke-width="1.4"/>
+    <text x="310" y="130" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#2f5223">第 2 组</text>
+    <text x="310" y="150" text-anchor="middle" font-size="12" fill="#2f5223">首都边条数 [0, 2]</text>
+    <text x="310" y="170" text-anchor="middle" font-size="12" fill="#8b3a37">取 c₂ = 1</text>
+
+    <rect x="400" y="108" width="140" height="70" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4"/>
+    <text x="470" y="130" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8a6015">第 3 组</text>
+    <text x="470" y="150" text-anchor="middle" font-size="12" fill="#8a6015">首都边条数 [2, 2]</text>
+    <text x="470" y="170" text-anchor="middle" font-size="12" fill="#8b3a37">取 c₃ = 2</text>
+
+    <rect x="560" y="108" width="140" height="70" rx="8" fill="#fdecea" stroke="#b85450" stroke-width="1.4"/>
+    <text x="630" y="130" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#8b3a37">第 4 组</text>
+    <text x="630" y="150" text-anchor="middle" font-size="12" fill="#8b3a37">首都边条数 [1, 4]</text>
+    <text x="630" y="170" text-anchor="middle" font-size="12" fill="#8b3a37">取 c₄ = 3</text>
+  </g>
+
+  <!-- 组内构造 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="200" width="620" height="96" rx="9" fill="#ffffff" stroke="#888" stroke-width="1.2"/>
+    <text x="96" y="224" font-size="13" font-weight="bold" fill="#2b2b2b">组内怎么凑出恰好 c_g 条首都边</text>
+    <text x="96" y="248" font-size="12.5" fill="#2b2b2b">① 先按「非首都边优先」跑一遍，得到本组最少首都边的最大森林（a_g 条），这是起点；</text>
+    <text x="96" y="270" font-size="12.5" fill="#2b2b2b">② 再按「首都边优先」跑一遍，得到最多的版本（b_g 条）；两个森林大小相同、连出的分量也相同；</text>
+    <text x="96" y="292" font-size="12.5" fill="#2b2b2b">③ 从 a_g 出发，反复做「等权交换」：加入一条 b_g 版里有、当前没有的首都边，在它形成的环上删掉一条</text>
+  </g>
+  <text x="96" y="316" font-size="12.5" fill="#8a6015" filter="url(#rough2)">　　当前森林里有、而 b_g 版里没有的边（优先删非首都边）。每交换一次首都边 +1，走到 c_g 停手。</text>
+
+  <!-- 配额分配 -->
+  <g filter="url(#rough2)">
+    <rect x="80" y="336" width="620" height="90" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <text x="96" y="360" font-size="13" font-weight="bold" fill="#8a6015">总量怎么分：所有组独立，所以可达的总条数是各区间之和</text>
+    <text x="96" y="382" font-size="12.5" fill="#2b2b2b">先去掉每组的下限：need = k − Σa_g；再从左到右给第 g 组加</text>
+    <text x="96" y="404" font-size="12.5" fill="#2b2b2b">extra_g = min(b_g − a_g, 剩下的 need)，于是 Σ(a_g + extra_g) = k 且每组都落在自己的区间里。</text>
+  </g>
+
+  <text x="390" y="440" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">为什么组与组独立：跑完一组后，「哪些点被连在一起」与组内选择顺序无关，只由这组全部边决定。</text>
+</svg>
