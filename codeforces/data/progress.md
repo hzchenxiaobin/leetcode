@@ -3,7 +3,7 @@
 - 快照时间：2026-11-19T22:17:49+0800
 - 已结束比赛（contest.list）：2164，其中有题面映射：2030，无映射（ICPC/IOI 镜像等）：134
 - 原始题位：11526；唯一题目：11526
-- 报告生成时间：2026-11-21 05:22
+- 报告生成时间：2026-11-21 05:30
 
 ## 覆盖率
 
@@ -14,7 +14,7 @@
 | 唯一题解覆盖率 | 960 / 11526（8.33%） |
 | 验证覆盖率 | 960 / 960（100.00%） |
 | 复核覆盖率 | 630 / 960（65.62%） |
-| blocked | 76 |
+| blocked | 86 |
 
 > 复核统计口径：`published` 表示通过独立复核流程（`check.py` + `check_samples.py` + `verify_solution.py` 三项自动检查，并抽读正文）。有人工复核记录（另一位撰写者逐条核对证明/样例/性能）的篇目见 `data/reviews.md`。
 
@@ -134,6 +134,16 @@
 - `153/E` Euclidean Distance：外部原因：contest 153 是「Surprise Language Round 5」，洛谷镜像只提供了部分题面（缓存里只有 CF153C/CF153D 与两个异常编号 CF1531B1/CF1531B2，A/B/E 全部 401），官方题面本身也以"奇怪语言"形式给出（输出契约与常规题不同）。缺样例与输出契约无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
 - `154/E` Martian Colony：3000 分「Martian Colony」：已推出结构——半径 $r$ 的发电机圆盘包含建筑集 $K$ ⟺ 圆心落在 $C=\bigcap_i D(p_i,r)$；最小保护区 = 对 $C$ 中所有圆心取交 $R=\bigcap_{c\in C}D(c,r)$。样例 1（直角边 6、8 的三角形外接圆半径恰为 5=r）验证了这层：$C$ 退化为单个外心，答案 $25\pi$ ✓。卡点在第二层：$R$ 的边界由"以 $C$ 的边界点为中心、半径 $r$ 的圆弧"拼成，需求 $C$（等半径圆盘之交）再做一次圆盘包络/对偶，并用 $S+rP+\pi r^2$ 型公式算到 $10^{-4}$；涉及两层曲边凸集的支撑函数与弧段拼接，还要处理 $C$ 为空/单点/线段/弧交一点等退化。本轮只完成归约与样例自洽性，未把弧段拼接分类与面积公式做到"可证明 + 可对拍"。下一步：先写独立的 $O(n^2)$ 数值 oracle（含圆弧-圆弧交点）再反推闭式。
 - `156/E` Mrs. Hudson's Pancakes：3000 分「Mrs. Hudson's Pancakes」：给定 $n$ 缸香料价格 $a_i\le10^{18}$ 与 $m$ 个配方 $(d_i,s_i,c_i)$，对每个配方求"所有在 $d_i$ 进制下匹配模式 $s_i$ 的缸号之积 $+c_i$"的最小质因子（$>100$ 输出 −1）。已识别结构：只需判 $z_i \bmod p$（$p\le100$ 的 25 个素数）是否为零 ⟺ 至少一个被选缸号 $a_j\equiv0\pmod p$，故问题化为"按 $p$ 分类的模式匹配计数"，可对每个 $d$ 与模式做数位 DP/按位容斥。卡点：$d$ 与模式随查询变化（$m\le3\times10^4$、模式长 30、进制 2..16），要为每个查询在 $O(|s|\cdot\mathrm{poly}(d))$ 内算出"匹配缸号在模 $p$ 各剩余类的数量"，需对 25 个 $p$ 分别做"数字自动机 + 模 $p$ 余数"的乘积 DP，并对 $n=10^4$ 个缸号预处理；$d=2$、长 30 时状态达 $2^{30}$，必须只保留 $\le n$ 的前缀路径，还要处理前导零与逐 $p$ 代入。本轮只完成归约，未把 DP 表推到可证明、可对拍。下一步：先写 $O(nd)$ 暴力 oracle（$n\le200$）验证小规模，再设计按 $\le n$ 截断的自动机 DP。
+- `162/A` Pentagonal numbers：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/B` Binary notation：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/C` Prime factorization：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/D` Remove digits：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/E` HQ9+：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/F` Factorial zeros：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/G` Non-decimal sum：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/H` Alternating case：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/I` Truncatable primes：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `162/J` Brackets：外部原因：contest 162 是「VK Cup 2012 Wild-card Round 1」（10 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153 同一类"Special/Unknown Language"场次现象），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
 - `2237/I2` DBFS Order (Hard Version)：3500 分；官方 editorial 的 Tutorial 正文被隐藏/Cloudflare 拦截，submission 源码亦 403，强制的颜色 1 的容斥 DP 未推导出可验证版本
 
 ## 下一批（按开赛时间从旧到新）
