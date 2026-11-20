@@ -379,9 +379,9 @@ main()
 
 - **编译环境与命令**：`verify_solution.py` 用 `clang++ -std=c++17 -O2` + 仓库兼容头 `bits/stdc++.h`（本机 `/usr/bin/g++` 是 Apple clang 软链）；Python 为 `/usr/bin/python3`。样例比对用 `--checker`，因为本题多解。
 - **官方样例**：4 / 4 通过（checker 模式）。命令
-  `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/70/C_幸运车票最少发行.md --checker /tmp/cf_verify_70/checker_c.py`
+  `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/70/C_幸运车票最少发行.md --checker codeforces/tools/checkers/cf70c.py`
   输出 `CF70C: samples 4 / C++ 编译 OK, 样例 4/4 / Python 语法 OK, 样例 4/4`。
-- **checker 的校验条件**（`/tmp/cf_verify_70/checker_c.py`）：读入 $(\text{max}_x,\text{max}_y,w)$ 与选手输出；用**定义**（逐对判断 $a b=\operatorname{rev}(a)\operatorname{rev}(b)$）建二维前缀和，独立求出最小面积。
+- **checker 的校验条件**（`codeforces/tools/checkers/cf70c.py`）：读入 $(\text{max}_x,\text{max}_y,w)$ 与选手输出；用**定义**（逐对判断 $a b=\operatorname{rev}(a)\operatorname{rev}(b)$）建二维前缀和，独立求出最小面积。
   1. 若"无解"，选手必须输出单个 `-1`；
   2. 否则输出必须是两个整数 $x,y$，满足 $1\le x\le \text{max}_x$、$1\le y\le \text{max}_y$；
   3. 该矩形内按定义数出的幸运票数 $\ge w$；
