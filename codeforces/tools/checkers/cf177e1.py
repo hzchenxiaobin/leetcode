@@ -19,6 +19,30 @@ def recompute(n, c, a, b):
         return -1 if c == n else 0
     bmax = max(b)
     limit = bmax * (c + 1) + 2
+    if limit > 5000000:
+        # 兜底（正常不该走到）：E1 的 30 分档里 limit <= 10102，
+        # 若被误用于满分档数据，改用公式 + 二分，避免 checker 自身跑不完。
+        def days(x):
+            return n + sum(a[i] * x // b[i] for i in range(n))
+
+        def first_at_least(target):
+            hi = 1
+            while days(hi) < target:
+                hi *= 2
+            lo = 1
+            while lo < hi:
+                mid = (lo + hi) // 2
+                if days(mid) >= target:
+                    hi = mid
+                else:
+                    lo = mid + 1
+            return lo
+
+        left = first_at_least(c)
+        if days(left) != c:
+            return 0
+        return first_at_least(c + 1) - left
+
     ans = 0
     x = 1
     while x <= limit:
