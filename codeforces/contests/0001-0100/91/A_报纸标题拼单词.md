@@ -72,7 +72,7 @@ $$\texttt{nxt}[|s_1|][c] = -1,\qquad \texttt{nxt}[i] = \texttt{nxt}[i+1]\ \text{
 
 ### 3.4 样例走查
 
-![样例 2 的匹配过程](../../../images/cf91a_next.svg)
+对照 3.2 节那张 next 表示意图：
 
 $s_1 = \texttt{abcd}$，`nxt` 表给出：`pos=0` 时 `nxt[0][d] = 3` → 匹配 `d` 后 `pos = 4`；下一个字符 `a`：`nxt[4][a] = -1` → 换第 2 份，`pos = nxt[0][a]+1 = 1`；`b`：`nxt[1][b] = 1 → pos = 2`；`c`：`nxt[2][c] = 2 → pos = 3`。共 $2$ 份。
 
