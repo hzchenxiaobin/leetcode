@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="340" viewBox="0 0 760 340"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="497"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+      <path d="M0,0 L8,3.5 L0,7 z" fill="#8a6015"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="340" fill="#fafafa"/>
+
+  <text x="380" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">D：n 位密码太长，折半枚举（meet in the middle）</text>
+  <path d="M 140 40 Q 380 45 620 40" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <rect x="60" y="62" width="300" height="30" rx="6" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="210" y="82" text-anchor="middle" font-size="11" fill="#2f4a66" filter="url(#rough2)">左半：位置 0..k−1（k = 17）</text>
+  <rect x="364" y="62" width="300" height="30" rx="6" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="514" y="82" text-anchor="middle" font-size="11" fill="#2f5223" filter="url(#rough2)">右半：位置 k..n−1（最多 18 位）</text>
+  <text x="210" y="106" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">2^17 = 131072 种</text>
+  <text x="514" y="106" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">2^18 = 262144 种</text>
+
+  <rect x="60" y="120" width="300" height="96" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="72" y="142" font-size="10.5" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">对每种左半赋值 L 算出向量</text>
+  <text x="72" y="164" font-size="10.5" fill="#3c5e88" filter="url(#rough2)">a(L) =（与 s1 相符位数, …）</text>
+  <text x="72" y="186" font-size="10.5" fill="#3c5e88" filter="url(#rough2)">需要右半提供 c_i − a_i(L) 位</text>
+  <text x="72" y="208" font-size="10" fill="#8c3a36" filter="url(#rough2)">若某个差值 &lt;0 或 &gt;右半长度 ⇒ 丢弃</text>
+
+  <rect x="364" y="120" width="300" height="96" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="376" y="142" font-size="10.5" font-weight="bold" fill="#2f5223" filter="url(#rough2)">对每种右半赋值 R 算出向量</text>
+  <text x="376" y="164" font-size="10.5" fill="#3c5e2e" filter="url(#rough2)">b(R) =（与 s1 相符位数, …）</text>
+  <text x="376" y="186" font-size="10.5" fill="#3c5e2e" filter="url(#rough2)">把 b(R) 编码成一个整数 key 存进哈希表</text>
+  <text x="376" y="208" font-size="10.5" fill="#3c5e2e" filter="url(#rough2)">key 每段 6 位（位数 ≤ 35 ⇒ 6 位足够）</text>
+
+  <line x1="360" y1="168" x2="364" y2="168" stroke="#8a6015" stroke-width="1.2" filter="url(#rough2)"/>
+  <line x1="210" y1="228" x2="210" y2="252" stroke="#8a6015" stroke-width="1.5" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <line x1="514" y1="228" x2="514" y2="252" stroke="#8a6015" stroke-width="1.5" marker-end="url(#arrb)" filter="url(#rough2)"/>
+
+  <rect x="120" y="256" width="500" height="66" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="132" y="280" font-size="11.5" font-weight="bold" fill="#8a6015" filter="url(#rough2)">答案 = Σ_L hash[ c − a(L) ]</text>
+  <text x="132" y="304" font-size="10.5" fill="#7a5a1b" filter="url(#rough2)">两个半边的相符位数相加恰为 c_i，等价于整串与 s_i 恰有 c_i 位相同。</text>
+
+  <text x="380" y="332" text-anchor="middle" font-size="10" fill="#777" filter="url(#rough2)">复杂度 O(2^(n/2) · m)，n ≤ 35、m ≤ 10 时约 400 万次操作；答案 ≤ C(35,5) = 324632。</text>
+</svg>

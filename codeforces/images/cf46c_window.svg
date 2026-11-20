@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="410" viewBox="0 0 780 410"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1301"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr46c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#8c3b37"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="410" fill="#fafafa"/>
+  <text x="390" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">环形窗口：长度等于仓鼠数 h，在环上滑一圈</text>
+
+  <!-- 环形排列 -->
+  <circle cx="250" cy="210" r="110" fill="none" stroke="#7a8ca6" stroke-width="1.4" filter="url(#rough2)"/>
+  <circle cx="250" cy="100" r="16" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="250" y="105" text-anchor="middle" font-size="11" fill="#204a1e" filter="url(#rough2)">H</text>
+  <circle cx="315" cy="130" r="16" fill="#ffd9b3" stroke="#b06a2c" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="315" y="135" text-anchor="middle" font-size="11" fill="#8a4a14" filter="url(#rough2)">T</text>
+  <circle cx="345" cy="190" r="16" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="345" y="195" text-anchor="middle" font-size="11" fill="#204a1e" filter="url(#rough2)">H</text>
+  <circle cx="330" cy="260" r="16" fill="#ffd9b3" stroke="#b06a2c" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="330" y="265" text-anchor="middle" font-size="11" fill="#8a4a14" filter="url(#rough2)">T</text>
+  <circle cx="270" cy="305" r="16" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="270" y="310" text-anchor="middle" font-size="11" fill="#204a1e" filter="url(#rough2)">H</text>
+  <circle cx="195" cy="302" r="16" fill="#ffd9b3" stroke="#b06a2c" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="195" y="307" text-anchor="middle" font-size="11" fill="#8a4a14" filter="url(#rough2)">T</text>
+  <circle cx="150" cy="250" r="16" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="150" y="255" text-anchor="middle" font-size="11" fill="#204a1e" filter="url(#rough2)">H</text>
+  <circle cx="165" cy="175" r="16" fill="#ffd9b3" stroke="#b06a2c" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="165" y="180" text-anchor="middle" font-size="11" fill="#8a4a14" filter="url(#rough2)">T</text>
+
+  <!-- 高亮窗口 -->
+  <path d="M 250 100 A 110 110 0 0 1 345 190" stroke="#8c3b37" stroke-width="5" fill="none" opacity="0.55" filter="url(#rough2)"/>
+  <text x="330" y="88" font-size="10" fill="#8c3b37" filter="url(#rough2)">窗口（h 个位置）</text>
+
+  <!-- 线性化 -->
+  <text x="470" y="96" font-size="11" fill="#446688" filter="url(#rough2)">把环拆成两倍长的串：</text>
+  <rect x="470" y="110" width="270" height="40" rx="6" fill="#eef4ff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="480" y="136" font-size="11" fill="#23405c" filter="url(#rough2)">H T H T H T H H T | H T H T ...</text>
+
+  <text x="470" y="180" font-size="10.5" fill="#555" filter="url(#rough2)">每个起点 s ∈ [0,n) 对应一个环形窗口，</text>
+  <text x="470" y="200" font-size="10.5" fill="#555" filter="url(#rough2)">窗口就是复制串上的 [s, s+h)。</text>
+  <text x="470" y="226" font-size="10.5" fill="#8c3b37" filter="url(#rough2)">答案 = h − 窗口内 H 数的最大值。</text>
+
+  <!-- 滑动更新 -->
+  <rect x="470" y="248" width="270" height="92" rx="8" fill="#fff8e1" stroke="#d6a040"
+        stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="482" y="270" font-size="10.5" fill="#8a6015" filter="url(#rough2)">右移一格：</text>
+  <text x="482" y="290" font-size="10.5" fill="#8a6015" filter="url(#rough2)">减 s[(i−1) mod n]</text>
+  <text x="482" y="310" font-size="10.5" fill="#8a6015" filter="url(#rough2)">加 s[(i+h−1) mod n]</text>
+  <text x="482" y="330" font-size="10.5" fill="#8a6015" filter="url(#rough2)">每步 O(1)，总 O(n)。</text>
+
+  <text x="40" y="370" font-size="10.5" fill="#666" filter="url(#rough2)">最终形态一定是"某个连续 h 个位置全是 H"；窗口内已有 c 个 H，就还需要 h−c 次交换。</text>
+  <text x="40" y="392" font-size="10.5" fill="#8c3b37" filter="url(#rough2)">每次交换最多让窗口内 H 数 +1（把一个窗外 H 换一个窗内 T），所以 h−max c 就是下界且可达。</text>
+</svg>

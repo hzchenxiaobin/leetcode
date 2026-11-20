@@ -156,19 +156,23 @@ def main():
                 result['cpp']['error'] = err
             else:
                 ok = 0
-                for i, s in enumerate(samples):
-                    if fileio:
-                        out, ms, rc = run_file_io(exe, s['in'], a.timeout, wd)
-                    else:
-                        out, ms, rc = run(exe, s['in'], a.timeout)
-                    result['max_ms'] = max(result['max_ms'], round(ms))
+                for i, smp in enumerate(samples):
+                    # 并行跑批时单次耗时会受干扰，取 3 次中的最小值作为该样例的耗时
+                    best_ms, out = None, ''
+                    for _ in range(3):
+                        if fileio:
+                            out, ms, rc = run_file_io(exe, smp['in'], a.timeout, wd)
+                        else:
+                            out, ms, rc = run(exe, smp['in'], a.timeout)
+                        best_ms = ms if best_ms is None else min(best_ms, ms)
+                    result['max_ms'] = max(result['max_ms'], round(best_ms))
                     if a.checker:
                         ip = os.path.join(wd, 'in.txt'); op = os.path.join(wd, 'out.txt')
                         open(ip, 'w').write(s['in']); open(op, 'w').write(out)
                         good = subprocess.run([sys.executable, a.checker, ip, op, '/dev/stdin'],
                                               input=s['out'], capture_output=True, text=True).returncode == 0
                     else:
-                        good = norm(out, a.compare) == norm(s['out'], a.compare)
+                        good = norm(out, a.compare) == norm(smp['out'], a.compare)
                     if good:
                         ok += 1
                     else:
@@ -205,7 +209,7 @@ def main():
                         good = subprocess.run([sys.executable, a.checker, ip, op, '/dev/stdin'],
                                               input=s['out'], capture_output=True, text=True).returncode == 0
                     else:
-                        good = norm(out, a.compare) == norm(s['out'], a.compare)
+                        good = norm(out, a.compare) == norm(smp['out'], a.compare)
                     ok += good
                 result['py_ok'] = ok
 

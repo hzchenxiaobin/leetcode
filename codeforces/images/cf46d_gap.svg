@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="410" viewBox="0 0 780 410"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1401"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr46d" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#8c3b37"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="410" fill="#fafafa"/>
+  <text x="390" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">空隙与约束：后车距 b、前车距 f，最早可停位置是 e + b</text>
+
+  <!-- 停车带 -->
+  <line x1="60" y1="150" x2="720" y2="150" stroke="#7a8ca6" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="726" y="154" font-size="10" fill="#777" filter="url(#rough2)">x</text>
+  <text x="60" y="176" font-size="10" fill="#777" filter="url(#rough2)">0</text>
+  <text x="700" y="176" font-size="10" fill="#777" filter="url(#rough2)">L</text>
+
+  <!-- 后车 -->
+  <rect x="120" y="128" width="150" height="44" rx="6" fill="#dbe7fb" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="195" y="155" text-anchor="middle" font-size="11" fill="#23405c" filter="url(#rough2)">后车（结束于 e）</text>
+
+  <!-- 前车 -->
+  <rect x="450" y="128" width="150" height="44" rx="6" fill="#ffd9b3" stroke="#b06a2c" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="525" y="155" text-anchor="middle" font-size="11" fill="#8a4a14" filter="url(#rough2)">前车（开始于 s）</text>
+
+  <!-- 距离标注 -->
+  <line x1="270" y1="150" x2="330" y2="150" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arr46d)" filter="url(#rough2)"/>
+  <text x="300" y="142" text-anchor="middle" font-size="10" fill="#c0392b" filter="url(#rough2)">b</text>
+  <line x1="450" y1="150" x2="410" y2="150" stroke="#c0392b" stroke-width="1.6" marker-end="url(#arr46d)" filter="url(#rough2)"/>
+  <text x="430" y="142" text-anchor="middle" font-size="10" fill="#c0392b" filter="url(#rough2)">f</text>
+
+  <!-- 新车 -->
+  <rect x="330" y="112" width="80" height="76" rx="6" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="2" filter="url(#rough2)"/>
+  <text x="370" y="156" text-anchor="middle" font-size="11" fill="#204a1e" filter="url(#rough2)">新车 ℓ</text>
+
+  <text x="330" y="106" font-size="10" fill="#2f5223" filter="url(#rough2)">x = e + b</text>
+
+  <!-- 条件 -->
+  <rect x="60" y="200" width="660" height="70" rx="9" fill="#eef4ff" stroke="#446688"
+        stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="76" y="226" font-size="12" fill="#23405c" filter="url(#rough2)">左边缘（没有后车）：x = 0，只需 0 + ℓ ≤ s − f（没有前车时只需 ℓ ≤ L）</text>
+  <text x="76" y="250" font-size="12" fill="#23405c" filter="url(#rough2)">空隙 (e, s)：x = e + b 可行 ⟺ e + b + ℓ ≤ s − f</text>
+
+  <!-- 候选扫描 -->
+  <rect x="60" y="286" width="660" height="100" rx="9" fill="#fff8e1" stroke="#d6a040"
+        stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="76" y="310" font-size="11" fill="#8a6015" filter="url(#rough2)">候选按坐标递增：0（左边缘）→ e₁+b → e₂+b → … → e_last+b（右边缘）</text>
+  <text x="76" y="332" font-size="11" fill="#8a6015" filter="url(#rough2)">第一个满足条件的候选就是全局最早的停车位置（贪心正确）。</text>
+  <text x="76" y="354" font-size="11" fill="#8c3b37" filter="url(#rough2)">相邻两车之间必须留出 ≥ b + f：后面的车留 f，前面的车留 b，两个约束叠加。</text>
+  <text x="76" y="374" font-size="11" fill="#8c3b37" filter="url(#rough2)">删除一辆车后，两侧空隙自动合并，不需要额外操作。</text>
+</svg>

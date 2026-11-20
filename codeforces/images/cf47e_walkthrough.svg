@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="330" viewBox="0 0 760 330"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="511"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="760" height="330" fill="#fafafa"/>
+
+  <text x="380" y="28" text-anchor="middle" font-size="17.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">E：样例 1 —— 两发炮弹，一发放空、一发卡墙</text>
+  <path d="M 150 38 Q 380 43 610 38" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <rect x="40" y="58" width="336" height="110" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="52" y="80" font-size="11" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">炮弹 1：α = 0.7853（u ≈ 1）</text>
+  <text x="52" y="102" font-size="10.5" fill="#3c5e88" filter="url(#rough2)">墙 x=4：y = 2.432 &gt; 2.4 ⇒ 从顶上飞过</text>
+  <text x="52" y="122" font-size="10.5" fill="#3c5e88" filter="url(#rough2)">墙 x=5：y = 2.549 ≤ 5 ⇒ 卡在墙上</text>
+  <text x="52" y="142" font-size="10.5" fill="#3c5e88" filter="url(#rough2)">墙 x=6：已停下，不再考虑</text>
+  <text x="52" y="160" font-size="10.5" fill="#2f4a66" filter="url(#rough2)">输出 5.000000000 2.549499369</text>
+
+  <rect x="392" y="58" width="330" height="110" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="404" y="80" font-size="11" font-weight="bold" fill="#2f5223" filter="url(#rough2)">炮弹 2：α = 0.3（u ≈ 0.309）</text>
+  <text x="404" y="102" font-size="10.5" fill="#3c5e2e" filter="url(#rough2)">墙 x=4：y = 0.378 ≤ 2.4 ⇒ 卡住</text>
+  <text x="404" y="122" font-size="10.5" fill="#3c5e2e" filter="url(#rough2)">（它是按 x 排序后第一堵满足条件的墙）</text>
+  <text x="404" y="142" font-size="10.5" fill="#2f5223" filter="url(#rough2)">输出 4.000000000 0.378324889</text>
+  <text x="404" y="160" font-size="10" fill="#777" filter="url(#rough2)">与样例完全一致</text>
+
+  <rect x="40" y="182" width="682" height="64" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="52" y="206" font-size="11" fill="#8a6015" filter="url(#rough2)">做法：把所有墙按 x 升序排列（同一个 x 只留最高的）。对每堵墙，算出“会撞上它的 u 区间”，</text>
+  <text x="52" y="228" font-size="11" fill="#8a6015" filter="url(#rough2)">把落在区间里、且还没被更左边的墙拦下的炮弹一次性删掉，记下它们的落点 (x, y(x))。每发只删一次。</text>
+
+  <rect x="40" y="256" width="682" height="60" rx="10" fill="#fdeceb" stroke="#b85450" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="52" y="280" font-size="11" fill="#8c3a36" filter="url(#rough2)">精度：double 足够（要求 1e-4）。判定“是否撞上”时用闭区间，端点取 1e-12 的容差——</text>
+  <text x="52" y="302" font-size="11" fill="#8c3a36" filter="url(#rough2)">题面明确说“恰好打在墙顶也算卡住”，所以边界必须算进去，不能写成严格小于。</text>
+</svg>

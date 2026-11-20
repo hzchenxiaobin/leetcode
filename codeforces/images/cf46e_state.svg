@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="410" viewBox="0 0 780 410"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1501"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr46e" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="410" fill="#fafafa"/>
+  <text x="390" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">状态 dp[i][k]：第 i 行选 k 个；转移取上一行的前缀/后缀最大值</text>
+
+  <!-- 三行 -->
+  <rect x="60" y="70" width="200" height="44" rx="8" fill="#dbe7fb" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="160" y="97" text-anchor="middle" font-size="11" fill="#23405c" filter="url(#rough2)">第 1 行：dp[1][k]（峰）</text>
+
+  <rect x="300" y="70" width="200" height="44" rx="8" fill="#ffd9b3" stroke="#b06a2c" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="400" y="97" text-anchor="middle" font-size="11" fill="#8a4a14" filter="url(#rough2)">第 2 行（谷）</text>
+
+  <rect x="540" y="70" width="200" height="44" rx="8" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="640" y="97" text-anchor="middle" font-size="11" fill="#204a1e" filter="url(#rough2)">第 3 行（峰）</text>
+
+  <!-- 转移箭头 -->
+  <path d="M 260 92 L 296 92" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr46e)" filter="url(#rough2)"/>
+  <path d="M 500 92 L 536 92" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr46e)" filter="url(#rough2)"/>
+
+  <!-- 公式 -->
+  <rect x="60" y="140" width="660" height="80" rx="9" fill="#eef4ff" stroke="#446688"
+        stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="76" y="166" font-size="11.5" fill="#23405c" filter="url(#rough2)">谷（第 2 行）：c₂ &lt; c₁　→　dp[2][k] = P₂[k] + max_{j &gt; k} dp[1][j]</text>
+  <text x="76" y="192" font-size="11.5" fill="#23405c" filter="url(#rough2)">峰（第 3 行）：c₃ &gt; c₂　→　dp[3][k] = P₃[k] + max_{j &lt; k} dp[2][j]</text>
+  <text x="76" y="214" font-size="11" fill="#8c3b37" filter="url(#rough2)">前缀最大值 pre[k] = max_{j ≤ k} dp[j]；后缀最大值 suf[k] = max_{j ≥ k} dp[j]，均 O(m) 预处理。</text>
+
+  <!-- 示意条 -->
+  <text x="60" y="248" font-size="11" fill="#555" filter="url(#rough2)">对第 2 行（谷），k 越小可用的 j 越多：</text>
+  <rect x="60" y="262" width="660" height="34" rx="6" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.1" filter="url(#rough2)"/>
+  <text x="76" y="284" font-size="10.5" fill="#446688" filter="url(#rough2)">k = 1 → j ∈ {2..m}　　　k = 2 → j ∈ {3..m}　　…　　k = m−1 → j = m　　　k = m → 无解</text>
+
+  <text x="60" y="330" font-size="11" fill="#555" filter="url(#rough2)">对第 3 行（峰），k 越大可用的 j 越多：</text>
+  <rect x="60" y="344" width="660" height="34" rx="6" fill="#ffffff" stroke="#c9c9c9" stroke-width="1.1" filter="url(#rough2)"/>
+  <text x="76" y="366" font-size="10.5" fill="#446688" filter="url(#rough2)">k = 2 → j = 1　　　k = 3 → j ∈ {1,2}　　…　　k = m → j ∈ {1..m−1}　　　k = 1 → 无解</text>
+
+  <text x="60" y="400" font-size="10.5" fill="#8c3b37" filter="url(#rough2)">每行只依赖上一行，滚动数组 O(m) 空间；总时间 O(nm)。</text>
+</svg>
