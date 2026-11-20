@@ -195,7 +195,7 @@ main()
 - **编译环境与命令**：本机无 GNU `g++`，用 `Apple clang 21.0.0` + 仓库自带 `codeforces/tools/include/bits/stdc++.h` 兼容头（`clang++ -std=c++17 -O2 -I codeforces/tools/include`）编译；Python 为 `Python 3.9.6`。
 - **官方样例**：3 / 3 通过（`12:00` → `0 0`，`04:30` → `135 180`，`08:17` → `248.5 102`），C++ 与 Python 输出一致。
 - **额外测试**：对**全部** $24 \times 60 = 1440$ 个合法时刻跑两个实现，并用"浮点复算 + 范围检查（$0 \le x,y < 360$）"的独立判据校验每个输出的数值与格式，1440 组全部一致且合法。
-- **最大约束性能**：`23:59` 时 C++ 端到端 30 次平均约 $2.3$ ms，Python 约 $14$ ms；相对 1 s 时限余量在 400 倍以上。
+- **最大约束性能**：`23:59` 时 C++ 端到端 15 次平均 $2.33$ ms，Python $14.84$ ms；相对 1 s 时限余量在 60 倍以上。
 - **图片校验**：两张 SVG（`cf80b_clock.svg`、`cf80b_flow.svg`）通过 `xml.etree.ElementTree.parse`，文本块估算未越出 `viewBox`。
 - **公式校验**：KaTeX（`throwOnError: true`）渲染无报错。
 - **复核状态**：verified。

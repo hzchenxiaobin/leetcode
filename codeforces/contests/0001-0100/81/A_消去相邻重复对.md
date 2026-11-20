@@ -139,7 +139,7 @@ a
 
 - **时间**：$O(|s|)$。每个字符最多被压栈一次、弹栈一次，均摊 $O(1)$；$|s| = 2 \times 10^5$ 时约 $4 \times 10^5$ 次操作，实测 C++ 端到端约 $2.5$ ms。
 - **空间**：$O(|s|)$ 的栈（最坏情况全部压栈，如 `abcabc...`）。
-- **与时限的关系**：1 s 对 $2 \times 10^5$ 的线性算法余量在 300 倍以上；Python 版本约 $15$ ms。
+- **与时限的关系**：1 s 对 $2 \times 10^5$ 的线性算法余量在 30 倍以上（见第 8 节的实测分解：本机 iostream 读 200 KB 就占约 $29$ ms，算法本体只有约 $1.2$ ms）。
 
 ## 6. 参考代码
 
@@ -207,7 +207,7 @@ main()
 - **编译环境与命令**：本机无 GNU `g++`，用 `Apple clang 21.0.0` + 仓库自带 `codeforces/tools/include/bits/stdc++.h` 兼容头（`clang++ -std=c++17 -O2 -I codeforces/tools/include`）编译；Python 为 `Python 3.9.6`。
 - **官方样例**：3 / 3 通过（`hhoowaaaareyyoouu` → `wre`，`reallazy` → `rezy`，`abacabaabacabaa` → `a`）。
 - **额外测试（对拍）**：另写"反复全串扫描删除相邻对直到不再变化"的**朴素暴力**（$O(|s|^2)$，与栈完全不同的实现路径），对 400 组随机字符串（长度 $1 \sim 14$，字母表大小 $1 \sim 3$，并包含大量连锁删除的构造）与 C++、Python 两个实现三方比对，**400 / 400 全部一致**。
-- **最大约束性能**：构造 $|s| = 2 \times 10^5$ 的输入（形如 `abab...` 与大量可消对两种极端），C++ 端到端 30 次平均约 $2.5$ ms，Python 约 $15$ ms；相对 1 s 时限余量在 300 倍以上。
+- **最大约束性能**：构造 $|s| = 2 \times 10^5$ 的输入（`ab` 随机交替，输出几乎不缩短），C++ 端到端 15 次平均 $32.0$ ms、Python $28.9$ ms。用插桩计时拆开看：`getline` 读入 $29.2$ ms、栈消去本体 $1.15$ ms、输出 $0.01$ ms——本机只有 libc++，其 iostream 逐字符路径约 $7$ MB/s（同为 $200$ KB 的 `fread` 只需 $0.04$ ms），所以本地测得的绝大部分是 I/O 开销；相对 1 s 时限仍有 30 倍以上余量。
 - **图片校验**：两张 SVG（`cf81a_stack.svg`、`cf81a_cases.svg`）通过 `xml.etree.ElementTree.parse`，文本块估算未越出 `viewBox`。
 - **公式校验**：KaTeX（`throwOnError: true`）渲染无报错。
 - **复核状态**：verified。
