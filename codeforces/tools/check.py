@@ -22,6 +22,18 @@ VERIFY_RE = re.compile(r'^## (?:8|9)\. 验证记录\s*$', re.M)
 def check_doc(path):
     errs, warns = [], []
     src = open(path, encoding='utf-8').read()
+    # 别名页（同一道题的另一个题位）只保留链接与元信息，不写正文
+    if '<!-- alias-page -->' in src:
+        h1 = next((l for l in src.splitlines() if l.startswith('# ')), '')
+        if not re.match(r'# Codeforces \d+[A-Za-z0-9]+ .+ 题解\s*$', h1):
+            errs.append(f'H1 格式: {h1!r}')
+        if 'codeforces.com/problemset/problem/' not in src:
+            errs.append('别名页缺题目链接')
+        if '## 题目信息' not in src:
+            errs.append('别名页缺「## 题目信息」')
+        if not re.search(r'\]\([^)]+\.md\)', src) and '](/contests/' not in src:
+            errs.append('别名页缺指向正文的链接')
+        return errs, warns
     h1 = next((l for l in src.splitlines() if l.startswith('# ')), '')
     m = re.match(r'# Codeforces (\d+)([A-Za-z0-9]+) .+ 题解\s*$', h1)
     if not m:

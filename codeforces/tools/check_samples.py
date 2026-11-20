@@ -74,6 +74,8 @@ def main():
         if only and only not in doc:
             continue
         src = open(doc, encoding='utf-8').read()
+        if '<!-- alias-page -->' in src:
+            continue
         m = H1.search(src)
         if not m:
             continue
