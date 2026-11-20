@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="400" viewBox="0 0 740 400"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="601"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="w1" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="740" height="400" fill="#fafafa"/>
+
+  <text x="370" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">三层盘子：水只沿 6 个面流动（上下 + 四个侧向）</text>
+  <path d="M 130 40 Q 370 46 610 40" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <!-- 水龙头 -->
+  <rect x="196" y="52" width="46" height="12" rx="4" fill="#8fb3d9" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <path d="M 219 64 L 219 96" stroke="#446688" stroke-width="2.6" marker-end="url(#w1)" filter="url(#rough2)"/>
+  <text x="252" y="82" font-size="11.5" fill="#2b4a68" filter="url(#rough2)">每分钟 1 个单位水，从第一层 (x,y) 落下</text>
+
+  <!-- 三层 -->
+  <g filter="url(#rough2)">
+    <polygon points="150,110 330,110 390,150 210,150" fill="#eef3f8" stroke="#446688" stroke-width="1.8"/>
+    <polygon points="150,150 330,150 390,190 210,190" fill="#eef3f8" stroke="#446688" stroke-width="1.8"/>
+    <polygon points="150,190 330,190 390,230 210,230" fill="#eef3f8" stroke="#446688" stroke-width="1.8"/>
+  </g>
+  <text x="318" y="128" font-size="12" font-weight="bold" fill="#2b4a68" filter="url(#rough2)">第 1 层（顶）</text>
+  <text x="318" y="168" font-size="12" font-weight="bold" fill="#2b4a68" filter="url(#rough2)">第 2 层</text>
+  <text x="318" y="208" font-size="12" font-weight="bold" fill="#2b4a68" filter="url(#rough2)">第 3 层（底）</text>
+
+  <!-- 流动箭头 -->
+  <path d="M 240 128 L 240 166" stroke="#b85450" stroke-width="1.8" marker-end="url(#w1)" filter="url(#rough2)"/>
+  <path d="M 240 168 L 240 206" stroke="#b85450" stroke-width="1.8" marker-end="url(#w1)" filter="url(#rough2)"/>
+  <path d="M 268 176 L 300 176" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#w1)" filter="url(#rough2)"/>
+  <path d="M 214 176 L 186 176" stroke="#4a7a3a" stroke-width="1.8" marker-end="url(#w1)" filter="url(#rough2)"/>
+
+  <text x="452" y="120" font-size="12" font-weight="bold" fill="#8c3a37" filter="url(#rough2)">上下：层与层之间</text>
+  <text x="452" y="140" font-size="11.5" fill="#8c3a37" filter="url(#rough2)">只有正下方/正上方的格子相连</text>
+  <text x="452" y="172" font-size="12" font-weight="bold" fill="#2f5223" filter="url(#rough2)">侧向：同一层内前后左右</text>
+  <text x="452" y="192" font-size="11.5" fill="#2f5223" filter="url(#rough2)">斜对角不算连通</text>
+  <text x="452" y="224" font-size="12" font-weight="bold" fill="#8a6015" filter="url(#rough2)">障碍 '#' 挡水，' . ' 才能进水</text>
+
+  <!-- 结论 -->
+  <rect x="60" y="268" width="620" height="110" rx="8" fill="#f4f8ee" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="292" font-size="12.5" font-weight="bold" fill="#2f5223" filter="url(#rough2)">为什么答案 = 能到达的空格数：</text>
+  <text x="76" y="314" font-size="11.5" fill="#3c5e2e" filter="url(#rough2)">水不可压缩，每秒落进 1 个单位；只要某格与进水口 6-连通，水早晚会灌满它，</text>
+  <text x="76" y="334" font-size="11.5" fill="#3c5e2e" filter="url(#rough2)">而被 '#' 完全围住、与进水口不连通的空格永远不会被灌到（样例 4、5 都有这种格子）。</text>
+  <text x="76" y="356" font-size="11.5" fill="#3c5e2e" filter="url(#rough2)">所以"盘子刚好灌满"的时刻 = 连通的空格个数（含起点），一次 BFS/DFS 即可。</text>
+</svg>
