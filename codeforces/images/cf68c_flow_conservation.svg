@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="440" viewBox="0 0 720 440"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="9"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="fl" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#446688"/>
+    </marker>
+    <marker id="fl2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#bbbbbb"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="440" fill="#fafafa"/>
+  <text x="360" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">按编号从左到右分配：每个节点的入流是唯一的状态</text>
+  <path d="M 130 40 Q 360 46 590 40" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <!-- 节点 -->
+  <g filter="url(#rough2)">
+    <circle cx="90" cy="230" r="26" fill="#e8f0fe" stroke="#446688" stroke-width="1.8"/>
+    <text x="90" y="236" text-anchor="middle" font-size="16" font-weight="bold" fill="#2f4a66">1</text>
+    <circle cx="330" cy="120" r="26" fill="#e6f4ea" stroke="#2f7a3a" stroke-width="1.8"/>
+    <text x="330" y="126" text-anchor="middle" font-size="16" font-weight="bold" fill="#1f5226">2</text>
+    <circle cx="330" cy="340" r="26" fill="#e6f4ea" stroke="#2f7a3a" stroke-width="1.8"/>
+    <text x="330" y="346" text-anchor="middle" font-size="16" font-weight="bold" fill="#1f5226">3</text>
+    <circle cx="580" cy="230" r="26" fill="#fdecea" stroke="#b85450" stroke-width="1.8"/>
+    <text x="580" y="236" text-anchor="middle" font-size="16" font-weight="bold" fill="#8c2f2b">4</text>
+  </g>
+
+  <!-- 外部注入 -->
+  <line x1="20" y1="230" x2="60" y2="230" stroke="#8a6015" stroke-width="2" marker-end="url(#fl)" filter="url(#rough2)"/>
+  <text x="18" y="212" font-size="12" font-weight="bold" fill="#8a6015" filter="url(#rough2)">F = 2</text>
+  <text x="18" y="256" font-size="10.5" fill="#8a6015" filter="url(#rough2)">可任意注入</text>
+  <line x1="610" y1="230" x2="660" y2="230" stroke="#8a6015" stroke-width="2" marker-end="url(#fl)" filter="url(#rough2)"/>
+  <text x="626" y="212" font-size="12" font-weight="bold" fill="#8a6015" filter="url(#rough2)">F = 2</text>
+  <text x="618" y="256" font-size="10.5" fill="#8a6015" filter="url(#rough2)">进调速器</text>
+
+  <!-- 边与流量 -->
+  <g filter="url(#rough2)" stroke="#446688" stroke-width="1.8" fill="none">
+    <line x1="114" y1="216" x2="304" y2="134" marker-end="url(#fl)"/>
+    <line x1="115" y1="246" x2="304" y2="326" marker-end="url(#fl)"/>
+    <line x1="352" y1="142" x2="558" y2="212" marker-end="url(#fl)"/>
+    <line x1="352" y1="318" x2="558" y2="248" marker-end="url(#fl)"/>
+    <line x1="330" y1="146" x2="330" y2="314" marker-end="url(#fl)"/>
+  </g>
+  <g filter="url(#rough2)" stroke="#c8c8c8" stroke-width="1.6" fill="none" stroke-dasharray="5 5">
+    <line x1="110" y1="230" x2="554" y2="230" marker-end="url(#fl2)"/>
+  </g>
+
+  <g filter="url(#rough2)" font-size="12" font-weight="bold" fill="#2f4a66">
+    <text x="196" y="158">c₁₂ = 1</text>
+    <text x="196" y="318">c₁₃ = 1</text>
+    <text x="424" y="166">c₂₄ = 0</text>
+    <text x="424" y="306">c₃₄ = 2</text>
+    <text x="340" y="238">c₂₃ = 1</text>
+    <text x="300" y="214" fill="#999999">c₁₄ = 0</text>
+  </g>
+
+  <!-- 守恒标注 -->
+  <rect x="378" y="70" width="300" height="86" rx="10" fill="#e6f4ea" stroke="#2f7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="392" y="96" font-size="12" font-weight="bold" fill="#1f5226" filter="url(#rough2)">节点 2：入 1 = 出 (1 + 0)</text>
+  <text x="392" y="120" font-size="12" font-weight="bold" fill="#1f5226" filter="url(#rough2)">节点 3：入 (1 + 1) = 出 2</text>
+  <text x="392" y="144" font-size="12" font-weight="bold" fill="#1f5226" filter="url(#rough2)">节点 4：入 (0 + 0 + 2) = F</text>
+
+  <!-- 费用 -->
+  <rect x="60" y="384" width="600" height="42" rx="8" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="76" y="403" font-size="11.5" fill="#8a6015" filter="url(#rough2)">费用 = Σ(cᵢⱼ &gt; 0)(aᵢⱼ + cᵢⱼ²) = (1+1) + (1+1) + (6+1) + (0+4) = 15</text>
+  <text x="76" y="421" font-size="11.5" fill="#8a6015" filter="url(#rough2)">流量为 0 的 (1,4)、(2,4) 不收费</text>
+
+  <text x="60" y="378" font-size="11.5" fill="#555" filter="url(#rough2)">处理到节点 3 时，1→3 与 2→3 都已确定 ⇒ 入流 2 已知，只需把它拆给 (3,4)</text>
+</svg>

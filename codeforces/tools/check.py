@@ -23,6 +23,11 @@ def check_doc(path):
     errs, warns = [], []
     src = open(path, encoding='utf-8').read()
     # 别名页（同一道题的另一个题位）只保留链接与元信息，不写正文
+    # 文件名必须是「<题号>_<题名>.md」，不能写成 65A_xxx（会让站点把题号显示成 65A）
+    base = os.path.basename(path)
+    mh = re.match(r'# Codeforces (\d+)([A-Za-z0-9]+) ', src)
+    if mh and not base.startswith(mh.group(2) + '_'):
+        errs.append(f'文件名应以题号 {mh.group(2)}_ 开头，实际为 {base}')
     if '<!-- alias-page -->' in src:
         h1 = next((l for l in src.splitlines() if l.startswith('# ')), '')
         if not re.match(r'# Codeforces \d+[A-Za-z0-9]+ .+ 题解\s*$', h1):
