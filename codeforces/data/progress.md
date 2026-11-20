@@ -14,7 +14,7 @@
 | 唯一题解覆盖率 | 672 / 11526（5.83%） |
 | 验证覆盖率 | 672 / 672（100.00%） |
 | 复核覆盖率 | 342 / 672（50.89%） |
-| blocked | 17 |
+| blocked | 35 |
 
 > 复核统计口径：`published` 表示通过独立复核流程（`check.py` + `check_samples.py` + `verify_solution.py` 三项自动检查，并抽读正文）。有人工复核记录（另一位撰写者逐条核对证明/样例/性能）的篇目见 `data/reviews.md`。
 
@@ -75,6 +75,24 @@
 - `48/H` Black and White：2800 分「Black and White」：题面用图片给出 6 种 1×1 瓷砖的"朝向 ↔ 接触边颜色"语义，该图片（cdn.luogu.com.cn/...png）在当前环境取不到；中文题面里被转义打散的 4 个 ASCII 图案 + 2 个样例不足以唯一确定 6 种瓷砖的边色对应，猜错即全盘皆错。下一步：拿到图片/英文原版瓷砖图或一份 AC 输出片段后再构造 + checker。
 - `57/D` Journey：2500 分「Journey」：带障碍的成对最短路和。已验证 dist=曼哈顿+2·[无单调路径]（δ 只取 0/2，>108 万对核对），正确判定需"每行可达区间 [L,M]"的 DP；但要在 O(nm) 内可验证地统计被隔开的点对数，"L 被 X 列掐住""m-1 列延迟起链""窄走廊"三类修正项耦合，未能得到可证明的闭式计数（逐点 DP 为 1e9 会超时）。下一步：需 editorial 的按行聚合计数方法。
 - `57/E` Chess：3000 分「Chess」：需"近原点 BFS + 远处骑士距离闭式计数"，删格会让边界 O(k) 个格子的距离整体后移 2，缺乏可验证的平移处理；样例已用 BFS 复现（9/9/1/109），但 k≤1e18 的计数无法保证正确。下一步：确认边界平移的精确条件后再补。
+- `64/A` Factorial：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `64/B` Expression：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `64/C` Table：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `64/D` Presents：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `64/E` Prime Segment：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `64/F` Domain：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `64/G` Path Canonization：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `64/H` Table Bowling：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `64/I` Sort the Table：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/A` Goshtasp, Vishtasp and Eidi：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/B` INI-file：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/C` Extraordinarily Nice Numbers：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/D` Perse-script：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/E` Ali goes shopping：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/F` Oil：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/G` Fibonacci army：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/H` Reverse It!：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
+- `72/I` Goofy Numbers：外部原因：洛谷镜像对该题面持续返回 401（CF64x「Unknown Language Round 1」与 CF72x 均取不到），Codeforces 原页 403、hydro/qoj/vjudge 也都被反爬拦截，因此拿不到官方样例与输出契约，无法做「样例+对拍」的可验证交付。下一步：镜像恢复或人工提供题面/样例后再补；不凭记忆写题面。
 - `2237/I2` DBFS Order (Hard Version)：3500 分；官方 editorial 的 Tutorial 正文被隐藏/Cloudflare 拦截，submission 源码亦 403，强制的颜色 1 的容斥 DP 未推导出可验证版本
 
 ## 下一批（按开赛时间从旧到新）
@@ -88,6 +106,6 @@
 - `40/C` Berland Square（2300）
 - `40/D` Interesting Sequence（2600）
 - `40/E` Number Table（2500）
-- `64/A` Factorial（1300）
-- `64/B` Expression（1500）
-- `64/C` Table（1600）
+- `80/A` Panoramix's Prediction（800）
+- `80/B` Depression（1200）
+- `81/A` Plug-in（1400）
