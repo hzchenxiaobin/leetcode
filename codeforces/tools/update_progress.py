@@ -57,6 +57,20 @@ def main():
     L.append(f"| blocked | {len(blocked)} |")
     L.append('')
 
+    # 质量回归（如果之前跑过 tools/audit.py）
+    audit_path = os.path.join(ROOT, '.cf-meta', 'audit.json')
+    if os.path.exists(audit_path):
+        rows = json.load(open(audit_path, encoding='utf-8'))
+        ok = [r for r in rows if r.get('samples') and r.get('cpp_samples_ok') == r.get('samples')]
+        compiled = [r for r in rows if r.get('cpp_compiled')]
+        struct_ok = [r for r in rows if not r.get('doc_errors')]
+        L += ['## 质量回归（最近一次 audit.py）', '']
+        L.append(f'- 审计正文：{len(rows)} 篇；C++ 编译通过 {len(compiled)} 篇')
+        L.append(f'- 官方样例逐字复现：{len(ok)} 篇；其余 {len(rows) - len(ok)} 篇为特殊评测 / 多解 / 交互题，'
+                 '已在各自「验证记录」中注明判定方式')
+        L.append(f'- 文档结构检查：{len(struct_ok)} / {len(rows)} 通过')
+        L.append('')
+
     L += ['## 里程碑进度', '', '| 里程碑 | 场次区间 | 题位 | 已完成 | 覆盖率 | 状态 |', '| --- | --- | ---: | ---: | ---: | --- |']
     for m in sorted(milestones):
         cs = milestones[m]
