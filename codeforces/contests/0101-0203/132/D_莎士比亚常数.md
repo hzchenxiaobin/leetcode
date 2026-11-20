@@ -251,7 +251,7 @@ main()
 
 - **编译环境与命令**：`clang++ -std=c++17 -O2`（配 `codeforces/tools/include/bits/stdc++.h` 兼容头）；Python 3.9.6。
   `python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/132/D_莎士比亚常数.md --checker codeforces/tools/checkers/cf132d.py`
-- **checker 的校验条件**（`codeforces/tools/checkers/cf132d.py`，本题答案不唯一）：① 第一行 $m$ 与后面行数一致、每行匹配 `^[+-]2\^(\d+)$`；② 各项按符号求和（Python 大整数精确计算）必须等于 $n$；③ $m$ 必须等于最小项数——checker 用**独立的「低位到高位 + 进位状态 DP」**求出（与题解的贪心是两套写法）。
+- **checker 的校验条件**（`codeforces/tools/checkers/cf132d.py`，本题答案不唯一）：① 第一行 $m$ 与后面行数一致、每行都形如 `+2^x` 或 `-2^x`；② 各项按符号求和（Python 大整数精确计算）必须等于 $n$；③ $m$ 必须等于最小项数——checker 用**独立的「低位到高位 + 进位状态 DP」**求出（与题解的贪心是两套写法）。
 - **官方样例**：$2/2$ 通过 checker（样例 1 输出与官方完全一致；样例 2 输出 4 项、和等于 83、项数最优）。
 - **穷举对拍**：对 $n=1..499$ 的每个值，用 **BFS**（把整数当结点、每次加减 $2^k$，边权 1）独立求出最少项数，与程序输出比对，$499$ 组全部一致（项数、求和、格式都检查）。
 - **大规模**：随机 $1000/10^5/10^6$ 位的输入，程序分别耗时 0.003 s / 0.021 s / 0.187 s，输出均通过 checker（$10^6$ 位时约 33 万项）。
