@@ -3,18 +3,18 @@
 - 快照时间：2026-11-19T22:17:49+0800
 - 已结束比赛（contest.list）：2164，其中有题面映射：2030，无映射（ICPC/IOI 镜像等）：134
 - 原始题位：11526；唯一题目：11526
-- 报告生成时间：2026-11-21 02:08
+- 报告生成时间：2026-11-21 02:12
 
 ## 覆盖率
 
 | 指标 | 数值 |
 | --- | --- |
-| 比赛覆盖率 | 121 / 2030（5.96%） |
-| 题位覆盖率 | 730 / 11526（6.33%） |
-| 唯一题解覆盖率 | 730 / 11526（6.33%） |
-| 验证覆盖率 | 730 / 730（100.00%） |
-| 复核覆盖率 | 400 / 730（54.79%） |
-| blocked | 41 |
+| 比赛覆盖率 | 122 / 2030（6.01%） |
+| 题位覆盖率 | 732 / 11526（6.35%） |
+| 唯一题解覆盖率 | 732 / 11526（6.35%） |
+| 验证覆盖率 | 732 / 732（100.00%） |
+| 复核覆盖率 | 402 / 732（54.92%） |
+| blocked | 51 |
 
 > 复核统计口径：`published` 表示通过独立复核流程（`check.py` + `check_samples.py` + `verify_solution.py` 三项自动检查，并抽读正文）。有人工复核记录（另一位撰写者逐条核对证明/样例/性能）的篇目见 `data/reviews.md`。
 
@@ -22,7 +22,7 @@
 
 | 里程碑 | 场次区间 | 题位 | 已完成 | 覆盖率 | 状态 |
 | --- | --- | ---: | ---: | ---: | --- |
-| M1 | #1 – #100 | 505 | 434 | 85.94% | 🚧 进行中 |
+| M1 | #1 – #100 | 505 | 436 | 86.34% | 🚧 进行中 |
 | M2 | #101 – #203 | 452 | 0 | 0.00% | ⬜ 未开始 |
 | M3 | #207 – #305 | 425 | 0 | 0.00% | ⬜ 未开始 |
 | M4 | #311 – #411 | 434 | 0 | 0.00% | ⬜ 未开始 |
@@ -99,6 +99,16 @@
 - `93/C` Azembler：2500 分「Azembler」：要求 $n\le255$ 的最短 LEA 程序（以 26 个寄存器为约束、指令 `x+y`/`x+2y`/`4y`/`x+8y` 的最短算术电路），需带可采纳剪枝的 IDA*/状态搜索 + 最小性证明；本轮未实现出可验证的搜索。下一步：先写小 $n$ 全搜索定界，再做可采纳启发式。
 - `93/D` Flags：2500 分「Flags」：$L..R\le10^9$、按反转去重、四色 + 五条约束、模 $10^9+7$；需"最后两位颜色"转移矩阵快速幂，并单独处理回文串（Burnside 反转项）在 BWR/RWB 约束下的计数，本轮未完成回文侧推导与验证。
 - `93/E` Lostborn：2600 分「Lostborn」：$n\le10^{13}$、$k\le100$ 个两两互素 $a_i\le1000$，求不被任何 $a_i$ 整除的个数；朴素容斥 DFS 最坏有 1,969,863,757 个节点（实测），远超 2 s；缺 meet-in-the-middle 等可验证分解。下一步：按大小拆半 + 每半的整除掩码统计。
+- `100/A` Carpeting the Room：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/B` Friendly Numbers：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/C` A+B：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/D` World of Mouth：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/E` Lamps in a Line：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/F` Polynom：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/G` Name the album：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/H` Battleship：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/I` Rotation：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `100/J` Interval Coloring：外部原因：contest 100 是「Unknown Language Round 3」（10 题），洛谷镜像对这些题面持续 401/超时（与 CF64「Unknown Language Round 1」同一现象），Codeforces 原页 403，hydro/qoj 被反爬拦截；拿不到官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
 - `2237/I2` DBFS Order (Hard Version)：3500 分；官方 editorial 的 Tutorial 正文被隐藏/Cloudflare 拦截，submission 源码亦 403，强制的颜色 1 的容斥 DP 未推导出可验证版本
 
 ## 下一批（按开赛时间从旧到新）
