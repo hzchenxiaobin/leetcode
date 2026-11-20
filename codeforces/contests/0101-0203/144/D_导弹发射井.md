@@ -5,7 +5,7 @@
 - **题目链接**：https://codeforces.com/problemset/problem/144/D
 - **比赛来源**：Codeforces Round 103 (Div. 2) · Problem D（UTC 2012-01-18）
 - **难度**：1900
-- **标签**：图论、最短路（Dijkstra）、边的解析计数
+- **标签**：最短路、图论、数据结构
 - **评测类型**：普通
 - **限制**：时间 2 s / 内存 256 MB
 
