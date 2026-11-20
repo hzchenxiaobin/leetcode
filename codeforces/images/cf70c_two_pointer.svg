@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="400" viewBox="0 0 760 400"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="23"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#2b2b2b"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="400" fill="#fafafa"/>
+  <text x="380" y="30" text-anchor="middle" font-size="17.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">固定 x 求最小 y：cnt(x,y) 单调，所以边界是一条只降不升的阶梯</text>
+  <path d="M 90 40 Q 380 46 680 40" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <!-- 可行域（右上） -->
+  <path d="M 90 60 L 640 60 L 640 270 L 500 270 L 500 215 L 380 215 L 380 175 L 270 175 L 270 140 L 180 140 L 180 115 L 90 115 Z"
+        fill="#e6f4ea" stroke="none" filter="url(#rough2)"/>
+
+  <!-- 阶梯边界 -->
+  <path d="M 90 115 L 180 115 L 180 140 L 270 140 L 270 175 L 380 175 L 380 215 L 500 215 L 500 270 L 640 270"
+        fill="none" stroke="#b85450" stroke-width="2.2" filter="url(#rough2)"/>
+
+  <!-- 坐标轴 -->
+  <line x1="90" y1="330" x2="660" y2="330" stroke="#2b2b2b" stroke-width="1.6" marker-end="url(#ar2)" filter="url(#rough2)"/>
+  <line x1="90" y1="330" x2="90" y2="52" stroke="#2b2b2b" stroke-width="1.6" marker-end="url(#ar2)" filter="url(#rough2)"/>
+  <text x="668" y="334" font-size="12" fill="#2b2b2b" filter="url(#rough2)">x（series）</text>
+  <text x="62" y="50" font-size="12" fill="#2b2b2b" filter="url(#rough2)">y</text>
+
+  <!-- 标注 -->
+  <g font-size="11.5" fill="#2f4a66" filter="url(#rough2)">
+    <text x="100" y="106">y_1</text>
+    <text x="186" y="132">y_2</text>
+    <text x="276" y="167">y_3</text>
+    <text x="386" y="207">y_4</text>
+    <text x="506" y="262">y_5</text>
+    <text x="330" y="86" font-size="12" fill="#1f5226">可行域：cnt(x,y) ≥ w</text>
+    <text x="150" y="300" font-size="12" fill="#8c2f2b">不可行：cnt(x,y) &lt; w</text>
+  </g>
+
+  <!-- 箭头：x 前进时 y 下降 -->
+  <path d="M 190 128 Q 240 132 262 160" stroke="#446688" stroke-width="1.4" fill="none" stroke-dasharray="5 4" marker-end="url(#ar2)" filter="url(#rough2)"/>
+  <text x="150" y="152" font-size="11" fill="#2f4a66" filter="url(#rough2)">x 增大 → 最小可行 y 只减不增</text>
+
+  <!-- 右侧说明 -->
+  <rect x="420" y="70" width="310" height="120" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="436" y="94" font-size="12.5" font-weight="bold" fill="#8a6015" filter="url(#rough2)">维护 cnt = cnt(x, y)</text>
+  <text x="436" y="118" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">① 加入 a = x：cnt += 组内 b ≤ y 的个数</text>
+  <text x="436" y="140" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">② 降低 y：cnt -= A[key(y)]</text>
+  <text x="436" y="162" font-size="11" fill="#7a5a1b" filter="url(#rough2)">A[·] 是"a ≤ x 且配对组为 ·"的个数</text>
+  <text x="436" y="182" font-size="11" fill="#7a5a1b" filter="url(#rough2)">两个操作都是 O(log n) 或 O(1)</text>
+
+  <!-- 底部结论 -->
+  <rect x="30" y="344" width="700" height="44" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="46" y="364" font-size="12" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">对每个 x 得到最小可行 y 后，取 x·y 的最小值；若所有 x 都不可行（含 y 降到 0），输出 -1。</text>
+  <text x="46" y="382" font-size="11.5" fill="#2f4a66" filter="url(#rough2)">y 只会从 max_y 单调降到 1，故全部 x 扫描完，y 的总下降次数不超过 max_y。</text>
+</svg>

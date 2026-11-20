@@ -115,6 +115,7 @@ codeforces/
 | `audit.py` | 全量回归：逐篇编译 + 样例比对 + 文档结构，结果写 `.cf-meta/audit.json` |
 | `check.py` | 单篇/单场文档规范检查（章节、引理、∎、代码块、图片可解析、Python 语法、C++ 语法） |
 | `sync_paths.py` | 扫描正文目录，把真实路径与状态写回 `problems.json`；`--publish k1,k2` 把复核通过的题位置为 published |
+| `checkers/` | 题解配套的 checker（`cf<id><idx>.py`）；浮点答案通用件 `float.py`。**不要留 /tmp 路径** |
 | `update_progress.py` | 重算 `data/progress.md`（五项覆盖率 + 里程碑 + 阻塞项 + 下一批） |
 
 - Codeforces 主站题面页对脚本请求返回 403，题面与样例统一走 `fetch_problem.py` 的镜像缓存，不要凭记忆写"官方样例"。

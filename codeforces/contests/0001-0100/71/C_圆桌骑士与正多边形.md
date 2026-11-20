@@ -149,13 +149,59 @@ $$
 ### C++17
 
 ```cpp
-{{CPP}}
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    vector<int> a(n);
+    for (int i = 0; i < n; ++i) scanf("%d", &a[i]);
+    // 正多边形有 p 个顶点（p >= 3），顶点在圆上等距 => p 整除 n，步长为 n/p
+    for (int p = 3; p <= n; ++p) {
+        if (n % p) continue;
+        int step = n / p;
+        for (int r = 0; r < step; ++r) {
+            bool ok = true;
+            for (int j = 0; j < p; ++j)
+                if (!a[r + j * step]) {
+                    ok = false;
+                    break;
+                }
+            if (ok) {
+                printf("YES\n");
+                return 0;
+            }
+        }
+    }
+    printf("NO\n");
+    return 0;
+}
 ```
 
 ### Python3
 
 ```python
-{{PY}}
+import sys
+
+
+def main():
+    data = list(map(int, sys.stdin.read().split()))
+    n = data[0]
+    a = data[1:1 + n]
+    for p in range(3, n + 1):
+        if n % p:
+            continue
+        step = n // p
+        for r in range(step):
+            if all(a[r + j * step] for j in range(p)):
+                print("YES")
+                return
+    print("NO")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## 7. 边界情况与易错点
@@ -176,13 +222,15 @@ $$
   ```text
   python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/71/C_圆桌骑士与正多边形.md"
   CF71C: samples 3
-    C++ 编译 OK, 样例 3/3, 最慢 3 ms
+    C++ 编译 OK, 样例 3/3, 最慢 2 ms
     Python 语法 OK, 样例 3/3
   ```
 
+  上述毫秒数为单次运行结果（含进程启动），随机器负载有 ±1 ms 抖动。
+
 - **暴力对拍（300 组，全部实跑）**：独立暴力 `/tmp/cf_verify_71_C/brute.py` 换了枚举对象——它枚举"相邻两个好骑士 $(i,j)$"来确定步长 $d = (j-i) \bmod n$，再判断 $n \bmod d = 0$、$n/d \ge 3$，并绕行一圈验证同余类是否全好。它与正解读同一输入、各自输出，300 组随机数据（$n \in [3,40]$，好心情概率取 $0.2/0.5/0.8/1.0$ 四档，另有四成数据刻意植入某个同余类以制造 `YES`）逐组比对，**0 处不符**。
 - **自造边界用例**：$n=3$ 全好 / 有一个坏；$n=4$（只能取正四边形 $p=4$ 或退化情形）；$n=5$（素数，只能全好）；$n=6$ 的两组同余类；$n=10^5$ 全 $0$（最坏 `NO`）；$n=10^5$ 全 $1$（立即 `YES`），均与手算一致。
-- **最大约束性能**：$n = 10^5$ 全 $0$（必须穷尽所有约数）C++ 端到端 $20$ ms；全 $1$ 时 $11$ ms；随机数据 $19$ ms。均远低于 0.5 s 时限。
+- **最大约束性能**：$n = 10^5$ 全 $0$（必须穷尽所有约数）C++ 端到端 $8$ ms（多次运行 $7.7 \sim 8.7$ ms，含进程启动；若用 shell `time` 包裹再计一次，约 $20$ ms，多出的部分是 shell 开销）；全 $1$ 与随机数据同为 $8$ ms 左右。均远低于 0.5 s 时限。
 - **复核状态**：verified。
 
 ## 相关题目与扩展

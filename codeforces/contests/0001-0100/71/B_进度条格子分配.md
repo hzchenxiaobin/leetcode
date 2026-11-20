@@ -166,13 +166,42 @@ $$
 ### C++17
 
 ```cpp
-{{CPP}}
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n, k, t;
+    cin >> n >> k >> t;
+    // 界面上显示的总饱和量，向下取整：百分比不能超过 t%
+    int total = n * k * t / 100;
+    for (int i = 0; i < n; ++i) {
+        int v = total - i * k;
+        if (v < 0) v = 0;
+        if (v > k) v = k;
+        cout << v << (i + 1 == n ? '\n' : ' ');
+    }
+    return 0;
+}
 ```
 
 ### Python3
 
 ```python
-{{PY}}
+import sys
+
+
+def main():
+    n, k, t = map(int, sys.stdin.read().split())
+    total = n * k * t // 100
+    res = []
+    for i in range(n):
+        v = total - i * k
+        res.append(max(0, min(k, v)))
+    sys.stdout.write(" ".join(map(str, res)) + "\n")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## 7. 边界情况与易错点
@@ -193,9 +222,11 @@ $$
   ```text
   python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/71/B_进度条格子分配.md"
   CF71B: samples 2
-    C++ 编译 OK, 样例 2/2, 最慢 3 ms
+    C++ 编译 OK, 样例 2/2, 最慢 2 ms
     Python 语法 OK, 样例 2/2
   ```
+
+  上述毫秒数为单次运行结果（含进程启动），随机器负载有 ±1 ms 抖动。
 
 - **暴力对拍（300 组，全部实跑）**：独立暴力 `/tmp/cf_verify_71_B/brute.py` 换了一套完全不同的写法——直接枚举 $(i, a)$ 的所有合法显示，用不等式 $100 \cdot ((i-1)k+a) \le t \cdot n \cdot k$ 筛选，取总和最大者，再按"前 $i-1$ 格为 $k$、第 $i$ 格为 $a$、其余 $0$"直接拼出答案。它与正解读同一输入、各自输出。数据为 300 组随机 $(n,k,t)$（$n,k \in [1,100]$，$t \in [0,100]$），逐组比对 token 序列，**0 处不符**。
 - **自造边界用例**：$(1,1,0)$、$(1,1,100)$、$(1,100,50)$、$(100,100,0)$、$(100,100,100)$、$(3,7,50)$、$(11,13,37)$ 等，C++、Python、暴力三方一致。

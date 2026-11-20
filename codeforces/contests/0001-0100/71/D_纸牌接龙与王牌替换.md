@@ -203,13 +203,331 @@ $3\times3$ 方块"合法"的定义只有两条：九张牌**同花色**，或九
 ### C++17
 
 ```cpp
-{{CPP}}
+#include <bits/stdc++.h>
+using namespace std;
+
+const char *RANKS = "23456789TJQKA";
+const char *SUITS = "CDHS";
+
+int n, m;
+int g[17][17];                 // 0..51：普通牌（点数 * 4 + 花色）；52 + k：第 k 张王牌
+int jr[2], jc[2], jlabel[2];   // 王牌的坐标与输入中的编号（1 或 2）
+int jcnt = 0;
+bool onBoard[52];              // 该普通牌是否已经摆在桌面上
+vector<int> avail;             // 尚未摆出的普通牌
+int rankIdx[256], suitIdx[256];
+
+int rankOf(int id) { return id >> 2; }
+int suitOf(int id) { return id & 3; }
+
+string cardStr(int id) {
+    string s;
+    s += RANKS[rankOf(id)];
+    s += SUITS[suitOf(id)];
+    return s;
+}
+
+// 方块内全是普通牌时，判断是否「同花色」或「点数两两不同」
+bool squareValid(int r, int c) {
+    int suitMask = 0, rankMask = 0;
+    for (int i = r; i < r + 3; ++i)
+        for (int j = c; j < c + 3; ++j) {
+            suitMask |= 1 << suitOf(g[i][j]);
+            rankMask |= 1 << rankOf(g[i][j]);
+        }
+    return __builtin_popcount((unsigned)suitMask) == 1 ||
+           __builtin_popcount((unsigned)rankMask) == 9;
+}
+
+bool jokerInside(int k, int r, int c) {
+    return jr[k] >= r && jr[k] <= r + 2 && jc[k] >= c && jc[k] <= c + 2;
+}
+
+// 一个方块的可选「合法模式」：
+//   mode = -1：方块里没有王牌，且现在已经合法
+//   mode =  0：固定牌同花色，王牌补同花色的牌
+//   mode =  1：固定牌点数互异，王牌补未出现过的点数
+struct Option {
+    int mode;      // -1 / 0 / 1
+    int suit;      // mode 0 用
+    int rankMask;  // mode 1 用
+};
+
+vector<Option> optionsOf(int r, int c) {
+    int suitMask = 0, rankMask = 0, fixed = 0;
+    for (int i = r; i < r + 3; ++i)
+        for (int j = c; j < c + 3; ++j) {
+            if (g[i][j] >= 52) continue;
+            suitMask |= 1 << suitOf(g[i][j]);
+            rankMask |= 1 << rankOf(g[i][j]);
+            ++fixed;
+        }
+    vector<Option> res;
+    if (fixed == 9) {
+        if (__builtin_popcount((unsigned)suitMask) == 1 ||
+            __builtin_popcount((unsigned)rankMask) == 9)
+            res.push_back({-1, 0, 0});
+        return res;
+    }
+    if (__builtin_popcount((unsigned)suitMask) == 1)
+        res.push_back({0, __builtin_ctz((unsigned)suitMask), 0});
+    if (__builtin_popcount((unsigned)rankMask) == fixed)
+        res.push_back({1, 0, rankMask});
+    return res;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    for (int i = 0; i < 13; ++i) rankIdx[(int)RANKS[i]] = i;
+    for (int i = 0; i < 4; ++i) suitIdx[(int)SUITS[i]] = i;
+
+    cin >> n >> m;
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < m; ++j) {
+            string w;
+            cin >> w;
+            if (w[0] == 'J' && (w[1] == '1' || w[1] == '2')) {
+                g[i][j] = 52 + jcnt;
+                jr[jcnt] = i;
+                jc[jcnt] = j;
+                jlabel[jcnt] = w[1] - '0';
+                ++jcnt;
+            } else {
+                int id = rankIdx[(int)w[0]] * 4 + suitIdx[(int)w[1]];
+                g[i][j] = id;
+                onBoard[id] = true;
+            }
+        }
+    for (int id = 0; id < 52; ++id)
+        if (!onBoard[id]) avail.push_back(id);
+
+    vector<pair<int, int>> pos;
+    for (int r = 0; r + 2 < n; ++r)
+        for (int c = 0; c + 2 < m; ++c) pos.push_back({r, c});
+    int P = (int)pos.size();
+
+    int chosen[2] = {-1, -1};
+    int inSquare[2] = {-1, -1};    // 该王牌落在第几个方块里（-1 表示两个方块都不含它）
+    int solA = -1, solB = -1;
+    bool found = false;
+
+    for (int a = 0; a < P && !found; ++a) {
+        for (int b = a + 1; b < P && !found; ++b) {
+            if (abs(pos[a].first - pos[b].first) < 3 &&
+                abs(pos[a].second - pos[b].second) < 3)
+                continue;                       // 两个方块重叠
+            vector<Option> oa = optionsOf(pos[a].first, pos[a].second);
+            vector<Option> ob = optionsOf(pos[b].first, pos[b].second);
+            for (const Option &pa : oa) {
+                for (const Option &pb : ob) {
+                    if (found) break;
+                    for (int k = 0; k < jcnt; ++k) {
+                        if (jokerInside(k, pos[a].first, pos[a].second)) inSquare[k] = a;
+                        else if (jokerInside(k, pos[b].first, pos[b].second)) inSquare[k] = b;
+                        else inSquare[k] = -1;
+                    }
+                    // 同一方块里两张王牌且该方块走「点数互异」模式时，点数也要互异
+                    bool sameSq = (jcnt == 2 && inSquare[0] >= 0 && inSquare[0] == inSquare[1]);
+                    bool rankMode = false;
+                    if (sameSq) rankMode = (inSquare[0] == a ? pa.mode : pb.mode) == 1;
+                    // 为每张王牌生成候选牌
+                    vector<int> cand[2];
+                    bool bad = false;
+                    for (int k = 0; k < jcnt; ++k) {
+                        if (inSquare[k] < 0) {
+                            cand[k] = avail;      // 不在方块里：任意未使用的牌
+                            continue;
+                        }
+                        const Option &o = (inSquare[k] == a) ? pa : pb;
+                        for (int id : avail) {
+                            if (o.mode == 0) {
+                                if (suitOf(id) == o.suit) cand[k].push_back(id);
+                            } else if (o.mode == 1) {
+                                if (!(o.rankMask >> rankOf(id) & 1)) cand[k].push_back(id);
+                            }
+                        }
+                        if (cand[k].empty()) { bad = true; break; }
+                    }
+                    if (bad) continue;
+                    chosen[0] = chosen[1] = -1;
+                    function<bool(int)> go = [&](int k) -> bool {
+                        if (k == jcnt) return true;
+                        for (int id : cand[k]) {
+                            bool ok = true;
+                            for (int t = 0; t < k; ++t) {
+                                if (chosen[t] == id) { ok = false; break; }
+                                if (sameSq && rankMode && rankOf(id) == rankOf(chosen[t])) {
+                                    ok = false;
+                                    break;
+                                }
+                            }
+                            if (!ok) continue;
+                            chosen[k] = id;
+                            if (go(k + 1)) return true;
+                        }
+                        return false;
+                    };
+                    if (go(0)) {
+                        found = true;
+                        solA = a;
+                        solB = b;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    if (!found) {
+        cout << "No solution.\n";
+        return 0;
+    }
+    cout << "Solution exists.\n";
+    if (jcnt == 0) {
+        cout << "There are no jokers.\n";
+    } else if (jcnt == 1) {
+        cout << "Replace J" << jlabel[0] << " with " << cardStr(chosen[0]) << ".\n";
+    } else {
+        int k1 = (jlabel[0] == 1) ? 0 : 1, k2 = 1 - k1;
+        cout << "Replace J1 with " << cardStr(chosen[k1])
+             << " and J2 with " << cardStr(chosen[k2]) << ".\n";
+    }
+    cout << "Put the first square to (" << pos[solA].first + 1 << ", " << pos[solA].second + 1 << ").\n";
+    cout << "Put the second square to (" << pos[solB].first + 1 << ", " << pos[solB].second + 1 << ").\n";
+    return 0;
+}
 ```
 
 ### Python3
 
 ```python
-{{PY}}
+import sys
+
+RANKS = "23456789TJQKA"
+SUITS = "CDHS"
+ALL = [r + s for r in RANKS for s in SUITS]
+RIDX = {c: i for i, c in enumerate(RANKS)}
+SIDX = {c: i for i, c in enumerate(SUITS)}
+
+
+def main():
+    tok = sys.stdin.read().split()
+    n, m = int(tok[0]), int(tok[1])
+    g = [tok[2 + i * m: 2 + (i + 1) * m] for i in range(n)]
+
+    def is_joker(card):
+        return card[0] == "J" and card[1] in "12"
+
+    jokers = [(i, j) for i in range(n) for j in range(m) if is_joker(g[i][j])]
+    used = {c for row in g for c in row} - {"J1", "J2"}
+    avail = [c for c in ALL if c not in used]
+    sq = [(r, c) for r in range(n - 2) for c in range(m - 2)]
+
+    def cells(r, c):
+        return [(i, j) for i in range(r, r + 3) for j in range(c, c + 3)]
+
+    def options(r, c):
+        """该方块可能的「补齐模式」；空表示这个方块无解。
+        ('suit', s)：固定牌同花色，王牌补花色 s
+        ('rank', mask)：固定牌点数互异，王牌补 mask 之外的点数
+        ('ok',)：方块里没有王牌，且现在已经合法"""
+        suit_mask = rank_mask = fixed = 0
+        for (i, j) in cells(r, c):
+            card = g[i][j]
+            if is_joker(card):
+                continue
+            suit_mask |= 1 << SIDX[card[1]]
+            rank_mask |= 1 << RIDX[card[0]]
+            fixed += 1
+        if fixed == 9:
+            ones = bin(rank_mask).count("1")
+            if bin(suit_mask).count("1") == 1 or ones == 9:
+                return [("ok",)]
+            return []
+        res = []
+        if bin(suit_mask).count("1") == 1:
+            res.append(("suit", suit_mask.bit_length() - 1))
+        if bin(rank_mask).count("1") == fixed:
+            res.append(("rank", rank_mask))
+        return res
+
+    def candidates(mode):
+        if mode[0] == "suit":
+            return [c for c in avail if SIDX[c[1]] == mode[1]]
+        if mode[0] == "rank":
+            mask = mode[1]
+            return [c for c in avail if not (mask >> RIDX[c[0]]) & 1]
+        return []
+
+    J = len(jokers)
+    for ai in range(len(sq)):
+        for bi in range(ai + 1, len(sq)):
+            (r1, c1), (r2, c2) = sq[ai], sq[bi]
+            if abs(r1 - r2) < 3 and abs(c1 - c2) < 3:
+                continue                      # 两个方块重叠
+            inA = [k for k, (i, j) in enumerate(jokers)
+                   if r1 <= i <= r1 + 2 and c1 <= j <= c1 + 2]
+            inB = [k for k, (i, j) in enumerate(jokers)
+                   if r2 <= i <= r2 + 2 and c2 <= j <= c2 + 2]
+            for oa in options(r1, c1):
+                for ob in options(r2, c2):
+                    cand = {}
+                    bad = False
+                    for k in inA:
+                        cand[k] = candidates(oa)
+                        bad = bad or not cand[k]
+                    for k in inB:
+                        cand[k] = candidates(ob)
+                        bad = bad or not cand[k]
+                    if bad:
+                        continue
+                    for k in range(J):
+                        if k not in cand:
+                            cand[k] = avail   # 不在任何方块里：任意未使用的牌
+                    # 两张王牌落在同一个方块且该方块走「点数互异」模式
+                    rank_mode = False
+                    if J == 2 and len(inA) == 2 and inA == [0, 1]:
+                        rank_mode = oa[0] == "rank"
+                    if J == 2 and len(inB) == 2 and inB == [0, 1]:
+                        rank_mode = ob[0] == "rank"
+                    chosen = {}
+
+                    def go(k):
+                        if k == J:
+                            return True
+                        for card in cand[k]:
+                            good = all(chosen[t] != card for t in range(k))
+                            if good and rank_mode and k == 1:
+                                good = RIDX[card[0]] != RIDX[chosen[0][0]]
+                            if good:
+                                chosen[k] = card
+                                if go(k + 1):
+                                    return True
+                        return False
+
+                    if go(0):
+                        out = ["Solution exists."]
+                        if J == 0:
+                            out.append("There are no jokers.")
+                        elif J == 1:
+                            lab = g[jokers[0][0]][jokers[0][1]][1]
+                            out.append(f"Replace J{lab} with {chosen[0]}.")
+                        else:
+                            labs = [g[jokers[0][0]][jokers[0][1]][1],
+                                    g[jokers[1][0]][jokers[1][1]][1]]
+                            k1 = 0 if labs[0] == "1" else 1
+                            k2 = 1 - k1
+                            out.append(f"Replace J1 with {chosen[k1]} and J2 with {chosen[k2]}.")
+                        out.append(f"Put the first square to ({r1 + 1}, {c1 + 1}).")
+                        out.append(f"Put the second square to ({r2 + 1}, {c2 + 1}).")
+                        sys.stdout.write("\n".join(out) + "\n")
+                        return
+    print("No solution.")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## 7. 边界情况与易错点
@@ -231,9 +549,11 @@ $3\times3$ 方块"合法"的定义只有两条：九张牌**同花色**，或九
   ```text
   python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/71/D_纸牌接龙与王牌替换.md" --checker /tmp/cf_verify_71_D/check.py
   CF71D: samples 3
-    C++ 编译 OK, 样例 3/3, 最慢 4 ms
+    C++ 编译 OK, 样例 3/3, 最慢 3 ms
     Python 语法 OK, 样例 3/3
   ```
+
+  上述毫秒数为单次运行结果（含进程启动），随机器负载有 ±1 ms 抖动。
 
   checker（`/tmp/cf_verify_71_D/check.py`）的校验条件：① 先用独立实现的"枚举所有不重叠方块对 + 枚举所有王牌替换"求出真实可解性，与选手输出的 `Solution exists.` / `No solution.` 互相印证；② 第二行必须与输入中的王牌数量严格匹配，且替换牌必须是合法牌、未出现在桌面、互不相同、编号与输入一致；③ 第三、四行坐标在界内、两个方块不重叠；④ 替换后两个方块分别满足"同花色"或"点数互异"。任一条件不满足即判错。本实现样例 2 输出 `Replace J1 with JC.`（官方为 `2H`），checker 判定通过。
 - **暴力对拍（500 组，全部实跑）**：独立暴力 `/tmp/cf_verify_71_D/brute.cpp` 只做三重全枚举（方块对 × 每张王牌的所有剩余牌 × 全量合法判定），不含任何"模式剪枝"，用它作为可解性的参照。数据构成：300 组随机小棋盘（$n, m \in [3,7]$，含 $0/1/2$ 张王牌，其中一部分按"先摆两个合法方块再撒王牌"的方式构造以保证 `YES` 覆盖），外加 200 组"强制两张王牌随机落点"的专项数据。判定结果与正解**逐组一致（0 处不符）**，并逐组用 checker 校验了正解输出的方案合法性（`--nooracle` 模式，只验方案不重复算可解性），全部通过。

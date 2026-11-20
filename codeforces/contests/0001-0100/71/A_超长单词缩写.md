@@ -156,13 +156,45 @@ $$
 ### C++17
 
 ```cpp
-{{CPP}}
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    if (!(cin >> n)) return 0;
+    while (n--) {
+        string s;
+        cin >> s;
+        if ((int)s.size() > 10)
+            cout << s.front() << s.size() - 2 << s.back() << '\n';
+        else
+            cout << s << '\n';
+    }
+    return 0;
+}
 ```
 
 ### Python3
 
 ```python
-{{PY}}
+import sys
+
+
+def main():
+    data = sys.stdin.read().split()
+    n = int(data[0])
+    res = []
+    for i in range(1, n + 1):
+        s = data[i]
+        if len(s) > 10:
+            res.append(s[0] + str(len(s) - 2) + s[-1])
+        else:
+            res.append(s)
+    sys.stdout.write("\n".join(res) + "\n")
+
+
+if __name__ == "__main__":
+    main()
 ```
 
 ## 7. 边界情况与易错点
@@ -187,9 +219,11 @@ $$
     Python 语法 OK, 样例 1/1
   ```
 
+  上述毫秒数为单次运行结果（含进程启动），随机器负载有 ±1 ms 抖动。
+
 - **暴力对拍（300 组，全部实跑）**：独立暴力 `/tmp/cf_verify_71_A/brute.py` 用"逐字符数出中间字母个数"的另一套写法（`for ch in s[1:-1]: cnt += 1`）实现，与正解读同一输入、各自输出。数据构成：300 组随机数据（$n \in [1,8]$，单词长度在 $\{1,2,9,10,11,12,30,100\}$ 与 $[1,100]$ 随机中抽取），逐组比对 token 序列，**0 处不符**。
 - **自造边界用例**：长度 $1$、长度 $9$、长度 $10$、长度 $11$、长度 $100$ 各若干，C++ 与 Python 输出一致，且与手算结果（`a9k`、`a98a` 等）一致。
-- **最大约束性能**：$n = 100$、每个单词 $100$ 个字母，C++ 端到端 $3$ ms/次（含进程启动），远低于 1 s 时限；Python 同样为毫秒级。
+- **最大约束性能**：$n = 100$、每个单词 $100$ 个字母，C++ 端到端 $3 \sim 5$ ms/次（含进程启动，多次运行取范围），远低于 1 s 时限；Python 同样为毫秒级。
 - **复核状态**：verified。
 
 ## 相关题目与扩展
