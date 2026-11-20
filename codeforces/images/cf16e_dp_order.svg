@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.023" numOctaves="2" seed="337"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrX" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrY" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="420" fill="#fafafa"/>
+
+  <text x="380" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">按掩码从大到小处理：删掉一条鱼后，数值一定变小</text>
+
+  <!-- 掩码列表 -->
+  <rect x="56" y="54" width="200" height="42" rx="8" fill="#dbe7fb" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="156" y="81" text-anchor="middle" font-size="14" fill="#23405c" filter="url(#rough2)">111 = 7　k=3</text>
+
+  <rect x="56" y="112" width="200" height="36" rx="8" fill="#eef4ff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="156" y="136" text-anchor="middle" font-size="12.5" fill="#23405c" filter="url(#rough2)">110 = 6　k=2</text>
+  <rect x="56" y="154" width="200" height="36" rx="8" fill="#eef4ff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="156" y="178" text-anchor="middle" font-size="12.5" fill="#23405c" filter="url(#rough2)">101 = 5　k=2</text>
+  <rect x="56" y="196" width="200" height="36" rx="8" fill="#eef4ff" stroke="#446688" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="156" y="220" text-anchor="middle" font-size="12.5" fill="#23405c" filter="url(#rough2)">011 = 3　k=2</text>
+
+  <rect x="56" y="244" width="200" height="36" rx="8" fill="#f6f6f6" stroke="#999999" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="156" y="268" text-anchor="middle" font-size="12.5" fill="#555" filter="url(#rough2)">100 = 4　k=1</text>
+  <rect x="56" y="286" width="200" height="36" rx="8" fill="#f6f6f6" stroke="#999999" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="156" y="310" text-anchor="middle" font-size="12.5" fill="#555" filter="url(#rough2)">010 = 2　k=1</text>
+  <rect x="56" y="328" width="200" height="36" rx="8" fill="#f6f6f6" stroke="#999999" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="156" y="352" text-anchor="middle" font-size="12.5" fill="#555" filter="url(#rough2)">001 = 1　k=1</text>
+
+  <text x="56" y="386" font-size="10.5" fill="#777" filter="url(#rough2)">处理顺序 ↓（从 7 递减到 1）</text>
+
+  <!-- 箭头：7 → 6,5,3 -->
+  <path d="M 262 76 L 330 122" stroke="#446688" stroke-width="1.5" fill="none"
+        marker-end="url(#arrX)" filter="url(#rough2)"/>
+  <path d="M 262 76 L 330 164" stroke="#446688" stroke-width="1.5" fill="none"
+        marker-end="url(#arrX)" filter="url(#rough2)"/>
+  <path d="M 262 76 L 330 206" stroke="#446688" stroke-width="1.5" fill="none"
+        marker-end="url(#arrX)" filter="url(#rough2)"/>
+
+  <text x="336" y="128" font-size="10.5" fill="#446688" filter="url(#rough2)">去掉 1：7 - 1 = 6 &lt; 7</text>
+  <text x="336" y="170" font-size="10.5" fill="#446688" filter="url(#rough2)">去掉 2：7 - 2 = 5 &lt; 7</text>
+  <text x="336" y="212" font-size="10.5" fill="#446688" filter="url(#rough2)">去掉 4：7 - 4 = 3 &lt; 7</text>
+
+  <!-- 结论 -->
+  <rect x="336" y="232" width="392" height="72" rx="9" fill="#e6f4ea" stroke="#4a7a3a"
+        stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="352" y="256" font-size="12" font-weight="bold" fill="#2f5223" filter="url(#rough2)">转移只删一位 ⇒ mask ^ (1&lt;&lt;j) 的数值严格更小</text>
+  <text x="352" y="278" font-size="11.5" fill="#3c5e2e" filter="url(#rough2)">所以按数值递减枚举时，任何状态在被用到之前，</text>
+  <text x="352" y="296" font-size="11.5" fill="#3c5e2e" filter="url(#rough2)">它的所有超集都已经把概率贡献完毕。</text>
+
+  <!-- 层和 -->
+  <text x="336" y="336" font-size="11" fill="#8c3b37" filter="url(#rough2)">每层概率之和恒为 1：</text>
+  <text x="336" y="356" font-size="11" fill="#8c3b37" filter="url(#rough2)">k=3 层：f[7] = 1</text>
+  <text x="336" y="374" font-size="11" fill="#8c3b37" filter="url(#rough2)">k=2 层：f[6]+f[5]+f[3] = 1</text>
+  <text x="336" y="392" font-size="11" fill="#8c3b37" filter="url(#rough2)">k=1 层：f[4]+f[2]+f[1] = 1</text>
+
+  <path d="M 300 300 L 300 330" stroke="#b85450" stroke-width="1.4" fill="none"
+        marker-end="url(#arrY)" filter="url(#rough2)"/>
+</svg>

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/16/A
-- **比赛来源**：Codeforces Beta Round 16 · Problem A
+- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem A
 - **难度**：800
 - **标签**：实现
 - **评测类型**：普通

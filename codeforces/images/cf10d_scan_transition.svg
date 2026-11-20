@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="420" viewBox="0 0 760 420"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="17"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#c9801f"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="420" fill="#fafafa" filter="url(#rough2)"/>
+  <text x="380.0" y="38" text-anchor="middle" font-size="18.5" fill="#2b2b2b" font-weight="bold" filter="url(#rough2)">一维扫描：把 max{f[i-1][k]} 边扫边累计</text>
+  <path d="M 152 50 Q 380 56 608 50" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+  <text x="60" y="84" text-anchor="start" font-size="12.5" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">固定 i（当前 a[i]），从左到右扫 j，维护 cur = max{ f[i-1][k] : k &lt; j 且 b[k] &lt; a[i] }</text>
+  <path d="M 80 300 L 700 300" stroke="#555" stroke-width="1.6" fill="none" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <line x1="80" y1="292" x2="80" y2="308" stroke="#555" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="80" y="326" text-anchor="middle" font-size="10.5" fill="#555" font-weight="normal" filter="url(#rough2)">j=1</text>
+  <line x1="180" y1="292" x2="180" y2="308" stroke="#555" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="180" y="326" text-anchor="middle" font-size="10.5" fill="#555" font-weight="normal" filter="url(#rough2)">j=2</text>
+  <line x1="280" y1="292" x2="280" y2="308" stroke="#555" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="280" y="326" text-anchor="middle" font-size="10.5" fill="#555" font-weight="normal" filter="url(#rough2)">j=3</text>
+  <line x1="380" y1="292" x2="380" y2="308" stroke="#555" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="380" y="326" text-anchor="middle" font-size="10.5" fill="#555" font-weight="normal" filter="url(#rough2)">j=4</text>
+  <line x1="480" y1="292" x2="480" y2="308" stroke="#555" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="480" y="326" text-anchor="middle" font-size="10.5" fill="#555" font-weight="normal" filter="url(#rough2)">j=5</text>
+  <line x1="580" y1="292" x2="580" y2="308" stroke="#555" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="580" y="326" text-anchor="middle" font-size="10.5" fill="#555" font-weight="normal" filter="url(#rough2)">j=6</text>
+  <text x="80" y="250" text-anchor="start" font-size="12" fill="#2f5223" font-weight="normal" filter="url(#rough2)">b[j] &lt; a[i] 时：cur = max(cur, f[i-1][j])</text>
+  <text x="80" y="228" text-anchor="start" font-size="12" fill="#2f4a66" font-weight="normal" filter="url(#rough2)">b[j] == a[i] 时：f[i][j] = cur + 1，并记 pj[i][j] = cur 取到最大值时的 j</text>
+  <text x="80" y="206" text-anchor="start" font-size="12" fill="#a8641a" font-weight="normal" filter="url(#rough2)">b[j] &gt; a[i] 时：这个 k 不能接在后面（递增要求），跳过</text>
+  <rect x="80" y="344" width="620" height="56" rx="8" fill="#e8f0fe" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="94" y="368" text-anchor="start" font-size="12" fill="#2b2b2b" font-weight="normal" filter="url(#rough2)">cur 只会变大 ⇒ 每个 j 的 max 都能 O(1) 取得，总复杂度 O(n*m)，n,m &lt;= 500。</text>
+</svg>
