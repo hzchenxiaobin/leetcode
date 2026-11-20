@@ -117,7 +117,7 @@ $$c(t,i)=\begin{cases}\text{best}[t], & \text{best}[t]\ne i\\ \text{second}[t], 
 
 - **时间**：预处理 `best/second` 为 $O(n^2)$；逐朋友枚举时刻为 $O(n^2)$；总 $O(n^2)=9\times10^4$。
 - **空间**：$O(n^2)$ 存偏好名次表（$300\times300$）。
-- **与时限的关系**：2 s 时限下 $O(n^2)$ 只有微秒级，$O(n^3)$ 的写法（每次重算名次）也能过，但没有必要。
+- **与时限的关系**：2 s 时限下 $O(n^2)$ 的核心计算只有微秒级，实测 $n=300$ 约 $8$ ms（含读入），$O(n^3)$ 的写法也能过但没有必要。
 
 ## 6. 参考代码
 
@@ -128,16 +128,18 @@ $$c(t,i)=\begin{cases}\text{best}[t], & \text{best}[t]\ne i\\ \text{second}[t], 
 using namespace std;
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
     int n;
-    if (!(cin >> n)) return 0;
-    vector<vector<int>> pref(n + 1, vector<int>(n + 1));   // pref[i][r] = 第 r 喜欢的卡片
-    vector<vector<int>> rankF(n + 1, vector<int>(n + 1));  // rankF[i][c] = 卡片 c 在 i 心中的名次
+    if (scanf("%d", &n) != 1) return 0;
+    // rankF[i][c]：卡片 c 在第 i 个朋友心中的名次
+    vector<vector<int>> rankF(n + 1, vector<int>(n + 1, 0));
     for (int i = 1; i <= n; ++i)
-        for (int r = 1; r <= n; ++r) { cin >> pref[i][r]; rankF[i][pref[i][r]] = r; }
+        for (int r = 1; r <= n; ++r) {
+            int c;
+            scanf("%d", &c);
+            rankF[i][c] = r;
+        }
     vector<int> alex(n + 1);                               // alex[r] = 第 r 喜欢的卡片
-    for (int r = 1; r <= n; ++r) cin >> alex[r];
+    for (int r = 1; r <= n; ++r) scanf("%d", &alex[r]);
 
     // best[t] / second[t]：收到前 t 张卡片时，Alexander 最喜欢 / 次喜欢的卡片
     vector<int> best(n + 1, 0), second(n + 1, 0);
@@ -147,7 +149,7 @@ int main() {
             int c = alex[r];
             if (c > t) continue;
             if (!c1) c1 = c;
-            else if (!c2) { c2 = c; break; }
+            else { c2 = c; break; }
         }
         best[t] = c1;
         second[t] = c2;
@@ -163,7 +165,7 @@ int main() {
         }
         ans[i] = bestT;
     }
-    for (int i = 1; i <= n; ++i) cout << ans[i] << (i == n ? '\n' : ' ');
+    for (int i = 1; i <= n; ++i) printf("%d%c", ans[i], i == n ? '\n' : ' ');
     return 0;
 }
 ```
@@ -229,7 +231,7 @@ main()
 - **官方样例**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/140/B_新年贺卡.md --checker codeforces/tools/checkers/cf140b.py` → `CF140B: samples 1`，C++ 1/1、Python 1/1（本解输出 `2 1 1 3`，与样例的 `2 1 1 4` 不同但同样合法）。
 - **方案校验器**：新增 `codeforces/tools/checkers/cf140b.py`，先按规则复算每个时刻的 `best/second`，再对每个朋友验证“输出的时刻可寄”且“该时刻拿到的卡片名次 = 所有时刻里的最小名次”。
 - **额外测试**：独立暴力 `brute.py`（枚举全部 $n^n$ 个时刻向量，逐朋友取最优名次），与 C++/Python 在 $n\in[2,5]$ 的 300 组随机偏好（含全部 $n!$ 随机排列）上交叉验证：三者给每个朋友的名次向量完全一致，且都通过 checker。
-- **最大约束性能**：$n=300$ 随机偏好，C++ 与 Python 均 $<5$ ms。
+- **最大约束性能**：$n=300$ 随机偏好，C++ 约 $8$ ms、Python 约 $43$ ms（读入 $9	imes10^4$ 个整数占了大部分），远低于 $2$ s。
 - **复核状态**：verified。
 
 ## 相关题目与扩展

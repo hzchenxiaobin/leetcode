@@ -226,7 +226,7 @@ main()
 - **编译环境与命令**：本机没有 GNU `g++`，用 `Apple clang 21.0.0` + 仓库自带兼容头（`-std=c++17 -O2 -I codeforces/tools/include`）；Python 为 `Python 3.9.6`。
 - **官方样例**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/141/B_跳房子.md` → `CF141B: samples 5`，C++ 样例 5/5，Python 样例 5/5。
 - **额外测试**：另写独立暴力 `brute.py`（按题面几何逐行枚举格子、用开区间判定），随机 1000 组（$a\le9$、$|x|\le14$、$y\le40$）与 C++/Python 逐组比对，全部一致。
-- **最大约束性能**：$a=1,x=10^6,y=10^6$ 单次运行 $<1$ ms。
+- **最大约束性能**：$a=1,x=10^6,y=10^6$ 单次运行约 $1$ ms（几乎全是进程启动开销）。
 - **复核状态**：verified。
 
 ## 相关题目与扩展
