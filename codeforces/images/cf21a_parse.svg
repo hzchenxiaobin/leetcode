@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arrb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="420" fill="#fafafa"/>
+
+  <text x="360" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">解析与校验流程</text>
+  <path d="M 250 44 Q 360 50 470 44" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <rect x="30" y="70" width="150" height="60" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="105" y="95" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">① 读入整行</text>
+  <text x="105" y="116" text-anchor="middle" font-size="10.5" fill="#3c5a73" filter="url(#rough2)">ASCII 33…127</text>
+
+  <path d="M 182 100 L 212 100" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <rect x="216" y="70" width="160" height="60" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="296" y="95" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">② 数 '@'</text>
+  <text x="296" y="116" text-anchor="middle" font-size="10.5" fill="#3c5a73" filter="url(#rough2)">必须恰好 1 个</text>
+
+  <path d="M 378 100 L 408 100" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <rect x="412" y="70" width="160" height="60" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="492" y="95" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">③ 切 user / rest</text>
+  <text x="492" y="116" text-anchor="middle" font-size="10.5" fill="#3c5a73" filter="url(#rough2)">rest 中最多一个 '/'</text>
+
+  <path d="M 574 100 L 604 100" stroke="#446688" stroke-width="1.7" fill="none" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <rect x="608" y="70" width="82" height="60" rx="10" fill="#fde8e8" stroke="#b85450" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="649" y="95" text-anchor="middle" font-size="12" font-weight="bold" fill="#a33a36" filter="url(#rough2)">④ 校验</text>
+  <text x="649" y="116" text-anchor="middle" font-size="10.5" fill="#8a3b38" filter="url(#rough2)">全过才 YES</text>
+
+  <rect x="30" y="164" width="660" height="112" rx="12" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <g font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">
+    <text x="46" y="192">④-a user：1…16 且字符集 {A-Z,a-z,0-9,_}；④-b 有 '/' 时 resource 同样 1…16 且字符集相同；</text>
+    <text x="46" y="220">④-c hostname：先查总长 1…32，再按 '.' 切成若干段，每段非空、长度 1…16、字符集合法；</text>
+    <text x="46" y="248">任一条件不满足立刻输出 NO；全部满足输出 YES。字符集检查用显式范围比较，不依赖 isalnum 的语言环境。</text>
+  </g>
+
+  <rect x="30" y="296" width="660" height="100" rx="12" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <g font-size="11.5" fill="#2f5223" filter="url(#rough2)">
+    <text x="46" y="324">mike@codeforces.com → user=mike，host=codeforces.com，没有 resource：每段都合法 → YES。</text>
+    <text x="46" y="350">john.smith@codeforces.ru/contest.icpc/12 → user 里出现 '.'，且 resource 里出现 '.' 和 '/' → NO。</text>
+    <text x="46" y="376">a@b/c → YES；a@b/ → resource 为空 → NO；a@b@c → 两个 '@' → NO。</text>
+  </g>
+</svg>

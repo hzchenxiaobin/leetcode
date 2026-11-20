@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="360" viewBox="0 0 760 360"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="37"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="360" fill="#fafafa"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="18.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">C：按目标长度分层的 DP，状态 (p, i, j)，k = L − i − j</text>
+  <path d="M 90 42 Q 380 47 670 42" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <rect x="50" y="70" width="300" height="96" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="62" y="94" font-size="12" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">状态含义</text>
+  <text x="62" y="118" font-size="10.5" fill="#3c5e88" filter="url(#rough2)">p：当前这一“块”的来源下标（n 表示还没开始）</text>
+  <text x="62" y="138" font-size="10.5" fill="#3c5e88" filter="url(#rough2)">i, j：已放入的 a、b 个数；k = L − i − j 是 c 的个数</text>
+  <text x="62" y="158" font-size="10.5" fill="#3c5e88" filter="url(#rough2)">值：能产生这种前缀的不同串的个数</text>
+
+  <rect x="50" y="182" width="300" height="76" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="62" y="206" font-size="12" font-weight="bold" fill="#2f5223" filter="url(#rough2)">转移 ①：延长当前块</text>
+  <text x="62" y="230" font-size="10.5" fill="#3c5e2e" filter="url(#rough2)">再放一个 s[p]，p 不变，对应字母计数 +1</text>
+  <text x="62" y="250" font-size="10.5" fill="#3c5e2e" filter="url(#rough2)">（同一块可以任意长，所以是“自环”式转移）</text>
+
+  <rect x="50" y="272" width="300" height="76" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="62" y="296" font-size="12" font-weight="bold" fill="#8a6015" filter="url(#rough2)">转移 ②：换一个新块</text>
+  <text x="62" y="320" font-size="10.5" fill="#7a5a1b" filter="url(#rough2)">挑一个 ≠ s[p] 的字符 c，跳到 p 之后第一个 c</text>
+  <text x="62" y="340" font-size="10.5" fill="#7a5a1b" filter="url(#rough2)">（贪心跳到最靠前的 c，保证同一个串只被数一次）</text>
+
+  <line x1="374" y1="66" x2="374" y2="356" stroke="#ddd" stroke-width="1" stroke-dasharray="4 4" filter="url(#rough2)"/>
+
+  <text x="398" y="80" font-size="11.5" fill="#777" filter="url(#rough2)">s = a b c a（一层的示意）</text>
+  <rect x="398" y="90" width="40" height="34" rx="5" fill="#fff" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <rect x="442" y="90" width="40" height="34" rx="5" fill="#fff" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <rect x="486" y="90" width="40" height="34" rx="5" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <rect x="530" y="90" width="40" height="34" rx="5" fill="#fff" stroke="#999" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="418" y="113" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">a</text>
+  <text x="462" y="113" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">b</text>
+  <text x="506" y="113" text-anchor="middle" font-size="12" fill="#2f5223" filter="url(#rough2)">c</text>
+  <text x="550" y="113" text-anchor="middle" font-size="12" fill="#555" filter="url(#rough2)">a</text>
+  <text x="506" y="140" text-anchor="middle" font-size="9.5" fill="#2f5223" filter="url(#rough2)">p = 3</text>
+
+  <text x="398" y="168" font-size="10.5" fill="#2f5223" filter="url(#rough2)">① 继续放 c：留在 p = 3（可以无限续）</text>
+  <text x="398" y="192" font-size="10.5" fill="#8a6015" filter="url(#rough2)">② 想放 b：跳到 p 之后第一个 b —— 没有，剪枝</text>
+  <text x="398" y="216" font-size="10.5" fill="#8a6015" filter="url(#rough2)">② 想放 a：跳到 4 号位的 a，p 变成 4</text>
+
+  <rect x="398" y="236" width="330" height="106" rx="10" fill="#f3e8fd" stroke="#8a6d9a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="410" y="260" font-size="11.5" font-weight="bold" fill="#5b3a6e" filter="url(#rough2)">为什么不会重复计数？</text>
+  <text x="410" y="284" font-size="10.5" fill="#5b3a6e" filter="url(#rough2)">每个串的“块序列”唯一，贪心嵌入也唯一；</text>
+  <text x="410" y="306" font-size="10.5" fill="#5b3a6e" filter="url(#rough2)">同字符只能延长当前块、不会另起新块，</text>
+  <text x="410" y="328" font-size="10.5" fill="#5b3a6e" filter="url(#rough2)">所以一条 DP 路径 ⟷ 一个目标串。</text>
+</svg>
