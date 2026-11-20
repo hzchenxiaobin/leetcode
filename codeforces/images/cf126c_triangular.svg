@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="440" viewBox="0 0 760 440"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="17"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arr126c2" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="760" height="440" fill="#fafafa"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">命令矩阵 O 被画面唯一确定：上三角、下三角、对角线三段分别反解</text>
+  <path d="M 80 42 Q 380 50 680 42" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <!-- 矩阵示意 5x5，cell 46，起点 (90,70) -->
+  <g filter="url(#rough2)" stroke="#999" stroke-width="1">
+    <polygon points="90,70 320,70 320,300" fill="#e8f0fe" opacity="0.85"/>
+    <polygon points="90,70 90,300 320,300" fill="#fdecea" opacity="0.75"/>
+    <rect x="90" y="70" width="230" height="230" fill="none"/>
+    <line x1="136" y1="70" x2="136" y2="300"/><line x1="182" y1="70" x2="182" y2="300"/>
+    <line x1="228" y1="70" x2="228" y2="300"/><line x1="274" y1="70" x2="274" y2="300"/>
+    <line x1="90" y1="116" x2="320" y2="116"/><line x1="90" y1="162" x2="320" y2="162"/>
+    <line x1="90" y1="208" x2="320" y2="208"/><line x1="90" y1="254" x2="320" y2="254"/>
+    <line x1="90" y1="70" x2="320" y2="300" stroke="#b85450" stroke-width="2"/>
+  </g>
+  <text x="250" y="100" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">i &lt; j（上三角）</text>
+  <text x="104" y="288" font-size="12.5" fill="#8b3a37" filter="url(#rough2)">i &gt; j（下三角）</text>
+  <text x="205" y="196" font-size="12" fill="#b85450" filter="url(#rough2)">对角</text>
+
+  <!-- 箭头：上三角扫描方向 -->
+  <path d="M 340 96 Q 372 104 372 140" stroke="#446688" stroke-width="1.6" fill="none" marker-end="url(#arr126c2)" filter="url(#rough2)"/>
+  <text x="380" y="92" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">上三角：行从上到下，列从右到左</text>
+  <text x="380" y="116" font-size="12" fill="#555" filter="url(#rough2)">用「行后缀异或 ⊕ 列前缀异或」反解 O[i][j]</text>
+
+  <path d="M 340 214 Q 372 222 372 250" stroke="#b85450" stroke-width="1.6" fill="none" marker-end="url(#arr126c2)" filter="url(#rough2)"/>
+  <text x="380" y="210" font-size="12.5" fill="#8b3a37" filter="url(#rough2)">下三角：列从左到右，行从下到上</text>
+  <text x="380" y="234" font-size="12" fill="#555" filter="url(#rough2)">用「行前缀 ⊕ 列后缀」反解，互不干扰</text>
+
+  <g filter="url(#rough2)">
+    <rect x="380" y="270" width="350" height="70" rx="8" fill="#e9f5e6" stroke="#4a7a3a" stroke-width="1.3"/>
+    <text x="396" y="294" font-size="12.5" font-weight="bold" fill="#2f5223">最后单独解对角：</text>
+    <text x="396" y="316" font-size="12.5" fill="#2b2b2b">O[i][i] = cell(i,i) ⊕（第 i 行其余项的异或）</text>
+    <text x="396" y="334" font-size="12.5" fill="#2b2b2b">　　　　　⊕（第 i 列其余项的异或）</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="356" width="660" height="66" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3"/>
+    <text x="76" y="380" font-size="13" fill="#8a6015">因为每一步用的都是「已经确定的量」，三段合起来给出了 O 的全部元素 —— 命令集合唯一，</text>
+    <text x="76" y="404" font-size="13" fill="#8a6015">所以最少命令数不是一个优化问题，而是一次 O(n²) 的反解 + 数 1 的个数。</text>
+  </g>
+</svg>
