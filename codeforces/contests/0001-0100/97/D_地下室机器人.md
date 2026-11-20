@@ -138,6 +138,8 @@ $$S\leftarrow \operatorname{shift}(S\ \&\ \text{src}_d,\ \Delta_d)\ \cup\ (S\ \&
 
 ### 3.4 样例走查
 
+![样例 1：可能位置集合逐步收缩](../../../images/cf97d_sample_walk.svg)
+
 以样例 1 为例，掩码的含义是：
 
 - $U$ 的源集 = 第 $2,3,4$ 行的 $9$ 个格子（第 $2$ 行上方是墙，不在源集里）；
