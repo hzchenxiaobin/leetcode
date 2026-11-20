@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：我的意识正在消失（Codeforces 2284E，英文名 My Mind Is Going）
 - **链接**：https://codeforces.com/problemset/problem/2284/E
-- **来源**：Codeforces Round 1132 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1132 (Div. 2) · Problem E（UTC 2026-11-06）
 - **难度**：未评级（2500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：交互题，二分查找，图论，DFS 与遍历，二分图

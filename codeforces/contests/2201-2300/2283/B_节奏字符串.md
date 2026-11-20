@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：节奏字符串（Codeforces 2283B，英文名 Rhythmic String）
 - **链接**：https://codeforces.com/problemset/problem/2283/B
-- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem B
+- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem B（UTC 2026-11-04）
 - **难度**：未评级（题面未给分值，rating 尚未标定；按 Div. 2 的 B 题估计约 1200）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：暴力枚举、数论、整除、剪枝

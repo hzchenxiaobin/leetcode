@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：小众互联网入门（Codeforces 2284B，英文名 Introduction to the Niche Internet）
 - **链接**：https://codeforces.com/problemset/problem/2284/B
-- **来源**：Codeforces Round 1132 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1132 (Div. 2) · Problem B（UTC 2026-11-06）
 - **难度**：未评级（1000 分）
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：构造、贪心、排序、数学

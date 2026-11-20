@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/4/B
-- **比赛来源**：Codeforces Beta Round 4 (Div. 2 Only) · Problem B
+- **比赛来源**：Codeforces Beta Round 4 (Div. 2 Only) · Problem B（UTC 2010-03-12）
 - **难度**：1200
 - **标签**：构造、贪心（constructive algorithms, greedy）
 - **评测类型**：特殊评测（输出任意一种合法时间表）

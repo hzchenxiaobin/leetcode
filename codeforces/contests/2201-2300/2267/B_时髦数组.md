@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：时髦数组（Codeforces 2267B，英文名 Fashionable Array）
 - **链接**：https://codeforces.com/problemset/problem/2267/B
-- **来源**：Codeforces Round 1123 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1123 (Div. 2) · Problem B（UTC 2026-09-25）
 - **难度**：800（官方 rating，本题 500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：暴力枚举，构造，排序

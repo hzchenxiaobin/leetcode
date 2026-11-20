@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/24/C
-- **比赛来源**：Codeforces Beta Round 24 · Problem C（2010-07-26）
+- **比赛来源**：Codeforces Beta Round 24 · Problem C（UTC 2010-07-26）
 - **难度**：1800
 - **标签**：计算几何、实现、数学（geometry, implementation, math）
 - **评测类型**：普通

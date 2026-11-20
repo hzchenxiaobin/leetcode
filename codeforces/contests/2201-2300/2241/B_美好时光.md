@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：美好时光（Codeforces 2241B，英文名 Good times Good times）
 - **链接**：https://codeforces.com/problemset/problem/2241/B
-- **来源**：Codeforces Round 1107 (Div. 3) · Problem B
+- **来源**：Codeforces Round 1107 (Div. 3) · Problem B（UTC 2026-06-30）
 - **难度**：1100（Div. 3 第二题，但官方赛后承认「B 比预期难」）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：构造、数学、搜索（官方标签：constructive algorithms, dfs and similar, math）

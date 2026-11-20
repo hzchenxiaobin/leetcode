@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：剪影（Codeforces 2254D，英文名 Silhouette）
 - **链接**：https://codeforces.com/problemset/problem/2254/D
-- **来源**：Codeforces Round 1114 (Div. 3) · Problem D
+- **来源**：Codeforces Round 1114 (Div. 3) · Problem D（UTC 2026-08-04）
 - **难度**：1300
 - **限制**：时间 2.5 s / 内存 256 MB
 - **标签**：构造，数学，排序（官方 tag：constructive algorithms、math、sortings）

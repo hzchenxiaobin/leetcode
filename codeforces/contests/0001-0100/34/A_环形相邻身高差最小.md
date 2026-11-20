@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/34/A
-- **比赛来源**：Codeforces Beta Round 34 (Div. 2) · Problem A（2010-10-11）
+- **比赛来源**：Codeforces Beta Round 34 (Div. 2) · Problem A（UTC 2010-10-11）
 - **难度**：800
 - **标签**：实现
 - **评测类型**：特殊评测（输出任意一组最优解即可）

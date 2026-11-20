@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：世界的终结（Codeforces 2239E，英文名 The end of this world,）
 - **链接**：https://codeforces.com/problemset/problem/2239/E
-- **来源**：Codeforces Round 1105 (Div. 1) · Problem E
+- **来源**：Codeforces Round 1105 (Div. 1) · Problem E（UTC 2026-06-27）
 - **难度**：rating 3300（Div. 1 的 E 题，2750 分）
 - **限制**：时间 5 s / 内存 1024 MB
 - **标签**：图论、可撤销并查集（rollback DSU）、线段树 / 分治、数据结构

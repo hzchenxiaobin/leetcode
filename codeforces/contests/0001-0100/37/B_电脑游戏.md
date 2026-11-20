@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/37/B
-- **比赛来源**：Codeforces Beta Round 37 · Problem B（2010-06-27）
+- **比赛来源**：Codeforces Beta Round 37 · Problem B（UTC 2010-10-25）
 - **难度**：1800
 - **标签**：greedy / implementation
 - **评测类型**：多解（任意一组最优方案）

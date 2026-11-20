@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：甩鞭（Codeforces 2254F，英文名 Whiplash）
 - **链接**：https://codeforces.com/problemset/problem/2254/F
-- **来源**：Codeforces Round 1114 (Div. 3) · Problem F
+- **来源**：Codeforces Round 1114 (Div. 3) · Problem F（UTC 2026-08-04）
 - **难度**：1900
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位运算（bitmasks）、构造、数学、排序（官方 tag：bitmasks、constructive algorithms、math、sortings）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/33/B
-- **比赛来源**：Codeforces Beta Round 33 · Problem B（2010-07-06）
+- **比赛来源**：Codeforces Beta Round 33 (Codeforces format) · Problem B（UTC 2010-10-07）
 - **难度**：1800
 - **标签**：最短路
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/19/A
-- **比赛来源**：Codeforces Beta Round 19 · Problem A
+- **比赛来源**：Codeforces Beta Round 19 · Problem A（UTC 2010-06-24）
 - **难度**：1400
 - **标签**：实现
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/47/E
-- **比赛来源**：Codeforces Beta Round 47 · Problem E（2010-12-08）
+- **比赛来源**：Codeforces Beta Round 44 (Div. 2) · Problem E（UTC 2010-12-07）
 - **难度**：2200
 - **标签**：数据结构、几何、排序
 - **评测类型**：普通（允许误差：相对或绝对误差 $<10^{-4}$）

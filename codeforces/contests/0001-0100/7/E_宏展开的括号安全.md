@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/7/E
-- **比赛来源**：Codeforces Beta Round 7 · Problem E（2010-04-01）
+- **比赛来源**：Codeforces Beta Round 7 · Problem E（UTC 2010-04-01）
 - **难度**：2600
 - **标签**：动态规划、表达式解析、实现（dp, expression parsing, implementation）
 - **评测类型**：普通

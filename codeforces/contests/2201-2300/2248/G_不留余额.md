@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：不留余额（Codeforces 2248G，英文名 No Balance Left）
 - **链接**：https://codeforces.com/problemset/problem/2248/G
-- **来源**：Codeforces Round 1113 (Div. 2) · Problem G
+- **来源**：Codeforces Round 1113 (Div. 2) · Problem G（UTC 2026-08-01）
 - **难度**：3000（3500 分）
 - **限制**：时间 6 s / 内存 256 MB
 - **标签**：位运算（bitset），动态规划，数学，数论

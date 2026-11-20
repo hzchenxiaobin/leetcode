@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/61/B
-- **比赛来源**：Codeforces Beta Round 61 · Problem B（2011-02-23）
+- **比赛来源**：Codeforces Beta Round 57 (Div. 2) · Problem B（UTC 2011-02-22）
 - **难度**：1300
 - **标签**：字符串、枚举、集合
 - **评测类型**：普通

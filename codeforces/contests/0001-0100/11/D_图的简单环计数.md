@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/11/D
-- **比赛来源**：Codeforces Beta Round 11 · Problem D
+- **比赛来源**：Codeforces Beta Round 11 · Problem D（UTC 2010-04-26）
 - **难度**：2200
 - **标签**：位掩码、动态规划、图论
 - **评测类型**：普通

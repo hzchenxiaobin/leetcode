@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：雅罗斯拉夫与生产力（Codeforces 2244D，英文名 Yaroslav and Productivity）
 - **链接**：https://codeforces.com/problemset/problem/2244/D
-- **来源**：Codeforces Round 1109 (Div. 3) · Problem D
+- **来源**：Codeforces Round 1109 (Div. 3) · Problem D（UTC 2026-07-14）
 - **难度**：$\ast 1200$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、贪心、动态规划、数学、前缀和（官方标签：constructive algorithms, dp, greedy, math, number theory）

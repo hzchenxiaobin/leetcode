@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：恶心数组与 GCD（校验版）（Codeforces 2284C2，英文名 Disgusting + GCD (Checker Version)）
 - **链接**：https://codeforces.com/problemset/problem/2284/C2
-- **来源**：Codeforces Round 1132 (Div. 2) · Problem C2
+- **来源**：Codeforces Round 1132 (Div. 2) · Problem C2（UTC 2026-11-06）
 - **难度**：未评级（1250 分；同场 C1 是它的构造版，本题只保留「从 a 到 b 的最小步数」这一段）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：暴力枚举、动态规划、图论建模、贪心、数学、数论

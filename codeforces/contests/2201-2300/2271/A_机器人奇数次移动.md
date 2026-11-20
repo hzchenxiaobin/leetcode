@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：机器人奇数次移动（Codeforces 2271A，英文名 Robot Odd Moves）
 - **链接**：https://codeforces.com/problemset/problem/2271/A
-- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem A
+- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem A（UTC 2026-10-10）
 - **难度**：800（Div. 1 + Div. 2 签到题，500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：数学，构造

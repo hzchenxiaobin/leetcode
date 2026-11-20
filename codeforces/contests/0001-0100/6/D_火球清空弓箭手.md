@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/6/D
-- **比赛来源**：Codeforces Beta Round 6 (Div. 2 Only) · Problem D
+- **比赛来源**：Codeforces Beta Round 6 (Div. 2 Only) · Problem D（UTC 2010-03-27）
 - **难度**：2600
 - **标签**：暴力、动态规划
 - **评测类型**：特殊评测（多解，输出任意一个最优方案）

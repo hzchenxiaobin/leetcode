@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：逆序划分（Codeforces 2285D，英文名 Reverse Partition）
 - **链接**：https://codeforces.com/problemset/problem/2285/D
-- **来源**：Codeforces Round 1135 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1135 (Div. 2) · Problem D（UTC 2026-11-15）
 - **难度**：未评级（2000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分查找，组合数学，数据结构

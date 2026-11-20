@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/51/D
-- **比赛来源**：Codeforces Beta Round 51 · Problem D（2010-12-29）
+- **比赛来源**：Codeforces Beta Round 48 · Problem D（UTC 2010-12-28）
 - **难度**：2200
 - **标签**：实现、数学、等比数列判定、分类讨论
 - **评测类型**：普通

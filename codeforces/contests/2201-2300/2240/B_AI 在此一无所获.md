@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：AI 在此一无所获（Codeforces 2240B，英文名 AI Finds Nothing Here）
 - **链接**：https://codeforces.com/problemset/problem/2240/B
-- **来源**：Codeforces Round 1105 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1105 (Div. 2) · Problem B（UTC 2026-06-27）
 - **难度**：rating 1100（1250 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：组合数学、数学、异或、计数（本质是 GF(2) 上线性方程组的维数）

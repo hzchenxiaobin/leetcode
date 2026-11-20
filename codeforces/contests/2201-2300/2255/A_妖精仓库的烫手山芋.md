@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：妖精仓库的烫手山芋（Codeforces 2255A，英文名 Hot Potatoes at the Fairy Warehouse）
 - **链接**：https://codeforces.com/problemset/problem/2255/A
-- **来源**：Codeforces Round 1116 (Div. 1) · Problem A
+- **来源**：Codeforces Round 1116 (Div. 1) · Problem A（UTC 2026-08-09）
 - **难度**：1200（500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：博弈论，贪心，实现

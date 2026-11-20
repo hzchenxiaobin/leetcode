@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：黑板上的三个数（Codeforces 2256A，英文名 Three Numbers on the Blackboard）
 - **链接**：https://codeforces.com/problemset/problem/2256/A
-- **来源**：Codeforces Round 1116 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1116 (Div. 2) · Problem A（UTC 2026-08-09）
 - **难度**：800（500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：数学，排序

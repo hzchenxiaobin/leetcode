@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：货架上的商品（Codeforces 2233D，英文名 Goods on the Shelf）
 - **链接**：https://codeforces.com/problemset/problem/2233/D
-- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem D
+- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem D（UTC 2026-06-09）
 - **难度**：1900（题面标注 $\ast 1900$）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：暴力、数据结构、实现、双指针（官方标签：brute force, data structures, implementation, two pointers）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/53/C
-- **比赛来源**：Codeforces Beta Round 53 · Problem C（2011-01-07）
+- **比赛来源**：Codeforces Beta Round 49 (Div. 2) · Problem C（UTC 2011-01-06）
 - **难度**：1200
 - **标签**：构造、贪心
 - **评测类型**：特殊评测（多解，输出任意合法方案）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/32/D
-- **比赛来源**：Codeforces Beta Round 32 · Problem D
+- **比赛来源**：Codeforces Beta Round 32 (Div. 2, Codeforces format) · Problem D（UTC 2010-10-02）
 - **难度**：1600
 - **标签**：实现（implementation）
 - **评测类型**：普通

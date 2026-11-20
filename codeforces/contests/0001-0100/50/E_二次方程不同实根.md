@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/50/E
-- **比赛来源**：Codeforces Beta Round 50 · Problem E
+- **比赛来源**：Codeforces Beta Round 47 · Problem E（UTC 2010-12-20）
 - **难度**：2300
 - **标签**：数学、计数、数论
 - **评测类型**：普通

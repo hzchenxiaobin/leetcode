@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：Plegma II：问我任意格（简单版）（Codeforces 2261F1，英文名 Plegma II: Ask Me Any Cell (Easy Version)）
 - **链接**：https://codeforces.com/problemset/problem/2261/F1
-- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem F1
+- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem F1（UTC 2026-10-17）
 - **难度**：2500（2500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，贪心，数学，输出型

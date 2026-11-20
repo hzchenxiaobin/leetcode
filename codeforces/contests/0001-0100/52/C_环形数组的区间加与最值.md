@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/52/C
-- **比赛来源**：Codeforces Beta Round 52 · Problem C
+- **比赛来源**：Codeforces Testing Round 1 · Problem C（UTC 2011-01-04）
 - **难度**：2200
 - **标签**：数据结构、线段树、惰性标记、环形数组
 - **评测类型**：普通

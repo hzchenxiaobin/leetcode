@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/34/B
-- **比赛来源**：Codeforces Beta Round 34 (Div. 2) · Problem B（2010-10-11）
+- **比赛来源**：Codeforces Beta Round 34 (Div. 2) · Problem B（UTC 2010-10-11）
 - **难度**：900
 - **标签**：贪心、排序
 - **评测类型**：普通（单组输入，唯一答案）

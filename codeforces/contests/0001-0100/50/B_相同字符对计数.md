@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/50/B
-- **比赛来源**：Codeforces Beta Round 50 · Problem B
+- **比赛来源**：Codeforces Beta Round 47 · Problem B（UTC 2010-12-20）
 - **难度**：1500
 - **标签**：字符串、计数
 - **评测类型**：普通

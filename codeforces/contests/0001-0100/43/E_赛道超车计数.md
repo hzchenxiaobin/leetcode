@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/43/E
-- **比赛来源**：Codeforces Beta Round 42 (Div. 2)（2010-11-30）· Problem E
+- **比赛来源**：Codeforces Beta Round 42 (Div. 2) · Problem E（UTC 2010-11-29）
 - **难度**：2300
 - **标签**：暴力、实现、双指针
 - **评测类型**：普通

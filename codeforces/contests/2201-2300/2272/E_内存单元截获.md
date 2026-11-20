@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：内存单元截获（Codeforces 2272E，英文名 Memory Cell Interception）
 - **链接**：https://codeforces.com/problemset/problem/2272/E
-- **来源**：Codeforces Round 1130 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1130 (Div. 2) · Problem E（UTC 2026-10-26）
 - **难度**：未评级（1750 分，Div. 2 第五题）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分查找，贪心，双指针

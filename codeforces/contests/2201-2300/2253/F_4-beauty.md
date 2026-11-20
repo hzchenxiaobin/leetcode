@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：4-美丽度（Codeforces 2253F，英文名 4-beauty）
 - **链接**：https://codeforces.com/problemset/problem/2253/F
-- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem F
+- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem F（UTC 2026-08-07）
 - **难度**：2600
 - **限制**：时间 5 s / 内存 1024 MB
 - **标签**：位运算（状压），动态规划，图论，数学，数论

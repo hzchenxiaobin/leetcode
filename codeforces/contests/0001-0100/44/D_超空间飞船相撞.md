@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/44/D
-- **比赛来源**：Codeforces Beta Round 44（School Team Contest 2, Winter Computer School 2010/11）· Problem D（2010-11-06）
+- **比赛来源**：School Team Contest 2 (Winter Computer School 2010/11) · Problem D（UTC 2010-11-06）
 - **难度**：1800
 - **标签**：数学、计算几何、三角形不等式
 - **评测类型**：普通（浮点答案，绝对或相对误差不超过 $10^{-6}$）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/15/E
-- **比赛来源**：Codeforces Beta Round 15 · Problem E
+- **比赛来源**：Codeforces Beta Round 15 · Problem E（UTC 2010-05-29）
 - **难度**：2600
 - **标签**：组合数学、动态规划（combinatorics, dp）
 - **评测类型**：普通

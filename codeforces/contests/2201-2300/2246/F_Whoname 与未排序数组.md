@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：Whoname 与未排序数组（Codeforces 2246F，英文名 Whoname and Unsorted Array）
 - **链接**：https://codeforces.com/problemset/problem/2246/F
-- **来源**：Codeforces Round 1108 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1108 (Div. 2) · Problem F（UTC 2026-07-12）
 - **难度**：2900（2750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、置换奇偶性、不变量

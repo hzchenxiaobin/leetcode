@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/46/C
-- **比赛来源**：Codeforces Beta Round 46 · Problem C
+- **比赛来源**：School Personal Contest #2 (Winter Computer School 2010/11) - Codeforces Beta Round 43 (ACM-ICPC Rules) · Problem C（UTC 2010-12-05）
 - **难度**：1600
 - **标签**：two pointers
 - **评测类型**：普通

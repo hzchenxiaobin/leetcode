@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/18/E
-- **比赛来源**：Codeforces Beta Round 18 · Problem E（2010-05-06）
+- **比赛来源**：Codeforces Beta Round 18 (Div. 2 Only) · Problem E（UTC 2010-06-16）
 - **难度**：2000
 - **标签**：动态规划
 - **评测类型**：特殊评测（输出方案）

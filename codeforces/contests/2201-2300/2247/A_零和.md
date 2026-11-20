@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：零和（Codeforces 2247A，英文名 Zero Sum）
 - **链接**：https://codeforces.com/problemset/problem/2247/A
-- **来源**：Codeforces Round 1111 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1111 (Div. 2) · Problem A（UTC 2026-07-18）
 - **难度**：$\ast 800$（500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：构造、数论、不变量、结论（官方标签：constructive algorithms, dp, number theory）

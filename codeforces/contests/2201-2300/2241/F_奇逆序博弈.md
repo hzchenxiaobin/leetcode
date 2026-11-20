@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：奇逆序博弈（Codeforces 2241F，英文名 A Bit Odd）
 - **链接**：https://codeforces.com/problemset/problem/2241/F
-- **来源**：Codeforces Round 1107 (Div. 3) · Problem F
+- **来源**：Codeforces Round 1107 (Div. 3) · Problem F（UTC 2026-06-30）
 - **难度**：1700
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：博弈论，贪心，数学，数据结构

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/21/D
-- **比赛来源**：Codeforces Beta Round 21 · Problem D
+- **比赛来源**：Codeforces Alpha Round 21 (Codeforces format) · Problem D（UTC 2010-06-28）
 - **难度**：2400
 - **标签**：状压 DP、图匹配、图论
 - **评测类型**：普通

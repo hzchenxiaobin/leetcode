@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/13/B
-- **比赛来源**：Codeforces Beta Round 13 · Problem B
+- **比赛来源**：Codeforces Beta Round 13 · Problem B（UTC 2010-05-06）
 - **难度**：2000
 - **标签**：几何、实现
 - **评测类型**：普通

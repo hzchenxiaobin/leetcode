@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/54/B
-- **比赛来源**：Codeforces Beta Round 54 · Problem B
+- **比赛来源**：Codeforces Beta Round 50 · Problem B（UTC 2011-01-11）
 - **难度**：1800
 - **标签**：哈希、实现、字符串
 - **评测类型**：普通

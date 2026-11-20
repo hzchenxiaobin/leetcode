@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/34/D
-- **比赛来源**：Codeforces Beta Round 34 (Div. 2) · Problem D（2010-10-11）
+- **比赛来源**：Codeforces Beta Round 34 (Div. 2) · Problem D（UTC 2010-10-11）
 - **难度**：1600
 - **标签**：dfs 与图论、图
 - **评测类型**：普通（单组输入，唯一输出）

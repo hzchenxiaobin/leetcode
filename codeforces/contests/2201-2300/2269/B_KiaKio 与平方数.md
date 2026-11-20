@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：KiaKio 与平方数（Codeforces 2269B，英文名 KiaKio and Squared Numbers）
 - **链接**：https://codeforces.com/problemset/problem/2269/B
-- **来源**：Codeforces Round 1124 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1124 (Div. 2) · Problem B（UTC 2026-09-26）
 - **难度**：1000（Div. 2 Problem B，1000 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：暴力枚举、实现

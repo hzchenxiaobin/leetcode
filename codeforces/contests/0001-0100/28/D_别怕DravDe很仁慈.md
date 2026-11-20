@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/28/D
-- **比赛来源**：Codeforces Beta Round 28 · Problem D（2010-06-25）
+- **比赛来源**：Codeforces Beta Round 28 (Codeforces format) · Problem D（UTC 2010-09-17）
 - **难度**：2400
 - **标签**：binary search / data structures / dp / hashing
 - **评测类型**：多解（任意一组合法且总价值最大的方案）

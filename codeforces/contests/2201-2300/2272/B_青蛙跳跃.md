@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：青蛙跳跃（Codeforces 2272B，英文名 Frogs Jump）
 - **链接**：https://codeforces.com/problemset/problem/2272/B
-- **来源**：Codeforces Round 1130 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1130 (Div. 2) · Problem B（UTC 2026-10-26）
 - **难度**：未评级（1000 分，Div. 2 B，约 1200–1300 档）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：构造，贪心，奇偶性不变量

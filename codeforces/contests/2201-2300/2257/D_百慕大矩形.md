@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：百慕大矩形（Codeforces 2257D，英文名 Bermuda Rectangle）
 - **链接**：https://codeforces.com/problemset/problem/2257/D
-- **来源**：Codeforces Round 1117 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1117 (Div. 2) · Problem D（UTC 2026-08-17）
 - **难度**：1600
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：数论、因子枚举（试除法）、二分查找、双指针、前缀和

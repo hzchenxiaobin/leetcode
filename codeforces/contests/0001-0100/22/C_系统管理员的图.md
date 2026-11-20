@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/22/C
-- **比赛来源**：Codeforces Beta Round 22 · Problem C（2010-06-03）
+- **比赛来源**：Codeforces Beta Round 22 (Div. 2 Only) · Problem C（UTC 2010-06-29）
 - **难度**：1700
 - **标签**：图论、构造
 - **评测类型**：特殊评测（输出任一方案）

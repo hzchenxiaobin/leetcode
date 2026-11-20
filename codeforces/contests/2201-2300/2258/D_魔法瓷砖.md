@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：魔法瓷砖（Codeforces 2258D，英文名 Magic Tiles）
 - **链接**：https://codeforces.com/problemset/problem/2258/D
-- **来源**：Codeforces Round 1118 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1118 (Div. 2) · Problem D（UTC 2026-08-29）
 - **难度**：2500（2000 分）
 - **限制**：时间 4 s / 内存 512 MB
 - **标签**：动态规划、贪心、实现、大数比较转字典序

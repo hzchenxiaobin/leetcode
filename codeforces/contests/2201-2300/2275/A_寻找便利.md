@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：寻找便利（Codeforces 2275A，英文名 In Search of Convenience）
 - **链接**：https://codeforces.com/problemset/problem/2275/A
-- **来源**：Codeforces Round 1125 (Div. 3) · Problem A
+- **来源**：Codeforces Round 1125 (Div. 3) · Problem A（UTC 2026-10-07）
 - **难度**：800
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：几何，实现，整点构造（官方 tag：geometry、implementation）

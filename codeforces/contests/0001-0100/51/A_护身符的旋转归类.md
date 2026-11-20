@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/51/A
-- **比赛来源**：Codeforces Beta Round 51 · Problem A
+- **比赛来源**：Codeforces Beta Round 48 · Problem A（UTC 2010-12-28）
 - **难度**：1300
 - **标签**：实现、模拟、旋转判等、集合去重
 - **评测类型**：普通

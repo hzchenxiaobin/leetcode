@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/38/H
-- **比赛来源**：Codeforces Beta Round 38 · Problem H
+- **比赛来源**：School Personal Contest #1 (Winter Computer School 2010/11) - Codeforces Beta Round 38 (ACM-ICPC Rules) · Problem H（UTC 2010-10-30）
 - **难度**：2400
 - **标签**：dp
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/19/B
-- **比赛来源**：Codeforces Beta Round 19 · Problem B
+- **比赛来源**：Codeforces Beta Round 19 · Problem B（UTC 2010-06-24）
 - **难度**：1900
 - **标签**：动态规划
 - **评测类型**：普通

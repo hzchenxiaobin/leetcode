@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/12/A
-- **比赛来源**：Codeforces Beta Round 12 (Div 2 Only) · Problem A（2010-04-29）
+- **比赛来源**：Codeforces Beta Round 12 (Div 2 Only) · Problem A（UTC 2010-04-29）
 - **难度**：800
 - **标签**：实现
 - **评测类型**：普通（单组输入，唯一答案）

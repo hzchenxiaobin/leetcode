@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：合数排列（Codeforces 2285A，英文名 Composite Permutation）
 - **链接**：https://codeforces.com/problemset/problem/2285/A
-- **来源**：Codeforces Round 1135 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1135 (Div. 2) · Problem A（UTC 2026-11-15）
 - **难度**：未评级（500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：构造、数学

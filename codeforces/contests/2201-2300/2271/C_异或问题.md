@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：异或问题（Codeforces 2271C，英文名 XOR Problem）
 - **链接**：https://codeforces.com/problemset/problem/2271/C
-- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem C
+- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem C（UTC 2026-10-10）
 - **难度**：1400（1250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位运算，构造，图论，贪心，数学

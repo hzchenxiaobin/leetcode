@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：主导频率划分（Codeforces 2242B，英文名 Predominant Frequency Division）
 - **链接**：https://codeforces.com/problemset/problem/2242/B
-- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem B
+- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem B（UTC 2026-07-06）
 - **难度**：1000（$\ast 1000$）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：前缀和、贪心、数学、实现（官方标签：data structures, greedy, implementation, math）

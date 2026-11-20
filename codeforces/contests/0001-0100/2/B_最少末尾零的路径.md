@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/2/B
-- **比赛来源**：Codeforces Beta Round 2 · Problem B
+- **比赛来源**：Codeforces Beta Round 2 · Problem B（UTC 2010-02-25）
 - **难度**：rating 2000（2000 分）
 - **标签**：动态规划、数学（素因子分解、路径最优化）
 - **评测类型**：普通（最优路径可能有多条，评测器比较零的个数并检验路径合法）

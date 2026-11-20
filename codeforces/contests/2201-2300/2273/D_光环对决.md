@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：光环对决（Codeforces 2273D，英文名 Aura Battle）
 - **链接**：https://codeforces.com/problemset/problem/2273/D
-- **来源**：Codeforces Round 1127 (Div. 1, Based on Mexican Olympiad in Informatics 2026) · Problem D
+- **来源**：Codeforces Round 1127 (Div. 1, Based on Mexican Olympiad in Informatics 2026) · Problem D（UTC 2026-10-11）
 - **难度**：*2600（2000 分，Div. 1 D 位）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：交互题，数学，暴力枚举，实现

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：欧几里得序列与两个数（Codeforces 2234A，英文名 Euclid, Sequence and Two Numbers）
 - **链接**：https://codeforces.com/problemset/problem/2234/A
-- **来源**：Codeforces Round 1102 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1102 (Div. 2) · Problem A（UTC 2026-06-07）
 - **难度**：800（*800）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：数学、数论、排序

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：干净子串（Codeforces 2267E，英文名 Clean Substrings）
 - **链接**：https://codeforces.com/problemset/problem/2267/E
-- **来源**：Codeforces Round 1123 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1123 (Div. 2) · Problem E（UTC 2026-09-25）
 - **难度**：2000 分（题面 rating 2000）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学，数据结构，数学

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：熟悉吗（Codeforces 2245F，英文名 Familiar?）
 - **链接**：https://codeforces.com/problemset/problem/2245/F
-- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem F
+- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem F（UTC 2026-07-16）
 - **难度**：2800（3000 分）
 - **限制**：时间 5 s / 内存 128 MB（题目特意声明「非常规内存限制」）
 - **标签**：单调栈、笛卡尔树、区间 DP、组合计数、剪枝

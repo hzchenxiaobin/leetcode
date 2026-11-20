@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：监视海狸（Codeforces 2257C，英文名 Spying on the Beaver）
 - **链接**：https://codeforces.com/problemset/problem/2257/C
-- **来源**：Codeforces Round 1117 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1117 (Div. 2) · Problem C（UTC 2026-08-17）
 - **难度**：1200（1250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、树、图论、DFS 与类似、连通块（思维题）

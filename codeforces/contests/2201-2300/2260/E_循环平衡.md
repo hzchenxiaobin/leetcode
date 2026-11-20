@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：循环平衡（Codeforces 2260E，英文名 Cyclic Balance）
 - **链接**：https://codeforces.com/problemset/problem/2260/E
-- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem E
+- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem E（UTC 2026-09-08）
 - **难度**：2000 分
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：二分查找、构造、动态规划、数学

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：夜行者（Codeforces 2254G，英文名 Nightcrawler）
 - **链接**：https://codeforces.com/problemset/problem/2254/G
-- **来源**：Codeforces Round 1114 (Div. 3) · Problem G
+- **来源**：Codeforces Round 1114 (Div. 3) · Problem G（UTC 2026-08-04）
 - **难度**：2200
 - **限制**：时间 2.5 s / 内存 256 MB
 - **标签**：树、贪心、排序、并查集 / 可并堆、DP、DFS

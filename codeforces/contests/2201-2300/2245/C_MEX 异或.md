@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：MEX 异或（Codeforces 2245C，英文名 MEXOR）
 - **链接**：https://codeforces.com/problemset/problem/2245/C
-- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem C
+- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem C（UTC 2026-07-16）
 - **难度**：1400（1250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位运算，构造，数学，mex

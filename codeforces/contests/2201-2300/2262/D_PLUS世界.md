@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：PLUS世界（Codeforces 2262D，英文名 PLUSworld）
 - **链接**：https://codeforces.com/problemset/problem/2262/D
-- **来源**：Codeforces Round 1120 (Div. 1) · Problem D
+- **来源**：Codeforces Round 1120 (Div. 1) · Problem D（UTC 2026-09-12）
 - **难度**：$*2900$（2500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、图论、贪心、函数图与向上森林（官方标签：constructive algorithms、graphs、greedy）

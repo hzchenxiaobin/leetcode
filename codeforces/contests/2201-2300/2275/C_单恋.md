@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：单恋（Codeforces 2275C，英文名 Unrequited Love）
 - **链接**：https://codeforces.com/problemset/problem/2275/C
-- **来源**：Codeforces Round 1125 (Div. 3) · Problem C
+- **来源**：Codeforces Round 1125 (Div. 3) · Problem C（UTC 2026-10-07）
 - **难度**：1000
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：枚举，数据结构（排序 / 哈希计数），组合计数

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/14/B
-- **比赛来源**：Codeforces Beta Round 14 (Div. 2) · Problem B
+- **比赛来源**：Codeforces Beta Round 14 (Div. 2) · Problem B（UTC 2010-05-19）
 - **难度**：1000
 - **标签**：实现（implementation）
 - **评测类型**：普通

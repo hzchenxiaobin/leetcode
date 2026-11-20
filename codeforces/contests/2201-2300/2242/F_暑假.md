@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：暑假（Codeforces 2242F，英文名 Summer Vacation）
 - **链接**：https://codeforces.com/problemset/problem/2242/F
-- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem F
+- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem F（UTC 2026-07-06）
 - **难度**：2800（$\ast 2800$）
 - **限制**：时间 1.5 s / 内存 1024 MB
 - **标签**：数据结构、动态规划、概率与期望、树（官方标签：data structures, dp, probabilities, trees）

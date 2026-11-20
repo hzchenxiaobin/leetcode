@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：Agos 博士的深色模式（Codeforces 2264D，英文名 Dr. Agos's Dark Mode）
 - **链接**：https://codeforces.com/problemset/problem/2264/D
-- **来源**：Codeforces Round 1121 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1121 (Div. 2) · Problem D（UTC 2026-09-13）
 - **难度**：1900（2500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：暴力枚举、中国剩余定理、构造算法、数学、字符串

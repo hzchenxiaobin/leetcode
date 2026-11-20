@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：二进制冒泡排序逆序数（Codeforces 2259F，英文名 Binary Bubble Sort Inversions）
 - **链接**：https://codeforces.com/problemset/problem/2259/F
-- **来源**：Codeforces Round 1119 (Div. 3) · Problem F
+- **来源**：Codeforces Round 1119 (Div. 3) · Problem F（UTC 2026-09-05）
 - **难度**：$\ast 1800$
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：数据结构、数学、双指针（官方标签：data structures、math、two pointers）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/24/A
-- **比赛来源**：Codeforces Beta Round 24 · Problem A（2010-07-26）
+- **比赛来源**：Codeforces Beta Round 24 · Problem A（UTC 2010-07-26）
 - **难度**：1400
 - **标签**：图论（graphs）
 - **评测类型**：普通

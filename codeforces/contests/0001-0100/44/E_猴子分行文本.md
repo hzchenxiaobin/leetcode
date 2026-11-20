@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/44/E
-- **比赛来源**：Codeforces Beta Round 44（School Team Contest 2, Winter Computer School 2010/11）· Problem E（2010-11-06）
+- **比赛来源**：School Team Contest 2 (Winter Computer School 2010/11) · Problem E（UTC 2010-11-06）
 - **难度**：1400
 - **标签**：动态规划、构造、贪心
 - **评测类型**：多解（special judge：输出任意一种合法分行即可）

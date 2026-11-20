@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：Kia Kio 与生命之树（Codeforces 2268E，英文名 Kia Kio and Tree of Life）
 - **链接**：https://codeforces.com/problemset/problem/2268/E
-- **来源**：Codeforces Round 1124 (Div. 1) · Problem E
+- **来源**：Codeforces Round 1124 (Div. 1) · Problem E（UTC 2026-09-26）
 - **难度**：2700（2750 分）
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：树，组合计数，按位拆解，卷积 / NTT，数学

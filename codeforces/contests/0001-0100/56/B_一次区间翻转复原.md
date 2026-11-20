@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/56/B
-- **比赛来源**：Codeforces Beta Round 52 (Div. 2)（2011-01-22）· Problem B
+- **比赛来源**：Codeforces Beta Round 52 (Div. 2) · Problem B（UTC 2011-01-21）
 - **难度**：1300
 - **标签**：实现、排列、对称性
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/7/C
-- **比赛来源**：Codeforces Beta Round 7 · Problem C（2010-04-01）
+- **比赛来源**：Codeforces Beta Round 7 · Problem C（UTC 2010-04-01）
 - **难度**：1800
 - **标签**：数学、数论
 - **评测类型**：特殊评测（任意合法答案均可）

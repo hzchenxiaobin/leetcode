@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：又一个构造（Codeforces 2247B，英文名 Yet Another Constructive）
 - **链接**：https://codeforces.com/problemset/problem/2247/B
-- **来源**：Codeforces Round 1111 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1111 (Div. 2) · Problem B（UTC 2026-07-18）
 - **难度**：$\ast 900$（750 分）
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：构造、前缀和、同余、鸽笼原理（官方标签：constructive algorithms）

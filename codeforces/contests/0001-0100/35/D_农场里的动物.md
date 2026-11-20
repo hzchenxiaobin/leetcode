@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/35/D
-- **比赛来源**：Codeforces Beta Round 35 · Problem D
+- **比赛来源**：Codeforces Beta Round 35 (Div. 2) · Problem D（UTC 2010-10-19）
 - **难度**：1700
 - **标签**：动态规划、贪心
 - **评测类型**：普通

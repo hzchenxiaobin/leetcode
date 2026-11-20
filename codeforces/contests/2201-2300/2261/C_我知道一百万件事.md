@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：我知道一百万件事（Codeforces 2261C，英文名 I Know About a Million Things）
 - **链接**：https://codeforces.com/problemset/problem/2261/C
-- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem C
+- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem C（UTC 2026-10-17）
 - **难度**：1000 分（Div. 1 + Div. 2 的 C 题）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：博弈，数学

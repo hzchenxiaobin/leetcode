@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：交换与取反（Codeforces 2278E，英文名 Swap and Negate）
 - **链接**：https://codeforces.com/problemset/problem/2278/E
-- **来源**：Codeforces Round 1131 (Div. 3) · Problem E
+- **来源**：Codeforces Round 1131 (Div. 3) · Problem E（UTC 2026-10-31）
 - **难度**：未评级（Div. 3 E，约 1600–1800 档；官方未标 rating）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、贪心、排序、不变量

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：鞑靼电视节目（Codeforces 2236B，英文名 Tatar TV Show）
 - **链接**：https://codeforces.com/problemset/problem/2236/B
-- **来源**：Codeforces Round 1103 (Div. 3) · Problem B
+- **来源**：Codeforces Round 1103 (Div. 3) · Problem B（UTC 2026-06-12）
 - **难度**：rating 800（800 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心、数学、字符串、奇偶性（不变量）

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：汤姆与杰瑞（Codeforces 2245E，英文名 Tom and Jerry）
 - **链接**：https://codeforces.com/problemset/problem/2245/E
-- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem E
+- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem E（UTC 2026-07-16）
 - **难度**：2300（2500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：博弈，树，DFS 与遍历，并查集，计数

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：排列染色游戏（Codeforces 2276F，英文名 Permutation Coloring Game）
 - **链接**：https://codeforces.com/problemset/problem/2276/F
-- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem F
+- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem F（UTC 2026-10-14）
 - **难度**：2400
 - **限制**：时间 3 s / 内存 512 MB
 - **标签**：博弈论，置换环，分类讨论，贪心，位集背包

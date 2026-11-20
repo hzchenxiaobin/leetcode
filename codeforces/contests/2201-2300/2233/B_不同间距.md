@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：不同间距（Codeforces 2233B，英文名 Different Distances）
 - **链接**：https://codeforces.com/problemset/problem/2233/B
-- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem B
+- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem B（UTC 2026-06-09）
 - **难度**：900
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：构造、数学、特殊评测（special judge）

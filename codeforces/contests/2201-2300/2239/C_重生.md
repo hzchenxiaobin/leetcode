@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：重生（Codeforces 2239C，英文名 Revival）
 - **链接**：https://codeforces.com/problemset/problem/2239/C
-- **来源**：Codeforces Round 1105 (Div. 1) · Problem C
+- **来源**：Codeforces Round 1105 (Div. 1) · Problem C（UTC 2026-06-27）
 - **难度**：rating 2200（Div. 1 的 C 题，1500 分）
 - **限制**：时间 2.5 s / 内存 256 MB
 - **标签**：二分查找、数据结构、数学、双指针（官方标签）

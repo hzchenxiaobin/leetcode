@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：网格填数（Codeforces 2271G，英文名 Grid Filling）
 - **链接**：https://codeforces.com/problemset/problem/2271/G
-- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem G
+- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem G（UTC 2026-10-10）
 - **难度**：3100（3500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，贪心，实现

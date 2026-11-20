@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/45/E
-- **比赛来源**：Codeforces Beta Round 45 · Problem E（2010-10-13）
+- **比赛来源**：School Team Contest 3 (Winter Computer School 2010/11) · Problem E（UTC 2010-11-13）
 - **难度**：2000
 - **标签**：构造、贪心、字典序
 - **评测类型**：构造（答案唯一，按行比对；本地用 checker 校验格式与最小性）

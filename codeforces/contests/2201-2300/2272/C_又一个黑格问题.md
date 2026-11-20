@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：又一个黑格问题（Codeforces 2272C，英文名 Yet Another Black Cell Problem）
 - **链接**：https://codeforces.com/problemset/problem/2272/C
-- **来源**：Codeforces Round 1130 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1130 (Div. 2) · Problem C（UTC 2026-10-26）
 - **难度**：未评级（1000 分，Div. 2 C 位，结构上约 1500–1700 档）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分答案，贪心，构造，区间配对

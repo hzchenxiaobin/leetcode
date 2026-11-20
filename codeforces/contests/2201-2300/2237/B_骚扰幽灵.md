@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：骚扰幽灵（Codeforces 2237B，英文名 Annoying the Ghost）
 - **链接**：https://codeforces.com/problemset/problem/2237/B
-- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem B
+- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem B（UTC 2026-06-18）
 - **难度**：rating 1000（1000 分）
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：贪心、暴力枚举、匹配、逆序对（相邻交换）

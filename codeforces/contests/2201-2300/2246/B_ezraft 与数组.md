@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：ezraft 与数组（Codeforces 2246B，英文名 ezraft and Array）
 - **链接**：https://codeforces.com/problemset/problem/2246/B
-- **来源**：Codeforces Round 1108 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1108 (Div. 2) · Problem B（UTC 2026-07-12）
 - **难度**：900（750 分）
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：构造、数论

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/55/A
-- **比赛来源**：Codeforces Beta Round 55 · Problem A
+- **比赛来源**：Codeforces Beta Round 51 · Problem A（UTC 2011-01-14）
 - **难度**：1200
 - **标签**：数学、取模、数论
 - **评测类型**：普通

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：不稳定元素（Codeforces 2242C，英文名 Unstable Elements）
 - **链接**：https://codeforces.com/problemset/problem/2242/C
-- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem C
+- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem C（UTC 2026-07-06）
 - **难度**：1300（$\ast 1300$）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：暴力、数据结构、实现、排序、双指针（官方标签：brute force, data structures, implementation, sortings, two pointers）

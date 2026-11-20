@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/9/A
-- **比赛来源**：Codeforces Beta Round 9 (Div. 2 Only) · Problem A
+- **比赛来源**：Codeforces Beta Round 9 (Div. 2 Only) · Problem A（UTC 2010-04-11）
 - **难度**：800
 - **标签**：数学、概率（math, probabilities）
 - **评测类型**：普通

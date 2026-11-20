@@ -3,7 +3,7 @@
 
 - **标题 / 题号**：XOR 排序（困难版）（Codeforces 2247D2，英文名 XOR Sorting (Hard Version)）
 - **链接**：https://codeforces.com/problemset/problem/2247/D2
-- **来源**：Codeforces Round 1111 (Div. 2) · Problem D2
+- **来源**：Codeforces Round 1111 (Div. 2) · Problem D2（UTC 2026-07-18）
 - **难度**：$\ast 2000$（1250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位运算、线段树、贪心、结论（官方标签：bitmasks, data structures, greedy）

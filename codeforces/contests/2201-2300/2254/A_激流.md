@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：激流（Codeforces 2254A，英文名 Riptide）
 - **链接**：https://codeforces.com/problemset/problem/2254/A
-- **来源**：Codeforces Round 1114 (Div. 3) · Problem A
+- **来源**：Codeforces Round 1114 (Div. 3) · Problem A（UTC 2026-08-04）
 - **难度**：800
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：实现，排序（官方 tag：implementation、sortings；本质是「排序后只盯两端 + 常数轮模拟」）

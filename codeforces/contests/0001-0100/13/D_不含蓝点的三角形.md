@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/13/D
-- **比赛来源**：Codeforces Beta Round 13 · Problem D（2010-05-06）
+- **比赛来源**：Codeforces Beta Round 13 · Problem D（UTC 2010-05-06）
 - **难度**：2600
 - **标签**：动态规划、计算几何（dp, geometry）
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/54/D
-- **比赛来源**：Codeforces Beta Round 54 · Problem D
+- **比赛来源**：Codeforces Beta Round 50 · Problem D（UTC 2011-01-11）
 - **难度**：2100
 - **标签**：构造、自动机、DP、字符串
 - **评测类型**：特殊评测（输出任意合法方案）

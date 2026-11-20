@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：古代伯兰马戏团（Codeforces 1C，英文名 Ancient Berland Circus）
 - **链接**：https://codeforces.com/problemset/problem/1/C
-- **来源**：Codeforces Beta Round 1 · Problem C
+- **来源**：Codeforces Beta Round 1 · Problem C（UTC 2010-02-19）
 - **难度**：2100（`*2100`）
 - **标签**：计算几何、数学、整数倍与单调性
 - **评测类型**：普通题（答案只需保证 $10^{-6}$ 精度，非特殊评测）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/38/D
-- **比赛来源**：Codeforces Beta Round 38 · Problem D（2010-07-13）
+- **比赛来源**：School Personal Contest #1 (Winter Computer School 2010/11) - Codeforces Beta Round 38 (ACM-ICPC Rules) · Problem D（UTC 2010-10-30）
 - **难度**：1900
 - **标签**：实现、几何、物理
 - **评测类型**：普通

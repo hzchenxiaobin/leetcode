@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/23/B
-- **比赛来源**：Codeforces Beta Round 23 · Problem B
+- **比赛来源**：Codeforces Beta Round 23 · Problem B（UTC 2010-07-09）
 - **难度**：1600
 - **标签**：构造、图论、数学（constructive algorithms, graphs, math）
 - **评测类型**：普通

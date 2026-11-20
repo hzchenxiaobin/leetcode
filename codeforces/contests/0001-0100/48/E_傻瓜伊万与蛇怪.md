@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/48/E
-- **比赛来源**：Codeforces Beta Round 48 · Problem E（2010-07-11）
+- **比赛来源**：School Personal Contest #3 (Winter Computer School 2010/11) - Codeforces Beta Round 45 (ACM-ICPC Rules) · Problem E（UTC 2010-12-12）
 - **难度**：2100
 - **标签**：dp / games / graphs
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/26/A
-- **比赛来源**：Codeforces Beta Round 26 · Problem A（2010-06-13）
+- **比赛来源**：Codeforces Beta Round 26 (Codeforces format) · Problem A（UTC 2010-08-16）
 - **难度**：900
 - **标签**：数论
 - **评测类型**：普通

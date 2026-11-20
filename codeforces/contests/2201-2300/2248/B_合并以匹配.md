@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：合并以匹配（Codeforces 2248B，英文名 Merge to Match）
 - **链接**：https://codeforces.com/problemset/problem/2248/B
-- **来源**：Codeforces Round 1113 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1113 (Div. 2) · Problem B（UTC 2026-08-01）
 - **难度**：1000
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：贪心，排序，匹配（Hall 计数）

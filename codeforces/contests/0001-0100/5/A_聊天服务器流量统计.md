@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/5/A
-- **比赛来源**：Codeforces Beta Round 5 · Problem A（2010-03-21）
+- **比赛来源**：Codeforces Beta Round 5 · Problem A（UTC 2010-03-20）
 - **难度**：1000
 - **标签**：实现、字符串处理、模拟
 - **评测类型**：普通（单组输入，唯一答案）

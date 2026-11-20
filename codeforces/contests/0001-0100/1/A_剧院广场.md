@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/1/A
-- **比赛来源**：Codeforces Beta Round 1 · Problem A（2010-02-19）
+- **比赛来源**：Codeforces Beta Round 1 · Problem A（UTC 2010-02-19）
 - **难度**：1000
 - **标签**：数学、向上取整、整数除法
 - **评测类型**：普通

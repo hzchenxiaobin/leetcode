@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/12/D
-- **比赛来源**：Codeforces Beta Round 12 (Div 2 Only) · Problem D（2010-04-29）
+- **比赛来源**：Codeforces Beta Round 12 (Div 2 Only) · Problem D（UTC 2010-04-29）
 - **难度**：2400
 - **标签**：数据结构、排序
 - **评测类型**：普通（单组输入，唯一答案）

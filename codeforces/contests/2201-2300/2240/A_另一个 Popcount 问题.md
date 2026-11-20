@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：另一个 Popcount 问题（Codeforces 2240A，英文名 Another Popcount Problem）
 - **链接**：https://codeforces.com/problemset/problem/2240/A
-- **来源**：Codeforces Round 1105 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1105 (Div. 2) · Problem A（UTC 2026-06-27）
 - **难度**：800（500 分，题面标注 *800）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心

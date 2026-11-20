@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：额外道路（Codeforces 2290H，英文名 Extra Road）
 - **链接**：https://codeforces.com/problemset/problem/2290/H
-- **来源**：Codeforces Round 1134 (Div. 4) · Problem H
+- **来源**：Codeforces Round 1134 (Div. 4) · Problem H（UTC 2026-11-12）
 - **难度**：未评级（Div. 4 压轴题，暂无公开 rating）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：树、贪心、深度优先搜索、动态规划（重链）、二分查找

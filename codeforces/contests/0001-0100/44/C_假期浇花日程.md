@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/44/C
-- **比赛来源**：Codeforces Beta Round 44（School Team Contest 2, Winter Computer School 2010/11）· Problem C（2010-11-06）
+- **比赛来源**：School Team Contest 2 (Winter Computer School 2010/11) · Problem C（UTC 2010-11-06）
 - **难度**：1300
 - **标签**：实现、差分数组、前缀和
 - **评测类型**：普通

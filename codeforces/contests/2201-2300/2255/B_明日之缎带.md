@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：明日之缎带（Codeforces 2255B，英文名 A Ribbon for Tomorrow）
 - **链接**：https://codeforces.com/problemset/problem/2255/B
-- **来源**：Codeforces Round 1116 (Div. 1) · Problem B（同题在 Div. 2 的编号是 2256D）
+- **来源**：Codeforces Round 1116 (Div. 1) · Problem B（UTC 2026-08-09）
 - **难度**：1600
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学、数学、字符串、计数、隔板法

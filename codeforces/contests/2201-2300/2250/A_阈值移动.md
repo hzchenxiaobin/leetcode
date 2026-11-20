@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：阈值移动（Codeforces 2250A，英文名 Threshold Movement）
 - **链接**：https://codeforces.com/problemset/problem/2250/A
-- **来源**：Codeforces Round 1112 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1112 (Div. 2) · Problem A（UTC 2026-07-26）
 - **难度**：800（Div. 2 A，500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：暴力枚举，实现，数学

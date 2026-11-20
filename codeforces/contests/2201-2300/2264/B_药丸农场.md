@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：药丸农场（Codeforces 2264B，英文名 Knife's Pill Farm）
 - **链接**：https://codeforces.com/problemset/problem/2264/B
-- **来源**：Codeforces Round 1121 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1121 (Div. 2) · Problem B（UTC 2026-09-13）
 - **难度**：1000（1250 分）
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：数据结构、贪心、数学

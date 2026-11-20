@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/36/E
-- **比赛来源**：Codeforces Beta Round 36 · Problem E
+- **比赛来源**：Codeforces Beta Round 36 · Problem E（UTC 2010-10-19）
 - **难度**：2600
 - **标签**：构造、并查集、图论、实现
 - **评测类型**：特殊评测（多解）

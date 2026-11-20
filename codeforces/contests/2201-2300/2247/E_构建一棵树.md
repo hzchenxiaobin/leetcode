@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：构建一棵树（Codeforces 2247E，英文名 Build a Tree）
 - **链接**：https://codeforces.com/problemset/problem/2247/E
-- **来源**：Codeforces Round 1111 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1111 (Div. 2) · Problem E（UTC 2026-07-18）
 - **难度**：2300（本题 3000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、树、双指针

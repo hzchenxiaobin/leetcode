@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/13/A
-- **比赛来源**：Codeforces Beta Round 13 · Problem A
+- **比赛来源**：Codeforces Beta Round 13 · Problem A（UTC 2010-05-06）
 - **难度**：1000
 - **标签**：实现、数学
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/51/F
-- **比赛来源**：Codeforces Beta Round 51 · Problem F（2010-12-29）
+- **比赛来源**：Codeforces Beta Round 48 · Problem F（UTC 2010-12-28）
 - **难度**：2800
 - **标签**：DFS 与类似、树形 DP、图论、树、点双连通分量
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/41/C
-- **比赛来源**：Codeforces Beta Round 41 · Problem C
+- **比赛来源**：Codeforces Beta Round 40 (Div. 2) · Problem C（UTC 2010-11-08）
 - **难度**：1300
 - **标签**：表达式解析、实现
 - **评测类型**：普通

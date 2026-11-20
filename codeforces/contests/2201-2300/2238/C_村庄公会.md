@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：村庄公会（Codeforces 2238C，英文名 Village Guilds）
 - **链接**：https://codeforces.com/problemset/problem/2238/C
-- **来源**：Codeforces Round 1106 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1106 (Div. 2) · Problem C（UTC 2026-06-28）
 - **难度**：1400（$*1400$）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：树、深度优先搜索、动态规划 / 树形统计（官方标签：dfs and similar, dp, trees）

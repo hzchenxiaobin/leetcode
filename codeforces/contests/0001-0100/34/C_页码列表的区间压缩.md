@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/34/C
-- **比赛来源**：Codeforces Beta Round 34 (Div. 2) · Problem C（2010-10-11）
+- **比赛来源**：Codeforces Beta Round 34 (Div. 2) · Problem C（UTC 2010-10-11）
 - **难度**：1300
 - **标签**：表达式解析、实现、排序、字符串
 - **评测类型**：普通（单组输入，唯一输出）

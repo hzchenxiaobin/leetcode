@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：二进制串划分（Codeforces 2283E，英文名 Partition of a Binary String）
 - **链接**：https://codeforces.com/problemset/problem/2283/E
-- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem E
+- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem E（UTC 2026-11-04）
 - **难度**：未评级（Educational Round 的 E 题，题面未给分值）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：组合数学、动态规划（Bell 数预处理）、计数、字符串

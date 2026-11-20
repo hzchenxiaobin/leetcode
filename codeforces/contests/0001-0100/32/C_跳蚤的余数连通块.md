@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/32/C
-- **比赛来源**：Codeforces Beta Round 32 · Problem C
+- **比赛来源**：Codeforces Beta Round 32 (Div. 2, Codeforces format) · Problem C（UTC 2010-10-02）
 - **难度**：1700
 - **标签**：数学（math）
 - **评测类型**：普通

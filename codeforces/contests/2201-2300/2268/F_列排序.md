@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：列排序（Codeforces 2268F，英文名 Deglado）
 - **链接**：https://codeforces.com/problemset/problem/2268/F
-- **来源**：Codeforces Round 1124 (Div. 1) · Problem F
+- **来源**：Codeforces Round 1124 (Div. 1) · Problem F（UTC 2026-09-26）
 - **难度**：3500（3250 分，本场压轴）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：构造，奇偶不变量，相邻交换，分组（配对），摊还分析

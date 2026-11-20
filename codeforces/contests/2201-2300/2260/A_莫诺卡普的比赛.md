@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：莫诺卡普的比赛（Codeforces 2260A，英文名 Monocarp's Contest）
 - **链接**：https://codeforces.com/problemset/problem/2260/A
-- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem A
+- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem A（UTC 2026-09-08）
 - **难度**：800 分（Div. 2 的签到题）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：实现（implementation）

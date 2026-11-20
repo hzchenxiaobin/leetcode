@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：创建缩写（Codeforces 2257A，英文名 Creating Abbreviations）
 - **链接**：https://codeforces.com/problemset/problem/2257/A
-- **来源**：Codeforces Round 1117 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1117 (Div. 2) · Problem A（UTC 2026-08-17）
 - **难度**：800（Div. 2 签到题）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：字符串、模拟、观察（不变量）

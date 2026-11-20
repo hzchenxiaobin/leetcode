@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：嘿，是我，苏夫拉基提（Codeforces 2261A，英文名 Hey, It's Me, Souvlakity）
 - **链接**：https://codeforces.com/problemset/problem/2261/A
-- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem A
+- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem A（UTC 2026-10-17）
 - **难度**：800 分（Div. 1 + Div. 2 的签到题）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：博弈，数学

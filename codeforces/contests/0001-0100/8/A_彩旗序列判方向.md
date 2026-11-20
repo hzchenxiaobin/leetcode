@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/8/A
-- **比赛来源**：Codeforces Beta Round 8 · Problem A（2010-04-08）
+- **比赛来源**：Codeforces Beta Round 8 · Problem A（UTC 2010-04-08）
 - **难度**：1200
 - **标签**：字符串
 - **评测类型**：普通

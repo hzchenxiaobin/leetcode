@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：世代三元组（Codeforces 2252E，英文名 Generational Triplets）
 - **链接**：https://codeforces.com/problemset/problem/2252/E
-- **来源**：Codeforces Round 1115 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1115 (Div. 2) · Problem E（UTC 2026-08-06）
 - **难度**：2100（2250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位运算，组合数学，动态规划，数学

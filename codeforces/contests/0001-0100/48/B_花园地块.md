@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/48/B
-- **比赛来源**：Codeforces Beta Round 48 · Problem B（2010-07-11）
+- **比赛来源**：School Personal Contest #3 (Winter Computer School 2010/11) - Codeforces Beta Round 45 (ACM-ICPC Rules) · Problem B（UTC 2010-12-12）
 - **难度**：1200
 - **标签**：brute force / implementation
 - **评测类型**：普通

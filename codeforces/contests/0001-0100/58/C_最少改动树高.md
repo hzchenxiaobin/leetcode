@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/58/C
-- **比赛来源**：Codeforces Beta Round 54 (Div. 2) · Problem C（2011-01-31）
+- **比赛来源**：Codeforces Beta Round 54 (Div. 2) · Problem C（UTC 2011-01-31）
 - **难度**：1800
 - **标签**：暴力枚举、计数
 - **评测类型**：普通

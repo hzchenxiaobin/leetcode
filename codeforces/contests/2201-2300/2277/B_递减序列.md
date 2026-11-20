@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：递减序列（Codeforces 2277B，英文名 Sequence Decreasing）
 - **链接**：https://codeforces.com/problemset/problem/2277/B
-- **来源**：Codeforces Round 1129 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1129 (Div. 2) · Problem B（UTC 2026-10-24）
 - **难度**：未评级（750 分 / Div. 2 B，约 1200 档）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：构造，贪心

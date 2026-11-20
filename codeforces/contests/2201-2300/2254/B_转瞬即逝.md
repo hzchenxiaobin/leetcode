@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：转瞬即逝（Codeforces 2254B，英文名 Evanescent）
 - **链接**：https://codeforces.com/problemset/problem/2254/B
-- **来源**：Codeforces Round 1114 (Div. 3) · Problem B
+- **来源**：Codeforces Round 1114 (Div. 3) · Problem B（UTC 2026-08-04）
 - **难度**：900（Div. 3 B）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：实现，字符串，双指针（压缩成段 + 分情况判定）

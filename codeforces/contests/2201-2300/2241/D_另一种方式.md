@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：另一种方式（Codeforces 2241D，英文名 An Alternative Way）
 - **链接**：https://codeforces.com/problemset/problem/2241/D
-- **来源**：Codeforces Round 1107 (Div. 3) · Problem D
+- **来源**：Codeforces Round 1107 (Div. 3) · Problem D（UTC 2026-06-30）
 - **难度**：1100（$\ast 1100$）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心、数学、动态规划（官方标签：dp, greedy, math）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/17/D
-- **比赛来源**：Codeforces Beta Round 17 · Problem D（2010-06-10）
+- **比赛来源**：Codeforces Beta Round 17 · Problem D（UTC 2010-06-10）
 - **难度**：2400
 - **标签**：数论
 - **评测类型**：普通（单组输入，唯一答案）

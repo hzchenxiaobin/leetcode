@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：删除并拼接（Codeforces 2245B，英文名 Delete and Concatenate）
 - **链接**：https://codeforces.com/problemset/problem/2245/B
-- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem B
+- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem B（UTC 2026-07-16）
 - **难度**：1100（1000 分）
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：贪心，排序，配对，构造性分析

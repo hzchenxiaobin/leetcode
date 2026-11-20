@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/55/D
-- **比赛来源**：Codeforces Beta Round 55 · Problem D
+- **比赛来源**：Codeforces Beta Round 51 · Problem D（UTC 2011-01-14）
 - **难度**：2500
 - **标签**：数位 DP、数论、状态压缩
 - **评测类型**：普通
@@ -117,7 +117,7 @@ $$\text{rem}' = (10\,\text{rem} + d) \bmod 2520,\qquad L' = \operatorname{lcm}(L
 
 ## 4. 正确性证明
 
-**引理 1**：正整数 $x$ 是美丽数，当且仅当 $x$ 能被 $L(x) := \operatorname{lcm}\{\text{$x$ 的非零数位}\}$ 整除。
+**引理 1**：正整数 $x$ 是美丽数，当且仅当 $x$ 能被 $L(x) := \operatorname{lcm}\{\text{非零数位}\}$ 整除。
 
 **证明**：若 $x$ 能被每个非零数位整除，则它能被这些数的最小公倍数整除（最小公倍数是它们的公倍数中最小的，任何公倍数都是它的倍数）。反之，若 $x$ 能被 $L(x)$ 整除，而每个非零数位都整除 $L(x)$，由传递性每个非零数位都整除 $x$。∎
 

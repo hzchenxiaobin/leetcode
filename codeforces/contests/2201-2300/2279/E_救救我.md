@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：救救我（Codeforces 2279E，英文名 Save Me!）
 - **链接**：https://codeforces.com/problemset/problem/2279/E
-- **来源**：Codeforces Round 1133 (Div. 1) · Problem E
+- **来源**：Codeforces Round 1133 (Div. 1) · Problem E（UTC 2026-11-07）
 - **难度**：未评级（2250 分）
 - **限制**：时间 7 s / 内存 16 MB（出题人特意提醒"内存限制不寻常"）
 - **标签**：暴力枚举、DFS、线性代数（异或基 / 矩阵）、折半搜索

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：取模与计数（Codeforces 2278F，英文名 Modulo and Counting）
 - **链接**：https://codeforces.com/problemset/problem/2278/F
-- **来源**：Codeforces Round 1131 (Div. 3) · Problem F
+- **来源**：Codeforces Round 1131 (Div. 3) · Problem F（UTC 2026-10-31）
 - **难度**：未评级（Div. 3 后半段计数题，tags：dp / math / number theory）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：动态规划、数学、数论、差分、前缀和、计数

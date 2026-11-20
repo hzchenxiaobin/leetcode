@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：MEX 的下取整（简单版）（Codeforces 2262A1，英文名 Floor of MEX (Easy Version)）
 - **链接**：https://codeforces.com/problemset/problem/2262/A1
-- **来源**：Codeforces Round 1120 (Div. 1) · Problem A1
+- **来源**：Codeforces Round 1120 (Div. 1) · Problem A1（UTC 2026-09-12）
 - **难度**：1200（`*1200`，500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，贪心

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：清空数组（Codeforces 2271E，英文名 Array Emptying）
 - **链接**：https://codeforces.com/problemset/problem/2271/E
-- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem E
+- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem E（UTC 2026-10-10）
 - **难度**：2100（2250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分答案，数据结构，贪心

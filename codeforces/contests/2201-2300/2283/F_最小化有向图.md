@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最小化有向图（Codeforces 2283F，英文名 Minimize the Graph）
 - **链接**：https://codeforces.com/problemset/problem/2283/F
-- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem F
+- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem F（UTC 2026-11-04）
 - **难度**：未评级（Educational Round 的 F 题，题面未给 rating / points）
 - **限制**：时间 3 s / 内存 512 MB
 - **标签**：图论、传递约简、贪心、并查集、树状数组、离线二维数点

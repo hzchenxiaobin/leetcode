@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/25/E
-- **比赛来源**：Codeforces Beta Round 25 · Problem E
+- **比赛来源**：Codeforces Beta Round 25 (Div. 2 Only) · Problem E（UTC 2010-08-02）
 - **难度**：2200
 - **标签**：哈希、字符串
 - **评测类型**：普通

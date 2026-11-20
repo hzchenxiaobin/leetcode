@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：字母下移（Codeforces 2290D，英文名 Letters Down）
 - **链接**：https://codeforces.com/problemset/problem/2290/D
-- **来源**：Codeforces Round 1134 (Div. 4) · Problem D
+- **来源**：Codeforces Round 1134 (Div. 4) · Problem D（UTC 2026-11-12）
 - **难度**：未评级（Div. 4 的 D 题，官方标签含并查集）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：数据结构，并查集，贪心，实现，字符串

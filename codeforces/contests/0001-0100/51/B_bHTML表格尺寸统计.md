@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/51/B
-- **比赛来源**：Codeforces Beta Round 51 · Problem B
+- **比赛来源**：Codeforces Beta Round 48 · Problem B（UTC 2010-12-28）
 - **难度**：1700
 - **标签**：表达式解析、栈、语法分析
 - **评测类型**：普通

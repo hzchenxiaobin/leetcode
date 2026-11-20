@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：大异或（Codeforces 2283C，英文名 Big XOR）
 - **链接**：https://codeforces.com/problemset/problem/2283/C
-- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem C
+- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem C（UTC 2026-11-04）
 - **难度**：未评级（Div. 2 的 C 题，暂无公开 rating）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：位运算、构造、异或、数学

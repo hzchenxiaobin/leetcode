@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：雪崩（Codeforces 2290E，英文名 Avalanche）
 - **链接**：https://codeforces.com/problemset/problem/2290/E
-- **来源**：Codeforces Round 1134 (Div. 4) · Problem E
+- **来源**：Codeforces Round 1134 (Div. 4) · Problem E（UTC 2026-11-12）
 - **难度**：未评级（Div. 4 的 E 题，暂无公开 rating）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：博弈论、Sprague-Grundy 定理、动态规划、数学

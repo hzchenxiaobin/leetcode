@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/48/F
-- **比赛来源**：Codeforces Beta Round 48 · Problem F（2010-07-11）
+- **比赛来源**：School Personal Contest #3 (Winter Computer School 2010/11) - Codeforces Beta Round 45 (ACM-ICPC Rules) · Problem F（UTC 2010-12-12）
 - **难度**：2800
 - **标签**：greedy / sortings
 - **评测类型**：普通（浮点，误差 $\le 10^{-9}$）

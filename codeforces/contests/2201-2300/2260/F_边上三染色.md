@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：边上三染色（Codeforces 2260F，英文名 Edge Three-Coloring）
 - **链接**：https://codeforces.com/problemset/problem/2260/F
-- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem F
+- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem F（UTC 2026-09-08）
 - **难度**：2500
 - **限制**：时间 4 s / 内存 512 MB
 - **标签**：暴力，DFS，并查集，图论，树

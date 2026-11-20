@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：Plegma II：问我任意格（困难版）（Codeforces 2261F2，英文名 Plegma II: Ask Me Any Cell (Hard Version)）
 - **链接**：https://codeforces.com/problemset/problem/2261/F2
-- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem F2
+- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem F2（UTC 2026-10-17）
 - **难度**：3300（5000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，输出型，adhoc，分阶段设计

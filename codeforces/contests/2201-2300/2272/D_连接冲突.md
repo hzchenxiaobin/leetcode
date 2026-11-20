@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：连接冲突（Codeforces 2272D，英文名 Connecting the Conflicts）
 - **链接**：https://codeforces.com/problemset/problem/2272/D
-- **来源**：Codeforces Round 1130 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1130 (Div. 2) · Problem D（UTC 2026-10-26）
 - **难度**：未评级（1250 分，Div. 2 D）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，树形 DP，DFS 与遍历，最大独立集，贪心

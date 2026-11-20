@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/45/A
-- **比赛来源**：Codeforces Beta Round 45 · Problem A（2010-10-13）
+- **比赛来源**：School Team Contest 3 (Winter Computer School 2010/11) · Problem A（UTC 2010-11-13）
 - **难度**：900
 - **标签**：实现
 - **评测类型**：普通

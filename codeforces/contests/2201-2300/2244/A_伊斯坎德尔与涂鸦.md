@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：伊斯坎德尔与涂鸦（Codeforces 2244A，英文名 Iskander and Drawings）
 - **链接**：https://codeforces.com/problemset/problem/2244/A
-- **来源**：Codeforces Round 1109 (Div. 3) · Problem A
+- **来源**：Codeforces Round 1109 (Div. 3) · Problem A（UTC 2026-07-14）
 - **难度**：$\ast 800$
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：字符串、贪心、枚举、模拟（官方标签：dp, games, greedy, strings）

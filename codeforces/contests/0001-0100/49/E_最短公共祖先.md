@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/49/E
-- **比赛来源**：Codeforces Beta Round 49 · Problem E（2010-12-18）
+- **比赛来源**：Codeforces Beta Round 46 (Div. 2) · Problem E（UTC 2010-12-17）
 - **难度**：2300
 - **标签**：动态规划、区间 DP、字符串
 - **评测类型**：普通

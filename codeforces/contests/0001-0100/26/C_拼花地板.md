@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/26/C
-- **比赛来源**：Codeforces Beta Round 26 · Problem C（2010-06-13）
+- **比赛来源**：Codeforces Beta Round 26 (Codeforces format) · Problem C（UTC 2010-08-16）
 - **难度**：2000
 - **标签**：构造、贪心、实现
 - **评测类型**：特殊评测（输出任一可行方案）

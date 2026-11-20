@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：排名子序列（Codeforces 2249A，英文名 Rank Subsequence）
 - **链接**：https://codeforces.com/problemset/problem/2249/A
-- **来源**：Codeforces Round 1112 (Div. 1) · Problem A
+- **来源**：Codeforces Round 1112 (Div. 1) · Problem A（UTC 2026-07-26）
 - **难度**：1300（Div. 1 A，750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：暴力枚举，贪心，实现

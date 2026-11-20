@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/28/A
-- **比赛来源**：Codeforces Beta Round 28 · Problem A（2010-06-25）
+- **比赛来源**：Codeforces Beta Round 28 (Codeforces format) · Problem A（UTC 2010-09-17）
 - **难度**：1600
 - **标签**：实现
 - **评测类型**：多解（任意一组合法方案）

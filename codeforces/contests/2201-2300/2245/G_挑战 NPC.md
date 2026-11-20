@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：挑战 NPC（Codeforces 2245G，英文名 NPC Challenge）
 - **链接**：https://codeforces.com/problemset/problem/2245/G
-- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem G
+- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem G（UTC 2026-07-16）
 - **难度**：3000（3500 分）
 - **限制**：时间 4 s / 内存 256 MB（交互题）
 - **标签**：分治、交互、独立集（贪心）、随机化

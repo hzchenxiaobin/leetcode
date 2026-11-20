@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/3/A
-- **比赛来源**：Codeforces Beta Round 3 · Problem A（2010-03-07）
+- **比赛来源**：Codeforces Beta Round 3 · Problem A（UTC 2010-03-07）
 - **难度**：1000（题面标注 `*1000`）
 - **标签**：贪心、最短路径（greedy, shortest paths）
 - **评测类型**：普通评测；但答案不唯一，判题器按规则校验走法（多解题）

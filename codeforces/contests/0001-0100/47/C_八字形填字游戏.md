@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/47/C
-- **比赛来源**：Codeforces Beta Round 47 · Problem C（2010-12-08）
+- **比赛来源**：Codeforces Beta Round 44 (Div. 2) · Problem C（UTC 2010-12-07）
 - **难度**：2000
 - **标签**：实现
 - **评测类型**：普通（单组输入，唯一输出：字典序最小的方案）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/59/E
-- **比赛来源**：Codeforces Beta Round 59 · Problem E（2011-02-12）
+- **比赛来源**：Codeforces Beta Round 55 (Div. 2) · Problem E（UTC 2011-02-11）
 - **难度**：2000
 - **标签**：图论、最短路、BFS
 - **评测类型**：特殊评测（任意一条最短路径均可）

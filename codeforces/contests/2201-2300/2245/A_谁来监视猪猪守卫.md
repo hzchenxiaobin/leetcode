@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：谁来监视猪猪守卫（Codeforces 2245A，英文名 Who Watches the Watchpig?）
 - **链接**：https://codeforces.com/problemset/problem/2245/A
-- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem A
+- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem A（UTC 2026-07-16）
 - **难度**：800（500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心、字符串、前缀后缀计数

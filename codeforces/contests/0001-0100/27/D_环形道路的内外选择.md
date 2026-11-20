@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/27/D
-- **比赛来源**：Codeforces Beta Round 27 · Problem D（2010-08-25）
+- **比赛来源**：Codeforces Beta Round 27 (Codeforces format, Div. 2) · Problem D（UTC 2010-09-10）
 - **难度**：2200
 - **标签**：2-SAT、DFS、并查集、图论（2-sat, dfs and similar, dsu, graphs）
 - **评测类型**：特殊评测（有多组合法方案，输出任意一组）

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：追猎野兽（Codeforces 2239D，英文名 Hunting the Beast）
 - **链接**：https://codeforces.com/problemset/problem/2239/D
-- **来源**：Codeforces Round 1105 (Div. 1) · Problem D
+- **来源**：Codeforces Round 1105 (Div. 1) · Problem D（UTC 2026-06-27）
 - **难度**：2500（$\ast 2500$，2000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学、图论、生成函数、拉格朗日反演、容斥（官方标签：combinatorics, dp, graphs, math）

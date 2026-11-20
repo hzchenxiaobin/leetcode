@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：多彩作品（Codeforces 2239F，英文名 Colorful Works）
 - **链接**：https://codeforces.com/problemset/problem/2239/F
-- **来源**：Codeforces Round 1105 (Div. 1) · Problem F
+- **来源**：Codeforces Round 1105 (Div. 1) · Problem F（UTC 2026-06-27）
 - **难度**：rating 3500（Div. 1 的 F 题，3500 分）
 - **限制**：时间 5 s / 内存 256 MB
 - **标签**：动态规划、多项式（GF(2) 上的背包/卷积）、博弈论、实现

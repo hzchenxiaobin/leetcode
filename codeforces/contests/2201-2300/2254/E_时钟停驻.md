@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：时钟停驻（Codeforces 2254E，英文名 Chronostasis）
 - **链接**：https://codeforces.com/problemset/problem/2254/E
-- **来源**：Codeforces Round 1114 (Div. 3) · Problem E
+- **来源**：Codeforces Round 1114 (Div. 3) · Problem E（UTC 2026-08-04）
 - **难度**：1500
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心，数据结构，二分查找（官方 tag：binary search、data structures、greedy；本质是「多重集上按阈值取最小可行元素」）

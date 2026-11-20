@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/44/G
-- **比赛来源**：Codeforces Beta Round 44（School Team Contest 2, Winter Computer School 2010/11）· Problem G（2010-11-06）
+- **比赛来源**：School Team Contest 2 (Winter Computer School 2010/11) · Problem G（UTC 2010-11-06）
 - **难度**：2500
 - **标签**：数据结构、离线处理、二维线段树
 - **评测类型**：普通

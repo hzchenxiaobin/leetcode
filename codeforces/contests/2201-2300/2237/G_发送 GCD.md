@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：发送 GCD（Codeforces 2237G，英文名 Send GCDs）
 - **链接**：https://codeforces.com/problemset/problem/2237/G
-- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem G
+- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem G（UTC 2026-06-18）
 - **难度**：rating 2900（2750 分）
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：通信题（run twice）、构造、交互、数学、数论

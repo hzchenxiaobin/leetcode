@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：奇数橡皮擦（Codeforces 2258A，英文名 Odd Eraser）
 - **链接**：https://codeforces.com/problemset/problem/2258/A
-- **来源**：Codeforces Round 1118 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1118 (Div. 2) · Problem A（UTC 2026-08-29）
 - **难度**：800（Div. 2 签到题）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：数学、贪心、不变量

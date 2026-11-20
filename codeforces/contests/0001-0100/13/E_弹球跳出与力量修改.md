@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/13/E
-- **比赛来源**：Codeforces Beta Round 13 · Problem E（2010-05-06）
+- **比赛来源**：Codeforces Beta Round 13 · Problem E（UTC 2010-05-06）
 - **难度**：2700
 - **标签**：数据结构、并查集 / 分块（data structures, dsu）
 - **评测类型**：普通

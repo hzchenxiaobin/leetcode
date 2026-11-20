@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：Nim 游戏即异或游戏（Codeforces 2239A，英文名 Nim Game Is XOR Game）
 - **链接**：https://codeforces.com/problemset/problem/2239/A
-- **来源**：Codeforces Round 1105 (Div. 1) · Problem A
+- **来源**：Codeforces Round 1105 (Div. 1) · Problem A（UTC 2026-06-27）
 - **难度**：1300（$\ast 1300$，750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、博弈论、贪心、数学（官方标签：constructive algorithms, games, greedy, math）

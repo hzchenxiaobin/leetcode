@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/22/E
-- **比赛来源**：Codeforces Beta Round 22 · Problem E（2010-06-03）
+- **比赛来源**：Codeforces Beta Round 22 (Div. 2 Only) · Problem E（UTC 2010-06-29）
 - **难度**：2300
 - **标签**：DFS、图论、树
 - **评测类型**：特殊评测（任意最优方案）

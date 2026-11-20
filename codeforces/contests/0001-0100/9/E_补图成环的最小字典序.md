@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/9/E
-- **比赛来源**：Codeforces Beta Round 9 (Div. 2 Only) · Problem E
+- **比赛来源**：Codeforces Beta Round 9 (Div. 2 Only) · Problem E（UTC 2010-04-11）
 - **难度**：2300
 - **标签**：dfs and similar、并查集、图论
 - **评测类型**：构造（最少补边数 + 字典序最小 ⇒ 答案唯一）

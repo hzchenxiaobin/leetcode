@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/7/A
-- **比赛来源**：Codeforces Beta Round 7 · Problem A（2010-04-01）
+- **比赛来源**：Codeforces Beta Round 7 · Problem A（UTC 2010-04-01）
 - **难度**：1100
 - **标签**：暴力枚举、构造
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/60/D
-- **比赛来源**：Codeforces Beta Round 60 · Problem D（2011-02-20）
+- **比赛来源**：Codeforces Beta Round 56 · Problem D（UTC 2011-02-19）
 - **难度**：2500
 - **标签**：暴力枚举、并查集、数论（本原勾股三元组）
 - **评测类型**：普通

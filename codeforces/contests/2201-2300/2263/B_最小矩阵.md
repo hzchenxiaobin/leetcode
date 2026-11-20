@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最小矩阵（Codeforces 2263B，英文名 Min Matrices）
 - **链接**：https://codeforces.com/problemset/problem/2263/B
-- **来源**：Codeforces Round 1120 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1120 (Div. 2) · Problem B（UTC 2026-09-12）
 - **难度**：$\ast 900$（1000 分）
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：构造、思维、计数（constructive algorithms）

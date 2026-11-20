@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：数组替换（Codeforces 2252D，英文名 Array Replacement）
 - **链接**：https://codeforces.com/problemset/problem/2252/D
-- **来源**：Codeforces Round 1115 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1115 (Div. 2) · Problem D（UTC 2026-08-06）
 - **难度**：1700（1750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心、排序

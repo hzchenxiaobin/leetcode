@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/41/D
-- **比赛来源**：Codeforces Beta Round 41 · Problem D
+- **比赛来源**：Codeforces Beta Round 40 (Div. 2) · Problem D（UTC 2010-11-08）
 - **难度**：1900
 - **标签**：动态规划
 - **评测类型**：特殊评测（多解；输出方案）

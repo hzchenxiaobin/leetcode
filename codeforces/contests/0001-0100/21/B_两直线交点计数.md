@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/21/B
-- **比赛来源**：Codeforces Beta Round 21 · Problem B
+- **比赛来源**：Codeforces Alpha Round 21 (Codeforces format) · Problem B（UTC 2010-06-28）
 - **难度**：2000
 - **标签**：实现、数学
 - **评测类型**：普通

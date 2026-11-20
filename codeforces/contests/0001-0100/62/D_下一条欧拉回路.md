@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/62/D
-- **比赛来源**：Codeforces Beta Round 62 · Problem D（2011-02-26）
+- **比赛来源**：Codeforces Beta Round 58 · Problem D（UTC 2011-02-25）
 - **难度**：2300
 - **标签**：DFS、图论、欧拉回路、贪心
 - **评测类型**：普通（答案唯一，可用 checker 校验）

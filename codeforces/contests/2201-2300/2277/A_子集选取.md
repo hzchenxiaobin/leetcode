@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：子集选取（Codeforces 2277A，英文名 Subset Selecting）
 - **链接**：https://codeforces.com/problemset/problem/2277/A
-- **来源**：Codeforces Round 1129 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1129 (Div. 2) · Problem A（UTC 2026-10-24）
 - **难度**：未评级（500 分 / Div. 2 A，约 800 档）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心，计数，mex

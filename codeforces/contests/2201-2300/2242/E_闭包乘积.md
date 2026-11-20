@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：闭包乘积（Codeforces 2242E，英文名 Product of Closures）
 - **链接**：https://codeforces.com/problemset/problem/2242/E
-- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem E
+- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem E（UTC 2026-07-06）
 - **难度**：2200（$\ast 2200$）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：位运算、暴力、构造、贪心、实现、数学、数论（官方标签：bitmasks, brute force, constructive algorithms, greedy, implementation, math, number theory）

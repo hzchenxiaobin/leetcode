@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/49/B
-- **比赛来源**：Codeforces Beta Round 49 · Problem B（2010-12-18）
+- **比赛来源**：Codeforces Beta Round 46 (Div. 2) · Problem B（UTC 2010-12-17）
 - **难度**：1500
 - **标签**：数学、进制、枚举
 - **评测类型**：普通

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：全新鞑靼电视节目（Codeforces 2236D，英文名 Brand New Tatar TV Show）
 - **链接**：https://codeforces.com/problemset/problem/2236/D
-- **来源**：Codeforces Round 1103 (Div. 3) · Problem D
+- **来源**：Codeforces Round 1103 (Div. 3) · Problem D（UTC 2026-06-12）
 - **难度**：1300
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：博弈论，动态规划，二分，构造，数学

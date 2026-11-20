@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/32/A
-- **比赛来源**：Codeforces Beta Round 32 · Problem A
+- **比赛来源**：Codeforces Beta Round 32 (Div. 2, Codeforces format) · Problem A（UTC 2010-10-02）
 - **难度**：800
 - **标签**：暴力枚举（brute force）
 - **评测类型**：普通

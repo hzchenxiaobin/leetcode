@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：赌注与形状（Codeforces 2278B，英文名 Stakes and Shapes）
 - **链接**：https://codeforces.com/problemset/problem/2278/B
-- **来源**：Codeforces Round 1131 (Div. 3) · Problem B
+- **来源**：Codeforces Round 1131 (Div. 3) · Problem B（UTC 2026-10-31）
 - **难度**：未评级（Div. 3 Problem B，rating 未公布）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、贪心、最坏情况分析

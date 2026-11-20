@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/14/C
-- **比赛来源**：Codeforces Beta Round 14 (Div. 2) · Problem C
+- **比赛来源**：Codeforces Beta Round 14 (Div. 2) · Problem C（UTC 2010-05-19）
 - **难度**：1700
 - **标签**：暴力枚举、构造、几何、实现、数学（brute force, constructive algorithms, geometry, implementation, math）
 - **评测类型**：普通

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：配对括号序列（Codeforces 2262E，英文名 Paired Bracket Sequences）
 - **链接**：https://codeforces.com/problemset/problem/2262/E
-- **来源**：Codeforces Round 1120 (Div. 1) · Problem E
+- **来源**：Codeforces Round 1120 (Div. 1) · Problem E（UTC 2026-09-12）
 - **难度**：$\ast 3100$（3000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学、生成函数、拉格朗日反演、二项式反演（官方标签：combinatorics、math）

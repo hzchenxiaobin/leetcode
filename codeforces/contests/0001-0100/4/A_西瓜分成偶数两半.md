@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/4/A
-- **比赛来源**：Codeforces Beta Round 4 (Div. 2 Only) · Problem A
+- **比赛来源**：Codeforces Beta Round 4 (Div. 2 Only) · Problem A（UTC 2010-03-12）
 - **难度**：800
 - **标签**：暴力枚举、数学（brute force, math）
 - **评测类型**：普通

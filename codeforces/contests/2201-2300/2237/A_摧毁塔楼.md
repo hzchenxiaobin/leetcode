@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：摧毁塔楼（Codeforces 2237A，英文名 Destroying Towers）
 - **链接**：https://codeforces.com/problemset/problem/2237/A
-- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem A
+- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem A（UTC 2026-06-18）
 - **难度**：800（500 分，题面标注 *800）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：博弈、贪心、调度

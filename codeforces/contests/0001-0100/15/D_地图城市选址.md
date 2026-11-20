@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/15/D
-- **比赛来源**：Codeforces Beta Round 15 · Problem D
+- **比赛来源**：Codeforces Beta Round 15 · Problem D（UTC 2010-05-29）
 - **难度**：2500
 - **标签**：数据结构、实现、排序（data structures, implementation, sortings）
 - **评测类型**：普通

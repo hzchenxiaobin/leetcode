@@ -3,7 +3,7 @@
 
 - **标题 / 题号**：宝藏地图破坏（计数版）（Codeforces 2259H，英文名 Treasure Map Destruction (Counting Version)）
 - **链接**：https://codeforces.com/problemset/problem/2259/H
-- **来源**：Codeforces Round 1119 (Div. 3) · Problem H
+- **来源**：Codeforces Round 1119 (Div. 3) · Problem H（UTC 2026-09-05）
 - **难度**：2200
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：图论、并查集、动态规划、DFS、数学、计数

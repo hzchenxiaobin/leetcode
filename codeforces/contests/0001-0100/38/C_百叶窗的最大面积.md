@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/38/C
-- **比赛来源**：Codeforces Beta Round 38 · Problem C（2010-07-13）
+- **比赛来源**：School Personal Contest #1 (Winter Computer School 2010/11) - Codeforces Beta Round 38 (ACM-ICPC Rules) · Problem C（UTC 2010-10-30）
 - **难度**：1400
 - **标签**：暴力枚举
 - **评测类型**：普通

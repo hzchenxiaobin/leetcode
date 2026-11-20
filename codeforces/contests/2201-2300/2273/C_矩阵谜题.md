@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：矩阵谜题（Codeforces 2273C，英文名 Matrix Puzzle）
 - **链接**：https://codeforces.com/problemset/problem/2273/C
-- **来源**：Codeforces Round 1127 (Div. 1, Based on Mexican Olympiad in Informatics 2026) · Problem C
+- **来源**：Codeforces Round 1127 (Div. 1, Based on Mexican Olympiad in Informatics 2026) · Problem C（UTC 2026-10-11）
 - **难度**：*2100（1250 分，Div. 1 C 位）
 - **限制**：时间 2.5 s / 内存 256 MB
 - **标签**：暴力枚举，数据结构，实现，数学，矩阵

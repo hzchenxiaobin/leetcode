@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：质数拆解（Codeforces 2266E，英文名 Prime Destruction）
 - **链接**：https://codeforces.com/problemset/problem/2266/E
-- **来源**：Codeforces Round 1122 (Div. 3) · Problem E
+- **来源**：Codeforces Round 1122 (Div. 3) · Problem E（UTC 2026-09-21）
 - **难度**：$\ast 1400$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：暴力枚举，动态规划，数学，数论

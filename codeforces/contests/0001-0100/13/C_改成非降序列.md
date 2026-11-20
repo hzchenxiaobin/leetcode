@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/13/C
-- **比赛来源**：Codeforces Beta Round 13 · Problem C
+- **比赛来源**：Codeforces Beta Round 13 · Problem C（UTC 2010-05-06）
 - **难度**：2200
 - **标签**：动态规划、排序
 - **评测类型**：普通

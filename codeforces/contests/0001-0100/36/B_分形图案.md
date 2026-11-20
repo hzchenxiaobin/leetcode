@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/36/B
-- **比赛来源**：Codeforces Beta Round 36 · Problem B
+- **比赛来源**：Codeforces Beta Round 36 · Problem B（UTC 2010-10-19）
 - **难度**：1600
 - **标签**：实现
 - **评测类型**：普通

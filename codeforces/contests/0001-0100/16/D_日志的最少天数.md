@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/16/D
-- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem D
+- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem D（UTC 2010-06-03）
 - **难度**：1900
 - **标签**：implementation、strings（本题本质是模拟 + 贪心）
 - **评测类型**：普通

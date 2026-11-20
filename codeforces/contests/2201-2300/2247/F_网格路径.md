@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：网格路径（Codeforces 2247F，英文名 Paths on a Grid）
 - **链接**：https://codeforces.com/problemset/problem/2247/F
-- **来源**：Codeforces Round 1111 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1111 (Div. 2) · Problem F（UTC 2026-07-18）
 - **难度**：$\ast 2900$（3500 分）
 - **限制**：时间 3 s / 内存 1024 MB
 - **标签**：动态规划、随机化哈希、排序分组、计数（官方标签：data structures, dp, hashing）

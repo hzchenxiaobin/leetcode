@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：diss_quack 与数组游戏（Codeforces 2246D，英文名 diss_quack and Array Game）
 - **链接**：https://codeforces.com/problemset/problem/2246/D
-- **来源**：Codeforces Round 1108 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1108 (Div. 2) · Problem D（UTC 2026-07-12）
 - **难度**：1900（Div. 2 D，1750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位运算、暴力枚举、博弈、贪心

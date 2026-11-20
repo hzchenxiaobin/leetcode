@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：三堆石子（Codeforces 2266B，英文名 Three Piles）
 - **链接**：https://codeforces.com/problemset/problem/2266/B
-- **来源**：Codeforces Round 1122 (Div. 3) · Problem B
+- **来源**：Codeforces Round 1122 (Div. 3) · Problem B（UTC 2026-09-21）
 - **难度**：$\ast 800$
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：博弈，贪心，数学

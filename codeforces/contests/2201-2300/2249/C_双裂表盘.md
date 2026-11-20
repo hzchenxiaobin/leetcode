@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：双裂表盘（Codeforces 2249C，英文名 Double-Rift Dial）
 - **链接**：https://codeforces.com/problemset/problem/2249/C
-- **来源**：Codeforces Round 1112 (Div. 1) · Problem C
+- **来源**：Codeforces Round 1112 (Div. 1) · Problem C（UTC 2026-07-26）
 - **难度**：2000（1750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：数据结构，线段树，扫描线，环形区间，实现

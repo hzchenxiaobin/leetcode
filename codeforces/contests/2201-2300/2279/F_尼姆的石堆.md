@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：尼姆的石堆（Codeforces 2279F，英文名 The Stones of Nim）
 - **链接**：https://codeforces.com/problemset/problem/2279/F
-- **来源**：Codeforces Round 1133 (Div. 1) · Problem F
+- **来源**：Codeforces Round 1133 (Div. 1) · Problem F（UTC 2026-11-07）
 - **难度**：未评级（3000 分）
 - **限制**：时间 8 s / 内存 256 MB
 - **标签**：位运算与线性基（GF(2) 线性代数）、拟阵划分与增广路、贪心、图论

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/54/A
-- **比赛来源**：Codeforces Beta Round 54 · Problem A
+- **比赛来源**：Codeforces Beta Round 50 · Problem A（UTC 2011-01-11）
 - **难度**：1300
 - **标签**：贪心、实现
 - **评测类型**：普通

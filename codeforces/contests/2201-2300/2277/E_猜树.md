@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：猜树（Codeforces 2277E，英文名 Tree Guessing）
 - **链接**：https://codeforces.com/problemset/problem/2277/E
-- **来源**：Codeforces Round 1129 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1129 (Div. 2) · Problem E（UTC 2026-10-24）
 - **难度**：未评级（2750 分 / Div. 2 E）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，交互题，树

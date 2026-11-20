@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/21/C
-- **比赛来源**：Codeforces Beta Round 21 · Problem C
+- **比赛来源**：Codeforces Alpha Round 21 (Codeforces format) · Problem C（UTC 2010-06-28）
 - **难度**：2000
 - **标签**：二分、动态规划、排序
 - **评测类型**：普通

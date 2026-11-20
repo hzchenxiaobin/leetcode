@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/58/A
-- **比赛来源**：Codeforces Beta Round 54 (Div. 2) · Problem A（2011-01-31）
+- **比赛来源**：Codeforces Beta Round 54 (Div. 2) · Problem A（UTC 2011-01-31）
 - **难度**：1000
 - **标签**：贪心、字符串
 - **评测类型**：普通

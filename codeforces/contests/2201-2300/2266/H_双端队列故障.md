@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：双端队列故障（Codeforces 2266H，英文名 Deque Malfunction）
 - **链接**：https://codeforces.com/problemset/problem/2266/H
-- **来源**：Codeforces Round 1122 (Div. 3) · Problem H
+- **来源**：Codeforces Round 1122 (Div. 3) · Problem H（UTC 2026-09-21）
 - **难度**：$\ast 2400$
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：数据结构，动态规划，贪心，二分查找

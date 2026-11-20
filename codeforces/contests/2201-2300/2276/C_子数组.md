@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：子数组（Codeforces 2276C，英文名 Subarrays）
 - **链接**：https://codeforces.com/problemset/problem/2276/C
-- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem C
+- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem C（UTC 2026-10-14）
 - **难度**：1100
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：数学，数论

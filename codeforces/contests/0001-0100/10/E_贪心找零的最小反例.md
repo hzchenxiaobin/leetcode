@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/10/E
-- **比赛来源**：Codeforces Beta Round 10 · Problem E（2010-04-15）
+- **比赛来源**：Codeforces Beta Round 10 · Problem E（UTC 2010-04-15）
 - **难度**：2600
 - **标签**：构造、贪心、数论
 - **评测类型**：普通

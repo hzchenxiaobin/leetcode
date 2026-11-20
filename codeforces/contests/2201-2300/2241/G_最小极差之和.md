@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最小极差之和（Codeforces 2241G，英文名 Summmon）
 - **链接**：https://codeforces.com/problemset/problem/2241/G
-- **来源**：Codeforces Round 1107 (Div. 3) · Problem G
+- **来源**：Codeforces Round 1107 (Div. 3) · Problem G（UTC 2026-06-30）
 - **难度**：2400（$\ast 2400$）
 - **限制**：时间 4 s / 内存 256 MB
 - **标签**：二分、数据结构、贪心、实现、数学、数论（官方标签：binary search, data structures, greedy, implementation, math, number theory）

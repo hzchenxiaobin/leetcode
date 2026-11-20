@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：帕皮鲁斯的另一道谜题（Codeforces 2238A，英文名 Another Puzzle from Papyrus）
 - **链接**：https://codeforces.com/problemset/problem/2238/A
-- **来源**：Codeforces Round 1106 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1106 (Div. 2) · Problem A（UTC 2026-06-28）
 - **难度**：800（$\ast 800$）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心、数学、排序（官方标签：greedy, math, sortings）

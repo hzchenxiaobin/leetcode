@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/12/C
-- **比赛来源**：Codeforces Beta Round 12 (Div 2 Only) · Problem C（2010-04-29）
+- **比赛来源**：Codeforces Beta Round 12 (Div 2 Only) · Problem C（UTC 2010-04-29）
 - **难度**：1100
 - **标签**：贪心、实现、排序
 - **评测类型**：普通（单组输入，唯一答案）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/18/A
-- **比赛来源**：Codeforces Beta Round 18 · Problem A（2010-05-06）
+- **比赛来源**：Codeforces Beta Round 18 (Div. 2 Only) · Problem A（UTC 2010-06-16）
 - **难度**：1500
 - **标签**：暴力枚举、几何
 - **评测类型**：普通

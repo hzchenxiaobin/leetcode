@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：加边删边（Codeforces 2277C，英文名 Edge Addeleting）
 - **链接**：https://codeforces.com/problemset/problem/2277/C
-- **来源**：Codeforces Round 1129 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1129 (Div. 2) · Problem C（UTC 2026-10-24）
 - **难度**：未评级（1500 分 / Div. 2 C，约 1800 档）
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：树，DFS 与遍历，贪心，最近公共祖先

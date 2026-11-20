@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：分数与 six（Codeforces 2278A，英文名 Fraction and Six）
 - **链接**：https://codeforces.com/problemset/problem/2278/A
-- **来源**：Codeforces Round 1131 (Div. 3) · Problem A
+- **来源**：Codeforces Round 1131 (Div. 3) · Problem A（UTC 2026-10-31）
 - **难度**：未评级（Div. 3 签到题，约 800 档）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：实现、排序、字符串

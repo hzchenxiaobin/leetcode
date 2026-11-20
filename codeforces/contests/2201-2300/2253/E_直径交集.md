@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：直径交集（Codeforces 2253E，英文名 Diameter Intersections）
 - **链接**：https://codeforces.com/problemset/problem/2253/E
-- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem E
+- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem E（UTC 2026-08-07）
 - **难度**：2200
 - **限制**：时间 4 s / 内存 512 MB
 - **标签**：暴力枚举，DFS 与树上搜索，FFT/卷积，图论，实现，树

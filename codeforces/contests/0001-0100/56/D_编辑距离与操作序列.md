@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/56/D
-- **比赛来源**：Codeforces Beta Round 52 (Div. 2)（2011-01-22）· Problem D
+- **比赛来源**：Codeforces Beta Round 52 (Div. 2) · Problem D（UTC 2011-01-21）
 - **难度**：2100
 - **标签**：动态规划、编辑距离、构造
 - **评测类型**：特殊评测（多组合法操作序列）

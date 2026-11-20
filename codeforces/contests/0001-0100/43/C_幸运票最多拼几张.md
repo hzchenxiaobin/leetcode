@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/43/C
-- **比赛来源**：Codeforces Beta Round 42 (Div. 2)（2010-11-30）· Problem C
+- **比赛来源**：Codeforces Beta Round 42 (Div. 2) · Problem C（UTC 2010-11-29）
 - **难度**：1300
 - **标签**：贪心、数学（整除性质）、计数
 - **评测类型**：普通

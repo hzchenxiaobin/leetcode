@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/30/B
-- **比赛来源**：Codeforces Beta Round 30 · Problem B
+- **比赛来源**：Codeforces Beta Round 30 (Codeforces format) · Problem B（UTC 2010-09-24）
 - **难度**：1700
 - **标签**：实现
 - **评测类型**：普通

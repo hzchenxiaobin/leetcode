@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：鄂木斯克程序员（Codeforces 2236C，英文名 Omsk Programmers）
 - **链接**：https://codeforces.com/problemset/problem/2236/C
-- **来源**：Codeforces Round 1103 (Div. 3) · Problem C
+- **来源**：Codeforces Round 1103 (Div. 3) · Problem C（UTC 2026-06-12）
 - **难度**：未评级（1000 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：暴力枚举、贪心、数学

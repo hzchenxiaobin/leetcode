@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：牛说了什么（Codeforces 2261E，英文名 What Does the Cow Say?）
 - **链接**：https://codeforces.com/problemset/problem/2261/E
-- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem E
+- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem E（UTC 2026-10-17）
 - **难度**：1800
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分，数据结构，深度优先搜索，贪心，树

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/3/D
-- **比赛来源**：Codeforces Beta Round 3 · Problem D（2010-03-07）
+- **比赛来源**：Codeforces Beta Round 3 · Problem D（UTC 2010-03-07）
 - **难度**：2600
 - **标签**：贪心、优先队列
 - **评测类型**：普通

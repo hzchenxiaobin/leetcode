@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/33/A
-- **比赛来源**：Codeforces Beta Round 33 · Problem A（2010-07-06）
+- **比赛来源**：Codeforces Beta Round 33 (Codeforces format) · Problem A（UTC 2010-10-07）
 - **难度**：1200
 - **标签**：贪心、实现
 - **评测类型**：普通

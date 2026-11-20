@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/30/A
-- **比赛来源**：Codeforces Beta Round 30 · Problem A
+- **比赛来源**：Codeforces Beta Round 30 (Codeforces format) · Problem A（UTC 2010-09-24）
 - **难度**：1400
 - **标签**：暴力枚举、数学
 - **评测类型**：特殊评测（多解）

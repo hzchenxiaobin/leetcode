@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：友好的礼物（Codeforces 2236E，英文名 Friendly Gifts）
 - **链接**：https://codeforces.com/problemset/problem/2236/E
-- **来源**：Codeforces Round 1103 (Div. 3) · Problem E
+- **来源**：Codeforces Round 1103 (Div. 3) · Problem E（UTC 2026-06-12）
 - **难度**：1700
 - **限制**：时间 3 s / 内存 512 MB
 - **标签**：暴力枚举、动态规划（值域 → 最优起点的 DP 表）、滑动窗口、稀疏表（RMQ）

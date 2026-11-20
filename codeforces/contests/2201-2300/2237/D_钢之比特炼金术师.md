@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：钢之比特炼金术师（Codeforces 2237D，英文名 Fullmetal Bitchemist）
 - **链接**：https://codeforces.com/problemset/problem/2237/D
-- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem D
+- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem D（UTC 2026-06-18）
 - **难度**：1600（1750 分，题面标注 *1600）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、贪心、数学

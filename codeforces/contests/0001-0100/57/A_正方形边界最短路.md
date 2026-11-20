@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/57/A
-- **比赛来源**：Codeforces Beta Round 53 · Problem A（2011-01-25）
+- **比赛来源**：Codeforces Beta Round 53 · Problem A（UTC 2011-01-25）
 - **难度**：1300
 - **标签**：实现、几何、最短路
 - **评测类型**：普通

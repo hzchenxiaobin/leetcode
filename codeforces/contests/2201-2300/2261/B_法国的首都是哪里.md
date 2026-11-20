@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：法国的首都是哪里（Codeforces 2261B，英文名 What's the Capital of France?）
 - **链接**：https://codeforces.com/problemset/problem/2261/B
-- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem B
+- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem B（UTC 2026-10-17）
 - **难度**：$\ast 1100$（1000 分）
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：位运算、贪心、数学

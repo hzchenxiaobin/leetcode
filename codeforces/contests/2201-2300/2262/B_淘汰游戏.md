@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：淘汰游戏（Codeforces 2262B，英文名 Culling Game）
 - **链接**：https://codeforces.com/problemset/problem/2262/B
-- **来源**：Codeforces Round 1120 (Div. 1) · Problem B
+- **来源**：Codeforces Round 1120 (Div. 1) · Problem B（UTC 2026-09-12）
 - **难度**：$\ast 2000$（1750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：数据结构、树状数组、有序集合、均摊分析、逆序处理（官方标签：binary search、data structures、implementation、two pointers）

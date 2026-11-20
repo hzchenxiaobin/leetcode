@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：巨人之战（Codeforces 2257B，英文名 Gigantomachy）
 - **链接**：https://codeforces.com/problemset/problem/2257/B
-- **来源**：Codeforces Round 1117 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1117 (Div. 2) · Problem B（UTC 2026-08-17）
 - **难度**：800
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：数学、博弈、不变量、贪心

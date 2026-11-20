@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：黑白灰染色（Codeforces 2283D，英文名 Black, Gray and White）
 - **链接**：https://codeforces.com/problemset/problem/2283/D
-- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem D
+- **来源**：Educational Codeforces Round 196 (Rated for Div. 2) · Problem D（UTC 2026-11-04）
 - **难度**：未评级（该场 Div. 2 的 D 题，官方标签为暴力、构造、DFS 与树）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：暴力，构造，DFS 与树，树

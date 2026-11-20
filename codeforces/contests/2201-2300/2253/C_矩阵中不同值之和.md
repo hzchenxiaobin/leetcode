@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：矩阵中不同值之和（Codeforces 2253C，英文名 Sum of Distinct Values in a Matrix）
 - **链接**：https://codeforces.com/problemset/problem/2253/C
-- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem C
+- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem C（UTC 2026-08-07）
 - **难度**：1500
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：贪心，排序，双指针，横贯拟阵（二分图匹配）

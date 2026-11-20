@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：代币再移动（Codeforces 2277F，英文名 Token Re-Moving）
 - **链接**：https://codeforces.com/problemset/problem/2277/F
-- **来源**：Codeforces Round 1129 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1129 (Div. 2) · Problem F（UTC 2026-10-24）
 - **难度**：未评级（3000 分，Div. 2 F）
 - **限制**：时间 4 s / 内存 256 MB
 - **标签**：并查集，树，DFS 与树形结构，数据结构

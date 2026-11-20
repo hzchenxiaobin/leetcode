@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：农场小猪与子集和（Codeforces 2246A，英文名 farmpiggie and Subset Sum）
 - **链接**：https://codeforces.com/problemset/problem/2246/A
-- **来源**：Codeforces Round 1108 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1108 (Div. 2) · Problem A（UTC 2026-07-12）
 - **难度**：800（Div. 2 A，500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：构造、奇偶性、不变量

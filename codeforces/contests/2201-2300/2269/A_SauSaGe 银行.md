@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：SauSaGe 银行（Codeforces 2269A，英文名 SauSaGe Bank）
 - **链接**：https://codeforces.com/problemset/problem/2269/A
-- **来源**：Codeforces Round 1124 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1124 (Div. 2) · Problem A（UTC 2026-09-26）
 - **难度**：800 分（Div. 2 签到题）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心，数学

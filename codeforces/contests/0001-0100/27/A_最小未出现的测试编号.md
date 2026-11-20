@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/27/A
-- **比赛来源**：Codeforces Beta Round 27 · Problem A（2010-08-25）
+- **比赛来源**：Codeforces Beta Round 27 (Codeforces format, Div. 2) · Problem A（UTC 2010-09-10）
 - **难度**：1200
 - **标签**：实现、排序（implementation, sortings）
 - **评测类型**：普通

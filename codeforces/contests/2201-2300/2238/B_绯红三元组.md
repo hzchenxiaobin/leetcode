@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：绯红三元组（Codeforces 2238B，英文名 Crimson Triples）
 - **链接**：https://codeforces.com/problemset/problem/2238/B
-- **来源**：Codeforces Round 1106 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1106 (Div. 2) · Problem B（UTC 2026-06-28）
 - **难度**：900（Div. 2 第二题）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：数学、数论、计数、数论分块（官方标签：dp, math, number theory）

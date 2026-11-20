@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/5/D
-- **比赛来源**：Codeforces Beta Round 5 · Problem D
+- **比赛来源**：Codeforces Beta Round 5 · Problem D（UTC 2010-03-20）
 - **难度**：2100
 - **标签**：实现、数学（运动学 / 最优控制）
 - **评测类型**：普通（浮点答案，按误差判定）

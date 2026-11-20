@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：书架上的书（Codeforces 2290C，英文名 Books on a Shelf）
 - **链接**：https://codeforces.com/problemset/problem/2290/C
-- **来源**：Codeforces Round 1134 (Div. 4) · Problem C
+- **来源**：Codeforces Round 1134 (Div. 4) · Problem C（UTC 2026-11-12）
 - **难度**：未评级（Div. 4 的 C 题，官方 rating 尚未公布）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、贪心、排序、计数

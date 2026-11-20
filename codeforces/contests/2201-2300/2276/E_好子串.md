@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：好子串（Codeforces 2276E，英文名 Good Substrings）
 - **链接**：https://codeforces.com/problemset/problem/2276/E
-- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem E
+- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem E（UTC 2026-10-14）
 - **难度**：1800（Div. 2 E）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：组合数学，数据结构，动态规划，贪心，字符串

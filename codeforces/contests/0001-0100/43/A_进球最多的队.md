@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/43/A
-- **比赛来源**：Codeforces Beta Round 42 (Div. 2)（2010-11-30）· Problem A
+- **比赛来源**：Codeforces Beta Round 42 (Div. 2) · Problem A（UTC 2010-11-29）
 - **难度**：1000
 - **标签**：字符串、计数（哈希表）
 - **评测类型**：普通

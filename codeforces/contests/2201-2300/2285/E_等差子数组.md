@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：等差子数组（Codeforces 2285E，英文名 Arithmetic Subarray）
 - **链接**：https://codeforces.com/problemset/problem/2285/E
-- **来源**：Codeforces Round 1135 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1135 (Div. 2) · Problem E（UTC 2026-11-15）
 - **难度**：未评级（2500 分）
 - **限制**：时间 6 s / 内存 1024 MB
 - **标签**：数据结构、贪心、实现、双指针

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：平衡子集（Codeforces 2279B，英文名 Balanced Subsets）
 - **链接**：https://codeforces.com/problemset/problem/2279/B
-- **来源**：Codeforces Round 1133 (Div. 1) · Problem B
+- **来源**：Codeforces Round 1133 (Div. 1) · Problem B（UTC 2026-11-07）
 - **难度**：未评级（1000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位掩码、动态规划、组合计数

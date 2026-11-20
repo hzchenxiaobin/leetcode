@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/62/C
-- **比赛来源**：Codeforces Beta Round 62 · Problem C（2011-02-26）
+- **比赛来源**：Codeforces Beta Round 58 · Problem C（UTC 2011-02-25）
 - **难度**：2300
 - **标签**：计算几何、实现、排序
 - **评测类型**：普通

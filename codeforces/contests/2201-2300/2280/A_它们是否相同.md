@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：它们是否相同（Codeforces 2280A，英文名 Are They the Same?）
 - **链接**：https://codeforces.com/problemset/problem/2280/A
-- **来源**：Codeforces Round 1133 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1133 (Div. 2) · Problem A（UTC 2026-11-07）
 - **难度**：未评级（官方暂未给 rating；Div. 2 A 签到题，500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：暴力枚举、实现、奇偶性分析

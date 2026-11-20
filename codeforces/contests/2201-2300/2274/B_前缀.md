@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：前缀（Codeforces 2274B，英文名 Prefix）
 - **链接**：https://codeforces.com/problemset/problem/2274/B
-- **来源**：Codeforces Round 1127 (Div. 2, Based on Mexican Olympiad in Informatics 2026) · Problem B
+- **来源**：Codeforces Round 1127 (Div. 2, Based on Mexican Olympiad in Informatics 2026) · Problem B（UTC 2026-10-11）
 - **难度**：1100（Div. 2 B，1250 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心，前缀和，动态规划，极值维护

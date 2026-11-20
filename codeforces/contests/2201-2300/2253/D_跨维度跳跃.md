@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：跨维度跳跃（Codeforces 2253D，英文名 Hypercarp and Interdimensional Jumps）
 - **链接**：https://codeforces.com/problemset/problem/2253/D
-- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem D
+- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem D（UTC 2026-08-07）
 - **难度**：1800
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：二分，暴力枚举，几何，贪心，实现，数学

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/27/E
-- **比赛来源**：Codeforces Beta Round 27 · Problem E（2010-08-25）
+- **比赛来源**：Codeforces Beta Round 27 (Codeforces format, Div. 2) · Problem E（UTC 2010-09-10）
 - **难度**：2000
 - **标签**：暴力、动态规划、数论（brute force, dp, number theory）
 - **评测类型**：普通

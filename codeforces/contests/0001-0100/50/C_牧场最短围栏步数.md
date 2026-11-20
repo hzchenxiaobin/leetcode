@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/50/C
-- **比赛来源**：Codeforces Beta Round 50 · Problem C
+- **比赛来源**：Codeforces Beta Round 47 · Problem C（UTC 2010-12-20）
 - **难度**：2000
 - **标签**：计算几何、坐标变换、构造
 - **评测类型**：普通

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：谱分量（Codeforces 2252F，英文名 Spectral Components）
 - **链接**：https://codeforces.com/problemset/problem/2252/F
-- **来源**：Codeforces Round 1115 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1115 (Div. 2) · Problem F（UTC 2026-08-06）
 - **难度**：*2600
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：树，虚树与 DFS，动态规划，贪心，排序

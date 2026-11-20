@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：遥远城市（Codeforces 2258C，英文名 Far Cities）
 - **链接**：https://codeforces.com/problemset/problem/2258/C
-- **来源**：Codeforces Round 1118 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1118 (Div. 2) · Problem C（UTC 2026-08-29）
 - **难度**：1600（1250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：交互、树、双指针（单调增量探测）

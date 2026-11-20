@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：两个数字串（Codeforces 2242D，英文名 Two Digit Strings）
 - **链接**：https://codeforces.com/problemset/problem/2242/D
-- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem D
+- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem D（UTC 2026-07-06）
 - **难度**：1600（$\ast 1600$）
 - **限制**：时间 3 s / 内存 512 MB
 - **标签**：动态规划、字符串（官方标签：dp, strings）

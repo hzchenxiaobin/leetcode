@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最大化分数（Codeforces 2248C，英文名 Maximize the Score）
 - **链接**：https://codeforces.com/problemset/problem/2248/C
-- **来源**：Codeforces Round 1113 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1113 (Div. 2) · Problem C（UTC 2026-08-01）
 - **难度**：1300
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：动态规划，贪心

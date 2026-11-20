@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/41/E
-- **比赛来源**：Codeforces Beta Round 41 · Problem E
+- **比赛来源**：Codeforces Beta Round 40 (Div. 2) · Problem E（UTC 2010-11-08）
 - **难度**：1900
 - **标签**：构造、图论、贪心
 - **评测类型**：特殊评测（多解，构造题）

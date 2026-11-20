@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：宝藏地图破坏（构造版）（Codeforces 2259E，英文名 Treasure Map Destruction (Constructive Version)）
 - **链接**：https://codeforces.com/problemset/problem/2259/E
-- **来源**：Codeforces Round 1119 (Div. 3) · Problem E
+- **来源**：Codeforces Round 1119 (Div. 3) · Problem E（UTC 2026-09-05）
 - **难度**：$\ast 1500$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：2-SAT、构造、贪心（官方标签：2-sat、constructive algorithms、greedy）

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：赢家（Codeforces 2A，英文名 Winner）
 - **链接**：https://codeforces.com/problemset/problem/2/A
-- **来源**：Codeforces Beta Round 2 · Problem A（2010-02-26）
+- **来源**：Codeforces Beta Round 2 · Problem A（UTC 2010-02-25）
 - **难度**：1500（题面标注 `*1500`）
 - **标签**：哈希表、模拟（hashing, implementation）
 - **评测类型**：普通评测（无交互、无多解、无子任务）

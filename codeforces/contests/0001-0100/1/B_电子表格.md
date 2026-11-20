@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/1/B
-- **比赛来源**：Codeforces Beta Round 1 · Problem B
+- **比赛来源**：Codeforces Beta Round 1 · Problem B（UTC 2010-02-19）
 - **难度**：1600
 - **标签**：实现、数学（进制转换）、字符串
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/17/B
-- **比赛来源**：Codeforces Beta Round 17 · Problem B（2010-06-10）
+- **比赛来源**：Codeforces Beta Round 17 · Problem B（UTC 2010-06-10）
 - **难度**：1500
 - **标签**：dfs 与图论、并查集、贪心、最短路
 - **评测类型**：普通（单组输入，唯一答案）

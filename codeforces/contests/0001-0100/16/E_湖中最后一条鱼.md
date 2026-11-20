@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/16/E
-- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem E
+- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem E（UTC 2010-06-03）
 - **难度**：1900
 - **标签**：状压 DP、概率、位运算
 - **评测类型**：普通（实数输出，按误差判定）

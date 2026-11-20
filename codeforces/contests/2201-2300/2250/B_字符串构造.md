@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：字符串构造（Codeforces 2250B，英文名 String Construction）
 - **链接**：https://codeforces.com/problemset/problem/2250/B
-- **来源**：Codeforces Round 1112 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1112 (Div. 2) · Problem B（UTC 2026-07-26）
 - **难度**：1000（Div. 2 B，750 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：构造

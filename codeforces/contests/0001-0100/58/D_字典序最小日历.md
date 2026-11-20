@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/58/D
-- **比赛来源**：Codeforces Beta Round 54 (Div. 2) · Problem D（2011-01-31）
+- **比赛来源**：Codeforces Beta Round 54 (Div. 2) · Problem D（UTC 2011-01-31）
 - **难度**：2000
 - **标签**：贪心、字符串、排序
 - **评测类型**：特殊评测（多解，输出字典序最小的日历）

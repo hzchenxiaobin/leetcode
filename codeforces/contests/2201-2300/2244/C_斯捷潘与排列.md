@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：斯捷潘与排列（Codeforces 2244C，英文名 Stepan and Permutation）
 - **链接**：https://codeforces.com/problemset/problem/2244/C
-- **来源**：Codeforces Round 1109 (Div. 3) · Problem C
+- **来源**：Codeforces Round 1109 (Div. 3) · Problem C（UTC 2026-07-14）
 - **难度**：$\ast 1100$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：图论建模、并查集、DFS、数论（$\gcd$）、排序（官方标签：constructive algorithms, dfs and similar, dsu, greedy, math, number theory, sortings）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/29/C
-- **比赛来源**：Codeforces Beta Round 29 · Problem C
+- **比赛来源**：Codeforces Beta Round 29 (Div. 2, Codeforces format) · Problem C（UTC 2010-09-20）
 - **难度**：1700
 - **标签**：数据结构、DFS、图论、实现
 - **评测类型**：特殊评测（多解）

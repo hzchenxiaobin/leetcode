@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：MEX 替换（Codeforces 2266F，英文名 MEX Replacement）
 - **链接**：https://codeforces.com/problemset/problem/2266/F
-- **来源**：Codeforces Round 1122 (Div. 3) · Problem F
+- **来源**：Codeforces Round 1122 (Div. 3) · Problem F（UTC 2026-09-21）
 - **难度**：$\ast 2000$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分，暴力，贪心，实现，数学，排序

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/16/C
-- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem C
+- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem C（UTC 2010-06-03）
 - **难度**：1800
 - **标签**：二分、数论
 - **评测类型**：普通

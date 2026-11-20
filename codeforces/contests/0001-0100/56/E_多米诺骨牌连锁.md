@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/56/E
-- **比赛来源**：Codeforces Beta Round 52 (Div. 2)（2011-01-22）· Problem E
+- **比赛来源**：Codeforces Beta Round 52 (Div. 2) · Problem E（UTC 2011-01-21）
 - **难度**：2200
 - **标签**：排序、单调栈、数据结构
 - **评测类型**：普通（输出一行答案）

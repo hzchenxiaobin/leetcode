@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/30/C
-- **比赛来源**：Codeforces Beta Round 30 · Problem C
+- **比赛来源**：Codeforces Beta Round 30 (Codeforces format) · Problem C（UTC 2010-09-24）
 - **难度**：1800
 - **标签**：动态规划、概率
 - **评测类型**：普通（浮点，误差 $\le 10^{-6}$）

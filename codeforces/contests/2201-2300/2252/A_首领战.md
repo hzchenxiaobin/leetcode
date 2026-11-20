@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：首领战（Codeforces 2252A，英文名 Boss Fight）
 - **链接**：https://codeforces.com/problemset/problem/2252/A
-- **来源**：Codeforces Round 1115 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1115 (Div. 2) · Problem A（UTC 2026-08-06）
 - **难度**：800
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心，数据结构，计数

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：括号序列的代价（Codeforces 2233C，英文名 Cost of a Bracket Sequence）
 - **链接**：https://codeforces.com/problemset/problem/2233/C
-- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem C
+- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem C（UTC 2026-06-09）
 - **难度**：$\ast 1400$
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：贪心、动态规划、暴力枚举（官方标签：brute force, dp, greedy）

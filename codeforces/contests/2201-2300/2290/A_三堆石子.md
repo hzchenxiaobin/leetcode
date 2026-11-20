@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：三堆石子（Codeforces 2290A，英文名 Three Piles）
 - **链接**：https://codeforces.com/problemset/problem/2290/A
-- **来源**：Codeforces Round 1134 (Div. 4) · Problem A
+- **来源**：Codeforces Round 1134 (Div. 4) · Problem A（UTC 2026-11-12）
 - **难度**：未评级（无评分，Div. 4 签到题，约 800 档）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：实现、数学

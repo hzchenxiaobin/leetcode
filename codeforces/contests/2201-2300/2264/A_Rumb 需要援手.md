@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：Rumb 需要援手（Codeforces 2264A，英文名 Rumb Needs a Hand）
 - **链接**：https://codeforces.com/problemset/problem/2264/A
-- **来源**：Codeforces Round 1121 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1121 (Div. 2) · Problem A（UTC 2026-09-13）
 - **难度**：800（500 分，Div. 2 签到题）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：实现、排序、双指针

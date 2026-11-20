@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/53/A
-- **比赛来源**：Codeforces Beta Round 53 · Problem A（2011-01-07）
+- **比赛来源**：Codeforces Beta Round 49 (Div. 2) · Problem A（UTC 2011-01-06）
 - **难度**：1100
 - **标签**：实现、字符串、字典序
 - **评测类型**：普通

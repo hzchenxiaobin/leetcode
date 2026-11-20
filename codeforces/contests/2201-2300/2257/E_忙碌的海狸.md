@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：忙碌的海狸（Codeforces 2257E，英文名 Busy Beaver）
 - **链接**：https://codeforces.com/problemset/problem/2257/E
-- **来源**：Codeforces Round 1117 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1117 (Div. 2) · Problem E（UTC 2026-08-17）
 - **难度**：2100
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：贪心、排序、优先队列（小根堆）、分块合并、实现、数据结构

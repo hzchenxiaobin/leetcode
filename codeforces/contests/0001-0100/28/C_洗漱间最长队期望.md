@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/28/C
-- **比赛来源**：Codeforces Beta Round 28 · Problem C（2010-06-25）
+- **比赛来源**：Codeforces Beta Round 28 (Codeforces format) · Problem C（UTC 2010-09-17）
 - **难度**：2200
 - **标签**：combinatorics / dp / probabilities
 - **评测类型**：普通（浮点，误差 $\le 10^{-9}$）

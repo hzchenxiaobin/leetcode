@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：淘汰玩家（Codeforces 2276G，英文名 Elimination of Players）
 - **链接**：https://codeforces.com/problemset/problem/2276/G
-- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem G
+- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem G（UTC 2026-10-14）
 - **难度**：2100 分（Div. 2 的压轴题 G）
 - **限制**：时间 4 s / 内存 512 MB
 - **标签**：组合数学，计数，动态规划，数学

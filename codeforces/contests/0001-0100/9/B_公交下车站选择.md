@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/9/B
-- **比赛来源**：Codeforces Beta Round 9 (Div. 2 Only) · Problem B
+- **比赛来源**：Codeforces Beta Round 9 (Div. 2 Only) · Problem B（UTC 2010-04-11）
 - **难度**：1200
 - **标签**：暴力枚举、几何、实现（brute force, geometry, implementation）
 - **评测类型**：普通（浮点比较，唯一答案）

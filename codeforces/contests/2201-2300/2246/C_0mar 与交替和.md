@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：0mar 与交替和（Codeforces 2246C，英文名 0mar and Alternating Sums）
 - **链接**：https://codeforces.com/problemset/problem/2246/C
-- **来源**：Codeforces Round 1108 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1108 (Div. 2) · Problem C（UTC 2026-07-12）
 - **难度**：1400（Div. 2 C，1500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学、动态规划、数学

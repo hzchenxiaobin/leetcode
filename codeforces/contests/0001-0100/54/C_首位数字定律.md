@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/54/C
-- **比赛来源**：Codeforces Beta Round 54 · Problem C
+- **比赛来源**：Codeforces Beta Round 50 · Problem C（UTC 2011-01-11）
 - **难度**：2000
 - **标签**：概率、DP、数学
 - **评测类型**：特殊评测（实数答案，误差限 $10^{-9}$）

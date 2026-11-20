@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：排列切割（Codeforces 2249B，英文名 Permutation Cuts）
 - **链接**：https://codeforces.com/problemset/problem/2249/B
-- **来源**：Codeforces Round 1112 (Div. 1) · Problem B
+- **来源**：Codeforces Round 1112 (Div. 1) · Problem B（UTC 2026-07-26）
 - **难度**：1700
 - **限制**：时间 4 s / 内存 256 MB
 - **标签**：组合数学，计数，实现，单调性

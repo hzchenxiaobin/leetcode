@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：超级鲤鱼与控制面板（Codeforces 2253B，英文名 Hypercarp and the Control Panel）
 - **链接**：https://codeforces.com/problemset/problem/2253/B
-- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem B
+- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem B（UTC 2026-08-07）
 - **难度**：1100（Div. 2 B）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：暴力，数据结构（压缩成段），双指针（枚举相邻段对）

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：公平与平方（Codeforces 2241E，英文名 Fair and Square）
 - **链接**：https://codeforces.com/problemset/problem/2241/E
-- **来源**：Codeforces Round 1107 (Div. 3) · Problem E
+- **来源**：Codeforces Round 1107 (Div. 3) · Problem E（UTC 2026-06-30）
 - **难度**：1600（$\ast 1600$）
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：组合数学、树、数学、数论（官方标签：combinatorics, dp, graphs, math, number theory, trees）

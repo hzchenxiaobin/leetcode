@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：安雅爱树（Codeforces 2244F，英文名 Anya Loves Trees!）
 - **链接**：https://codeforces.com/problemset/problem/2244/F
-- **来源**：Codeforces Round 1109 (Div. 3) · Problem F
+- **来源**：Codeforces Round 1109 (Div. 3) · Problem F（UTC 2026-07-14）
 - **难度**：$\ast 1700$
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：树、DFS、贪心、动态规划（官方标签：dfs and similar, dp, greedy, trees）

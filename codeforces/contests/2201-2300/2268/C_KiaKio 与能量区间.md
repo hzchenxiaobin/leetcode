@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：KiaKio 与能量区间（Codeforces 2268C，英文名 KiaKio and Energy Intervals）
 - **链接**：https://codeforces.com/problemset/problem/2268/C
-- **来源**：Codeforces Round 1124 (Div. 1) · Problem C（Div. 2 侧编号 2269E，同一道题）
+- **来源**：Codeforces Round 1124 (Div. 1) · Problem C（UTC 2026-09-26）
 - **难度**：2300（1750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位运算，按位贪心，并查集，笛卡尔树，单调栈，哈希表，小并大合并

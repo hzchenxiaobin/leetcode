@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/27/B
-- **比赛来源**：Codeforces Beta Round 27 · Problem B（2010-08-25）
+- **比赛来源**：Codeforces Beta Round 27 (Codeforces format, Div. 2) · Problem B（UTC 2010-09-10）
 - **难度**：1300
 - **标签**：位运算、暴力、DFS、贪心（bitmasks, brute force, dfs and similar, greedy）
 - **评测类型**：特殊评测（有多组合法答案，输出任意一组）

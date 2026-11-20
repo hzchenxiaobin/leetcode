@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：美丽的石柱（Codeforces 2271F，英文名 Beautiful Pillers）
 - **链接**：https://codeforces.com/problemset/problem/2271/F
-- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem F
+- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem F（UTC 2026-10-10）
 - **难度**：2300（2500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，数据结构，动态规划，贪心，实现

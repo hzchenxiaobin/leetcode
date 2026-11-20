@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：快乐时光（Codeforces 2284F，英文名 Fun Times）
 - **链接**：https://codeforces.com/problemset/problem/2284/F
-- **来源**：Codeforces Round 1132 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1132 (Div. 2) · Problem F（UTC 2026-11-06）
 - **难度**：未评级（2750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学、数据结构、DP、数学、矩阵

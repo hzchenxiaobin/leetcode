@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/60/E
-- **比赛来源**：Codeforces Beta Round 60 · Problem E（2011-02-20）
+- **比赛来源**：Codeforces Beta Round 56 · Problem E（UTC 2011-02-19）
 - **难度**：2600
 - **标签**：数学、矩阵/递推、Fibonacci、快速幂
 - **评测类型**：普通

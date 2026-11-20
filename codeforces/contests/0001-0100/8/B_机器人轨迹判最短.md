@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/8/B
-- **比赛来源**：Codeforces Beta Round 8 · Problem B（2010-04-08）
+- **比赛来源**：Codeforces Beta Round 8 · Problem B（UTC 2010-04-08）
 - **难度**：1400
 - **标签**：构造、图论、实现
 - **评测类型**：普通

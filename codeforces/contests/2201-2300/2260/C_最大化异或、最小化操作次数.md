@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最大化异或、最小化操作次数（Codeforces 2260C，英文名 Maximize XOR, Minimize Operations）
 - **链接**：https://codeforces.com/problemset/problem/2260/C
-- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem C
+- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem C（UTC 2026-09-08）
 - **难度**：$\ast 1300$
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：位运算、贪心、不变量

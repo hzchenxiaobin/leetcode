@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/39/B
-- **比赛来源**：Codeforces Beta Round 39 · Problem B
+- **比赛来源**：School Team Contest 1 (Winter Computer School 2010/11) · Problem B（UTC 2010-10-24）
 - **难度**：1300
 - **标签**：贪心（greedy）
 - **评测类型**：普通

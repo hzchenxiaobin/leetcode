@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：抉择恐惧症（Codeforces 2239B，英文名 Decidophobia）
 - **链接**：https://codeforces.com/problemset/problem/2239/B
-- **来源**：Codeforces Round 1105 (Div. 1) · Problem B
+- **来源**：Codeforces Round 1105 (Div. 1) · Problem B（UTC 2026-06-27）
 - **难度**：rating 1600（Div. 1 的 B 题，1000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心、数学、滑动窗口、双指针（官方标签另含排序，见文末延伸）

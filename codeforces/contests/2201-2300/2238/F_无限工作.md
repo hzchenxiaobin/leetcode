@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：无限工作（Codeforces 2238F，英文名 Infinite Work）
 - **链接**：https://codeforces.com/problemset/problem/2238/F
-- **来源**：Codeforces Round 1106 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1106 (Div. 2) · Problem F（UTC 2026-06-28）
 - **难度**：2600（2750 分）
 - **限制**：时间 2.5 s / 内存 256 MB
 - **标签**：组合数学、树、贪心、数学、计数（官方标签：combinatorics, graphs, greedy, math, trees）

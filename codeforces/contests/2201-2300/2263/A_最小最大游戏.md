@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最小最大游戏（Codeforces 2263A，英文名 Min Max Game）
 - **链接**：https://codeforces.com/problemset/problem/2263/A
-- **来源**：Codeforces Round 1120 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1120 (Div. 2) · Problem A（UTC 2026-09-12）
 - **难度**：$\ast 800$（500 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：博弈、不变量、贪心、结论题（官方标签：games）

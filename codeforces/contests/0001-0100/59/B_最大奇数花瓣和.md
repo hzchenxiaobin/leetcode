@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/59/B
-- **比赛来源**：Codeforces Beta Round 59 · Problem B（2011-02-12）
+- **比赛来源**：Codeforces Beta Round 55 (Div. 2) · Problem B（UTC 2011-02-11）
 - **难度**：1200
 - **标签**：数学、数论
 - **评测类型**：普通

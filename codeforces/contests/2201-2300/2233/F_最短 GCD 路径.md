@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最短 GCD 路径（Codeforces 2233F，英文名 Shortest GCD Paths）
 - **链接**：https://codeforces.com/problemset/problem/2233/F
-- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem F
+- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem F（UTC 2026-06-09）
 - **难度**：2800（题面标注 $\ast 2800$）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：数论、图论、最短路、动态规划、整除（官方标签：dp, graphs, math, number theory, shortest paths）

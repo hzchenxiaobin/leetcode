@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：连接连接看见（Codeforces 2245H，英文名 Connect Connect See）
 - **链接**：https://codeforces.com/problemset/problem/2245/H
-- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem H
+- **来源**：Spectral::Cup 2026 Round 3 (Codeforces Round 1110, Div. 1 + Div. 2) · Problem H（UTC 2026-07-16）
 - **难度**：3500（5000 分）
 - **限制**：时间 8 s / 内存 1024 MB
 - **标签**：暴力枚举，数据结构，扫描线，容斥

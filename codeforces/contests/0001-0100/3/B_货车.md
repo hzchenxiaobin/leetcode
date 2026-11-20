@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/3/B
-- **比赛来源**：Codeforces Beta Round 3 · Problem B（2010-03-07）
+- **比赛来源**：Codeforces Beta Round 3 · Problem B（UTC 2010-03-07）
 - **难度**：1900（题面标注 *1900）
 - **标签**：贪心、排序（greedy, sortings）
 - **评测类型**：特殊评测 / 多解（输出任意一组最优集合都算对）

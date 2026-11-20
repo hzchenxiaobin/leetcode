@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/5/C
-- **比赛来源**：Codeforces Beta Round 5 · Problem C（2010-03-21）
+- **比赛来源**：Codeforces Beta Round 5 · Problem C（UTC 2010-03-20）
 - **难度**：1900
 - **标签**：字符串、栈、动态规划、贪心
 - **评测类型**：普通（单组输入，唯一答案）

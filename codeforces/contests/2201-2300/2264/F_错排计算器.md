@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：错排计算器（Codeforces 2264F，英文名 Deranged Calculator）
 - **链接**：https://codeforces.com/problemset/problem/2264/F
-- **来源**：Codeforces Round 1121 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1121 (Div. 2) · Problem F（UTC 2026-09-13）
 - **难度**：2800（3000 分，Div. 2 压轴题）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、实现、数学

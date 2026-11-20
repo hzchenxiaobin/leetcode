@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：多米诺骨牌（Codeforces 2256B，英文名 Domino Tiles）
 - **链接**：https://codeforces.com/problemset/problem/2256/B
-- **来源**：Codeforces Round 1116 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1116 (Div. 2) · Problem B（UTC 2026-08-09）
 - **难度**：1000
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：实现、数学、奇偶性

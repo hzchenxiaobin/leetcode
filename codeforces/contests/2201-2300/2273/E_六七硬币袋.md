@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：六七硬币袋（Codeforces 2273E，英文名 Six-Seven Bags）
 - **链接**：https://codeforces.com/problemset/problem/2273/E
-- **来源**：Codeforces Round 1127 (Div. 1, Based on Mexican Olympiad in Informatics 2026) · Problem E
+- **来源**：Codeforces Round 1127 (Div. 1, Based on Mexican Olympiad in Informatics 2026) · Problem E（UTC 2026-10-11）
 - **难度**：*2900（2250 分，Div. 1 E 位）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：暴力枚举，贪心，交互

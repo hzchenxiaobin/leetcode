@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/3/C
-- **比赛来源**：Codeforces Beta Round 3 · Problem C（2010-03-07）
+- **比赛来源**：Codeforces Beta Round 3 · Problem C（UTC 2010-03-07）
 - **难度**：1800
 - **标签**：暴力枚举、博弈、实现
 - **评测类型**：普通

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/58/B
-- **比赛来源**：Codeforces Beta Round 54 (Div. 2) · Problem B（2011-01-31）
+- **比赛来源**：Codeforces Beta Round 54 (Div. 2) · Problem B（UTC 2011-01-31）
 - **难度**：1300
 - **标签**：贪心、数论（整除）
 - **评测类型**：特殊评测（多解，输出任意一种硬币数量最多的方案）

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/15/A
-- **比赛来源**：Codeforces Beta Round 15 · Problem A（2010-05-15）
+- **比赛来源**：Codeforces Beta Round 15 · Problem A（UTC 2010-05-29）
 - **难度**：1200
 - **标签**：实现、排序（implementation, sortings）
 - **评测类型**：普通

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：分而治之（Codeforces 2241A，英文名 Divide and Conquer）
 - **链接**：https://codeforces.com/problemset/problem/2241/A
-- **来源**：Codeforces Round 1107 (Div. 3) · Problem A
+- **来源**：Codeforces Round 1107 (Div. 3) · Problem A（UTC 2026-06-30）
 - **难度**：800（$\ast 800$）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心、数学、数论（官方标签：greedy, math, number theory）

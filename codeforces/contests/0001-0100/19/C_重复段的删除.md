@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/19/C
-- **比赛来源**：Codeforces Beta Round 19 · Problem C
+- **比赛来源**：Codeforces Beta Round 19 · Problem C（UTC 2010-06-24）
 - **难度**：2200
 - **标签**：贪心、哈希、字符串后缀结构
 - **评测类型**：普通

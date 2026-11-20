@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：尼基塔与书堆（Codeforces 2244B，英文名 Nikita and Books）
 - **链接**：https://codeforces.com/problemset/problem/2244/B
-- **来源**：Codeforces Round 1109 (Div. 3) · Problem B
+- **来源**：Codeforces Round 1109 (Div. 3) · Problem B（UTC 2026-07-14）
 - **难度**：$800$
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心、数学、前缀和（官方标签：greedy, math, sortings；实际不需要排序，只用到前缀和的单调性）

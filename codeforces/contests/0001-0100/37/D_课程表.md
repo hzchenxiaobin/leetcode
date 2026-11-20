@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/37/D
-- **比赛来源**：Codeforces Beta Round 37 · Problem D（2010-06-27）
+- **比赛来源**：Codeforces Beta Round 37 · Problem D（UTC 2010-10-25）
 - **难度**：2300
 - **标签**：combinatorics / dp / math
 - **评测类型**：普通（对 $10^9+7$ 取模）

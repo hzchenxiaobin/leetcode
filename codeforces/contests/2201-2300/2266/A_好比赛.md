@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：好比赛（Codeforces 2266A，英文名 Good Contest）
 - **链接**：https://codeforces.com/problemset/problem/2266/A
-- **来源**：Codeforces Round 1122 (Div. 3) · Problem A
+- **来源**：Codeforces Round 1122 (Div. 3) · Problem A（UTC 2026-09-21）
 - **难度**：800 分（Div. 3 签到题）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心、构造、计数

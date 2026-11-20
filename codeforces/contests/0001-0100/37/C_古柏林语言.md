@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/37/C
-- **比赛来源**：Codeforces Beta Round 37 · Problem C（2010-06-27）
+- **比赛来源**：Codeforces Beta Round 37 · Problem C（UTC 2010-10-25）
 - **难度**：1900
 - **标签**：data structures / greedy / trees
 - **评测类型**：多解（任意一组合法单词）

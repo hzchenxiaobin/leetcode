@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：后室山丘（Codeforces 2267D，英文名 Backrooms Hill）
 - **链接**：https://codeforces.com/problemset/problem/2267/D
-- **来源**：Codeforces Round 1123 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1123 (Div. 2) · Problem D（UTC 2026-09-25）
 - **难度**：1400（官方 rating，本题 1250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，动态规划，贪心，排序，双指针

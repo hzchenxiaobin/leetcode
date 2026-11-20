@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：秘密字符串模式（Codeforces 2280B，英文名 Secret String Patterns）
 - **链接**：https://codeforces.com/problemset/problem/2280/B
-- **来源**：Codeforces Round 1133 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1133 (Div. 2) · Problem B（UTC 2026-11-07）
 - **难度**：未评级（1000 分）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：交互题、前缀和、分类讨论、判定与构造性证明

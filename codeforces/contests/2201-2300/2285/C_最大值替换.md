@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最大值替换（Codeforces 2285C，英文名 Max Substitution）
 - **链接**：https://codeforces.com/problemset/problem/2285/C
-- **来源**：Codeforces Round 1135 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1135 (Div. 2) · Problem C（UTC 2026-11-15）
 - **难度**：未评级（1500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学、数学、排序、数据结构、双指针

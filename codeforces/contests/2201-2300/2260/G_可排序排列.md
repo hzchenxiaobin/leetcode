@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：可排序排列（Codeforces 2260G，英文名 Sortable Permutations）
 - **链接**：https://codeforces.com/problemset/problem/2260/G
-- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem G
+- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem G（UTC 2026-09-08）
 - **难度**：2900 分
 - **限制**：时间 8 s / 内存 1024 MB
 - **标签**：暴力枚举，组合数学，数学，数论（无平方因子 + 莫比乌斯容斥 + CRT）

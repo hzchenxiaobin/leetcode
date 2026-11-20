@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/28/E
-- **比赛来源**：Codeforces Beta Round 28 · Problem E（2010-06-25）
+- **比赛来源**：Codeforces Beta Round 28 (Codeforces format) · Problem E（UTC 2010-09-17）
 - **难度**：2800
 - **标签**：geometry / math
 - **评测类型**：普通（浮点，误差 $< 10^{-6}$）

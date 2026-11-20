@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/36/C
-- **比赛来源**：Codeforces Beta Round 36 · Problem C
+- **比赛来源**：Codeforces Beta Round 36 · Problem C（UTC 2010-10-19）
 - **难度**：2200
 - **标签**：几何、实现
 - **评测类型**：普通

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：全是肉的香肠（Codeforces 2268B，英文名 What a SauSaGe! It's All Meat）
 - **链接**：https://codeforces.com/problemset/problem/2268/B
-- **来源**：Codeforces Round 1124 (Div. 1) · Problem B（Div. 2 侧编号 2269D）
+- **来源**：Codeforces Round 1124 (Div. 1) · Problem B（UTC 2026-09-26）
 - **难度**：1500（1000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：位运算，线性基（异或子空间），数学，暴力枚举，计数

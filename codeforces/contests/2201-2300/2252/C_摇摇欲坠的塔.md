@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：摇摇欲坠的塔（Codeforces 2252C，英文名 Risky Tower）
 - **链接**：https://codeforces.com/problemset/problem/2252/C
-- **来源**：Codeforces Round 1115 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1115 (Div. 2) · Problem C（UTC 2026-08-06）
 - **难度**：1400
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：二分查找，暴力枚举，数据结构，贪心，排序

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：未能付印（Codeforces 2275B，英文名 Did Not Go to Print）
 - **链接**：https://codeforces.com/problemset/problem/2275/B
-- **来源**：Codeforces Round 1125 (Div. 3) · Problem B
+- **来源**：Codeforces Round 1125 (Div. 3) · Problem B（UTC 2026-10-07）
 - **难度**：800
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：栈、模拟（官方 tag：data structures、implementation）

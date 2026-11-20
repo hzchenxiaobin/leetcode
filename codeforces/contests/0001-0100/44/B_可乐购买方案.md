@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/44/B
-- **比赛来源**：Codeforces Beta Round 44（School Team Contest 2, Winter Computer School 2010/11）· Problem B（2010-11-06）
+- **比赛来源**：School Team Contest 2 (Winter Computer School 2010/11) · Problem B（UTC 2010-11-06）
 - **难度**：1500
 - **标签**：实现、枚举、计数
 - **评测类型**：普通

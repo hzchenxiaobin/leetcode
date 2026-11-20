@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/54/E
-- **比赛来源**：Codeforces Beta Round 54 · Problem E
+- **比赛来源**：Codeforces Beta Round 50 · Problem E（UTC 2011-01-11）
 - **难度**：2700
 - **标签**：计算几何、旋转扫描、精度
 - **评测类型**：特殊评测（实数答案，误差限 $10^{-6}$）

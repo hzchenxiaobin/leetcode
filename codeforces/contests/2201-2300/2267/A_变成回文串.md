@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：变成回文串（Codeforces 2267A，英文名 Turn Into a Palindrome）
 - **链接**：https://codeforces.com/problemset/problem/2267/A
-- **来源**：Codeforces Round 1123 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1123 (Div. 2) · Problem A（UTC 2026-09-25）
 - **难度**：800 分（题面 rating 800，Div. 2 签到题）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心，字符串

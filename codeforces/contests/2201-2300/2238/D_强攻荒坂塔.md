@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：强攻荒坂塔（Codeforces 2238D，英文名 Storming Arasaka）
 - **链接**：https://codeforces.com/problemset/problem/2238/D
-- **来源**：Codeforces Round 1106 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1106 (Div. 2) · Problem D（UTC 2026-06-28）
 - **难度**：1500（$\ast 1500$）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心、数学、数论（官方标签：greedy, math, number theory）

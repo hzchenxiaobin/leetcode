@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/57/C
-- **比赛来源**：Codeforces Beta Round 53 · Problem C（2011-01-25）
+- **比赛来源**：Codeforces Beta Round 53 · Problem C（UTC 2011-01-25）
 - **难度**：1900
 - **标签**：组合数学、计数
 - **评测类型**：普通

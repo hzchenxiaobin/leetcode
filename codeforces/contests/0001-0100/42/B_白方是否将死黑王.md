@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/42/B
-- **比赛来源**：Codeforces Beta Round 42 · Problem B（2010-09-28）
+- **比赛来源**：Codeforces Beta Round 41 · Problem B（UTC 2010-11-18）
 - **难度**：1700
 - **标签**：实现（implementation）
 - **评测类型**：普通

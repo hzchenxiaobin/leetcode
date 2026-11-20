@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/51/C
-- **比赛来源**：Codeforces Beta Round 51 · Problem C
+- **比赛来源**：Codeforces Beta Round 48 · Problem C（UTC 2010-12-28）
 - **难度**：1800
 - **标签**：二分答案、贪心、实数处理
 - **评测类型**：特殊评测（多解，输出任意合法方案）

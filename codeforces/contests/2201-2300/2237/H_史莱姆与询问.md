@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：史莱姆与询问（Codeforces 2237H，英文名 Slime and Queries）
 - **链接**：https://codeforces.com/problemset/problem/2237/H
-- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem H
+- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem H（UTC 2026-06-18）
 - **难度**：3500（3500 分，题面标注 *3500）
 - **限制**：时间 5 s / 内存 1024 MB
 - **标签**：数据结构、贪心、树

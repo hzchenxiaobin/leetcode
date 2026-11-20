@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：一道眉毛热身题（Codeforces 2275H，英文名 A Problem to Warm Up the Eyebrows）
 - **链接**：https://codeforces.com/problemset/problem/2275/H
-- **来源**：Codeforces Round 1125 (Div. 3) · Problem H
+- **来源**：Codeforces Round 1125 (Div. 3) · Problem H（UTC 2026-10-07）
 - **难度**：$\ast 2400$
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：组合数学，数学，前缀和（官方标签 combinatorics / dp / math）

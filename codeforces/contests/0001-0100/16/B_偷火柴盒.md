@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/16/B
-- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem B
+- **比赛来源**：Codeforces Beta Round 16 (Div. 2 Only) · Problem B（UTC 2010-06-03）
 - **难度**：900
 - **标签**：贪心、实现、排序
 - **评测类型**：普通

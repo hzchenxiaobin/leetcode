@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：树的归约游戏（Codeforces 2272F，英文名 Tree Reduction Game）
 - **链接**：https://codeforces.com/problemset/problem/2272/F
-- **来源**：Codeforces Round 1130 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1130 (Div. 2) · Problem F（UTC 2026-10-26）
 - **难度**：未评级（2000 分，Div. 2 F）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：树，博弈论，动态规划，换根 DP，迭代 DFS

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：双罐定理（Codeforces 2284D，英文名 The Theorem of Two Cans）
 - **链接**：https://codeforces.com/problemset/problem/2284/D
-- **来源**：Codeforces Round 1132 (Div. 2) · Problem D
+- **来源**：Codeforces Round 1132 (Div. 2) · Problem D（UTC 2026-11-06）
 - **难度**：未评级（2000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：通信题（run-twice），构造，DFS 与图遍历，图论，数学，树

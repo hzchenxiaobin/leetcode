@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：恶心数组与 GCD（Codeforces 2284C1，英文名 Disgusting + GCD (Constructive Version)）
 - **链接**：https://codeforces.com/problemset/problem/2284/C1
-- **来源**：Codeforces Round 1132 (Div. 2) · Problem C1
+- **来源**：Codeforces Round 1132 (Div. 2) · Problem C1（UTC 2026-11-06）
 - **难度**：未评级（1000 分，官方 rating 尚未公布）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造、数论、数学、贪心（题面 tags 另挂 dp / 图论，本解法未使用）

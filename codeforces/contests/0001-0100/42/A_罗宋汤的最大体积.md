@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/42/A
-- **比赛来源**：Codeforces Beta Round 42 · Problem A（2010-09-28）
+- **比赛来源**：Codeforces Beta Round 41 · Problem A（UTC 2010-11-18）
 - **难度**：1400
 - **标签**：贪心、实现（greedy, implementation）
 - **评测类型**：普通（实数输出，误差 $\le 10^{-4}$）

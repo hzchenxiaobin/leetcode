@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/27/C
-- **比赛来源**：Codeforces Beta Round 27 · Problem C（2010-08-25）
+- **比赛来源**：Codeforces Beta Round 27 (Codeforces format, Div. 2) · Problem C（UTC 2010-09-10）
 - **难度**：1900
 - **标签**：构造、贪心（constructive algorithms, greedy）
 - **评测类型**：特殊评测（有多组合法答案）

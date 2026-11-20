@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/42/D
-- **比赛来源**：Codeforces Beta Round 42 · Problem D（2010-09-28）
+- **比赛来源**：Codeforces Beta Round 41 · Problem D（UTC 2010-11-18）
 - **难度**：2300
 - **标签**：构造、数学（constructive algorithms, math）
 - **评测类型**：特殊评测（多解，输出任意一张合法图）

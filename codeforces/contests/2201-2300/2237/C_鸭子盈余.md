@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：鸭子盈余（Codeforces 2237C，英文名 Duck Surplus）
 - **链接**：https://codeforces.com/problemset/problem/2237/C
-- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem C
+- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem C（UTC 2026-06-18）
 - **难度**：rating 1000（1250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分查找、贪心、线性扫描

@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/4/D
-- **比赛来源**：Codeforces Beta Round 4 (Div. 2 Only) · Problem D
+- **比赛来源**：Codeforces Beta Round 4 (Div. 2 Only) · Problem D（UTC 2010-03-12）
 - **难度**：1700
 - **标签**：动态规划、排序（dp, sortings）
 - **评测类型**：普通（多解：输出任意一个最长链）

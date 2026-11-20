@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/61/C
-- **比赛来源**：Codeforces Beta Round 61 · Problem C（2011-02-23）
+- **比赛来源**：Codeforces Beta Round 57 (Div. 2) · Problem C（UTC 2011-02-22）
 - **难度**：2000
 - **标签**：数学、进制转换、大数、罗马数字
 - **评测类型**：普通

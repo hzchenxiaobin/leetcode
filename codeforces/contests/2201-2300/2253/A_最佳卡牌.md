@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最佳卡牌（Codeforces 2253A，英文名 The Best Card）
 - **链接**：https://codeforces.com/problemset/problem/2253/A
-- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem A
+- **来源**：Educational Codeforces Round 193 (Rated for Div. 2) · Problem A（UTC 2026-08-07）
 - **难度**：800
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：贪心，数学，数论

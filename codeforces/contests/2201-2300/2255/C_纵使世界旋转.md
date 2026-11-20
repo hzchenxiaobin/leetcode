@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：纵使世界旋转（Codeforces 2255C，英文名 Even If the World Turns）
 - **链接**：https://codeforces.com/problemset/problem/2255/C
-- **来源**：Codeforces Round 1116 (Div. 1) · Problem C
+- **来源**：Codeforces Round 1116 (Div. 1) · Problem C（UTC 2026-08-09）
 - **难度**：$\ast 2100$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：通信题（run-twice），构造，交互，数学，数论，贪心

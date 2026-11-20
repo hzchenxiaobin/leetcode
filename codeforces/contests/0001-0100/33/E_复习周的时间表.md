@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/33/E
-- **比赛来源**：Codeforces Beta Round 33 · Problem E（2010-07-06）
+- **比赛来源**：Codeforces Beta Round 33 (Codeforces format) · Problem E（UTC 2010-10-07）
 - **难度**：2600
 - **标签**：构造 / 排序 / 动态规划（调度）
 - **评测类型**：特殊评测（输出方案）

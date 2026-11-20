@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/12/E
-- **比赛来源**：Codeforces Beta Round 12 (Div 2 Only) · Problem E（2010-04-29）
+- **比赛来源**：Codeforces Beta Round 12 (Div 2 Only) · Problem E（UTC 2010-04-29）
 - **难度**：2100
 - **标签**：构造
 - **评测类型**：特殊评测（输出任一合法矩阵即可）

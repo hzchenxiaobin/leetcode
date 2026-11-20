@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：尤拉与截止日期（Codeforces 2244G，英文名 Yura and Deadlines）
 - **链接**：https://codeforces.com/problemset/problem/2244/G
-- **来源**：Codeforces Round 1109 (Div. 3) · Problem G
+- **来源**：Codeforces Round 1109 (Div. 3) · Problem G（UTC 2026-07-14）
 - **难度**：$\ast 1900$
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：动态规划、数据结构、树状数组、前缀最大值、离线激活（官方标签：data structures, dp）

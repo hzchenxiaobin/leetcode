@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/30/D
-- **比赛来源**：Codeforces Beta Round 30 · Problem D
+- **比赛来源**：Codeforces Beta Round 30 (Codeforces format) · Problem D（UTC 2010-09-24）
 - **难度**：2600
 - **标签**：几何、贪心
 - **评测类型**：普通（浮点，相对或绝对误差 $\le 10^{-6}$）

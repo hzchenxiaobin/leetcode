@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：前缀和的符号（Codeforces 2260D，英文名 Signs of Prefix Sums）
 - **链接**：https://codeforces.com/problemset/problem/2260/D
-- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem D
+- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem D（UTC 2026-09-08）
 - **难度**：1700 分
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：暴力枚举，构造，DFS 与搜索，动态规划，实现

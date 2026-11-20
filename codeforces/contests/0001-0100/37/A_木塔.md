@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/37/A
-- **比赛来源**：Codeforces Beta Round 37 · Problem A（2010-06-27）
+- **比赛来源**：Codeforces Beta Round 37 · Problem A（UTC 2010-10-25）
 - **难度**：1000
 - **标签**：sortings
 - **评测类型**：普通

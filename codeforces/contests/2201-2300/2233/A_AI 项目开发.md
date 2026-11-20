@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：AI 项目开发（Codeforces 2233A，英文名 AI Project Development）
 - **链接**：https://codeforces.com/problemset/problem/2233/A
-- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem A
+- **来源**：Educational Codeforces Round 191 (Rated for Div. 2) · Problem A（UTC 2026-06-09）
 - **难度**：800
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：暴力枚举、数学、向上取整、分类讨论

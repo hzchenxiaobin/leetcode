@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：元图（Codeforces 2279D，英文名 Meta Graph）
 - **链接**：https://codeforces.com/problemset/problem/2279/D
-- **来源**：Codeforces Round 1133 (Div. 1) · Problem D
+- **来源**：Codeforces Round 1133 (Div. 1) · Problem D（UTC 2026-11-07）
 - **难度**：未评级（1750 分）
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：构造，动态规划，图论，最短路

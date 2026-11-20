@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：替换与压缩（Codeforces 2276B，英文名 Replace and Compress）
 - **链接**：https://codeforces.com/problemset/problem/2276/B
-- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem B
+- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem B（UTC 2026-10-14）
 - **难度**：1000
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：实现，字符串

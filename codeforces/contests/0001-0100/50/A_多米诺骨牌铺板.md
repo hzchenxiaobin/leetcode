@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/50/A
-- **比赛来源**：Codeforces Beta Round 50 · Problem A
+- **比赛来源**：Codeforces Beta Round 47 · Problem A（UTC 2010-12-20）
 - **难度**：800
 - **标签**：贪心、数学、整除
 - **评测类型**：普通

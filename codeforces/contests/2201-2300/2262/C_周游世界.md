@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：周游世界（Codeforces 2262C，英文名 Traveling the World）
 - **链接**：https://codeforces.com/problemset/problem/2262/C
-- **来源**：Codeforces Round 1120 (Div. 1) · Problem C
+- **来源**：Codeforces Round 1120 (Div. 1) · Problem C（UTC 2026-09-12）
 - **难度**：$\ast 2300$（1750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学、构造、图论、贪心、数学（官方标签：combinatorics、constructive algorithms、graphs、greedy、math）

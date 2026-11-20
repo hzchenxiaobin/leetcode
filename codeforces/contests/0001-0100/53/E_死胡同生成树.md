@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/53/E
-- **比赛来源**：Codeforces Beta Round 53 · Problem E（2011-01-07）
+- **比赛来源**：Codeforces Beta Round 49 (Div. 2) · Problem E（UTC 2011-01-06）
 - **难度**：2500
 - **标签**：状压 DP、矩阵树定理、容斥、组合计数
 - **评测类型**：普通

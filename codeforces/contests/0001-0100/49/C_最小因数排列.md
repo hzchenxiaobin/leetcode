@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/49/C
-- **比赛来源**：Codeforces Beta Round 49 · Problem C（2010-12-18）
+- **比赛来源**：Codeforces Beta Round 46 (Div. 2) · Problem C（UTC 2010-12-17）
 - **难度**：1700
 - **标签**：构造、数学
 - **评测类型**：特殊评测（任意最优解均可）

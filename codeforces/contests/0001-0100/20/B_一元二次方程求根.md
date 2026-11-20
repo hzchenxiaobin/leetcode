@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/20/B
-- **比赛来源**：Codeforces Beta Round 20 · Problem B
+- **比赛来源**：Codeforces Alpha Round 20 (Codeforces format) · Problem B（UTC 2010-06-18）
 - **难度**：2000
 - **标签**：数学
 - **评测类型**：特殊评测（浮点答案，按误差判定）

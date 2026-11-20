@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/17/E
-- **比赛来源**：Codeforces Beta Round 17 · Problem E（2010-06-10）
+- **比赛来源**：Codeforces Beta Round 17 · Problem E（UTC 2010-06-10）
 - **难度**：2900
 - **标签**：字符串（回文、Manacher）
 - **评测类型**：普通（单组输入，唯一答案）

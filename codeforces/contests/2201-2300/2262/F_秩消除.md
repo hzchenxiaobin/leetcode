@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：秩消除（Codeforces 2262F，英文名 Rank Removal）
 - **链接**：https://codeforces.com/problemset/problem/2262/F
-- **来源**：Codeforces Round 1120 (Div. 1) · Problem F
+- **来源**：Codeforces Round 1120 (Div. 1) · Problem F（UTC 2026-09-12）
 - **难度**：$*3500$（3250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：数学、线性代数（$GF(2)$ 上的行列式与逆矩阵）、构造、二分图匹配

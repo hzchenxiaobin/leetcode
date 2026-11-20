@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：穴居人（Codeforces 2276D，英文名 Caveman）
 - **链接**：https://codeforces.com/problemset/problem/2276/D
-- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem D
+- **来源**：Educational Codeforces Round 195 (Rated for Div. 2) · Problem D（UTC 2026-10-14）
 - **难度**：1400
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：组合数学，图论，分类讨论

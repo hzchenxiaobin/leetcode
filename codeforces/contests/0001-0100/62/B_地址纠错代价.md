@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/62/B
-- **比赛来源**：Codeforces Beta Round 62 · Problem B（2011-02-26）
+- **比赛来源**：Codeforces Beta Round 58 · Problem B（UTC 2011-02-25）
 - **难度**：1800
 - **标签**：二分、字符串、实现
 - **评测类型**：普通

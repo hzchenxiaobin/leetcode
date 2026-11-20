@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：除数MEX（Codeforces 2258E，英文名 DivMEX）
 - **链接**：https://codeforces.com/problemset/problem/2258/E
-- **来源**：Codeforces Round 1118 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1118 (Div. 2) · Problem E（UTC 2026-08-29）
 - **难度**：2400（2250 分）
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：数据结构、数学、数论（素数幂、离线扫描、线段树上二分）

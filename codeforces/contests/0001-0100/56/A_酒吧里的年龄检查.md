@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/56/A
-- **比赛来源**：Codeforces Beta Round 52 (Div. 2)（2011-01-22）· Problem A
+- **比赛来源**：Codeforces Beta Round 52 (Div. 2) · Problem A（UTC 2011-01-21）
 - **难度**：1000
 - **标签**：实现、字符串、计数
 - **评测类型**：普通

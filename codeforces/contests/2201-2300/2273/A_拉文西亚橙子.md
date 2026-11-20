@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：拉文西亚橙子（Codeforces 2273A，英文名 Lavencia Oranges）
 - **链接**：https://codeforces.com/problemset/problem/2273/A
-- **来源**：Codeforces Round 1127 (Div. 1, Based on Mexican Olympiad in Informatics 2026) · Problem A
+- **来源**：Codeforces Round 1127 (Div. 1, Based on Mexican Olympiad in Informatics 2026) · Problem A（UTC 2026-10-11）
 - **难度**：1300（500 分，Div. 1 的 A 题）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分查找，构造，动态规划，贪心

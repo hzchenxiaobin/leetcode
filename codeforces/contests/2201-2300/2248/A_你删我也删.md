@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：你删我也删（Codeforces 2248A，英文名 You Delete, I Delete）
 - **链接**：https://codeforces.com/problemset/problem/2248/A
-- **来源**：Codeforces Round 1113 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1113 (Div. 2) · Problem A（UTC 2026-08-01）
 - **难度**：800
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心，博弈，字符串

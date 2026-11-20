@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/4/C
-- **比赛来源**：Codeforces Beta Round 4 (Div. 2 Only) · Problem C
+- **比赛来源**：Codeforces Beta Round 4 (Div. 2 Only) · Problem C（UTC 2010-03-12）
 - **难度**：1300
 - **标签**：数据结构、哈希表、实现（data structures, hashing, implementation）
 - **评测类型**：普通

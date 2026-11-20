@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：数学与物理（Codeforces 2278C，英文名 Math and Physics）
 - **链接**：https://codeforces.com/problemset/problem/2278/C
-- **来源**：Codeforces Round 1131 (Div. 3) · Problem C
+- **来源**：Codeforces Round 1131 (Div. 3) · Problem C（UTC 2026-10-31）
 - **难度**：未评级（Div. 3 C，约 1200 档；场次数据未给 rating / points）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心

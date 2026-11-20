@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/47/D
-- **比赛来源**：Codeforces Beta Round 47 · Problem D（2010-12-08）
+- **比赛来源**：Codeforces Beta Round 44 (Div. 2) · Problem D（UTC 2010-12-07）
 - **难度**：2200
 - **标签**：暴力（枚举）
 - **评测类型**：普通（单组输入，唯一答案）

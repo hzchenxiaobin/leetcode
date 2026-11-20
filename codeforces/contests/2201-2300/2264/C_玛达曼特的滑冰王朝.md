@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：玛达曼特的滑冰王朝（Codeforces 2264C，英文名 Madamant's Skating Dynasty）
 - **链接**：https://codeforces.com/problemset/problem/2264/C
-- **来源**：Codeforces Round 1121 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1121 (Div. 2) · Problem C（UTC 2026-09-13）
 - **难度**：1400（1500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合计数、数学、排序

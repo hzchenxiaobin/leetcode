@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：模运算树（Codeforces 2266G，英文名 Modular Tree）
 - **链接**：https://codeforces.com/problemset/problem/2266/G
-- **来源**：Codeforces Round 1122 (Div. 3) · Problem G
+- **来源**：Codeforces Round 1122 (Div. 3) · Problem G（UTC 2026-09-21）
 - **难度**：$\ast 2200$
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：DFS 与树，动态规划，贪心，数学，数论，树

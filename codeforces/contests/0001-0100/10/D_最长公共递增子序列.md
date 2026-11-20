@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/10/D
-- **比赛来源**：Codeforces Beta Round 10 · Problem D（2010-04-15）
+- **比赛来源**：Codeforces Beta Round 10 · Problem D（UTC 2010-04-15）
 - **难度**：2800
 - **标签**：动态规划
 - **评测类型**：特殊评测（多解，输出任意一个合法序列即可）

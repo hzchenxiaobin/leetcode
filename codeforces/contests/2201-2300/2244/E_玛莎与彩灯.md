@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：玛莎与彩灯（Codeforces 2244E，英文名 Masha and the Garland）
 - **链接**：https://codeforces.com/problemset/problem/2244/E
-- **来源**：Codeforces Round 1109 (Div. 3) · Problem E
+- **来源**：Codeforces Round 1109 (Div. 3) · Problem E（UTC 2026-07-14）
 - **难度**：$\ast 1400$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：数据结构、动态规划、贪心、实现、数学、数论、字符串（官方标签：data structures, dp, greedy, implementation, math, number theory, strings）

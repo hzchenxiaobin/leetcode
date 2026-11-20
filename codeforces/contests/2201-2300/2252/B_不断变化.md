@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：不断变化（Codeforces 2252B，英文名 Always Changing）
 - **链接**：https://codeforces.com/problemset/problem/2252/B
-- **来源**：Codeforces Round 1115 (Div. 2) · Problem B
+- **来源**：Codeforces Round 1115 (Div. 2) · Problem B（UTC 2026-08-06）
 - **难度**：1100
 - **限制**：时间 1.5 s / 内存 256 MB
 - **标签**：字符串，动态规划，贪心，数学

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：MEX 的下取整（困难版）（Codeforces 2262A2，英文名 Floor of MEX (Hard Version)）
 - **链接**：https://codeforces.com/problemset/problem/2262/A2
-- **来源**：Codeforces Round 1120 (Div. 1) · Problem A2
+- **来源**：Codeforces Round 1120 (Div. 1) · Problem A2（UTC 2026-09-12）
 - **难度**：1800（`*1800`，1000 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：动态规划，实现，数学

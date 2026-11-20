@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/14/E
-- **比赛来源**：Codeforces Beta Round 14 (Div. 2) · Problem E
+- **比赛来源**：Codeforces Beta Round 14 (Div. 2) · Problem E（UTC 2010-05-19）
 - **难度**：1900
 - **标签**：动态规划（dp）
 - **评测类型**：普通

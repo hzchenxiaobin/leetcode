@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/37/E
-- **比赛来源**：Codeforces Beta Round 37 · Problem E（2010-06-27）
+- **比赛来源**：Codeforces Beta Round 37 · Problem E（UTC 2010-10-25）
 - **难度**：2600
 - **标签**：graphs / greedy / shortest paths
 - **评测类型**：普通

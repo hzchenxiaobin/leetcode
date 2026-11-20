@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/43/D
-- **比赛来源**：Codeforces Beta Round 42 (Div. 2)（2010-11-30）· Problem D
+- **比赛来源**：Codeforces Beta Round 42 (Div. 2) · Problem D（UTC 2010-11-29）
 - **难度**：2000
 - **标签**：暴力枚举、构造、实现
 - **评测类型**：特殊评测（多组合法输出）

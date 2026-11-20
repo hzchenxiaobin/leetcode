@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：直到什么都不剩还要多久（Codeforces 2255D，英文名 How Long Until Nothing Remains?）
 - **链接**：https://codeforces.com/problemset/problem/2255/D
-- **来源**：Codeforces Round 1116 (Div. 1) · Problem D（Div. 2 同题是 2256F）
+- **来源**：Codeforces Round 1116 (Div. 1) · Problem D（UTC 2026-08-09）
 - **难度**：$\ast 2300$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分答案，位运算（bitmask），数据结构（堆），贪心，数学，排序

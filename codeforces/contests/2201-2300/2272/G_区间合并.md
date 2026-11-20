@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：区间合并（Codeforces 2272G，英文名 Ranges）
 - **链接**：https://codeforces.com/problemset/problem/2272/G
-- **来源**：Codeforces Round 1130 (Div. 2) · Problem G
+- **来源**：Codeforces Round 1130 (Div. 2) · Problem G（UTC 2026-10-26）
 - **难度**：未评级（2500 分，Div. 2 压轴）
 - **限制**：时间 5 s / 内存 512 MB
 - **标签**：数据结构，分治，并查集，离线处理

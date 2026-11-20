@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：交换置换（Codeforces 2237E，英文名 Permutation Commutation）
 - **链接**：https://codeforces.com/problemset/problem/2237/E
-- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem E
+- **来源**：Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2) · Problem E（UTC 2026-06-18）
 - **难度**：2100（2250 分，题面标注 *2100）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：数据结构，图论，贪心

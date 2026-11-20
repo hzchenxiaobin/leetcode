@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：噢，树树树，不必离开（Codeforces 2261H，英文名 Oh Tree Tree Tree, No Need to Leave）
 - **链接**：https://codeforces.com/problemset/problem/2261/H
-- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem H
+- **来源**：WorldQuant Round 1 (Codeforces Round 1128, Div. 1 + Div. 2) · Problem H（UTC 2026-10-17）
 - **难度**：$\ast 3500$（4500 分）
 - **限制**：时间 3 s / 内存 512 MB
 - **标签**：位运算，通信题，构造，DFS，交互，树

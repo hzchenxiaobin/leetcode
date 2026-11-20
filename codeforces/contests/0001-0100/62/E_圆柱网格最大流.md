@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/62/E
-- **比赛来源**：Codeforces Beta Round 62 · Problem E（2011-02-26）
+- **比赛来源**：Codeforces Beta Round 58 · Problem E（UTC 2011-02-25）
 - **难度**：2700
 - **标签**：网络流、最小割、状压 DP
 - **评测类型**：普通

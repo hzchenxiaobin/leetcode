@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/45/B
-- **比赛来源**：Codeforces Beta Round 45 · Problem B（2010-10-13）
+- **比赛来源**：School Team Contest 3 (Winter Computer School 2010/11) · Problem B（UTC 2010-11-13）
 - **难度**：2200
 - **标签**：dp、并查集（dsu）、函数图
 - **评测类型**：普通

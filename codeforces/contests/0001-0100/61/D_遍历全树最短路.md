@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/61/D
-- **比赛来源**：Codeforces Beta Round 61 · Problem D（2011-02-23）
+- **比赛来源**：Codeforces Beta Round 57 (Div. 2) · Problem D（UTC 2011-02-22）
 - **难度**：1800
 - **标签**：树、DFS、贪心、图论
 - **评测类型**：普通

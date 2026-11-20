@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：子序列取反（Codeforces 2247C，英文名 Inversion of a Subsequence）
 - **链接**：https://codeforces.com/problemset/problem/2247/C
-- **来源**：Codeforces Round 1111 (Div. 2) · Problem C
+- **来源**：Codeforces Round 1111 (Div. 2) · Problem C（UTC 2026-07-18）
 - **难度**：rating 1100（1250 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心，数学，奇偶性分析

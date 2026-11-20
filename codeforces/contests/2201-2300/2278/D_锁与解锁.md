@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：锁与解锁（Codeforces 2278D，英文名 Lock and Unlock）
 - **链接**：https://codeforces.com/problemset/problem/2278/D
-- **来源**：Codeforces Round 1131 (Div. 3) · Problem D
+- **来源**：Codeforces Round 1131 (Div. 3) · Problem D（UTC 2026-10-31）
 - **难度**：未评级（Div. 3 Problem D，评测数据中无 rating）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心，构造，排序，中位数

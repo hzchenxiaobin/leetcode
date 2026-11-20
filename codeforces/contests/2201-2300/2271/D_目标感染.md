@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：目标感染（Codeforces 2271D，英文名 Target Infection）
 - **链接**：https://codeforces.com/problemset/problem/2271/D
-- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem D
+- **来源**：DeepInfra Round 1 (Codeforces Round 1126, Div. 1 + Div. 2) · Problem D（UTC 2026-10-10）
 - **难度**：1700（1750 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分查找，暴力，贪心，实现，双指针

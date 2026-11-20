@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/11/E
-- **比赛来源**：Codeforces Beta Round 11 · Problem E
+- **比赛来源**：Codeforces Beta Round 11 · Problem E（UTC 2010-04-26）
 - **难度**：2800
 - **标签**：二分、动态规划、贪心
 - **评测类型**：普通（浮点答案，截断到 6 位小数）

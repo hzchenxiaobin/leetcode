@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/9/C
-- **比赛来源**：Codeforces Beta Round 9 (Div. 2 Only) · Problem C
+- **比赛来源**：Codeforces Beta Round 9 (Div. 2 Only) · Problem C（UTC 2010-04-11）
 - **难度**：1200
 - **标签**：暴力枚举、实现、数学（brute force, implementation, math）
 - **评测类型**：普通

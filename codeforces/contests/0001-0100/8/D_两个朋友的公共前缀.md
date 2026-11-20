@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/8/D
-- **比赛来源**：Codeforces Beta Round 8 · Problem D（2010-04-08）
+- **比赛来源**：Codeforces Beta Round 8 · Problem D（UTC 2010-04-08）
 - **难度**：2600
 - **标签**：二分、几何
 - **评测类型**：普通（浮点答案，带误差判定）

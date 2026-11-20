@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：与或排序（Codeforces 2266C，英文名 AND, OR, Sort!）
 - **链接**：https://codeforces.com/problemset/problem/2266/C
-- **来源**：Codeforces Round 1122 (Div. 3) · Problem C
+- **来源**：Codeforces Round 1122 (Div. 3) · Problem C（UTC 2026-09-21）
 - **难度**：$\ast 1000$
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：贪心，字符串，枚举

@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：K 很重要（Codeforces 2268A，英文名 K Is Important）
 - **链接**：https://codeforces.com/problemset/problem/2268/A
-- **来源**：Codeforces Round 1124 (Div. 1) · Problem A（Div. 2 的编号是 2269C，同一道题）
+- **来源**：Codeforces Round 1124 (Div. 1) · Problem A（UTC 2026-09-26）
 - **难度**：1200 分（Div. 1 的签到题）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：构造，贪心，双指针

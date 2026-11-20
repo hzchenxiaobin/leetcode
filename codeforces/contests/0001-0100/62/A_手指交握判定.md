@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/62/A
-- **比赛来源**：Codeforces Beta Round 62 · Problem A（2011-02-26）
+- **比赛来源**：Codeforces Beta Round 58 · Problem A（UTC 2011-02-25）
 - **难度**：1300
 - **标签**：贪心、数学、分类讨论
 - **评测类型**：普通

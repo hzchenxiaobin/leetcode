@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/52/A
-- **比赛来源**：Codeforces Beta Round 52 · Problem A
+- **比赛来源**：Codeforces Testing Round 1 · Problem A（UTC 2011-01-04）
 - **难度**：900
 - **标签**：实现、计数、众数
 - **评测类型**：普通

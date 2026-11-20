@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/33/D
-- **比赛来源**：Codeforces Beta Round 33 · Problem D（2010-07-06）
+- **比赛来源**：Codeforces Beta Round 33 (Codeforces format) · Problem D（UTC 2010-10-07）
 - **难度**：2000
 - **标签**：几何、图论、最短路、排序
 - **评测类型**：普通

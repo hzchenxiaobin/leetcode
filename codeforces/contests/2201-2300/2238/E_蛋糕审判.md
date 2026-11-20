@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：蛋糕审判（Codeforces 2238E，英文名 Cake Trial）
 - **链接**：https://codeforces.com/problemset/problem/2238/E
-- **来源**：Codeforces Round 1106 (Div. 2) · Problem E
+- **来源**：Codeforces Round 1106 (Div. 2) · Problem E（UTC 2026-06-28）
 - **难度**：2100（$\ast 2100$）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：动态规划、贪心（官方标签：dp, greedy）

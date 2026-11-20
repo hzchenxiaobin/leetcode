@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：异或排列矩阵（Codeforces 2249D，英文名 Xor Permutation Matrix）
 - **链接**：https://codeforces.com/problemset/problem/2249/D
-- **来源**：Codeforces Round 1112 (Div. 1) · Problem D
+- **来源**：Codeforces Round 1112 (Div. 1) · Problem D（UTC 2026-07-26）
 - **难度**：2300
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：位运算，构造，数学

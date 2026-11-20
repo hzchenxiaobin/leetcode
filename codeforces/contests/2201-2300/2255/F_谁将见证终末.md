@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：谁将见证终末（Codeforces 2255F，英文名 Who Will Witness the End?）
 - **链接**：https://codeforces.com/problemset/problem/2255/F
-- **来源**：Codeforces Round 1116 (Div. 1) · Problem F
+- **来源**：Codeforces Round 1116 (Div. 1) · Problem F（UTC 2026-08-09）
 - **难度**：*3100（本题 3500 分）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：组合数学、生成函数、NTT/FFT、多项式、数学

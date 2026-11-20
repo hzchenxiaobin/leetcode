@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：正负号树（Codeforces 2258F，英文名 Plus Minus Tree）
 - **链接**：https://codeforces.com/problemset/problem/2258/F
-- **来源**：Codeforces Round 1118 (Div. 2) · Problem F
+- **来源**：Codeforces Round 1118 (Div. 2) · Problem F（UTC 2026-08-29）
 - **难度**：3000（3000 分，本场压轴）
 - **限制**：时间 3 s / 内存 256 MB
 - **标签**：树形 DP、凸函数（斜率技巧）、可合并有序多重集、贪心、DFS

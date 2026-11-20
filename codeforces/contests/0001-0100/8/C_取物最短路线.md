@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/8/C
-- **比赛来源**：Codeforces Beta Round 8 · Problem C（2010-04-08）
+- **比赛来源**：Codeforces Beta Round 8 · Problem C（UTC 2010-04-08）
 - **难度**：2000
 - **标签**：状态压缩、动态规划
 - **评测类型**：特殊评测（输出任一最优方案）

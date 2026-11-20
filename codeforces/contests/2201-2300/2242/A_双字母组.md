@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：双字母组（Codeforces 2242A，英文名 Bigrams）
 - **链接**：https://codeforces.com/problemset/problem/2242/A
-- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem A
+- **来源**：Educational Codeforces Round 192 (Rated for Div. 2) · Problem A（UTC 2026-07-06）
 - **难度**：800（$\ast 800$）
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：排序、字符串（官方标签：sortings, strings）

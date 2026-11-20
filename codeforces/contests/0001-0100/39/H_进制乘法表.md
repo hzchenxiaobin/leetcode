@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/39/H
-- **比赛来源**：Codeforces Beta Round 39 · Problem H
+- **比赛来源**：School Team Contest 1 (Winter Computer School 2010/11) · Problem H（UTC 2010-10-24）
 - **难度**：1300
 - **标签**：实现
 - **评测类型**：普通（空格数量不敏感）

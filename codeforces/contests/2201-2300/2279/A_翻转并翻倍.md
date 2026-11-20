@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：翻转并翻倍（Codeforces 2279A，英文名 Reverse and Double）
 - **链接**：https://codeforces.com/problemset/problem/2279/A
-- **来源**：Codeforces Round 1133 (Div. 1) · Problem A
+- **来源**：Codeforces Round 1133 (Div. 1) · Problem A（UTC 2026-11-07）
 - **难度**：未评级（750 分，Div. 1 的签到题）
 - **限制**：时间 2 s / 内存 256 MB
 - **标签**：二分查找、暴力枚举、数据结构、实现

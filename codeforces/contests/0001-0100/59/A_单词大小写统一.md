@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/59/A
-- **比赛来源**：Codeforces Beta Round 59 · Problem A（2011-02-12）
+- **比赛来源**：Codeforces Beta Round 55 (Div. 2) · Problem A（UTC 2011-02-11）
 - **难度**：800
 - **标签**：实现、字符串
 - **评测类型**：普通

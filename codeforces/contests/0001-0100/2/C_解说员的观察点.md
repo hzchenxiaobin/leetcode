@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/2/C
-- **比赛来源**：Codeforces Beta Round 2（2010-02-26）· Problem C，英文名 Commentator problem
+- **比赛来源**：Codeforces Beta Round 2 · Problem C（UTC 2010-02-25）
 - **难度**：2600
 - **标签**：计算几何、阿波罗尼斯圆、解线性方程组与一元二次方程
 - **评测类型**：普通（输出实数，可能要求空输出）

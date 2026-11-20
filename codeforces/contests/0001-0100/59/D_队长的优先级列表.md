@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/59/D
-- **比赛来源**：Codeforces Beta Round 59 · Problem D（2011-02-12）
+- **比赛来源**：Codeforces Beta Round 55 (Div. 2) · Problem D（UTC 2011-02-11）
 - **难度**：2000
 - **标签**：构造、贪心、实现
 - **评测类型**：普通

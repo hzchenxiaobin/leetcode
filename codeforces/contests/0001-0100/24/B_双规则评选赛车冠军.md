@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/24/B
-- **比赛来源**：Codeforces Beta Round 24 · Problem B（2010-07-26）
+- **比赛来源**：Codeforces Beta Round 24 · Problem B（UTC 2010-07-26）
 - **难度**：1500
 - **标签**：实现（implementation）
 - **评测类型**：普通

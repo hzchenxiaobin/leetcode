@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/52/B
-- **比赛来源**：Codeforces Beta Round 52 · Problem B
+- **比赛来源**：Codeforces Testing Round 1 · Problem B（UTC 2011-01-04）
 - **难度**：1600
 - **标签**：组合计数、乘法原理、网格
 - **评测类型**：普通

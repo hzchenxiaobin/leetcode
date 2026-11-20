@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/20/C
-- **比赛来源**：Codeforces Beta Round 20 · Problem C
+- **比赛来源**：Codeforces Alpha Round 20 (Codeforces format) · Problem C（UTC 2010-06-18）
 - **难度**：1900
 - **标签**：图论、最短路
 - **评测类型**：特殊评测（多解，输出任意一条最短路）

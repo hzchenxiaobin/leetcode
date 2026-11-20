@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/7/D
-- **比赛来源**：Codeforces Beta Round 7 · Problem D（2010-04-17）
+- **比赛来源**：Codeforces Beta Round 7 · Problem D（UTC 2010-04-01）
 - **难度**：2200
 - **标签**：哈希、字符串
 - **评测类型**：普通

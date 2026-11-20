@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/25/D
-- **比赛来源**：Codeforces Beta Round 25 · Problem D
+- **比赛来源**：Codeforces Beta Round 25 (Div. 2 Only) · Problem D（UTC 2010-08-02）
 - **难度**：1900
 - **标签**：并查集、图论、树
 - **评测类型**：特殊评测（多解，输出任意一种合法方案）

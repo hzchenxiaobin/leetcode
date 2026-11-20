@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：莫诺卡普与项目（Codeforces 2260B，英文名 Monocarp and Projects）
 - **链接**：https://codeforces.com/problemset/problem/2260/B
-- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem B
+- **来源**：Educational Codeforces Round 194 (Rated for Div. 2) · Problem B（UTC 2026-09-08）
 - **难度**：$\ast 900$
 - **限制**：时间 2 s / 内存 512 MB
 - **标签**：暴力枚举、数学、数论、整除与余数

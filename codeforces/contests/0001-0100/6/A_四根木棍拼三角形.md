@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/6/A
-- **比赛来源**：Codeforces Beta Round 6 (Div. 2 Only) · Problem A
+- **比赛来源**：Codeforces Beta Round 6 (Div. 2 Only) · Problem A（UTC 2010-03-27）
 - **难度**：900
 - **标签**：暴力、几何、排序
 - **评测类型**：普通

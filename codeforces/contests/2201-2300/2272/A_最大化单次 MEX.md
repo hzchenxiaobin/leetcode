@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：最大化单次 MEX（Codeforces 2272A，英文名 Maximize One MEX）
 - **链接**：https://codeforces.com/problemset/problem/2272/A
-- **来源**：Codeforces Round 1130 (Div. 2) · Problem A
+- **来源**：Codeforces Round 1130 (Div. 2) · Problem A（UTC 2026-10-26）
 - **难度**：未评级（500 分，Div. 2 签到题，约 800 档）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：暴力枚举，构造，贪心

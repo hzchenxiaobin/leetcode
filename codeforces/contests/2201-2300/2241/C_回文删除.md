@@ -4,7 +4,7 @@
 
 - **标题 / 题号**：回文删除（Codeforces 2241C，英文名 RemovevomeR）
 - **链接**：https://codeforces.com/problemset/problem/2241/C
-- **来源**：Codeforces Round 1107 (Div. 3) · Problem C
+- **来源**：Codeforces Round 1107 (Div. 3) · Problem C（UTC 2026-06-30）
 - **难度**：1000（$*1000$）
 - **限制**：时间 1 s / 内存 256 MB
 - **标签**：贪心、字符串、回文（官方标签：greedy）

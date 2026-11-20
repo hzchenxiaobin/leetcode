@@ -3,7 +3,7 @@
 ## 1. 题目概述
 
 - **题目链接**：https://codeforces.com/problemset/problem/43/B
-- **比赛来源**：Codeforces Beta Round 42 (Div. 2)（2010-11-30）· Problem B
+- **比赛来源**：Codeforces Beta Round 42 (Div. 2) · Problem B（UTC 2010-11-29）
 - **难度**：1100
 - **标签**：实现、字符串、计数
 - **评测类型**：普通
