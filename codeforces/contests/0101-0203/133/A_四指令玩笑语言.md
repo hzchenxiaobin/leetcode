@@ -74,6 +74,8 @@ $$\text{有输出}\iff p\text{ 中含有字符 } \texttt{H}、\texttt{Q}、\text
 
 ### 3.3 样例走查
 
+![两个样例的判定路径](../../../images/cf133a_sample.svg)
+
 - 样例 1 `Hi!`：`H` ✓ ⇒ `YES`；
 - 样例 2 `Codeforces`：9 个字符都不是 ⇒ `NO`；
 - 自造 `+`：唯一指令是不输出的 `+` ⇒ `NO`（这是最容易错的一个，很多人会以为"有指令就有输出"）；
@@ -155,7 +157,7 @@ main()
 - **穷举对拍**：对长度 $1..3$、字符取自 $\{\texttt{H},\texttt{Q},\texttt{9},\texttt{+},\texttt{h},\texttt{q},\texttt{x}\}$ 的**全部** $7+49+343=399$ 个程序，与"逐字符判断是否属于 $\{\texttt{H},\texttt{Q},\texttt{9}\}$"的暴力比对，全部一致。
 - **随机抽查**：$200$ 组随机可打印字符（长度 1..100）同样一致（C++ 与 Python 各跑一遍）。
 - **最大规模**：长度 100 的单次约 2 ms（进程启动为主），2 s 余量四个数量级。
-- **图片校验**：1 张 SVG 通过 `xml.etree.ElementTree.parse`。
+- **图片校验**：2 张 SVG 均通过 `xml.etree.ElementTree.parse`。
 - **复核状态**：verified（样例、穷举、随机、性能、图片均实跑通过）。
 
 ## 相关题目与扩展
