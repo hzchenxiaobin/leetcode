@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="420" viewBox="0 0 780 420"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.023" numOctaves="2" seed="709"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr38e2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="780" height="420" fill="#fafafa"/>
+  <text x="390" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">DP：dp[i] = 前 i+1 颗处理完、且第 i 颗插针的最小罚金</text>
+
+  <!-- 状态节点 -->
+  <rect x="70" y="90" width="110" height="46" rx="8" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="125" y="119" text-anchor="middle" font-size="13" fill="#204a1e" filter="url(#rough2)">dp[0] = c₀</text>
+
+  <rect x="240" y="90" width="110" height="46" rx="8" fill="#dbe7fb" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="295" y="119" text-anchor="middle" font-size="13" fill="#23405c" filter="url(#rough2)">dp[1]</text>
+  <rect x="410" y="90" width="110" height="46" rx="8" fill="#dbe7fb" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="465" y="119" text-anchor="middle" font-size="13" fill="#23405c" filter="url(#rough2)">dp[2]</text>
+  <text x="560" y="120" font-size="15" fill="#888" filter="url(#rough2)">…</text>
+  <rect x="600" y="90" width="110" height="46" rx="8" fill="#ffd9b3" stroke="#b06a2c" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="655" y="119" text-anchor="middle" font-size="13" fill="#8a4a14" filter="url(#rough2)">dp[i]</text>
+
+  <!-- 转移箭头 -->
+  <path d="M 180 113 L 236 113" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr38e2)" filter="url(#rough2)"/>
+  <path d="M 350 113 L 406 113" stroke="#446688" stroke-width="2" fill="none" marker-end="url(#arr38e2)" filter="url(#rough2)"/>
+  <path d="M 180 140 C 240 200, 560 200, 640 140" stroke="#b85450" stroke-width="2" fill="none"
+        stroke-dasharray="6 4" marker-end="url(#arr38e2)" filter="url(#rough2)"/>
+  <text x="410" y="196" text-anchor="middle" font-size="10.5" fill="#8c3b37" filter="url(#rough2)">从上一根针 i′ 直接跳过来（中间整段滚到 x[i′]）</text>
+
+  <!-- 公式卡 -->
+  <rect x="60" y="230" width="660" height="96" rx="10" fill="#fff8e1" stroke="#d6a040"
+        stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="76" y="256" font-size="12" fill="#8a6015" filter="url(#rough2)">dp[i] = min over i′ &lt; i of  dp[i′] + c[i] + Σ_{k=i′+1}^{i-1} (x[k] − x[i′])</text>
+  <text x="76" y="282" font-size="12" fill="#8a6015" filter="url(#rough2)">Σ 用前缀和：S[r] − S[l] = x[l] + … + x[r−1]　→　区间和 = (S[i] − S[i′+1]) − (i−1−i′)·x[i′]</text>
+  <text x="76" y="308" font-size="12" fill="#8c3b37" filter="url(#rough2)">答案 = min over i of  dp[i] + Σ_{k=i+1}^{n-1} (x[k] − x[i])　（最后一根针右边的人全滚向它）</text>
+
+  <text x="60" y="356" font-size="11" fill="#666" filter="url(#rough2)">转移枚举"上一根针是谁"，中间那段的下标是 i′+1 … i−1，它们都滚到 x[i′]。</text>
+  <text x="60" y="378" font-size="11" fill="#666" filter="url(#rough2)">复杂度 O(n²)：n=3000 时约 4.5×10⁶ 次转移；排序 O(n log n) 可忽略。</text>
+  <text x="60" y="400" font-size="11" fill="#8c3b37" filter="url(#rough2)">初值只能是 dp[0]（最左必须插针）；若允许从别处起步，会得到"最左滚向 −∞"的非法解。</text>
+</svg>
