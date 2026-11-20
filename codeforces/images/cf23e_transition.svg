@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="780" height="440" viewBox="0 0 780 440"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.024" numOctaves="2" seed="607"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+  </defs>
+
+  <rect width="780" height="440" fill="#fafafa"/>
+
+  <text x="390" y="30" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">合并一个孩子：切断让它的块闭合，保留则两个开放块合并</text>
+
+  <!-- 左：切断 -->
+  <rect x="36" y="52" width="350" height="270" rx="10" fill="#fdeef0" stroke="#b85450"
+        stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="52" y="76" font-size="12" font-weight="bold" fill="#8c3b37" filter="url(#rough2)">① 切断 (v, u)</text>
+
+  <circle cx="150" cy="120" r="18" fill="#dbe7fb" stroke="#446688" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="150" y="126" text-anchor="middle" font-size="12" fill="#23405c" filter="url(#rough2)">v</text>
+  <circle cx="150" cy="210" r="18" fill="#ffd9b3" stroke="#b06a2c" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="150" y="216" text-anchor="middle" font-size="12" fill="#8a4a14" filter="url(#rough2)">u</text>
+  <line x1="150" y1="138" x2="150" y2="192" stroke="#c0392b" stroke-width="2.4" stroke-dasharray="6 4" filter="url(#rough2)"/>
+  <text x="158" y="170" font-size="10" fill="#c0392b" filter="url(#rough2)">切掉</text>
+
+  <circle cx="100" cy="290" r="14" fill="#f6f6f6" stroke="#999999" stroke-width="1.2" filter="url(#rough2)"/>
+  <circle cx="200" cy="290" r="14" fill="#f6f6f6" stroke="#999999" stroke-width="1.2" filter="url(#rough2)"/>
+  <line x1="150" y1="228" x2="100" y2="276" stroke="#7a8ca6" stroke-width="1.3" filter="url(#rough2)"/>
+  <line x1="150" y1="228" x2="200" y2="276" stroke="#7a8ca6" stroke-width="1.3" filter="url(#rough2)"/>
+
+  <text x="52" y="304" font-size="10.5" fill="#8c3b37" filter="url(#rough2)">u 的整棵子树合成一个闭合块（大小 k），</text>
+  <text x="52" y="322" font-size="10.5" fill="#8c3b37" filter="url(#rough2)">贡献 k · f[u][k]；对 k 取最大得 close[u]。</text>
+
+  <!-- 右：保留 -->
+  <rect x="396" y="52" width="350" height="270" rx="10" fill="#e6f4ea" stroke="#4a7a3a"
+        stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="412" y="76" font-size="12" font-weight="bold" fill="#2f5223" filter="url(#rough2)">② 保留 (v, u)</text>
+
+  <circle cx="510" cy="120" r="18" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="510" y="126" text-anchor="middle" font-size="12" fill="#204a1e" filter="url(#rough2)">v</text>
+  <circle cx="510" cy="210" r="18" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.8" filter="url(#rough2)"/>
+  <text x="510" y="216" text-anchor="middle" font-size="12" fill="#204a1e" filter="url(#rough2)">u</text>
+  <line x1="510" y1="138" x2="510" y2="192" stroke="#2f5223" stroke-width="3" filter="url(#rough2)"/>
+  <text x="520" y="170" font-size="10" fill="#2f5223" filter="url(#rough2)">保留</text>
+
+  <circle cx="460" cy="290" r="14" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <circle cx="560" cy="290" r="14" fill="#a8d8a8" stroke="#4a7a3a" stroke-width="1.2" filter="url(#rough2)"/>
+  <line x1="510" y1="228" x2="460" y2="276" stroke="#7a8ca6" stroke-width="1.3" filter="url(#rough2)"/>
+  <line x1="510" y1="228" x2="560" y2="276" stroke="#7a8ca6" stroke-width="1.3" filter="url(#rough2)"/>
+
+  <text x="412" y="304" font-size="10.5" fill="#2f5223" filter="url(#rough2)">两块连成一块：大小 j + k，</text>
+  <text x="412" y="322" font-size="10.5" fill="#2f5223" filter="url(#rough2)">乘积 f[v][j] · f[u][k]。</text>
+
+  <!-- 转移公式 -->
+  <rect x="36" y="336" width="710" height="44" rx="9" fill="#eef4ff" stroke="#446688"
+        stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="52" y="364" font-size="12" fill="#23405c" filter="url(#rough2)">g[j] = max(g[j], f[v][j]·close[u])　　g[j+k] = max(g[j+k], f[v][j]·f[u][k])</text>
+
+  <text x="36" y="404" font-size="11" fill="#666" filter="url(#rough2)">两种选择各对应一个候选，取较大者；处理完所有孩子后 f[v] = g，开放块大小范围扩到 1..(子树大小)。</text>
+  <text x="36" y="424" font-size="11" fill="#8c3b37" filter="url(#rough2)">根的开放块没有"父亲"可连，所以最后答案要对每个 j 计算 j·f[1][j] 再取最大。</text>
+</svg>
