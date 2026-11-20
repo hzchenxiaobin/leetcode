@@ -114,7 +114,7 @@ $$\text{ans}(q) = \frac{1}{|V(q)|}\sum_{v \in V(q)} \begin{cases}\text{rightMin}
 
 ### 3.4 样例走查
 
-![样例 1 的树与两条错误路径](../../../images/cf85c_mistake.svg)
+对照第 2 节那张树图：
 
 样例一：$\text{rightMin}(8) = \min\{10,14\} = 10$，$\text{rightMin}(4) = 6$；$\text{leftMax}(8)=\max\{2,6\}=6$，$\text{leftMax}(4)=2$。
 
