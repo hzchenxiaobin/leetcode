@@ -303,6 +303,7 @@ Python 版在 $t=2\times10^5$、$k=100$ 的极端数据上会明显偏慢，提�
 
 - **编译环境与命令**：本机无 GNU `g++`，用 `clang++ -std=c++17 -O2` + `codeforces/tools/include` 的兼容头编译；Python 3.9.6。文档级校验：`python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/177/F2_剧本配对第k小.md`。
 - **官方样例**：2 / 2 通过（$t=3\to2$，$t=7\to8$），C++ 与 Python 输出一致。
+- **配套 checker（独立重算）**：`codeforces/tools/checkers/cf177f2.py`，校验条件为「输出恰一个整数」+「$k\le16$ 时与 $2^k$ 子集枚举一致，否则与优先队列 best-first 独立枚举一致」+「与期望输出一致」。可复现命令：`python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/177/F2_剧本配对第k小.md --checker codeforces/tools/checkers/cf177f2.py`（实测 2/2 通过）。
 - **自造样例**：第 2 节表格 7 组（$t=1$、$t$ 取满、并列值、$n=20$ 只有一条边）全部与手算一致。
 - **三路对拍**：
   1. 小规模：$n\le5$、$k\le12$ 随机 **300 组**，与"枚举 $2^k$ 子集 + 检查冲突"的暴力逐组比对，全部一致；
