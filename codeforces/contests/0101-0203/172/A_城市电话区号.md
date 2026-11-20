@@ -143,8 +143,8 @@ $$|P_{i+1}| \le |P_i|.$$
 ## 5. 复杂度分析
 
 - **时间**：$O(nL)$。第 $i$ 次比较最多做 $\textit{len}_{i-1}$ 次字符比较，而 $\sum_{i\ge 2}\textit{len}_{i-1}\le (n-1)L$；再加上初始化，总量不超过 $nL=6\times10^5$ 次。即使不写任何剪枝、每次都比满 $L$ 位，也只有 $6\times10^5$ 次，2 s 的时限余量在两个数量级以上。
-- **空间**：$O(L)$。只需要保存参照串和当前输入串，不必把 $n$ 个号码全部存下来（C++ 版仍然存了 `vector<string>`，为了方便；改成边读边算可以做到 $O(L)$）。极端情况 $n=3\times10^4$、$L=20$ 时字符总量 600 KB，远低于 256 MB。
-- **常数**：每个字符只做一次相等比较，没有除法、没有取模。实测最大规模（$n=3\times10^4$、$L=20$、公共前缀长 19）耗时约 1 ms，几乎全是 I/O。
+- **空间**：$O(L)$。只需要保存参照串和当前输入串（各 32 字节的 `char` 数组），不必把 $n$ 个号码全部存下来。极端情况 $n=3\times10^4$、$L=20$ 时输入总量 600 KB，全部流式读入。
+- **常数**：每个字符只做一次相等比较，没有除法、没有取模。实测最大规模（$n=3\times10^4$、$L=20$、公共前缀长 15）C++ 端到端 6 ms，其中全部是读入开销。
 
 ## 6. 参考代码
 
@@ -155,21 +155,19 @@ $$|P_{i+1}| \le |P_i|.$$
 using namespace std;
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
     int n;
-    if (!(cin >> n)) return 0;                 // 题面只有一组数据
-    vector<string> s(n);
-    for (int i = 0; i < n; ++i) cin >> s[i];
+    if (scanf("%d", &n) != 1) return 0;        // 题面只有一组数据
+    static char first[32], cur[32];            // 长度 ≤ 20，开 32 足够
+    scanf("%31s", first);
 
-    int len = (int)s[0].size();                // 候选公共前缀长度，只减不增
+    int len = (int)strlen(first);              // 候选公共前缀长度，只减不增
     for (int i = 1; i < n && len > 0; ++i) {
+        scanf("%31s", cur);
         int j = 0;
-        while (j < len && s[i][j] == s[0][j]) ++j;   // 只比到 len，绝不越界
+        while (j < len && cur[j] == first[j]) ++j;   // 只比到 len，绝不越界
         len = j;                                     // 第一次失配处截断
     }
-    cout << len << '\n';
+    printf("%d\n", len);
     return 0;
 }
 ```
@@ -216,7 +214,7 @@ main()
 - **编译环境与命令**：`Apple clang 21.0.0` + `codeforces/tools/include/bits/stdc++.h` 兼容头，`clang++ -std=c++17 -O2`；Python 3.9.6。用 `python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/172/A_城市电话区号.md` 验证，C++ 与 Python 均为 3 / 3 组官方样例逐 token 通过。
 - **官方样例**：3 / 3 通过（含前导零、长度 1 退化、$L=20$ 三组）。
 - **独立暴力对拍**：暴力程序用完全不同的思路——从 $L$ 往下枚举候选长度 $p$，对每个 $p$ 检查"所有号码的前 $p$ 位是否都等于第一个串的前 $p$ 位"，第一个成立的就是答案（即 $O(nL^2)$ 的直接定义翻译）。随机生成 $n\in[2,12]$、$L\in[1,8]$、号码互不相同的 **260 组**数据，与正文 C++、Python 两版逐 token 比对，全部一致。
-- **最大约束性能**：构造 $n=3\times10^4$、$L=20$、公共前缀长 19 的数据（前 19 位全 `7`，末位两两不同），C++ 端到端 1 ms 量级，Python 约 15 ms；峰值内存 < 3 MB。
+- **最大约束性能**：构造 $n=3\times10^4$、$L=20$、公共前缀长 15 的数据（前 15 位固定，末 5 位是编号），C++ 端到端 6 ms、Python 约 50 ms（均含进程启动）；峰值内存 < 3 MB。
 - **图片校验**：两张 SVG（`cf172a_prefix_shrink.svg`、`cf172a_flow.svg`）通过 `xml.etree.ElementTree.parse`，所有文字都在 `viewBox` 内。
 - **复核状态**：verified（样例、260 组暴力对拍、性能、图片四项实跑通过）。
 

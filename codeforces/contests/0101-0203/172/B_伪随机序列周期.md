@@ -132,7 +132,7 @@ $a=2,b=6,m=12,r_0=11$：
 
 - **时间**：$O(m)$。循环每轮访问一个新状态，最多 $m$ 轮后必然重复；每轮一次乘法、一次加法、一次取模。
 - **空间**：$O(m)$，即一个长度 $m$ 的 `first` 数组（$10^5$ 个 `int`，约 400 KB）。不需要保存序列本身。
-- **常数与时限**：$m=10^5$ 时循环最多 $10^5$ 次，实测 C++ 端到端 $<5$ ms，相对 2 s 余量两个数量级；Python 约 20 ms。
+- **常数与时限**：$m=10^5$ 时循环最多 $10^5$ 次，实测 C++ 端到端 2 ms，相对 2 s 余量三个数量级；Python 约 20 ms。
 - **数值范围**：$a\cdot r+b\le 1000\times(10^5-1)+1000<10^8$，`int` 不溢出；若把 $a$ 的上界记错成 $10^9$ 就得用 `long long`，保险起见代码里统一用 `long long` 计算这一步。
 
 ## 6. 参考代码
@@ -144,12 +144,9 @@ $a=2,b=6,m=12,r_0=11$：
 using namespace std;
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
     long long a, b;
     int m, r0;
-    if (!(cin >> a >> b >> m >> r0)) return 0;
+    if (scanf("%lld %lld %d %d", &a, &b, &m, &r0) != 4) return 0;
 
     vector<int> first(m, -1);          // first[x] = 状态 x 首次出现的位置
     long long cur = r0;
@@ -159,7 +156,7 @@ int main() {
         cur = (a * cur + b) % m;       // 确定性映射 f
         ++i;
     }
-    cout << i - first[cur] << '\n';    // 环长 = 当前位置 - 首次出现位置
+    printf("%d\n", i - first[cur]);    // 环长 = 当前位置 - 首次出现位置
     return 0;
 }
 ```
@@ -203,7 +200,7 @@ main()
 - **编译环境与命令**：`Apple clang 21.0.0` + `codeforces/tools/include/bits/stdc++.h` 兼容头（`clang++ -std=c++17 -O2`）；Python 3.9.6。`python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/172/B_伪随机序列周期.md` 输出 C++ 3/3、Python 3/3。
 - **官方样例**：3 / 3 通过（覆盖有前导段、纯循环、进入不动点三种形态）。
 - **独立暴力对拍**：暴力程序完全不复用"首次出现位置"的思路——先暴力生成 $4m+16$ 项序列，再对 $t=1,2,\dots,m$ 逐个大范围验证 $\forall i\in[m,\,3m]:\ r_i=r_{i+t}$，第一个成立的 $t$ 即为答案。随机取 $m\in[1,40]$、$a,b\in[0,20]$（含 $a=0$、$b=0$ 的退化）、$r_0\in[0,m-1]$，共 **300 组**数据，与正文 C++、Python 两版逐 token 比对，全部一致。
-- **最大约束性能**：构造 $m=10^5$、$a=999$、$b=997$、$r_0=12345$ 的数据，C++ 端到端约 3 ms（循环约 $9.4\times10^4$ 轮），Python 约 20 ms；峰值内存 < 4 MB。
+- **最大约束性能**：构造 $m=10^5$、$a=999$、$b=997$、$r_0=12345$ 的数据（环长 200，环检测走了约 $9.9\times10^4$ 轮），C++ 端到端 2 ms、Python 约 20 ms；峰值内存 < 4 MB。
 - **图片校验**：两张 SVG（`cf172b_rho.svg`、`cf172b_state.svg`）通过 `xml.etree.ElementTree.parse`，文本包围盒都在 `viewBox` 内。
 - **复核状态**：verified（样例、300 组暴力对拍、性能、图片四项实跑通过）。
 
