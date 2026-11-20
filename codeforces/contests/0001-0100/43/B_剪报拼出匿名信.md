@@ -64,7 +64,7 @@ k j i h g f e d c b a
 YES
 ```
 
-**样例 1 走查**：$s_2$ 为 `where is your dog`，其中字母 `w` 在 $s_1$（`Instead of dogging Your footsteps it disappears but you dont notice anything`）里一次都没出现，剪不出来，输出 `NO`。注意 $s_1$ 里有大写 `Y`，但 $s_1$ 里的 `your` 是小写，样例 2 需要的 `Y` 恰好来自 `Your`。
+**样例 1 走查**：$s_2$ 为 `where is your dog`，其中字母 `w` 在 $s_1$（`Instead of dogging Your footsteps it disappears but you dont notice anything`）里一次都没出现，剪不出来，输出 `NO`。
 
 **样例 3 走查**：$s_2$ 为 `Your dog is upstears`，需要的每个字母在 $s_1$ 里都有——但 $s_1$ 中只有小写 `your`，没有大写 `Y`，所以输出 `NO`。这一组专门用来提醒**大小写不可混用**。
 
