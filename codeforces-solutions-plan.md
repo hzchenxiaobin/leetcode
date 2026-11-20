@@ -324,10 +324,10 @@ pending → drafting → sample_passed → verified → review_passed → publis
 | 项目 | 状态 |
 | --- | --- |
 | 快照范围 | 2164 场已结束比赛；2030 场有题面映射；11526 个题位 |
-| 已发布正文 | 651 篇（另有 17 项 blocked，不计入） |
-| 比赛覆盖率 | 103 / 2030（全部题位都已有正文的比赛数） |
-| 题位覆盖率 | 651 / 11526（5.65%） |
-| M1 进度 | #1–#100 共 505 个题位，已完成 355（70.3%；缺 #64 待确认评测语义、#72 受镜像限频） |
+| 已发布正文 | 681 篇（另有 35 项 blocked，不计入） |
+| 比赛覆盖率 | 109 / 2030（全部题位都已有正文的比赛数） |
+| 题位覆盖率 | 681 / 11526（5.91%） |
+| M1 进度 | #1–#100 共 505 个题位，已完成 385（76.2%）；缺 CF64/CF72（镜像无题面，已标 blocked） |
 | 题面来源 | Codeforces 主站题面页对脚本 403，统一走洛谷镜像缓存（`tools/fetch_problem.py`，样例与 CF 原页一致）；**格式与约束以 `outputFormat.en` 等英文原文为准，中文翻译可能截断** |
 | 代码验证 | 本机无 GNU g++，用 `clang++ -std=c++17 -O2` + 仓库内 `bits/stdc++.h` 兼容头；提交代码仍是标准 GNU C++17 |
 | 样例比对 | `tools/verify_solution.py` 默认按 Codeforces 标准 checker 的 token 比对；构造/交互/多解题用 `--checker`；题面写明文件输入输出的自动切到临时目录读写 `input.txt`/`output.txt` |
@@ -338,6 +338,6 @@ pending → drafting → sample_passed → verified → review_passed → publis
 | 站点构建 | `BATCH_TOTAL=12 BATCH_INDEX=0 npm run build` 本地通过（约 94 s）；CI 用同一分片参数 |
 | 阻塞 | 10 项，均在 `data/progress.md` 与 `problems.json` 的 `blocked_reason` 里写明原因与下一步 |
 
-阻塞项一览（详细原因见清单）：`8/E`、`10/E`、`30/E`、`38/F`、`39/G`、`39/I`、`39/K`、`40/A`、`42/C`、`42/E`、`44/F`、`45/F`、`46/G`、`48/H`、`57/D`、`57/E`、`2237/I2`。
+阻塞项一览：`8E`、`10E`、`30E`、`38F`、`39G`、`39I`、`39K`、`40A`、`42C`、`42E`、`44F`、`45F`、`46G`、`48H`、`57D`、`57E`、`2237I2`，以及 CF64/CF72 全 18 题（镜像无题面，外部原因）。
 
 下一步：继续按开赛时间推进 M1（#1–#100，剩余 140 个题位；#76–#79 已派单在跑），每批 3–5 题/子代理，批末跑 `check.py` + `check_samples.py` + `verify_solution.py` + `update_progress.py` 并提交；遇到题面语义不明或性能不达标的题目按 blocked 记录，不写半成品。

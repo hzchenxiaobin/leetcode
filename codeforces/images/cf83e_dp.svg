@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="884" height="474" viewBox="0 0 884 474"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="83"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrg" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/></marker>
+    <marker id="arrb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/></marker>
+  </defs>
+  <rect width="884" height="474" fill="#fafafa"/>
+  <text x="442" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">两子序列 DP：状态 = (当前元素, 另一侧最后一个元素)</text>
+  <text x="442" y="58" text-anchor="middle" font-size="12" fill="#777777" filter="url(#rough2)">dp[i][j]：前 i 个已分配，a_i 刚放进某一侧，另一侧最后是 a_j（j=0 表示空）</text>
+  <g filter="url(#rough2)"><rect x="120" y="120" width="52" height="44" rx="4" fill="#d7ecd0" fill-opacity="0.6" stroke="#8899aa" stroke-width="1.2"/></g>
+  <text x="146" y="148" text-anchor="middle" font-size="12.5" fill="#2b2b2b" filter="url(#rough2)">a1</text>
+  <g filter="url(#rough2)"><rect x="184" y="120" width="52" height="44" rx="4" fill="#cfe0f5" fill-opacity="0.6" stroke="#8899aa" stroke-width="1.2"/></g>
+  <text x="210" y="148" text-anchor="middle" font-size="12.5" fill="#2b2b2b" filter="url(#rough2)">a2</text>
+  <g filter="url(#rough2)"><rect x="248" y="120" width="52" height="44" rx="4" fill="#d7ecd0" fill-opacity="0.6" stroke="#8899aa" stroke-width="1.2"/></g>
+  <text x="274" y="148" text-anchor="middle" font-size="12.5" fill="#2b2b2b" filter="url(#rough2)">a3</text>
+  <g filter="url(#rough2)"><rect x="312" y="120" width="52" height="44" rx="4" fill="#cfe0f5" fill-opacity="0.6" stroke="#8899aa" stroke-width="1.2"/></g>
+  <text x="338" y="148" text-anchor="middle" font-size="12.5" fill="#2b2b2b" filter="url(#rough2)">a4</text>
+  <g filter="url(#rough2)"><rect x="376" y="120" width="52" height="44" rx="4" fill="#d7ecd0" fill-opacity="0.6" stroke="#8899aa" stroke-width="1.2"/></g>
+  <text x="402" y="148" text-anchor="middle" font-size="12.5" fill="#2b2b2b" filter="url(#rough2)">a5</text>
+  <g filter="url(#rough2)"><rect x="440" y="120" width="52" height="44" rx="4" fill="#cfe0f5" fill-opacity="0.6" stroke="#8899aa" stroke-width="1.2"/></g>
+  <text x="466" y="148" text-anchor="middle" font-size="12.5" fill="#2b2b2b" filter="url(#rough2)">a6</text>
+  <g filter="url(#rough2)"><line x1="90" y1="200" x2="504" y2="200" stroke="#3d6b2f" stroke-width="1.6" stroke-dasharray="6 4"/></g>
+  <text x="84" y="204" text-anchor="end" font-size="13" fill="#3d6b2f" font-weight="bold" filter="url(#rough2)">b</text>
+  <g filter="url(#rough2)"><line x1="90" y1="240" x2="504" y2="240" stroke="#446688" stroke-width="1.6" stroke-dasharray="6 4"/></g>
+  <text x="84" y="244" text-anchor="end" font-size="13" fill="#2f4a66" font-weight="bold" filter="url(#rough2)">c</text>
+  <text x="312" y="202" text-anchor="middle" font-size="11.5" fill="#3d6b2f" filter="url(#rough2)">同侧：+cost(a_i, a_{i+1})，另一侧不动（公共偏移 off）</text>
+  <text x="312" y="242" text-anchor="middle" font-size="11.5" fill="#2f4a66" filter="url(#rough2)">另一侧：+cost(a_j, a_{i+1})，状态变成 (i+1, i)</text>
+  <g filter="url(#rough2)"><rect x="90" y="270" width="704" height="96" rx="4" fill="#ffffff" fill-opacity="0.0" stroke="#cccccc" stroke-width="1.2" stroke-dasharray="5 4"/></g>
+  <text x="442" y="296" text-anchor="middle" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">dp[i+1][j] = dp[i][j] + cost(a_i, a_{i+1})　（j &lt; i）</text>
+  <text x="442" y="322" text-anchor="middle" font-size="12.5" fill="#8a2b28" filter="url(#rough2)">dp[i+1][i] = min( val₀ + L, L − max_j( ov(a_j, a_{i+1}) − val_j ) )</text>
+  <text x="442" y="348" text-anchor="middle" font-size="12" fill="#3d6b2f" filter="url(#rough2)">val_j = dp[i][j] − off_i：同侧转移只是 off 增加，val 不变</text>
+  <g filter="url(#rough2)"><rect x="90" y="378" width="704" height="64" rx="4" fill="#d7ecd0" fill-opacity="0.3" stroke="#6a9a58" stroke-width="1.3"/></g>
+  <text x="442" y="402" text-anchor="middle" font-size="11.5" fill="#3d6b2f" filter="url(#rough2)">把 ov 拆成 20 个长度：维护 best[模式] = 具有该后缀的已插入元素的 min val</text>
+  <text x="442" y="426" text-anchor="middle" font-size="11.5" fill="#2f4a66" filter="url(#rough2)">查询 = max_{k=0..L} ( k − best[ a_{i+1} 的长度 k 前缀 ] )，每次 O(L)</text>
+</svg>
