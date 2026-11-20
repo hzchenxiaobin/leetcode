@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="860" height="380" viewBox="0 0 860 380"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="65"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="380" fill="#fafafa"/>
+
+  <text x="430" y="32" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">两遍扫描：先用模拟定位置，再回放并回答询问</text>
+
+  <g filter="url(#rough2)">
+    <rect x="40" y="70" width="150" height="70" rx="10" fill="#cfe0f5" stroke="#446688" stroke-width="1.6"/>
+    <text x="115" y="98" text-anchor="middle" font-size="12" fill="#2f4a66">读入全部请求</text>
+    <text x="115" y="120" text-anchor="middle" font-size="10.5" fill="#446688">（离线）</text>
+
+    <path d="M 190 105 L 226 105" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+
+    <rect x="228" y="60" width="180" height="90" rx="10" fill="#d9ecd4" stroke="#4a7a3a" stroke-width="1.6"/>
+    <text x="318" y="86" text-anchor="middle" font-size="12" font-weight="bold" fill="#2f5223">第一遍：只模拟</text>
+    <text x="318" y="108" text-anchor="middle" font-size="10.5" fill="#444444">到达 / 离开</text>
+    <text x="318" y="126" text-anchor="middle" font-size="10.5" fill="#444444">维护空闲段集合</text>
+    <text x="318" y="142" text-anchor="middle" font-size="10.5" fill="#444444">记录每次挂点</text>
+
+    <path d="M 408 105 L 444 105" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+
+    <rect x="446" y="70" width="170" height="70" rx="10" fill="#f6e3c4" stroke="#b58a3a" stroke-width="1.6"/>
+    <text x="531" y="98" text-anchor="middle" font-size="12" fill="#7a5a1b">挂点排序 + 去重</text>
+    <text x="531" y="120" text-anchor="middle" font-size="10.5" fill="#7a5a1b">坐标压缩</text>
+
+    <path d="M 616 105 L 652 105" stroke="#446688" stroke-width="1.8" marker-end="url(#arr)"/>
+
+    <rect x="654" y="60" width="170" height="90" rx="10" fill="#e8e0f2" stroke="#6b5b9a" stroke-width="1.6"/>
+    <text x="739" y="86" text-anchor="middle" font-size="12" font-weight="bold" fill="#4b3f66">第二遍：回放</text>
+    <text x="739" y="108" text-anchor="middle" font-size="10.5" fill="#444444">到达 +1，离开 −1</text>
+    <text x="739" y="126" text-anchor="middle" font-size="10.5" fill="#444444">询问 → 两次前缀和相减</text>
+    <text x="739" y="142" text-anchor="middle" font-size="10.5" fill="#444444">树状数组 O(log q)</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="228" y="196" width="596" height="120" rx="12" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5"/>
+    <text x="244" y="222" font-size="11.5" fill="#8a6015">为什么可以分两遍：询问不改变挂衣架状态，所以"谁挂在哪"完全由到达/离开序列决定，与询问无关。</text>
+    <text x="244" y="248" font-size="11.5" fill="#8a6015">第一遍把所有可能的挂点收集起来（最多 q 个），就能用树状数组做"单点 ±1、区间求和"。</text>
+    <text x="244" y="274" font-size="11.5" fill="#8a6015">第二遍按原顺序重放：到达 → 在对应挂点 +1；离开 → −1；询问 [i,j] → F(j) − F(i−1)。</text>
+    <text x="244" y="300" font-size="11" fill="#9a7020">总复杂度 O(q log q)，n 可以到 10⁹ 也不需要按钩子开数组。</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <text x="115" y="230" font-size="11" fill="#666666">q ≤ 10⁵</text>
+    <text x="115" y="252" font-size="11" fill="#666666">n ≤ 10⁹</text>
+  </g>
+</svg>
