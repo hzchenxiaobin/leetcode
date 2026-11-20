@@ -240,7 +240,7 @@ main()
 
 - **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/53/B_博客照片裁剪.md`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
 - **官方样例**：C++ 3 / 3 通过，Python 3 / 3 通过。
-- **额外测试**：独立暴力枚举所有 $1 \le h' \le h$、$1 \le w' \le w$，随机 300 组 $h,w \le 60$ 与程序逐组比对，0 处不一致；另外手工核对了 $1 \times 1$、$1 \times 10^9$、$10^9 \times 10^9$ 等大数边界。
+- **额外测试**：独立暴力枚举所有 $1 \le h' \le h$、$1 \le w' \le w$，随机 700 组（300 组 $h,w \le 60$，400 组 $h,w \le 300$）与程序逐组比对，0 处不一致；另外手工核对了 $1 \times 1$、$1 \times 10^9$、$10^9 \times 10^9$ 等大数边界。
 - **最大约束性能**：$h=w=10^9$ 时循环 30 次，C++ 运行时间小于 1 ms。
 - **复核状态**：区间推导、平局规则与溢出范围均已复核；暴力对拍未发现反例。
 
