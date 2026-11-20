@@ -374,7 +374,7 @@ main()
 
 ## 8. 验证记录
 
-- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/62/D_下一条欧拉回路.md --checker /tmp/cf_verify_62/checker_d.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
+- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/62/D_下一条欧拉回路.md --checker codeforces/tools/checkers/cf62d.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
 - **官方样例**：C++ 2 / 2 通过，Python 2 / 2 通过（checker 判定）。
 - **checker 的校验条件**：输出要么是 `No solution`，要么是 $m+1$ 个编号；首尾都等于主入口；相邻两项都是图中的边；每条边恰好使用一次；序列严格大于旧路径；对 $m \le 9$ 的情况再用暴力枚举所有欧拉回路，确认输出正是"下一个"。
 - **额外测试**：随机 300 个 $n \le 5$、$m \le 7$ 的连通欧拉图（所有度数为偶），用随机 Hierholzer 生成旧回路，与暴力枚举全部回路取后继的结果逐组比对，0 处不一致；另测了样例 2 的"已是最大回路"情形。

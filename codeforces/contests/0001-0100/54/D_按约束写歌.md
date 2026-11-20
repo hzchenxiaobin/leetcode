@@ -332,7 +332,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：`Apple clang 21.0.0`（`clang++ -std=c++17 -O2 -Wall` + 兼容头），Python `3.9.6`。由于是特殊评测，官方样例用 checker 校验：
-  `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/54/D_按约束写歌.md --checker /tmp/cf_verify_54_D/checker.py`
+  `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/54/D_按约束写歌.md --checker codeforces/tools/checkers/cf54d.py`
   checker 的校验条件是：若输出为字符串，则长度必须为 $N$、只含前 $K$ 个字母、且对每个起点 $i$ 有 "$P$ 从 $i$ 开始出现" $\iff b_i = 1$；若输出为 `No solution`，则用一个独立的回溯搜索（带 30 万结点上限）确认确实不存在合法串，搜索超限时退回与样例答案一致即可。
 - **官方样例**：3 / 3 通过（`ababa`、`abbba`、`No solution`）。
 - **穷举对拍**：对所有 $1 \le N \le 7$、$K \in \{2,3\}$、$|P| \le \min(N,4)$、以及全部 $2^{N-|P|+1}$ 个 01 串，共 **7988 组**，与"枚举全部 $K^N$ 个字符串"的暴力比较存在性，**全部一致**（其中 3444 组无解）。

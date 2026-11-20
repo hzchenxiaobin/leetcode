@@ -189,7 +189,7 @@ main()
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`（`/usr/bin/g++` 是 clang 软链），没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
 - **官方样例**：2 / 2 通过（用 checker 校验，而不是文本比对）。样例 1 本程序输出 `3 1 2`，与官方 `3 2 1` 不同但同样合法；样例 2 输出 `-1`。
-- **checker**（`/tmp/cf_verify_31_A/checker.py`，配合 `verify_solution.py --checker`）：读入 $n,a$ 与输出；若输出为 `-1`，则用暴力确认"确实不存在三元组"；否则校验三个整数在 $[1,n]$ 内、互不相同、且 $a_i=a_j+a_k$。任一不满足即拒绝。
+- **checker**（`codeforces/tools/checkers/cf31a.py`，配合 `verify_solution.py --checker`）：读入 $n,a$ 与输出；若输出为 `-1`，则用暴力确认"确实不存在三元组"；否则校验三个整数在 $[1,n]$ 内、互不相同、且 $a_i=a_j+a_k$。任一不满足即拒绝。
 - **随机对拍**：随机生成 **300 组**输入（$n\in[3,100]$，约 55% 人为塞入一个可解三元组），C++ 与 Python 的输出**都交给 checker 校验**，`300/300` 全部通过（checker 同时保证了无解情形没有误判）。
 - **穷举对拍**：对 $n=3,4$、$a_i\in[1,4]$ 的**全部** $4^3+4^4=320$ 组输入，两版输出也都过 checker，无一被拒。
 - **最大约束性能**：$n=100$，随机数据，C++ 端到端约 2 ms，Python 约 17 ms，内存 < 2 MB。

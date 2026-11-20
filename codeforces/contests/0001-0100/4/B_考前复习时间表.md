@@ -281,7 +281,7 @@ main()
 
 - **编译环境与命令**：本机没有 GNU `g++`（`/usr/bin/g++` 是 Apple clang 21.0.0 的软链），用 `clang++ -std=c++17 -O2 -Wall -Wextra -I codeforces/tools/include` 配合仓库自带的 `bits/stdc++.h` 兼容头编译，**零警告**；Python 侧为 `Python 3.9.6`。
 - **官方样例**：2 / 2 通过。`verify_solution.py --checker` 的输出为 `CF4B: samples 2`、`C++ 编译 OK, 样例 2/2`、`Python 语法 OK, 样例 2/2` 三行。由于是特殊评测，不能直接文本比对，改用下面的 checker。
-- **checker 的校验条件**（`/tmp/cf_verify_4_B/checker.py`，调用约定 `python3 checker.py <input> <output> <answer>`）：
+- **checker 的校验条件**（`（临时校验脚本，已随会话清理；校验条件见下）`，调用约定 `python3 checker.py <input> <output> <answer>`）：
   1. 重新解析输入，确认 $d \in [1,30]$、$sumTime \in [0,240]$、每对 $0 \le min_i \le max_i \le 8$，并算出 $L, R$；
   2. 若输出为 `NO`：必须**只有这一行**（无多余非空行），且 $sumTime \notin [L, R]$，并与样例标准答案的判定一致；
   3. 若输出为 `YES`：必须**恰好两行**，第二行恰好 $d$ 个整数 token；

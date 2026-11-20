@@ -172,7 +172,7 @@ main()
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`，没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
 - **官方样例**：2 / 2 通过（`8`、`7`），C++ 与 Python 一致，且与 JSON 的 `out` 逐字符相同。
-- **独立暴力对拍**：暴力（`/tmp/cf_verify_34_B/brute.py`）用 `itertools.combinations` 枚举**所有"至多 $m$ 台"的子集**并取最大收益——与"排序取最负的 $k$ 个"完全不同的思路。随机生成 **300 组**输入（$n\le12$，$m\le n$，价格 $-20\sim20$，含大量 0 与正价），C++ / Python / 暴力三方 **300/300 一致**。
+- **独立暴力对拍**：暴力（`codeforces/tools/checkers/cf34b.py`）用 `itertools.combinations` 枚举**所有"至多 $m$ 台"的子集**并取最大收益——与"排序取最负的 $k$ 个"完全不同的思路。随机生成 **300 组**输入（$n\le12$，$m\le n$，价格 $-20\sim20$，含大量 0 与正价），C++ / Python / 暴力三方 **300/300 一致**。
 - **最大约束性能**：$n=100$，C++ 端到端约 2 ms，Python 约 17 ms，内存 < 2 MB。
 - **图片校验**：两张 SVG（`cf34b_greedy.svg`、`cf34b_walkthrough.svg`）均通过 `xml.etree.ElementTree.parse`；用脚本估算每个 `text` 的包围盒，确认不越出 viewBox、文字互不重叠；并用 headless Chrome 渲染 PNG 后检查画布四边无墨迹（无裁切）。
 - **公式校验**：公式均为 `$...$`，星号直接写 `*`，`\text{}` 内无裸 `#`，KaTeX（`throwOnError`）渲染无报错。

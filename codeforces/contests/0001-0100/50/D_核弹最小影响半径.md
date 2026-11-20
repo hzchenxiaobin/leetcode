@@ -307,7 +307,7 @@ main()
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`（`/usr/bin/g++` 是 clang 的软链），没有 GNU `g++` 与 libstdc++，因此用 `clang++ -std=c++17 -O2 -Wall` 配合 `codeforces/tools/include` 下的 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）；Python 为 `Python 3.9.6`。
 - **官方样例**：2 / 2 通过。由于本题是实数答案、官方判定为"绝对或相对误差 $\le 10^{-6}$"，用 `--checker` 按同一标准校验：
-  `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/50/D_核弹最小影响半径.md --checker /tmp/cf_verify_50_D/checker.py`
+  `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/50/D_核弹最小影响半径.md --checker codeforces/tools/checkers/cf50d.py`
   checker 的校验条件是：输出必须是**恰好一个**实数 token，且 $|out - ans| \le 10^{-6}$ 或 $|out - ans| \le 10^{-6}\lvert ans\rvert$。逐字比对的失败仅出现在第 17 位小数（样例 $3.84257761518762740$，本实现 $3.84257761518762700$ 量级，相对误差约 $10^{-16}$），属于浮点舍入，不影响判定。
 - **独立暴力对拍**：另写一份暴力——对固定的 $R$ 用 $2^{N}$ **子集枚举**精确计算失败概率（`long double`），再对 $R$ 做 $300$ 次三分/二分。对 **376 组**数据（$N \le 9$、$K$ 随机、$\varepsilon$ 取 $1/3/10/50/100/250/333/500/750/900/950/999$、坐标 $\pm 6$ 内随机，另有样例、爆心重合、$K = N$、$N = 100$ 等固定组）与参考程序比较，**全部在 $10^{-6}$ 误差内一致**，最大绝对差 $4.99 \times 10^{-13}$。
 - **C++ 与 Python 一致性**：$60$ 组随机数据上两份代码的输出差均小于 $10^{-6}$，最大差 $<10^{-9}$。

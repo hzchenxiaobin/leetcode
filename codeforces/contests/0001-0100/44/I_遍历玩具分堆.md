@@ -233,7 +233,7 @@ main()
 
 ## 8. 验证记录
 
-- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/44/I_遍历玩具分堆.md --checker /tmp/cf_verify_44/checker_i.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
+- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/44/I_遍历玩具分堆.md --checker codeforces/tools/checkers/cf44i.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
 - **官方样例**：C++ 1 / 1 通过、Python 1 / 1 通过（checker 判定，不要求与样例逐字相同）。
 - **checker 的校验条件**：第一行等于第 $n$ 个 Bell 数；行数等于 $1 + B_n$；每行是一个合法的集合划分（每堆非空、堆内升序、堆按最小编号升序）；没有重复方案；相邻两个方案去掉某个玩具 $x$ 后其余玩具的两两同堆关系完全一致（即恰好移动一个玩具）。
 - **额外测试**：本题输入空间只有 $n = 1,2,\dots,10$ 共 10 种取值，已全部穷举，每个都用 checker 完整校验，全部通过；其中 $n=10$ 的输出有 115975 行、约 2 MB。另外手工核对了 $n=3$ 的官方样例顺序也能被 checker 接受。

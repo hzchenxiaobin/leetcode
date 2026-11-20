@@ -176,7 +176,7 @@ main()
 
 ## 8. 验证记录
 
-- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/53/C_青蛙跳石路线.md --checker /tmp/cf_verify_53/c_checker.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
+- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/53/C_青蛙跳石路线.md --checker codeforces/tools/checkers/cf53c.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
 - **官方样例**：C++ 2 / 2 通过、Python 2 / 2 通过（checker 判定，不要求逐字相同）。
 - **checker 的校验条件**：输出恰好 $n$ 个数；是 $1 \sim n$ 的排列；相邻差的绝对值两两不同。
 - **额外测试**：对 $n = 1,2,\dots$ 及随机 300 个 $1 \le n \le 10^4$ 的取值全部用 checker 校验通过；其中 $n=10^4$ 的输出有 10000 个数、验证通过。

@@ -206,7 +206,7 @@ main()
 
 ## 8. 验证记录
 
-- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/53/D_体育课换队列.md --checker /tmp/cf_verify_53/d_checker.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
+- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/53/D_体育课换队列.md --checker codeforces/tools/checkers/cf53d.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
 - **官方样例**：C++ 2 / 2 通过、Python 2 / 2 通过（checker 判定，不要求与样例的操作序列相同）。
 - **checker 的校验条件**：第一行 $k$ 在 $[0,10^6]$；之后恰好 $2k$ 个整数；每组满足 $1 \le p \le n-1$、$q=p+1$；从 $b$ 出发依次执行这些交换，最终等于 $a$。
 - **额外测试**：随机 300 组（$n \le 8$，身高取 $1 \sim 4$ 以制造大量重复）与 checker 逐组校验，全部通过；另测完全逆序 $n=300$，产生 44850 次操作且 checker 通过。

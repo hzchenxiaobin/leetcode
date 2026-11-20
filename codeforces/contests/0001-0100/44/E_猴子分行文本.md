@@ -211,9 +211,9 @@ if __name__ == "__main__":
 ## 8. 验证记录
 
 - **编译环境与命令**：`clang++ -std=c++17 -O2`（经 `codeforces/tools/include` 的 `bits/stdc++.h` 兼容头）；由于本题是多解题，用 checker 验收：
-  `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/44/E_猴子分行文本.md --checker /tmp/cf_verify_44_E/checker.py`
+  `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/44/E_猴子分行文本.md --checker codeforces/tools/checkers/cf44e.py`
   输出 `CF44E: samples 2`、C++ 2/2、Python 2/2（两组官方样例在 checker 下都通过）。
-- **checker 的校验条件**（`/tmp/cf_verify_44_E/checker.py`，独立于参考程序）：
+- **checker 的校验条件**（`codeforces/tools/checkers/cf44e.py`，独立于参考程序）：
   1. 若输出恰为一行 `No solution`，则 checker 用 $ka\le L\le kb$ 独立判定确实无解，否则判错；
   2. 否则必须恰好 $k$ 行、每行只含小写字母、长度均在 $[a,b]$ 内，且按顺序拼接后与原串**逐字符相同**；
   3. 若 checker 独立判定无解而选手输出了方案，直接判错。

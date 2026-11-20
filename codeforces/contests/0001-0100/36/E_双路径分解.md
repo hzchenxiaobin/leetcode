@@ -430,7 +430,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机没有 GNU `g++`（`/usr/bin/g++` 指向 `Apple clang 21.0.0`），`verify_solution.py` 自动用 `clang++ -std=c++17 -O2` 加仓库自带的 `bits/stdc++.h` 兼容头编译；Python 为 `Python 3.9.6`。
-  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/36/E_双路径分解.md --checker /tmp/cf_verify_36_e/chk.py`
+  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/36/E_双路径分解.md --checker codeforces/tools/checkers/cf36e.py`
   - 输出：`CF36E: samples 2 / C++ 编译 OK, 样例 2/2 / Python 语法 OK, 样例 2/2`。
 - **官方样例**：2 / 2 通过；样例 1 的输出与官方逐字一致，样例 2 输出 `-1`。
 - **checker 校验内容**：两条路径长度均 $>0$、纸条编号恰好是 $1\dots m$ 的一个划分、每条序列能实际走通（相邻纸条共享当前城市，方向可任选）。不依赖题解输出。

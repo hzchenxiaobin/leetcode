@@ -291,7 +291,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机没有 GNU `g++`，`verify_solution.py` 自动改用 `Apple clang 21.0.0`（`clang++ -std=c++17 -O2`）加仓库自带的 `bits/stdc++.h` 兼容头编译；Python 为 `Python 3.9.6`。
-  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/6/D_火球清空弓箭手.md --checker /tmp/cf_verify_6_d/chk.py`
+  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/6/D_火球清空弓箭手.md --checker （临时校验脚本，已随会话清理；校验条件见下）`
   - 输出：`CF6D: samples 2 / C++ 编译 OK, 样例 2/2 / Python 语法 OK, 样例 2/2`。
 - **官方样例**：2 / 2 通过（C++ 与 Python 都是 checker 通过，不逐字比对）。checker 的校验条件是：① 第一行 $t$ 与第二行数字个数一致；② 每个落点 $2 \le x \le n-1$；③ 按落点逐发扣血后所有人血量 $< 0$；④ $t$ 等于 checker 内单独实现的记忆化搜索（自顶向下，$K=17$，与正文自底向上的 $K=16$ 版本写法不同）算出的最少发数。样例 1 实际输出 `3 / 2 2 2`，样例 2 输出 `4 / 2 2 3 3`。
 - **额外测试与暴力对拍**：共 **410 组**，全部实跑，0 组不一致：

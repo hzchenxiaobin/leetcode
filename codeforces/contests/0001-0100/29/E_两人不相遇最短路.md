@@ -313,7 +313,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机没有 GNU `g++`（`/usr/bin/g++` 指向 `Apple clang 21.0.0`），`verify_solution.py` 自动用 `clang++ -std=c++17 -O2` 加仓库自带的 `bits/stdc++.h` 兼容头编译；Python 为 `Python 3.9.6`。
-  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/29/E_两人不相遇最短路.md --checker /tmp/cf_verify_29_e/chk.py`
+  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/29/E_两人不相遇最短路.md --checker codeforces/tools/checkers/cf29e.py`
   - 输出：`CF29E: samples 3 / C++ 编译 OK, 样例 3/3 / Python 语法 OK, 样例 3/3`。
 - **官方样例**：3 / 3 通过；样例 1、3 的输出与官方逐字一致（含顺序），样例 2 输出 `-1`。
 - **随机与构造对拍**：257 组（250 组随机图：$2 \le n \le 7$、$m \le 10$，允许不连通；7 组手工：单边、链、环、完全图、样例图），与一份独立 BFS 参考实现比较 $k$ 或 $-1$，0 组不符；所有非 `-1` 输出再通过 checker（长度、起止、相邻、逐时刻不同点、$k$ 最小）。

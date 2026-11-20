@@ -392,7 +392,7 @@ if __name__ == "__main__":
 - **官方样例（多解，用 checker）**：3 / 3 通过。
 
   ```text
-  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/71/E_核聚变与子集划分.md" --checker /tmp/cf_verify_71_E/check.py
+  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/71/E_核聚变与子集划分.md" --checker codeforces/tools/checkers/cf71e_1.py
   CF71E: samples 3
     C++ 编译 OK, 样例 3/3, 最慢 3 ms
     Python 语法 OK, 样例 3/3
@@ -400,9 +400,9 @@ if __name__ == "__main__":
 
   上述毫秒数为单次运行结果（含进程启动），随机器负载有 ±1 ms 抖动。
 
-  checker（`/tmp/cf_verify_71_E/check.py`）的校验条件：① 若输出 `NO`，用独立回溯程序确认确实无解；② 若输出 `YES`，恰好有 $k$ 行等式；③ 每行形如 `A+B+...->Y`，`Y` 是合法元素符号；④ 每行左边的原子序数之和等于 `Y` 的序数；⑤ 所有等式左边的原子符号**多重集**与输入完全一致（每个原子恰好用一次）；⑥ 所有 `Y` 的多重集与目标完全一致。本实现样例 1 的分组与官方不同（例如 `Co+Mg+F+Zn->Pt`），checker 判定通过。
+  checker（`codeforces/tools/checkers/cf71e_1.py`）的校验条件：① 若输出 `NO`，用独立回溯程序确认确实无解；② 若输出 `YES`，恰好有 $k$ 行等式；③ 每行形如 `A+B+...->Y`，`Y` 是合法元素符号；④ 每行左边的原子序数之和等于 `Y` 的序数；⑤ 所有等式左边的原子符号**多重集**与输入完全一致（每个原子恰好用一次）；⑥ 所有 `Y` 的多重集与目标完全一致。本实现样例 1 的分组与官方不同（例如 `Co+Mg+F+Zn->Pt`），checker 判定通过。
 - **暴力对拍（500 组，全部实跑）**：
-  - 独立暴力 `/tmp/cf_verify_71_E/brute.py`：按目标顺序回溯，对每个目标枚举剩余原子中所有和为其序数的子集，**不做任何记忆化**，纯粹按定义搜索，用于判定可解性。
+  - 独立暴力 `codeforces/tools/checkers/cf71e.py`：按目标顺序回溯，对每个目标枚举剩余原子中所有和为其序数的子集，**不做任何记忆化**，纯粹按定义搜索，用于判定可解性。
   - 数据构成：300 组随机数据（$n \le 8$、$k \le 4$，目标值 $1 \sim 25$；一半由"把每个目标随机拆成 $1 \sim 3$ 份"构造以保证 `YES` 覆盖，另一半是随机总和再随机拆分，覆盖 `NO`），另有 200 组针对 Python 版本的同类数据。
   - 结果：正解（C++、Python）与暴力的判定**逐组一致（0 处不符）**；对所有 `YES` 输出逐条用 checker 校验，全部通过。
 - **自造边界用例**：$n=k=1$ 且符号相同 / 不同；$n=17$ 的最大规模不可解数据（跑满 DP）；全同元素（`H H ... H`）；目标值 $100$（$\mathrm{Fm}$）与 $1$（$\mathrm{H}$）的极端组合。均与暴力或手算一致。

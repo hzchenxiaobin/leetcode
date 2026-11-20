@@ -300,7 +300,7 @@ main()
 
 ## 8. 验证记录
 
-- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/44/J_三格骨牌铺板.md --checker /tmp/cf_verify_44/checker_j.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
+- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/44/J_三格骨牌铺板.md --checker codeforces/tools/checkers/cf44j.py`；C++ 由 clang++ 17 + `codeforces/tools/include` 兼容头编译（`-O2`），Python 3 直接运行。
 - **官方样例**：C++ 4 / 4 通过、Python 4 / 4 通过（checker 判定，`YES` 不要求与样例同铺法）。
 - **checker 的校验条件**：输出首行 `YES`/`NO`；`YES` 时逐格检查"挖空位置与输入完全一致、非空格只含 `a`~`d`"；按字母做四连通分量，要求每个分量恰好是三个共线相邻格子、中心格输入为 `b`、两端输入为 `w`（这同时保证共边骨牌不同字母）；`NO` 时对 $nm \le 64$ 的棋盘运行独立的精确覆盖回溯，确认确实无解。
 - **额外测试**：对 $n, m \le 4$ 的全部挖洞方式（含两种棋盘配色）与独立暴力对拍，0 处不一致；再用最终程序对 400 组随机棋盘（一半由随机铺法反推、一半满足黑白计数条件）与暴力对拍，其中 316 组 `YES`（全部通过 checker 的铺法校验）、84 组 `NO`（暴力确认无解），0 处不一致。

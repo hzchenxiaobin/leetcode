@@ -305,7 +305,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机没有 GNU `g++`，C++ 用 `clang++ -std=c++17 -O2` 搭配 `codeforces/tools/include/bits/stdc++.h` 兼容头编译，代码只用标准库，可原样提交 GNU C++17；Python 为 `Python 3.9.6`。
-- **官方样例**：2 / 2 通过（C++ 与 Python 输出均与样例逐 token 相同）。因为本题**多解**，除文本比对外还用 checker 复核：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/4/D_神秘礼物的信封链.md --checker /tmp/cf_verify_4_D/checker.py`。checker 的校验条件是：
+- **官方样例**：2 / 2 通过（C++ 与 Python 输出均与样例逐 token 相同）。因为本题**多解**，除文本比对外还用 checker 复核：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/4/D_神秘礼物的信封链.md --checker （临时校验脚本，已随会话清理；校验条件见下）`。checker 的校验条件是：
   1. 若卡片装不进任何信封，输出必须恰好是单个 `0`；
   2. 否则第一行给出链长 $k$，第二行给出 $k$ 个下标，且 $k$ 必须等于 checker 用独立 $O(n^2)$ DP 算出的最优长度；
   3. 下标互不重复、都在 $[1, n]$ 内；按输出顺序，每个信封都要装得下卡片（$w_i > w$ 且 $h_i > h$），且相邻两封宽高都严格递增。

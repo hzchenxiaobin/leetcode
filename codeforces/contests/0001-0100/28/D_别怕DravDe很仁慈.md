@@ -284,15 +284,15 @@ main()
 - **官方样例**：2 / 2 通过（特殊评测：合法性 + 最优性）。
 
   ```text
-  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/28/D_别怕DravDe很仁慈.md" --checker /tmp/cf28_D/checker.py
+  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/28/D_别怕DravDe很仁慈.md" --checker codeforces/tools/checkers/cf28d.py
   CF28D: samples 2
     C++ 编译 OK, 样例 2/2, 最慢 12~22 ms（进程启动开销为主）
     Python 语法 OK, 样例 2/2
   ```
 
-  checker（`/tmp/cf28_D/checker.py`）用**独立实现**的最大价值 DP 求出最优值，再校验输出：编号递增、每辆被选中车的 $l_i$ 等于前面人数、$r_i$ 等于后面人数、总价值等于最优值。任一不满足即判错。
+  checker（`codeforces/tools/checkers/cf28d.py`）用**独立实现**的最大价值 DP 求出最优值，再校验输出：编号递增、每辆被选中车的 $l_i$ 等于前面人数、$r_i$ 等于后面人数、总价值等于最优值。任一不满足即判错。
 - **暴力对拍（302 组，全部实跑）**：
-  - 独立暴力 `/tmp/cf28_D/stress.py`：枚举全部 $2^n$ 个子集（$n \le 8$），对每个子集逐车校验 $l_i$（前缀人数）与 $r_i$（后缀人数），取最大价值（空集价值 0）。
+  - 独立暴力 `codeforces/tools/checkers/cf28d_1.py`：枚举全部 $2^n$ 个子集（$n \le 8$），对每个子集逐车校验 $l_i$（前缀人数）与 $r_i$（后缀人数），取最大价值（空集价值 0）。
   - 数据：2 组官方样例 + 300 组随机（$n \in [1,8]$，$c_i \in [1,3]$，$l_i, r_i \in [0,5]$，$v_i \in [1,20]$）。
   - 结果：`cases 302 bad 0`（C++ 输出经 `check_out` 逐车校验合法，且总价值等于暴力最优值；C++ 与 Python 车数一致）。
 - **最大约束性能**：$n = 10^5$ 随机数据，C++ 端到端约 10 ms（fread 快读；同样数据用 `cin` 要 0.58 s，所以正文代码用快读）；峰值内存 $O(n)$。

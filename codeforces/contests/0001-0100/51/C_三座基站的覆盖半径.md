@@ -261,7 +261,7 @@ C++ 版用 `scanf` 读入 $2 \times 10^5$ 个整数，避免 `cin` 在部分环�
 
 - **编译环境与命令**：本机只有 Apple clang 21.0.0（`/usr/bin/g++` 是 clang 的软链），用 `clang++ -std=c++17 -O2 -Wall` 搭配仓库自带的 `codeforces/tools/include/bits/stdc++.h` 兼容头编译；Python 为 3.9.6。
 - **官方样例**：3 / 3 通过（用 checker 校验，见下），C++ 与 Python 输出一致。
-- **checker 的校验条件**：`/tmp/cf_verify_51_C/checker.py` 读取输入与输出，要求恰有两行、第一行 1 个数、第二行 3 个数且均为合法数字；用整数二分独立算出最优 $2d$，要求输出 $d$ 与最优值相差不超过 $10^{-6}$；三个坐标都在 $[0, 2 \times 10^9]$ 内；最后逐座房子检查 $\lvert x_i - t \rvert \le d + 10^{-6}$。任何一条不满足即拒绝。
+- **checker 的校验条件**：`codeforces/tools/checkers/cf51c.py` 读取输入与输出，要求恰有两行、第一行 1 个数、第二行 3 个数且均为合法数字；用整数二分独立算出最优 $2d$，要求输出 $d$ 与最优值相差不超过 $10^{-6}$；三个坐标都在 $[0, 2 \times 10^9]$ 内；最后逐座房子检查 $\lvert x_i - t \rvert \le d + 10^{-6}$。任何一条不满足即拒绝。
 - **独立暴力对拍**：另写 `brute.py` 枚举两条分割线（把排序后的点分成至多三段），直接取「最大段跨度的一半」的最小值。随机对拍 **300 组**（$n \le 9$，坐标范围取 $3/6/12/30/10^9$ 多档，含重复点），C++、Python 的 $d$ 与暴力完全一致，且两版输出都通过 checker；另外对 $n \le 5$、坐标 $\in [1,5]$ 的 **251 组**多重集合做了全枚举，全部一致。
 - **最大约束性能**：$n = 2 \times 10^5$、坐标随机取 $[1,10^9]$ 的数据，C++ 端到端 30–40 ms，Python（`bisect` 版）约 70 ms；峰值内存约 3 MB，相对 1 s / 256 MB 余量充足。
 - **图片校验**：三张 SVG（`cf51c_binary_search.svg`、`cf51c_greedy.svg`、`cf51c_sample1.svg`）均通过 `xml.etree.ElementTree.parse`；用 headless Chrome 实际排版量出全部文本块的包围盒，确认没有越出 `viewBox`、没有互相重叠。

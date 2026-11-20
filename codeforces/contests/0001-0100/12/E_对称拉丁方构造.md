@@ -259,7 +259,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`，没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
-- **特殊评测 checker**（`/tmp/cf_verify_12_E/checker.py`，随验证命令使用 `--checker`）：读入 $n$ 与输出矩阵，依次校验
+- **特殊评测 checker**（`（临时校验脚本，已随会话清理；校验条件见下）`，随验证命令使用 `--checker`）：读入 $n$ 与输出矩阵，依次校验
   1. 数字个数恰好 $n^2$，且 $n$ 为偶数、$2\le n\le 1000$；
   2. 每个元素在 $[0,n-1]$ 内；
   3. 主对角线全为 $0$；

@@ -295,7 +295,7 @@ main()
 
 ## 8. 验证记录
 
-- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/63/D_岛屿分块构造.md --checker /tmp/cf_verify_63_D/checker.py`。checker 校验：① 首行为 `YES`；② 恰好 $\max(b,d)$ 行、每行 $a+c$ 个字符；③ 海格全为 `.`；④ 岛格只含 `a..a+n-1`；⑤ 每个字母的数量等于 $x_i$；⑥ 每个字母的格子四连通。
+- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/63/D_岛屿分块构造.md --checker codeforces/tools/checkers/cf63d.py`。checker 校验：① 首行为 `YES`；② 恰好 $\max(b,d)$ 行、每行 $a+c$ 个字符；③ 海格全为 `.`；④ 岛格只含 `a..a+n-1`；⑤ 每个字母的数量等于 $x_i$；⑥ 每个字母的格子四连通。
 - **官方样例**：2 / 2 通过（checker 判定合法，C++ 与 Python 各 2/2）。
 - **注意**：本题是特殊评测，构造出的方案与官方样例不同但合法。若直接用 `verify_solution.py` 而不加 `--checker`，会因为按文本逐字比对而报告不符——必须加 `--checker` 才会得到 2/2。
 - **额外测试**：随机 300 组（$a,b,c,d \le 10$、$b \ne d$、随机把面积切成 $n \le 26$ 份），每组用 checker 校验，全部合法，0 组失败；另外测了 $50 \times 50$ 级别的最大数据。

@@ -373,7 +373,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机没有 GNU `g++`（`/usr/bin/g++` 指向 `Apple clang 21.0.0`），`verify_solution.py` 自动用 `clang++ -std=c++17 -O2` 加仓库自带的 `bits/stdc++.h` 兼容头编译；Python 为 `Python 3.9.6`。
-  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/29/D_树上叶子顺序.md --checker /tmp/cf_verify_29_d/chk.py`
+  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/29/D_树上叶子顺序.md --checker codeforces/tools/checkers/cf29d.py`
   - 输出：`CF29D: samples 3 / C++ 编译 OK, 样例 3/3 / Python 语法 OK, 样例 3/3`。
 - **官方样例**：3 / 3 通过；样例 1、2 的输出与官方逐字一致，样例 3 输出 `-1`。
 - **随机与构造对拍**：255 组（250 组随机树：$3 \le n \le 7$，随机父子建树，叶子顺序取随机排列；5 组手工：单叶子链、星形、样例树、非法交错），与**暴力枚举所有孩子排列**的参考实现比较"是否存在合法路线"，0 组不符；所有非 `-1` 输出再通过 checker（长度、起止、相邻、每条边两次、叶子顺序）。

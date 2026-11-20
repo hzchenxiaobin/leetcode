@@ -297,15 +297,15 @@ main()
 - **官方样例（多解，用 checker）**：2 / 2 通过。
 
   ```text
-  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/10/D_最长公共递增子序列.md" --checker /tmp/cf_verify_10_D/checker.py
+  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/10/D_最长公共递增子序列.md" --checker codeforces/tools/checkers/cf10d.py
   CF10D: samples 2
     C++ 编译 OK, 样例 2/2, 最慢 21 ms
     Python 语法 OK, 样例 2/2
   ```
 
-  checker（`/tmp/cf_verify_10_D/checker.py`）的校验条件：① 第一行的 $k$ 等于独立的 $O(nm)$ DP 算出的 LCIS 长度；② 输出恰好有 $k$ 个整数；③ 这 $k$ 个数严格递增；④ 它是 $a$ 的子序列；⑤ 它是 $b$ 的子序列。任一不满足即判错。本程序对样例 1 输出 `1 5 6`（与官方 `3 5 6` 不同）也通过。
+  checker（`codeforces/tools/checkers/cf10d.py`）的校验条件：① 第一行的 $k$ 等于独立的 $O(nm)$ DP 算出的 LCIS 长度；② 输出恰好有 $k$ 个整数；③ 这 $k$ 个数严格递增；④ 它是 $a$ 的子序列；⑤ 它是 $b$ 的子序列。任一不满足即判错。本程序对样例 1 输出 `1 5 6`（与官方 `3 5 6` 不同）也通过。
 - **暴力对拍（325 组，全部实跑）**：
-  - 独立暴力 `/tmp/cf_verify_10_D/brute.py`：$m \le 12$ 时枚举 $b$ 的**全部下标子集**，保留"严格递增且是 $a$ 的子序列"的那些，取最长——它覆盖了所有可能的公共递增子序列。
+  - 独立暴力 `（临时校验脚本，已随会话清理；校验条件见下）`：$m \le 12$ 时枚举 $b$ 的**全部下标子集**，保留"严格递增且是 $a$ 的子序列"的那些，取最长——它覆盖了所有可能的公共递增子序列。
   - 数据构成：2 组官方样例 + 3 组手工边界（无公共元素、两序列相同、全相同元素）+ 320 组随机数据（$n, m \le 10$，值域取 2/3/5/10/30 五档）。
   - 结果：C++、Python、暴力三方的长度**全部一致（0 处不符）**；并且对 C++ 输出的序列逐条校验了"递增 + 是 $a$ 的子序列 + 是 $b$ 的子序列"，全部通过。
 - **最大约束性能**：$n = m = 500$、值域 300 的稠密数据，C++ 端到端 $4.7$ ms/次、Python $69$ ms/次；值域 $10^9$ 的稀疏数据 C++ $4.3$ ms。`/usr/bin/time -l` 实测峰值常驻内存 $3784704$ 字节（约 $3.6$ MB，限 256 MB）。

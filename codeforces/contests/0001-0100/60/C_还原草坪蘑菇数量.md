@@ -356,7 +356,7 @@ main()
 
 ## 8. 验证记录
 
-- **编译环境与命令**：本机 `g++` 实为 `Apple clang 21.0.0`，用 `clang++ -std=c++17 -O2` 搭配 `codeforces/tools/include/bits/stdc++.h` 兼容头编译（正文代码可原样提交 GNU C++17）；Python 侧为 `Python 3.9.6`。由于答案不唯一，官方样例用 `tools/verify_solution.py <doc> --checker /tmp/cf_verify_60_c/checker.py` 校验。
+- **编译环境与命令**：本机 `g++` 实为 `Apple clang 21.0.0`，用 `clang++ -std=c++17 -O2` 搭配 `codeforces/tools/include/bits/stdc++.h` 兼容头编译（正文代码可原样提交 GNU C++17）；Python 侧为 `Python 3.9.6`。由于答案不唯一，官方样例用 `tools/verify_solution.py <doc> --checker codeforces/tools/checkers/cf60c.py` 校验。
 - **checker 的校验条件**：读入输入与选手输出；输出必须是 `YES` 或 `NO`（token 数不能多）；输出 `NO` 时本 checker 直接接受（"确实无解"等价于把题再做一遍，故 NO 的正确性由下一条的小值域全枚举暴力单独核对）；输出 `YES` 时必须恰好有 $n$ 个正整数，并且对输入的每条边 $(u,v,g,l)$ 都有 $\gcd(a_u,a_v)=g$ 且 $\operatorname{lcm}(a_u,a_v)=l$。任何一条不满足即判错。
 - **官方样例**：4 / 4 通过（C++ 的输出 `YES/1`、`YES/1 3`、`YES/10 2 1`、`NO` 全部通过 checker；第 3 组与标准输出 `5 1 2` 不同但同样合法），Python 同样 4/4。
 - **随机对拍（合法数据）**：先随机生成 $n \le 6$ 个蘑菇数（$1..40$），再随机取若干条边、由两端值直接算出 $(g,l)$——这样的数据必然有解。150 组，检查我们的输出是 `YES` 且 checker 通过，**全部一致**。

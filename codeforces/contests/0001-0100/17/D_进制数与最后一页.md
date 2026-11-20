@@ -295,7 +295,7 @@ main()
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`，没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
 - **官方样例**：2 / 2 通过（`1`、`4`），C++ 与 Python 输出一致，且与 JSON 中的 `out` 逐字符相同。
-- **独立暴力对拍**：暴力（`/tmp/cf_verify_17_D/brute.py`）用 Python 大整数**直接算出** $N=(b-1)b^{n-1}$，再取 $(N-1)\bmod c+1$，完全不涉及任何指数约简。随机生成 **300 组**小规模输入（$b\le10^6$、$n\le12$，$c$ 覆盖 $1,2,3,4,6,8,9,12,16,27,36$、随机小值与大值），C++ / Python / 暴力三方 **300/300 一致**。
+- **独立暴力对拍**：暴力（`codeforces/tools/checkers/cf17d.py`）用 Python 大整数**直接算出** $N=(b-1)b^{n-1}$，再取 $(N-1)\bmod c+1$，完全不涉及任何指数约简。随机生成 **300 组**小规模输入（$b\le10^6$、$n\le12$，$c$ 覆盖 $1,2,3,4,6,8,9,12,16,27,36$、随机小值与大值），C++ / Python / 暴力三方 **300/300 一致**。
 - **真指数交叉验证**：另取 **80 组** $b\in\{2,\dots,10^6\}$、$n\le10^6$、$c\le10^9$（刻意覆盖 $b$ 与 $c$ 不互素的情形），用 `pow(b % c, n-1, c)`（真实指数的快速幂，未做任何降幂）算出期望值，C++ 与 Python 全部一致。
 - **最大约束性能**：$b$、$n$ 各 $10^6$ 位（`999…9` 与 `10^999999`），$c=10^9$ 与 $c=999999937$；C++ 端到端 288 ms，Python 262–329 ms，内存 < 10 MB。
 - **图片校验**：三张 SVG（`cf17d_formula.svg`、`cf17d_reduce.svg`、`cf17d_walkthrough.svg`）均通过 `xml.etree.ElementTree.parse`；用脚本估算每个 `text` 的包围盒，确认不越出 viewBox、文字之间不重叠；并用 headless Chrome 渲染 PNG 后检查画布四边无墨迹（无裁切）。

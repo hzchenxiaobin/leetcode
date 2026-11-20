@@ -328,7 +328,7 @@ Python 版本在最坏数据上较慢（状态转移总数可达 $5 \times 10^7$
 
 ## 8. 验证记录
 
-- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/59/E_避开禁咒的最短路.md --checker /tmp/cf_verify_59_E/checker.py`。checker 校验：① 输出格式（`-1` 或 $d$ + $d+1$ 个城市）；② 路径从 1 开始、到 $n$ 结束；③ 相邻两点之间确有道路；④ 不存在连续的禁咒三元组；⑤ $d$ 等于期望的最短路长度（样例中由官方输出给出）。
+- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/59/E_避开禁咒的最短路.md --checker codeforces/tools/checkers/cf59e.py`。checker 校验：① 输出格式（`-1` 或 $d$ + $d+1$ 个城市）；② 路径从 1 开始、到 $n$ 结束；③ 相邻两点之间确有道路；④ 不存在连续的禁咒三元组；⑤ $d$ 等于期望的最短路长度（样例中由官方输出给出）。
 - **官方样例**：3 / 3 通过（checker 判定合法且长度最短；C++ 与 Python 各 3/3）。
 - **额外测试**：随机 300 组小图（$n \le 7$、$m \le 10$、禁咒 $\le 10$），用**独立实现**的 BFS（以 `(prev, cur)` 元组为状态、用 Python 集合查禁咒）求出最短路长度，与程序输出的第一行比对；再用 checker 校验程序给出的整条路径合法、且长度等于独立 BFS 的最短路。300 组全部一致，0 组不符。
 - **最大约束性能**：$n = 3000$、$m = 20000$、$k = 10^5$，并把城市 $n$ 孤立以迫使 BFS 搜完全部 $40000$ 个状态（转移约 $5.4 \times 10^7$ 次），C++ 单次运行约 $55$ ms。

@@ -209,8 +209,8 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：`Apple clang 21.0.0` + `codeforces/tools/include/bits/stdc++.h` 兼容头，`clang++ -std=c++17 -O2`；Python 为 `3.9.6`。
-- **官方样例**：2 / 2 通过——由于是构造题，用 checker 判定：`python3 codeforces/tools/verify_solution.py <doc> --checker /tmp/cf_verify_66/d/checker.py`，C++ 与 Python 均通过。
-- **checker 的校验条件**（`/tmp/cf_verify_66/d/checker.py`）：读入 $n$ 与程序输出；若输出为 `-1`，仅当 $n=2$ 时通过；否则要求恰好 $n$ 个数、全部是十进制数字、无前导零、不超过 $100$ 位、互不相同、整体 gcd 为 $1$、且任意两数 gcd 大于 $1$。另用一组反例确认 checker 会拒绝：$n=2$ 时输出 `4 6`（整体 gcd 为 2）、$n=3$ 时输出 `15 15 6`（重复）、$n=3$ 时输出 4 个数（个数错）、$n=3$ 时输出 `-1`（有解却报无解），全部被正确拒绝。
+- **官方样例**：2 / 2 通过——由于是构造题，用 checker 判定：`python3 codeforces/tools/verify_solution.py <doc> --checker codeforces/tools/checkers/cf66d.py`，C++ 与 Python 均通过。
+- **checker 的校验条件**（`codeforces/tools/checkers/cf66d.py`）：读入 $n$ 与程序输出；若输出为 `-1`，仅当 $n=2$ 时通过；否则要求恰好 $n$ 个数、全部是十进制数字、无前导零、不超过 $100$ 位、互不相同、整体 gcd 为 $1$、且任意两数 gcd 大于 $1$。另用一组反例确认 checker 会拒绝：$n=2$ 时输出 `4 6`（整体 gcd 为 2）、$n=3$ 时输出 `15 15 6`（重复）、$n=3$ 时输出 4 个数（个数错）、$n=3$ 时输出 `-1`（有解却报无解），全部被正确拒绝。
 - **覆盖测试**：对 $n = 2, 3, \dots, 50$ 的全部 49 个取值，以及 210 组随机 $n$（$2 \le n \le 50$），共 **259 组**，C++ 与 Python 输出逐组一致，并逐组通过 checker 与一份独立的 Python 校验脚本（直接对输出做 gcd 判定，不复用 checker 代码），**全部合法**。
 - **最大约束性能**：$n = 50$ 时 C++ 端到端（含进程启动）约 $2.0 \sim 2.2$ ms，Python 约 $18$ ms；相对 2 s 时限余量在百倍以上。
 - **图片校验**：两张 SVG（`cf66d_factor_table.svg`、`cf66d_construction_flow.svg`）通过 `xml.etree.ElementTree.parse`，手绘抖动滤镜与手写字体齐备，文字未越出 `viewBox`。

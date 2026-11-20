@@ -345,7 +345,7 @@ main()
 ## 8. 验证记录
 
 - **编译环境与命令**：本机没有 GNU `g++`（`/usr/bin/g++` 是 Apple clang 21.0.0 的软链），用 `clang++ -std=c++17 -O2 -Wall -Wextra -I codeforces/tools/include` 配合仓库自带的 `bits/stdc++.h` 兼容头编译，**零警告**；Python 侧为 `Python 3.9.6`。
-- **官方样例**：1 / 1 通过。由于本题输出不唯一，`verify_solution.py --checker /tmp/cf_verify_23_C/checker.py` 的输出为 `CF23C: samples 1`、`C++ 编译 OK, 样例 1/1`、`Python 语法 OK, 样例 1/1`。checker 校验：
+- **官方样例**：1 / 1 通过。由于本题输出不唯一，`verify_solution.py --checker codeforces/tools/checkers/cf23c.py` 的输出为 `CF23C: samples 1`、`C++ 编译 OK, 样例 1/1`、`Python 语法 OK, 样例 1/1`。checker 校验：
   1. 每个测试先读 `YES`/`NO`；输出 `NO` 会被拒绝（构造证明总有解）；
   2. `YES` 后第二行必须恰好 $N$ 个整数，范围 $[1,2N-1]$，互不相同且升序；
   3. 用 `2*sum_apples >= total_apples` 与 `2*sum_oranges >= total_oranges` 校验两条不等式；

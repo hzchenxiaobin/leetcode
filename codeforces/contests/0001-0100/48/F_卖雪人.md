@@ -217,13 +217,13 @@ Python 版是"每天排序"的直观写法（只适合小数据；提交请用 C
 - **官方样例**：2 / 2 通过（浮点用 checker 判误差）。
 
   ```text
-  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/48/F_卖雪人.md" --checker /tmp/cf48_F/checker.py
+  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/48/F_卖雪人.md" --checker codeforces/tools/checkers/cf48f.py
   CF48F: samples 2
     C++ 编译 OK, 样例 2/2, 最慢 12~22 ms（进程启动开销为主）
     Python 语法 OK, 样例 2/2
   ```
 
-  checker（`/tmp/cf48_F/checker.py`）：把两边解析成 `double`，要求绝对误差 $\le10^{-9}$ 或相对误差 $\le10^{-9}$（样例 2 的官方值是 double 舍入后的结果，绝对差 $\sim5\times10^{-6}$、相对差 $\sim5\times10^{-17}$，按题面口径通过）。
+  checker（`codeforces/tools/checkers/cf48f.py`）：把两边解析成 `double`，要求绝对误差 $\le10^{-9}$ 或相对误差 $\le10^{-9}$（样例 2 的官方值是 double 舍入后的结果，绝对差 $\sim5\times10^{-6}$、相对差 $\sim5\times10^{-17}$，按题面口径通过）。
 - **随机对拍（220 组，全部实跑）**：C++（带权选择）与 Python（每天完整排序 + 贪心）以及独立的"逐天排序累计"三方比较，相对误差 $\le10^{-6}$。数据：$n \le 5$、$m \le 8$、$w_i \le 20$、$c_i$ 按题面保证 $c_i-(n-1)a_i>0$。结果 `cases 220 bad 0`。
 - **最大约束性能**：$n=100$、$m=5\times10^5$、$W=10^9$ 随机数据，C++ 0.51 s（10 s 时限）；同一数据用普通 `cin` 读入需 4 s，故正文用 fread 快读。
 - **图片校验**：两张 SVG，0 越界/重叠/越框。

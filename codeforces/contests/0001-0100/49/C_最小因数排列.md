@@ -207,7 +207,7 @@ main()
 
 ## 8. 验证记录
 
-- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/49/C_最小因数排列.md --checker /tmp/cf_verify_49_C/checker.py`。checker 约定为 `python3 checker.py <input> <output> <answer>`，本 checker 校验：① 恰好输出 $n$ 个整数；② 是 $1..n$ 的排列；③ 按题面定义统计因数个数，必须等于 1（理论最小值）。
+- **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0001-0100/49/C_最小因数排列.md --checker codeforces/tools/checkers/cf49c.py`。checker 约定为 `python3 checker.py <input> <output> <answer>`，本 checker 校验：① 恰好输出 $n$ 个整数；② 是 $1..n$ 的排列；③ 按题面定义统计因数个数，必须等于 1（理论最小值）。
 - **官方样例**：2 / 2 通过（checker 判合法，C++ 与 Python 各 2/2）。
 - **额外测试**：① 对 $n = 1,2,\dots,300$ 逐个运行 checker，全部合法（因数个数均为 1）；② 对 $n \le 8$ 用 `itertools.permutations` **全枚举** $n!$ 个排列求最小因数个数，全部等于 1，与"最小值 $=1$"的证明一致；③ $n = 100000$ 的最大数据也能通过 checker。
 - **最大约束性能**：$n = 10^5$，C++ 单次运行（含输出 10 万个数字）约 $15 \sim 20$ ms，远低于 2 s。

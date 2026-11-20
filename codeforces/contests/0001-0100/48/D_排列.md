@@ -196,14 +196,14 @@ main()
 - **官方样例**：3 / 3 通过（特殊评测）。
 
   ```text
-  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/48/D_排列.md" --checker /tmp/cf48_D/checker.py
+  python3 codeforces/tools/verify_solution.py "codeforces/contests/0001-0100/48/D_排列.md" --checker codeforces/tools/checkers/cf48d.py
   CF48D: samples 3
     C++ 编译 OK, 样例 3/3, 最慢 12~22 ms（进程启动开销为主）
     Python 语法 OK, 样例 3/3
   ```
 
-  checker（`/tmp/cf48_D/checker.py`）：若输出 `-1`，用独立回溯搜索确认确实无解；否则校验编号个数与范围、使用的编号数等于 $K$、每个编号组排序后恰为 $\{1,2,\dots,\text{size}\}$。
-- **与回溯暴力对拍（217 组，全部实跑）**：独立暴力 `/tmp/cf48_D/stress.py` 用记忆化回溯枚举"取一个 $1..L$ 的完整集合"的所有可能，判断是否有解；同时校验程序输出合法。数据：3 组官方样例 + 240 组随机（$n \le 8$、值域 $\le 4$）。结果 `cases 217 bad 0`。
+  checker（`codeforces/tools/checkers/cf48d.py`）：若输出 `-1`，用独立回溯搜索确认确实无解；否则校验编号个数与范围、使用的编号数等于 $K$、每个编号组排序后恰为 $\{1,2,\dots,\text{size}\}$。
+- **与回溯暴力对拍（217 组，全部实跑）**：独立暴力 `codeforces/tools/checkers/cf48d_1.py` 用记忆化回溯枚举"取一个 $1..L$ 的完整集合"的所有可能，判断是否有解；同时校验程序输出合法。数据：3 组官方样例 + 240 组随机（$n \le 8$、值域 $\le 4$）。结果 `cases 217 bad 0`。
 - **最大约束性能**：$n = 10^5$ 随机数据，C++ 约 10 ms。
 - **图片校验**：两张 SVG，0 越界/重叠/越框。
 - **复核状态**：verified。

@@ -331,7 +331,7 @@ C++ 版用 `scanf` 读 $2\times10^6$ 个字符；Python 版全程用列表，$n$
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`，没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
 - **官方样例**：2 / 2 通过（`6`、`2`），C++ 与 Python 输出一致，且与 JSON 中的 `out` 逐字符相同。
-- **独立暴力对拍**：暴力（`/tmp/cf_verify_17_E/brute.py`）用**向两边扩展**的方式枚举全部回文出现区间（$O(n^2)$），再**两两检查区间是否相交**（$O(P^2)$），完全不使用 Manacher 或补集分解。随机生成 **300 组**输入（$n\le30$，四种模式：双字母、三字母、单字母、回文模板），C++ / Python / 暴力三方 **300/300 一致**。
+- **独立暴力对拍**：暴力（`codeforces/tools/checkers/cf17e.py`）用**向两边扩展**的方式枚举全部回文出现区间（$O(n^2)$），再**两两检查区间是否相交**（$O(P^2)$），完全不使用 Manacher 或补集分解。随机生成 **300 组**输入（$n\le30$，四种模式：双字母、三字母、单字母、回文模板），C++ / Python / 暴力三方 **300/300 一致**。
 - **最大约束性能**：$n=2\times10^6$ 两种极端数据（随机串、全相同字符），C++ 端到端 75 ms / 56 ms，峰值内存 < 50 MB（限制 128 MB）；Python（CPython 3.9）约 3.2 s，满数据建议 C++/PyPy3。
 - **图片校验**：三张 SVG（`cf17e_mancher.svg`、`cf17e_formula.svg`、`cf17e_walkthrough.svg`）均通过 `xml.etree.ElementTree.parse`；用脚本估算每个 `text` 的包围盒，确认不越出 viewBox、文字之间不重叠；并用 headless Chrome 渲染 PNG 后检查画布四边无墨迹（无裁切）。
 - **公式校验**：公式均为 `$...$` / `$$...$$`，星号直接写 `*`，`\text{}` 内无裸 `#`，KaTeX（`throwOnError`）渲染无报错。

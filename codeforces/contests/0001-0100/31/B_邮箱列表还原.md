@@ -226,7 +226,7 @@ main()
 
 - **编译环境与命令**：本机只有 `Apple clang 21.0.0`，没有 GNU `g++`，因此用 `clang++ -std=c++17 -O2 -Wall -I codeforces/tools/include` 搭配本地 `bits/stdc++.h` 兼容头编译（代码只用标准库，可原样提交 GNU C++17）。Python 为 `Python 3.9.6`。
 - **官方样例**：3 / 3 通过（`a@a,a@a`、两次 `No solution`），与 JSON 中的 `out` 一致；本题输出唯一性不保证，因此另外用 checker 做了合法性校验。
-- **checker**（`/tmp/cf_verify_31_B/checker.py`，配合 `verify_solution.py --checker`）：若输出为 `No solution`，用 $O(n^2)$ 的划分 DP 独立确认"确实无解"；否则校验每个逗号分隔片段都匹配 `^[a-z]+@[a-z]+$`，且所有片段拼接后恰好等于输入串。
+- **checker**（`codeforces/tools/checkers/cf31b.py`，配合 `verify_solution.py --checker`）：若输出为 `No solution`，用 $O(n^2)$ 的划分 DP 独立确认"确实无解"；否则校验每个逗号分隔片段都匹配 `^[a-z]+@[a-z]+$`，且所有片段拼接后恰好等于输入串。
 - **随机对拍**：随机生成 **300 组**输入（长度 1–14，`@` 与字母混合），C++ 与 Python 的输出都交给 checker，`300/300` 全部通过。
 - **穷举对拍**：对 $\{a,@\}$ 上长度 $1..8$ 的**全部** $510$ 个串，两版输出也全部通过 checker（既覆盖了可解情形，也覆盖了各类无解情形）。
 - **最大约束性能**：$|s|=200$，C++ 端到端约 2 ms，Python 约 17 ms，内存 < 2 MB。
