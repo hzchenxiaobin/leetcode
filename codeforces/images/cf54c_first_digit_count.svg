@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="740" height="410" viewBox="0 0 740 410"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="11"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arrb2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+    <marker id="arrr2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+    <marker id="arrg2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#4a7a3a"/>
+    </marker>
+  </defs>
+  <rect width="740" height="410" fill="#fafafa"/>
+  <text x="370.0" y="36" font-size="20" fill="#2b2b2b" text-anchor="middle" font-weight="bold" filter="url(#rough2)">首位为 1 的数 = 每个位数上的一段区间</text>
+  <path d="M 133 46 Q 370 52 607 46" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+  <line x1="70.0" y1="150.0" x2="690.0" y2="150.0" stroke="#2b2b2b" stroke-width="1.8" marker-end="url(#arrb2)" filter="url(#rough2)"/>
+  <text x="694" y="154" font-size="13" fill="#2b2b2b" text-anchor="start" font-weight="bold" filter="url(#rough2)">x</text>
+  <text x="70" y="132" font-size="11" fill="#44546a" text-anchor="middle" filter="url(#rough2)">1</text>
+  <rect x="90" y="138" width="24" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="102.0" y="122" font-size="11" fill="#2f5223" text-anchor="middle" filter="url(#rough2)">1–1</text>
+  <text x="102.0" y="182" font-size="11.5" fill="#2f5223" text-anchor="middle" font-weight="bold" filter="url(#rough2)">d=1</text>
+  <rect x="240" y="138" width="60" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="270.0" y="122" font-size="11" fill="#2f5223" text-anchor="middle" filter="url(#rough2)">10–19</text>
+  <text x="270.0" y="182" font-size="11.5" fill="#2f5223" text-anchor="middle" font-weight="bold" filter="url(#rough2)">d=2</text>
+  <rect x="390" y="138" width="60" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="420.0" y="122" font-size="11" fill="#2f5223" text-anchor="middle" filter="url(#rough2)">100–199</text>
+  <text x="420.0" y="182" font-size="11.5" fill="#2f5223" text-anchor="middle" font-weight="bold" filter="url(#rough2)">d=3</text>
+  <rect x="540" y="138" width="60" height="24" rx="4" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="570.0" y="122" font-size="11" fill="#2f5223" text-anchor="middle" filter="url(#rough2)">1000–1999</text>
+  <text x="570.0" y="182" font-size="11.5" fill="#2f5223" text-anchor="middle" font-weight="bold" filter="url(#rough2)">d=4</text>
+  <text x="370" y="216" font-size="12.5" fill="#2f5223" text-anchor="middle" font-weight="bold" filter="url(#rough2)">这些区间 [10^(d−1), 2·10^(d−1) − 1] 两两不交</text>
+  <rect x="60" y="238" width="620" height="74" rx="10" fill="#f2f6fb" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="78" y="264" font-size="13" fill="#2f4a66" text-anchor="start" font-weight="bold" filter="url(#rough2)">cnt(X) = Σ_d max(0, min(X, 2·10^(d−1) − 1) − 10^(d−1) + 1)</text>
+  <text x="78" y="290" font-size="13" fill="#2f4a66" text-anchor="start" font-weight="bold" filter="url(#rough2)">p_i = ( cnt(R_i) − cnt(L_i − 1) ) / ( R_i − L_i + 1 )</text>
+  <text x="78" y="306" font-size="11" fill="#7a5a1b" text-anchor="start" filter="url(#rough2)">位数最多 19 位（10^18 本身 19 位），循环要防止 10 的幂溢出 64 位</text>
+  <rect x="60" y="326" width="620" height="60" rx="10" fill="#fff8e1" stroke="#d6a040" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="78" y="352" font-size="12.5" fill="#8a6015" text-anchor="start" filter="url(#rough2)">得到 N 个独立伯努利概率后，问题变成「至少 t = ceil(K·N/100) 个成功」的二项分布：</text>
+  <text x="78" y="374" font-size="12.5" fill="#8a6015" text-anchor="start" font-weight="bold" filter="url(#rough2)">dp[j] ← dp[j]·(1 − p_i) + dp[j−1]·p_i ，答案 = Σ_{j ≥ t} dp[j]</text>
+</svg>

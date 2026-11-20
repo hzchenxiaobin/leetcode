@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="350" viewBox="0 0 760 350"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="591"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arrb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="760" height="350" fill="#fafafa"/>
+  <text x="380" y="30" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">把"一位一位地构造 x、y、z"看成最短路：状态 (i, j, k, carry, 三个数是否已结束)</text>
+  <path d="M 60 40 Q 380 48 700 40" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+
+  <rect x="40" y="66" width="300" height="120" rx="9" fill="#cfe0f5" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="56" y="90" font-size="11.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">状态的含义</text>
+  <text x="56" y="112" font-size="10.6" fill="#2b2b2b" filter="url(#rough2)">i, j, k：a、b、c 已从右往左匹配的位数；</text>
+  <text x="56" y="132" font-size="10.6" fill="#2b2b2b" filter="url(#rough2)">carry：上一位的进位（0 或 1）；</text>
+  <text x="56" y="152" font-size="10.6" fill="#2b2b2b" filter="url(#rough2)">sx, sy, sz：该数是否已经"收尾"（不再写位）。</text>
+  <text x="56" y="174" font-size="10" fill="#555555" filter="url(#rough2)">共 8×8×8×2×2×2×2 = 8192 个状态。</text>
+
+  <rect x="40" y="200" width="300" height="130" rx="9" fill="#fbe3c8" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="56" y="224" font-size="11.5" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">转移（每转移一次 = 一个十进制列）</text>
+  <text x="56" y="246" font-size="10.6" fill="#2b2b2b" filter="url(#rough2)">选 dx（0..9）、dy（0..9），dz = (dx+dy+carry) mod 10；</text>
+  <text x="56" y="266" font-size="10.6" fill="#2b2b2b" filter="url(#rough2)">新 carry = (dx+dy+carry) div 10；</text>
+  <text x="56" y="286" font-size="10.6" fill="#2b2b2b" filter="url(#rough2)">dx 命中 a 的下一位就 i++（否则算插入）；</text>
+  <text x="56" y="306" font-size="10.6" fill="#2b2b2b" filter="url(#rough2)">代价 = 本列实际写下的数字个数（0~3）。</text>
+  <text x="56" y="324" font-size="9.8" fill="#8a2b28" filter="url(#rough2)">收尾只能在本列写下非零数字时进行（不能有前导零）。</text>
+
+  <ellipse cx="470" cy="96" rx="70" ry="34" fill="#d9ecd4" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="470" y="92" text-anchor="middle" font-size="10.5" fill="#2b2b2b" filter="url(#rough2)">起点</text>
+  <text x="470" y="108" text-anchor="middle" font-size="9.5" fill="#555555" filter="url(#rough2)">(0,0,0,0, 全未结束)</text>
+
+  <ellipse cx="470" cy="205" rx="86" ry="34" fill="#fbe3c8" stroke="#446688" stroke-width="1.4" filter="url(#rough2)"/>
+  <text x="470" y="200" text-anchor="middle" font-size="10.5" fill="#2b2b2b" filter="url(#rough2)">(0,1,1,0)，y 已结束</text>
+  <text x="470" y="218" text-anchor="middle" font-size="9.5" fill="#555555" filter="url(#rough2)">写下 x=1，y=4，z=5</text>
+
+  <ellipse cx="470" cy="310" rx="86" ry="30" fill="#f6d5d5" stroke="#8a2b28" stroke-width="1.6" filter="url(#rough2)"/>
+  <text x="470" y="306" text-anchor="middle" font-size="10.5" fill="#2b2b2b" filter="url(#rough2)">终点 (1,1,1,0)，全结束</text>
+  <text x="470" y="324" text-anchor="middle" font-size="9.5" fill="#8a2b28" filter="url(#rough2)">写下 x=2，z=2</text>
+
+  <path d="M 470 130 L 470 169" stroke="#446688" stroke-width="1.6" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="484" y="154" font-size="9.8" fill="#446688" filter="url(#rough2)">dx=1, dy=4, dz=5（代价 3）</text>
+  <path d="M 470 239 L 470 278" stroke="#446688" stroke-width="1.6" marker-end="url(#arrb)" filter="url(#rough2)"/>
+  <text x="484" y="262" font-size="9.8" fill="#446688" filter="url(#rough2)">dx=2, dy=0, dz=2（代价 2）</text>
+
+  <text x="572" y="70" font-size="10.8" fill="#2b2b2b" filter="url(#rough2)">用 Dijkstra 求起点到终点的最小代价，</text>
+  <text x="572" y="90" font-size="10.8" fill="#2b2b2b" filter="url(#rough2)">代价就是 x+y=z 的数字总位数。</text>
+  <text x="572" y="110" font-size="10.8" fill="#2b2b2b" filter="url(#rough2)">回溯记录每列写下的数字即可还原答案。</text>
+
+  <text x="40" y="345" font-size="9.8" fill="#555555" filter="url(#rough2)">状态与"第几列"无关：同一状态之后的走法完全相同，所以可以合并，状态图只有 8192 个点。</text>
+</svg>
