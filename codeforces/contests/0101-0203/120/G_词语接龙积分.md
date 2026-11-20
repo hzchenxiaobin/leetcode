@@ -48,6 +48,28 @@ brother
 1 brother 
 ```
 
+官方样例 2（输入 / 输出原样）：
+
+```text
+输入：
+2 4
+1 2 2 1
+2 3 2 2
+4
+armchair
+3
+quetzalcoatl
+10
+pilotage
+5
+defibrillator
+7
+
+输出：
+2 armchair quetzalcoatl 
+2 pilotage defibrillator 
+```
+
 **走查**：两队技能都是 1+1=2，牌复杂度都是 1 → `need = max(1, 1-2-0) = 1`。每回合 2 秒，能猜 2 张牌。顺序：(队1,人1) 猜 home、car；(队2,人1) 猜 brother → 结束。结果：队 1 得 2 分（home, car），队 2 得 1 分（brother）✓。
 
 **观察 1**：模拟的状态只有"牌堆顺序 + 每队对每张牌的累计时间 $d$"。
@@ -105,7 +127,7 @@ brother
 
 - **时间**：每回合至多 $t$ 次成功 + 1 次失败；总回合数 $O(m\cdot\text{积累})$，实际上界很松，$n,m,t\le100$ 时毫秒级。
 - **空间**：$O(nm)$。
-- **与时限的关系**：实测最大数据约 $2$ ms。
+- **与时限的关系**：实测 $n=m=100$、$t=100$ 时 C++ 端到端 $3.7$ ms、Python $17.5$ ms。
 
 ## 6. 参考代码
 
