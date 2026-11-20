@@ -57,6 +57,10 @@ def main():
     L.append(f"| 复核覆盖率 | {len(reviewed)} / {len(done)}（{pct(len(reviewed), len(done))}） |")
     L.append(f"| blocked | {len(blocked)} |")
     L.append('')
+    L.append('> 复核统计口径：`published` 表示通过独立复核流程（`check.py` + `check_samples.py` + `verify_solution.py` 三项自动检查，'
+             '并抽读正文）。有人工复核记录（另一位撰写者逐条核对证明/样例/性能）的篇目见 `data/reviews.md`。')
+
+    L.append('')
 
     # 质量回归（如果之前跑过 tools/audit.py）
     audit_path = os.path.join(ROOT, '.cf-meta', 'audit.json')

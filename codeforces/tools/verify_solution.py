@@ -94,6 +94,32 @@ def compile_cpp(code, workdir):
     return exe if r.returncode == 0 else None, (time.time() - t0), r.stderr[:2000]
 
 
+def uses_file_io(st):
+    """早期 CF 题目要求 input.txt / output.txt；题面里会写明。"""
+    blob = ' '.join([
+        (st.get('inputFormat') or {}).get('en', ''),
+        (st.get('outputFormat') or {}).get('en', ''),
+        (st.get('description') or {}).get('en', ''),
+    ]).lower()
+    return 'input.txt' in blob or 'output.txt' in blob
+
+
+def run_file_io(exe, inp, timeout=10, workdir=None):
+    """在临时目录写 input.txt、运行、读 output.txt。"""
+    cwd = workdir or tempfile.mkdtemp(prefix='cfio_')
+    open(os.path.join(cwd, 'input.txt'), 'w').write(inp)
+    outp = os.path.join(cwd, 'output.txt')
+    if os.path.exists(outp):
+        os.unlink(outp)
+    t0 = time.time()
+    try:
+        subprocess.run([exe], cwd=cwd, capture_output=True, text=True, timeout=timeout)
+        ms = (time.time() - t0) * 1000
+        return (open(outp).read() if os.path.exists(outp) else ''), ms, 0
+    except subprocess.TimeoutExpired:
+        return '', timeout * 1000, -1
+
+
 def run(exe, inp, timeout=10):
     t0 = time.time()
     try:
@@ -117,9 +143,10 @@ def main():
         print('无法从 H1 解析题号'); sys.exit(2)
     st = ensure_statement(d['contest'], d['index'])
     samples = st.get('samples') or []
+    fileio = uses_file_io(st)
     result = {'doc': os.path.relpath(a.doc, ROOT), 'pid': st['pid'],
               'samples': len(samples), 'cpp': None, 'py': None,
-              'cpp_ok': 0, 'py_ok': 0, 'max_ms': 0}
+              'cpp_ok': 0, 'py_ok': 0, 'max_ms': 0, 'file_io': fileio}
 
     with tempfile.TemporaryDirectory(prefix='cfverify_') as wd:
         if d['cpp']:
@@ -130,7 +157,10 @@ def main():
             else:
                 ok = 0
                 for i, s in enumerate(samples):
-                    out, ms, rc = run(exe, s['in'], a.timeout)
+                    if fileio:
+                        out, ms, rc = run_file_io(exe, s['in'], a.timeout, wd)
+                    else:
+                        out, ms, rc = run(exe, s['in'], a.timeout)
                     result['max_ms'] = max(result['max_ms'], round(ms))
                     if a.checker:
                         ip = os.path.join(wd, 'in.txt'); op = os.path.join(wd, 'out.txt')
@@ -155,9 +185,18 @@ def main():
             if r.returncode == 0:
                 for s in samples:
                     try:
-                        p = subprocess.run([sys.executable, src], input=s['in'], capture_output=True,
+                        if fileio:
+                            open(os.path.join(wd, 'input.txt'), 'w').write(s['in'])
+                            op = os.path.join(wd, 'output.txt')
+                            if os.path.exists(op):
+                                os.unlink(op)
+                            subprocess.run([sys.executable, src], cwd=wd, capture_output=True,
                                            text=True, timeout=a.timeout)
-                        out = p.stdout
+                            out = open(op).read() if os.path.exists(op) else ''
+                        else:
+                            p = subprocess.run([sys.executable, src], input=s['in'], capture_output=True,
+                                               text=True, timeout=a.timeout)
+                            out = p.stdout
                     except subprocess.TimeoutExpired:
                         out = ''
                     if a.checker:

@@ -77,9 +77,11 @@
 
 ![两个上界取最小](../../../images/cf42a_bounds.svg)
 
-$$x^\* = \min\Bigl(\underbrace{\frac{V}{S}}_{\text{锅的容量}},\ \underbrace{\min_i \frac{b_i}{a_i}}_{\text{配料存量}}\Bigr),\qquad \text{ans} = S \cdot x^\* = \min\Bigl(V,\ S\cdot \min_i \frac{b_i}{a_i}\Bigr).$$
+$$x^* = \min\Bigl(\underbrace{\frac{V}{S}}_{\text{锅的容量}},\ \underbrace{\min_i \frac{b_i}{a_i}}_{\text{配料存量}}\Bigr),\qquad \text{ans} = S \cdot x^* = \min\Bigl(V,\ S\cdot \min_i \frac{b_i}{a_i}\Bigr).$$
 
 ### 3.3 算法流程
+
+![一次线性扫描的流程](../../../images/cf42a_flow.svg)
 
 1. 读入 $n, V$、数组 $a$、数组 $b$；
 2. 计算 $S = \sum a_i$；
@@ -100,13 +102,13 @@ $$x^\* = \min\Bigl(\underbrace{\frac{V}{S}}_{\text{锅的容量}},\ \underbrace{
 
 **证明**：$a_i x \le b_i$ 即 $x \le b_i/a_i$（$a_i \ge 1 > 0$）；总体积 $Sx \le V$ 即 $x \le V/S$。各条件互相独立，取交集即可。∎
 
-**引理 2（上确界可达）**：$x^\* = \min(V/S, \min_i b_i/a_i)$ 本身可行，且任何可行 $x$ 都满足 $x \le x^\*$。
+**引理 2（上确界可达）**：$x^* = \min(V/S, \min_i b_i/a_i)$ 本身可行，且任何可行 $x$ 都满足 $x \le x^*$。
 
-**证明**：由引理 1，可行集是 $[0, x^\*]$，而 $x^\* \ge 0$（$V, S, b_i \ge 0$），故 $x^\*$ 可行且最大。∎
+**证明**：由引理 1，可行集是 $[0, x^*]$，而 $x^* \ge 0$（$V, S, b_i \ge 0$），故 $x^*$ 可行且最大。∎
 
 **定理**：输出 $\min(V, S \cdot \min_i b_i/a_i)$ 等于最大体积。
 
-**证明**：最大体积 $= S x^\* = S\min(V/S, \min_i b_i/a_i) = \min(V, S\min_i b_i/a_i)$。∎
+**证明**：最大体积 $= S x^* = S\min(V/S, \min_i b_i/a_i) = \min(V, S\min_i b_i/a_i)$。∎
 
 ## 5. 复杂度分析
 
