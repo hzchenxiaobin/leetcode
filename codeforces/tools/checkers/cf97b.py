@@ -86,7 +86,9 @@ def upper_bound(a, v):
 
 
 def sampled_good(pts, rnd):
+    """抽样校验：对每个点对扫 [x1, x2] 区间内的所有点（含同一 x 的边界点），命中即停。"""
     m = len(pts)
+    xs = [p[0] for p in pts]
     pairs = [(i, j) for i in range(m) for j in range(i + 1, min(m, i + 65))]
     for _ in range(200000):
         i = rnd.randrange(m)
@@ -102,7 +104,16 @@ def sampled_good(pts, rnd):
         if x1 == x2 or y1 == y2:
             continue
         lo, hi = (y1, y2) if y1 < y2 else (y2, y1)
-        if not any(lo <= pts[k][1] <= hi for k in range(i + 1, j)):
+        a = lower_bound(xs, x1)
+        b = upper_bound(xs, x2)
+        ok = False
+        for k in range(a, b):
+            if k == i or k == j:
+                continue
+            if lo <= pts[k][1] <= hi:
+                ok = True
+                break
+        if not ok:
             return (x1, y1), (x2, y2)
     return None
 
