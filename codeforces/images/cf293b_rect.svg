@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="300" viewBox="0 0 700 300"
+     font-family="'Comic Sans MS','Marker Felt','Kaiti SC',楷体,cursive">
+  <defs><filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="511"/>
+    <feDisplacementMap in="SourceGraphic" scale="1.5"/></filter></defs>
+  <rect width="700" height="300" fill="#fafafa"/>
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">"任意路径同色冲突" ⟺ 每个颜色类都是反链</text>
+  <path d="M 120 40 Q 350 46 580 40" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <g filter="url(#rough2)"><rect x="60" y="58" width="580" height="76" rx="8" fill="#dfeafc" stroke="#446688" stroke-width="1.3"/></g>
+  <text x="76" y="82" font-size="12.5" fill="#22314a" filter="url(#rough2)">两格 (i,j) 与 (i',j') 能出现在同一条单调路径上 ⟺ 它们可比（i≤i' 且 j≤j'，或反过来）。</text>
+  <text x="76" y="106" font-size="12.5" fill="#22314a" filter="url(#rough2)">所以"路径上不能同色" ⟺ 同色的任意两格都**不可比** ⟺ 每个颜色类是一条反链。</text>
+  <text x="76" y="130" font-size="12" fill="#2f4a66" filter="url(#rough2)">处理格子 (i,j) 时，被禁的颜色 = 矩形 [0..i]×[0..j] 里已用的颜色（这些格子全都与它可比）。</text>
+  <g filter="url(#rough2)"><rect x="60" y="146" width="580" height="66" rx="8" fill="#fdf3d0" stroke="#d6a040" stroke-width="1.3"/></g>
+  <text x="76" y="170" font-size="13" fill="#8a6015" filter="url(#rough2)">关键剪枝：整块棋盘要拆成 k 条反链，而最长链长 = n+m−1。</text>
+  <text x="76" y="194" font-size="13" fill="#8a6015" filter="url(#rough2)">所以 n+m−1 &gt; k ⇒ 答案直接是 0（此时棋盘一定很小，不会爆搜）。</text>
+  <g filter="url(#rough2)"><rect x="60" y="224" width="580" height="58" rx="8" fill="#f6fbf2" stroke="#4a7a3a" stroke-width="1.3"/></g>
+  <text x="76" y="248" font-size="12.5" fill="#2f5223" filter="url(#rough2)">于是 n+m ≤ 11、格子 ≤ 30、k ≤ 10 ⇒ DFS + 颜色对称性压缩即可。</text>
+  <text x="76" y="270" font-size="12" fill="#3c5e2e" filter="url(#rough2)">实测最坏情况（5×6, k=10）只要 0.074 s。</text>
+</svg>
