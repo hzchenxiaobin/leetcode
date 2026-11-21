@@ -68,6 +68,8 @@ Still Rozdil
 
 样例二：读入 $7$（best=7,cnt=1）、$4$（best=4,cnt=1）、$47$、$100$、$4$（相等，cnt=2）、$9$、$12$ ⇒ 结束时 cnt=2 ⇒ 输出 `Still Rozdil`。
 
+![扫描流程](../../../images/cf205a_flow.svg)
+
 ## 4. 正确性证明
 
 **引理 1**：扫描结束时 `best` 等于 $\min_i a_i$。
@@ -146,7 +148,7 @@ main()
 - **官方样例**：2 / 2 通过（`2` 与 `Still Rozdil`）。
 - **随机对拍**：独立 Python 实现（`min` + `count`）随机 $n\le10$、值域含重复（$1,2,3$ 与随机大数混合）共 **250 组**，与正文 C++ 完全一致。
 - **最大约束性能**：$n=10^5$、值随机 $\le10^9$，C++ < 1 ms、Python < 50 ms。
-- **图片校验**：`cf205a_scan.svg` 通过 `xml.etree.ElementTree.parse`。
+- **图片校验**：`cf205a_scan.svg`、`cf205a_flow.svg` 通过 `xml.etree.ElementTree.parse`。
 - **复核状态**：verified。
 
 ## 相关题目与扩展
