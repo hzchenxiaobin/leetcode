@@ -129,7 +129,7 @@ def main() -> None:
         x, y = y, x % y
     while len(cf) > 1 and cf[-1] == 1:
         cf[-2] += 1; cf.pop()
-    print("YES" if cf == a else "NO")
+    print("YES" if cf == a[:n] else "NO")
 main()
 ```
 
