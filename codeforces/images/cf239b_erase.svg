@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="400" viewBox="0 0 720 400"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="43"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#b85450"/>
+    </marker>
+  </defs>
+  <rect width="720" height="400" fill="#fafafa"/>
+
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">删除后下标会左移：CP 要跟着修正</text>
+  <path d="M 150 42 Q 360 48 570 42" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <!-- 删除前 -->
+  <text x="60" y="86" font-size="12.5" fill="#555" filter="url(#rough2)">删除前（CP 在 2 号格，DP 向右；打印 0，需要删除）</text>
+  <g filter="url(#rough2)">
+    <rect x="150" y="100" width="60" height="50" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+    <rect x="210" y="100" width="60" height="50" fill="#fde8e8" stroke="#b85450" stroke-width="1.8"/>
+    <rect x="270" y="100" width="60" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="330" y="100" width="60" height="50" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+  </g>
+  <text x="180" y="132" text-anchor="middle" font-size="15" fill="#2b2b2b" filter="url(#rough2)">a</text>
+  <text x="240" y="132" text-anchor="middle" font-size="15" font-weight="bold" fill="#8c2f2b" filter="url(#rough2)">0</text>
+  <text x="300" y="132" text-anchor="middle" font-size="15" fill="#2f4a66" filter="url(#rough2)">c</text>
+  <text x="360" y="132" text-anchor="middle" font-size="15" fill="#2b2b2b" filter="url(#rough2)">d</text>
+  <text x="180" y="88" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">下标 0</text>
+  <text x="240" y="88" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">下标 1</text>
+  <text x="300" y="88" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">下标 2</text>
+  <text x="360" y="88" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">下标 3</text>
+  <path d="M 240 156 L 240 172" stroke="#b85450" stroke-width="1.5" marker-end="url(#arr)" filter="url(#rough2)"/>
+  <text x="300" y="176" font-size="11" fill="#8c2f2b" filter="url(#rough2)">CP 先移动到下标 2（c 的位置）</text>
+
+  <!-- 删除后 -->
+  <text x="60" y="214" font-size="12.5" fill="#555" filter="url(#rough2)">删除后（0 号格被删掉，c、d 整体左移；CP 仍应指向 c）</text>
+  <g filter="url(#rough2)">
+    <rect x="150" y="228" width="60" height="50" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+    <rect x="210" y="228" width="60" height="50" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="270" y="228" width="60" height="50" fill="#ffffff" stroke="#888" stroke-width="1.4"/>
+    <rect x="330" y="228" width="60" height="50" fill="#f0f0f0" stroke="#ccc" stroke-width="1.2" stroke-dasharray="5 4"/>
+  </g>
+  <text x="180" y="260" text-anchor="middle" font-size="15" fill="#2b2b2b" filter="url(#rough2)">a</text>
+  <text x="240" y="260" text-anchor="middle" font-size="15" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">c</text>
+  <text x="300" y="260" text-anchor="middle" font-size="15" fill="#2b2b2b" filter="url(#rough2)">d</text>
+  <text x="360" y="260" text-anchor="middle" font-size="12" fill="#bbb" filter="url(#rough2)">—</text>
+  <text x="180" y="216" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">下标 0</text>
+  <text x="240" y="216" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">下标 1</text>
+  <text x="300" y="216" text-anchor="middle" font-size="10.5" fill="#666" filter="url(#rough2)">下标 2</text>
+  <text x="360" y="292" text-anchor="middle" font-size="11" fill="#8c2f2b" filter="url(#rough2)">CP 从 2 修正为 1</text>
+
+  <rect x="60" y="316" width="600" height="58" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="74" y="338" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">规则：删除位置 old 后，若 CP（记为 nxt）在 old 的右边，则 nxt 减 1；在左边则不变。</text>
+  <text x="74" y="360" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">DP 向左时 CP 在 old 左边，不受影响；DP 向右时 CP 在 old 右边，必须减 1。这正是本题最容易写错的地方。</text>
+</svg>

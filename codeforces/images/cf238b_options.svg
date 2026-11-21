@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="27"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+  </defs>
+  <rect width="720" height="420" fill="#fafafa"/>
+
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">只需比较两种划分结构</text>
+  <path d="M 180 42 Q 360 48 540 42" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <!-- 方案一 -->
+  <rect x="40" y="66" width="300" height="150" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="56" y="90" font-size="13" font-weight="bold" fill="#2f5223" filter="url(#rough2)">方案一：全部放进一个序列</text>
+  <text x="56" y="116" font-size="11.5" fill="#2f5223" filter="url(#rough2)">最大 f = a[n-1] + a[n-2]</text>
+  <text x="56" y="138" font-size="11.5" fill="#2f5223" filter="url(#rough2)">最小 f = a[0] + a[1]</text>
+  <text x="56" y="166" font-size="12.5" font-weight="bold" fill="#2f5223" filter="url(#rough2)">D1 = (a[n-1]+a[n-2]) − (a[0]+a[1])</text>
+  <text x="56" y="196" font-size="11" fill="#3c5e2e" filter="url(#rough2)">对应输出：全部标 2</text>
+
+  <!-- 方案二 -->
+  <rect x="380" y="66" width="300" height="150" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.5" filter="url(#rough2)"/>
+  <text x="396" y="90" font-size="13" font-weight="bold" fill="#2f4a66" filter="url(#rough2)">方案二：最小的单独一组</text>
+  <text x="396" y="116" font-size="11" fill="#2f4a66" filter="url(#rough2)">最大 f = max(a[n-1]+a[n-2],</text>
+  <text x="446" y="134" font-size="11" fill="#2f4a66" filter="url(#rough2)">a[0]+a[n-1]+h)</text>
+  <text x="396" y="156" font-size="11" fill="#2f4a66" filter="url(#rough2)">最小 f = min(a[1]+a[2],</text>
+  <text x="446" y="174" font-size="11" fill="#2f4a66" filter="url(#rough2)">a[0]+a[1]+h)</text>
+  <text x="396" y="198" font-size="11" fill="#3c5e2e" filter="url(#rough2)">D2 = 上面两者之差；最小值标 1</text>
+
+  <text x="360" y="246" text-anchor="middle" font-size="13" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">答案 = min(D1, D2)；n = 2 时答案为 0</text>
+
+  <rect x="60" y="268" width="600" height="88" rx="9" fill="#fff8e1" stroke="#d6a040" stroke-width="1.3" filter="url(#rough2)"/>
+  <text x="74" y="290" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">为什么只需两种：两组都非空时，任何划分的 max 都 ≥</text>
+  <text x="74" y="308" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">max(a[n-1]+a[n-2], a[0]+a[n-1]+h)，min 都 ≤</text>
+  <text x="74" y="326" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">min(a[1]+a[2], a[0]+a[1]+h)（a[0..2] 中必有两个同组），</text>
+  <text x="74" y="344" font-size="11.5" fill="#7a5a1b" filter="url(#rough2)">故不可能优于方案二；一组为空就是方案一。</text>
+
+  <text x="60" y="382" font-size="11.5" fill="#666" filter="url(#rough2)">实现：排序取 a[0],a[1],a[2],a[n-2],a[n-1]，算出 D1、D2；</text>
+  <text x="60" y="404" font-size="11.5" fill="#666" filter="url(#rough2)">选择较小者并按对应结构输出 1/2（最小值的原始下标标 1，其余标 2）。</text>
+</svg>
