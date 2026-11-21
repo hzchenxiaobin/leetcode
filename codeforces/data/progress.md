@@ -3,7 +3,7 @@
 - 快照时间：2026-11-19T22:17:49+0800
 - 已结束比赛（contest.list）：2164，其中有题面映射：2030，无映射（ICPC/IOI 镜像等）：134
 - 原始题位：11526；唯一题目：11526
-- 报告生成时间：2026-11-21 08:39
+- 报告生成时间：2026-11-21 08:44
 
 ## 覆盖率
 
@@ -14,7 +14,7 @@
 | 唯一题解覆盖率 | 1063 / 11526（9.22%） |
 | 验证覆盖率 | 1063 / 1063（100.00%） |
 | 复核覆盖率 | 733 / 1063（68.96%） |
-| blocked | 99 |
+| blocked | 107 |
 
 > 复核统计口径：`published` 表示通过独立复核流程（`check.py` + `check_samples.py` + `verify_solution.py` 三项自动检查，并抽读正文）。有人工复核记录（另一位撰写者逐条核对证明/样例/性能）的篇目见 `data/reviews.md`。
 
@@ -157,6 +157,14 @@
 - `176/C` Playing with Superglue：2000 分「Playing with Superglue」：已用完整极小极大博弈求解器（状态 = 两棋子位置 + 胶水位掩码）穷举 $1\times2..1\times7$、$2\times2..2\times7$、$3\times3$ 与 $3\times6$（4000 万状态），所有结果与 3 个官方样例都满足同一判定：`First` 当且仅当 $\max(|x_1-x_2|,|y_1-y_2|)\le4$（切比雪夫距离 ≤4）。失败点：**缺证明**——没能构造后手在 $\max\ge5$ 时的显式封锁策略（胶水不阻挡移动、只把踩上去的棋子永久固定），也没给出先手在 $\max\le4$ 时的统一取胜策略；按"要完整证明"的要求不交付只有经验支持的判定式。下一步：(a) 从求解器导出后手最优应手序列并归纳；(b) 用该策略给出 $\max\ge5$ 的归纳证明；(c) 对 $\max\le4$ 给 4–8 步构造性策略。
 - `176/D` Hyper String：2500 分「Hyper String」：已确认结构——$t$ 是 $m\le2000$ 个基串拼接、$|t|$ 可达 $2\times10^9$、$|s|\le2000$；标准做法是把 LCS 写成 $g[k]$=匹配 $k$ 个字符的最小前缀，逐字符转移不可行，必须把基串预处理成对 $g$ 的块转移（用 next-occurrence 表跳）。失败点：单块作用在整条 $g$ 上不是简单平移，需为每个 $k$ 求"从 $g[k]$ 出发在块内最多再吃几个字符、终点在哪"；朴素重扫是 $O(|b||s|)$、$m$ 块累加到 $10^{12}$；尝试的"块内前缀贪心跳表 + 单调性摊还"在同一块内不同 $k$ 的最优终点不单调时失效。下一步：对每块预计算 $F_b(p)$="从 $s$ 的位置 $p$ 开始贪心匹配整块的终点与命中数"（$O(|b|+|s|)$ 分摊），每块做 $O(|s|)$ 向量更新，总 $O(\sum|b|+m|s|)=4\times10^6$；用 $m\le6$、$|b|\le4$、$|s|\le8$ 全枚举 LCS 对拍。
 - `183/E` Candy Shop：2900 分「Candy Shop」：已建模——每人必须买同样多包 $r$，总包数 $L=nr$，包大小严格递增且 $\le m$，小孩 $k$ 的 $r$ 包之和 $\le a_k$；换元 $y_t=t+z_t$ 后 $z$ 单调不减、$0\le z_t\le m-t$，**固定 $L$ 时从后往前贪心**（$z_t=\min(z_{t+1},m-t,\text{剩余 z 预算})$）可证最优，并用"枚举全部递增序列"的暴力在 400 组小数据上验证 0 不符。卡点：还要对 $L$（即 $r$）取最大。可行 $r$ 构成前缀，但 $S(r)$ 不单调（反例 $n=2,m=10,a=(10,10)$：$S(1)=19$、$S(2)=18$），所以不能直接取最大可行 $r$；400 组随机数据上 $S(r)$ 都单峰但**未证明单峰/凹性**，枚举所有 $L$ 每次 $O(L)$ 总计 $O(m^2/n)$（$n=2,m=5\times10^6$ 时约 $1.25\times10^{13}$）不可行；三分能过对拍但依赖未证的单峰性，与"完整证明"要求冲突。下一步：证明 $S(L)$ 单峰，或给出 $O(m\log m)$ 求 $\max_L S(L)$ 的方法。
+- `188/A` Hexagonal Numbers：外部原因：contest 188 是「Surprise Language Round 6」（8 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153/CF162 同一类 Special/Surprise Language 场次），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `188/B` A + Reverse B：外部原因：contest 188 是「Surprise Language Round 6」（8 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153/CF162 同一类 Special/Surprise Language 场次），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `188/C` LCM：外部原因：contest 188 是「Surprise Language Round 6」（8 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153/CF162 同一类 Special/Surprise Language 场次），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `188/D` Asterisks：外部原因：contest 188 是「Surprise Language Round 6」（8 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153/CF162 同一类 Special/Surprise Language 场次），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `188/E` HQ9+：外部原因：contest 188 是「Surprise Language Round 6」（8 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153/CF162 同一类 Special/Surprise Language 场次），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `188/F` Binary Notation：外部原因：contest 188 是「Surprise Language Round 6」（8 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153/CF162 同一类 Special/Surprise Language 场次），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `188/G` Array Sorting：外部原因：contest 188 是「Surprise Language Round 6」（8 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153/CF162 同一类 Special/Surprise Language 场次），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
+- `188/H` Stack：外部原因：contest 188 是「Surprise Language Round 6」（8 题），洛谷镜像对其题面全部 401（与 CF64/CF100/CF153/CF162 同一类 Special/Surprise Language 场次），Codeforces 原页 403。缺官方样例与输出契约，无法做可验证交付。下一步：镜像恢复或人工提供题面后再补。
 - `2237/I2` DBFS Order (Hard Version)：3500 分；官方 editorial 的 Tutorial 正文被隐藏/Cloudflare 拦截，submission 源码亦 403，强制的颜色 1 的容斥 DP 未推导出可验证版本
 
 ## 下一批（按开赛时间从旧到新）
