@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" viewBox="0 0 700 380"
+     font-family="'Comic Sans MS','Marker Felt','Kaiti SC',楷体,cursive">
+  <defs><filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="191"/>
+    <feDisplacementMap in="SourceGraphic" scale="1.5"/></filter></defs>
+  <rect width="700" height="380" fill="#fafafa"/>
+  <text x="350" y="30" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">前缀与后缀不能相交 ⇒ 用「切点 i ≤ j」把方案参数化</text>
+  <path d="M 110 40 Q 350 46 590 40" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+  <g filter="url(#rough2)"><rect x="70" y="62" width="150" height="46" rx="6" fill="#dfeafc" stroke="#446688" stroke-width="1.4"/></g>
+  <text x="145" y="90" text-anchor="middle" font-size="13" fill="#22314a" filter="url(#rough2)">前缀 [0, i)</text>
+  <g filter="url(#rough2)"><rect x="230" y="62" width="240" height="46" rx="6" fill="#f4f4f4" stroke="#888" stroke-width="1.2"/></g>
+  <text x="350" y="90" text-anchor="middle" font-size="13" fill="#666" filter="url(#rough2)">中间不要（可以任意空）</text>
+  <g filter="url(#rough2)"><rect x="480" y="62" width="150" height="46" rx="6" fill="#e8f4e0" stroke="#4a7a3a" stroke-width="1.4"/></g>
+  <text x="555" y="90" text-anchor="middle" font-size="13" fill="#2f5223" filter="url(#rough2)">后缀 [j, n)</text>
+  <text x="350" y="128" text-anchor="middle" font-size="12.5" fill="#333" filter="url(#rough2)">约束 i ≤ j（两段不重叠）；i=0 表示空前缀，j=n 表示空后缀</text>
+  <g filter="url(#rough2)"><rect x="60" y="146" width="580" height="76" rx="8" fill="#fdf3d0" stroke="#d6a040" stroke-width="1.3"/></g>
+  <text x="76" y="170" font-size="13" fill="#8a6015" filter="url(#rough2)">记 P[i] = a₀⊕…⊕a_{i−1}（P[0]=0），S[j] = a_j⊕…⊕a_{n−1}（S[n]=0）。</text>
+  <text x="76" y="194" font-size="13" fill="#8a6015" filter="url(#rough2)">目标：在 i ≤ j 的约束下最大化 P[i] ⊕ S[j]。</text>
+  <text x="76" y="216" font-size="12" fill="#8a6015" filter="url(#rough2)">按 j 从小到大扫：先把 P[j] 插入 01-trie，再查询「与 S[j] 异或最大」的 P 值。</text>
+  <g filter="url(#rough2)"><rect x="60" y="234" width="580" height="60" rx="8" fill="#f6fbf2" stroke="#4a7a3a" stroke-width="1.3"/></g>
+  <text x="76" y="258" font-size="12.5" fill="#2f5223" filter="url(#rough2)">为什么插入 P[j] 而不是更早的？因为 i ≤ j 必须成立：trie 里只放 P[0..j]。</text>
+  <text x="76" y="282" font-size="12.5" fill="#2f5223" filter="url(#rough2)">j 从 0 到 n 循环 n+1 次，最后一次插入 P[n] 并查询 S[n]=0。</text>
+  <g filter="url(#rough2)"><rect x="60" y="306" width="580" height="58" rx="8" fill="#fbeeee" stroke="#b85450" stroke-width="1.3"/></g>
+  <text x="76" y="330" font-size="12.5" fill="#8a3a36" filter="url(#rough2)">样例 1：a=[1,2]，P=[0,1,3]，S=[3,2,0]。</text>
+  <text x="76" y="352" font-size="12.5" fill="#8a3a36" filter="url(#rough2)">取 i=1,j=1：P=1, S=2 ⇒ 3；也等于 i=0,j=0 的 0⊕3=3 ⇒ 答案 3 ✓</text>
+</svg>
