@@ -144,7 +144,7 @@ $$\sum_{j \ge l} \sum_{c \ge 0} \mathrm{dp}_n[j][c].$$
 
 **引理 2（截断不改变判定）**：若把账面 $c$ 定义中的 $k$ 与 $\sum a_i$ 之和截断到 $n$（即 $c \leftarrow \min(n, c)$），则最终 $c \ge 0 \iff$ 真实账面 $\ge 0$。
 
-**证明**：设真实账面 $c^\* = k + \sum_B a_i - |H|$，截断后的账面 $c' = \min(n, k + \sum_B a_i) - |H|$。若 $k + \sum_B a_i \le n$，则 $c' = c^\*$；否则 $c' = n - |H| \ge n - n = 0$，而 $c^\* \ge n - |H| \ge 0$，两者同号。故 $c'$ 与 $c^\*$ 的非负性一致。∎
+**证明**：设真实账面 $c^{\star} = k + \sum_B a_i - |H|$，截断后的账面 $c' = \min(n, k + \sum_B a_i) - |H|$。若 $k + \sum_B a_i \le n$，则 $c' = c^{\star}$；否则 $c' = n - |H| \ge n - n = 0$，而 $c^{\star} \ge n - |H| \ge 0$，两者同号。故 $c'$ 与 $c^{\star}$ 的非负性一致。∎
 
 **引理 3（概率的完全性）**：$\mathrm{dp}_i[j][c]$ 等于"前 $i$ 场中恰好赢 $j$ 场、且截断账面为 $c$"的所有结果的概率之和。
 
