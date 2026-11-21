@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="350" viewBox="0 0 720 350"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="191"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="720" height="350" fill="#fafafa"/>
+  <text x="360.0" y="34" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">204D：前后缀各一套滑动窗口 DP</text>
+  <path d="M 144.00 46 Q 360.0 52 576.00 46" stroke="#2b2b2b" stroke-width="1.3" fill="none" filter="url(#rough2)"/>
+  <text x="60" y="72" text-anchor="start" font-size="11.5" fill="#333" filter="url(#rough2)">两套对称的滑动窗口 DP：统计“不含 k 连 B”的前缀与“不含 k 连 W”的后缀。</text>
+  <rect x="60" y="96" width="300" height="118" rx="9" fill="#eef3fb" stroke="#446688" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="74" y="113" text-anchor="start" font-size="11" fill="#33506e" filter="url(#rough2)">前缀：NB[i] = 1..i 无 k 连 B 的赋值数</text>
+  <text x="74" y="134" text-anchor="start" font-size="11" fill="#33506e" filter="url(#rough2)">Wpos[i]：且第 i 位为 W</text>
+  <text x="74" y="155" text-anchor="start" font-size="11" fill="#33506e" filter="url(#rough2)">Wpos[0] = 1 作为虚拟起点</text>
+  <text x="74" y="176" text-anchor="start" font-size="11" fill="#33506e" filter="url(#rough2)">NB[i] = Σ_{t=0..lim} Wpos[i−t]</text>
+  <text x="74" y="197" text-anchor="start" font-size="11" fill="#33506e" filter="url(#rough2)">lim = min(k−1, i − lastW[i])</text>
+  <text x="74" y="218" text-anchor="start" font-size="11" fill="#33506e" filter="url(#rough2)">用 Wpos 的前缀和 O(1) 求</text>
+  <rect x="380" y="96" width="300" height="118" rx="9" fill="#fdeef1" stroke="#c0708a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="394" y="113" text-anchor="start" font-size="11" fill="#8a3a52" filter="url(#rough2)">后缀：NBr[j] = j..n 无 k 连 W 的赋值数</text>
+  <text x="394" y="134" text-anchor="start" font-size="11" fill="#8a3a52" filter="url(#rough2)">V[j]：且第 j 位为 B</text>
+  <text x="394" y="155" text-anchor="start" font-size="11" fill="#8a3a52" filter="url(#rough2)">V[n+1] = 1 作为虚拟终点</text>
+  <text x="394" y="176" text-anchor="start" font-size="11" fill="#8a3a52" filter="url(#rough2)">NBr[j] = Σ_{t=0..lim} V[j+t]</text>
+  <text x="394" y="197" text-anchor="start" font-size="11" fill="#8a3a52" filter="url(#rough2)">lim = min(k−1, nextB[j] − j)</text>
+  <text x="394" y="218" text-anchor="start" font-size="11" fill="#8a3a52" filter="url(#rough2)">用 V 的后缀和 O(1) 求</text>
+  <text x="60" y="244" text-anchor="start" font-size="11" fill="#33506e" filter="url(#rough2)">后缀 p 至少含一个 W^k 的赋值数：g[p] = 2^{#X in [p,n]} − NBr[p]。</text>
+  <rect x="60" y="266" width="620" height="64" rx="9" fill="#eef8ef" stroke="#5b8c5a" stroke-width="1.2" filter="url(#rough2)"/>
+  <text x="74" y="284" text-anchor="start" font-size="11" fill="#2f5b34" filter="url(#rough2)">答案 = Σ_{i=k..n} firstBlock[i] · g[i+1]（i=n 时 g[n+1]=0）。</text>
+  <text x="74" y="306" text-anchor="start" font-size="11" fill="#2f5b34" filter="url(#rough2)">总复杂度 O(n)，n ≤ 10⁶ 实测 0.04 s。</text>
+</svg>
