@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="400" viewBox="0 0 880 400"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="7"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="arrb" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/></marker>
+  </defs>
+  <rect width="880" height="400" fill="#fafafa"/>
+  <text x="440.0" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">两阶段贪心：先最大化目标位，再最小化 x1</text>
+  <text x="440.0" y="57" text-anchor="middle" font-size="12" fill="#777777" filter="url(#rough2)">F 是"高位已固定后仍可自由变动"的子空间；每次用完就把该位从 F 里消掉</text>
+  <text x="140" y="104" text-anchor="start" font-size="13" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">阶段一</text>
+  <text x="150" y="132" text-anchor="start" font-size="12.5" fill="#555555" filter="url(#rough2)">b 从高到低；若 X 的第 b 位是 0：</text>
+  <text x="150" y="156" text-anchor="start" font-size="12.5" fill="#3d6b2f" filter="url(#rough2)">cur 的第 b 位若为 0，就从 F 里找一个第 b 位为 1 的向量异或上</text>
+  <text x="150" y="180" text-anchor="start" font-size="12.5" fill="#3d6b2f" filter="url(#rough2)">然后把 F 限制成"第 b 位恒为 0"的子空间（高斯消元）</text>
+  <text x="140" y="226" text-anchor="start" font-size="13" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">阶段二</text>
+  <text x="150" y="254" text-anchor="start" font-size="12.5" fill="#555555" filter="url(#rough2)">b 从高到低；若 X 的第 b 位是 1：</text>
+  <text x="150" y="278" text-anchor="start" font-size="12.5" fill="#2f4a66" filter="url(#rough2)">目标值与此位无关，但 x1 越小越好 → 尽量把 cur 的这一位清成 0</text>
+  <text x="440" y="330" text-anchor="middle" font-size="12.5" fill="#555555" filter="url(#rough2)">每个阶段都只做 61 步，每步对 ≤ 61 个基向量做一次消元 → O(60^2)</text>
+  <text x="440" y="360" text-anchor="middle" font-size="12.5" fill="#555555" filter="url(#rough2)">最后把 cur 拆成"若干基向量的异或"，再展开成原始下标</text>
+</svg>
