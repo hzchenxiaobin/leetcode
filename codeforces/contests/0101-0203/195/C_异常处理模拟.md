@@ -27,11 +27,10 @@
 
 - $n\le10^5$：$O(n)$ 扫描 + 栈配对。
 - 输入含空格与引号：按 token 切分会破坏消息，必须逐行处理并手工找括号/逗号。
-- 镜像题面把引号转义成了 `&quot;`，解析器要同时兼容两种写法。
 
 ## 2. 示例与观察
 
-官方样例 1（输入 / 输出原样；镜像把引号存成了 `&quot;`，真实输入里是 `"`）：
+官方样例 1（输入 / 输出原样）：
 
 ```text
 输入：
@@ -39,16 +38,16 @@
 try
     try
         throw ( AE ) 
-    catch ( BE, &quot;BE in line 3&quot;)
+    catch ( BE, "BE in line 3")
 
     try
-    catch(AE, &quot;AE in line 5&quot;) 
-catch(AE,&quot;AE somewhere&quot;)
+    catch(AE, "AE in line 5") 
+catch(AE,"AE somewhere")
 输出：
 AE somewhere
 ```
 
-官方样例 2（输入 / 输出原样；镜像把引号存成了 `&quot;`，真实输入里是 `"`）：
+官方样例 2（输入 / 输出原样）：
 
 ```text
 输入：
@@ -56,16 +55,16 @@ AE somewhere
 try
     try
         throw ( AE ) 
-    catch ( AE, &quot;AE in line 3&quot;)
+    catch ( AE, "AE in line 3")
 
     try
-    catch(BE, &quot;BE in line 5&quot;) 
-catch(AE,&quot;AE somewhere&quot;)
+    catch(BE, "BE in line 5") 
+catch(AE,"AE somewhere")
 输出：
 AE in line 3
 ```
 
-官方样例 3（输入 / 输出原样；镜像把引号存成了 `&quot;`，真实输入里是 `"`）：
+官方样例 3（输入 / 输出原样）：
 
 ```text
 输入：
@@ -73,11 +72,11 @@ AE in line 3
 try
     try
         throw ( CE ) 
-    catch ( BE, &quot;BE in line 3&quot;)
+    catch ( BE, "BE in line 3")
 
     try
-    catch(AE, &quot;AE in line 5&quot;) 
-catch(AE,&quot;AE somewhere&quot;)
+    catch(AE, "AE in line 5") 
+catch(AE,"AE somewhere")
 输出：
 Unhandled Exception
 ```
@@ -122,7 +121,7 @@ throw 在第 3 行、类型 AE。满足「try 行 < 3 < catch 行」且类型为
    - 行首是 `throw` → 记录行号与类型。
 3. 遍历所有块，找 `try行 < throw行 < catch行` 且类型相同的块，取 catch 行最小的那个；打印它的消息。没有则打印 `Unhandled Exception`。
 
-**解析细节**：在 `catch` 行里找第一个 `(` 与最后一个 `)`，中间按**第一个逗号**分成类型和消息；消息两侧可能是 `"..."` 或镜像里的 `&quot;...&quot;`，都剥掉。类型与消息再做一次首尾去空白。
+**解析细节**：在 `catch` 行里找第一个 `(` 与最后一个 `)`，中间按**第一个逗号**分成类型和消息；消息两侧的引号 `"..."` 剥掉。类型与消息再做一次首尾去空白。
 
 ![195C 三个样例的判定](../../../images/cf195c_sample.svg)
 
@@ -161,7 +160,6 @@ using namespace std;
 
 // 195C：用栈把 try 和 catch 配对，得到每个块 (try 行, catch 行, 类型, 消息)；
 // throw 在第 L 行、类型 T：在所有满足 try行<L<catch行 且类型=T 的块中，取 catch 行最早的那个。
-// 题面镜像里引号被转义成 &quot;，两种写法都兼容。
 static string trim(const string& s) {
     size_t a = s.find_first_not_of(" \t\r");
     if (a == string::npos) return "";
@@ -170,11 +168,6 @@ static string trim(const string& s) {
 }
 static string stripQuotes(string s) {
     s = trim(s);
-    const string ent = "&quot;";
-    if (s.size() >= 2 * ent.size() && s.compare(0, ent.size(), ent) == 0 &&
-        s.compare(s.size() - ent.size(), ent.size(), ent) == 0) {
-        return s.substr(ent.size(), s.size() - 2 * ent.size());
-    }
     if (s.size() >= 2 && s.front() == '"' && s.back() == '"')
         return s.substr(1, s.size() - 2);
     return s;
@@ -257,10 +250,7 @@ def main() -> None:
             comma = inner.find(',')
             typ = inner[:comma].strip()
             msg = inner[comma + 1:].strip()
-            ent = '&quot;'
-            if len(msg) >= 2 * len(ent) and msg.startswith(ent) and msg.endswith(ent):
-                msg = msg[len(ent):-len(ent)]
-            elif len(msg) >= 2 and msg[0] == '"' and msg[-1] == '"':
+            if len(msg) >= 2 and msg[0] == '"' and msg[-1] == '"':
                 msg = msg[1:-1]
             tline = stack.pop() if stack else -1
             blocks.append((tline, idx, typ, msg))
@@ -285,7 +275,7 @@ main()
 ## 7. 边界情况与易错点
 
 1. **消息含空格/逗号**：不能按空格或逗号切整行；只按「第一个逗号」分类型和消息，且只在括号内处理。
-2. **引号转义**：镜像样例里是 `&quot;`，真实输入是 `"`；两种都要剥掉（代码已兼容）。
+2. **引号**：`catch` 消息两侧的 `"` 要剥掉再比较。
 3. **空行与行内空白**：空行跳过；行首行尾空白用 `trim` 去掉。
 4. **throw 在所有块之外**：没有块包住它 → `Unhandled Exception`。
 5. **嵌套块**：栈配对；catch 行号比较即可，不必显式建树。

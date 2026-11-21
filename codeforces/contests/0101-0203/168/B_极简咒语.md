@@ -27,22 +27,22 @@
 
 ## 2. 示例与观察
 
-官方样例 1（输入 / 输出原样。注意：题面镜像把 `<`、`>`、`"` 存成了 HTML 实体 `&lt;` `&gt;` `&quot;`，正文按镜像逐字保留，实际题面里它们是 `<cstdio>` 与 `"Hello # World"`）：
+官方样例 1（输入 / 输出原样）：
 
 ```text
 输入：
-   #   include &lt;cstdio&gt;
+   #   include <cstdio>
 
 using namespace std;
 
 int main     (   ){
-puts(&quot;Hello # World&quot;); #
+puts("Hello # World"); #
 #
 }
 
 输出：
-   #   include &lt;cstdio&gt;
-usingnamespacestd;intmain(){puts(&quot;Hello#World&quot;);#
+   #   include <cstdio>
+usingnamespacestd;intmain(){puts("Hello#World");#
 #
 }
 ```

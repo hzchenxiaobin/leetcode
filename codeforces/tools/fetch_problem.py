@@ -11,7 +11,7 @@ Codeforces 主站题面页对无浏览器环境的请求返回 403，洛谷镜�
 
 缓存：.cf-meta/statements/<pid>.json，重复抓取直接读缓存（加 --force 覆盖）。
 """
-import json, os, re, sys, time, urllib.parse, urllib.request, http.cookiejar
+import html as _html, json, os, re, sys, time, urllib.parse, urllib.request, http.cookiejar
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 CACHE = os.path.join(ROOT, '.cf-meta', 'statements')
@@ -81,7 +81,9 @@ def fetch(contest, index, force=False, delay=1.2):
         data = {'pid': pid, 'ok': False, 'error': 'no lentille-context (status=%s)' % (ctx or {}).get('status')}
     else:
         pr = ctx['data']['problem']
-        samples = [{'in': s[0], 'out': s[1]} for s in (pr.get('samples') or [])]
+        # 洛谷返回的样例常带 HTML 实体（&quot; / &lt; / &gt;），必须还原成真实字符
+        samples = [{'in': _html.unescape(s[0]), 'out': _html.unescape(s[1])}
+                   for s in (pr.get('samples') or [])]
         zh = pr.get('contenu') or {}
         en = pr.get('content') or {}
 
