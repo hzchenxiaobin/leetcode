@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="450" viewBox="0 0 720 450"
+     font-family="'Comic Sans MS','Marker Felt','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.5"/>
+    </filter>
+    <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+
+  <rect width="720" height="450" fill="#fafafa"/>
+
+  <text x="360" y="32" text-anchor="middle" font-size="19" font-weight="bold" fill="#2b2b2b"
+        filter="url(#rough2)">每个位置一个 3×3 矩阵，答案就是连乘后的一列之和</text>
+  <path d="M 78 42 Q 360 48 642 42" stroke="#2b2b2b" stroke-width="1.4" fill="none" filter="url(#rough2)"/>
+
+  <!-- 位置链 -->
+  <g filter="url(#rough2)">
+    <circle cx="80" cy="92" r="22" fill="#dfeafc" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="230" cy="92" r="22" fill="#dfeafc" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="380" cy="92" r="22" fill="#dfeafc" stroke="#446688" stroke-width="1.6"/>
+    <circle cx="530" cy="92" r="22" fill="#e8f4e0" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <g font-size="13" text-anchor="middle" fill="#22314a" filter="url(#rough2)">
+    <text x="80" y="97">a₁</text>
+    <text x="230" y="97">a₂</text>
+    <text x="380" y="97">a₃</text>
+    <text x="530" y="97">a_n</text>
+  </g>
+  <g stroke="#446688" stroke-width="1.5" fill="none" filter="url(#rough2)">
+    <path d="M 104 92 L 202 92" marker-end="url(#ar2)"/>
+    <path d="M 254 92 L 352 92" marker-end="url(#ar2)"/>
+    <path d="M 404 92 L 502 92" marker-end="url(#ar2)"/>
+  </g>
+  <g font-size="11.5" fill="#556" filter="url(#rough2)">
+    <text x="132" y="84">w[u][v]</text>
+    <text x="282" y="84">w[u][v]</text>
+    <text x="432" y="84">w[u][v]</text>
+  </g>
+
+  <!-- 单矩阵说明 -->
+  <g filter="url(#rough2)">
+    <rect x="60" y="140" width="270" height="120" rx="8" fill="#ffffff" stroke="#446688" stroke-width="1.4"/>
+  </g>
+  <text x="195" y="162" text-anchor="middle" font-size="13" fill="#2f4a66" filter="url(#rough2)">
+    位置 i 的矩阵（i &lt; n）
+  </text>
+  <g filter="url(#rough2)">
+    <rect x="92" y="172" width="196" height="76" fill="#f4f8ff" stroke="#7a93b8" stroke-width="1.2"/>
+    <line x1="157" y1="172" x2="157" y2="248" stroke="#c8d4e6" stroke-width="1"/>
+    <line x1="222" y1="172" x2="222" y2="248" stroke="#c8d4e6" stroke-width="1"/>
+    <line x1="92" y1="197" x2="288" y2="197" stroke="#c8d4e6" stroke-width="1"/>
+    <line x1="92" y1="222" x2="288" y2="222" stroke="#c8d4e6" stroke-width="1"/>
+  </g>
+  <g font-size="12" fill="#2b2b2b" text-anchor="middle" filter="url(#rough2)">
+    <text x="124" y="192">ok·w¹¹</text>
+    <text x="189" y="192">ok·w¹²</text>
+    <text x="254" y="192">ok·w¹³</text>
+    <text x="124" y="217">ok·w²¹</text>
+    <text x="189" y="217">ok·w²²</text>
+    <text x="254" y="217">ok·w²³</text>
+    <text x="124" y="242">ok·w³¹</text>
+    <text x="189" y="242">ok·w³²</text>
+    <text x="254" y="242">ok·w³³</text>
+  </g>
+  <text x="195" y="276" text-anchor="middle" font-size="11.5" fill="#8a6015" filter="url(#rough2)">
+    ok = 第 i 位允许取这一行的值
+  </text>
+
+  <!-- 连乘 -->
+  <g font-size="15" fill="#2b2b2b" text-anchor="middle" filter="url(#rough2)">
+    <text x="352" y="196">M₁ × M₂ × ⋯ × Mₙ</text>
+  </g>
+  <g stroke="#b85450" stroke-width="1.6" fill="none" filter="url(#rough2)">
+    <rect x="334" y="168" width="36" height="22" fill="none" stroke="#b85450"/>
+    <rect x="382" y="174" width="26" height="20" fill="none" stroke="#b85450"/>
+  </g>
+  <text x="352" y="158" text-anchor="middle" font-size="11.5" fill="#a04a46" filter="url(#rough2)">
+    最后一位只收集
+  </text>
+  <text x="352" y="224" text-anchor="middle" font-size="13" fill="#a04a46" filter="url(#rough2)">
+    ans = Σᵤ (∏M)[u][0]
+  </text>
+
+  <!-- 线段树 -->
+  <g filter="url(#rough2)">
+    <rect x="440" y="140" width="240" height="130" rx="8" fill="#f6fbf2" stroke="#4a7a3a" stroke-width="1.4"/>
+  </g>
+  <text x="560" y="162" text-anchor="middle" font-size="13" fill="#2f5223" filter="url(#rough2)">
+    线段树：乘积可结合
+  </text>
+  <g filter="url(#rough2)">
+    <rect x="480" y="176" width="150" height="22" rx="4" fill="#e8f4e0" stroke="#4a7a3a" stroke-width="1.2"/>
+    <rect x="466" y="212" width="86" height="20" rx="4" fill="#fff" stroke="#4a7a3a" stroke-width="1.1"/>
+    <rect x="566" y="212" width="86" height="20" rx="4" fill="#fff" stroke="#4a7a3a" stroke-width="1.1"/>
+    <rect x="452" y="244" width="60" height="18" rx="3" fill="#fff" stroke="#4a7a3a" stroke-width="1"/>
+    <rect x="522" y="244" width="60" height="18" rx="3" fill="#fff" stroke="#4a7a3a" stroke-width="1"/>
+    <rect x="592" y="244" width="60" height="18" rx="3" fill="#fff" stroke="#4a7a3a" stroke-width="1"/>
+  </g>
+  <g font-size="10.5" fill="#2f5223" text-anchor="middle" filter="url(#rough2)">
+    <text x="555" y="191">[1..n] 的乘积</text>
+    <text x="509" y="226">[1..n/2]</text>
+    <text x="609" y="226">[n/2+1..n]</text>
+    <text x="482" y="257">⋯</text>
+    <text x="552" y="257">Mᵢ</text>
+    <text x="622" y="257">⋯</text>
+  </g>
+
+  <!-- 更新 -->
+  <g font-size="12.5" fill="#333" filter="url(#rough2)">
+    <text x="60" y="316">单点修改 a_v = t：只重算第 v 个矩阵，再把它到根的 O(log n) 个祖先重新相乘。</text>
+    <text x="60" y="342">3×3 矩阵乘一次 27 次乘加，一次修改约 27 × 2 × log₂(77777) ≈ 900 次运算。</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="60" y="360" width="620" height="72" rx="8" fill="#dfeafc" stroke="#446688" stroke-width="1.2"/>
+  </g>
+  <g font-size="12.5" fill="#22314a" filter="url(#rough2)">
+    <text x="74" y="384">为什么矩阵乘的顺序不能换：w 不是对称矩阵，(u,v) 好不代表 (v,u) 好，</text>
+    <text x="74" y="406">所以合并两个区间必须 left × right，线段树的左右儿子顺序就是数组顺序。</text>
+  </g>
+</svg>
