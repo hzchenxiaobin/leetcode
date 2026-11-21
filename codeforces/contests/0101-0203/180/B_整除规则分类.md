@@ -270,6 +270,7 @@ def type_of(b: int, d: int):
         if i == len(prime_powers):
             return all(single_type_ok(g) for g in groups) and len(groups) >= 2
         for k in range(len(groups)):
+            # groups[k] 与 p^e 互质（来自不同素数），可以直接乘
             old = groups[k]
             groups[k] = old * prime_powers[i]
             if search(i + 1, groups):
