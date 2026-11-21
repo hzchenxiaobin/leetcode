@@ -12,7 +12,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 CF = os.path.join(ROOT, 'codeforces')
 # 正文里常见「**输入**：」「输入：」等写法，比对时先去掉强调符号
 # 允许「输入（自造 ①：…）：」「样例输入 #2：」这类写法
-_SUF = r'\s*(?:[#＃]\s*\d+)?\s*(?:[（(][^）)]*[）)])?\s*[:：]?\s*$'
+_SUF = r'\s*(?:[#＃]?\s*\d+)?\s*(?:[（(][^）)]*[）)])?\s*[:：]?\s*$'
 IN_RE = re.compile(r'^\s*(?:样例)?(?:输入|Input)' + _SUF)
 OUT_RE = re.compile(r'^\s*(?:样例)?(?:输出|Output)' + _SUF)
 
@@ -47,6 +47,12 @@ def parse(body):
     pairs, cur, mode = [], {}, None
     for raw in lines:
         l = _clean(raw)
+        # 「样例 N」单独成行时是分组边界，不属于任何一组的输入/输出内容
+        if re.match(r'^样例\s*\d+$', l.strip()):
+            if mode == 'out' and 'in' in cur:
+                pairs.append((cur.get('in', ''), cur.get('out', '')))
+                cur, mode = {}, None
+            continue
         if IN_RE.match(l):
             if mode == 'out' and 'in' in cur:
                 pairs.append((cur.get('in', ''), cur.get('out', '')))
@@ -86,6 +92,24 @@ def main():
         st = json.load(open(cache, encoding='utf-8'))
         official = [(norm(s['in']), norm(s['out'])) for s in st.get('samples') or []]
         if not official:
+            skipped += 1
+            continue
+        # 两类题不做静态样例比对：
+        # 1) 交互题——缓存里的“样例”是评测机与程序的对话记录，任何合法程序都不可能逐字复现；
+        # 2) 已有 checker 的题——多解/构造/浮点，输出合法性由 checker 判定，token 比对必然误报。
+        prob_key = f'{m.group(1)}/{m.group(2)}'
+        _probs = getattr(main, '_probs', None)
+        if _probs is None:
+            pf = os.path.join(ROOT, 'codeforces', 'data', 'problems.json')
+            _probs = {x['key']: x for x in json.load(open(pf, encoding='utf-8'))}
+            main._probs = _probs
+        px = _probs.get(prob_key, {})
+        if 'interactive' in (px.get('tags') or []):
+            skipped += 1
+            continue
+        idx_lower = m.group(2).lower()
+        if os.path.exists(os.path.join(ROOT, 'codeforces', 'tools', 'checkers',
+                                       f'cf{m.group(1)}{idx_lower}.py')):
             skipped += 1
             continue
         # 同一篇里「输入」和「输出」可能分别放在两个 ```text 块里，按出现顺序拼接后再解析，
