@@ -1,4 +1,4 @@
-# Codeforces 265B 路边树（简化版）题解
+# Codeforces 265B 路边树 题解
 
 ## 1. 题目概述
 

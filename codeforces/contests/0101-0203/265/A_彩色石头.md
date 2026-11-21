@@ -1,4 +1,4 @@
-# Codeforces 265A 彩色石头（简化版）题解
+# Codeforces 265A 彩色石头 题解
 
 ## 1. 题目概述
 
@@ -35,6 +35,17 @@ BBBRR
 
 输出：
 3
+```
+
+官方样例 3：
+
+```text
+输入：
+BRRBGBRGRBGRGRRGGBGBGBRGBRGRGGGRBRRRBRBBBGRRRGGBBB
+BBRBGGRGRGBBBRBGRBRBBBBRBRRRBGBBGBBRRBBGGRBRRBRGRB
+
+输出：
+15
 ```
 
 **样例 1**：第 1 个指令 `R`，脚下 `R` → 走到第 2 块（`G`）；后两个指令 `R` 与脚下 `G` 不符 → 不动 → 答案 2 ✓。
