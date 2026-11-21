@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="330" viewBox="0 0 720 330"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="23"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.7"/>
+    </filter>
+    <marker id="arr2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="720" height="330" fill="#fafafa"/>
+  <text x="360" y="28" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">整条路线 = 若干段独立的网格最短路，在路口拼接</text>
+
+  <g filter="url(#rough2)">
+    <rect x="24"  y="62" width="120" height="54" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="216" y="62" width="120" height="54" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="408" y="62" width="120" height="54" rx="10" fill="#e8f0fe" stroke="#446688" stroke-width="1.6"/>
+    <rect x="576" y="62" width="120" height="54" rx="10" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+  </g>
+  <g font-size="12.5" fill="#2b2b2b" text-anchor="middle" filter="url(#rough2)">
+    <text x="84"  y="86">起点</text><text x="84"  y="104" font-size="11" fill="#4a7a3a">街道街区</text>
+    <text x="276" y="86">路口 s[1]</text><text x="276" y="104" font-size="11" fill="#446688">a</text>
+    <text x="468" y="86">路口 s[2]</text><text x="468" y="104" font-size="11" fill="#446688">b</text>
+    <text x="636" y="86">终点</text><text x="636" y="104" font-size="11" fill="#4a7a3a">街道街区</text>
+  </g>
+  <g stroke="#446688" stroke-width="1.7" marker-end="url(#arr2)" filter="url(#rough2)">
+    <line x1="146" y1="89" x2="210" y2="89"/>
+    <line x1="338" y1="89" x2="402" y2="89"/>
+    <line x1="530" y1="89" x2="570" y2="89"/>
+  </g>
+  <g font-size="11" fill="#446688" text-anchor="middle" filter="url(#rough2)">
+    <text x="178" y="80">Dijkstra</text><text x="178" y="112">段 1</text>
+    <text x="370" y="80">Dijkstra</text><text x="370" y="112">段 2</text>
+    <text x="550" y="80">Dijkstra</text><text x="550" y="112">段 3</text>
+  </g>
+
+  <g stroke="#b4652a" stroke-width="1.4" stroke-dasharray="5 4" filter="url(#rough2)">
+    <line x1="24" y1="134" x2="144" y2="134"/><line x1="24" y1="134" x2="24" y2="146"/>
+    <line x1="216" y1="134" x2="336" y2="134"/><line x1="336" y1="134" x2="336" y2="146"/>
+    <line x1="408" y1="134" x2="528" y2="134"/><line x1="528" y1="134" x2="528" y2="146"/>
+  </g>
+  <g font-size="11" fill="#b4652a" text-anchor="middle" filter="url(#rough2)">
+    <text x="84"  y="160">起点 → s[1]</text>
+    <text x="276" y="160">s[1] → s[2]</text>
+    <text x="468" y="160">s[2] → 终点</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="184" width="320" height="118" rx="10" fill="#eef6ec" stroke="#4a7a3a" stroke-width="1.3"/>
+    <rect x="372" y="184" width="318" height="118" rx="10" fill="#f3edf8" stroke="#7a4a9a" stroke-width="1.3"/>
+  </g>
+  <g font-size="11.5" fill="#2f5223" filter="url(#rough2)">
+    <text x="44" y="208" font-weight="bold">3.1 每一段：一个带权网格最短路</text>
+    <text x="44" y="230">边权只由「出发单元格」决定：</text>
+    <text x="44" y="250">· 数字街区 d → 权 d，路口 → 权 1</text>
+    <text x="44" y="270">· 用 Dijkstra，边权 1..9，非负</text>
+    <text x="44" y="290">· 距离 = 到达该格的分钟数</text>
+  </g>
+  <g font-size="11.5" fill="#4a2a62" filter="url(#rough2)">
+    <text x="386" y="208" font-weight="bold">3.2 缓存：同一对端点只算一次</text>
+    <text x="386" y="230">s 长度 ≤ 1000，但路口 ≤ 26 个，</text>
+    <text x="386" y="250">不同 (源, 汇) 至多 26 × 27 对，</text>
+    <text x="386" y="270">路径可以整条存下来重复使用。</text>
+    <text x="386" y="290">于是 1000 段只剩几百次 Dijkstra。</text>
+  </g>
+</svg>

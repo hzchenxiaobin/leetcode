@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="340" viewBox="0 0 720 340"
+     font-family="'Comic Sans MS','Marker Felt','Segoe UI','Kaiti SC',楷体,cursive">
+  <defs>
+    <filter id="rough2" x="-4%" y="-4%" width="108%" height="108%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="61"/>
+      <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+    </filter>
+    <marker id="m" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#446688"/>
+    </marker>
+  </defs>
+  <rect width="720" height="340" fill="#fafafa"/>
+  <text x="360" y="28" text-anchor="middle" font-size="17" font-weight="bold" fill="#2b2b2b" filter="url(#rough2)">折半枚举：子集 = 左半 + 右半，拼接按 remA·10^lenB + remB 合并</text>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="52" width="320" height="46" rx="8" fill="#e6f4ea" stroke="#4a7a3a" stroke-width="1.6"/>
+    <rect x="370" y="52" width="320" height="46" rx="8" fill="#fde9d9" stroke="#b4652a" stroke-width="1.6"/>
+  </g>
+  <g font-size="12" fill="#2f5223" text-anchor="middle" filter="url(#rough2)">
+    <text x="190" y="72">左半 A：a[0..h-1]，枚举全部 2^h 个子集</text>
+    <text x="190" y="90" font-size="11">记录 (异或 xorA, 拼接余数 remA)</text>
+  </g>
+  <g font-size="12" fill="#7a4b22" text-anchor="middle" filter="url(#rough2)">
+    <text x="530" y="72">右半 B：a[h..m-1]，共 2^(m-h) 个子集</text>
+    <text x="530" y="90" font-size="11">记录 (xorB, 位数 lenB, remB)</text>
+  </g>
+  <line x1="352" y1="75" x2="366" y2="75" stroke="#446688" stroke-width="1.6" marker-end="url(#m)" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="112" width="320" height="86" rx="9" fill="#e8f0fe" stroke="#446688" stroke-width="1.3"/>
+  </g>
+  <g font-size="11.5" fill="#2f4a66" filter="url(#rough2)">
+    <text x="44" y="134" font-weight="bold">哈希表：key = (xorA, remA) → 子集掩码</text>
+    <text x="44" y="156">· 键共 2^16 × p 种可能，但只插 2^h 个</text>
+    <text x="44" y="176">· 同键只留一个代表；空集优先让位给非空集</text>
+    <text x="44" y="194">· 表大小 2^(h+1)，线性探测</text>
+  </g>
+
+  <g filter="url(#rough2)">
+    <rect x="370" y="112" width="320" height="86" rx="9" fill="#f3edf8" stroke="#7a4a9a" stroke-width="1.3"/>
+  </g>
+  <g font-size="11.5" fill="#4a2a62" filter="url(#rough2)">
+    <text x="384" y="134" font-weight="bold">合并条件（同余方程）</text>
+    <text x="384" y="158" font-size="12">xorA = xorB，且 remA·10^lenB + remB ≡ 0 (mod p)</text>
+    <text x="384" y="180">⇒ remA ≡ (−remB)·10^(−lenB) (mod p)</text>
+    <text x="384" y="194">所以后缀只需查 key = (xorB, target)</text>
+  </g>
+  <line x1="530" y1="200" x2="530" y2="196" stroke="#7a4a9a" stroke-width="1.4" filter="url(#rough2)"/>
+
+  <g filter="url(#rough2)">
+    <rect x="30" y="216" width="660" height="106" rx="9" fill="#eef6ec" stroke="#4a7a3a" stroke-width="1.2"/>
+  </g>
+  <g font-size="11.5" fill="#2f5223" filter="url(#rough2)">
+    <text x="44" y="238" font-weight="bold">两个规模事实（决定了表的大小）</text>
+    <text x="44" y="260">· n ≤ 44：左右各 2^22 = 4.2×10^6 个子集，枚举全部子集 ⇒ 判定是精确的</text>
+    <text x="44" y="282">· n &gt; 44：只取 42 个元素做同样的折半枚举，2^21 一侧，几十毫秒一次</text>
+    <text x="44" y="304">· p = 2 或 5 时 10 不可逆，不能这样解方程，需要单独处理（见下一张图）</text>
+  </g>
+</svg>
