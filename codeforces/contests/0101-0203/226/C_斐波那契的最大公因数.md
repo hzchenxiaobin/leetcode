@@ -64,7 +64,7 @@
 
 ### 3.2 核心观察一：gcd 落到下标上
 
-![gcd(F_a, F_b) = F_gcd(a,b)](../../../images/cf226c_gcd.svg)
+![两斐波那契数的最大公因数仍是斐波那契数](../../../images/cf226c_gcd.svg)
 
 **引理**：$\gcd(F_a,F_b)=F_{\gcd(a,b)}$。
 

@@ -87,7 +87,7 @@ $$C := X \wedge Y = \frac{A - B}{2}.$$
 
 ### 3.2 核心恒等式：$X+Y = (X \oplus Y) + 2(X \wedge Y)$
 
-![X+Y = (X xor Y) + 2(X and Y)](../../../images/cf76d_identity.svg)
+![加法与按位异或的进位分解](../../../images/cf76d_identity.svg)
 
 上面那张逐位表就是对恒等式的完整证明：每一位上「和」由 $x \oplus y$ 与「是否进位」共同决定，而进位只发生在 $x = y = 1$，贡献是 $2 \cdot 2^k = 2^{k+1}$，累加起来正好是 $2(X \wedge Y)$。
 

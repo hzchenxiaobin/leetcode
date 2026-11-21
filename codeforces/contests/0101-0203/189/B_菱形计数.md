@@ -70,7 +70,7 @@ $$\text{答案}=\Big(\sum_{x_0=0}^{w}\min(x_0,w-x_0)\Big)\cdot\Big(\sum_{y_0=0}^
 
 ### 3.2 核心观察：两个方向独立
 
-![S(w)=⌊w²/4⌋](../../../images/cf189b_count.svg)
+![宽度对应的菱形个数公式](../../../images/cf189b_count.svg)
 
 菱形由（中心，水平半对角线 $\text{dx}$，竖直半对角线 $\text{dy}$）唯一确定，且三个量独立：
 
