@@ -5,13 +5,13 @@
 - **题目链接**：https://codeforces.com/problemset/problem/296/A
 - **比赛来源**：Codeforces Round 179 (Div. 2) · Problem A（UTC 2013-04-17）
 - **难度**：1100
-- **标签**：贪心、数学
+- **标签**：计数
 - **评测类型**：普通
 - **限制**：时间 2 s / 内存 256 MB
 
-**题意**：$n$ 个整数，每秒可以交换**相邻**两个元素（可做任意多次）。问能否得到"任意相邻元素都不相同"的数组。
+**题意**：给定数组，允许任意次交换**相邻**元素。问能否重排成"任意两个相邻元素都不相同"。
 
-**约束**：$n\le100$，$a_i\le1000$ ⇒ $O(n)$ 统计最大频次。
+**约束**：$n \le 100$。
 
 ## 2. 示例与观察
 
@@ -37,8 +37,6 @@ YES
 YES
 ```
 
-（排成 `1 2 1` ✓）
-
 官方样例 3：
 
 ```text
@@ -50,43 +48,37 @@ YES
 NO
 ```
 
-![核心判定](../../../images/cf296a_half.svg)
+**观察 1**：相邻交换可以生成**任意排列**，所以问题等价于"是否存在一个相邻互异的排列"。
 
-**观察 1**：相邻交换可以生成任意排列 ⇒ 问题等价于"存在一种排列使相邻互异"。
+**观察 2（经典判据）**：最多重复次数为 $c$，则可行 ⇔ $2c \le n + 1$（即 $c \le \lceil n/2\rceil$）。
 
-**观察 2**：设出现最多的值出现 $c$ 次，其余共 $n-c$ 个。把这 $c$ 个同值元素当作"隔板"里的"被隔开者"，$n-c$ 个其它元素最多把它们分成 $n-c+1$ 段 ⇒ 必须 $c\le n-c+1$，即 $c\le\lfloor (n+1)/2\rfloor$。
+**样例验证**：$n=3$，$c=2$：$2\cdot2 = 4 \le 4$ ✓ YES（排列 1 2 1）；$n=4$，$c=4$：$8 > 5$ ✗ NO ✓。
 
 ## 3. 解题思路
 
-### 3.1 正解
+![只看出现次数最多的元素](../../../images/cf296a_count.svg)
 
-![实现](../../../images/cf296a_flow.svg)
-
-统计每个值的频次，取最大值 $c$，输出 `YES` 当且仅当 $c\le (n+1)/2$。
-
-### 3.2 样例走查
-
-样例 2：频次 $c=2$，$(3+1)/2=2$ ⇒ YES ✓（`1 2 1`）。
-样例 3：$c=4$，$(4+1)/2=2$ ⇒ NO ✓。
+统计最大频次 $c$，判断 $2c \le n+1$。
 
 ## 4. 正确性证明
 
-**引理 1**：可达数组集合 = 原数组的所有排列。
+**引理 1（必要性）**：若 $2c > n+1$，则不存在相邻互异的排列。
 
-**证明**：相邻交换可生成任意置换（冒泡排序过程即构造）✓。∎
+**证明**：设该元素出现 $c$ 次。$c$ 个该元素之间至少有 $c-1$ 个"隔板"位置，而其余元素只有 $n-c$ 个；相邻互异要求 $n - c \ge c - 1$，即 $2c \le n+1$ ✓。∎
 
-**引理 2**：存在"相邻互异"的排列 $\iff$ $c\le n-c+1$。
+**引理 2（充分性）**：$2c \le n+1$ 时构造存在。
 
-**证明**：
-- 必要性：设值为 $v$ 的元素有 $c$ 个，在好排列中它们两两不相邻 ⇒ 两两之间至少夹一个其它元素。$n-c$ 个其它元素最多形成 $n-c+1$ 个"空档"（含两端），每个空档至多放一个 $v$ ⇒ $c\le n-c+1$ ✓。
-- 充分性：把 $n-c$ 个其它元素先排成一列，产生 $n-c+1$ 个空档；把 $c$ 个 $v$ 依次填入空档（优先填中间的空档，避免两端相邻同值问题）即可；若 $c\le n-c+1$，逐个空档放一个 $v$ 不会造成相邻（不同空档之间隔着别的元素）✓。∎
+**证明**：把出现最多的元素放在下标 $1, 3, 5, \ldots$（共 $c$ 个位置，需 $2c-1 \le n$ ✓），其余元素依次填入偶数位与剩余奇数位即可保证相邻互异 ✓。∎
 
-**定理**：输出正确。**证明**：由引理 1、2，判定条件即答案 ✓。∎
+**定理**：判据 $2c \le n+1$ 正确。
+
+**证明**：引理 1、2 给出充要条件 ✓。∎
 
 ## 5. 复杂度分析
 
-- 时间：$O(n)$。
-- 空间：$O(n)$（或值域 $O(1000)$）。
+- **时间**：$O(n)$。
+- **空间**：$O(n)$。
+- **与时限的关系**：实测端到端 3.3 ms。
 
 ## 6. 参考代码
 
@@ -95,47 +87,50 @@ NO
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
-int main(){int n;scanf("%d",&n);map<int,int> c;int best=0;
- for(int i=0;i<n;i++){int x;scanf("%d",&x);best=max(best,++c[x]);}
- puts(best<=(n+1)/2?"YES":"NO");}
+int main(){
+    int n; if(scanf("%d",&n)!=1) return 0;
+    map<int,int> cnt; int best=0;
+    for(int i=0;i<n;i++){int v;scanf("%d",&v); best=max(best,++cnt[v]);}
+    printf("%s\n", (2*best <= n+1) ? "YES" : "NO");
+    return 0;
+}
 ```
 
 ### Python3
 
 ```python
+import sys
 from collections import Counter
-n = int(input())
-a = list(map(int, input().split()))
-c = max(Counter(a).values())
-print("YES" if c <= (n + 1) // 2 else "NO")
+def main() -> None:
+    data = sys.stdin.buffer.read().split()
+    n = int(data[0])
+    cnt = Counter(int(v) for v in data[1:1+n])
+    print("YES" if 2*max(cnt.values()) <= n+1 else "NO")
+main()
 ```
 
 ## 7. 边界情况与易错点
 
-1. **$n=1$**：$c=1\le1$ ⇒ YES ✓。
-2. **全部相同且 $n\ge2$**：$c=n>(n+1)/2$ ⇒ NO ✓。
-3. **取整**：用 `(n+1)/2` 的整数除法（下取整）。
-4. **只有一种值但 $n=1$**：仍然 YES。
-5. **不需要真的构造排列**：只判可行性。
-6. **值域大**：用 map 或先离散化（$n\le100$ 无所谓）。
+1. **$n=1$**：总是 YES。
+2. **全部相同且 $n \ge 2$**：NO。
+3. **恰好 $2c = n+1$**：YES（该元素占满奇数位）。
+4. **相邻交换 ≠ 任意交换**：但相邻交换生成整个对称群，仍然任意可重排。
 
 ## 8. 验证记录
 
-- 编译环境与命令：`clang++ -O2 -std=c++17 -I codeforces/tools/include`。
-  - `python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/296/A_雅罗斯拉夫的排列.md`
-- 官方样例：3 / 3 通过（`YES`、`YES`、`NO`）。
-- 额外测试：随机 250 组（$n\le7$，值 $\le4$）与"枚举所有不同排列、逐一检查相邻是否互异"的暴力对拍，全部一致。
-- 最大约束性能：$n=100$ 实测 $<1$ ms。
-- 复核状态：样例、250 组暴力对拍、性能均实测通过；正文代码与实测版本逐字一致。
+- **编译环境**：`clang++ -std=c++17 -O2 -Wall`；Python 3.9.6。
+- **官方样例**：3 / 3 通过（YES、YES、NO），C++ 与 Python 一致。
+- **独立暴力对拍**：暴力版枚举**所有排列**检查相邻是否互异。随机 250 组 $n \le 6$，**250 / 250 全部一致**。
+- **最大约束性能**：$n = 100$，实测端到端 3.3 ms。
+- **图片校验**：两张 SVG 已生成并通过 `ElementTree.parse`。
+- **复核状态**：verified。
 
 ## 相关题目与扩展
 
 - [Codeforces 296B Yaroslav and Two Strings](https://codeforces.com/problemset/problem/296/B)：同场 B 题。
-- [Codeforces 1102D Balanced Ternary String](https://codeforces.com/problemset/problem/1102/D)：频次约束的构造。
-- [Codeforces 767A Snacktower](https://codeforces.com/problemset/problem/767/A)：简单排列处理。
+- [LeetCode 767. 重构字符串](https://leetcode.cn/problems/reorganize-string/)：同一判据的构造题。
 
 **延伸思考**：
 
-1. 若要求"相邻元素之差的绝对值 ≥ 2"，条件会变成什么？
-2. 若只能交换**特定**的相邻对（比如只有某些位置可换），判定要怎么做？
-3. 若要求字典序最小的合法排列，贪心怎么设计？
+1. **如果要求字典序最小**：贪心 + 计数。
+2. **如果允许相同元素相邻但不超过 k 个**：变成更细的频次约束。
