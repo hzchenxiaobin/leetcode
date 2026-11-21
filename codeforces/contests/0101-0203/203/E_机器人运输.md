@@ -277,7 +277,7 @@ main()
 - **编译环境与命令**：`python3 codeforces/tools/verify_solution.py codeforces/contests/0101-0203/203/E_机器人运输.md`。
 - **官方样例**：3 / 3 通过（`2 6`、`0 0`、`4 9`，与官方输出逐字一致）。
 - **随机对拍**：独立暴力枚举出勤集合的全部子集（$n\le9$），对每个集合按"先搬 $c\ge1$、再搬 $c=0$"精确计算可搬运数，随机 $n\le7,c_i\le3,f_i\le6,S\le10$ 共 **300 组**，以及 $n\le9$、故意混入 $c_i\in\{0,5,10\}$、$f_i\in\{0,1,2,3,5,8\}$ 的 **400 + 200 组**，与正文 C++ 全部一致。
-- **最大规模性能**：$n=10^5$、随机 $c_i,f_i,l_i\le10^9$，C++ 与 Python 均在几十毫秒内完成（排序为主）。
+- **最大规模性能**：$n=10^5$、$d=5$、$S=10^9$、$f_i\le10^4$、$l_i\in[5,10]$、$c_i$ 随机 $\le10^9$，C++ 20 ms、Python 140 ms（排序为主，远低于 2 s）。
 - **图片校验**：`cf203e_seats.svg`、`cf203e_formula.svg` 通过 `xml.etree.ElementTree.parse`。
 - **复核状态**：verified。
 
